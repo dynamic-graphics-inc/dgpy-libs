@@ -1,0 +1,6 @@
+[submodule "lager"]
+	path = lager
+	url = https://github.com/dynamic-graphics-inc/lager.git
+[submodule "jsonbourne"]
+	path = jsonbourne
+	url = https://github.com/dynamic-graphics-inc/jsonbourne.git
