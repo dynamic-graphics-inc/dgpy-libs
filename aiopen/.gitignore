@@ -118,3 +118,5 @@ node_modules/
 .nox/
 mypy_reports/
 scratch/
+.pytype/
+monkeytype.sqlite3
