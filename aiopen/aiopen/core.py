@@ -20,9 +20,6 @@ from typing import Any
 from typing import Optional
 from typing import Union
 
-import funkify
-
-
 PathType = Union[str, PathLike]
 
 _open = open
@@ -144,42 +141,6 @@ class BaseAsyncDetachable(BaseAsync):
 
     def detach(self):
         return self._file.detach()
-
-
-# def _hoist_method(attr_name):
-#     def method(self, *args, **kwargs):
-#         return getattr(self._file, attr_name)(*args, **kwargs)
-#
-#
-#     return method
-#
-#
-# def hoist_method(*attrs):
-#     def _mk_methods(cls):
-#         for attr_name in attrs:
-#             setattr(cls, attr_name, _hoist_method(attr_name))
-#         return cls
-#
-#
-#     return _mk_methods
-#
-#
-# def _hoist_property(attr_name: "str") -> property:
-#     def proxy_property(self):
-#         return getattr(self._file, attr_name)
-#
-#
-#     return property(proxy_property)
-#
-#
-# def hoist_property(*attrs):
-#     def cls_builder(cls):
-#         for attr_name in attrs:
-#             setattr(cls, attr_name, _hoist_property(attr_name))
-#         return cls
-#
-#
-#     return cls_builder
 
 
 class TextIOWrapperAsync(BaseAsyncDetachable):
@@ -324,7 +285,6 @@ class ContextManagerAsync(Coroutine):
         resp = await self._coro
         return resp
 
-    # Union[BufferedIOBaseAsync, BufferedReaderAsync, TextIOWrapperAsync, FileIOAsync, None]
     async def __aenter__(
         self,
     ) -> Union[
@@ -337,26 +297,6 @@ class ContextManagerAsync(Coroutine):
         if self._obj:
             await self._obj.close()
         self._obj = None
-
-
-# def _asyncify_method(attr_name):
-#     async def _async_funk(self, *args, **kwargs):
-#         return await self._loop.run_in_executor(
-#             self._executor, partial(getattr(self._file, attr_name), *args, **kwargs)
-#             )
-#
-#
-#     return _async_funk
-#
-#
-# def asyncify_method(*attrs):
-#     def cls_builder(cls):
-#         for attr_name in attrs:
-#             setattr(cls, attr_name, _asyncify_method(attr_name))
-#         return cls
-#
-#
-#     return cls_builder
 
 
 async def _aiopen(
