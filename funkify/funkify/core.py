@@ -5,9 +5,6 @@ from types import ModuleType
 from functools import partial
 
 
-print(__name__)
-
-
 def _funkify(funk=None, *, name=None):
     try:
         _name = name or funk.__module__
