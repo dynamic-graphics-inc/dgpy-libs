@@ -7,7 +7,7 @@ from funkify._version import VERSION_MINOR
 from funkify._version import VERSION_PATCH
 from funkify._version import __version__
 
-_funkify(funkify, name='funkify')
+_funkify(funkify, name="funkify")
 
 __all__ = [
     "funkify",
@@ -17,4 +17,4 @@ __all__ = [
     "VERSION_PATCH",
     "VERSION_INFO",
     "__version__",
-    ]
+]
