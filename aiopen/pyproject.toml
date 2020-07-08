@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "aiopen"
+version = "0.0.2"
+description = "Funkify modules so that they are callable"
+license = "MIT"
+authors = ["jesse <jesse@dgi.com>"]
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+packages = [
+    { include = "aiopen", from = "." },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Typing :: Typed"
+]
+keywords = [
+    "aio", "aiofiles", "fs", "aiopen", "async", "dgpy"
+]
+
+
+[tool.poetry.dependencies]
+python = "==3.*,>=3.6.1"
+#funkify = {path = "../funkify"}
+
+funkify = "^0.0.1"
+[tool.poetry.dev-dependencies]
+pytest = "==5.*,>=5.3.0"
+
+[tool.dephell.main]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "setuppy", path = "setup.py"}
+# explicitly specify your versioning scheme to let your users know what they can expect
+versioning = "semver"
+# git tag template for releases
+tag = "v"
+
+[tool.dephell.vendorized]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "wheel", path = "dist-vendored/"}
+envs = ["main"]
+
+# Make vendorized version of the project:
+# dephell vendor download --env=vendorized
+# dephell vendor import --env=vendorized
+[tool.dephell.vendorized.vendor]
+path = "dephell_vendor"
+exclude = ["jinja2", "tests", "setuptools", "pip"]
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
