@@ -15,6 +15,8 @@ import aiopen
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_iteration(mode: str, buffering: int) -> None:
     """Test iterating over lines from a file."""
+    import aiopen
+
     filename = join(dirname(__file__), "resources", "multiline_file.txt")
 
     async with aiopen(filename, mode=mode, buffering=buffering) as file:

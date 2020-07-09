@@ -16,9 +16,18 @@ from io import FileIO
 from io import TextIOBase
 from io import TextIOWrapper
 from os import PathLike
+from types import TracebackType
 from typing import Any
+from typing import AsyncContextManager
+from typing import Awaitable
+from typing import Callable
 from typing import Optional
+from typing import Type
+from typing import TypeVar
 from typing import Union
+from typing import cast
+
+T = TypeVar("T")
 
 PathType = Union[str, PathLike]
 
@@ -26,15 +35,16 @@ _open = open
 __all__ = ["aiopen"]
 
 
-def aio_hoist(funk):
+def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
     @wraps(funk)
-    async def _async_funk(self, *args, **kwargs):
+    async def _async_funk(self, *args: Any, **kwargs: Any) -> T:
         fn = getattr(self._file, funk.__name__)
-        return await self._loop.run_in_executor(
+        retval = await self._loop.run_in_executor(
             self._executor, partial(fn, *args, **kwargs)
         )
+        return cast(T, retval)
 
-    return _async_funk
+    return cast(Callable[..., Awaitable[T]], _async_funk)
 
 
 class BaseAsync:
@@ -66,80 +76,80 @@ class BaseAsync:
             raise StopAsyncIteration
 
     @aio_hoist
-    def close(self, *args, **kwargs):
+    def close(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def flush(self, *args, **kwargs):
+    def flush(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def isatty(self, *args, **kwargs):
+    def isatty(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def read(self, *args, **kwargs):
+    def read(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def readall(self, *args, **kwargs):
+    def readall(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def readinto(self, *args, **kwargs):
+    def readinto(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def readline(self, *args, **kwargs):
+    def readline(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def readlines(self, *args, **kwargs):
+    def readlines(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def seek(self, *args, **kwargs):
+    def seek(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def seekable(self, *args, **kwargs):
+    def seekable(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def tell(self, *args, **kwargs):
+    def tell(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def truncate(self, *args, **kwargs):
+    def truncate(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def writable(self, *args, **kwargs):
+    def writable(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def write(self, *args, **kwargs):
+    def write(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
     @aio_hoist
-    def writelines(self, *args, **kwargs):
+    def writelines(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
-    def fileno(self):
+    def fileno(self) -> int:
         return self._file.fileno()
 
     def readable(self) -> bool:
         return self._file.readable()
 
     @property
-    def closed(self):
+    def closed(self) -> bool:
         return self._file.closed
 
 
 class BaseAsyncDetachable(BaseAsync):
     _file: Union[BufferedReader, BufferedRandom, BufferedWriter, TextIOWrapper]
 
-    def detach(self):
+    def detach(self) -> Any:
         return self._file.detach()
 
 
@@ -149,23 +159,23 @@ class TextIOWrapperAsync(BaseAsyncDetachable):
     _file: TextIOWrapper
 
     @property
-    def encoding(self):
+    def encoding(self) -> str:
         return self._file.encoding
 
     @property
-    def buffer(self):
+    def buffer(self) -> Any:
         return self._file.buffer
 
     @property
-    def errors(self):
+    def errors(self) -> Any:
         return self._file.errors
 
     @property
-    def line_buffering(self):
+    def line_buffering(self) -> Any:
         return self._file.line_buffering
 
     @property
-    def newlines(self):
+    def newlines(self) -> Any:
         return self._file.newlines
 
 
@@ -183,7 +193,7 @@ class BufferedReaderAsync(BufferedIOBaseAsync):
     """The asyncio executor version of io.BufferedReader and Random."""
 
     @aio_hoist
-    def peek(self, *args, **kwargs):
+    def peek(self, *args: Any, **kwargs: Any) -> Any:
         ...
 
 
@@ -195,21 +205,21 @@ class FileIOAsync(BaseAsync):
 
 @singledispatch
 def _aiopen_dispatch(
-    file, *, loop=None, executor=None
+    file, *, loop: BaseEventLoop, executor: Any = None
 ) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
     raise TypeError("Unsupported io type: {}.".format(file))
 
 
 @_aiopen_dispatch.register(TextIOBase)
 def _textio_base_dispatcher(
-    file: FileIO, *, loop=None, executor=None
+    file: FileIO, *, loop: BaseEventLoop, executor: Any = None
 ) -> TextIOWrapperAsync:
     return TextIOWrapperAsync(file, loop=loop, executor=executor)
 
 
 @_aiopen_dispatch.register(BufferedWriter)
 def _buffered_io_base_async_dispatcher(
-    file, *, loop=None, executor=None
+    file, *, loop: BaseEventLoop, executor: Any = None
 ) -> BufferedIOBaseAsync:
     return BufferedIOBaseAsync(file, loop=loop, executor=executor)
 
@@ -217,7 +227,7 @@ def _buffered_io_base_async_dispatcher(
 @_aiopen_dispatch.register(BufferedReader)
 @_aiopen_dispatch.register(BufferedRandom)
 def _buffered_reader_async_dispatcher(
-    file, *, loop=None, executor=None
+    file, *, loop: BaseEventLoop, executor: Any = None
 ) -> BufferedReaderAsync:
     return BufferedReaderAsync(file, loop=loop, executor=executor)
 
@@ -227,11 +237,21 @@ def _fileio_async_dispatcher(file, *, loop=None, executor=None) -> FileIOAsync:
     return FileIOAsync(file, loop, executor)
 
 
-class ContextManagerAsync(Coroutine):
+class ContextManagerAsync(
+    AsyncContextManager[
+        Union[
+            BufferedIOBaseAsync,
+            BufferedReaderAsync,
+            TextIOWrapperAsync,
+            FileIOAsync,
+            None,
+        ]
+    ]
+):
     __slots__ = ("_coro", "_obj")
 
     def __init__(self, coro) -> None:
-        self._coro: Coroutine = coro
+        self._coro: Coroutine[Any, Any, Any] = coro
         self._obj: Optional[
             Union[
                 BufferedIOBaseAsync,
@@ -241,7 +261,7 @@ class ContextManagerAsync(Coroutine):
             ]
         ] = None
 
-    def send(self, value):
+    def send(self, value: Any) -> Any:
         return self._coro.send(value)
 
     def throw(self, typ, val=None, tb=None):
@@ -271,7 +291,7 @@ class ContextManagerAsync(Coroutine):
         return self.send(None)
 
     def __iter__(self):
-        resp = yield from self._coro
+        resp = yield self._coro
         return resp
 
     async def __aiter__(self):
@@ -293,7 +313,12 @@ class ContextManagerAsync(Coroutine):
         self._obj = await self._coro
         return self._obj
 
-    async def __aexit__(self, exc_type: None, exc: None, tb: None) -> None:
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc: Optional[BaseException],
+        tb: Optional[TracebackType],
+    ) -> None:
         if self._obj:
             await self._obj.close()
         self._obj = None
@@ -303,18 +328,18 @@ async def _aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: None = None,
+    encoding: Optional[str] = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop=None,
+    loop: Optional[BaseEventLoop] = None,
     executor=None,
 ) -> Union[FileIOAsync, BufferedIOBaseAsync, TextIOWrapperAsync, BufferedReaderAsync]:
     """Open an asyncio file."""
     if loop is None:
-        loop = asyncio.get_event_loop()
+        _loop = asyncio.get_event_loop()
     cb = partial(
         _open,
         str(file),
@@ -326,22 +351,22 @@ async def _aiopen(
         closefd=closefd,
         opener=opener,
     )
-    f = await loop.run_in_executor(executor, cb)
-    return _aiopen_dispatch(f, loop=loop, executor=executor)
+    f = await _loop.run_in_executor(executor, cb)
+    return _aiopen_dispatch(f, loop=_loop, executor=executor)
 
 
 def aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: None = None,
+    encoding: Optional[str] = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop=None,
-    executor=None,
+    loop: Optional[BaseEventLoop] = None,
+    executor: Any = None,
 ) -> ContextManagerAsync:
     """Async version of the `open` builtin"""
     return ContextManagerAsync(
