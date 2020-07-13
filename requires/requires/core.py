@@ -7,10 +7,13 @@ import asyncio
 from functools import wraps
 from typing import Optional
 from typing import List
-from typing import Union
+from typing import Union, Any, Dict, TypeVar, Callable
 
 
-def _fn_globals(f):
+T = TypeVar("T")
+
+
+def _fn_globals(f) -> Any:
     if hasattr(f, "__wrapped__"):
         return _fn_globals(f.__wrapped__)
     return f.__globals__
@@ -31,11 +34,13 @@ class Requirement:
     conda: Optional[Union[str, bool]] = None
     conda_forge: Optional[Union[str, bool]] = None
 
-    def __post_init__(self):
+
+    def __post_init__(self) -> None:
         pass
 
+
     @property
-    def pkg_basename(self):
+    def pkg_basename(self) -> str:
         if self._from:
             if "." in self._from:
                 return self._from.split(".")[0]
@@ -44,6 +49,7 @@ class Requirement:
         if "." in self._import:
             return self._import.split(".")[0]
         return self._import
+
 
     @property
     def import_string(self) -> str:
@@ -55,28 +61,32 @@ class Requirement:
             return f"from {self._from} import {self._import}"
         return f"import {self._import}"
 
-    def _pip_install_str(self):
+
+    def _pip_install_str(self) -> str:
         if self.pip:
             if isinstance(self.pip, str):
                 return f"pip install {self.pip}"
             return f"pip install {self.pkg_basename}"
         return f"pip install {self.pkg_basename} (pip install info unspecified)"
 
-    def _conda_install_str(self):
+
+    def _conda_install_str(self) -> str:
         if self.conda:
             if isinstance(self.conda, str):
                 return f"pip install {self.conda}"
             return f"conda install {self.pkg_basename}"
         return f"conda install {self.pkg_basename} (conda install info unspecified)"
 
-    def _conda_forge_install_str(self):
+
+    def _conda_forge_install_str(self) -> str:
         if self.conda_forge:
             if isinstance(self.conda_forge, str):
                 return f"conda install -c conda-forge {self.conda_forge}"
             return f"conda install -c conda-forge {self.pkg_basename}"
         return f"conda install -c conda-forge {self.pkg_basename} (conda-forge install info unspecified)"
 
-    def err(self):
+
+    def err(self) -> RequirementError:
         _install_str = [
             f"    {el}"
             for el in filter(
@@ -85,16 +95,17 @@ class Requirement:
                     self._pip_install_str(),
                     self._conda_install_str() if self.conda else None,
                     self._conda_forge_install_str() if self.conda_forge else None,
-                ],
-            )
-        ]
+                    ],
+                )
+            ]
         msg_parts = [
             f"Module/Package(s) not found/installed; could not import: `{self.import_string}`",
             *_install_str,
-        ]
+            ]
         return RequirementError("\n".join(msg_parts))
 
-    def import_requirement(self):
+
+    def import_requirement(self) -> Any:
         """Import and return the requirement"""
         if self._from is None:
             return import_module(self._import)
@@ -107,17 +118,18 @@ class Requirement:
                     [
                         f"Module/Package(s) import AttributeError: `{self.import_string}`",
                         f"    AttributeError: {str(ae)}",
-                    ]
+                        ]
+                    )
                 )
-            )
+
 
     @property
-    def alias(self):
+    def alias(self) -> str:
         return self._as or self._import
 
-    def __call__(self, f):
-        if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
+    def __call__(self, f: Callable[..., T]) -> Callable[..., T]:
+        if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
             @wraps(f)
             async def _requires_dec_async(*args, **kwargs):
                 try:
@@ -133,7 +145,9 @@ class Requirement:
                 except ModuleNotFoundError:
                     raise self.err()
 
+
             return _requires_dec_async
+
 
         @wraps(f)
         def _requires_dec(*args, **kwargs):
@@ -149,6 +163,7 @@ class Requirement:
                 return retval
             except ModuleNotFoundError:
                 raise self.err()
+
 
         return _requires_dec
 
@@ -170,13 +185,13 @@ def parse_import_string(string: str) -> Requirement:
         return Requirement(_import=_import_str)
 
 
-def string2requirement(string: str):
+def string2requirement(string: str) -> Requirement:
     if "import" in string:
         return parse_import_string(string)
     return Requirement(_import=string)
 
 
-def make_requirement(requirement):
+def make_requirement(requirement) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
     elif isinstance(requirement, str):
@@ -192,8 +207,8 @@ def make_requirement(requirement):
     raise RequirementError(
         "Unable to create requirement (type: {}): {}".format(
             str(type(requirement)), str(requirement)
+            )
         )
-    )
 
 
 def make_requirements(requirements) -> List[Requirement]:
@@ -203,14 +218,14 @@ def make_requirements(requirements) -> List[Requirement]:
 
 
 def requires(
-    *requirements,
-    _import: Optional[str] = None,
-    _as: Optional[str] = None,
-    _from: Optional[str] = None,
-    pip: Optional[Union[str, bool]] = None,
-    conda: Optional[Union[str, bool]] = None,
-    conda_forge: Optional[Union[str, bool]] = None,
-):
+        *requirements: Any,
+        _import: Optional[str] = None,
+        _as: Optional[str] = None,
+        _from: Optional[str] = None,
+        pip: Optional[Union[str, bool]] = None,
+        conda: Optional[Union[str, bool]] = None,
+        conda_forge: Optional[Union[str, bool]] = None,
+        ):
     """Decorator to specify the packages a function or class requires
 
     The decorator will not do anything unless a NameError is thrown. If a
@@ -232,15 +247,16 @@ def requires(
             raise ValueError("*requirements and **kwargs are mutually exclusive")
         requirements = [
             Requirement(
-                _import=_import,
+                _import=str(_import),
                 _from=_from,
                 _as=_as,
                 pip=pip,
                 conda=conda,
                 conda_forge=conda_forge,
-            )
-        ]
+                )
+            ]
     requirements = make_requirements(requirements)
+
 
     def _requires_dec(f):
         _wrapped_fn = f
@@ -248,5 +264,6 @@ def requires(
             _wrapped_fn = el(_wrapped_fn)
         wraps(f)(_wrapped_fn)
         return _wrapped_fn
+
 
     return _requires_dec
