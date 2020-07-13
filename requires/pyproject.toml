@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "requires"
-version = "0.0.2"
+version = "0.1.0"
 description = "Funkify modules so that they are callable"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
