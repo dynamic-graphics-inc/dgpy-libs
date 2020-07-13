@@ -63,7 +63,7 @@ uno()
 
 ```python
 # This will not fail
-import requires
+import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
 
 @requires('json')
 def uno():
