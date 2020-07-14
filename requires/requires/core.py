@@ -73,7 +73,7 @@ class Requirement:
     def _conda_install_str(self) -> str:
         if self.conda:
             if isinstance(self.conda, str):
-                return f"pip install {self.conda}"
+                return f"conda install {self.conda}"
             return f"conda install {self.pkg_basename}"
         return f"conda install {self.pkg_basename} (conda install info unspecified)"
 

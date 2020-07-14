@@ -83,6 +83,12 @@ def test_requirement_import_str_rapidjson():
     assert req._conda_forge_install_str().endswith('python-rapidjson')
     assert req._conda_install_str().endswith('python-rapidjson')
 
+def test_requirement_import_str_numpy_install_str():
+    req = Requirement(_import='numpy', pip=True, conda_forge=True, conda=True)
+    assert req._pip_install_str().endswith('numpy')
+    assert req._conda_forge_install_str().endswith('numpy')
+    assert req._conda_install_str().endswith('numpy')
+
 
 def test_jsonthing():
     import json
