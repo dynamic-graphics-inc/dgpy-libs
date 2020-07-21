@@ -17,8 +17,8 @@
 
 ### [requires](./requires/README.ipynb)
 
+## Notebooks
+
+ - [Filtering None and False-y values](./notebooks/filter_none.ipynb)
 
 
-```python
-
-```
