@@ -28,7 +28,7 @@ python = "==3.*,>=3.6.1"
 funkify = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
-pytest = "==5.*,>=5.3.0"
+pytest = "==6.*"
 
 [tool.dephell.main]
 from = {format = "poetry", path = "pyproject.toml"}
