@@ -3,15 +3,25 @@ updates:
 - package-ecosystem: pip
   directory: "/funkify"
   schedule:
-    interval: daily
+    interval: weekly
   open-pull-requests-limit: 10
 - package-ecosystem: pip
   directory: "/aiopen"
   schedule:
-    interval: daily
+    interval: weekly
   open-pull-requests-limit: 10
 - package-ecosystem: pip
   directory: "/requires"
   schedule:
-    interval: daily
+    interval: weekly
+  open-pull-requests-limit: 10
+- package-ecosystem: pip
+  directory: "/lager"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+- package-ecosystem: pip
+  directory: "/jsonbourne"
+  schedule:
+    interval: weekly
   open-pull-requests-limit: 10
