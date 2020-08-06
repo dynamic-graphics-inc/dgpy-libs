@@ -1,0 +1,18 @@
+[flake8]
+# Black formatting length
+max-line-length = 120
+extend-ignore =
+    BLK100
+    D400
+    E203
+    E266
+    E302
+    I001
+    Q000
+    T002
+    WPS201
+    WPS202
+    WPS305
+    WPS326
+# per-file-ignores =
+    # path/to/file.py:E501,W605,W293,W291,XXX

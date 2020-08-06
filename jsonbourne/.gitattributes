@@ -1,0 +1,289 @@
+# ========================
+# DGPY LIBS GIT ATTRIBUTES
+# ========================
+# SET UP LINE ENDINGS FOR TEXT FILES AND WHICH FILES TO TREAT AS BINARY
+* text eol=lf
+
+######################
+### DGI FILE TYPES ###
+######################
+# TEXT
+*.dat text eol=lf
+*.pdat text eol=lf
+*.ply text eol=lf
+*.prod text eol=lf
+*.path text eol=lf
+
+# BINARY
+*.2grd binary
+*.3grd binary
+*.m3grd binary
+*.c3grd binary
+*.dxf binary
+*.geom binary
+*.4dv binary
+*.bdat binary
+*.faces binary
+*.plt binary
+*.map binary
+*.bin binary
+*.trv binary
+*.wba binary
+*.trans binary
+*.kmz binary
+*.bwd binary
+*.wlg binary
+
+*.png binary
+*.tif binary
+*.jpg binary
+*.jpeg binary
+*.stl binary
+*.wlist binary
+*.stack
+
+*.whl binary
+*.tar.gz binary
+
+###########
+### GIT ###
+###########
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
+.gitmodules text eol=lf
+
+###############
+### Windows ###
+###############
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.exe binary
+*.dll binary
+*.docx binary
+*.xlsx binary
+
+##### Linux
+*.sh text eol=lf
+*.so binary
+
+##### Global
+#################
+### DOCUMENTS ###
+#################
+*.sql text
+*.adoc text
+*.textile text
+*.mustache text
+*.csv text
+*.tab text
+*.tsv text
+*.coffee text
+*.css text
+*.htm text
+*.html text
+*.xhtml text
+*.inc text
+*.js text
+*.jsx text
+*.less text
+*.od text
+*.onlydata text
+*.sass text
+*.scm text
+*.log text
+*.properties text
+*.scss text
+*.styl text
+*.tag text
+*.ts text
+*.tsx text
+*.dockerignore text
+Dockerfile text
+## MARKDOWN ##
+*.md text eol=lf
+*.markdown text eol=lf
+*.mdwn text eol=lf
+*.mdown text eol=lf
+*.mkd text eol=lf
+*.mkdn text eol=lf
+*.mdtxt text eol=lf
+*.mdtext eol=lf text
+## TXT ##
+*.txt text eol=lf
+AUTHORS text eol=lf
+CHANGELOG text eol=lf
+CHANGES text eol=lf
+CONTRIBUTING text eol=lf
+COPYING text eol=lf
+copyright text eol=lf
+*COPYRIGHT* text eol=lf
+INSTALL text eol=lf
+license text eol=lf
+LICENSE text eol=lf
+NEWS text eol=lf
+readme text eol=lf
+*README* text eol=lf
+TODO text eol=lf
+# Configuration
+*.cnf text
+*.cfg text
+*.conf text
+*.config text
+*.ini text
+*.bowerrc text
+.browserslistrc text
+.editorconfig text
+*.npmignore text
+*.yaml text
+*.yml text
+browserslist text
+Makefile text
+makefile text
+NMakefile text eol=crlf
+nmakefile text eol=crlf
+Procfile text
+.slugignore text
+# Linters
+.csslintrc text
+.eslintrc text
+.htmlhintrc text
+.jscsrc text
+.jshintrc text
+.jshintignore text
+.stylelintrc text
+# Video
+*.3gpp binary
+*.3gp binary
+*.as binary
+*.asf binary
+*.asx binary
+*.fla binary
+*.flv binary
+*.m4v binary
+*.mng binary
+*.mov binary
+*.mp4 binary
+*.mpeg binary
+*.mpg binary
+*.ogv binary
+*.swc binary
+*.swf binary
+*.webm binary
+# Audio
+*.kar binary
+*.m4a binary
+*.mid binary
+*.midi binary
+*.mp3 binary
+*.ogg binary
+*.ra binary
+# Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.tif binary
+*.tiff binary
+*.ico binary
+*.eps binary
+*.ai binary
+*.bmp binary
+*.jng binary
+*.jp2 binary
+*.jpx binary
+*.jxr binary
+*.pdf binary
+*.psb binary
+*.psd binary
+*.svg text
+*.svgz binary
+*.wbmp binary
+*.webp binary
+# Archives
+*.7z binary
+*.gz binary
+*.jar binary
+*.rar binary
+*.tar binary
+*.zip binary
+# Fonts
+*.ttf binary
+*.eot binary
+*.otf binary
+*.woff binary
+*.woff2 binary
+# Executables
+*.pyc binary
+# Objects
+*.o binary
+
+##### IDE/Editor
+# Visual Studio
+*.sln text eol=crlf
+*.csproj text eol=crlf
+*.vbproj text eol=crlf
+*.vcxproj text eol=crlf
+*.vcproj text eol=crlf
+*.dbproj text eol=crlf
+*.fsproj text eol=crlf
+*.lsproj text eol=crlf
+*.wixproj text eol=crlf
+*.modelproj text eol=crlf
+*.sqlproj text eol=crlf
+*.wmaproj text eol=crlf
+*.xproj text eol=crlf
+*.props text eol=crlf
+*.filters text eol=crlf
+*.vcxitems text eol=crlf
+# Eclipse
+*.project text
+*.classpath text
+*.prefs
+
+##### Language
+# Python
+*.cfg text eol=lf
+*.py text eol=lf
+*.pyx text eol=lf
+*.pyi text eol=lf
+*.ipynb text eol=lf
+*.rst text eol=lf
+# Shell
+*.sh text eol=lf
+# js
+*.js text eol=lf
+*.jsx text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+# C/C++
+*.c text eol=lf
+*.cc text eol=lf
+*.cxx text eol=lf
+*.cpp text eol=lf
+*.c++ text eol=lf
+*.hpp text eol=lf
+*.h text eol=lf
+*.h++ text eol=lf
+*.hh text eol=lf
+*.in text eol=lf
+*.slo binary
+*.lo binary
+*.o binary
+*.obj binary
+*.gch binary
+*.pch binary
+*.so binary
+*.dylib binary
+*.dll binary
+*.lai binary
+*.la binary
+*.a binary
+*.lib binary
+*.exe binary
+*.out binary
+*.app binary
+# MISC
+*.txt text eol=lf
+*.xml text eol=lf
