@@ -10,7 +10,7 @@ from typing import Any, Callable, List, Optional, TypeVar, Union
 T = TypeVar("T")
 
 
-def _fn_globals(f) -> Any:
+def _fn_globals(f: Any) -> Any:
     if hasattr(f, "__wrapped__"):
         return _fn_globals(f.__wrapped__)
     return f.__globals__
@@ -132,6 +132,9 @@ class Requirement:
                 except NameError as ne:
                     if self.alias not in parse_name_error(ne):
                         raise ne
+                except TypeError:
+                    tb = sys.exc_info()[2]
+                    raise self.err().with_traceback(tb)
                 try:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
@@ -139,7 +142,8 @@ class Requirement:
                     retval = await f(*args, **kwargs)
                     return retval
                 except ModuleNotFoundError:
-                    raise self.err()
+                    tb = sys.exc_info()[2]
+                    raise self.err().with_traceback(tb)
 
             return _requires_dec_async
 
@@ -170,7 +174,7 @@ class Requirement:
 class RequirementProxy:
     req: Requirement
 
-    def __init__(self, req: Requirement = None):
+    def __init__(self, req: Requirement) -> None:
         self.req = req
 
     def __call__(self, *args, **kwargs):
@@ -251,7 +255,7 @@ def make_requirement(requirement) -> Requirement:
 def make_requirements(requirements) -> List[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]
-    return make_requirement(requirements)
+    return [make_requirement(requirements)]
 
 
 def require(*args, **kwargs):
@@ -286,7 +290,7 @@ def requires(
     if any(kw for kw in _kwargs):
         if requirements:
             raise ValueError("*requirements and **kwargs are mutually exclusive")
-        requirements = [
+        _requirements = [
             Requirement(
                 _import=str(_import),
                 _from=_from,
@@ -296,11 +300,11 @@ def requires(
                 conda_forge=conda_forge,
             )
         ]
-    requirements = make_requirements(requirements)
+    _requirements = make_requirements(requirements)
 
     def _requires_dec(f):
         _wrapped_fn = f
-        for el in requirements:
+        for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
         wraps(f)(_wrapped_fn)
         return _wrapped_fn

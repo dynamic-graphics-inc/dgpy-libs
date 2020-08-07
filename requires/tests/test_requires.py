@@ -1,4 +1,8 @@
-from requires.core import RequirementError, requires, string2requirement
+from typing import Union
+
+import pytest
+
+from requires.core import Requirement, RequirementError, requires, string2requirement
 
 
 def test_parse_import_xxx():
@@ -397,14 +401,6 @@ def test_requires_err_msg():
             return 123
 
         assert fn() == 123
-
-
-from typing import Union
-
-import pytest
-
-import requires
-from requires import Requirement
 
 
 def test_stacked_requirements():
