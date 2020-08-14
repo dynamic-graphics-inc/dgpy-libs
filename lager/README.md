@@ -1,6 +1,6 @@
-# Lager :beer: ~ small and EZ python logging
+# Lager :beer:
 
-<img src="https://github.com/dynamic-graphics-inc/dgimages/blob/master/dgpy/dgpy_logo.svg?raw=true" alt="drawing" width="120"/> **Dynamic Graphics Python**
+<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
 
 [![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg)
 [![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg)
@@ -9,9 +9,34 @@
 
 **Install:** `pip install lager`
 
-Lager is a python logging package module created primarily because of how fantastic the name is; lager really provides several utility functions/extensions for loguru (which is an AMAZING lib).
+___
 
-## Got JSON??
+## Who? What? Where? When? Why?
 
-Checkout [jsonbourne](https://github.com/dynamic-graphics-inc/jsonbourne) (if you get the chance)!
+**WHO???** Me
+
+**WHAT???** Logging utils/tools for dgpy
+
+**WHERE???** Dynamic Graphics Inc in this repo
+
+**WHEN???** 9 => 5 on workdays
+
+**WHY???** The name. Mostly the name. Lager is a python logging package module created primarily because of how fantastic the name is; lager really provides several utility functions/extensions for loguru (which is an AMAZING lib).
+
+___
+
+## Usage:
+
+
+
+
+
+```python
+from lager import LOG
+LOG.info('info')
+LOG.i('info')
+```
+
+    2020-08-14 16:23:09.202 | INFO     | __main__:<module>:2 - info
+    2020-08-14 16:23:09.203 | INFO     | __main__:<module>:3 - info
 

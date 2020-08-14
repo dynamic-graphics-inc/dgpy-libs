@@ -1,6 +1,6 @@
 # aiopen
 
-<img src="https://github.com/dynamic-graphics-inc/dgimages/blob/master/dgpy/dgpy_logo.svg?raw=true" alt="drawing" width="120"/> **Dynamic Graphics Python**
+<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
 
 [![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg)
 [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg)

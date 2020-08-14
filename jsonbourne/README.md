@@ -1,6 +1,6 @@
 # jsonbourne
 
-<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_logo.svg?raw=true" alt="drawing" width="120"/> **Dynamic Graphics Python**
+<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
 
 [![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg)](https://img.shields.io/pypi/wheel/jsonbourne.svg)
 [![Version](https://img.shields.io/pypi/v/jsonbourne.svg)](https://img.shields.io/pypi/v/jsonbourne.svg)
@@ -23,6 +23,8 @@ ___
 
 **WHY???** Three reasons: **1)** Why not? **2)** Also I (jessekrubin) wanted a python object that was a hybrid between a dictionary and an python-object that worked kinda like a js object. **3)** Was able to get `jsonbourne` on pip
 
+**HOW???** Python! NOTE: I tried to make the actual internals of the `jsonbourne.JsonObj` use list/dict comprehensions everywhere as an experiment.
+
 ___
 
 ## Usage:
@@ -34,6 +36,8 @@ ___
 
 ```python
 from jsonbourne import JSON
+# or
+import JSON  # Which is included with jsonbourne
 string_stringify = JSON.stringify({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps = JSON.dumps({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps

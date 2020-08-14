@@ -1,6 +1,6 @@
 # requires
 
-<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_logo.svg?raw=true" alt="drawing" width="120"/> **Dynamic Graphics Python**
+<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
 
 [![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg)
 [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg)
@@ -144,42 +144,7 @@ tres()  # Will err if not install with where to install instructions
 
     ---------------------------------------------------------------------------
 
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    /mnt/d/dgpy-dev/dgpy-libs/requires/requires/core.py in _requires_dec(*args, **kwargs)
-        146                 if self.alias not in _f_globals:
-    --> 147                     _f_globals[self.alias] = self.import_requirement()
-        148                 retval = f(*args, **kwargs)
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/requires/requires/core.py in import_requirement(self)
-         99         if self._from is None:
-    --> 100             return import_module(self._import)
-        101         req = import_module(self._from)
-
-
-    ~/miniconda3/envs/dgpy/lib/python3.8/importlib/__init__.py in import_module(name, package)
-        126             level += 1
-    --> 127     return _bootstrap._gcd_import(name[level:], package, level)
-        128 
-
-
-    ~/miniconda3/envs/dgpy/lib/python3.8/importlib/_bootstrap.py in _gcd_import(name, package, level)
-
-
-    ~/miniconda3/envs/dgpy/lib/python3.8/importlib/_bootstrap.py in _find_and_load(name, import_)
-
-
-    ~/miniconda3/envs/dgpy/lib/python3.8/importlib/_bootstrap.py in _find_and_load_unlocked(name, import_)
-
-
-    ModuleNotFoundError: No module named 'rapidjson'
-
-    
-    During handling of the above exception, another exception occurred:
-
-
-    RequirementError                          Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
     <ipython-input-6-eddc4b10b188> in <module>
           5     return rapidjson.dumps({'a': 1, 'b': 2})
@@ -187,17 +152,15 @@ tres()  # Will err if not install with where to install instructions
     ----> 7 tres()  # Will err if not install with where to install instructions
     
 
-    /mnt/d/dgpy-dev/dgpy-libs/requires/requires/core.py in _requires_dec(*args, **kwargs)
-        149                 return retval
-        150             except ModuleNotFoundError:
-    --> 151                 raise self.err()
-        152 
-        153         return _requires_dec
+    <ipython-input-6-eddc4b10b188> in tres()
+          3 @requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
+          4 def tres():
+    ----> 5     return rapidjson.dumps({'a': 1, 'b': 2})
+          6 
+          7 tres()  # Will err if not install with where to install instructions
 
 
-    RequirementError: Module/Package(s) not found/installed; could not import: `import rapidjson`
-        pip install python-rapidjson
-        conda install -c conda-forge python-rapidjson
+    NameError: name 'rapidjson' is not defined
 
 
 
