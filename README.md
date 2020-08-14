@@ -22,5 +22,8 @@ ___
 ## Notebooks
 
  - [Filtering None and False-y values](./notebooks/filter_none.ipynb)
+ - [cache money! `functools.lru_cache`](./notebooks/cache_money.ipynb)
+ - [String formatting funks](./notebooks/string_fmt.ipynb)
+ - [JSON parsing vs plain-jane dictionaries](./notebooks/json_parsing.ipynb)
 
 
