@@ -15,7 +15,7 @@
 
 ### [lager](./lager/README.ipynb) ~ `pip install lager`
 
-### [requires](./requires/README.ipynb) ~ `pip install lager`
+### [requires](./requires/README.ipynb) ~ `pip install requires`
 
 ___
 
