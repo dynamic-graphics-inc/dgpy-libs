@@ -37,6 +37,6 @@ LOG.info('info')
 LOG.i('info')
 ```
 
-    2020-08-14 16:23:09.202 | INFO     | __main__:<module>:2 - info
-    2020-08-14 16:23:09.203 | INFO     | __main__:<module>:3 - info
+    2020-08-14 16:41:56.865 | INFO     | __main__:<module>:2 - info
+    2020-08-14 16:41:56.866 | INFO     | __main__:<module>:3 - info
 
