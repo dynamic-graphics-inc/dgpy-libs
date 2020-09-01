@@ -8,6 +8,7 @@ repository = "https://github.com/dynamic-graphics-inc/jsonbourne"
 packages = [
     { include = "jsonbourne", from = "." },
     { include = "JSON.py", from = "." },
+    { include = "david_webb.py", from = "." },
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
