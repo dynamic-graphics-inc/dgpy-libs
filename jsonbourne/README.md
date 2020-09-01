@@ -31,13 +31,25 @@ ___
 
 ### JSON ~ `from jsonbourne import JSON`
 
+**Importing:**
+
+
+```python
+# Importing JSON:
+from jsonbourne import JSON
+# or
+import JSON
+
+# Importing jsonbourne:
+import jsonbourne
+import david_webb  # jsonbourne's `True` identity
+```
+
 **JSON basics:**
 
 
 ```python
-from jsonbourne import JSON
-# or
-import JSON  # Which is included with jsonbourne
+import JSON  # Module included with jsonbourne
 string_stringify = JSON.stringify({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps = JSON.dumps({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps
