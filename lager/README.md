@@ -28,15 +28,11 @@ ___
 ## Usage:
 
 
-
-
-
 ```python
 from lager import LOG
 LOG.info('info')
 LOG.i('info')
 ```
 
-    2020-08-14 16:41:56.865 | INFO     | __main__:<module>:2 - info
-    2020-08-14 16:41:56.866 | INFO     | __main__:<module>:3 - info
-
+    2020-09-01 13:59:48.220 | INFO     | __main__:<module>:2 - info
+    2020-09-01 13:59:48.220 | INFO     | __main__:<module>:3 - info

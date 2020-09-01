@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """JSON callable module ~ jsonbourne"""
 import sys
+
 from jsonbourne import json
-from jsonbourne.core import JSONModuleCls
 from jsonbourne._import import import_json
 from jsonbourne._version import (
     VERSION_INFO,
@@ -11,7 +11,13 @@ from jsonbourne._version import (
     VERSION_PATCH,
     __version__,
 )
-from jsonbourne.core import JSON, JsonDict, JsonObj, JsonObjMutableMapping
+from jsonbourne.core import (
+    JSON,
+    JsonDict,
+    JSONModuleCls,
+    JsonObj,
+    JsonObjMutableMapping,
+)
 
 
 sys.modules['JSON'].__class__ = JSONModuleCls

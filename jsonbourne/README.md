@@ -15,7 +15,7 @@ ___
 
 **WHO???** Secret agent Json Bourne
 
-**WHAT???** Python json lib/pkg that makes json feel a little bit more like the JSON module in javascript/typescript
+**WHAT???** Python json lib/pkg that makes json feel like the JSON module in javascript/typescript
 
 **WHERE???** Dynamic Graphics Inc
 
@@ -23,7 +23,7 @@ ___
 
 **WHY???** Three reasons: **1)** Why not? **2)** Also I (jessekrubin) wanted a python object that was a hybrid between a dictionary and an python-object that worked kinda like a js object. **3)** Was able to get `jsonbourne` on pip
 
-**HOW???** Python! NOTE: I tried to make the actual internals of the `jsonbourne.JsonObj` use list/dict comprehensions everywhere as an experiment.
+**HOW???** Python! NOTE: I tried to make the actual internals of the `jsonbourne.JsonObj` use list/dict comprehensions everywhere because 'why not?'
 
 ___
 
@@ -31,13 +31,25 @@ ___
 
 ### JSON ~ `from jsonbourne import JSON`
 
+**Importing:**
+
+
+```python
+# Importing JSON:
+from jsonbourne import JSON
+# or
+import JSON
+
+# Importing jsonbourne:
+import jsonbourne
+import david_webb  # jsonbourne's `True` identity
+```
+
 **JSON basics:**
 
 
 ```python
-from jsonbourne import JSON
-# or
-import JSON  # Which is included with jsonbourne
+import JSON  # Module included with jsonbourne
 string_stringify = JSON.stringify({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps = JSON.dumps({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps

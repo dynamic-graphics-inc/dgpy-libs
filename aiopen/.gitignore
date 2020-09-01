@@ -120,3 +120,4 @@ mypy_reports/
 scratch/
 .pytype/
 monkeytype.sqlite3
+afile.txt
