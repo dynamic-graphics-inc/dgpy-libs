@@ -26,7 +26,6 @@ class ORJSON(JsonLib):
             pretty=pretty,
             sort_keys=sort_keys,
             default=default or _json_encode_default,
-            **kwargs,
         ).decode(encoding="utf-8")
 
     @staticmethod
@@ -46,7 +45,7 @@ class ORJSON(JsonLib):
             option |= orjson.OPT_SERIALIZE_NUMPY
 
         return orjson.dumps(
-            data, option=option, default=default or _json_encode_default, **kwargs
+            data, option=option, default=default or _json_encode_default
         )
 
     @staticmethod

@@ -37,7 +37,7 @@ class JsonLib(ABC):
 
     @staticmethod
     @abstractmethod
-    def loads(string: str) -> Any:
+    def loads(string: str, **kwargs: Any) -> Any:
         ...
 
 

@@ -545,7 +545,7 @@ class JsonObj(JsonObjMutableMapping):
         """Yield tuples of the form (dot-key, value)"""
         return ((dk, self.dot_lookup(dk)) for dk in self.dot_keys())
 
-    def to_str(self, minify: bool = False, width: int = 88) -> str:
+    def to_str(self, minify: bool = False, width: int = 120) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
@@ -772,6 +772,7 @@ class JSON(metaclass=JSONMeta):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
+        """Return JSON stringified/dumps-ed data"""
         return str(
             json.dumps(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
@@ -786,6 +787,7 @@ class JSON(metaclass=JSONMeta):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
+        """Return JSON stringified/dumps-ed data"""
         return str(
             json.dumps(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
@@ -800,6 +802,7 @@ class JSON(metaclass=JSONMeta):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
+        """Return JSON string bytes for given data"""
         return bytes(
             json.dumpb(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
@@ -814,6 +817,7 @@ class JSON(metaclass=JSONMeta):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
+        """Return JSON string bytes for given data"""
         return bytes(
             json.dumpb(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
@@ -822,24 +826,28 @@ class JSON(metaclass=JSONMeta):
 
     @staticmethod
     def loads(string: str, obj: bool = False, **kwargs: Any) -> Any:
+        """Parse JSON string/bytes and return raw representation"""
         if obj:
             return jsonify(json.loads(string, **kwargs))
         return json.loads(string, **kwargs)
 
     @staticmethod
     def parse(string: str, obj: bool = True) -> Any:
+        """Parse JSON string/bytes and jsonify all dictionaries -> JsonObj"""
         if obj:
             return jsonify(json.loads(string))
         return json.loads(string)
 
     @staticmethod
     def json_lib() -> Any:
+        """Return the name of the JSON library being used as a backend"""
         return json._json.__class__.__name__
 
 
 class JSONModuleCls(ModuleType, JSON):
     @staticmethod
     def __call__(value: Any):  # type: ignore
+        """Jsonify a value"""
         return jsonify(value)
 
 

@@ -38,7 +38,9 @@ class JsonBaseModel(BaseModel, JsonObj):
         """Function place holder that is called after object initialization"""
         pass  # pylint: disable=unnecessary-pass
 
-    def to_str(self, minify: bool = False, fmt_kwargs: bool = False) -> str:
+    def to_str(
+        self, minify: bool = False, width: int = 120, fmt_kwargs: bool = False
+    ) -> str:
         if fmt_kwargs:
             return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"
         if minify:
@@ -47,7 +49,7 @@ class JsonBaseModel(BaseModel, JsonObj):
             [
                 type(self).__name__,
                 "(**{\n    ",
-                pformat(self.to_dict_filter_none(), width=120)[1:-1].replace(
+                pformat(self.to_dict_filter_none(), width=width)[1:-1].replace(
                     "\n", "\n    "
                 ),
                 "\n})",
@@ -146,7 +148,7 @@ class JsonBaseModel(BaseModel, JsonObj):
         return self.eject()
 
     @classmethod
-    def from_dict_filtered(cls, dictionary) -> "JsonBaseModel":
+    def from_dict_filtered(cls, dictionary: Dict[str, Any]) -> "JsonBaseModel":
         """Create class from dict filtering keys not in (sub)class' fields"""
         attr_names: Set[str] = set(cls._cls_field_names())
         return cls(**{k: v for k, v in dictionary.items() if k in attr_names})
@@ -170,7 +172,7 @@ class JsonBaseModel(BaseModel, JsonObj):
         )
 
     @classmethod
-    def defaults_dict(cls):
+    def defaults_dict(cls) -> Dict[str, Any]:
         """Return a dictionary of non-required keys -> default value(s)
 
         Returns:
@@ -201,7 +203,7 @@ class JsonBaseModel(BaseModel, JsonObj):
         """
         return {k: v.default for k, v in cls.__fields__.items() if not v.required}
 
-    def __setattr__(self, name, value):
+    def __setattr__(self, name: str, value: Any) -> None:
         if name in self.__property_fields__:
             property_field = getattr(self.__class__, name)
             return property_field.fset(self, value)
