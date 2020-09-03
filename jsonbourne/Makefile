@@ -4,7 +4,7 @@ PKG_NAME := $(shell cat pyproject.toml | grep name | awk '{print $$3}' | sed 's/
 PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
-isort = isort -sp pyproject.toml jsonbourne JSON.py david_webb.py tests
+isort = isort --sp pyproject.toml jsonbourne JSON.py david_webb.py tests
 black = black -S -l 88 jsonbourne JSON.py david_webb.py tests
 
 nbs = $(wildcard *.ipynb)

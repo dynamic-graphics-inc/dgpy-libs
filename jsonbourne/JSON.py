@@ -35,6 +35,7 @@ __all__ = [
     "JsonObjMutableMapping",
     "JsonObj",
     "JsonDict",
+    "JSONModuleCls",
     # import
     "import_json",
     # util funks

@@ -27,6 +27,8 @@ class JsonBaseModelDefaultConfig:
 
 
 class JsonBaseModel(BaseModel, JsonObj):
+    """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
+
     Config = JsonBaseModelDefaultConfig
 
     def __init__(self, *args: Any, **kwargs: Any):
