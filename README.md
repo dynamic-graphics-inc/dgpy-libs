@@ -7,6 +7,15 @@
 
 ## Libs
 
+```
+libs
+├── aiopen
+├── funkify
+├── jsonbourne
+├── lager
+└── requires
+```
+
 ### [aiopen](./libs/aiopen/README.md) ~ `pip install aiopen`
 
 ### [funkify](./libs/funkify/README.md) ~ `pip install funkify`
@@ -19,6 +28,14 @@
 
 
 ## Notebooks
+
+```
+notebooks/
+├── cache_money.ipynb
+├── filter_none.ipynb
+├── json_parsing.ipynb
+└── string_fmt.ipynb
+```
 
  - [Filtering None and False-y values](./notebooks/filter_none.ipynb)
  - [cache money! `functools.lru_cache`](./notebooks/cache_money.ipynb)
