@@ -5,19 +5,18 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dynamic-graphics-inc/dgpy-libs/master?filepath=README.ipynb)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## LIBS
+## Libs
 
-### [aiopen](./aiopen/README.ipynb) ~ `pip install aiopen`
+### [aiopen](./libs/aiopen/README.md) ~ `pip install aiopen`
 
-### [funkify](./funkify/README.ipynb) ~ `pip install funkify`
+### [funkify](./libs/funkify/README.md) ~ `pip install funkify`
 
-### [jsonbourne](./jsonbourne/README.ipynb) ~ `pip install jsonbourne`
+### [jsonbourne](./libs/jsonbourne/README.md) ~ `pip install jsonbourne`
 
-### [lager](./lager/README.ipynb) ~ `pip install lager`
+### [lager](./libs/lager/README.md) ~ `pip install lager`
 
-### [requires](./requires/README.ipynb) ~ `pip install requires`
+### [requires](./libs/requires/README.md) ~ `pip install requires`
 
-___
 
 ## Notebooks
 
