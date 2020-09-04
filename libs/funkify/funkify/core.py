@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 """Funkify core"""
 import sys
+
 from types import ModuleType
-from functools import partial
+from typing import Any, Callable, Optional, TypeVar
 
 
-def _funkify(funk=None, *, name=None):
+T = TypeVar('T')
+
+
+def _funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[..., T]:
     try:
         _name = name or funk.__module__
     except AttributeError:
         raise ValueError(f"Bad args: funk={funk} name={name}")
-    if funk is None:
-        return partial(funk=_funkify, name=_name)
 
     class ModuleCls(ModuleType):
-        def __call__(self, *args, **kwargs):
+        def __call__(self, *args: Any, **kwargs: Any) -> T:
             return funk(*args, **kwargs)
 
     sys.modules[_name].__class__ = ModuleCls
@@ -22,5 +24,6 @@ def _funkify(funk=None, *, name=None):
 
 
 @_funkify
-def funkify(funk=None, *, name=None):
+def funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[..., T]:
+    """Funkify a module"""
     return _funkify(funk=funk, name=name)
