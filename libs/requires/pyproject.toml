@@ -19,7 +19,8 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "funk", "dgpy", "python", "modules", "funky"
+    "requires", "dgpy", "python", "modules", "funkified", "import",
+    "dependencies", "lazy"
 ]
 
 
