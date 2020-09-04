@@ -2,10 +2,12 @@
 """Core for requires"""
 import asyncio
 import sys
+
 from dataclasses import dataclass
 from functools import wraps
 from importlib import import_module
 from typing import Any, Callable, List, Optional, TypeVar, Union
+
 
 T = TypeVar("T")
 

@@ -4,6 +4,7 @@ import pytest
 
 from requires import __version__
 
+
 pytestmark = [pytest.mark.basic]
 
 

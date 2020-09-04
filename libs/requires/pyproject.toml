@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "requires"
-version = "0.2.0"
+version = "0.2.1"
 description = "Require and import dependencies at runtime"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -26,7 +26,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.1"
-funkify = "^0.0.1"
+funkify = "^0.1.0"
 dataclasses = {version="^0.7", python = "~3.6"}
 
 [tool.poetry.dev-dependencies]
