@@ -6,26 +6,28 @@ Inspired by the pip project aiofiles, but different
 import asyncio
 from asyncio import BaseEventLoop  # type: ignore
 from collections.abc import Coroutine
-from functools import partial
-from functools import singledispatch
-from functools import wraps
-from io import BufferedRandom
-from io import BufferedReader
-from io import BufferedWriter
-from io import FileIO
-from io import TextIOBase
-from io import TextIOWrapper
+from functools import partial, singledispatch, wraps
+from io import (
+    BufferedRandom,
+    BufferedReader,
+    BufferedWriter,
+    FileIO,
+    TextIOBase,
+    TextIOWrapper,
+)
 from os import PathLike
 from types import TracebackType
-from typing import Any
-from typing import AsyncContextManager
-from typing import Awaitable
-from typing import Callable
-from typing import Optional
-from typing import Type
-from typing import TypeVar
-from typing import Union
-from typing import cast
+from typing import (
+    Any,
+    AsyncContextManager,
+    Awaitable,
+    Callable,
+    Optional,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 T = TypeVar("T")
 
@@ -37,7 +39,7 @@ __all__ = ["aiopen"]
 
 def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
     @wraps(funk)
-    async def _async_funk(self, *args: Any, **kwargs: Any) -> T:
+    async def _async_funk(self: Any, *args: Any, **kwargs: Any) -> T:
         fn = getattr(self._file, funk.__name__)
         retval = await self._loop.run_in_executor(
             self._executor, partial(fn, *args, **kwargs)
@@ -205,7 +207,12 @@ class FileIOAsync(BaseAsync):
 
 @singledispatch
 def _aiopen_dispatch(
-    file, *, loop: BaseEventLoop, executor: Any = None
+    file: Union[
+        TextIOBase, BufferedWriter, BufferedReader, BufferedRandom, FileIO, Any
+    ],
+    *,
+    loop: BaseEventLoop,
+    executor: Any = None,
 ) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
     raise TypeError("Unsupported io type: {}.".format(file))
 
@@ -219,7 +226,7 @@ def _textio_base_dispatcher(
 
 @_aiopen_dispatch.register(BufferedWriter)
 def _buffered_io_base_async_dispatcher(
-    file, *, loop: BaseEventLoop, executor: Any = None
+    file: BufferedWriter, *, loop: BaseEventLoop, executor: Any = None
 ) -> BufferedIOBaseAsync:
     return BufferedIOBaseAsync(file, loop=loop, executor=executor)
 
@@ -227,13 +234,18 @@ def _buffered_io_base_async_dispatcher(
 @_aiopen_dispatch.register(BufferedReader)
 @_aiopen_dispatch.register(BufferedRandom)
 def _buffered_reader_async_dispatcher(
-    file, *, loop: BaseEventLoop, executor: Any = None
+    file: Union[BufferedReader, BufferedRandom],
+    *,
+    loop: BaseEventLoop,
+    executor: Any = None,
 ) -> BufferedReaderAsync:
     return BufferedReaderAsync(file, loop=loop, executor=executor)
 
 
 @_aiopen_dispatch.register(FileIO)
-def _fileio_async_dispatcher(file, *, loop=None, executor=None) -> FileIOAsync:
+def _fileio_async_dispatcher(
+    file: FileIO, *, loop: BaseEventLoop, executor: Any = None
+) -> FileIOAsync:
     return FileIOAsync(file, loop, executor)
 
 
@@ -250,7 +262,7 @@ class ContextManagerAsync(
 ):
     __slots__ = ("_coro", "_obj")
 
-    def __init__(self, coro) -> None:
+    def __init__(self, coro: Any) -> None:
         self._coro: Coroutine[Any, Any, Any] = coro
         self._obj: Optional[
             Union[
@@ -264,7 +276,9 @@ class ContextManagerAsync(
     def send(self, value: Any) -> Any:
         return self._coro.send(value)
 
-    def throw(self, typ, val=None, tb=None):
+    def throw(
+        self, typ: Any, val: Any = None, tb: Optional[TracebackType] = None
+    ) -> Any:
         if val is None:
             return self._coro.throw(typ)
         elif tb is None:
@@ -272,36 +286,36 @@ class ContextManagerAsync(
         else:
             return self._coro.throw(typ, val, tb)
 
-    def close(self):
+    def close(self) -> Any:
         return self._coro.close()
 
     @property
-    def gi_frame(self):
-        return self._coro.gi_frame
+    def gi_frame(self) -> Any:
+        return self._coro.gi_frame  # type: ignore
 
     @property
-    def gi_running(self):
-        return self._coro.gi_running
+    def gi_running(self) -> bool:
+        return self._coro.gi_running  # type: ignore
 
     @property
-    def gi_code(self):
-        return self._coro.gi_code
+    def gi_code(self) -> Any:
+        return self._coro.gi_code  # type: ignore
 
-    def __next__(self):
+    def __next__(self) -> Any:
         return self.send(None)
 
-    def __iter__(self):
+    def __iter__(self) -> Any:
         resp = yield self._coro
         return resp
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> Any:
         resp = await self._coro
         return resp
 
-    def __await__(self):
+    def __await__(self) -> Any:
         return self._coro.__await__()
 
-    async def __anext__(self):
+    async def __anext__(self) -> Any:
         resp = await self._coro
         return resp
 
@@ -335,7 +349,7 @@ async def _aiopen(
     opener: None = None,
     *,
     loop: Optional[BaseEventLoop] = None,
-    executor=None,
+    executor: Any = None,
 ) -> Union[FileIOAsync, BufferedIOBaseAsync, TextIOWrapperAsync, BufferedReaderAsync]:
     """Open an asyncio file."""
     if loop is None:

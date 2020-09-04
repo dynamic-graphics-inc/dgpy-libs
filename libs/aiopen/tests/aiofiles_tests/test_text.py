@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """PEP 0492/Python 3.5+ tests for text files."""
 import io
-from os.path import dirname
-from os.path import join
+from os.path import dirname, join
 
 import pytest
 from py._path.local import LocalPath
