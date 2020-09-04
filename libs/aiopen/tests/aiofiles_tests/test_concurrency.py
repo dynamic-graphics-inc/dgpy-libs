@@ -2,9 +2,11 @@
 """Test concurrency properties of the implementation."""
 import asyncio
 import time
+
 from os.path import dirname, join
 
 import pytest
+
 from _pytest.monkeypatch import MonkeyPatch
 
 # from dgpy.aio import _aiopen as aio

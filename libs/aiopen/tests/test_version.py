@@ -4,6 +4,7 @@ import pytest
 
 from aiopen import __version__
 
+
 pytestmark = [pytest.mark.basic]
 
 

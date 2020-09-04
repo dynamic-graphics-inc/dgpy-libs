@@ -4,6 +4,7 @@
 Inspired by the pip project aiofiles, but different
 """
 import asyncio
+
 from asyncio import BaseEventLoop  # type: ignore
 from collections.abc import Coroutine
 from functools import partial, singledispatch, wraps
@@ -28,6 +29,7 @@ from typing import (
     Union,
     cast,
 )
+
 
 T = TypeVar("T")
 
