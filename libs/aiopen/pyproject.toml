@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiopen"
-version = "0.1.3"
+version = "0.1.4"
 description = "Funkify modules so that they are callable"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
