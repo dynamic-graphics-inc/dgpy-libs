@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from typing import Any
 
-from starlette.responses import JSONResponse
-
 from jsonbourne import JSON
+
+
+try:
+    from starlette.responses import JSONResponse
+except ModuleNotFoundError:
+    JSONResponse = object
 
 
 class JSONBOURNEResponse(JSONResponse):

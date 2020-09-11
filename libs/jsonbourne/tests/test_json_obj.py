@@ -12,7 +12,7 @@ from decimal import Decimal
 
 import pytest
 
-from jsonbourne import JsonObj
+from jsonbourne import JSON, JsonObj
 
 
 pytestmark = [pytest.mark.basic]
@@ -102,6 +102,95 @@ def test_dictainer_property() -> None:
 #############
 
 #############
+data = {
+    "id": 1,
+    "code": None,
+    "subd": {"a": 23, "b": {"herm": 2}},
+    "type": "foo",
+    "root": {
+        "string_list": ['one', 'two', 'octopus', 'what_is_up'],
+        "mixed_dict": {"num": 123, "obj": {"k": "v"}, "list": ['s', 123, {'k': 'v'}]},
+    },
+    "bars": [
+        {"id": 6934900},
+        {"id": 6934977},
+        {"id": 6934992},
+        {"id": 6934993},
+        {"id": 6935014},
+    ],
+    "n": 10,
+    "date_str": "2013-07-08 00:00:00",
+    "float_here": 0.454545,
+    "complex": [{"id": 83865, "goal": Decimal("2.000000"), "state": "active"}],
+    "profile_id": None,
+    "state": "active",
+}
+
+
+def test_dot_items():
+    jd: JsonObj = JSON(data)
+    print(jd.dot_keys_list())
+    expected = [
+        ('id', 1),
+        ('code', None),
+        ('subd.a', 23),
+        ('subd.b.herm', 2),
+        ('type', 'foo'),
+        ('root.string_list', ['one', 'two', 'octopus', 'what_is_up']),
+        ('root.mixed_dict.num', 123),
+        ('root.mixed_dict.obj.k', 'v'),
+        ('root.mixed_dict.list', ['s', 123, JsonObj(**{'k': 'v'})]),
+        (
+            'bars',
+            [
+                JsonObj(**{'id': 6934900}),
+                JsonObj(**{'id': 6934977}),
+                JsonObj(**{'id': 6934992}),
+                JsonObj(**{'id': 6934993}),
+                JsonObj(**{'id': 6935014}),
+            ],
+        ),
+        ('n', 10),
+        ('date_str', '2013-07-08 00:00:00'),
+        ('float_here', 0.454545),
+        (
+            'complex',
+            [JsonObj(**{'id': 83865, 'goal': Decimal('2.000000'), 'state': 'active'})],
+        ),
+        ('profile_id', None),
+        ('state', 'active'),
+    ]
+    from pprint import pprint
+
+    pprint(jd.dot_items_list())
+    dkl = jd.dot_items_list()
+    assert expected == dkl
+
+    # from time import time
+    # ta = time()
+    # # for i in range(10):
+    # for i in range(100):
+    #     a = list(jd.dot_items_chain())
+    # tb = time()
+    # for i in range(100):
+    #     b = list(jd.dot_items_chain2())
+    # tc = time()
+    # for i in range(100):
+    #     c = list(jd.dot_items())
+    # td = time()
+    # print('yielding', tc-tb,'-- chain: ', tb-ta, '-- og: ', td-tc)
+    expected_json_str = JSON.stringify(expected, sort_keys=True, pretty=True)
+    output_json_str = JSON.stringify(dkl, sort_keys=True, pretty=True)
+    assert output_json_str == expected_json_str
+    try:
+        from deepdiff import DeepDiff
+
+        print('deepdiff', DeepDiff(expected, dkl))
+        assert not DeepDiff(expected, dkl)
+    except ModuleNotFoundError as mnfe:
+        print(mnfe)
+
+
 d1 = {
     "id": 1,
     "code": None,

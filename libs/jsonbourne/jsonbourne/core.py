@@ -483,7 +483,7 @@ class JsonObj(JsonObjMutableMapping):
                 yield k
 
         """
-        return chain(  # type: ignore
+        return chain(
             *(
                 (str(k),)
                 if not isinstance(v, JsonObj)
@@ -542,8 +542,32 @@ class JsonObj(JsonObjMutableMapping):
         return cur_val
 
     def dot_items(self) -> Iterator[Tuple[str, Any]]:
-        """Yield tuples of the form (dot-key, value)"""
-        return ((dk, self.dot_lookup(dk)) for dk in self.dot_keys())
+        """Yield tuples of the form (dot-key, value)
+
+        OG-version:
+            def dot_items(self) -> Iterator[Tuple[str, Any]]:
+                return ((dk, self.dot_lookup(dk)) for dk in self.dot_keys())
+
+        Readable-version:
+            for k, value in self.items():
+                value = jsonify(value)
+                if isinstance(value, JsonObj) or hasattr(value, 'dot_items'):
+                    yield from ((f"{k}.{dk}", dv) for dk, dv in value.dot_items())
+                else:
+                    yield k, value
+        """
+        return chain.from_iterable(  # type: ignore
+            (
+                (*((f"{k}.{dk}", dv) for dk, dv in jsonify(v).dot_items()),)
+                if isinstance(v, (JsonObj, dict)) or hasattr(v, 'dot_items')
+                else ((str(k), v),)
+                for k, v in self.items()
+            )
+        )
+
+    def dot_items_list(self) -> List[Tuple[str, Any]]:
+        """Return list of tuples of the form (dot-key, value)"""
+        return list(self.dot_items())
 
     def to_str(self, minify: bool = False, width: int = 120) -> str:
         """Return a string representation of the JsonObj object"""
