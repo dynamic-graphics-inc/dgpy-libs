@@ -220,7 +220,7 @@ class JsonBaseModel(BaseModel, JsonObj):
     def _cls_property_fields(cls) -> Set[str]:
         """Return a set of property names with a setter function"""
         return {
-            attr
-            for attr, value in vars(cls).items()
-            if isinstance(value, property) and value.fset is not None
+            k
+            for k, v in ((el, getattr(cls, el)) for el in dir(cls))
+            if isinstance(v, property) and v.fset is not None
         }
