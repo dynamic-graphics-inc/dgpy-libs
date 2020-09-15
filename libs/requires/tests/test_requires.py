@@ -427,7 +427,7 @@ def test_module_wrap():
     # print(np.arange(10))
     # import numpy as np
     @requires(_import='numpy', _as='np')
-    def mag(vector: np.ndarray) -> Union[float, np.ndarray]:
+    def mag(vector):
         """Return the magnitude of `vector`.
 
         For stacked inputs, compute the magnitude of each one.
@@ -450,7 +450,7 @@ def test_module_wrap():
         else:
             ValueError("Too many dimensions!")
 
-    with pytest.raises(requires.RequirementError) as re:
+    with pytest.raises(RequirementError) as re:
         mag([12, 3])
     assert "could not import: `import numpy as np`" in str(re.value)
 
