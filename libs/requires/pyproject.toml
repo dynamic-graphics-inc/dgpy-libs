@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "requires"
-version = "0.2.3"
+version = "0.3.0"
 description = "Require and import dependencies at runtime"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

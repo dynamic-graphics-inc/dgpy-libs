@@ -6,7 +6,7 @@ import sys
 from dataclasses import dataclass
 from functools import wraps
 from importlib import import_module
-from typing import Any, Callable, List, Optional, TypeVar, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
 
 
 T = TypeVar("T")
@@ -117,7 +117,7 @@ class Requirement:
             return RequirementProxy(req=self)
 
     @property
-    def __requirement__(self):
+    def __requirement__(self) -> Any:
         return self.import_requirement()
 
     @property
@@ -128,9 +128,9 @@ class Requirement:
         if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
             @wraps(f)
-            async def _requires_dec_async(*args, **kwargs):
+            async def _requires_dec_async(*args: Any, **kwargs: Any) -> T:
                 try:
-                    return await f(*args, **kwargs)
+                    return await f(*args, **kwargs)  # type: ignore
                 except NameError as ne:
                     if self.alias not in parse_name_error(ne):
                         raise ne
@@ -141,7 +141,7 @@ class Requirement:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()
-                    retval = await f(*args, **kwargs)
+                    retval = await f(*args, **kwargs)  # type: ignore
                     return retval
                 except ModuleNotFoundError:
                     tb = sys.exc_info()[2]
@@ -150,7 +150,7 @@ class Requirement:
             return _requires_dec_async
 
         @wraps(f)
-        def _requires_dec(*args, **kwargs):
+        def _requires_dec(*args: Any, **kwargs: Any) -> T:
             try:
                 return f(*args, **kwargs)
             except NameError as ne:
@@ -179,17 +179,16 @@ class RequirementProxy:
     def __init__(self, req: Requirement) -> None:
         self.req = req
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         tb = sys.exc_info()[1]
-        raise self.req.err().with_traceback(tb)
+        raise self.req.err().with_traceback(tb)  # type: ignore
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: str) -> Any:
         try:
             return object.__getattribute__(self, item)
         except AttributeError:
             pass
-        attr = RequirementProxy(req=self.req)
-        return attr
+        return RequirementProxy(req=self.req)
 
 
 def parse_name_error(ne: NameError) -> List[str]:
@@ -234,7 +233,9 @@ def string2requirement(string: str) -> Requirement:
     return Requirement(_import=string)
 
 
-def make_requirement(requirement) -> Requirement:
+def make_requirement(
+    requirement: Union[str, Requirement, Dict[str, str]]
+) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
     elif isinstance(requirement, str):
@@ -254,25 +255,30 @@ def make_requirement(requirement) -> Requirement:
     )
 
 
-def make_requirements(requirements) -> List[Requirement]:
+def make_requirements(
+    requirements: Union[
+        List[Union[str, Requirement, Dict[str, str]]],
+        Tuple[Union[str, Requirement, Dict[str, str]]],
+    ]
+) -> List[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]
-    return [make_requirement(requirements)]
+    return make_requirements([requirements])
 
 
-def require(*args, **kwargs):
+def require(*args: Any, **kwargs: Any) -> Requirement:
     return Requirement(*args, **kwargs)
 
 
 def requires(
-    *requirements: Any,
+    *requirements: Union[str, Dict[str, str], Requirement],
     _import: Optional[str] = None,
     _as: Optional[str] = None,
     _from: Optional[str] = None,
     pip: Optional[Union[str, bool]] = None,
     conda: Optional[Union[str, bool]] = None,
     conda_forge: Optional[Union[str, bool]] = None,
-):
+) -> Callable[[Callable[..., T]], Callable[..., T]]:
     """Decorator to specify the packages a function or class requires
 
     The decorator will not do anything unless a NameError is thrown. If a
@@ -302,9 +308,9 @@ def requires(
                 conda_forge=conda_forge,
             )
         ]
-    _requirements = make_requirements(requirements)
+    _requirements = make_requirements(list(requirements))
 
-    def _requires_dec(f):
+    def _requires_dec(f: Callable[..., T]) -> Callable[..., T]:
         _wrapped_fn = f
         for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
