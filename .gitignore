@@ -114,3 +114,4 @@ node_modules/
 .*.sw[po]
 scratch/
 .pytype/ 
+mypy_reports/ 
