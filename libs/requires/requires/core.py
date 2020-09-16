@@ -2,7 +2,6 @@
 """Core for requires"""
 import asyncio
 import sys
-import traceback
 
 from dataclasses import dataclass
 from functools import wraps
@@ -156,7 +155,7 @@ class Requirement:
             except NameError as ne:
                 if self.alias not in parse_name_error(ne):
                     raise ne
-            except TypeError as te:
+            except TypeError:
                 pass
 
             try:
