@@ -2,6 +2,7 @@
 """Core for requires"""
 import asyncio
 import sys
+import traceback
 
 from dataclasses import dataclass
 from functools import wraps
@@ -135,8 +136,7 @@ class Requirement:
                     if self.alias not in parse_name_error(ne):
                         raise ne
                 except TypeError:
-                    tb = sys.exc_info()[2]
-                    raise self.err().with_traceback(tb)
+                    pass
                 try:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
@@ -156,9 +156,8 @@ class Requirement:
             except NameError as ne:
                 if self.alias not in parse_name_error(ne):
                     raise ne
-            except TypeError:
-                tb = sys.exc_info()[2]
-                raise self.err().with_traceback(tb)
+            except TypeError as te:
+                pass
 
             try:
                 _f_globals = _fn_globals(f)
