@@ -9,23 +9,10 @@
 
 **Install:** `pip install jsonbourne`
 
-___
-
-## Who? What? Where? When? Why?
-
-**WHO???** Secret agent Json Bourne
-
-**WHAT???** Python json lib/pkg that makes json feel like the JSON module in javascript/typescript
-
-**WHERE???** Dynamic Graphics Inc
-
-**WHEN???** 9 => 5 on workdays
-
-**WHY???** Three reasons: **1)** Why not? **2)** Also I (jessekrubin) wanted a python object that was a hybrid between a dictionary and an python-object that worked kinda like a js object. **3)** Was able to get `jsonbourne` on pip
-
-**HOW???** Python! NOTE: I tried to make the actual internals of the `jsonbourne.JsonObj` use list/dict comprehensions everywhere because 'why not?'
-
-___
+ - Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
+ 	 - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
+ - Hybrid dict/class object (`jsonbourne.JsonObj`) with dot-notation getting/setting
+ - `jsonbourne.JsonObj` uses list/dict comprehensions (some are recursive) everywhere because 'why not?' and it is a bit faster
 
 ## Usage:
 

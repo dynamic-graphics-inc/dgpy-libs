@@ -5,6 +5,16 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dynamic-graphics-inc/dgpy-libs/master?filepath=README.ipynb)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+Dynamic Graphics python libraries, home of:
+
+ - Callable modules
+ - Dynamic imports
+ - Recursive list/gen comprehensions
+ - Nutty decorators
+ - Secret agent JSON Bourne
+ - The best package names around
+ - Notebooks with funky python
+
 ## Libs
 
 ```
@@ -41,5 +51,3 @@ notebooks/
  - [cache money! `functools.lru_cache`](./notebooks/cache_money.ipynb)
  - [String formatting funks](./notebooks/string_fmt.ipynb)
  - [JSON parsing vs plain-jane dictionaries](./notebooks/json_parsing.ipynb)
-
-

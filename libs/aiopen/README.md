@@ -9,31 +9,26 @@
 
 **Install:** `pip install aiopen`
 
-___
+Async-open
 
-## Who? What? Where? When? Why?
+**Why not use aiofiles?**
 
-**WHO???** The dgpy team and the people who wrote aiofiles which is the basis for aiopen
+ - Wanted more type annotations
+ - aiofiles uses ye ole `@coroutine` decorator -- aiopen uses python3.6+ `async/await`
+ - aiopen is a callable module, so you can do:
+ 	- `import aiopen`
+ 	- `async with aiopen('afile.txt', 'w') as f: await f.write('some text!')`
+ 	- `async with aiopen('afile.txt', 'r') as f: content = await f.read()`
 
-**WHAT???** Asyncio open for python36 and up
-
-**WHERE???** Dynamic Graphics Inc in this repo
-
-**WHEN???** 9 => 5 on workdays
-
-**WHY???** Three reasons: **1)** I have used the pip package aiofiles (`pip install aiofiles`) quite a bit, and I wanted a more type-annotation-friendly version of aiofiles **2)** aiopen uses funkify (`pip install funkify`) so the imported is callable as `aiopen` (see examples below) **3)** Async file io with out ye ole `@coroutine` decorator; Aiofiles supportes python3.5 which is dark-ages async-python.
 
 (Big shouts out to the aiofiles people, aiopen is entirely based off of aiofiles)
 
-
-___
 
 ## Usage:
 
 Just import it! The module is also callable!
 
 
-```python
 import aiopen
 
 async with aiopen('afile.txt', 'w') as f:
@@ -42,8 +37,4 @@ async with aiopen('afile.txt', 'w') as f:
 async with aiopen('afile.txt', 'r') as f:
     content = await f.read()
     print(content)
-
-```
-
-    some text!
 

@@ -9,23 +9,17 @@
 
 **Install:** `pip install lager`
 
-___
+Logging library based off of loguru (`pip install loguru`).
 
-## Who? What? Where? When? Why?
+**Why not just use loguru?**
 
-**WHO???** Me
+ - Lager is a better pun
+ - Lager is really a utility pack for loguru
 
-**WHAT???** Logging utils/tools for dgpy
-
-**WHERE???** Dynamic Graphics Inc in this repo
-
-**WHEN???** 9 => 5 on workdays
-
-**WHY???** The name. Mostly the name. Lager is a python logging package module created primarily because of how fantastic the name is; lager really provides several utility functions/extensions for loguru (which is an AMAZING lib).
-
-___
+BTW: Loguru is an amazing lib. Check it out: https://github.com/Delgan/loguru
 
 ## Usage:
+
 
 
 ```python
@@ -34,5 +28,6 @@ LOG.info('info')
 LOG.i('info')
 ```
 
-    2020-09-01 13:59:48.220 | INFO     | __main__:<module>:2 - info
-    2020-09-01 13:59:48.220 | INFO     | __main__:<module>:3 - info
+    2020-09-18 13:46:24.487 | INFO     | __main__:<module>:2 - info
+    2020-09-18 13:46:24.488 | INFO     | __main__:<module>:3 - info
+

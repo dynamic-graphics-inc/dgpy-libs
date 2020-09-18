@@ -9,21 +9,7 @@
 
 **Install:** `pip install funkify`
 
-___
-
-## Who? What? Where? When? Why?
-
-**WHO???** jesse @ dgi
-
-**WHAT???** (tiny) Lib/package that lets ya make a module callable
-
-**WHERE???** Dynamic Graphics Inc
-
-**WHEN???** 9 => 5 on workdays
-
-**WHY???** Two reasons: **1)** Why not? **2)** It is pretty cool and I have always wanted something like this for tiny modules/packages centered around a singular function
-
-___
+Make a module/package/script callable.
 
 ## Usage:
 

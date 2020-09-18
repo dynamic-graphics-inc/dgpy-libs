@@ -1,4 +1,4 @@
-from lager.httpx import HttpxSink
+from lager.dev import HttpxSink
 from lager import LAGER_PORT
 from lager import LOG as log
 import httpx

@@ -9,20 +9,12 @@
 
 **Install:** `pip install requires`
 
-___
+Decorate that lets you
+Require/Import dependencies at runtime.
 
-## Who? What? Where? When? Why?
+Python dependency management can be mind bottlingly complex. Optional dependencies are pretty common. Why not require the dependency at run time if a function requires said dependency?
 
-**WHO???** jesse @ dgi
-
-**WHAT???** (tiny) Lib/package with decorator that lets you require/import dependencies at runtime.
-
-**WHERE???** Dynamic Graphics Inc
-
-**WHEN???** 9 => 5 on workdays
-
-**WHY???** Python dependency management can be mind bottlingly complex, and many projects I (jesse) work on end up having optional dependencies. Why not require the dependency at run time if a function requires said dependency?
-
+This package has come in handy in lambda-land where you only get 250mb (on aws)!
 
 ___
 
