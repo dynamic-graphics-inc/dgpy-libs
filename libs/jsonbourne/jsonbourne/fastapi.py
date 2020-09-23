@@ -5,12 +5,12 @@ from jsonbourne import JSON
 
 
 try:
-    from starlette.responses import JSONResponse
+    from starlette.responses import Response
 except ModuleNotFoundError:
-    JSONResponse = object
+    Response = object
 
 
-class JSONBOURNEResponse(JSONResponse):
+class JSONBOURNEResponse(Response):
     """FastAPI/starlette json response to auto use jsonbourne"""
 
     media_type = "application/json"

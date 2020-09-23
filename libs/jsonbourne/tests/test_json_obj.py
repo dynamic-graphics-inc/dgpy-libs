@@ -99,9 +99,28 @@ def test_dictainer_property() -> None:
     #     thing2['herm herm herm import'] = 'should break'
 
 
-#############
+def test_protected_attrs_slash_members():
+    j = JsonObj()
+    j.key = 'value'
+    j['12'] = 'twelve'
+    print(j.__dict__)
+    print(j.items)
+    with pytest.raises(ValueError):
+        j.items = [1, 2, 3, 4]
+    j['items'] = [1, 2, 3, 4]
+    print(j.__dict__)
+    print(j)
+    j_items = j.items
+    print('items', j_items)
 
-#############
+
+def test_number_keys():
+    j = JsonObj()
+    j.key = 'value'
+    j['12'] = 'twelve'
+    assert j['12'] == 'twelve'
+
+
 data = {
     "id": 1,
     "code": None,

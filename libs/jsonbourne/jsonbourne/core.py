@@ -3,6 +3,7 @@
 import keyword
 import sys
 
+from functools import lru_cache
 from itertools import chain
 from pprint import pformat
 from types import ModuleType
@@ -42,6 +43,8 @@ __all__ = [
     "JSON",
 ]
 
+_JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
+
 
 def is_identifier(string: str) -> bool:
     """Return True if a string is a valid python identifier; False otherwise
@@ -78,6 +81,31 @@ def is_identifier(string: str) -> bool:
     if keyword.iskeyword(string):
         return False
     return True
+
+
+def is_float(value: Any) -> bool:
+    """Return True if value is a float"""
+    try:
+        float(value)
+        return True
+    except ValueError:
+        pass
+    return False
+
+
+def is_int(value: Any) -> bool:
+    """Return True if value is a int"""
+    if isinstance(value, int):
+        return True
+    value = str(value)
+    if value[0] in ('-', '+'):
+        return value[1:].isdigit()
+    return value.isdigit()
+
+
+def is_number(value: Any) -> bool:
+    """Return True if value is a number"""
+    return is_int(value) or is_float(value)
 
 
 class JsonObj(JsonObjMutableMapping):
@@ -196,6 +224,14 @@ class JsonObj(JsonObjMutableMapping):
             return isinstance(val, MutableMapping) and val.__contains__(rest)
         return key in self.__dict__
 
+    def __setattr__(self, attr, value):
+        if attr in self._cls_protected_attrs():
+            raise ValueError(
+                f"Cannot set protected attribute ('{str(attr)}'),"
+                f" must use brackets/setitem syntax: json_obj['{str(attr)}']"
+            )
+        super(JsonObj, self).__setattr__(attr, value)
+
     def __setitem__(self, key: str, value: Any) -> None:
         """Set JsonObj item with 'key' to 'value'
 
@@ -227,12 +263,9 @@ class JsonObj(JsonObjMutableMapping):
             Key(s) is not a valid python identifier
 
         """
-        if isinstance(key, int):
-            raise ValueError(
-                f"Invalid key: ({key}).\n"
-                f"Key cannot be integer or convertable to integer"
-            )
-
+        if is_int(key):
+            self.__dict__[str(key)] = value
+            return None
         if not is_identifier(key):
             raise ValueError(
                 f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
@@ -265,13 +298,17 @@ class JsonObj(JsonObjMutableMapping):
             2
 
         """
+        if item in _JsonObjMutableMapping_attrs:
+            return object.__getattribute__(self, item)
+        if item in self._cls_protected_attrs():
+            return object.__getattribute__(self, item)
         try:
-            return self.__dict__[item]
+            return self.__getitem__(str(item))
         except KeyError:
             pass
         return object.__getattribute__(self, item)
 
-    def __getattribute__(self, item: str) -> Any:
+    def __object_getattribute__(self, item: str) -> Any:
         return object.__getattribute__(self, item)
 
     def __getitem__(self, key: str) -> Any:
@@ -282,7 +319,7 @@ class JsonObj(JsonObjMutableMapping):
         except KeyError:
             pass
         try:
-            return jsonify(object.__getattribute__(self, key))
+            return jsonify(self.__object_getattribute__(key))
         except AttributeError:
             raise KeyError(str(key))
 
@@ -618,6 +655,12 @@ class JsonObj(JsonObjMutableMapping):
         except AttributeError:
             raise AttributeError("Class does not inherit from pydantic.BaseModel")
 
+    @classmethod
+    @lru_cache(maxsize=None)
+    def _cls_protected_attrs(cls) -> Set[str]:
+        """Return attrs-attribute names for an object decorated with attrs"""
+        return set(dir(cls))
+
     def _field_names(self) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         return self.__class__._cls_field_names()
@@ -873,6 +916,12 @@ class JSONModuleCls(ModuleType, JSON):
     def __call__(value: Any):  # type: ignore
         """Jsonify a value"""
         return jsonify(value)
+
+
+@lru_cache(maxsize=None)
+def _cls_protected_attrs(cls) -> Set[str]:
+    """Return attrs-attribute names for an object decorated with attrs"""
+    return set(dir(cls))
 
 
 stringify = JSON.stringify
