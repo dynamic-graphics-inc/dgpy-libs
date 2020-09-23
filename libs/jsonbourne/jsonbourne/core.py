@@ -252,15 +252,11 @@ class JsonObj(JsonObjMutableMapping):
             >>> d
             JsonObj(**{'a': 123, 'b': 321})
             >>> d[123] = 'a'
-            Traceback (most recent call last):
-            ...
-            ValueError: Invalid key: (123).
-            Key cannot be integer or convertable to integer
-            >>> d['123'] = 'a'
-            Traceback (most recent call last):
-            ...
-            ValueError: Invalid key: (123).
-            Key(s) is not a valid python identifier
+            >>> d
+            JsonObj(**{'a': 123, 'b': 321, '123': 'a'})
+            >>> d['456'] = 'a'
+            >>> d
+            JsonObj(**{'a': 123, 'b': 321, '123': 'a', '456': 'a'})
 
         """
         if is_int(key):
@@ -606,7 +602,7 @@ class JsonObj(JsonObjMutableMapping):
         """Return list of tuples of the form (dot-key, value)"""
         return list(self.dot_items())
 
-    def to_str(self, minify: bool = False, width: int = 120) -> str:
+    def to_str(self, minify: bool = False, width: int = 88) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
