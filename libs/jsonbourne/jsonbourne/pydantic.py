@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """JSONBourne + Pydantic"""
 
+from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set
 
@@ -217,6 +218,7 @@ class JsonBaseModel(BaseModel, JsonObj):
         return self.__class__._cls_property_fields()
 
     @classmethod
+    @lru_cache(maxsize=1)
     def _cls_property_fields(cls) -> Set[str]:
         """Return a set of property names with a setter function"""
         return {
