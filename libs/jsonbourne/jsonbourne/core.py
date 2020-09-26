@@ -652,10 +652,40 @@ class JsonObj(JsonObjMutableMapping):
             raise AttributeError("Class does not inherit from pydantic.BaseModel")
 
     @classmethod
-    @lru_cache(maxsize=None)
     def _cls_protected_attrs(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
-        return set(dir(cls))
+        return {
+            'asdict',
+            'clear',
+            'copy',
+            'dot_items',
+            'dot_items_list',
+            'dot_keys',
+            'dot_keys_list',
+            'dot_keys_set',
+            'dot_lookup',
+            'eject',
+            'entries',
+            'filter_false',
+            'filter_none',
+            'from_dict',
+            'from_json',
+            'fromkeys',
+            'get',
+            'items',
+            'keys',
+            'pop',
+            'popitem',
+            'recurse',
+            'setdefault',
+            'stringify',
+            'to_dict',
+            'to_json',
+            'to_str',
+            'update',
+            'validate_type',
+            'values',
+        }
 
     def _field_names(self) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
