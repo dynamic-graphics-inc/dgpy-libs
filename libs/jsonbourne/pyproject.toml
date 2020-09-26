@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.8.0"
+version = "0.8.1"
 description = "JSON not json"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
