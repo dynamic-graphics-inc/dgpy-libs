@@ -112,6 +112,8 @@ def test_protected_attrs_slash_members():
     print(j)
     j_items = j.items
     print('items', j_items)
+    assert j.items != [1, 2, 3, 4]
+    assert j['items'] == [1, 2, 3, 4]
 
 
 def test_number_keys():

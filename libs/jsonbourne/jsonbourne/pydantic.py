@@ -88,7 +88,7 @@ class JsonBaseModel(BaseModel, JsonObj):
             JsonObj(**{'a': 1, 'b': 'herm'})
 
         """
-        return {k: v for k, v in self.items() if v is not None}
+        return {k: v for k, v in self.dict().items() if v is not None}
 
     def to_dict_filter_defaults(self) -> Dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default
@@ -115,7 +115,11 @@ class JsonBaseModel(BaseModel, JsonObj):
 
         """
         defaults = self.defaults_dict()
-        return {k: v for k, v in self.items() if k not in defaults or v != defaults[k]}
+        return {
+            k: v
+            for k, v in self.dict().items()
+            if k not in defaults or v != defaults[k]
+        }
 
     def to_json_obj_filter_defaults(self) -> JsonObj:
         """Eject to JsonObj and filter key-values equal to (sub)class' default"""

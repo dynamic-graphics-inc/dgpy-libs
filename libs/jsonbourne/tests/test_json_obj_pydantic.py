@@ -26,6 +26,23 @@ try:
         class Config:
             extra = "allow" if "pytest" in sys.modules else "ignore"
 
+    class PydanticJsonDictPropertySetter(BaseModel, JsonObj):
+        a: int
+        b: int
+        c: str
+
+        #
+        @property
+        def aprop(self) -> int:
+            return self.a
+
+        @aprop.setter
+        def aprop(self, value):
+            self.a = value
+
+        class Config:
+            extra = "allow" if "pytest" in sys.modules else "ignore"
+
 
 except:
     pass
@@ -51,3 +68,14 @@ def test_dictainer_property_pydantic_setattr_hasattr() -> None:
     thing_w_prop.some_attr = "attr_value"
     assert thing_w_prop.some_attr == "attr_value"
     assert thing_w_prop["some_attr"] == "attr_value"
+
+
+def test_dictainer_property_with_setter_pydantic() -> None:
+    thing_w_prop = PydanticJsonDictPropertySetter(**{"a": 1, "b": 2, "c": "herm"})
+    print(thing_w_prop)
+    assert thing_w_prop.a == 1
+    thing_w_prop.a = 123
+    assert thing_w_prop.a == 123
+    assert thing_w_prop.c == thing_w_prop["c"]
+    assert thing_w_prop.aprop == 123
+    print(dir(thing_w_prop))

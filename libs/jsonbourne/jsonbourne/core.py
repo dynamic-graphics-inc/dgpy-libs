@@ -146,6 +146,8 @@ class JsonObj(JsonObjMutableMapping):
         >>> del d['dos']
         >>> d
         JsonObj(**{'uno': 'ONE', 'tres': 3})
+        >>> d.tres
+        3
         >>> del d.tres
         >>> d
         JsonObj(**{'uno': 'ONE'})
@@ -175,13 +177,16 @@ class JsonObj(JsonObjMutableMapping):
 
     """
 
+    _data: Dict[str, Any]
+
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Use the object dict"""
-        self.__dict__.update(*args, **kwargs)
+        _data = dict(*args, **kwargs)
+        super().__setattr__('_data', _data)
         try:
-            assert all(isinstance(k, str) for k in self.__dict__)
+            assert all(isinstance(k, str) for k in self._data)
         except AssertionError:
-            d = {k: v for k, v in self.__dict__.items() if not isinstance(k, str)}
+            d = {k: v for k, v in self._data.items() if not isinstance(k, str)}
             raise ValueError(
                 "JsonObj keys MUST be strings! Bad key values: {}".format(str(d))
             )
@@ -189,7 +194,7 @@ class JsonObj(JsonObjMutableMapping):
 
     def recurse(self) -> None:
         """Recusively convert all sub dictionaries to JsonObj objects"""
-        self.__dict__.update({k: jsonify(v) for k, v in self.__dict__.items()})
+        self._data.update({k: jsonify(v) for k, v in self._data.items()})
 
     def __attrs_post_init__(self) -> None:
         self.recurse()
@@ -220,17 +225,17 @@ class JsonObj(JsonObjMutableMapping):
         """
         if "." in key:
             first_key, _, rest = key.partition(".")
-            val = self.__dict__.get(first_key)
+            val = self._data.get(first_key)
             return isinstance(val, MutableMapping) and val.__contains__(rest)
-        return key in self.__dict__
+        return key in self._data
 
-    def __setattr__(self, attr, value):
+    def __setattr__(self, attr: str, value: Any) -> None:
         if attr in self._cls_protected_attrs():
             raise ValueError(
                 f"Cannot set protected attribute ('{str(attr)}'),"
                 f" must use brackets/setitem syntax: json_obj['{str(attr)}']"
             )
-        super(JsonObj, self).__setattr__(attr, value)
+        return self.__setitem__(attr, value)
 
     def __setitem__(self, key: str, value: Any) -> None:
         """Set JsonObj item with 'key' to 'value'
@@ -260,13 +265,13 @@ class JsonObj(JsonObjMutableMapping):
 
         """
         if is_int(key):
-            self.__dict__[str(key)] = value
+            self._data[str(key)] = value
             return None
         if not is_identifier(key):
             raise ValueError(
                 f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
             )
-        self.__dict__[key] = value
+        self._data[key] = value
 
     def __getattr__(self, item: str) -> Any:
         """Return an attr
@@ -294,12 +299,15 @@ class JsonObj(JsonObjMutableMapping):
             2
 
         """
-        if item in _JsonObjMutableMapping_attrs:
-            return object.__getattribute__(self, item)
-        if item in self._cls_protected_attrs():
+        if item == '_data':
+            try:
+                return object.__getattribute__(self, '_data')
+            except AttributeError:
+                return self.__dict__
+        if item in _JsonObjMutableMapping_attrs or item in self._cls_protected_attrs():
             return object.__getattribute__(self, item)
         try:
-            return self.__getitem__(str(item))
+            return jsonify(self.__getitem__(str(item)))
         except KeyError:
             pass
         return object.__getattribute__(self, item)
@@ -311,7 +319,7 @@ class JsonObj(JsonObjMutableMapping):
         if "." in key:
             return self.dot_lookup(key)
         try:
-            return jsonify(self.__dict__[key])
+            return jsonify(self._data[key])
         except KeyError:
             pass
         try:
@@ -320,17 +328,20 @@ class JsonObj(JsonObjMutableMapping):
             raise KeyError(str(key))
 
     def __delitem__(self, key: str) -> None:
-        del self.__dict__[key]
+        return self._data.__delitem__(key)
+
+    def __delattr__(self, item: str) -> None:
+        return self.__delitem__(item)
 
     def __iter__(self) -> Iterator[Any]:
-        return iter(self.__dict__)
+        return iter(self._data)
 
     def __len__(self) -> int:
-        return len(self.__dict__)
+        return len(self._data)
 
     def items(self) -> ItemsView[str, Any]:
         """Return an items view of the JsonObj object"""
-        return self.__dict__.items()
+        return self._data.items()
 
     def entries(self) -> ItemsView[str, Any]:
         """Alias for items"""
@@ -338,7 +349,7 @@ class JsonObj(JsonObjMutableMapping):
 
     def keys(self) -> KeysView[str]:
         """Return the keys view of the JsonObj object"""
-        return self.__dict__.keys()
+        return self._data.keys()
 
     def filter_none(self, recursive: bool = False) -> "JsonObj":
         """Filter key-values where the value is `None` but not false-y
@@ -562,7 +573,7 @@ class JsonObj(JsonObjMutableMapping):
 
         """
         parts = dot_key.split(".")
-        root_val: Any = self.__dict__.get(parts[0])
+        root_val: Any = self._data.get(parts[0])
         cur_val = root_val
         for ix, part in enumerate(parts[1:], start=1):
             try:
@@ -708,7 +719,7 @@ class JsonObj(JsonObjMutableMapping):
         return {
             k: unjsonify(v)
             # if not isinstance(v, JsonObj) else v.eject()
-            for k, v in self.__dict__.items()
+            for k, v in self._data.items()
         }
 
     def to_dict(self) -> Dict[str, Any]:
@@ -838,7 +849,7 @@ def jsonify(value: Any) -> Any:
 def unjsonify(value: Any) -> Any:
     """Recursively eject a JsonDit object"""
     if isinstance(value, JsonObj):
-        return {k: unjsonify(v) for k, v in value.__dict__.items()}
+        return {k: unjsonify(v) for k, v in value._data.items()}
     if isinstance(value, list):
         return [unjsonify(el) for el in value]
     if isinstance(value, tuple):
@@ -945,7 +956,7 @@ class JSONModuleCls(ModuleType, JSON):
 
 
 @lru_cache(maxsize=None)
-def _cls_protected_attrs(cls) -> Set[str]:
+def _cls_protected_attrs(cls: Any) -> Set[str]:
     """Return attrs-attribute names for an object decorated with attrs"""
     return set(dir(cls))
 
