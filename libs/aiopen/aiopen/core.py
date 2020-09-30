@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Async io base functions and utilities
 
-Inspired by the pip project aiofiles, but different
+Inspired by aiofiles
 """
 import asyncio
 
