@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Python lager brewed by a loguru"""
+from lager import logging
 from lager._version import (
     VERSION_INFO,
     VERSION_MAJOR,
