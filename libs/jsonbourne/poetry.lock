@@ -150,7 +150,7 @@ testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "requests", "xm
 
 [[package]]
 name = "python-rapidjson"
-version = "0.9.1"
+version = "0.9.3"
 description = "Python wrapper around rapidjson"
 category = "main"
 optional = true
@@ -280,35 +280,35 @@ pytest = [
     {file = "pytest-5.4.3.tar.gz", hash = "sha256:7979331bfcba207414f5e1263b5a0f8f521d0f457318836a7355531ed1a4c7d8"},
 ]
 python-rapidjson = [
-    {file = "python-rapidjson-0.9.1.tar.gz", hash = "sha256:ad80bd7e4bb15d9705227630037a433e2e2a7982b54b51de2ebabdd1611394a1"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-macosx_10_6_intel.whl", hash = "sha256:c7d509a8c6192c6e57b5e2c005e8c6dd8d2f988776b3444af42a39ffda38f6a8"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-manylinux1_i686.whl", hash = "sha256:842c2298f91ecae60925bb133ad5dfb2793dcb909266b88d1d30eaabfd3f5199"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:99c7896f14ddd7592842da5181ae6b2cf4362159cde7993875b72b93818a4840"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-manylinux2010_i686.whl", hash = "sha256:5647c1df3cd2253d16192795c61aeb7be37c07d007179aaeac014992cddc937c"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-manylinux2010_x86_64.whl", hash = "sha256:b8d26ceb35495a885c4dcf8d28946ae2a878dc749d3c0fedbf0df6e6f5d99f06"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-win32.whl", hash = "sha256:680a476d41f95cdc7292d17fcb1fcf54445f08e9ca1c5fba2a6067016b42a859"},
-    {file = "python_rapidjson-0.9.1-cp35-cp35m-win_amd64.whl", hash = "sha256:292fdd82d4cc3e81b01b46717b969fbba56d19e70708e545e7d86c70cc11596a"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:541935d6ef72d6e665acbb649144d4f7aa364e54b0d3c6689b5d427bec2b07c2"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:0fc885de12a35699ed7e4ec9fa56ec791d1d2404269398bf989543e6b324c7fd"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:0e129f8c5a098aa7d066fe7ca3a99411010bf3ca1dc17525d4869c77e2dd4351"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:dab0d99456537e180da9f311aff70712a165c6c362dc4da5fd766ab53869bb64"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:c687dd3b2566dd8fbee4d24b484d35e17b4be9edea720a6601fcf65f39f9b1cd"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-win32.whl", hash = "sha256:7321bd3b7c96417f0c3d83c1b40d350e0f4893549881bdb384dadf08034f7975"},
-    {file = "python_rapidjson-0.9.1-cp36-cp36m-win_amd64.whl", hash = "sha256:12eab9675a75dd14c07ee851429a5465f051aa1ebf66ade093fb15f0dc3159a6"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-macosx_10_6_intel.whl", hash = "sha256:4e00de6ae6a4c0f91a9096fdea79d4c074166578a431ad4141b678d4531be081"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:c31e659b9720358533e2774fac12f5e5c4ea8cd45e6629fc8eccad0d8f421552"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:fc43e5376d8a1243c82e27397011bf03297e94242d45fad2f7b7b1561bf29615"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:602904892022bef8b1a1e4dc633c052e400d66652fcf0313167d4e227718629c"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:47bb70892452a14729a76e08bb60ba5f9628f5c6ee6a9a0c648fa3c6e543f019"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-win32.whl", hash = "sha256:70fbeacd28582a9be0b1fe521c14a9fa7d62d624616325de9c55dc53001f6715"},
-    {file = "python_rapidjson-0.9.1-cp37-cp37m-win_amd64.whl", hash = "sha256:ad554220dd5903f67765f69698c9c0be50ad67cc989ed9f406c2c19c73d8f2f3"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:2c3f37212499fab32abc3d53d591231e9fe99668f6a93faf8d17de30cdaf80a3"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:887026e57e5a142d31d06087ecee556062d83ee1c4dca81230c8d2a6a4cefc40"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:f81061d34e1510ab284e0c447e7b68dc6f3989260f57d84b3f335e10433692ca"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:c86d6b499603ece6c487cb45d757f7ee1cc8f8a5dc9e1a5548ce54cd763ffe48"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:3eee83134adfec5644821c10f776839ee78f9321c691af0116d8fb4331caeb32"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-win32.whl", hash = "sha256:26bfff41f0206f6f1df42c31a4c0d7c8de1e0fb57731707a0e04fa094f8bb7e1"},
-    {file = "python_rapidjson-0.9.1-cp38-cp38-win_amd64.whl", hash = "sha256:b11b523ba060fecadf306eeea597645fed287369971bddac1e5bb76e9bff016d"},
+    {file = "python-rapidjson-0.9.3.tar.gz", hash = "sha256:4e339edfbba9e5feed0cf44043b6befba0c780b34cdf446888dbce44de362a8a"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:2e5e3a5acb2511d40f3b67191f96a2f5cc0d888bd5f392fd770059e2cdbff8ed"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:0cfe81cbece443e5922f6570f40c1af8f9f58e80e3606e6dd6f94d34aa18d5b6"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:72aa3daa4c1b0df16e262e7cbec5c05eb42c785897c9a3ca4293c3a7d36a6081"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-manylinux2010_i686.whl", hash = "sha256:d09cf5359738e591f6638e81db2cc0de499e0dbd2d7b495ba968b2a175f2d9c5"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-manylinux2010_x86_64.whl", hash = "sha256:1971d4e49166624bb778ce1d023805c1635a87a139dfc39748024c73dd1291dc"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-win32.whl", hash = "sha256:4e24d271fa2d2791d16354a7101466050a21f476b5a45ba620772b4c727c4510"},
+    {file = "python_rapidjson-0.9.3-cp36-cp36m-win_amd64.whl", hash = "sha256:af8dbe6a7ba24b29c2376becc57400125c5e5bc71a97f68425b02afbe6ed9b84"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:dcd833fb65240a8b3b31475f886729a45621a44ea06870b4114b5471cfd3f08c"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:62c467d8c54b0360891f0cab4b60996e34a410fc5e58f69268750c5a432a6b92"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:c3d0835cd04f86044bfa4ac5b35398f69b8c1ba85e08c34893c88b00514dbe83"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-manylinux2010_i686.whl", hash = "sha256:3f590bffea361362f7bf68da438e8725833f21b29285a81baa7438a3aceda1a2"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:59771858dfa191cde894c233fc38a640df7131cb88598d21b0154515ba9b6285"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-win32.whl", hash = "sha256:d8a49f1310e9e6904f716d20ce50b08a026908b5dc3d4eae3a7f4ecaf09403b2"},
+    {file = "python_rapidjson-0.9.3-cp37-cp37m-win_amd64.whl", hash = "sha256:202fe95fec7bc8b86206b5c752ed954892951d0aee4b79ae1a3f5d311f762449"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:1ba9b3f6fb67c1dc5dcb3f0ae41c059076f613bd0ff28f86b4fe9abb57525cf8"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-manylinux1_i686.whl", hash = "sha256:89edf6193f20fc014acbc80174e8c505bfdd4daf7a2ba9420690b7abdb22edd3"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:8ff5005ff05f942d232e2aae0676db235c572363eda8018f6680a3d2fd6b15da"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-manylinux2010_i686.whl", hash = "sha256:1e5f022f13a2c58267f2827309af36495f9fa0844c1d5e983b74022afe9c91cc"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:1ec6f2b876e4f14b0fa1f31da84bf158945d72279470791efde7381701264e98"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-win32.whl", hash = "sha256:e112b38067a7d95c398ab9d8baeccade8b206ef6d08afdcdaed23a6db07ff3b0"},
+    {file = "python_rapidjson-0.9.3-cp38-cp38-win_amd64.whl", hash = "sha256:d523076d07974c78c9c5a75cd2ad29e8230d784bb6993cfd124597de51c0ff10"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a0c419c269719e536ae9f23edef6105914905b4c6a0b42399a4f20994a94df51"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-manylinux1_i686.whl", hash = "sha256:baaea8193ddcc1b147b861086caaa737fb3f8fe259fa8e32a182e19c3264dfd8"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:a4a722d8c7809e326251d5fd5b0ed679ec81df27a7682eace62a02232afcc72d"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-manylinux2010_i686.whl", hash = "sha256:bf4c1b85b803a99021b9adeca98265cf1eb70e73ca398954f61a4e8dfb5e06e0"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:89379057664d92b4286ac547f8b6785a0bf71799bcd451caa590b383b9c2f0f7"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-win32.whl", hash = "sha256:37a2cb20920951460a5f5f4de445c25a42c332c09adfe201236a7cc2c8509d17"},
+    {file = "python_rapidjson-0.9.3-cp39-cp39-win_amd64.whl", hash = "sha256:1c7d089975cc2fb0f4aec55347d53183b64437271e2bd7a7e61e3b30cc27d76d"},
 ]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
