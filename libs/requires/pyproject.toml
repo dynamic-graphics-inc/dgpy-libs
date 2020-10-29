@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "requires"
-version = "0.4.1"
+version = "0.5.0"
 description = "Require and import dependencies at runtime"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Typing :: Typed"
 ]
 keywords = [

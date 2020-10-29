@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funkify"
-version = "0.1.0"
+version = "0.2.0"
 description = "Funkify modules so that they are callable"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
     "Typing :: Typed"
 ]
 keywords = [
