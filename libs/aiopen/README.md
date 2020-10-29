@@ -28,7 +28,7 @@ Async-open
 
 Just import it! The module is also callable!
 
-```python
+
 import aiopen
 
 async with aiopen('afile.txt', 'w') as f:
@@ -37,4 +37,4 @@ async with aiopen('afile.txt', 'w') as f:
 async with aiopen('afile.txt', 'r') as f:
     content = await f.read()
     print(content)
-```
+

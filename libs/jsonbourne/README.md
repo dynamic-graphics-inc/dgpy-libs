@@ -10,8 +10,15 @@
 **Install:** `pip install jsonbourne`
 
  - Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
- 	 - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
- - Hybrid dict/class object (`jsonbourne.JsonObj`) with dot-notation getting/setting
+     - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
+     - Automatically uses best json-lib-backend avalible (`orjson`/`python-rapidjson`) ~ can be configured
+ - Hybrid dict/class object (`jsonbourne.JsonObj`):
+     - Dot-notation getting/setting (featuring protected attributes!)
+     - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!
+     - Works with `pydantic` and `attrs`
+ - FastAPI:
+     - JSONBOURNEResponse ~ auto use the best
+ - No hard dependencies ~ works with python-stdlib-json as well as `orjson` and `python-rapidjson`
  - `jsonbourne.JsonObj` uses list/dict comprehensions (some are recursive) everywhere because 'why not?' and it is a bit faster
 
 ## Usage:
@@ -84,11 +91,29 @@ print(string_dumps)
 ### JsonObj & JSON
 
 - Python dictionary/object with dot access
+- Protections against setting class/obj attributes
+- Is as javascript-y as possible (keys have to be strings -- ints/floats will be converted to strings)
 - Create a `jsonbourne.JsonObj` with `jsonbourne.JSON`
-- Recurses into sub lists/dictionaries
-- Works with `pydantic.BaseModel` and `attrs`
+- Recursive jsonification
 - Allows for kwarging (`**json_obj`)
+- Works with `pydantic` and `attrs`
 
+#### Make an empty JsonObj
+
+The following 3 examples all produce the same thing
+
+```python
+from jsonbourne import JSON
+j = JSON()  # j => JsonObj(**{})
+# OR
+import JSON
+j = JSON()  # j => JsonObj(**{})
+# OR
+from jsonbourne import JsonObj
+j = JsonObj()  # j => JsonObj(**{})
+```
+
+#### From a dictionary o data
 
 
 ```python
@@ -291,12 +316,51 @@ parsed_data.eject()
 
 
 
-### Usage with pydantic
+#### Protected keys
+
+`jsonbourne.JsonObj` protects against setting attributes like `'items'` through dot-notation.
+
+
+```python
+from jsonbourne import JSON
+j = JSON()
+j.key = 'value'
+try:  # CANNOT set 'items' using dot-access
+	j.items = [1, 2, 3, 4]
+except ValueError:
+	pass
+# CAN set 'items' through key/item access
+j['items'] = [1, 2, 3, 4]
+print(j.__dict__)
+print(j)
+j_items = j.items
+print('items', j_items)
+# Getting 'items' through dot-access returns the `items()` method
+assert j.items != [1, 2, 3, 4]
+# Getting 'items' with key-access returns the stored value
+assert j['items'] == [1, 2, 3, 4]
+```
+
+    {'_data': {'key': 'value', 'items': [1, 2, 3, 4]}}
+    JsonObj(**{
+        'items': [1, 2, 3, 4], 'key': 'value'
+    })
+    items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
+
+
+### pydantic & jsonbourne
+
+ - `from jsonbourne.pydantic import JsonBaseModel`
+ - Allows for aliases when getting/setting attribute(s)
+ - Supports `__post_init__` (like dataclasses)
+
+#### Basic usage:
 
 
 ```python
 from jsonbourne import JsonObj
 from jsonbourne.pydantic import JsonBaseModel
+
 class JsonSubObj(JsonBaseModel):
     herm: int
 
@@ -339,7 +403,7 @@ obj
 
 
 <pre>JsonObjModel(**{
-    'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': JsonSubObj(herm=2)
+    'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': {'herm': 2}
 })</pre>
 
 

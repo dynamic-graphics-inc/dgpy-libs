@@ -199,6 +199,10 @@ class JsonObj(JsonObjMutableMapping):
     def __attrs_post_init__(self) -> None:
         self.recurse()
 
+    def __post_init__(self) -> Any:
+        """Function place holder that is called after object initialization"""
+        pass  # pylint: disable=unnecessary-pass
+
     def __contains__(self, key: str) -> bool:  # type: ignore
         """Check if a key or dot-key is contained within the JsonObj object
 
@@ -350,6 +354,27 @@ class JsonObj(JsonObjMutableMapping):
     def keys(self) -> KeysView[str]:
         """Return the keys view of the JsonObj object"""
         return self._data.keys()
+
+    def setdefault(self, key: Any, default: Optional[Any] = None) -> None:
+        if default:
+            return self._data.setdefault(key, default)
+        return self._data.setdefault(key)
+
+    def clear(self) -> None:
+        self._data.clear()
+
+    def pop(self, key: str, default: Optional[Any] = None) -> Any:
+        if default:
+            return self._data.pop(key, default=default)
+        return self._data.pop(key)
+
+    def get(self, key: str, default: Optional[Any] = None) -> Any:
+        try:
+            return self._data.get(key)
+        except KeyError as ke:
+            if default:
+                return default
+            raise ke
 
     def filter_none(self, recursive: bool = False) -> "JsonObj":
         """Filter key-values where the value is `None` but not false-y
@@ -861,7 +886,9 @@ class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
     @staticmethod
-    def __call__(value: Any):  # type: ignore
+    def __call__(value=None):  # type: ignore
+        if value is None:
+            value = {}
         return jsonify(value)
 
 
@@ -947,11 +974,23 @@ class JSON(metaclass=JSONMeta):
         """Return the name of the JSON library being used as a backend"""
         return json._json.__class__.__name__
 
+    @staticmethod
+    def jsonify(value: Any) -> Any:
+        """Alias for jsonbourne.core.jsonify"""
+        return jsonify(value)
+
+    @staticmethod
+    def unjsonify(value: Any) -> Any:
+        """Alias for jsonbourne.core.unjsonify"""
+        return unjsonify(value)
+
 
 class JSONModuleCls(ModuleType, JSON):
     @staticmethod
-    def __call__(value: Any):  # type: ignore
+    def __call__(value: Any = None):  # type: ignore
         """Jsonify a value"""
+        if value is None:
+            return JsonObj()
         return jsonify(value)
 
 

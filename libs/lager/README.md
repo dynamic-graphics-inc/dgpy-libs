@@ -28,6 +28,19 @@ LOG.info('info')
 LOG.i('info')
 ```
 
-    2020-09-18 13:46:24.487 | INFO     | __main__:<module>:2 - info
-    2020-09-18 13:46:24.488 | INFO     | __main__:<module>:3 - info
+    2020-10-29 14:27:38.165 | INFO     | __main__:<module>:2 - info
+
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-1-36faeb76e3af> in <module>
+          1 from lager import LOG
+          2 LOG.info('info')
+    ----> 3 LOG.i('info')
+    
+
+    AttributeError: 'Logger' object has no attribute 'i'
 
