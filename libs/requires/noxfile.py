@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
+
 from os import path
 
-import os
 import nox
 
 
@@ -53,7 +54,7 @@ def _get_session_python_site_packages_dir(session):
                 "sys.stdout.write(get_python_lib())",
                 silent=True,
                 log=False,
-                )
+            )
             session._runner._site_packages_dir = site_packages_dir
         finally:
             session._runner.global_config.install_only = old_install_only_value
@@ -68,8 +69,8 @@ def _get_pkg_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
         [l for l in open(_filepath).read().split("\n") if "version" in l][0]
-            .replace("version = ", "")
-            .strip('"')
+        .replace("version = ", "")
+        .strip('"')
     )
     return version
 
@@ -99,4 +100,4 @@ def base_test(session):
         "-m",
         "not optdeps",
         TESTS_DIRPATH,
-        )
+    )

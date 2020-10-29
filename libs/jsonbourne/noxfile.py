@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
+
 from os import path
 from shutil import which
-import os
+
 import nox
 
 
@@ -54,7 +56,7 @@ def _get_session_python_site_packages_dir(session):
                 "sys.stdout.write(get_python_lib())",
                 silent=True,
                 log=False,
-                )
+            )
             session._runner._site_packages_dir = site_packages_dir
         finally:
             session._runner.global_config.install_only = old_install_only_value
@@ -69,8 +71,8 @@ def _get_jsonbourne_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
         [l for l in open(_filepath).read().split("\n") if "version" in l][0]
-            .replace("version = ", "")
-            .strip('"')
+        .replace("version = ", "")
+        .strip('"')
     )
     return version
 
@@ -100,7 +102,7 @@ def base_test(session):
         "-m",
         "not optdeps",
         TESTS_DIRPATH,
-        )
+    )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -115,7 +117,7 @@ def pydantic_test(session):
         "--doctest-modules",
         TESTS_DIRPATH,
         JSONBOURNE_PKG_DIRPATH,
-        )
+    )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -127,7 +129,7 @@ def attrs_test(session):
         "-m",
         "basic or attrs",
         TESTS_DIRPATH,
-        )
+    )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -140,7 +142,8 @@ def jsonlibs_test(session):
         "-m",
         "jsonlibs",
         TESTS_DIRPATH,
-        )
+    )
+
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def orjson_test(session):
@@ -151,7 +154,7 @@ def orjson_test(session):
         "-m",
         "basic or orjson",
         TESTS_DIRPATH,
-        )
+    )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -163,7 +166,8 @@ def rapidjson_test(session):
         "-m",
         "rapidjson or basic",
         TESTS_DIRPATH,
-        )
+    )
+
 
 ### TODO: add orjson (maybe)
 # @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
