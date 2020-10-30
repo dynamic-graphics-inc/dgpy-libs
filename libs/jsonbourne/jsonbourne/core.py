@@ -771,7 +771,7 @@ class JsonObj(JsonObjMutableMapping):
             JsonObj: JsonObj object for the given JSON string
 
         """
-        return cls.from_json(json_string)
+        return cls._from_json(json_string)
 
     @classmethod
     def _from_json(cls, json_string: str) -> "JsonObj":
