@@ -19,6 +19,7 @@ class JsonLib(ABC):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
@@ -30,6 +31,7 @@ class JsonLib(ABC):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:

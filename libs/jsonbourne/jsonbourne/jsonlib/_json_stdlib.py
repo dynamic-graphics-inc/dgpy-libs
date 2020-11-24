@@ -12,11 +12,12 @@ class JSON_STDLIB(JsonLib):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
         separators = (",", ": ") if pretty else (",", ":")
-        return json.dumps(
+        dump_str = json.dumps(
             data,
             indent=2 if pretty else None,
             sort_keys=sort_keys,
@@ -24,12 +25,16 @@ class JSON_STDLIB(JsonLib):
             default=default or _json_encode_default,
             **kwargs,
         )
+        if append_newline:
+            return f"{dump_str}\n"
+        return dump_str
 
     @staticmethod
     def dumpb(
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
@@ -37,6 +42,7 @@ class JSON_STDLIB(JsonLib):
             data,
             pretty=pretty,
             sort_keys=sort_keys,
+            append_newline=append_newline,
             default=default or _json_encode_default,
             **kwargs,
         ).encode()

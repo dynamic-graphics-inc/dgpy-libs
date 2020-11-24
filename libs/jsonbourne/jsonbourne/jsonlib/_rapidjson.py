@@ -21,10 +21,11 @@ class RAPIDJSON(JsonLib):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        return str(
+        dump_str = str(
             rapidjson.dumps(
                 data,
                 indent=2 if pretty else None,
@@ -34,12 +35,16 @@ class RAPIDJSON(JsonLib):
                 **kwargs,
             )
         )
+        if append_newline:
+            return f"{dump_str}\n"
+        return dump_str
 
     @staticmethod
     def dumpb(
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
@@ -47,6 +52,7 @@ class RAPIDJSON(JsonLib):
             data,
             pretty=pretty,
             sort_keys=sort_keys,
+            append_newline=append_newline,
             default=default or _json_encode_default,
             **kwargs,
         ).encode()

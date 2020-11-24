@@ -18,6 +18,7 @@ class ORJSON(JsonLib):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
@@ -25,6 +26,7 @@ class ORJSON(JsonLib):
             data,
             pretty=pretty,
             sort_keys=sort_keys,
+            append_newline=append_newline,
             default=default or _json_encode_default,
         ).decode(encoding="utf-8")
 
@@ -33,6 +35,7 @@ class ORJSON(JsonLib):
         data: Any,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
@@ -41,6 +44,8 @@ class ORJSON(JsonLib):
             option |= orjson.OPT_INDENT_2  # type: ignore
         if sort_keys:
             option |= orjson.OPT_SORT_KEYS
+        if append_newline:
+            option |= orjson.OPT_APPEND_NEWLINE
         if np:
             option |= orjson.OPT_SERIALIZE_NUMPY
 
