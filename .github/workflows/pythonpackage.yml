@@ -25,16 +25,17 @@ jobs:
           pip install flake8 pytest nox
       - name: Lint with flake8
         run: |
+          cd libs/jsonbourne
           nox -s flake
 
-  build:
+  test:
     needs: [lint]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os:
           - ubuntu
-        python-version: [3.6, 3.7, 3.8, 'pypy3']
+        python-version: [3.6, 3.7, 3.8, 3.9, 'pypy3']
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -47,6 +48,7 @@ jobs:
           pip install flake8 pytest nox
       - name: Test with pytest
         run: |
+          cd libs/jsonbourne
           nox -k test
 #      - name: list dist files
 #        run: |
