@@ -138,13 +138,13 @@ tres()  # Will err if not install with where to install instructions
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-6-eddc4b10b188> in <module>
+    <ipython-input-1-eddc4b10b188> in <module>
           5     return rapidjson.dumps({'a': 1, 'b': 2})
           6 
     ----> 7 tres()  # Will err if not install with where to install instructions
     
 
-    <ipython-input-6-eddc4b10b188> in tres()
+    <ipython-input-1-eddc4b10b188> in tres()
           3 @requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
           4 def tres():
     ----> 5     return rapidjson.dumps({'a': 1, 'b': 2})
@@ -169,13 +169,13 @@ quatro()
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-7-b3f241a5c6c7> in <module>
+    <ipython-input-1-b3f241a5c6c7> in <module>
           3     return path.join('a', 'b')
           4 
     ----> 5 quatro()
     
 
-    <ipython-input-7-b3f241a5c6c7> in quatro()
+    <ipython-input-1-b3f241a5c6c7> in quatro()
           1 # should error
           2 def quatro():
     ----> 3     return path.join('a', 'b')

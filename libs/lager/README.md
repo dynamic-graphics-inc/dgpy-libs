@@ -28,7 +28,7 @@ LOG.info('info')
 LOG.i('info')
 ```
 
-    2020-10-29 14:27:38.165 | INFO     | __main__:<module>:2 - info
+    2020-11-24 11:09:32.074 | INFO     | __main__:<module>:2 - info
 
 
 
