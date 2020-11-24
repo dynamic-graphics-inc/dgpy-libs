@@ -1,6 +1,5 @@
 import datetime
 import pathlib
-
 from decimal import Decimal
 
 import pytest
@@ -16,18 +15,18 @@ except (ImportError, ModuleNotFoundError):
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
 
 D = {
-    "key": "value",
-    "list": [1, 2, 3, 4, 5],
-    "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    "sub": {
-        'b': 3,
+    "key"      : "value",
+    "list"     : [1, 2, 3, 4, 5],
+    "dt"       : datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+    "sub"      : {
+        'b'  : 3,
         'key': 'val',
-        'a': 1,
-    },
-    "apath": pathlib.Path.home(),
-    "Decimal": Decimal(1.4),
+        'a'  : 1,
+        },
+    "apath"    : pathlib.Path.home(),
+    "Decimal"  : Decimal(1.4),
     "timedelta": datetime.timedelta(days=2),
-}
+    }
 
 
 def test_basic():
@@ -53,6 +52,13 @@ def test_sort_keys():
     a = [rj, oj, sj]
     assert len(set(a)) == 1
 
+def test_append_newline():
+    rj = RAPIDJSON.dumps(D, append_newline=True)
+    oj = ORJSON.dumps(D, append_newline=True)
+    sj = JSON_STDLIB.dumps(D, append_newline=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
 
 def test_pretty_sort_keys():
     rj = RAPIDJSON.dumps(D, pretty=True, sort_keys=True)
@@ -65,7 +71,7 @@ def test_pretty_sort_keys():
 def test_datetime():
     data = {
         "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    }
+        }
     rj = RAPIDJSON.dumps(data)
     oj = ORJSON.dumps(data)
     sj = JSON_STDLIB.dumps(data)
