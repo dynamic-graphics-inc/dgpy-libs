@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 """FastAPI logging"""
+from typing import List, Optional, Set, Tuple, Union
+
 from lager.logging import intercept
 
+
+__all__ = ['FASTAPI_LOGGERS', 'fastapi_intercept']
 
 FASTAPI_LOGGERS = [
     'gunicorn',
@@ -12,5 +16,10 @@ FASTAPI_LOGGERS = [
 ]
 
 
-def fastapi_intercept() -> None:
-    intercept(FASTAPI_LOGGERS)
+def fastapi_intercept(
+    loggers: Optional[Union[List[str], Set[str], Tuple[str, ...]]] = None
+) -> None:
+    _loggers2intercept = (
+        FASTAPI_LOGGERS if not loggers else sorted(set(*(*FASTAPI_LOGGERS, loggers)))
+    )
+    intercept(_loggers2intercept)
