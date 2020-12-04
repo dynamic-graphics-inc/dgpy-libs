@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Pre-fab requirements"""
-from requires import Requirement, RequirementError, requires
+from requires import Requirement
 
 
 __all__ = [
