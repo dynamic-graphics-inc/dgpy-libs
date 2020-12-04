@@ -5,13 +5,7 @@ Dynamic Graphics Python
 """
 from jsonbourne import json
 from jsonbourne._import import import_json
-from jsonbourne._version import (
-    VERSION_INFO,
-    VERSION_MAJOR,
-    VERSION_MINOR,
-    VERSION_PATCH,
-    __version__,
-)
+from jsonbourne._meta import __version__
 from jsonbourne.core import (
     JSON,
     JsonDict,
@@ -25,6 +19,7 @@ from jsonbourne.core import (
 JSONLIB = json.__name__
 
 __all__ = [
+    "__version__",
     "JSON",  # js/ts JSON (THE ONE TO USE)
     "json",  # json compat lib
     # core
@@ -36,10 +31,4 @@ __all__ = [
     # util funks
     "stringify",
     "parse",
-    # Version stuff
-    "VERSION_MAJOR",
-    "VERSION_MINOR",
-    "VERSION_PATCH",
-    "VERSION_INFO",
-    "__version__",
 ]

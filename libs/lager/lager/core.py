@@ -6,14 +6,16 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import Any, Dict, Union
+from typing import Any, Callable, Dict, Optional, TypeVar, Union
 
-from loguru import _defaults, logger
+from loguru import _defaults
 from loguru._handler import Handler
 from loguru._logger import Core as _Core, Logger as _Logger
 
 from lager.const import LOG_LEVELS
 
+
+T = TypeVar('T')
 
 __all__ = ['loglevel', 'flog', 'handlers', 'logger', 'log', 'LOG', 'ln', 'LN']
 
@@ -97,7 +99,12 @@ def loglevel(level: Union[str, int]) -> str:
     return LOG_LEVELS[str(level).strip("'").strip('"').lower()]
 
 
-def flog(funk=None, level: str = "debug", enter: bool = True, exit: bool = True):
+def flog(
+    funk: Optional[Callable[..., T]] = None,
+    level: str = "debug",
+    enter: bool = True,
+    exit: bool = True,
+) -> T:
     """Log function (sync/async) enter and exit using this decorator
 
     Args:
@@ -125,11 +132,11 @@ def flog(funk=None, level: str = "debug", enter: bool = True, exit: bool = True)
 
     """
 
-    def _flog(funk):
+    def _flog(funk: Callable[..., T]) -> Callable[..., T]:
         name = funk.__name__
 
         @wraps(funk)
-        def _flog_decorator(*args, **kwargs):
+        def _flog_decorator(*args: Any, **kwargs: Any) -> T:
             logger_ = logger.opt(depth=1)
             if enter:
                 logger_.log(
@@ -153,7 +160,7 @@ def flog(funk=None, level: str = "debug", enter: bool = True, exit: bool = True)
             return result
 
         @wraps(funk)
-        async def _flog_decorator_async(*args, **kwargs):
+        async def _flog_decorator_async(*args: Any, **kwargs: Any) -> T:
             logger_ = logger.opt(depth=7)
             if enter:
                 logger_.log(
@@ -164,7 +171,7 @@ def flog(funk=None, level: str = "debug", enter: bool = True, exit: bool = True)
                     kwargs,
                 )
             ti = time()
-            result = await funk(*args, **kwargs)
+            result = await funk(*args, **kwargs)  # type: ignore
             tf = time()
             if exit:
                 logger_.log(
@@ -180,7 +187,7 @@ def flog(funk=None, level: str = "debug", enter: bool = True, exit: bool = True)
             return _flog_decorator_async
         return _flog_decorator
 
-    return _flog(funk) if funk else _flog
+    return _flog(funk) if funk else _flog  # type: ignore
 
 
 def handlers() -> Dict[int, Handler]:
