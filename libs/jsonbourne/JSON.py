@@ -2,7 +2,7 @@
 """JSON callable module ~ jsonbourne"""
 import sys
 
-from jsonbourne import json, __version__
+from jsonbourne import __version__, json
 from jsonbourne._import import import_json
 from jsonbourne.core import (
     JSON,
