@@ -3,12 +3,12 @@
 
 from typing import Any
 
-from httpx import Response, __all__ as __httpx_all__
+from httpx import AsyncClient, Client, Cookies, Response
 
 from jsonbourne import JSON
 
 
-__all__ = [*__httpx_all__]
+__all__ = ['Response', 'AsyncClient', 'Client', 'Cookies']
 
 
 def _JSON(self, **kwargs: Any) -> Any:
