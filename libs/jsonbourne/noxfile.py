@@ -109,6 +109,7 @@ def base_test(session):
 def pydantic_test(session):
     session.install("pytest")
     session.install("pydantic")
+    session.install("httpx")
     session.install("orjson")
     session.run(
         "pytest",

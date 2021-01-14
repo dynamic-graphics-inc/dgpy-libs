@@ -18,6 +18,14 @@ from jsonbourne import JSON, JsonObj
 pytestmark = [pytest.mark.basic]
 
 
+def test_dot_access_attr_vs_item():
+    jd = JSON({"socket.io": "data"})
+    assert jd['socket.io'] == "data"
+    print(jd.to_dict())
+    with pytest.raises(AttributeError):
+        socketiothing = jd.socket.io
+
+
 class Thingy(JsonObj):
     @property
     def herm(self):
@@ -255,7 +263,7 @@ d2 = {
 def test_dotlookup() -> None:
     d = JsonObj(d1)
     dot_get = d.subd.a
-    dot_lookup = d["subd.a"]
+    dot_lookup = d.dot_lookup("subd.a")
     assert dot_lookup == dot_get
 
 

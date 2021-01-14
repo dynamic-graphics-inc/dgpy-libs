@@ -19,11 +19,7 @@ D = {
     "key": "value",
     "list": [1, 2, 3, 4, 5],
     "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    "sub": {
-        'b': 3,
-        'key': 'val',
-        'a': 1,
-    },
+    "sub": {'b': 3, 'key': 'val', 'a': 1,},
     "apath": pathlib.Path.home(),
     "Decimal": Decimal(1.4),
     "timedelta": datetime.timedelta(days=2),

@@ -8,12 +8,15 @@ from jsonbourne._import import import_json
 from jsonbourne._meta import __version__
 from jsonbourne.core import (
     JSON,
+    UNDEFINED,
     JsonDict,
     JsonObj,
     JsonObjMutableMapping,
     parse,
     stringify,
+    undefined,
 )
+from jsonbourne.helpers import rm_js_comments
 
 
 JSONLIB = json.__name__
@@ -31,4 +34,8 @@ __all__ = [
     # util funks
     "stringify",
     "parse",
+    "rm_js_comments",
+    # undefined
+    "undefined",
+    "UNDEFINED",
 ]

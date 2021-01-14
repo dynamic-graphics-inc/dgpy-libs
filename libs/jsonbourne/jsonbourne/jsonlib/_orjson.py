@@ -3,7 +3,7 @@ from typing import Any, Callable, Optional
 
 import orjson
 
-from jsonbourne.jsonlib.base import JsonLib, _json_encode_default
+from jsonbourne.jsonlib.base import JsonLibABC, _json_encode_default
 
 
 try:
@@ -12,7 +12,7 @@ except ImportError:
     np = None
 
 
-class ORJSON(JsonLib):
+class ORJSON(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,

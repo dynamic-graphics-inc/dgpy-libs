@@ -6,10 +6,12 @@ from jsonbourne import __version__, json
 from jsonbourne._import import import_json
 from jsonbourne.core import (
     JSON,
+    UNDEFINED,
     JsonDict,
     JSONModuleCls,
     JsonObj,
     JsonObjMutableMapping,
+    undefined,
 )
 
 
@@ -40,4 +42,6 @@ __all__ = [
     "loads",
     "json_lib",
     "parse",
+    "undefined",
+    "UNDEFINED",
 ]

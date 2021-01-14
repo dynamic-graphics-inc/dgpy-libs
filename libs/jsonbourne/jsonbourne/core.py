@@ -41,9 +41,14 @@ __all__ = [
     "parse",
     "jsonify",
     "JSON",
+    "UNDEFINED",
+    "undefined",
 ]
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
+
+UNDEFINED = 'undefined'
+undefined = 'undefined'
 
 
 def is_identifier(string: str) -> bool:
@@ -320,8 +325,6 @@ class JsonObj(JsonObjMutableMapping):
         return object.__getattribute__(self, item)
 
     def __getitem__(self, key: str) -> Any:
-        if "." in key:
-            return self.dot_lookup(key)
         try:
             return jsonify(self._data[key])
         except KeyError:
@@ -894,6 +897,9 @@ class JSONMeta(type):
 
 class JSON(metaclass=JSONMeta):
     """JSON class meant to mimic the js/ts-JSON"""
+
+    undefined: str = UNDEFINED
+    UNDEFINED: str = UNDEFINED
 
     @staticmethod
     def stringify(

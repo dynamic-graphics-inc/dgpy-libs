@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import TYPE_CHECKING, List, Optional, Tuple, Type, Union
 
-from jsonbourne.jsonlib.base import JsonLib
+from jsonbourne.jsonlib.base import JsonLibABC
 
 
 if TYPE_CHECKING:
@@ -36,7 +36,7 @@ def _import_json_stdlib() -> "Type[JSON_STDLIB]":
 
 def import_json(
     jsonlibs: Optional[Union[Tuple[str], List[str]]] = None
-) -> "Type[JsonLib]":
+) -> "Type[JsonLibABC]":
     lib2funk = {
         "rapidjson": _import_rapidjson,
         "orjson": _import_orjson,

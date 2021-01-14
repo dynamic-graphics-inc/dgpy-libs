@@ -3,10 +3,10 @@ import json
 
 from typing import Any, Callable, Optional
 
-from jsonbourne.jsonlib.base import JsonLib, _json_encode_default
+from jsonbourne.jsonlib.base import JsonLibABC, _json_encode_default
 
 
-class JSON_STDLIB(JsonLib):
+class JSON_STDLIB(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,
@@ -55,6 +55,3 @@ class JSON_STDLIB(JsonLib):
 JSONEncoder = json.JSONEncoder
 JSONDecoder = json.JSONDecoder
 JSONDecodeError = json.JSONDecodeError
-
-if __name__ == "__main__":
-    pass

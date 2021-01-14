@@ -12,7 +12,7 @@ except ImportError:
     np = None
 
 
-class JsonLib(ABC):
+class JsonLibABC(ABC):
     @staticmethod
     @abstractmethod
     def dumps(

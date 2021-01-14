@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import Any, Callable, Optional
 
-from jsonbourne.jsonlib.base import JsonLib, _json_encode_default
+from jsonbourne.jsonlib.base import JsonLibABC, _json_encode_default
 
 
 try:
@@ -15,7 +15,7 @@ except ImportError:
 JSONLIB = 'rapidjson'
 
 
-class RAPIDJSON(JsonLib):
+class RAPIDJSON(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,

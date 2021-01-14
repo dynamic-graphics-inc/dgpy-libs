@@ -11,8 +11,8 @@ from jsonbourne import JSON
 __all__ = ['Response', 'AsyncClient', 'Client', 'Cookies']
 
 
-def _JSON(self, **kwargs: Any) -> Any:
-    return JSON(self.json())
+def _JSON(self: Response, **kwargs: Any) -> Any:
+    return JSON(self.json())  # type: ignore
 
 
 Response.JSON = _JSON
