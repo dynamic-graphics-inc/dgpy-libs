@@ -25,7 +25,7 @@ JSONBOURNE_PKG_DIRPATH = path.join(PWD, "jsonbourne")
 TESTS_DIRPATH = path.join(PWD, "tests")
 
 
-VENV_BACKEND = None if is_win() or not which('conda') else "conda"
+VENV_BACKEND = None if is_win() or not which("conda") else "conda"
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
@@ -97,8 +97,12 @@ def flake(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def base_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "not optdeps",
         TESTS_DIRPATH,
@@ -108,11 +112,15 @@ def base_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def pydantic_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
     session.install("pydantic")
     session.install("httpx")
     session.install("orjson")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "basic or pydantic",
         "--doctest-modules",
@@ -124,9 +132,13 @@ def pydantic_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def attrs_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
     session.install("attrs")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "basic or attrs",
         TESTS_DIRPATH,
@@ -136,10 +148,14 @@ def attrs_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def jsonlibs_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
     session.install("orjson")
     session.install("python-rapidjson")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "jsonlibs",
         TESTS_DIRPATH,
@@ -149,9 +165,13 @@ def jsonlibs_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def orjson_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
     session.install("orjson")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "basic or orjson",
         TESTS_DIRPATH,
@@ -161,25 +181,21 @@ def orjson_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def rapidjson_test(session):
     session.install("pytest")
+    session.install("pytest-cov")
     session.install("python-rapidjson")
     session.run(
         "pytest",
+        "--cov",
+        "--cov-append",
         "-m",
         "rapidjson or basic",
         TESTS_DIRPATH,
     )
 
 
-### TODO: add orjson (maybe)
-# @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-# def orjson_test(session):
-#     session.install("pytest")
-#     session.install("orjson")
-#     session.run(
-#         "pytest",
-#         "-m",
-#         "orjson or basic",
-#         "--doctest-modules",
-#         TESTS_DIRPATH,
-#         JSONBOURNE_PKG_DIRPATH,
-#         )
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def coverage_report(session):
+    session.install("pytest")
+    session.install("pytest-cov")
+    session.install("coverage")
+    session.run("coverage", "report")
