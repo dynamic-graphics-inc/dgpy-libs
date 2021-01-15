@@ -60,7 +60,3 @@ class RAPIDJSON(JsonLibABC):
     @staticmethod
     def loads(string: str, **kwargs: Any) -> Any:
         return rapidjson.loads(string, **kwargs)
-
-
-if __name__ == "__main__":
-    pass

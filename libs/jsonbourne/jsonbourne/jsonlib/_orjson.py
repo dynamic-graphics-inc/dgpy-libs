@@ -56,7 +56,3 @@ class ORJSON(JsonLibABC):
     @staticmethod
     def loads(string: str, **kwargs: Any) -> Any:
         return orjson.loads(string)
-
-
-if __name__ == "__main__":
-    pass
