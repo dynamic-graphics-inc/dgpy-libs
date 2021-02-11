@@ -265,10 +265,43 @@ parsed_data['sub.key']
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
+        332         try:
+    --> 333             return jsonify(self.__object_getattribute__(key))
+        334         except AttributeError:
 
 
-    'val'
+    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __object_getattribute__(self, item)
+        324     def __object_getattribute__(self, item: str) -> Any:
+    --> 325         return object.__getattribute__(self, item)
+        326 
 
+
+    AttributeError: 'JsonObj' object has no attribute 'sub.key'
+
+    
+    During handling of the above exception, another exception occurred:
+
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-1-7eb6d393a38a> in <module>
+    ----> 1 parsed_data['sub.key']
+    
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
+        333             return jsonify(self.__object_getattribute__(key))
+        334         except AttributeError:
+    --> 335             raise KeyError(str(key))
+        336 
+        337     def __delitem__(self, key: str) -> None:
+
+
+    KeyError: 'sub.key'
 
 
 
