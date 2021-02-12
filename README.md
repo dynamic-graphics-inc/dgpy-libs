@@ -22,10 +22,13 @@ Dynamic Graphics python libraries, home of:
 ```
 libs
 ├── aiopen
+├── asyncify
 ├── funkify
+├── h5
 ├── jsonbourne
 ├── lager
-└── requires
+├── requires
+└── xtyping
 ```
 
 
