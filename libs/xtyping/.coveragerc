@@ -1,0 +1,19 @@
+[paths]
+source =
+   jsonbourne.py
+
+[run]
+branch = true
+source =
+    jsonbourne
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+exclude_lines =
+    if 0:
+    if __name__ == .__main__.:
+    if sys.version_info < (3, 7):
+
+    class BaseAsync:
