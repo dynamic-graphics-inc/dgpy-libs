@@ -98,6 +98,10 @@ ___
  
  - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
 
+## Contributing:
+
+Plz do! Send me that PR!
+
 ___
 
 ## TODO:
