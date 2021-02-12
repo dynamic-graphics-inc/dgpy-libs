@@ -20,8 +20,7 @@ fmt:
 ## LINTING
 .PHONY: flake
 flake: fmt
-	python -m flake8 --config=./.flake8 $(PKG_NAME)
-	python -m flake8 --config=./.flake8 tests
+	python -m flake8 --config=./.flake8 --verbose $(PKG_NAME)
 
 ###########
 ## CLEAN ##

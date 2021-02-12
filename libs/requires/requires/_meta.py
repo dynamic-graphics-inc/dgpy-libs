@@ -2,6 +2,6 @@
 """Package metadata/info"""
 
 __title__ = 'requires'
-__version__ = '0.7.0'
+__version__ = '0.8.0'
 __license__ = 'MIT'
 __description__ = 'Require and import dependencies at runtime'

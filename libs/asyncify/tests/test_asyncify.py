@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+
 @pytest.mark.asyncio
 async def test_asyncify():
     from asyncify import asyncify
@@ -8,8 +9,10 @@ async def test_asyncify():
     @asyncify
     def add(a, b):
         return a + b
+
     res = await add(1, 5)
     assert res == 6
+
 
 @pytest.mark.asyncio
 async def test_asyncify_funkified():

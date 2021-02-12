@@ -16,3 +16,9 @@ extend-ignore =
     WPS326
 # per-file-ignores =
     # path/to/file.py:E501,W605,W293,W291,XXX
+exclude =
+    .tox,
+    __pycache__,
+    .nox,
+    .nox_win,
+    .nox_lin

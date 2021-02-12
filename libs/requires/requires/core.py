@@ -32,6 +32,7 @@ class Requirement:
     pip: Optional[Union[str, bool]] = None
     conda: Optional[Union[str, bool]] = None
     conda_forge: Optional[Union[str, bool]] = None
+    details: Optional[Union[str, List[str]]] = None
 
     def __post_init__(self) -> None:
         pass
@@ -78,6 +79,13 @@ class Requirement:
             return f"conda install -c conda-forge {self.pkg_basename}"
         return f"conda install -c conda-forge {self.pkg_basename} (conda-forge install info unspecified)"
 
+    def _details_str(self) -> str:
+        if self.details is None:
+            return ''
+        return (
+            self.details if isinstance(self.details, str) else '\n'.join(self.details)
+        )
+
     def err(self) -> RequirementError:
         _install_str = [
             f"    {el}"
@@ -87,6 +95,7 @@ class Requirement:
                     self._pip_install_str(),
                     self._conda_install_str() if self.conda else None,
                     self._conda_forge_install_str() if self.conda_forge else None,
+                    self._details_str() if self.details is not None else None,
                 ],
             )
         ]
@@ -95,6 +104,12 @@ class Requirement:
             *_install_str,
         ]
         return RequirementError("\n".join(msg_parts))
+
+    def error(self) -> RequirementError:
+        return self.err()
+
+    def raise_error(self):
+        raise self.err()
 
     def import_requirement(self) -> Any:
         """Import and return the requirement"""
