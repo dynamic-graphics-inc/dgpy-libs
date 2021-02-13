@@ -26,6 +26,20 @@ def test_dot_access_attr_vs_item():
         socketiothing = jd.socket.io
 
 
+def test_dot_access_nested():
+    jd = JSON({"socket.io": {"key": "value", "two": 2}})
+    print(jd['socket.io'])
+    print(jd.dot_keys_list())
+    expected_dot_keys_list = [('socket.io', 'key'), ('socket.io', 'two')]
+    assert jd.dot_keys_list() == expected_dot_keys_list
+    assert jd.dot_items_list() == [
+        (('socket.io', 'key'), 'value'),
+        (('socket.io', 'two'), 2),
+    ]
+    with pytest.raises(AttributeError):
+        socketiothing = jd.socket.io
+
+
 class Thingy(JsonObj):
     @property
     def herm(self):
@@ -159,7 +173,38 @@ data = {
 def test_dot_items():
     jd: JsonObj = JSON(data)
     print(jd.dot_keys_list())
+
     expected = [
+        (('id',), 1),
+        (('code',), None),
+        (('subd', 'a'), 23),
+        (('subd', 'b', 'herm'), 2),
+        (('type',), 'foo'),
+        (('root', 'string_list'), ['one', 'two', 'octopus', 'what_is_up']),
+        (('root', 'mixed_dict', 'num'), 123),
+        (('root', 'mixed_dict', 'obj', 'k'), 'v'),
+        (('root', 'mixed_dict', 'list'), ['s', 123, JsonObj(**{'k': 'v'})]),
+        (
+            ('bars',),
+            [
+                JsonObj(**{'id': 6934900}),
+                JsonObj(**{'id': 6934977}),
+                JsonObj(**{'id': 6934992}),
+                JsonObj(**{'id': 6934993}),
+                JsonObj(**{'id': 6935014}),
+            ],
+        ),
+        (('n',), 10),
+        (('date_str',), '2013-07-08 00:00:00'),
+        (('float_here',), 0.454545),
+        (
+            ('complex',),
+            [JsonObj(**{'id': 83865, 'goal': Decimal('2.000000'), 'state': 'active'})],
+        ),
+        (('profile_id',), None),
+        (('state',), 'active'),
+    ]
+    expected_strings = [
         ('id', 1),
         ('code', None),
         ('subd.a', 23),
@@ -296,7 +341,10 @@ def test_dot_iter_keys() -> None:
         "profile_id",
         "state",
     ]
-    assert expected == list(d.dot_keys())
+    print(set(d.dot_keys()))
+    dot_keys_set = set(d.dot_keys())
+    expected_tuples_set = set(tuple(el.split('.')) for el in expected)
+    assert dot_keys_set == expected_tuples_set
 
 
 def test_dot_list_keys() -> None:
@@ -315,7 +363,7 @@ def test_dot_list_keys() -> None:
         "profile_id",
         "state",
     ]
-    assert set(expected) == set(d.dot_keys_list())
+    assert set([tuple(el.split('.')) for el in expected]) == set(d.dot_keys_list())
 
 
 def test_dot_list_keys_sorted() -> None:
@@ -334,7 +382,10 @@ def test_dot_list_keys_sorted() -> None:
         "profile_id",
         "state",
     ]
-    assert sorted(expected) == d.dot_keys_list(sort_keys=True)
+    print(d.dot_keys_list(sort_keys=True))
+    assert [tuple(el.split('.')) for el in sorted(expected)] == d.dot_keys_list(
+        sort_keys=True
+    )
 
 
 def test_json_dict_reject_non_string_key():

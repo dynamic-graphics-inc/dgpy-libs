@@ -19,6 +19,7 @@ from typing import (
     Optional,
     Set,
     Tuple,
+    Union,
 )
 
 from jsonbourne import json
@@ -535,7 +536,7 @@ class JsonObj(JsonObjMutableMapping):
             )
         return JsonObj({k: v for k, v in self.items() if v})
 
-    def dot_keys(self) -> Iterable[str]:
+    def dot_keys(self) -> Iterable[Tuple[str, ...]]:
         """Yield the JsonObj's dot-notation keys
 
         Returns:
@@ -557,14 +558,14 @@ class JsonObj(JsonObjMutableMapping):
         """
         return chain(
             *(
-                (str(k),)
+                ((str(k),),)
                 if not isinstance(v, JsonObj)
-                else (*(f"{k}.{dk}" for dk in jsonify(v).dot_keys()),)
+                else (*((str(k), *dk) for dk in jsonify(v).dot_keys()),)
                 for k, v in self.items()
             )
         )
 
-    def dot_keys_list(self, sort_keys: bool = False) -> List[str]:
+    def dot_keys_list(self, sort_keys: bool = False) -> List[Tuple[str, ...]]:
         """Return a list of the JsonObj's dot-notation friendly keys
 
         Args:
@@ -578,7 +579,7 @@ class JsonObj(JsonObjMutableMapping):
             return sorted(self.dot_keys_list())
         return list(self.dot_keys())
 
-    def dot_keys_set(self) -> Set[str]:
+    def dot_keys_set(self) -> Set[Tuple[str, ...]]:
         """Return a set of the JsonObj's dot-notation friendly keys
 
         Returns:
@@ -587,7 +588,7 @@ class JsonObj(JsonObjMutableMapping):
         """
         return set(self.dot_keys())
 
-    def dot_lookup(self, dot_key: str) -> Any:
+    def dot_lookup(self, dot_key: Union[str, Tuple[str, ...], List[str]]) -> Any:
         """Look up JsonObj keys using dot notation as a string
 
         Args:
@@ -600,7 +601,13 @@ class JsonObj(JsonObjMutableMapping):
             KeyError: Raised if the dot-key is not in in the object
 
         """
-        parts = dot_key.split(".")
+        if not isinstance(dot_key, (str, list, tuple)):
+            raise ValueError(
+                'dot_key arg must be tuple/list of strings or string; '
+                'strings will be split on \'.\''
+            )
+        parts = dot_key.split(".") if isinstance(dot_key, str) else list(dot_key)
+
         root_val: Any = self._data.get(parts[0])
         cur_val = root_val
         for ix, part in enumerate(parts[1:], start=1):
@@ -608,12 +615,16 @@ class JsonObj(JsonObjMutableMapping):
                 cur_val = cur_val[part]
             except TypeError:
                 reached = ".".join(parts[:ix])
-                raise KeyError(
-                    f"Invalid DotKey: {dot_key} -- Lookup reached: {reached} => {str(cur_val)}"
-                )
+                err_msg = f"Invalid DotKey: {dot_key} -- Lookup reached: {reached} => {str(cur_val)}"
+                if isinstance(dot_key, str):
+                    err_msg += (
+                        f'\nNOTE!!! dot_lookup performed with string (\'{dot_key}\') '
+                        f'PREFER lookup using List[str] or Tuple[str, ...]'
+                    )
+                raise KeyError(err_msg)
         return cur_val
 
-    def dot_items(self) -> Iterator[Tuple[str, Any]]:
+    def dot_items(self) -> Iterator[Tuple[Tuple[str, ...], Any]]:
         """Yield tuples of the form (dot-key, value)
 
         OG-version:
@@ -628,16 +639,28 @@ class JsonObj(JsonObjMutableMapping):
                 else:
                     yield k, value
         """
+
         return chain.from_iterable(  # type: ignore
             (
-                (*((f"{k}.{dk}", dv) for dk, dv in jsonify(v).dot_items()),)
+                (
+                    *(
+                        (
+                            (
+                                str(k),
+                                *dk,
+                            ),
+                            dv,
+                        )
+                        for dk, dv in jsonify(v).dot_items()
+                    ),
+                )
                 if isinstance(v, (JsonObj, dict)) or hasattr(v, 'dot_items')
-                else ((str(k), v),)
+                else (((str(k),), v),)
                 for k, v in self.items()
             )
         )
 
-    def dot_items_list(self) -> List[Tuple[str, Any]]:
+    def dot_items_list(self) -> List[Tuple[Tuple[str, ...], Any]]:
         """Return list of tuples of the form (dot-key, value)"""
         return list(self.dot_items())
 
