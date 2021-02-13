@@ -1,6 +1,8 @@
-# h5
+<a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" height="120"/>
+</a>
 
-<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
+# h5
 
 [![Wheel](https://img.shields.io/pypi/wheel/h5.svg)](https://img.shields.io/pypi/wheel/h5.svg)
 [![Version](https://img.shields.io/pypi/v/h5.svg)](https://img.shields.io/pypi/v/h5.svg)

@@ -1,6 +1,8 @@
-# jsonbourne
+<a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" height="120"/>
+</a>
 
-<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
+# jsonbourne
 
 [![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg)](https://img.shields.io/pypi/wheel/jsonbourne.svg)
 [![Version](https://img.shields.io/pypi/v/jsonbourne.svg)](https://img.shields.io/pypi/v/jsonbourne.svg)
@@ -237,7 +239,13 @@ list(parsed_data.dot_keys())
 
 
 
-    ['key', 'list', 'dt', 'sub.b', 'sub.key', 'sub.a', 'timedelta']
+    [('key',),
+     ('list',),
+     ('dt',),
+     ('sub', 'b'),
+     ('sub', 'key'),
+     ('sub', 'a'),
+     ('timedelta',)]
 
 
 
@@ -249,13 +257,13 @@ list(parsed_data.dot_items())
 
 
 
-    [('key', 'value'),
-     ('list', [1, 2, 3, 4, 5]),
-     ('dt', '1970-01-01T00:00:00.000001'),
-     ('sub.b', 3),
-     ('sub.key', 'val'),
-     ('sub.a', 1),
-     ('timedelta', 172800.0)]
+    [(('key',), 'value'),
+     (('list',), [1, 2, 3, 4, 5]),
+     (('dt',), '1970-01-01T00:00:00.000001'),
+     (('sub', 'b'), 3),
+     (('sub', 'key'), 'val'),
+     (('sub', 'a'), 1),
+     (('timedelta',), 172800.0)]
 
 
 
@@ -270,15 +278,15 @@ parsed_data['sub.key']
     AttributeError                            Traceback (most recent call last)
 
     /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
-        332         try:
-    --> 333             return jsonify(self.__object_getattribute__(key))
-        334         except AttributeError:
+        333         try:
+    --> 334             return jsonify(self.__object_getattribute__(key))
+        335         except AttributeError:
 
 
     /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __object_getattribute__(self, item)
-        324     def __object_getattribute__(self, item: str) -> Any:
-    --> 325         return object.__getattribute__(self, item)
-        326 
+        325     def __object_getattribute__(self, item: str) -> Any:
+    --> 326         return object.__getattribute__(self, item)
+        327 
 
 
     AttributeError: 'JsonObj' object has no attribute 'sub.key'
@@ -294,11 +302,11 @@ parsed_data['sub.key']
     
 
     /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
-        333             return jsonify(self.__object_getattribute__(key))
-        334         except AttributeError:
-    --> 335             raise KeyError(str(key))
-        336 
-        337     def __delitem__(self, key: str) -> None:
+        334             return jsonify(self.__object_getattribute__(key))
+        335         except AttributeError:
+    --> 336             raise KeyError(str(key))
+        337 
+        338     def __delitem__(self, key: str) -> None:
 
 
     KeyError: 'sub.key'

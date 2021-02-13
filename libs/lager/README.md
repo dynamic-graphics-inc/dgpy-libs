@@ -1,6 +1,9 @@
+<a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" height="120"/>
+</a>
+
 # Lager :beer:
 
-<img src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" width="320"/>
 
 [![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg)
 [![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg)
@@ -27,6 +30,9 @@ from lager import LOG
 LOG.info('info')
 LOG.i('info')
 ```
+
+    2021-02-12 17:46:31.441 | INFO     | __main__:<module>:2 - info
+
 
 
     ---------------------------------------------------------------------------
