@@ -1,6 +1,13 @@
 site_name: dgpy-libs
 docs_dir: docs
-repo_name: dgpy-libs
+site_dir: public
+repo_url: https://github.com/dynamic-graphics-inc/dgpy-libs/
+repo_name: 'GitHub'
+site_author: 'Sheldon'
+copyright: 'Dynamic Graphics Inc'
+remote_branch: 'gh-pages'
+dev_addr: '0.0.0.0:8000'
+
 
 theme:
   name: 'material'
