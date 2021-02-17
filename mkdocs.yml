@@ -1,0 +1,18 @@
+site_name: dgpy-libs
+docs_dir: docs
+repo_name: dgpy-libs
+
+theme:
+  name: 'material'
+  logo: 'images/dgpy_white_edge_small.png'
+  favicon: 'images/favicon.ico'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  palette:
+    primary: 'teal'
+    accent: 'deep purple'
+  features:
+    - tabs
+    - instant
+    - navigation.instant
