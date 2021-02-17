@@ -10,8 +10,8 @@ theme:
     text: 'Roboto'
     code: 'Roboto Mono'
   palette:
-    primary: 'teal'
-    accent: 'deep purple'
+    scheme: "slate"
+    primary: 'deep-purple'
   features:
     - tabs
     - instant
