@@ -1,7 +1,7 @@
 site_name: dgpy-libs
 docs_dir: docs
 site_dir: public
-repo_url: https://github.com/dynamic-graphics-inc/dgpy-libs/
+repo_url: 'https://github.com/dynamic-graphics-inc/dgpy-libs/'
 repo_name: 'GitHub'
 site_author: 'Sheldon'
 copyright: 'Dynamic Graphics Inc'
