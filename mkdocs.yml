@@ -16,3 +16,24 @@ theme:
     - tabs
     - instant
     - navigation.instant
+
+markdown_extensions:
+  - attr_list
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      selection:
+        new_path_syntax: yes
+      handlers:
+        python:
+          rendering:
+            show_source: false
+            show_root_heading: true
+            show_root_full_path: true
+            show_signature_annotations: true
+            show_category_heading: true
+      watch:
+        - libs/jsonbourne/jsonbourne
+        
