@@ -5,13 +5,19 @@ from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set
 
-from pydantic import BaseModel  # type: ignore
+from pydantic import BaseModel, Field, ValidationError  # type: ignore
 
 from jsonbourne import json
 from jsonbourne.core import JsonObj
 
 
-__all__ = ['JsonBaseModelDefaultConfig', 'JsonBaseModel']
+__all__ = [
+    'JsonBaseModelDefaultConfig',
+    'JsonBaseModel',
+    'BaseModel',
+    'Field',
+    'ValidationError',
+]
 
 
 class JsonBaseModelDefaultConfig:
@@ -178,6 +184,16 @@ class JsonBaseModel(BaseModel, JsonObj):
             mfield.default == self[fname] for fname, mfield in self.__fields__.items()
         )
 
+    def __delattr__(self, item: str) -> Any:
+        if item in self.__private_attributes__:
+            return object.__delattr__(self, item)
+        return super().__delattr__(item)
+
+    def __getattr__(self, item: str) -> Any:
+        if item in self.__private_attributes__:
+            return object.__getattribute__(self, item)
+        return super().__getattr__(item)
+
     @classmethod
     def defaults_dict(cls) -> Dict[str, Any]:
         """Return a dictionary of non-required keys -> default value(s)
@@ -211,10 +227,13 @@ class JsonBaseModel(BaseModel, JsonObj):
         return {k: v.default for k, v in cls.__fields__.items() if not v.required}
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name in self.__property_fields__:
+        if name in self.__private_attributes__:
+            return object.__setattr__(self, name, value)
+        elif name in self.__property_fields__:
             property_field = getattr(self.__class__, name)
             return property_field.fset(self, value)
-        return super().__setattr__(name, value)
+        else:
+            return super().__setattr__(name, value)
 
     @property
     def __property_fields__(self) -> Set[str]:
