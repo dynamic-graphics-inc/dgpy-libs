@@ -53,14 +53,12 @@ requires_xarray = Requirement(
     conda=True,
     conda_forge=True,
 )
-
 requires_msgpack = Requirement(
     _import='msgpack',
     pip='msgpack',
     conda='msgpack-python',
     conda_forge='msgpack-python',
 )
-
 requires_toml = Requirement(_import='toml', pip=True, conda=True, conda_forge=True)
 requires_ruamel_yaml = Requirement(
     _import='ruamel.yaml', pip='ruamel.yaml', conda=False, conda_forge='ruamel_yaml'
@@ -85,21 +83,18 @@ requires_rapidjson = Requirement(
     conda_forge='python-rapidjson',
 )
 requires_python_rapidjson = requires_rapidjson  # Alias for python rapidjson
-
 requires_pydantic = Requirement(
     _import='pydantic',
     pip=True,
     conda=True,
     conda_forge=True,
 )
-
 requires_httpx = Requirement(
     _import='httpx',
     pip=True,
     conda=True,
     conda_forge=True,
 )
-
 requires_zmq = Requirement(
     _import='zmq',
     pip='pyzmq',

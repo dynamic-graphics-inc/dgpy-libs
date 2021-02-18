@@ -108,8 +108,14 @@ class Requirement:
     def error(self) -> RequirementError:
         return self.err()
 
-    def raise_error(self):
+    def raise_error(self) -> None:
         raise self.err()
+
+    def __proxy__(self) -> 'RequirementProxy':
+        return RequirementProxy(req=self)
+
+    def proxy(self) -> 'RequirementProxy':
+        return self.__proxy__()
 
     def import_requirement(self) -> Any:
         """Import and return the requirement"""
@@ -161,7 +167,7 @@ class Requirement:
                     tb = sys.exc_info()[2]
                     raise self.err().with_traceback(tb)
 
-            return _requires_dec_async
+            return _requires_dec_async  # type: ignore
 
         @wraps(f)
         def _requires_dec(*args: Any, **kwargs: Any) -> T:

@@ -95,6 +95,7 @@ def flake(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def base_test(session):
     session.install("pytest")
+    session.install("funkify")
     session.run(
         "pytest",
         "-m",
