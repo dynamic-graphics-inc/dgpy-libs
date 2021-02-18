@@ -17,8 +17,6 @@ from lager.const import LOG_LEVELS
 
 T = TypeVar('T')
 
-__all__ = ['loglevel', 'flog', 'handlers', 'logger', 'log', 'LOG', 'ln', 'LN']
-
 try:
     import orjson  # type: ignore
 
@@ -86,12 +84,10 @@ if _defaults.LOGURU_AUTOINIT and _sys.stderr:
 
 _atexit.register(logger.remove)
 
-# commonly used dgpy aliases
-log = logger
-LOG = logger
-# ln => natural log
-ln = logger
-LN = logger
+# lager/logger aliases
+log = LOG = logger
+lager = LAGER = logger
+ln = LN = logger  # ln => natural log
 
 
 def loglevel(level: Union[str, int]) -> str:
@@ -193,3 +189,79 @@ def flog(
 def handlers() -> Dict[int, Handler]:
     """Return all handlers"""
     return logger._core.handlers  # type: ignore
+
+
+__hoisted__ = [
+    '_change_activation',
+    '_core',
+    '_dynamic_level',
+    '_find_iter',
+    '_log',
+    '_options',
+    'add',
+    'bind',
+    'catch',
+    'complete',
+    'configure',
+    'contextualize',
+    'critical',
+    'debug',
+    'disable',
+    'enable',
+    'error',
+    'exception',
+    'info',
+    'level',
+    'opt',
+    'parse',
+    'patch',
+    'remove',
+    'start',
+    'stop',
+    'success',
+    'trace',
+    'warning',
+]
+_change_activation = LAGER._change_activation
+_core = LAGER._core
+_dynamic_level = LAGER._dynamic_level
+_find_iter = LAGER._find_iter
+_log = LAGER._log
+_options = LAGER._options
+add = LAGER.add
+bind = LAGER.bind
+catch = LAGER.catch
+complete = LAGER.complete
+configure = LAGER.configure
+contextualize = LAGER.contextualize
+critical = LAGER.critical
+debug = LAGER.debug
+disable = LAGER.disable
+enable = LAGER.enable
+error = LAGER.error
+exception = LAGER.exception
+info = LAGER.info
+level = LAGER.level
+opt = LAGER.opt
+parse = LAGER.parse
+patch = LAGER.patch
+remove = LAGER.remove
+start = LAGER.start
+stop = LAGER.stop
+success = LAGER.success
+trace = LAGER.trace
+warning = LAGER.warning
+
+
+__all__ = [
+    'loglevel',
+    'flog',
+    'handlers',
+    'logger',
+    'log',
+    'LOG',
+    'ln',
+    'lager',
+    'LAGER',
+    *__hoisted__,
+]
