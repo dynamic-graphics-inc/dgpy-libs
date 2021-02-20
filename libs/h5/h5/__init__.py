@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""H5py/hdf5 utils"""
+"""HDF5 functions, and utils, and generators, OH MY!"""
 from h5._meta import __version__
 from h5.core import (
     __h5py_version__,
