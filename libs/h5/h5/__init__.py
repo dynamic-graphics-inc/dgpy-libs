@@ -2,6 +2,7 @@
 """H5py/hdf5 utils"""
 from h5._meta import __version__
 from h5.core import (
+    __h5py_version__,
     attrs_dict,
     attrs_gen,
     attrs_gen_from_fspath,
