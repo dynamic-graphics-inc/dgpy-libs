@@ -11,7 +11,7 @@ from h5.core import (
     h5_attrs_dict,
     h5_attrs_gen,
     h5_attrs_gen_from_fspath,
-    h5_dataset_dict,
+    h5_datasets_dict,
     h5_datasets_gen,
     h5_datasets_gen_from_fspath,
     h5py_obj_attrs_gen,
