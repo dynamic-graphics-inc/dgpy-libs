@@ -15,11 +15,17 @@ except ModuleNotFoundError:
 FsPath = Union[str, Path]
 
 __all__ = [
+    "h5py_obj_attrs_gen",
+    "h5py_obj_dataset_gen",
+    "attrs_gen",
+    "datasets_gen",
+    "datasets_dict",
+    "datasets_gen_from_fspath",
+    "attrs_dict",
+    "attrs_gen_from_fspath",
     "h5_attrs_gen",
     "h5_datasets_gen",
-    "h5py_obj_attrs_gen",
-    "h5_dataset_dict",
-    "h5py_obj_dataset_gen",
+    "h5_datasets_dict",
     "h5_datasets_gen_from_fspath",
     "h5_attrs_dict",
     "h5_attrs_gen_from_fspath",
@@ -62,17 +68,30 @@ def h5py_obj_attrs_gen(h5_group: Union[File, Group], h5_path: str = "") -> chain
     )
 
 
-def h5_attrs_gen_from_fspath(filepath: FsPath) -> chain:
+def attrs_gen_from_fspath(fspath: FsPath) -> chain:
     """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
 
     Args:
-        filepath (str): fspath to h5 format file
+        fspath (str): fspath to h5 format file
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
 
     """
-    return h5py_obj_attrs_gen(File(str(filepath), mode="r"))
+    return h5py_obj_attrs_gen(File(str(fspath), mode="r"))
+
+
+def h5_attrs_gen_from_fspath(fspath: FsPath) -> chain:
+    """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
+
+    Args:
+        fspath (str): fspath to h5 format file
+
+    Returns:
+        Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
+
+    """
+    return h5py_obj_attrs_gen(File(str(fspath), mode="r"))
 
 
 def h5py_obj_dataset_gen(h5_group: Union[File, Group], h5_path: str = "") -> chain:
@@ -106,20 +125,33 @@ def h5py_obj_dataset_gen(h5_group: Union[File, Group], h5_path: str = "") -> cha
     )
 
 
-def h5_datasets_gen_from_fspath(filepath: str) -> chain:
+def datasets_gen_from_fspath(fspath: str) -> chain:
     """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
 
     Args:
-        filepath (str): fspath to h5 format file
+        fspath (str): fspath to h5 format file
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
 
     """
-    return h5py_obj_dataset_gen(File(filepath, mode="r"))
+    return h5py_obj_dataset_gen(File(fspath, mode="r"))
 
 
-def h5_datasets_gen(
+def h5_datasets_gen_from_fspath(fspath: str) -> chain:
+    """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
+
+    Args:
+        fspath (str): fspath to h5 format file
+
+    Returns:
+        Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
+
+    """
+    return h5py_obj_dataset_gen(File(fspath, mode="r"))
+
+
+def datasets_gen(
     h5_filepath_or_data: Union[FsPath, File, Group]
 ) -> Iterable[Tuple[str, Dataset]]:
     """Return a generator that yields tuples with: (HDF5-path, Dataset)"""
@@ -128,7 +160,14 @@ def h5_datasets_gen(
     return h5py_obj_dataset_gen(h5_filepath_or_data)
 
 
-def h5_attrs_gen(
+def h5_datasets_gen(
+    h5_filepath_or_data: Union[FsPath, File, Group]
+) -> Iterable[Tuple[str, Dataset]]:
+    """Alias for h5.datasets_gen"""
+    return datasets_gen(h5_filepath_or_data=h5_filepath_or_data)
+
+
+def attrs_gen(
     h5_filepath_or_data: Union[FsPath, File, Group]
 ) -> Iterable[Tuple[str, Any]]:
     """Return a generator that yields tuples with: (HDF5-path, HDF5-attr)"""
@@ -137,8 +176,15 @@ def h5_attrs_gen(
     return h5py_obj_attrs_gen(h5_filepath_or_data)
 
 
-def h5_dataset_dict(
-    filepath: str,
+def h5_attrs_gen(
+    h5_filepath_or_data: Union[FsPath, File, Group]
+) -> Iterable[Tuple[str, Dataset]]:
+    """Alias for h5.datasets_gen"""
+    return attrs_gen(h5_filepath_or_data=h5_filepath_or_data)
+
+
+def datasets_dict(
+    fspath: str,
 ) -> Dict[str, Union[ndarray, int8, float64]]:
     """Load an HDF5 file from a fspath into a dictionary
 
@@ -148,7 +194,7 @@ def h5_dataset_dict(
     generate tuples of the form (HDF5-path, HDF5-dataset).
 
     Args:
-        filepath (str): Filepath to an HDF5 format file
+        fspath (str): Filepath to an HDF5 format file
 
     Returns:
         Dictionary with key => value paris of HDF5-path => HDF5-dataset
@@ -156,12 +202,19 @@ def h5_dataset_dict(
     """
     return {
         h5_path: h5_dataset[()]
-        for h5_path, h5_dataset in h5py_obj_dataset_gen(File(filepath, mode="r"))
+        for h5_path, h5_dataset in h5py_obj_dataset_gen(File(fspath, mode="r"))
     }
 
 
-def h5_attrs_dict(
-    filepath: str,
+def h5_datasets_dict(
+    fspath: str,
+) -> Dict[str, Union[ndarray, int8, float64]]:
+    """Alias for h5.datasets_dict"""
+    return datasets_dict(fspath=fspath)
+
+
+def attrs_dict(
+    fspath: str,
 ) -> Dict[str, Union[ndarray, int8, float64]]:
     """Load an HDF5 file from a fspath into a dictionary
 
@@ -171,7 +224,7 @@ def h5_attrs_dict(
     generate tuples of the form (HDF5-path, HDF5-dataset).
 
     Args:
-        filepath (str): Filepath to an HDF5 format file
+        fspath (str): Filepath to an HDF5 format file
 
     Returns:
         Dictionary with key => value paris of HDF5-path => HDF5-dataset
@@ -179,5 +232,12 @@ def h5_attrs_dict(
     """
     return {
         h5_path: h5_attr
-        for h5_path, h5_attr in h5py_obj_attrs_gen(File(filepath, mode="r"))
+        for h5_path, h5_attr in h5py_obj_attrs_gen(File(fspath, mode="r"))
     }
+
+
+def h5_attrs_dict(
+    fspath: str,
+) -> Dict[str, Union[ndarray, int8, float64]]:
+    """Alias for h5.attrs_dict"""
+    return attrs_dict(fspath=fspath)
