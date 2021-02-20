@@ -318,6 +318,7 @@ __all__ = [
 ##########
 ## NONE ##
 ##########
+null = Null = None.__class__
 NoneType = None.__class__
 NoneStr = Optional[str]
 NoneBytes = Optional[bytes]

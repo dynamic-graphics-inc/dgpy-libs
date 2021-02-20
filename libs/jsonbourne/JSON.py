@@ -11,6 +11,8 @@ from jsonbourne.core import (
     JSONModuleCls,
     JsonObj,
     JsonObjMutableMapping,
+    Null,
+    null,
     undefined,
 )
 
@@ -23,25 +25,28 @@ dumpb = JSON.dumpb
 loads = JSON.loads
 parse = JSON.parse
 json_lib = JSON.json_lib
+JSONDecodeError = JSON.JSONDecodeError
 
 __all__ = [
-    "__version__",
-    "json",  # json compat lib
+    '__version__',
+    'json',  # json compat lib
     # core
-    "JsonObjMutableMapping",
-    "JsonObj",
-    "JsonDict",
-    "JSONModuleCls",
+    'JsonObjMutableMapping',
+    'JsonObj',
+    'JsonDict',
+    'JSONModuleCls',
     # import
-    "import_json",
+    'import_json',
     # util funks
-    "stringify",
-    "binify",
-    "dumps",
-    "dumpb",
-    "loads",
-    "json_lib",
-    "parse",
-    "undefined",
-    "UNDEFINED",
+    'stringify',
+    'binify',
+    'dumps',
+    'dumpb',
+    'loads',
+    'json_lib',
+    'parse',
+    'undefined',
+    'UNDEFINED',
+    'Null',
+    'null',
 ]

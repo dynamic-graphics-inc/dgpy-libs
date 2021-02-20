@@ -22,8 +22,8 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "json", "python", "jsonbourne", "pydantic", "orjson", "rapidjson",
-    "python-rapidjson", "mattdamon"
+    "json", "jsonbourne", "pydantic", "orjson", "rapidjson",
+    "python-rapidjson", "mattdamon", "dgpy", "dgpy-libs", "dgi"
 ]
 
 
@@ -44,29 +44,6 @@ rapidjson = ["python-rapidjson"]
 orjson = ["orjson"]
 pydantic = ["pydantic"]
 full = ["orjson", "pydantic", "python-rapidjson"]
-
-
-
-
-[tool.dephell.main]
-from = { format = "poetry", path = "pyproject.toml" }
-to = { format = "setuppy", path = "setup.py" }
-# explicitly specify your versioning scheme to let your users know what they can expect
-versioning = "semver"
-# git tag template for releases
-tag = "v"
-
-[tool.dephell.vendorized]
-from = { format = "poetry", path = "pyproject.toml" }
-to = { format = "wheel", path = "dist-vendored/" }
-envs = ["main"]
-
-# Make vendorized version of the project:
-# dephell vendor download --env=vendorized
-# dephell vendor import --env=vendorized
-[tool.dephell.vendorized.vendor]
-path = "dephell_vendor"
-exclude = ["jinja2", "tests", "setuptools", "pip"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

@@ -5,6 +5,7 @@ import sys
 
 from functools import lru_cache
 from itertools import chain
+from json.decoder import JSONDecodeError
 from pprint import pformat
 from types import ModuleType
 from typing import (
@@ -44,12 +45,17 @@ __all__ = [
     "JSON",
     "UNDEFINED",
     "undefined",
+    "Null",
+    "null",
+    "JSONModuleCls",
 ]
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
 
 UNDEFINED = 'undefined'
 undefined = 'undefined'
+null = None
+Null = None.__class__
 
 
 def is_identifier(string: str) -> bool:
@@ -923,6 +929,9 @@ class JSON(metaclass=JSONMeta):
 
     undefined: str = UNDEFINED
     UNDEFINED: str = UNDEFINED
+    null = null
+    Null = Null
+    JSONDecodeError = JSONDecodeError
 
     @staticmethod
     def stringify(

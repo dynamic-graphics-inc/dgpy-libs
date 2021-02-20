@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
+from sys import modules as _sys_modules
 from typing import Any, Callable, Optional
 
 import orjson
 
 from jsonbourne.jsonlib.base import JsonLibABC, _json_encode_default
-
-
-try:
-    import numpy as np
-except ImportError:
-    np = None
 
 
 class ORJSON(JsonLibABC):
@@ -46,7 +41,7 @@ class ORJSON(JsonLibABC):
             option |= orjson.OPT_SORT_KEYS
         if append_newline:
             option |= orjson.OPT_APPEND_NEWLINE
-        if np:
+        if 'numpy' in _sys_modules:
             option |= orjson.OPT_SERIALIZE_NUMPY
 
         return orjson.dumps(
