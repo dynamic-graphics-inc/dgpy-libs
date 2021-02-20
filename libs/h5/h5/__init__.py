@@ -22,6 +22,7 @@ from h5.core import (
 
 __all__ = [
     "__version__",
+    "__h5py_version__",
     "h5py_obj_attrs_gen",
     "h5py_obj_dataset_gen",
     "attrs_gen",

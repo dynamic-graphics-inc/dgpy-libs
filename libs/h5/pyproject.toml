@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "h5"
-version = "0.3.0"
+version = "0.4.0"
 description = "H5py utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -26,7 +26,8 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.1"
-h5py = "*"
+h5py = ">= 2.10.0"
+numpy = ">= 1.7, != 1.19.4"
 
 [tool.poetry.dev-dependencies]
 pytest = "==5.*,>=5.3.0"
