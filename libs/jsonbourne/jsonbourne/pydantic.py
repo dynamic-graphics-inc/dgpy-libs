@@ -186,7 +186,7 @@ class JsonBaseModel(BaseModel, JsonObj):
 
     def __delattr__(self, item: str) -> Any:
         if item in self.__private_attributes__:
-            return object.__delattr__(self, item)
+            return object.__delattr__(self, item)  # type: ignore
         return super().__delattr__(item)
 
     def __getattr__(self, item: str) -> Any:

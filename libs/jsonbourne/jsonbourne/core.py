@@ -375,7 +375,7 @@ class JsonObj(JsonObjMutableMapping):
 
     def pop(self, key: str, default: Optional[Any] = None) -> Any:
         if default:
-            return self._data.pop(key, default=default)
+            return self._data.pop(key, default)
         return self._data.pop(key)
 
     def get(self, key: str, default: Optional[Any] = None) -> Any:
