@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-"""H5py/hdf5 utils"""
+"""HDF5 functions, and utils, and generators, OH MY!"""
 from h5._meta import __version__
 from h5.core import (
+    __h5py_version__,
     attrs_dict,
     attrs_gen,
     attrs_gen_from_fspath,
@@ -21,6 +22,7 @@ from h5.core import (
 
 __all__ = [
     "__version__",
+    "__h5py_version__",
     "h5py_obj_attrs_gen",
     "h5py_obj_dataset_gen",
     "attrs_gen",
