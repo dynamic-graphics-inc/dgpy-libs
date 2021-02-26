@@ -30,30 +30,14 @@ ___
 def uno():
     return json.dumps({'a': 1, 'b': 2})
 
-uno()
+try:
+    uno()
+except NameError as ne:
+    print("Error:", ne)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-ec67aed17342> in <module>
-          3     return json.dumps({'a': 1, 'b': 2})
-          4 
-    ----> 5 uno()
+    Error: name 'json' is not defined
     
-
-    <ipython-input-1-ec67aed17342> in uno()
-          1 # This will fail
-          2 def uno():
-    ----> 3     return json.dumps({'a': 1, 'b': 2})
-          4 
-          5 uno()
-
-
-    NameError: name 'json' is not defined
-
 
 
 ```python
@@ -137,25 +121,10 @@ tres()  # Will err if not install with where to install instructions
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-eddc4b10b188> in <module>
-          5     return rapidjson.dumps({'a': 1, 'b': 2})
-          6 
-    ----> 7 tres()  # Will err if not install with where to install instructions
-    
-
-    <ipython-input-1-eddc4b10b188> in tres()
-          3 @requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
-          4 def tres():
-    ----> 5     return rapidjson.dumps({'a': 1, 'b': 2})
-          6 
-          7 tres()  # Will err if not install with where to install instructions
 
 
-    NameError: name 'rapidjson' is not defined
+    '{"a":1,"b":2}'
+
 
 
 
@@ -164,30 +133,14 @@ tres()  # Will err if not install with where to install instructions
 def quatro():
     return path.join('a', 'b')
 
-quatro()
+try:
+    quatro()
+except NameError as ne:
+    print("ERROR:", ne)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-b3f241a5c6c7> in <module>
-          3     return path.join('a', 'b')
-          4 
-    ----> 5 quatro()
+    ERROR: name 'path' is not defined
     
-
-    <ipython-input-1-b3f241a5c6c7> in quatro()
-          1 # should error
-          2 def quatro():
-    ----> 3     return path.join('a', 'b')
-          4 
-          5 quatro()
-
-
-    NameError: name 'path' is not defined
-
 
 
 ```python
@@ -205,6 +158,6 @@ quatro()
 
 
 
-    'a/b'
+    'a\\b'
 
 

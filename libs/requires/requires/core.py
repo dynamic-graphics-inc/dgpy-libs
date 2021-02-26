@@ -327,7 +327,8 @@ def requires(
                 conda_forge=conda_forge,
             )
         ]
-    _requirements = make_requirements(list(requirements))
+    else:
+        _requirements = make_requirements(list(requirements))
 
     def _requires_dec(f: Callable[..., T]) -> Callable[..., T]:
         _wrapped_fn = f
