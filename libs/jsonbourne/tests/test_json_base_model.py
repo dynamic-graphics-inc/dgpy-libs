@@ -46,14 +46,8 @@ def test_json_base_model_w_prop() -> None:
     thing_w_prop = JsonObjModel(
         **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}, "e": {"herm": 2}}
     )
-    print(thing_w_prop)
     assert thing_w_prop.c == thing_w_prop["c"]
     assert thing_w_prop.a_property == "prop_value"
-    print("HERE WE ARE", thing_w_prop)
-    print(dir(thing_w_prop))
     assert thing_w_prop["a_property"] == "prop_value"
 
     assert thing_w_prop.d.nested == "nestedval"
-    print(dir(thing_w_prop))
-    print(thing_w_prop.e, type(thing_w_prop.e))
-    assert False

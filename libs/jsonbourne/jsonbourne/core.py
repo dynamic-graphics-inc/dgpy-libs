@@ -135,7 +135,7 @@ class JsonObj(JsonObjMutableMapping):
         >>> list(d.keys())
         ['uno', 'dos', 'tres']
         >>> list(d.dot_keys())
-        ['uno', 'dos', 'tres']
+        [('uno',), ('dos',), ('tres',)]
         >>> d
         JsonObj(**{'uno': 1, 'dos': 2, 'tres': 3})
         >>> d['uno']
@@ -331,14 +331,19 @@ class JsonObj(JsonObjMutableMapping):
     def __object_getattribute__(self, item: str) -> Any:
         return object.__getattribute__(self, item)
 
-    def __getitem__(self, key: str) -> Any:
+    def __getitem__(self, key: Union[str, Tuple[str, ...]]) -> Any:
+        if isinstance(key, str):
+            try:
+                return jsonify(self._data[key])
+            except KeyError:
+                pass
+            try:
+                return jsonify(self.__object_getattribute__(key))
+            except AttributeError:
+                pass
         try:
-            return jsonify(self._data[key])
+            return self.dot_lookup(key)
         except KeyError:
-            pass
-        try:
-            return jsonify(self.__object_getattribute__(key))
-        except AttributeError:
             raise KeyError(str(key))
 
     def __delitem__(self, key: str) -> None:
@@ -594,11 +599,11 @@ class JsonObj(JsonObjMutableMapping):
         """
         return set(self.dot_keys())
 
-    def dot_lookup(self, dot_key: Union[str, Tuple[str, ...], List[str]]) -> Any:
+    def dot_lookup(self, key: Union[str, Tuple[str, ...], List[str]]) -> Any:
         """Look up JsonObj keys using dot notation as a string
 
         Args:
-            dot_key (str): dot-notation key to look up ('key1.key2.third_key')
+            key (str): dot-notation key to look up ('key1.key2.third_key')
 
         Returns:
             The result of the dot-notation key look up
@@ -607,12 +612,12 @@ class JsonObj(JsonObjMutableMapping):
             KeyError: Raised if the dot-key is not in in the object
 
         """
-        if not isinstance(dot_key, (str, list, tuple)):
+        if not isinstance(key, (str, list, tuple)):
             raise ValueError(
                 'dot_key arg must be tuple/list of strings or string; '
                 'strings will be split on \'.\''
             )
-        parts = dot_key.split(".") if isinstance(dot_key, str) else list(dot_key)
+        parts = key.split(".") if isinstance(key, str) else list(key)
 
         root_val: Any = self._data.get(parts[0])
         cur_val = root_val
@@ -621,10 +626,10 @@ class JsonObj(JsonObjMutableMapping):
                 cur_val = cur_val[part]
             except TypeError:
                 reached = ".".join(parts[:ix])
-                err_msg = f"Invalid DotKey: {dot_key} -- Lookup reached: {reached} => {str(cur_val)}"
-                if isinstance(dot_key, str):
+                err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
+                if isinstance(key, str):
                     err_msg += (
-                        f'\nNOTE!!! dot_lookup performed with string (\'{dot_key}\') '
+                        f'\nNOTE!!! lookup performed with string (\'{key}\') '
                         f'PREFER lookup using List[str] or Tuple[str, ...]'
                     )
                 raise KeyError(err_msg)

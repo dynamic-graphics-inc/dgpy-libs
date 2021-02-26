@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Python builtin data structure utils"""
+import datetime
 
 from decimal import Decimal
 
@@ -14,15 +15,12 @@ pytestmark = [pytest.mark.basic]
 def test_dot_access_attr_vs_item():
     jd = JSON({"socket.io": "data"})
     assert jd['socket.io'] == "data"
-    print(jd.to_dict())
     with pytest.raises(AttributeError):
         socketiothing = jd.socket.io
 
 
 def test_dot_access_nested():
     jd = JSON({"socket.io": {"key": "value", "two": 2}})
-    print(jd['socket.io'])
-    print(jd.dot_keys_list())
     expected_dot_keys_list = [('socket.io', 'key'), ('socket.io', 'two')]
     assert jd.dot_keys_list() == expected_dot_keys_list
     assert jd.dot_items_list() == [
@@ -39,7 +37,7 @@ class Thingy(JsonObj):
         return "hermproperty"
 
 
-def test_dictainer_basic() -> None:
+def test_json_obj_basic() -> None:
     thing = Thingy({"a": 1, "b": 2, "c": 3})
     assert thing.a == thing["a"]
 
@@ -52,11 +50,6 @@ def test_dictainer_basic_unpacking() -> None:
     thing2 = Thingy({"a": 1, "b": 2, "c": 3, "d": ["different list"], "a": 234})
     assert thing.a == thing["a"]
 
-    for e in thing:
-        print(e)
-    for e in thing.items():
-        print(e)
-    print({**thing})
     assert {**thing} == {"a": 1, "b": 2, "c": 3, "d": ["list"]}
     assert {**thing2} == {"a": 234, "b": 2, "c": 3, "d": ["different list"]}
 
@@ -78,14 +71,14 @@ class ThingyWithMethod(JsonObj):
         return "prop_value"
 
 
-def test_dictainer_method() -> None:
+def test_json_obj_method() -> None:
     thing_w_prop = ThingyWithMethod({"a": 1, "b": 2, "c": {"herm": 23}})
     assert thing_w_prop.c.herm == thing_w_prop["c"]["herm"]
     assert thing_w_prop.a_property() == "prop_value"
     assert thing_w_prop["a_property"]() == "prop_value"
 
 
-def test_dictainer_method_set_attr() -> None:
+def test_json_obj_method_set_attr() -> None:
     thing_w_prop = ThingyWithMethod({"a": 1, "b": 2, "c": {"herm": 23}})
     assert thing_w_prop.c.herm == thing_w_prop["c"]["herm"]
     assert thing_w_prop.a_property() == "prop_value"
@@ -102,7 +95,7 @@ class ThingyWithProperty(JsonObj):
         return "prop_value"
 
 
-def test_dictainer_property() -> None:
+def test_json_obj_property() -> None:
     thing_w_prop = ThingyWithProperty(
         **{"a": 1, "b": 2, "c": {"herm": 23}, "d": {"nested": "nestedval"}}
     )
@@ -118,15 +111,10 @@ def test_protected_attrs_slash_members():
     j = JsonObj()
     j.key = 'value'
     j['12'] = 'twelve'
-    print(j.__dict__)
-    print(j.items)
     with pytest.raises(ValueError):
         j.items = [1, 2, 3, 4]
     j['items'] = [1, 2, 3, 4]
-    print(j.__dict__)
-    print(j)
     j_items = j.items
-    print('items', j_items)
     assert j.items != [1, 2, 3, 4]
     assert j['items'] == [1, 2, 3, 4]
 
@@ -165,7 +153,6 @@ data = {
 
 def test_dot_items():
     jd: JsonObj = JSON(data)
-    print(jd.dot_keys_list())
 
     expected = [
         (('id',), 1),
@@ -227,9 +214,7 @@ def test_dot_items():
         ('profile_id', None),
         ('state', 'active'),
     ]
-    from pprint import pprint
 
-    pprint(jd.dot_items_list())
     dkl = jd.dot_items_list()
     assert expected == dkl
 
@@ -405,7 +390,6 @@ def test_filter_none():
         },
     }
     result = JsonObj(t1).filter_none()
-    print(JsonObj(t1).filter_none())
     assert result == JsonObj(
         **{
             "falsey_dict": {},
@@ -443,7 +427,6 @@ def test_filter_none_recursive():
         },
     }
     result = JsonObj(t1).filter_none(recursive=True)
-    print(result)
     assert result == JsonObj(
         **{
             "falsey_dict": {},
@@ -514,3 +497,25 @@ def test_filter_falsey_recursive():
     }
     result = JsonObj(d).filter_false(recursive=True)
     assert result == JsonObj(**{"b": 2, "c": {"d": "herm"}})
+
+
+def test_lookup_ops():
+    data = {
+        "key": "value",
+        "list": [1, 2, 3, 4, 5],
+        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "sub": {
+            'b': 3,
+            'key': 'val',
+            'a': 1,
+        },
+        "timedelta": datetime.timedelta(days=2),
+    }
+
+    d = JSON(data)
+
+    assert d.dot_lookup('sub.key') == 'val'
+    assert d.dot_lookup(('sub', 'key')) == 'val'
+    assert 'val' == d['sub.key']
+    assert 'val' == d['sub', 'key']
+    assert 'val' == d[('sub', 'key')]

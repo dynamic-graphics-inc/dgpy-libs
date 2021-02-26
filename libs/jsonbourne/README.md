@@ -73,7 +73,7 @@ print(string_dumps)
       "a": 1,
       "c": 3
     }
-
+    
 
 **sort_keys:**
 
@@ -88,7 +88,7 @@ print(string_dumps)
       "b": 2,
       "c": 3
     }
-
+    
 
 ### JsonObj & JSON
 
@@ -182,7 +182,7 @@ print(stringified_data)
       },
       "timedelta": 172800.0
     }
-
+    
 
 
 ```python
@@ -269,47 +269,14 @@ list(parsed_data.dot_items())
 
 
 ```python
-parsed_data['sub.key']
+parsed_data[('sub', 'key')]
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
-        333         try:
-    --> 334             return jsonify(self.__object_getattribute__(key))
-        335         except AttributeError:
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __object_getattribute__(self, item)
-        325     def __object_getattribute__(self, item: str) -> Any:
-    --> 326         return object.__getattribute__(self, item)
-        327 
+    'val'
 
-
-    AttributeError: 'JsonObj' object has no attribute 'sub.key'
-
-    
-    During handling of the above exception, another exception occurred:
-
-
-    KeyError                                  Traceback (most recent call last)
-
-    <ipython-input-1-7eb6d393a38a> in <module>
-    ----> 1 parsed_data['sub.key']
-    
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/core.py in __getitem__(self, key)
-        334             return jsonify(self.__object_getattribute__(key))
-        335         except AttributeError:
-    --> 336             raise KeyError(str(key))
-        337 
-        338     def __delitem__(self, key: str) -> None:
-
-
-    KeyError: 'sub.key'
 
 
 
@@ -387,7 +354,7 @@ assert j['items'] == [1, 2, 3, 4]
         'items': [1, 2, 3, 4], 'key': 'value'
     })
     items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
-
+    
 
 ### pydantic & jsonbourne
 
@@ -489,9 +456,9 @@ print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.jsonlib._json_stdlib.JSON_STDLIB'>
+    <class 'jsonbourne.jsonlib._rapidjson.RAPIDJSON'>
     {"a":1,"b":2,"c":3}
-
+    
 
 ### Installing better JSON lib:
 
