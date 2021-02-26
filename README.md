@@ -74,7 +74,7 @@ notebooks/
  - Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present
  - Offer integrations/extensions with the super-hot-fire modern python packages all the kids are using
  - Optional dependencies are good! Missing optional deps should trigger an error msg that is helpful to installing the relevant dependency ONLY IF THE DEPENDENCY IS NEEDED.
- - I ain't got time for 100% test coverage; aiming for that C+/B- range
+ - 100% test coverage `!=` good/bug-free code
 
 ## Third party packages/libs that integrate/inspire dgpy-libs
 
@@ -107,11 +107,7 @@ ___
 ## TODO:
 
  - Figure out some docs
- - Have CI/CD auto publish stuff
- - Look into non-mypy type checkers
- - jsonbourne:
-    - needs stylistic refactoring
-    - Test `jsonbourne.pydantic` against latest version of pydantic (1.7)
-    - Dataclass support
+ - Have CI/CD auto build n publish
  - Make some sort of change log
- - Publish packages to conda-forge?
+ - Publish packages to conda-forge? (maybe)
+
