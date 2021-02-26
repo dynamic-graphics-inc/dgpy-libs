@@ -9,9 +9,29 @@
 [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+**TLDR:** Sync 2 Async decorator
+
 **Install:** `pip install asyncify`
 
-___
+**Usage:**
 
-Use sync functions async
 
+
+```python
+import asyncify 
+# OR
+from asyncify import asyncify
+from asyncify import run  # asyncio.run polyfill for python36
+
+def add(a, b):
+    return a + b
+
+assert add(1, 2) == 3
+
+@asyncify
+def add_async(a, b):
+    return a + b
+
+res = await add_async(1, 2)
+assert res == 3
+```
