@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """Asyncify core"""
 
+import asyncio
+import sys
+
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
 from typing import Any, Awaitable, Callable, Optional, TypeVar, cast
@@ -10,6 +13,7 @@ AnyCallable = Callable[..., Any]
 FuncType = Callable[..., Any]
 
 T = TypeVar("T")
+__all__ = ['asyncify', 'run']
 
 
 def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
@@ -60,3 +64,33 @@ def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
         return await loop.run_in_executor(executor, pfunc)
 
     return cast(Callable[..., Awaitable[T]], _async_funk)
+
+
+def run(aw: Awaitable[T]) -> T:
+    """Run an async/awaitable function (Polyfill asyncio.run)
+
+    Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
+    added in python3.7.
+
+    Returns:
+        Return the result of running the async function
+
+    Examples:
+        >>> async def add(a, b):
+        ...     return a + b
+        ...
+        >>> from asyncify.core import run as aiorun
+        >>> aiorun(add(1, 4))
+        5
+
+    """
+    if sys.version_info >= (3, 7):
+        return asyncio.run(aw)
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    try:
+        return loop.run_until_complete(aw)
+    finally:
+        loop.close()
+        asyncio.set_event_loop(None)
