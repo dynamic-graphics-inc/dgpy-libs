@@ -8,7 +8,7 @@ from jsonbourne import JsonObj, json
 pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 
-def test_dictainer_property_dgpy_base_obj() -> None:
+def test_json_base_model_w_prop() -> None:
     from jsonbourne.pydantic import JsonBaseModel
 
     class JsonSubObj(JsonBaseModel):
@@ -56,3 +56,4 @@ def test_dictainer_property_dgpy_base_obj() -> None:
     assert thing_w_prop.d.nested == "nestedval"
     print(dir(thing_w_prop))
     print(thing_w_prop.e, type(thing_w_prop.e))
+    assert False
