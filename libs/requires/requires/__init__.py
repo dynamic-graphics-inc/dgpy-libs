@@ -4,6 +4,7 @@ from funkify import funkify
 from requires._meta import __version__
 from requires.core import (
     Requirement,
+    RequirementAttributeError,
     RequirementError,
     RequirementProxy,
     require,
@@ -20,4 +21,5 @@ __all__ = [
     "RequirementError",
     "Requirement",
     "RequirementProxy",
+    "RequirementAttributeError",
 ]

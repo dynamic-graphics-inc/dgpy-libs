@@ -2,7 +2,13 @@ from typing import Union
 
 import pytest
 
-from requires.core import Requirement, RequirementError, requires, string2requirement
+from requires.core import (
+    Requirement,
+    RequirementAttributeError,
+    RequirementError,
+    requires,
+    string2requirement,
+)
 
 
 def test_parse_import_xxx():
@@ -367,7 +373,8 @@ def test_from_json_import_dumps_as_xxx_non_importable():
 
         assert fn() == '{"herm": 1}'
     except Exception as e:
-        assert isinstance(e, RequirementError)
+        assert isinstance(e, (RequirementAttributeError,))
+        print(e.__str__())
         assert "AttributeError" in e.__str__()
 
 
@@ -422,37 +429,19 @@ def test_stacked_requirements():
 def test_module_wrap():
     np_requirement = Requirement(_import='numpy', _as='np')
     np = np_requirement.__requirement__
-    print(np, dir(np))
 
-    # print(np.arange(10))
-    # import numpy as np
     @requires(_import='numpy', _as='np')
-    def mag(vector):
-        """Return the magnitude of `vector`.
+    def mkvec(vector):
+        vector = np.ndarray(vector)
+        return vector
 
-        For stacked inputs, compute the magnitude of each one.
-
-        Args:
-            vector (np.arraylike): A `3x1` vector or a `kx3` stack of vectors.
-
-        Returns:
-            object: For `3x1` inputs, a `float` with the magnitude. For `kx1`
-                inputs, a `kx1` array.
-
-        """
-        print(np.ndarray)
-        if not isinstance(vector, np.ndarray):
-            vector = np.ndarray(vector)
-        if vector.ndim == 1:
-            return np.linalg.norm(vector)
-        elif vector.ndim == 2:
-            return np.linalg.norm(vector, axis=1)
-        else:
-            ValueError("Too many dimensions!")
-
-    with pytest.raises(RequirementError) as re:
-        mag([12, 3])
-    assert "could not import: `import numpy as np`" in str(re.value)
+    try:
+        v = mkvec([12, 3])
+    except ModuleNotFoundError as e:
+        with pytest.raises(RequirementError) as re:
+            raise e
+            mkvec([12, 3])
+        assert "could not import: `import numpy as np`" in str(re.value)
 
 
 if __name__ == "__main__":

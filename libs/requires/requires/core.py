@@ -18,8 +18,14 @@ def _fn_globals(f: Any) -> Any:
     return f.__globals__
 
 
-class RequirementError(Exception):
+class RequirementError(ModuleNotFoundError):
     """Exception for requries"""
+
+    pass
+
+
+class RequirementAttributeError(AttributeError):
+    """Requirement attribute error"""
 
     pass
 
@@ -123,10 +129,11 @@ class Requirement:
             if self._from is None:
                 return import_module(self._import)
             req = import_module(self._from)
+            # Import ok BUT the attr/thing imported from the module does not exist
             try:
                 return getattr(req, self._import)
             except AttributeError as ae:
-                raise RequirementError(
+                raise RequirementAttributeError(
                     "\n".join(
                         [
                             f"Module/Package(s) import AttributeError: `{self.import_string}`",
@@ -297,6 +304,7 @@ def requires(
     pip: Optional[Union[str, bool]] = None,
     conda: Optional[Union[str, bool]] = None,
     conda_forge: Optional[Union[str, bool]] = None,
+    details: Optional[str] = None,
 ) -> Callable[[Callable[..., T]], Callable[..., T]]:
     """Decorator to specify the packages a function or class requires
 
@@ -325,6 +333,7 @@ def requires(
                 pip=pip,
                 conda=conda,
                 conda_forge=conda_forge,
+                details=details,
             )
         ]
     else:

@@ -152,12 +152,59 @@ os_path_req = Requirement(_import='path', _from='os')
 def quatro():
     return path.join('a', 'b')
 
-quatro()
+assert isinstance(quatro(), str)
+```
+
+## Enforcing requirements
+
+
+```python
+import requires
+
+try:
+    import alibrary
+except ModuleNotFoundError:
+    requirement = requires.Requirement(
+        _import='alibrary',
+        pip=True,
+        conda_forge='alibrary-conda-listing',
+        details="Install details"
+    )
+try:
+    requirement.raise_error()
+except requires.RequirementError as err:
+    print("ERROR:")
+    print(err)
+```
+
+    ERROR:
+    Module/Package(s) not found/installed; could not import: `import alibrary`
+        pip install alibrary
+        conda install -c conda-forge alibrary-conda-listing
+        Install details
+    
+
+## Less verbose version:
+
+```python
+import requires
+
+try:
+    import alibrary
+except ModuleNotFoundError:
+    requires.Requirement(
+        _import='alibrary',
+        pip=True,
+        conda_forge='alibrary-conda-listing',
+        details="Install details"
+    ).raise_error()
 ```
 
 
+___
 
+## Future ideas?
 
-    'a\\b'
-
-
+ - Adding support for requiring particular package versions?
+ - Auto install?
+ - Allow non pip/conda/conda-forge locations?
