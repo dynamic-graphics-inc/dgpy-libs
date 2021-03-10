@@ -73,7 +73,7 @@ print(string_dumps)
       "a": 1,
       "c": 3
     }
-    
+
 
 **sort_keys:**
 
@@ -88,7 +88,7 @@ print(string_dumps)
       "b": 2,
       "c": 3
     }
-    
+
 
 ### JsonObj & JSON
 
@@ -182,7 +182,7 @@ print(stringified_data)
       },
       "timedelta": 172800.0
     }
-    
+
 
 
 ```python
@@ -354,7 +354,7 @@ assert j['items'] == [1, 2, 3, 4]
         'items': [1, 2, 3, 4], 'key': 'value'
     })
     items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
-    
+
 
 ### pydantic & jsonbourne
 
@@ -408,12 +408,27 @@ obj
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    ModuleNotFoundError                       Traceback (most recent call last)
+
+    <ipython-input-1-cfffa9b1fdbb> in <module>
+          1 from jsonbourne import JsonObj
+    ----> 2 from jsonbourne.pydantic import JsonBaseModel
+          3 
+          4 class JsonSubObj(JsonBaseModel):
+          5     herm: int
 
 
-<pre>JsonObjModel(**{
-    'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': {'herm': 2}
-})</pre>
+    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/pydantic.py in <module>
+          6 from typing import Any, Dict, Set
+          7 
+    ----> 8 from pydantic import BaseModel, Field, ValidationError  # type: ignore
+          9 
+         10 from jsonbourne import json
 
+
+    ModuleNotFoundError: No module named 'pydantic'
 
 
 
@@ -423,10 +438,16 @@ obj.a_property
 ```
 
 
+    ---------------------------------------------------------------------------
 
+    NameError                                 Traceback (most recent call last)
 
-    'prop_value'
+    <ipython-input-1-e6a635071506> in <module>
+          1 # respects properties (which I don't think pydantic does(currently))
+    ----> 2 obj.a_property
+    
 
+    NameError: name 'obj' is not defined
 
 
 ___
@@ -456,9 +477,9 @@ print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.jsonlib._rapidjson.RAPIDJSON'>
+    <class 'jsonbourne.jsonlib._json_stdlib.JSON_STDLIB'>
     {"a":1,"b":2,"c":3}
-    
+
 
 ### Installing better JSON lib:
 
@@ -472,8 +493,3 @@ print(string)
 - `conda install -c anaconda python-rapidjson` [conda anaconda/defaults]
 - `conda install -c conda-forge python-rapidjson` [conda-forge]
 
-
-
-```python
-
-```

@@ -31,19 +31,40 @@ LOG.info('info')
 LOG.i('info')
 ```
 
-    2021-02-12 17:46:31.441 | INFO     | __main__:<module>:2 - info
-
-
 
     ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
+    ModuleNotFoundError                       Traceback (most recent call last)
 
     <ipython-input-1-36faeb76e3af> in <module>
-          1 from lager import LOG
+    ----> 1 from lager import LOG
           2 LOG.info('info')
-    ----> 3 LOG.i('info')
-    
+          3 LOG.i('info')
 
-    AttributeError: 'Logger' object has no attribute 'i'
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/__init__.py in <module>
+          1 # -*- coding: utf-8 -*-
+          2 """Python lager brewed by a loguru"""
+    ----> 3 from lager import logging
+          4 from lager._meta import __version__
+          5 from lager.const import LAGER_PORT, LOGURU_DEFAULT_FMT, TORNADO_FMT
+
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/logging.py in <module>
+          5 from typing import Any, Dict, List
+          6 
+    ----> 7 from lager.core import LOG, loglevel
+          8 
+          9 
+
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/core.py in <module>
+          9 from typing import Any, Callable, Dict, Optional, TypeVar, Union
+         10 
+    ---> 11 from loguru import _defaults
+         12 from loguru._handler import Handler
+         13 from loguru._logger import Core as _Core, Logger as _Logger
+
+
+    ModuleNotFoundError: No module named 'loguru'
 

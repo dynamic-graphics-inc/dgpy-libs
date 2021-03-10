@@ -35,3 +35,27 @@ def add_async(a, b):
 res = await add_async(1, 2)
 assert res == 3
 ```
+
+
+    ---------------------------------------------------------------------------
+
+    ModuleNotFoundError                       Traceback (most recent call last)
+
+    <ipython-input-1-9f3a53cb7576> in <module>
+    ----> 1 import asyncify
+          2 # OR
+          3 from asyncify import asyncify
+          4 from asyncify import run  # asyncio.run polyfill for python36
+          5 
+
+
+    /mnt/d/dgpy-dev/dgpy-libs/libs/asyncify/asyncify/__init__.py in <module>
+          4 from asyncify.core import asyncify, run
+          5 
+    ----> 6 from funkify import funkify
+          7 
+          8 
+
+
+    ModuleNotFoundError: No module named 'funkify'
+
