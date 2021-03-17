@@ -26,45 +26,9 @@ BTW: Loguru is an amazing lib. Check it out: https://github.com/Delgan/loguru
 
 
 ```python
-from lager import LOG
+from lager import LOG, lager, LAGER, log, logger  # All the same object
 LOG.info('info')
-LOG.i('info')
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-36faeb76e3af> in <module>
-    ----> 1 from lager import LOG
-          2 LOG.info('info')
-          3 LOG.i('info')
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """Python lager brewed by a loguru"""
-    ----> 3 from lager import logging
-          4 from lager._meta import __version__
-          5 from lager.const import LAGER_PORT, LOGURU_DEFAULT_FMT, TORNADO_FMT
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/logging.py in <module>
-          5 from typing import Any, Dict, List
-          6 
-    ----> 7 from lager.core import LOG, loglevel
-          8 
-          9 
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/lager/lager/core.py in <module>
-          9 from typing import Any, Callable, Dict, Optional, TypeVar, Union
-         10 
-    ---> 11 from loguru import _defaults
-         12 from loguru._handler import Handler
-         13 from loguru._logger import Core as _Core, Logger as _Logger
-
-
-    ModuleNotFoundError: No module named 'loguru'
+    2021-03-17 09:11:10.389 | INFO     | __main__:<module>:2 - info
 

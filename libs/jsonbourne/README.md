@@ -408,27 +408,12 @@ obj
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-cfffa9b1fdbb> in <module>
-          1 from jsonbourne import JsonObj
-    ----> 2 from jsonbourne.pydantic import JsonBaseModel
-          3 
-          4 class JsonSubObj(JsonBaseModel):
-          5     herm: int
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/jsonbourne/jsonbourne/pydantic.py in <module>
-          6 from typing import Any, Dict, Set
-          7 
-    ----> 8 from pydantic import BaseModel, Field, ValidationError  # type: ignore
-          9 
-         10 from jsonbourne import json
+<pre>JsonObjModel(**{
+    'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': {'herm': 2}
+})</pre>
 
-
-    ModuleNotFoundError: No module named 'pydantic'
 
 
 
@@ -438,16 +423,10 @@ obj.a_property
 ```
 
 
-    ---------------------------------------------------------------------------
 
-    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-1-e6a635071506> in <module>
-          1 # respects properties (which I don't think pydantic does(currently))
-    ----> 2 obj.a_property
-    
+    'prop_value'
 
-    NameError: name 'obj' is not defined
 
 
 ___
@@ -477,7 +456,7 @@ print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.jsonlib._json_stdlib.JSON_STDLIB'>
+    <class 'jsonbourne.jsonlib._rapidjson.RAPIDJSON'>
     {"a":1,"b":2,"c":3}
 
 

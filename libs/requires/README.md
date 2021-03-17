@@ -52,27 +52,10 @@ uno()
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-3ffdd02e0ce4> in <module>
-          1 # This will not fail
-    ----> 2 import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
-          3 
-          4 @requires('json')
-          5 def uno():
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
+    '{"a": 1, "b": 2}'
 
-
-    ModuleNotFoundError: No module named 'funkify'
 
 
 
@@ -87,27 +70,10 @@ uno()
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-0f4747ee5a8d> in <module>
-    ----> 1 import requires
-          2 
-          3 @requires('from json import dumps')
-          4 def uno():
-          5     return dumps({'a': 1, 'b': 2})
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
+    '{"a": 1, "b": 2}'
 
-
-    ModuleNotFoundError: No module named 'funkify'
 
 
 
@@ -119,24 +85,10 @@ dos()
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-1-c55804ca3790> in <module>
-          2     return dumps({'a': 1, 'b': 2})
-          3 
-    ----> 4 dos()
-    
-
-    <ipython-input-1-c55804ca3790> in dos()
-          1 def dos():
-    ----> 2     return dumps({'a': 1, 'b': 2})
-          3 
-          4 dos()
 
 
-    NameError: name 'dumps' is not defined
+    '{"a": 1, "b": 2}'
+
 
 
 
@@ -151,27 +103,10 @@ dos()
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-50c01f9ce9df> in <module>
-    ----> 1 import requires
-          2 
-          3 @requires(_from='json', _import='dumps')
-          4 def dos():
-          5     return dumps({'a': 1, 'b': 2})
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
+    '{"a": 1, "b": 2}'
 
-
-    ModuleNotFoundError: No module named 'funkify'
 
 
 
@@ -186,27 +121,10 @@ tres()  # Will err if not install with where to install instructions
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-eddc4b10b188> in <module>
-    ----> 1 import requires
-          2 
-          3 @requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
-          4 def tres():
-          5     return rapidjson.dumps({'a': 1, 'b': 2})
 
 
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
+    '{"a":1,"b":2}'
 
-
-    ModuleNotFoundError: No module named 'funkify'
 
 
 
@@ -237,30 +155,6 @@ def quatro():
 assert isinstance(quatro(), str)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-c3498d55ddec> in <module>
-    ----> 1 from requires import Requirement
-          2 
-          3 os_path_req = Requirement(_import='path', _from='os')
-          4 
-          5 @os_path_req
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
-
-
-    ModuleNotFoundError: No module named 'funkify'
-
-
 ## Enforcing requirements
 
 
@@ -283,28 +177,11 @@ except requires.RequirementError as err:
     print(err)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    ModuleNotFoundError                       Traceback (most recent call last)
-
-    <ipython-input-1-fb7ad22150e0> in <module>
-    ----> 1 import requires
-          2 
-          3 try:
-          4     import alibrary
-          5 except ModuleNotFoundError:
-
-
-    /mnt/d/dgpy-dev/dgpy-libs/libs/requires/requires/__init__.py in <module>
-          1 # -*- coding: utf-8 -*-
-          2 """`requires` ~ make modules callable"""
-    ----> 3 from funkify import funkify
-          4 from requires._meta import __version__
-          5 from requires.core import (
-
-
-    ModuleNotFoundError: No module named 'funkify'
+    ERROR:
+    Module/Package(s) not found/installed; could not import: `import alibrary`
+        pip install alibrary
+        conda install -c conda-forge alibrary-conda-listing
+        Install details
 
 
 ## Less verbose version:
