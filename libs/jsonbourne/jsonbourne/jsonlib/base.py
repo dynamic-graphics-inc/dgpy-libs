@@ -1,15 +1,44 @@
 # -*- coding: utf-8 -*-
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
-from decimal import Decimal
-from pathlib import Path
-from typing import Any, Callable, Optional
+from typing import Callable, Optional
 
 
 try:
     import numpy as np
 except ImportError:
     np = None
+from datetime import datetime, timedelta
+from decimal import Decimal
+from pathlib import Path
+from typing import Any
+
+
+def _json_encode_default(obj: Any) -> Any:
+    if np:
+        if isinstance(obj, np.float):
+            return float(obj)
+        if isinstance(obj, np.int):
+            return int(obj)
+        if isinstance(obj, (np.ndarray, np.generic)):
+            return obj.tolist()
+
+    if isinstance(obj, bytes):
+        return str(obj, encoding="utf-8")
+    if isinstance(obj, Path):
+        return str(obj)
+    if isinstance(obj, datetime):
+        return obj.isoformat()
+    if isinstance(obj, timedelta):
+        return obj.total_seconds()
+    if isinstance(obj, Decimal):
+        return str(obj)
+    if hasattr(obj, "eject"):
+        return obj.eject()
+    if hasattr(obj, "to_dict"):
+        return obj.to_dict()
+    if hasattr(obj, "dict"):
+        return obj.dict()
+    raise TypeError("Cannot encode obj as JSON: {}".format(str(obj)))
 
 
 class JsonLibABC(ABC):
@@ -42,27 +71,7 @@ class JsonLibABC(ABC):
     def loads(string: str, **kwargs: Any) -> Any:
         ...
 
-
-def _json_encode_default(obj: Any) -> Any:
-    if np:
-        if isinstance(obj, np.float):
-            return float(obj)
-        if isinstance(obj, np.int):
-            return int(obj)
-    if isinstance(obj, bytes):
-        return str(obj, encoding="utf-8")
-    if isinstance(obj, Path):
-        return str(obj)
-    if isinstance(obj, datetime):
-        return obj.isoformat()
-    if isinstance(obj, timedelta):
-        return obj.total_seconds()
-    if isinstance(obj, Decimal):
-        return str(obj)
-    if hasattr(obj, "eject"):
-        return obj.eject()
-    if hasattr(obj, "to_dict"):
-        return obj.to_dict()
-    if hasattr(obj, "dict"):
-        return obj.dict()
-    raise TypeError("Cannot encode obj as JSON: {}".format(str(obj)))
+    @staticmethod
+    def default(obj: Any) -> Any:
+        """Default encoder"""
+        return _json_encode_default(obj)

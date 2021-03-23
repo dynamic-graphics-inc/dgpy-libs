@@ -152,6 +152,7 @@ def jsonlibs_test(session):
     session.install("coverage")
     session.install("orjson")
     session.install("python-rapidjson")
+    session.install("numpy")
     session.run(
         "pytest",
         "--cov",

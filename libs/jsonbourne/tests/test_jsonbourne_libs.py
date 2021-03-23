@@ -70,6 +70,17 @@ def test_pretty_sort_keys():
     assert len(set(a)) == 1
 
 
+def test_dump_numpy_array():
+    import numpy as np
+
+    arr = np.array([[1, 2], [3, 4]])
+    rj = RAPIDJSON.dumps(arr)
+    oj = ORJSON.dumps(arr)
+    sj = JSON_STDLIB.dumps(arr)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
 def test_datetime():
     data = {
         "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
