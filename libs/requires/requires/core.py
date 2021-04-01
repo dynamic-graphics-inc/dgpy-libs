@@ -2,6 +2,7 @@
 """Core for requires"""
 import asyncio
 import sys
+import subprocess
 
 from dataclasses import dataclass
 from functools import wraps
@@ -10,6 +11,30 @@ from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
 
 
 T = TypeVar("T")
+
+
+def yesno(question: str, default: bool = True, tries: int = 3) -> bool:
+    """Ask a yes/no question and return an answer as a boolean
+
+    Args:
+        question: Question to ask a user
+        default: True=yes; False=no; None=no-default
+        tries: number of tries before giving up
+
+    Returns:
+        bool: True/False depending on the response
+
+    """
+    valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
+    default_prompts = {None: "[y/n]", True: "[Y/n]", False: "[y/N]"}
+    if default is not None:
+        valid[""] = True if default else False
+    stdout.write("{} {} ".format(question, default_prompts[default]))
+    try:
+        return valid[input().lower()]
+    except KeyError:
+        stdout.write("Valid responses: [y]es/[n]o (case insensitive)\n")
+    return yesno(question, default)
 
 
 def _fn_globals(f: Any) -> Any:
@@ -105,6 +130,14 @@ class Requirement:
                 ],
             )
         ]
+        if sys.stdin.isatty() and len(_install_str) > 0:
+            cmd = _install_str[0]
+            if yesno(f"Do you want me to try to install it for you? `{cmd}`"):
+                try:
+                    subprocess.run(cmd)
+                    return
+                except:
+                    pass
         msg_parts = [
             f"Module/Package(s) not found/installed; could not import: `{self.import_string}`",
             *_install_str,
