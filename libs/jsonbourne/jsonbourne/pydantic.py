@@ -249,3 +249,12 @@ class JsonBaseModel(BaseModel, JsonObj):
             for k, v in ((el, getattr(cls, el)) for el in dir(cls))
             if isinstance(v, property) and v.fset is not None
         }
+
+    @classmethod
+    def _cls_field_names(cls) -> Set[str]:
+        """Return pydantic field names"""
+        return {el for el in cls.__fields__}  # type: ignore
+
+    def _field_names(self) -> Set[str]:
+        """Return pydantic field names"""
+        return self.__class__._cls_field_names()
