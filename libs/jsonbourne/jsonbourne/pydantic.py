@@ -57,7 +57,7 @@ class JsonBaseModel(BaseModel, JsonObj):
         return "".join(
             [
                 type(self).__name__,
-                "(**{\n    ",
+                "(**{\n     ",
                 pformat(self.to_dict_filter_none(), width=width)[1:-1].replace(
                     "\n", "\n    "
                 ),
