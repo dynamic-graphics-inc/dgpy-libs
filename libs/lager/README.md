@@ -1,6 +1,7 @@
 <a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
-<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/_data/dgpy_banner.svg?raw=true" alt="drawing" height="120"/>
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
+
 
 # Lager :beer:
 
@@ -30,5 +31,5 @@ from lager import LOG, lager, LAGER, log, logger  # All the same object
 LOG.info('info')
 ```
 
-    2021-03-17 09:11:10.389 | INFO     | __main__:<module>:2 - info
+    2021-04-09 15:35:33.217 | INFO     | __main__:<module>:2 - info
 

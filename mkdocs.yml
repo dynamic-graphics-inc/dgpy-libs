@@ -8,6 +8,16 @@ copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
 dev_addr: '0.0.0.0:8000'
 
+nav:
+  - Home: index.md
+  - aiopen: './libs/aiopen/README.ipynb'
+#  - asyncify: './libs/'
+#  - funkify: './libs/'
+#  - h5: './libs/'
+#  - jsonbourne: './libs/'
+#  - lager: './libs/'
+#  - requires: './libs/'
+#  - Python file: python_script.py
 
 theme:
   name: 'material'
@@ -17,7 +27,7 @@ theme:
     text: 'Roboto'
     code: 'Roboto Mono'
   palette:
-    scheme: "slate"
+#    scheme: ""
     primary: 'deep-purple'
     accent: 'teal'
   features:
@@ -30,6 +40,7 @@ markdown_extensions:
 
 plugins:
   - search
+  - mkdocs-jupyter
   - mkdocstrings:
       default_handler: python
       selection:
@@ -44,4 +55,4 @@ plugins:
             show_category_heading: true
       watch:
         - libs/jsonbourne/jsonbourne
-        
+
