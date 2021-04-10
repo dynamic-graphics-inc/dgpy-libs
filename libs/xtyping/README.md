@@ -2,7 +2,6 @@
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
 
-
 # xtyping
 
 [![Wheel](https://img.shields.io/pypi/wheel/xtyping.svg)](https://img.shields.io/pypi/wheel/xtyping.svg)
@@ -18,7 +17,7 @@ xtyping (short for extended typing) is a collection of common python type annota
 
 If you want to 'steal' this, you can copy the module `xtyping._xtyping` and never look back; alternatively you could help expand/correct this package you could send me that PR!'
 
-NOTE: This package is largely auto generated so have a grain of salt with your xtyping   
+NOTE: This package is largely auto generated so have a grain of salt with your xtyping
 
 ```python
 import xtyping as xt
@@ -40,4 +39,3 @@ Too many letters to type and 'xtyping' is a better package name (tho `typing_ext
  - Pydantic extension/integration/buzzword
  - Figure out how to test this package?
  - Steal `typing_extensions` implementation o ye ole `TypedDict`
-

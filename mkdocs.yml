@@ -9,50 +9,72 @@ remote_branch: 'gh-pages'
 dev_addr: '0.0.0.0:8000'
 
 nav:
-  - Home: index.md
-  - aiopen: './libs/aiopen/README.ipynb'
-#  - asyncify: './libs/'
-#  - funkify: './libs/'
-#  - h5: './libs/'
-#  - jsonbourne: './libs/'
-#  - lager: './libs/'
-#  - requires: './libs/'
-#  - Python file: python_script.py
+  - Home: './index.md'
+  - Libs:
+      - aiopen: './libs/aiopen/README.ipynb'
+      - asyncify: './libs/asyncify/README.ipynb'
+      - funkify: './libs/funkify/README.ipynb'
+      - h5: './libs/h5/README.ipynb'
+      - jsonbourne: './libs/jsonbourne/README.ipynb'
+      - lager: './libs/lager/README.ipynb'
+      - requires: './libs/requires/README.ipynb'
+      - xtyping: './libs/xtyping/README.ipynb'
+  - Notebooks:
+      - Cache Money: './notebooks/cache_money.ipynb'
+      - Filter None: './notebooks/filter_none.ipynb'
+      - JSON "parsing": './notebooks/json_parsing.ipynb'
+      - String Formatting: './notebooks/string_fmt.ipynb'
 
 theme:
   name: 'material'
   logo: 'images/dgpy_white_edge_small.png'
-  favicon: 'images/favicon.ico'
+  favicon: images/favicon.png
+
+  icon:
+    repo: fontawesome/brands/github-alt
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
   palette:
-#    scheme: ""
     primary: 'deep-purple'
     accent: 'teal'
   features:
-    - tabs
     - instant
+    - navigation.tabs
+    - navigation.expand
     - navigation.instant
+    - navigation.top
+
 
 markdown_extensions:
+  - pymdownx.escapeall
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.inlinehilite
+  - pymdownx.betterem:
+      smart_enable: all
   - attr_list
+  - toc:
+      permalink: ⚓︎
 
 plugins:
   - search
   - mkdocs-jupyter
-  - mkdocstrings:
-      default_handler: python
-      selection:
-        new_path_syntax: yes
-      handlers:
-        python:
-          rendering:
-            show_source: false
-            show_root_heading: true
-            show_root_full_path: true
-            show_signature_annotations: true
-            show_category_heading: true
-      watch:
-        - libs/jsonbourne/jsonbourne
 
+### MKDOCSTRINGS ###
+#  - mkdocstrings:
+#      default_handler: python
+#      selection:
+#        new_path_syntax: yes
+#      handlers:
+#        python:
+#          rendering:
+#            show_source: false
+#            show_root_heading: true
+#            show_root_full_path: true
+#            show_signature_annotations: true
+#            show_category_heading: true
+#      watch:
+#        - libs/jsonbourne/jsonbourne
+#
