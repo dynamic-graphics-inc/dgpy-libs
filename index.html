@@ -1,0 +1,928 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="Sheldon">
+      
+      
+      <link rel="icon" href="images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.1.0">
+    
+    
+      
+        <title>dgpy-libs</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.33e2939f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ef6f36e2.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#7e56c2">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="deep-purple" data-md-color-accent="teal">
+  
+    
+    <script>function __prefix(e){return new URL(".",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dgpy-libs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="dgpy-libs" class="md-header__button md-logo" aria-label="dgpy-libs" data-md-component="logo">
+      
+  <img src="images/dgpy_white_edge_small.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            dgpy-libs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/dynamic-graphics-inc/dgpy-libs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="." class="md-tabs__link md-tabs__link--active">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="libs/aiopen/" class="md-tabs__link">
+        Libs
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="notebooks/cache_money/" class="md-tabs__link">
+        Notebooks
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="dgpy-libs" class="md-nav__button md-logo" aria-label="dgpy-libs" data-md-component="logo">
+      
+  <img src="images/dgpy_white_edge_small.png" alt="logo">
+
+    </a>
+    dgpy-libs
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/dynamic-graphics-inc/dgpy-libs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="." class="md-nav__link md-nav__link--active">
+        Home
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#libs" class="md-nav__link">
+    Libs
+  </a>
+  
+    <nav class="md-nav" aria-label="Libs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aiopen-pip-install-aiopen" class="md-nav__link">
+    aiopen ~ pip install aiopen ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asyncify-pip-install-asyncify" class="md-nav__link">
+    asyncify ~ pip install asyncify ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funkify-pip-install-funkify" class="md-nav__link">
+    funkify ~ pip install funkify ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5-pip-install-h5" class="md-nav__link">
+    h5 ~ pip install h5 ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsonbourne-pip-install-jsonbourne" class="md-nav__link">
+    jsonbourne ~ pip install jsonbourne ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lager-pip-install-lager" class="md-nav__link">
+    lager ~ pip install lager ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requires-pip-install-requires" class="md-nav__link">
+    requires ~ pip install requires ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xtyping-pip-install-xtyping" class="md-nav__link">
+    xtyping ~ pip install xtyping ~
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notebooks" class="md-nav__link">
+    Notebooks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-philosopy-principles" class="md-nav__link">
+    Design PhilosoPY &amp; Principles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-packageslibs-that-integrateinspire-dgpy-libs" class="md-nav__link">
+    Third party packages/libs that integrate/inspire dgpy-libs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    Contributor(s):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    Contributing:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#todo" class="md-nav__link">
+    TODO:
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" data-md-state="indeterminate" type="checkbox" id="__nav_2" checked>
+      
+      <label class="md-nav__link" for="__nav_2">
+        Libs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Libs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Libs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/aiopen/" class="md-nav__link">
+        aiopen
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/asyncify/" class="md-nav__link">
+        asyncify
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/funkify/" class="md-nav__link">
+        funkify
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/h5/" class="md-nav__link">
+        h5
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/jsonbourne/" class="md-nav__link">
+        jsonbourne
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/lager/" class="md-nav__link">
+        lager
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/requires/" class="md-nav__link">
+        requires
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="libs/xtyping/" class="md-nav__link">
+        xtyping
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" data-md-state="indeterminate" type="checkbox" id="__nav_3" checked>
+      
+      <label class="md-nav__link" for="__nav_3">
+        Notebooks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Notebooks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Notebooks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/cache_money/" class="md-nav__link">
+        Cache Money
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/filter_none/" class="md-nav__link">
+        Filter None
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/json_parsing/" class="md-nav__link">
+        JSON "parsing"
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="notebooks/string_fmt/" class="md-nav__link">
+        String Formatting
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#libs" class="md-nav__link">
+    Libs
+  </a>
+  
+    <nav class="md-nav" aria-label="Libs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#aiopen-pip-install-aiopen" class="md-nav__link">
+    aiopen ~ pip install aiopen ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asyncify-pip-install-asyncify" class="md-nav__link">
+    asyncify ~ pip install asyncify ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funkify-pip-install-funkify" class="md-nav__link">
+    funkify ~ pip install funkify ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5-pip-install-h5" class="md-nav__link">
+    h5 ~ pip install h5 ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jsonbourne-pip-install-jsonbourne" class="md-nav__link">
+    jsonbourne ~ pip install jsonbourne ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lager-pip-install-lager" class="md-nav__link">
+    lager ~ pip install lager ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requires-pip-install-requires" class="md-nav__link">
+    requires ~ pip install requires ~
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xtyping-pip-install-xtyping" class="md-nav__link">
+    xtyping ~ pip install xtyping ~
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#notebooks" class="md-nav__link">
+    Notebooks
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-philosopy-principles" class="md-nav__link">
+    Design PhilosoPY &amp; Principles
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-party-packageslibs-that-integrateinspire-dgpy-libs" class="md-nav__link">
+    Third party packages/libs that integrate/inspire dgpy-libs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributors" class="md-nav__link">
+    Contributor(s):
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    Contributing:
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#todo" class="md-nav__link">
+    TODO:
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/dynamic-graphics-inc/dgpy-libs/edit/master/docs/index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <p><a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
+</a></p>
+<h1 id="dgpy-libs">dgpy-libs<a class="headerlink" href="#dgpy-libs" title="Permanent link">⚓︎</a></h1>
+<p><a href="https://mybinder.org/v2/gh/dynamic-graphics-inc/dgpy-libs/master?filepath=README.ipynb"><img alt="Binder" src="https://mybinder.org/badge_logo.svg" /></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a></p>
+<p>Docs: <a href="https://dynamic-graphics-inc.github.io/dgpy-libs/">dynamic-graphics-inc.github.io/dgpy-libs</a></p>
+<p>Repo: <a href="https://github.com/dynamic-graphics-inc/dgpy-libs">github.com/dynamic-graphics-inc/dgpy-libs</a></p>
+<hr />
+<p>Dynamic Graphics python libraries, home of:</p>
+<ul>
+<li>Callable modules and packages</li>
+<li>Recursive list/gen comprehensions</li>
+<li>Nutty decorators</li>
+<li>Secret agent JSON Bourne</li>
+<li>The best package names around</li>
+<li>Notebooks with funky python</li>
+<li>Dynamic imports</li>
+</ul>
+<h2 id="libs">Libs<a class="headerlink" href="#libs" title="Permanent link">⚓︎</a></h2>
+<div class="highlight"><pre><span></span><code>libs
+├── aiopen
+├── asyncify
+├── funkify
+├── h5
+├── jsonbourne
+├── lager
+├── requires
+└── xtyping
+</code></pre></div>
+<h3 id="aiopen-pip-install-aiopen"><a href="./libs/aiopen">aiopen</a> ~ <code>pip install aiopen</code> ~ <a href="https://img.shields.io/pypi/wheel/aiopen.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/aiopen.svg" /></a> <a href="https://img.shields.io/pypi/v/aiopen.svg"><img alt="Version" src="https://img.shields.io/pypi/v/aiopen.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/aiopen.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/aiopen.svg" /></a><a class="headerlink" href="#aiopen-pip-install-aiopen" title="Permanent link">⚓︎</a></h3>
+<h3 id="asyncify-pip-install-asyncify"><a href="./libs/asyncify">asyncify</a> ~ <code>pip install asyncify</code> ~ <a href="https://img.shields.io/pypi/wheel/asyncify.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/asyncify.svg" /></a> <a href="https://img.shields.io/pypi/v/asyncify.svg"><img alt="Version" src="https://img.shields.io/pypi/v/asyncify.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/asyncify.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/asyncify.svg" /></a><a class="headerlink" href="#asyncify-pip-install-asyncify" title="Permanent link">⚓︎</a></h3>
+<h3 id="funkify-pip-install-funkify"><a href="./libs/funkify">funkify</a> ~ <code>pip install funkify</code> ~ <a href="https://img.shields.io/pypi/wheel/funkify.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/funkify.svg" /></a> <a href="https://img.shields.io/pypi/v/funkify.svg"><img alt="Version" src="https://img.shields.io/pypi/v/funkify.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/funkify.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/funkify.svg" /></a><a class="headerlink" href="#funkify-pip-install-funkify" title="Permanent link">⚓︎</a></h3>
+<h3 id="h5-pip-install-h5"><a href="./libs/h5">h5</a> ~ <code>pip install h5</code> ~ <a href="https://img.shields.io/pypi/wheel/h5.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/h5.svg" /></a> <a href="https://img.shields.io/pypi/v/h5.svg"><img alt="Version" src="https://img.shields.io/pypi/v/h5.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/h5.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/h5.svg" /></a><a class="headerlink" href="#h5-pip-install-h5" title="Permanent link">⚓︎</a></h3>
+<h3 id="jsonbourne-pip-install-jsonbourne"><a href="./libs/jsonbourne">jsonbourne</a> ~ <code>pip install jsonbourne</code> ~ <a href="https://img.shields.io/pypi/wheel/jsonbourne.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/jsonbourne.svg" /></a> <a href="https://img.shields.io/pypi/v/jsonbourne.svg"><img alt="Version" src="https://img.shields.io/pypi/v/jsonbourne.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/jsonbourne.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/jsonbourne.svg" /></a><a class="headerlink" href="#jsonbourne-pip-install-jsonbourne" title="Permanent link">⚓︎</a></h3>
+<h3 id="lager-pip-install-lager"><a href="./libs/lager">lager</a> ~ <code>pip install lager</code> ~ <a href="https://img.shields.io/pypi/wheel/lager.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/lager.svg" /></a> <a href="https://img.shields.io/pypi/v/lager.svg"><img alt="Version" src="https://img.shields.io/pypi/v/lager.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/lager.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/lager.svg" /></a><a class="headerlink" href="#lager-pip-install-lager" title="Permanent link">⚓︎</a></h3>
+<h3 id="requires-pip-install-requires"><a href="./libs/requires">requires</a> ~ <code>pip install requires</code> ~ <a href="https://img.shields.io/pypi/wheel/requires.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/requires.svg" /></a> <a href="https://img.shields.io/pypi/v/requires.svg"><img alt="Version" src="https://img.shields.io/pypi/v/requires.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/requires.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/requires.svg" /></a><a class="headerlink" href="#requires-pip-install-requires" title="Permanent link">⚓︎</a></h3>
+<h3 id="xtyping-pip-install-xtyping"><a href="./libs/xtyping">xtyping</a> ~ <code>pip install xtyping</code> ~ <a href="https://img.shields.io/pypi/wheel/xtyping.svg"><img alt="Wheel" src="https://img.shields.io/pypi/wheel/xtyping.svg" /></a> <a href="https://img.shields.io/pypi/v/xtyping.svg"><img alt="Version" src="https://img.shields.io/pypi/v/xtyping.svg" /></a> <a href="https://img.shields.io/pypi/pyversions/xtyping.svg"><img alt="py_versions" src="https://img.shields.io/pypi/pyversions/xtyping.svg" /></a><a class="headerlink" href="#xtyping-pip-install-xtyping" title="Permanent link">⚓︎</a></h3>
+<h2 id="notebooks">Notebooks<a class="headerlink" href="#notebooks" title="Permanent link">⚓︎</a></h2>
+<div class="highlight"><pre><span></span><code>notebooks/
+├── cache_money.ipynb
+├── filter_none.ipynb
+├── json_parsing.ipynb
+└── string_fmt.ipynb
+</code></pre></div>
+<ul>
+<li><a href="./notebooks/filter_none">Filtering None and False-y values</a></li>
+<li><a href="./notebooks/cache_money">cache money! <code>functools.lru_cache</code></a></li>
+<li><a href="./notebooks/string_fmt">String formatting funks</a></li>
+<li><a href="./notebooks/json_parsing">JSON parsing vs plain-jane dictionaries</a></li>
+</ul>
+<h2 id="design-philosopy-principles">Design PhilosoPY &amp; Principles<a class="headerlink" href="#design-philosopy-principles" title="Permanent link">⚓︎</a></h2>
+<ul>
+<li>dgpy-libs must have awesome lib/pkg names and be mostly polished</li>
+<li>Embrace <code>async/await</code></li>
+<li>Python 3.6 'n up, baby! Get w/ the program (the python program)</li>
+<li>Write non-standard but elegant python, bc PEP 20 is lame and not fun (PEP 20: "There should be one-- and preferably only one --obvious way to do it...")</li>
+<li>TYPE ANNOTATE ERR-THANG</li>
+<li>Prefer pure-python &amp; compiled-3rd-party-libs over writing packages with compiled extensions</li>
+<li>Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present</li>
+<li>Offer integrations/extensions with the super-hot-fire modern python packages all the kids are using</li>
+<li>Optional dependencies are good! Missing optional deps should trigger an error msg that is helpful to installing the relevant dependency ONLY IF THE DEPENDENCY IS NEEDED.</li>
+<li>100% test coverage <code>!=</code> good/bug-free code</li>
+</ul>
+<h2 id="third-party-packageslibs-that-integrateinspire-dgpy-libs">Third party packages/libs that integrate/inspire dgpy-libs<a class="headerlink" href="#third-party-packageslibs-that-integrateinspire-dgpy-libs" title="Permanent link">⚓︎</a></h2>
+<ul>
+<li>pydantic</li>
+<li>loguru</li>
+<li>httpx (forget about requests)</li>
+<li>fastapi</li>
+<li>attrs</li>
+<li>typer</li>
+<li>poetry</li>
+<li>orjson</li>
+<li>rapidjson/python-rapidjson</li>
+<li>h5py</li>
+<li>Most of the libs by aio-libs</li>
+<li>rich</li>
+<li>nox</li>
+</ul>
+<hr />
+<h2 id="contributors">Contributor(s):<a class="headerlink" href="#contributors" title="Permanent link">⚓︎</a></h2>
+<ul>
+<li><a href="https://github.com/jessekrubin">Jesse Rubin</a> ~ <code>jesse@dgi.com</code> / <code>jessekrubin@gmail.com</code></li>
+</ul>
+<h2 id="contributing">Contributing:<a class="headerlink" href="#contributing" title="Permanent link">⚓︎</a></h2>
+<p>Plz do! Send me that PR!</p>
+<hr />
+<h2 id="todo">TODO:<a class="headerlink" href="#todo" title="Permanent link">⚓︎</a></h2>
+<ul>
+<li>Figure out some docs</li>
+<li>Have CI/CD auto build n publish</li>
+<li>Make some sort of change log</li>
+<li>Publish packages to conda-forge? (maybe)</li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+      
+        <a href="libs/aiopen/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              aiopen
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Dynamic Graphics Inc
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": ".", "features": ["instant", "navigation.tabs", "navigation.expand", "navigation.instant", "navigation.top"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "assets/javascripts/workers/search.fe42c31b.min.js", "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.d892486b.min.js"></script>
+      
+    
+  </body>
+</html>
