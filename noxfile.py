@@ -6,6 +6,17 @@ from shutil import which
 
 import nox
 
+libs = [
+    'aiopen',
+    'asyncify',
+    'funkify',
+    'h5',
+    'jsonbourne',
+    'lager',
+    'requires',
+    'xtyping',
+]
+
 
 def is_win() -> bool:
     """Determine if current operating system is windows
@@ -26,7 +37,7 @@ LIBS_DIR = path.join(PWD, "libs")
 
 VENV_BACKEND = None if is_win() or not which("conda") else "conda"
 LIB_DIRS = {el: path.join(LIBS_DIR, el) for el in os.listdir(LIBS_DIR) if el[0] != '.'}
-SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in os.listdir(LIBS_DIR)}
+SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in os.listdir(LIBS_DIR)}
 
 
@@ -60,12 +71,33 @@ def _get_session_python_site_packages_dir(session):
     return site_packages_dir
 
 
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake(session):
+def _flake(session):
     session.install("flake8")
     session.install("flake8-print")
     session.install("flake8-eradicate")
     session.run("flake8", *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el])
+
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def flake(session):
+    _flake(session)
+
+
+def _mypy(session):
+    session.install('mypy')
+    session.install('typing-extensions')
+    session.install('pydantic')
+    session.run(
+        'mypy',
+        '--config-file',
+        './mypy.ini',
+        *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
+    )
+
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def mypy(session):
+    _mypy(session)
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

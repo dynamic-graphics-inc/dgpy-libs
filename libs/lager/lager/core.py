@@ -180,7 +180,7 @@ def flog(
             return result
 
         if asyncio.iscoroutinefunction(funk) or asyncio.iscoroutine(funk):
-            return _flog_decorator_async
+            return _flog_decorator_async  # type: ignore
         return _flog_decorator
 
     return _flog(funk) if funk else _flog  # type: ignore

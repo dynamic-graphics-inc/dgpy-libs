@@ -119,3 +119,4 @@ node_modules/
 scratch/
 .pytype/ 
 mypy_reports/ 
+pythonenv3.8/
