@@ -4,7 +4,6 @@
 Dynamic Graphics Python
 """
 from jsonbourne import json
-from jsonbourne._import import import_json
 from jsonbourne._meta import __version__
 from jsonbourne.core import (
     JSON,
@@ -17,6 +16,7 @@ from jsonbourne.core import (
     undefined,
 )
 from jsonbourne.helpers import rm_js_comments
+from jsonbourne.json import import_json
 
 
 JSONLIB = json.__name__

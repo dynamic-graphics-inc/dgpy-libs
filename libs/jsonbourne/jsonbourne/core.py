@@ -344,7 +344,8 @@ class JsonObj(JsonObjMutableMapping):
         try:
             return self.dot_lookup(key)
         except KeyError:
-            raise KeyError(str(key))
+            ...
+        raise KeyError(str(key))
 
     def __delitem__(self, key: str) -> None:
         return self._data.__delitem__(key)
@@ -618,8 +619,7 @@ class JsonObj(JsonObjMutableMapping):
                 'strings will be split on \'.\''
             )
         parts = key.split(".") if isinstance(key, str) else list(key)
-
-        root_val: Any = self._data.get(parts[0])
+        root_val: Any = self._data[parts[0]]
         cur_val = root_val
         for ix, part in enumerate(parts[1:], start=1):
             try:
@@ -1013,9 +1013,26 @@ class JSON(metaclass=JSONMeta):
         return json.loads(string)
 
     @staticmethod
-    def json_lib() -> Any:
+    def use_orjson() -> None:
+        json.use_orjson()
+
+    @staticmethod
+    def use_rapidjson() -> None:
+        json.use_rapidjson()
+
+    @staticmethod
+    def use_json_stdlib() -> None:
+        json.use_json_stdlib()
+
+    @staticmethod
+    def which() -> str:
         """Return the name of the JSON library being used as a backend"""
-        return json._json.__class__.__name__
+        return json.which()
+
+    @staticmethod
+    def json_lib() -> str:
+        """Return the name of the JSON library being used as a backend"""
+        return json.which()
 
     @staticmethod
     def jsonify(value: Any) -> Any:

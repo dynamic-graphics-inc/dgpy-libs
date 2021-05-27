@@ -7,9 +7,11 @@ import pytest
 
 
 try:
-    from jsonbourne.jsonlib._json_stdlib import JSON_STDLIB
-    from jsonbourne.jsonlib._orjson import ORJSON
-    from jsonbourne.jsonlib._rapidjson import RAPIDJSON
+    from jsonbourne.json import JSON_STDLIB, ORJSON, RAPIDJSON
+
+    # from jsonbourne.jsonlib._json_stdlib import JSON_STDLIB
+    # from jsonbourne.jsonlib._orjson import ORJSON
+    # from jsonbourne.jsonlib._rapidjson import RAPIDJSON
 except (ImportError, ModuleNotFoundError):
     pass
 
@@ -100,12 +102,12 @@ def test_datetime():
 
 
 def test_import_rapidjson():
-    from jsonbourne._import import _import_rapidjson
+    from jsonbourne.json import _import_rapidjson
 
     rj = _import_rapidjson()
 
 
 def test_import_orjson():
-    from jsonbourne._import import _import_orjson
+    from jsonbourne.json import _import_orjson
 
     oj = _import_orjson()

@@ -7,8 +7,7 @@ from typing import Any, Dict, Set
 
 from pydantic import BaseModel, Field, ValidationError  # type: ignore
 
-from jsonbourne import json
-from jsonbourne.core import JsonObj
+from jsonbourne.core import JSON, JsonObj
 
 
 __all__ = [
@@ -29,8 +28,8 @@ class JsonBaseModelDefaultConfig:
     extra = "forbid"  # Forbid extras as strictness is good w/ python
     arbitrary_types_allowed = True  # Allow
     allow_population_by_field_name = True
-    json_loads = json.loads
-    json_dumps = json.dumps
+    json_loads = JSON.loads
+    json_dumps = JSON.dumps
 
 
 class JsonBaseModel(BaseModel, JsonObj):
