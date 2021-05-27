@@ -77,9 +77,6 @@ def _get_jsonbourne_version() -> str:
     return version
 
 
-################
-##### DGPY #####
-################
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def flake(session):
     session.install("flake8")

@@ -75,9 +75,6 @@ def _get_funkify_version() -> str:
     return version
 
 
-################
-##### DGPY #####
-################
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def flake(session):
     session.install("flake8")
