@@ -778,11 +778,12 @@ class JsonObj(JsonObjMutableMapping):
             <class 'dict'>
 
         """
-        return {
-            k: unjsonify(v)
-            # if not isinstance(v, JsonObj) else v.eject()
-            for k, v in self._data.items()
-        }
+        try:
+            return {k: unjsonify(v) for k, v in self._data.items()}
+        except RecursionError:
+            raise ValueError(
+                'JSON.stringify recursion err; cycle/circular-refs detected'
+            )
 
     def to_dict(self) -> Dict[str, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""
@@ -911,7 +912,7 @@ def jsonify(value: Any) -> Any:
 def unjsonify(value: Any) -> Any:
     """Recursively eject a JsonDit object"""
     if isinstance(value, JsonObj):
-        return {k: unjsonify(v) for k, v in value._data.items()}
+        return value._data
     if isinstance(value, list):
         return [unjsonify(el) for el in value]
     if isinstance(value, tuple):

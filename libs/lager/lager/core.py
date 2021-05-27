@@ -191,6 +191,11 @@ def handlers() -> Dict[int, Handler]:
     return logger._core.handlers  # type: ignore
 
 
+def reset() -> None:
+    logger.remove()
+    logger.add(_sys.stderr)
+
+
 __hoisted__ = [
     '_change_activation',
     '_core',
@@ -251,7 +256,6 @@ stop = LAGER.stop
 success = LAGER.success
 trace = LAGER.trace
 warning = LAGER.warning
-
 
 __all__ = [
     'loglevel',

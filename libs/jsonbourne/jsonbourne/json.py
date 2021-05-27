@@ -10,6 +10,11 @@ from typing import Any, Callable, List, Optional, Tuple, Type, Union
 
 
 try:
+    import dataclasses
+except ImportError:
+    dataclasses = None  # type: ignore
+
+try:
     import rapidjson
 
     RapidJSONEncoder = rapidjson.Encoder
@@ -26,7 +31,7 @@ try:
     import orjson
 
 except ImportError:
-    orjson = None
+    orjson = None  # type: ignore
 
 try:
     import numpy as np
@@ -38,13 +43,15 @@ JSONLIB_DEFAULT_PREFERENCE = ['orjson', 'rapidjson']
 
 def _json_encode_default(obj: Any) -> Any:
     if np:
-        if isinstance(obj, np.float):
+        if isinstance(obj, np.floating):
             return float(obj)
-        if isinstance(obj, np.int):
+        if isinstance(obj, np.integer):
             return int(obj)
         if isinstance(obj, (np.ndarray, np.generic)):
             return obj.tolist()
-
+    if dataclasses:
+        if dataclasses.is_dataclass(obj):
+            return dataclasses.asdict(obj)
     if isinstance(obj, bytes):
         return str(obj, encoding="utf-8")
     if isinstance(obj, Path):
@@ -61,6 +68,7 @@ def _json_encode_default(obj: Any) -> Any:
         return obj.to_dict()
     if hasattr(obj, "dict"):
         return obj.dict()
+
     raise TypeError("Cannot encode obj as JSON: {}".format(str(obj)))
 
 

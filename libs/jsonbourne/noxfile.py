@@ -146,13 +146,14 @@ def attrs_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def jsonlibs_test(session):
+@nox.parametrize('numpy', ['1.19', '1.20'])
+def jsonlibs_test(session, numpy):
     session.install("pytest")
     session.install("pytest-cov")
     session.install("coverage")
     session.install("orjson")
     session.install("python-rapidjson")
-    session.install("numpy")
+    session.install(f"numpy=={numpy}")
     session.run(
         "pytest",
         "--cov",
@@ -161,6 +162,23 @@ def jsonlibs_test(session):
         "jsonlibs",
         TESTS_DIRPATH,
     )
+
+# @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+# def jsonlibs_test(session):
+#     session.install("pytest")
+#     session.install("pytest-cov")
+#     session.install("coverage")
+#     session.install("orjson")
+#     session.install("python-rapidjson")
+#     session.install("numpy")
+#     session.run(
+#         "pytest",
+#         "--cov",
+#         "--cov-append",
+#         "-m",
+#         "jsonlibs",
+#         TESTS_DIRPATH,
+#         )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

@@ -519,3 +519,37 @@ def test_lookup_ops():
     assert 'val' == d['sub.key']
     assert 'val' == d['sub', 'key']
     assert 'val' == d[('sub', 'key')]
+
+
+def test_cycle_eject():
+    a = JsonObj(**{"a": 'c', "herm": 123})
+    b = JsonObj(**{"c": 'c', 'd': a})
+    a.circle = b
+    astring = str(a)
+    assert isinstance(astring, str)
+
+
+def test_cycle_stringify():
+    a = JsonObj(**{"a": 'c', "herm": 123})
+    b = JsonObj(**{"c": 'c', 'd': a})
+    a.circle = b
+    with pytest.raises((TypeError, ValueError)):
+        json_str = a.to_json()
+
+
+def test_dataclass_stringify():
+    a = JsonObj(**{"a": 'c', "herm": 123})
+
+    from dataclasses import dataclass
+
+    @dataclass()
+    class DataThing:
+        n: int
+        s: str
+
+    data = DataThing(n=1, s='stringy')
+    data_string = JSON.stringify(data)
+    assert data_string == '{"n":1,"s":"stringy"}'
+    a.data = data
+    nested_str = JSON.stringify(a)
+    assert nested_str == '{"a":"c","herm":123,"data":{"n":1,"s":"stringy"}}'
