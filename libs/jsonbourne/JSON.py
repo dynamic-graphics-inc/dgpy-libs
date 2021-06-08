@@ -3,7 +3,7 @@
 import sys
 
 from jsonbourne import __version__, json
-from jsonbourne._import import import_json
+from jsonbourne.json import import_json
 from jsonbourne.core import (
     JSON,
     UNDEFINED,
