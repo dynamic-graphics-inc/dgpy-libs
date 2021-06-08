@@ -135,3 +135,11 @@ def update_metadata(session):
         metadata_filepath = path.join(dirpath, libname, '_meta.py')
         with open(metadata_filepath, 'w') as f:
             f.write(metadata_file_string)
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def mkdocs(session):
+    session.install('mkdocs')
+    session.install('mkdocs-material')
+    session.install('mkdocs-jupyter')
+    session.run('mkdocs', 'build')
+
