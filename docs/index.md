@@ -68,7 +68,6 @@ This repo (dgpy-libs) are the polished gems formed under intense pressure below 
  - Python 3.6 'n up, baby! (May move to 3.7 for `__future___.annotations`... tbd)
  - Use type annotations everywhere
  - No dead or commented out code
- - 
  - Prefer pure-python & compiled-3rd-party-libs over writing packages with compiled extensions
  - Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present
  - Offer integrations with the super-hot-fire modern python packages all the kids are using
