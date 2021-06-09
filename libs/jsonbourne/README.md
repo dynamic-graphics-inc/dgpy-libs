@@ -456,7 +456,7 @@ print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.jsonlib._rapidjson.RAPIDJSON'>
+    <class 'jsonbourne.json.RAPIDJSON'>
     {"a":1,"b":2,"c":3}
 
 
