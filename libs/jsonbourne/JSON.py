@@ -25,6 +25,12 @@ dumpb = JSON.dumpb
 loads = JSON.loads
 parse = JSON.parse
 json_lib = JSON.json_lib
+which = JSON.which
+use_orjson = JSON.use_orjson
+use_rapidjson = JSON.use_rapidjson
+use_json_stdlib = JSON.use_json_stdlib
+jsonify = JSON.jsonify
+unjsonify = JSON.unjsonify
 JSONDecodeError = JSON.JSONDecodeError
 
 __all__ = [
@@ -37,6 +43,9 @@ __all__ = [
     'JSONModuleCls',
     # import
     'import_json',
+    'use_orjson',
+    'use_rapidjson',
+    'use_json_stdlib',
     # util funks
     'stringify',
     'binify',
@@ -44,6 +53,8 @@ __all__ = [
     'dumpb',
     'loads',
     'json_lib',
+    'jsonify',
+    'unjsonify',
     'parse',
     'undefined',
     'UNDEFINED',

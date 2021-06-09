@@ -385,7 +385,7 @@ def use_rapidjson() -> None:
 
 def use_json_stdlib() -> None:
     global JSONLIB
-    JSONLIB = _import_orjson()
+    JSONLIB = _import_json_stdlib()
 
 
 def use_json() -> None:
