@@ -39,3 +39,41 @@ def test_xtyping_all():
     if not all(el in xtyping_all for el in non_typing_members):
         missing = sorted([el for el in non_typing_members if el not in xtyping_all])
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+
+
+def test_xtyping_imports():
+    for el in xtyping.__all__:
+        if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
+            assert hasattr(xtyping, el)
+
+
+def test_xtyping_imports_shed():
+    missing = set()
+    for el in xtyping.__all_shed__:
+        if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
+            if not hasattr(xtyping, el):
+                missing.add(el)
+    if missing:
+        raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+
+
+def test_xtyping_imports_typing():
+    missing = set()
+    for el in xtyping.__all_typing__:
+        if not hasattr(xtyping, el):
+            missing.add(el)
+    if missing:
+        raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+
+
+# def test_all_correct_order_no_dups():
+# correct_order = [
+#     *xtyping.__all_typing__,
+#     *xtyping.__all_typing_extensions__,
+#     *xtyping.__all_shed__,
+# ]
+# seen = set()
+# seen_add = seen.add
+# ordered_no_dupes = [x for x in correct_order if not (x in seen or seen_add(x))]
+# assert ordered_no_dupes == xtyping.__all__
+# assert len(correct_order) == len(set(correct_order))
