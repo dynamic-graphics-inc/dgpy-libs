@@ -122,7 +122,7 @@ print(
     xt.MutableSequence  ~  typing.MutableSequence  ~  typing.MutableSequence
     xt.MutableSet  ~  typing.MutableSet  ~  typing.MutableSet
     xt.NamedTuple  ~  typing.NamedTuple  ~  <class 'typing.NamedTuple'>
-    xt.NewType  ~  typing.NewType  ~  <function NewType at 0x7fa14b389a60>
+    xt.NewType  ~  typing.NewType  ~  <function NewType at 0x7fbb2a9dca60>
     xt.Optional  ~  typing.Optional  ~  typing.Optional
     xt.Reversible  ~  typing.Reversible  ~  typing.Reversible
     xt.Sequence  ~  typing.Sequence  ~  typing.Sequence
@@ -141,11 +141,11 @@ print(
     xt.TypeVar  ~  typing.TypeVar  ~  <class 'typing.TypeVar'>
     xt.Union  ~  typing.Union  ~  typing.Union
     xt.ValuesView  ~  typing.ValuesView  ~  typing.ValuesView
-    xt.cast  ~  typing.cast  ~  <function cast at 0x7fa14b3828b0>
-    xt.get_type_hints  ~  typing.get_type_hints  ~  <function get_type_hints at 0x7fa14b3829d0>
-    xt.no_type_check  ~  typing.no_type_check  ~  <function no_type_check at 0x7fa14b382b80>
-    xt.no_type_check_decorator  ~  typing.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fa14b382c10>
-    xt.overload  ~  typing.overload  ~  <function overload at 0x7fa14b382d30>
+    xt.cast  ~  typing.cast  ~  <function cast at 0x7fbb2a9d48b0>
+    xt.get_type_hints  ~  typing.get_type_hints  ~  <function get_type_hints at 0x7fbb2a9d49d0>
+    xt.no_type_check  ~  typing.no_type_check  ~  <function no_type_check at 0x7fbb2a9d4b80>
+    xt.no_type_check_decorator  ~  typing.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fbb2a9d4c10>
+    xt.overload  ~  typing.overload  ~  <function overload at 0x7fbb2a9d4d30>
     xt.__all_typing__  ~  typing.__all_typing__  ~  ['AbstractSet', 'Any', 'AnyStr', 'AsyncContextManager', 'AsyncGenerator', 'AsyncIterable', 'AsyncIterator', 'Awaitable', 'ByteString', 'Callable', 'ChainMap', 'ClassVar', 'Collection', 'Container', 'ContextManager', 'Coroutine', 'Counter', 'DefaultDict', 'Deque', 'Dict', 'FrozenSet', 'Generator', 'Generic', 'Hashable', 'IO', 'ItemsView', 'Iterable', 'Iterator', 'KeysView', 'List', 'Mapping', 'MappingView', 'MutableMapping', 'MutableSequence', 'MutableSet', 'NamedTuple', 'NewType', 'Optional', 'Reversible', 'Sequence', 'Set', 'Sized', 'SupportsAbs', 'SupportsBytes', 'SupportsComplex', 'SupportsFloat', 'SupportsInt', 'SupportsRound', 'TYPE_CHECKING', 'Text', 'Tuple', 'Type', 'TypeVar', 'Union', 'ValuesView', 'cast', 'get_type_hints', 'no_type_check', 'no_type_check_decorator', 'overload', '__all_typing__']
     
     
@@ -188,7 +188,7 @@ print(
     xt.MutableSequence  ~  typing_extensions.MutableSequence  ~  typing.MutableSequence
     xt.MutableSet  ~  typing_extensions.MutableSet  ~  typing.MutableSet
     xt.NamedTuple  ~  typing_extensions.NamedTuple  ~  <class 'typing.NamedTuple'>
-    xt.NewType  ~  typing_extensions.NewType  ~  <function NewType at 0x7fa14b389a60>
+    xt.NewType  ~  typing_extensions.NewType  ~  <function NewType at 0x7fbb2a9dca60>
     xt.Optional  ~  typing_extensions.Optional  ~  typing.Optional
     xt.Reversible  ~  typing_extensions.Reversible  ~  typing.Reversible
     xt.Sequence  ~  typing_extensions.Sequence  ~  typing.Sequence
@@ -207,11 +207,11 @@ print(
     xt.TypeVar  ~  typing_extensions.TypeVar  ~  <class 'typing.TypeVar'>
     xt.Union  ~  typing_extensions.Union  ~  typing.Union
     xt.ValuesView  ~  typing_extensions.ValuesView  ~  typing.ValuesView
-    xt.cast  ~  typing_extensions.cast  ~  <function cast at 0x7fa14b3828b0>
-    xt.get_type_hints  ~  typing_extensions.get_type_hints  ~  <function get_type_hints at 0x7fa14b3829d0>
-    xt.no_type_check  ~  typing_extensions.no_type_check  ~  <function no_type_check at 0x7fa14b382b80>
-    xt.no_type_check_decorator  ~  typing_extensions.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fa14b382c10>
-    xt.overload  ~  typing_extensions.overload  ~  <function overload at 0x7fa14b382d30>
+    xt.cast  ~  typing_extensions.cast  ~  <function cast at 0x7fbb2a9d48b0>
+    xt.get_type_hints  ~  typing_extensions.get_type_hints  ~  <function get_type_hints at 0x7fbb2a9d49d0>
+    xt.no_type_check  ~  typing_extensions.no_type_check  ~  <function no_type_check at 0x7fbb2a9d4b80>
+    xt.no_type_check_decorator  ~  typing_extensions.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fbb2a9d4c10>
+    xt.overload  ~  typing_extensions.overload  ~  <function overload at 0x7fbb2a9d4d30>
     xt.__all_typing__  ~  typing_extensions.__all_typing__  ~  ['AbstractSet', 'Any', 'AnyStr', 'AsyncContextManager', 'AsyncGenerator', 'AsyncIterable', 'AsyncIterator', 'Awaitable', 'ByteString', 'Callable', 'ChainMap', 'ClassVar', 'Collection', 'Container', 'ContextManager', 'Coroutine', 'Counter', 'DefaultDict', 'Deque', 'Dict', 'FrozenSet', 'Generator', 'Generic', 'Hashable', 'IO', 'ItemsView', 'Iterable', 'Iterator', 'KeysView', 'List', 'Mapping', 'MappingView', 'MutableMapping', 'MutableSequence', 'MutableSet', 'NamedTuple', 'NewType', 'Optional', 'Reversible', 'Sequence', 'Set', 'Sized', 'SupportsAbs', 'SupportsBytes', 'SupportsComplex', 'SupportsFloat', 'SupportsInt', 'SupportsRound', 'TYPE_CHECKING', 'Text', 'Tuple', 'Type', 'TypeVar', 'Union', 'ValuesView', 'cast', 'get_type_hints', 'no_type_check', 'no_type_check_decorator', 'overload', '__all_typing__']
     
     

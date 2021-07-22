@@ -31,5 +31,5 @@ from lager import LOG, lager, LAGER, log, logger  # All the same object
 LOG.info('info')
 ```
 
-    2021-07-22 12:17:42.067 | INFO     | __main__:<module>:2 - info
+    2021-07-22 12:29:22.853 | INFO     | __main__:<module>:2 - info
 
