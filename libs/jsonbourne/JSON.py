@@ -3,7 +3,6 @@
 import sys
 
 from jsonbourne import __version__, json
-from jsonbourne.json import import_json
 from jsonbourne.core import (
     JSON,
     UNDEFINED,
@@ -15,6 +14,7 @@ from jsonbourne.core import (
     null,
     undefined,
 )
+from jsonbourne.json import import_json
 
 
 sys.modules['JSON'].__class__ = JSONModuleCls
