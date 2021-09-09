@@ -12,14 +12,14 @@ from jsonbourne import JSON, JsonObj
 pytestmark = [pytest.mark.basic]
 
 
-def test_dot_access_attr_vs_item():
+def test_dot_access_attr_vs_item() -> None:
     jd = JSON({"socket.io": "data"})
     assert jd['socket.io'] == "data"
     with pytest.raises(AttributeError):
         socketiothing = jd.socket.io
 
 
-def test_dot_access_nested():
+def test_dot_access_nested() -> None:
     jd = JSON({"socket.io": {"key": "value", "two": 2}})
     expected_dot_keys_list = [('socket.io', 'key'), ('socket.io', 'two')]
     assert jd.dot_keys_list() == expected_dot_keys_list
@@ -107,7 +107,7 @@ def test_json_obj_property() -> None:
     #     thing2['herm herm herm import'] = 'should break'
 
 
-def test_protected_attrs_slash_members():
+def test_protected_attrs_slash_members() -> None:
     j = JsonObj()
     j.key = 'value'
     j['12'] = 'twelve'
@@ -119,7 +119,7 @@ def test_protected_attrs_slash_members():
     assert j['items'] == [1, 2, 3, 4]
 
 
-def test_number_keys():
+def test_number_keys() -> None:
     j = JsonObj()
     j.key = 'value'
     j['12'] = 'twelve'
@@ -151,7 +151,7 @@ data = {
 }
 
 
-def test_dot_items():
+def test_dot_items() -> None:
     jd: JsonObj = JSON(data)
 
     expected = [
@@ -366,13 +366,13 @@ def test_dot_list_keys_sorted() -> None:
     )
 
 
-def test_json_dict_reject_non_string_key():
+def test_json_dict_reject_non_string_key() -> None:
     t1 = {1: None, 2: 2}
     with pytest.raises(ValueError):
         jd = JsonObj(t1)
 
 
-def test_filter_none():
+def test_filter_none() -> None:
     t1 = {
         "falsey_dict": {},
         "falsey_list": [],
@@ -409,7 +409,7 @@ def test_filter_none():
     )
 
 
-def test_filter_none_recursive():
+def test_filter_none_recursive() -> None:
     t1 = {
         "falsey_dict": {},
         "falsey_list": [],
@@ -445,7 +445,7 @@ def test_filter_none_recursive():
     )
 
 
-def test_filter_false():
+def test_filter_false() -> None:
     t1 = {
         "falsey_dict": {},
         "falsey_list": [],
@@ -478,7 +478,7 @@ def test_filter_false():
     )
 
 
-def test_filter_falsey_recursive():
+def test_filter_falsey_recursive() -> None:
     d = {
         "falsey_dict": {},
         "falsey_list": [],
@@ -499,7 +499,7 @@ def test_filter_falsey_recursive():
     assert result == JsonObj(**{"b": 2, "c": {"d": "herm"}})
 
 
-def test_lookup_ops():
+def test_lookup_ops() -> None:
     data = {
         "key": "value",
         "list": [1, 2, 3, 4, 5],
@@ -521,7 +521,7 @@ def test_lookup_ops():
     assert 'val' == d[('sub', 'key')]
 
 
-def test_cycle_eject():
+def test_cycle_eject() -> None:
     a = JsonObj(**{"a": 'c', "herm": 123})
     b = JsonObj(**{"c": 'c', 'd': a})
     a.circle = b
@@ -529,7 +529,7 @@ def test_cycle_eject():
     assert isinstance(astring, str)
 
 
-def test_cycle_stringify():
+def test_cycle_stringify() -> None:
     a = JsonObj(**{"a": 'c', "herm": 123})
     b = JsonObj(**{"c": 'c', 'd': a})
     a.circle = b
@@ -537,7 +537,7 @@ def test_cycle_stringify():
         json_str = a.to_json()
 
 
-def test_dataclass_stringify():
+def test_dataclass_stringify() -> None:
     a = JsonObj(**{"a": 'c', "herm": 123})
 
     from dataclasses import dataclass

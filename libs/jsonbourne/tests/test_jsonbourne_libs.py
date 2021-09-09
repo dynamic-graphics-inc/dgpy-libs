@@ -32,7 +32,7 @@ D = {
 }
 
 
-def test_basic():
+def test_basic() -> None:
     rj = RAPIDJSON.dumps(D)
     oj = ORJSON.dumps(D)
     sj = JSON_STDLIB.dumps(D)
@@ -40,7 +40,7 @@ def test_basic():
     assert len(set(a)) == 1
 
 
-def test_pretty():
+def test_pretty() -> None:
     rj = RAPIDJSON.dumps(D, pretty=True)
     oj = ORJSON.dumps(D, pretty=True)
     sj = JSON_STDLIB.dumps(D, pretty=True)
@@ -48,7 +48,7 @@ def test_pretty():
     assert len(set(a)) == 1
 
 
-def test_sort_keys():
+def test_sort_keys() -> None:
     rj = RAPIDJSON.dumps(D, sort_keys=True)
     oj = ORJSON.dumps(D, sort_keys=True)
     sj = JSON_STDLIB.dumps(D, sort_keys=True)
@@ -56,7 +56,7 @@ def test_sort_keys():
     assert len(set(a)) == 1
 
 
-def test_append_newline():
+def test_append_newline() -> None:
     rj = RAPIDJSON.dumps(D, append_newline=True)
     oj = ORJSON.dumps(D, append_newline=True)
     sj = JSON_STDLIB.dumps(D, append_newline=True)
@@ -64,7 +64,7 @@ def test_append_newline():
     assert len(set(a)) == 1
 
 
-def test_pretty_sort_keys():
+def test_pretty_sort_keys() -> None:
     rj = RAPIDJSON.dumps(D, pretty=True, sort_keys=True)
     oj = ORJSON.dumps(D, pretty=True, sort_keys=True)
     sj = JSON_STDLIB.dumps(D, pretty=True, sort_keys=True)
@@ -72,7 +72,7 @@ def test_pretty_sort_keys():
     assert len(set(a)) == 1
 
 
-def test_dump_numpy_array():
+def test_dump_numpy_array() -> None:
     import numpy as np
 
     arr = np.array([[1, 2], [3, 4]])
@@ -83,7 +83,7 @@ def test_dump_numpy_array():
     assert len(set(a)) == 1
 
 
-def test_datetime():
+def test_datetime() -> None:
     data = {
         "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
@@ -101,13 +101,13 @@ def test_datetime():
     assert all(isinstance(el, bytes) for el in b)
 
 
-def test_import_rapidjson():
+def test_import_rapidjson() -> None:
     from jsonbourne.json import _import_rapidjson
 
     rj = _import_rapidjson()
 
 
-def test_import_orjson():
+def test_import_orjson() -> None:
     from jsonbourne.json import _import_orjson
 
     oj = _import_orjson()

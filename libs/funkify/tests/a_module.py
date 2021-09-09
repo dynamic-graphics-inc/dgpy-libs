@@ -2,5 +2,5 @@ import funkify
 
 
 @funkify
-def main():
+def main() -> int:
     return 123

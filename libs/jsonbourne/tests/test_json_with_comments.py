@@ -9,7 +9,7 @@ from jsonbourne.helpers import rm_js_comments
 PWD = path.dirname(path.abspath(__file__))
 
 
-def test_strip_comments_from_json():
+def test_strip_comments_from_json() -> None:
     rush_with_comments_filepath = path.join(PWD, 'data', 'rush.comments.json')
     rush_no_comments_filepath = path.join(PWD, 'data', 'rush.no-comments.json')
 

@@ -21,11 +21,11 @@ def _get_version() -> str:
     return version
 
 
-def test_version():
+def test_version() -> None:
     assert xtyping.__version__ == _get_version()
 
 
-def test_xtyping_all():
+def test_xtyping_all() -> None:
     members = dir(xtyping)
     a = xtyping.__all_typing__
     non_typing_members = [
@@ -41,13 +41,13 @@ def test_xtyping_all():
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
 
 
-def test_xtyping_imports():
+def test_xtyping_imports() -> None:
     for el in xtyping.__all__:
         if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
             assert hasattr(xtyping, el)
 
 
-def test_xtyping_imports_shed():
+def test_xtyping_imports_shed() -> None:
     missing = set()
     for el in xtyping.__all_shed__:
         if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
@@ -57,7 +57,7 @@ def test_xtyping_imports_shed():
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
 
 
-def test_xtyping_imports_typing():
+def test_xtyping_imports_typing() -> None:
     missing = set()
     for el in xtyping.__all_typing__:
         if not hasattr(xtyping, el):

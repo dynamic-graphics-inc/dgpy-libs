@@ -11,7 +11,7 @@ from requires.core import (
 )
 
 
-def test_parse_import_xxx():
+def test_parse_import_xxx() -> None:
     s = "import json"
     a = string2requirement(s)
     print(a)
@@ -20,7 +20,7 @@ def test_parse_import_xxx():
     assert a._from == None
 
 
-def test_parse_from_xxx_import_yyy():
+def test_parse_from_xxx_import_yyy() -> None:
     s = "from json import dumps"
     a = string2requirement(s)
     print(a)
@@ -36,7 +36,7 @@ def test_parse_from_xxx_import_yyy():
     assert a._from == "json"
 
 
-def test_parse_from_xxx_import_yyy_as_zzz():
+def test_parse_from_xxx_import_yyy_as_zzz() -> None:
     s = "from json import dumps as DUMPIT"
     a = string2requirement(s)
     print(a)
@@ -47,7 +47,7 @@ def test_parse_from_xxx_import_yyy_as_zzz():
     assert a.pkg_basename == "json"
 
 
-def test_parse_from_xxx_import_yyy_as_zzz_nested():
+def test_parse_from_xxx_import_yyy_as_zzz_nested() -> None:
     s = "from os.path import join as os_path_join"
     a = string2requirement(s)
     print(a)
@@ -58,7 +58,7 @@ def test_parse_from_xxx_import_yyy_as_zzz_nested():
     assert a.pkg_basename == "os"
 
 
-def test_parse_from_xxx_import_yyy():
+def test_parse_from_xxx_import_yyy() -> None:
     s = "import os.path.join as os_path_join"
     a = string2requirement(s)
     print(a)
@@ -69,27 +69,27 @@ def test_parse_from_xxx_import_yyy():
     assert a.pkg_basename == "os"
 
 
-def test_requirement_import_str__from_json_import_dumps_as_dumps_funk():
+def test_requirement_import_str__from_json_import_dumps_as_dumps_funk() -> None:
     req = Requirement(_import='dumps', _from='json', _as='dumps_funk')
     assert req.import_string == 'from json import dumps as dumps_funk'
 
 
-def test_requirement_import_str__from_json_import_dumps():
+def test_requirement_import_str__from_json_import_dumps() -> None:
     req = Requirement(_import='dumps', _from='json')
     assert req.import_string == 'from json import dumps'
 
 
-def test_requirement_import_str__import_json():
+def test_requirement_import_str__import_json() -> None:
     req = Requirement(_import='json')
     assert req.import_string == 'import json'
 
 
-def test_requirement_import_str__import_json_as_jsonmod():
+def test_requirement_import_str__import_json_as_jsonmod() -> None:
     req = Requirement(_import='json', _as='jsonmod')
     assert req.import_string == 'import json as jsonmod'
 
 
-def test_requirement_import_str_rapidjson():
+def test_requirement_import_str_rapidjson() -> None:
     req = Requirement(
         _import='rapidjson',
         pip='python-rapidjson',
@@ -101,14 +101,14 @@ def test_requirement_import_str_rapidjson():
     assert req._conda_install_str().endswith('python-rapidjson')
 
 
-def test_requirement_import_str_numpy_install_str():
+def test_requirement_import_str_numpy_install_str() -> None:
     req = Requirement(_import='numpy', pip=True, conda_forge=True, conda=True)
     assert req._pip_install_str().endswith('numpy')
     assert req._conda_forge_install_str().endswith('numpy')
     assert req._conda_install_str().endswith('numpy')
 
 
-def test_jsonthing():
+def test_jsonthing() -> None:
     import json
 
     @requires("json")
@@ -120,7 +120,7 @@ def test_jsonthing():
     assert fn() == '{"herm": 1}'
 
 
-def test_json_not_imported():
+def test_json_not_imported() -> None:
     #     import requires
 
     @requires("json")
@@ -132,7 +132,7 @@ def test_json_not_imported():
     assert fn() == '{"herm": 1}'
 
 
-def test_requirement_as_decorator():
+def test_requirement_as_decorator() -> None:
     import_string = "from json import dumps"
     json_dumps_req = string2requirement(import_string)
 
@@ -145,7 +145,7 @@ def test_requirement_as_decorator():
     assert fn() == '{"herm": 1}'
 
 
-def test_requirement_as_decorator_multiple_xfail():
+def test_requirement_as_decorator_multiple_xfail() -> None:
     with pytest.raises(NameError):
 
         def fn():
@@ -160,7 +160,7 @@ def test_requirement_as_decorator_multiple_xfail():
         assert f == {"herm": 1}
 
 
-def test_requirement_as_decorator_multiple():
+def test_requirement_as_decorator_multiple() -> None:
     import_string = "from json import dumps"
     json_dumps_req = string2requirement(import_string)
     import_loads_string = "from json import loads"
@@ -180,7 +180,7 @@ def test_requirement_as_decorator_multiple():
     assert f == {"herm": 1}
 
 
-def test_requirement_as_decorator_multiple_aliases():
+def test_requirement_as_decorator_multiple_aliases() -> None:
     import_string = "from json import dumps as dumps2"
     json_dumps_req = string2requirement(import_string)
     import_loads_string = "from json import loads as loads2"
@@ -200,7 +200,7 @@ def test_requirement_as_decorator_multiple_aliases():
     assert f == {"herm": 1}
 
 
-def test_requirement_as_decorator_multiple_async_xfail():
+def test_requirement_as_decorator_multiple_async_xfail() -> None:
     import asyncio
     import sys
 
@@ -222,7 +222,7 @@ def test_requirement_as_decorator_multiple_async_xfail():
         #
 
 
-def test_requirement_as_decorator_multiple_async():
+def test_requirement_as_decorator_multiple_async() -> None:
     import_string = "from json import dumps"
     json_dumps_req = string2requirement(import_string)
     import_loads_string = "from json import loads"
@@ -244,7 +244,7 @@ def test_requirement_as_decorator_multiple_async():
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps():
+def test_from_json_import_dumps() -> None:
     @requires("from json import dumps")
     def fn():
         d = {"herm": 1}
@@ -254,7 +254,7 @@ def test_from_json_import_dumps():
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_kwargs():
+def test_from_json_import_dumps_via_kwargs() -> None:
     @requires(_from="json", _import="dumps")
     def fn():
         d = {"herm": 1}
@@ -264,7 +264,7 @@ def test_from_json_import_dumps_via_kwargs():
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_kwargs():
+def test_from_json_import_dumps_via_kwargs() -> None:
     @requires({"from": "json", "import": "dumps"})
     def fn():
         d = {"herm": 1}
@@ -274,7 +274,7 @@ def test_from_json_import_dumps_via_kwargs():
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_dict():
+def test_from_json_import_dumps_via_dict() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn():
         d = {"herm": 1}
@@ -284,7 +284,7 @@ def test_from_json_import_dumps_via_dict():
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_dicts():
+def test_from_json_import_dumps_via_dicts() -> None:
     @requires(
         {'_from': 'json', '_import': 'dumps', '_as': 'dumps_test_dicts'},
         {'from': 'json', 'import': 'loads', 'as': 'loads_test_dicts'},
@@ -300,7 +300,7 @@ def test_from_json_import_dumps_via_dicts():
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps_via_dict():
+def test_from_json_import_dumps_via_dict() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
         d = {"herm": 1}
@@ -318,7 +318,7 @@ def test_from_json_import_dumps_via_dict():
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps_via_dicts_multi_single_dec():
+def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
@@ -335,7 +335,7 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec():
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps_via_dicts_multi():
+def test_from_json_import_dumps_via_dicts_multi() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
@@ -352,7 +352,7 @@ def test_from_json_import_dumps_via_dicts_multi():
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps_as_dumpit():
+def test_from_json_import_dumps_as_dumpit() -> None:
     @requires("from json import dumps as DUMPIT")
     def fn():
         d = {"herm": 1}
@@ -362,7 +362,7 @@ def test_from_json_import_dumps_as_dumpit():
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_as_xxx_non_importable():
+def test_from_json_import_dumps_as_xxx_non_importable() -> None:
     try:
 
         @requires("from json import DUMPSNOTANATTR")
@@ -378,7 +378,7 @@ def test_from_json_import_dumps_as_xxx_non_importable():
         assert "AttributeError" in e.__str__()
 
 
-def test_requires():
+def test_requires() -> None:
     #     import requires
 
     @requires("a_fake_module")
@@ -388,7 +388,7 @@ def test_requires():
     assert fn() == 123
 
 
-def test_requires_name_error():
+def test_requires_name_error() -> None:
     with pytest.raises(RequirementError) as re:
 
         @requires("a_fake_module")
@@ -399,7 +399,7 @@ def test_requires_name_error():
         assert fn() == 123
 
 
-def test_requires_err_msg():
+def test_requires_err_msg() -> None:
     with pytest.raises(RequirementError) as re:
 
         @requires("a_fake_module")
@@ -410,7 +410,7 @@ def test_requires_err_msg():
         assert fn() == 123
 
 
-def test_stacked_requirements():
+def test_stacked_requirements() -> None:
     requires_ruamel_yaml = Requirement(
         _import='ruamel.yaml', pip='ruamel.yaml', conda=False, conda_forge='ruamel_yaml'
     )
@@ -426,7 +426,7 @@ def test_stacked_requirements():
     assert '{"herm": 123}' == jsonify(data)
 
 
-def test_module_wrap():
+def test_module_wrap() -> None:
     np_requirement = Requirement(_import='numpy', _as='np')
     np = np_requirement.__requirement__
 

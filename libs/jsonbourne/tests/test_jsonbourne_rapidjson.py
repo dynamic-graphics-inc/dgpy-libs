@@ -12,7 +12,7 @@ os.path.dirname(os.path.abspath(__file__))
 pytestmark = [pytest.mark.rapidjson, pytest.mark.optdeps]
 
 
-def test_uno():
+def test_uno() -> None:
     from jsonbourne import json
 
     dictionary = {"a": 1, "b": 2, "c": 3}
@@ -20,7 +20,7 @@ def test_uno():
     assert dictionary == json.loads(string)
 
 
-def test_rapidjson():
+def test_rapidjson() -> None:
     libname = "rapidjson"
     _rapidjson = import_json((libname,))
     dictionary = {"a": 1, "b": 2, "c": 3}

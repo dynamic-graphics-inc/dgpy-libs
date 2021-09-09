@@ -1,4 +1,4 @@
-def test_funkify_module():
+def test_funkify_module() -> None:
     from . import a_module
 
     assert a_module.main() == 123

@@ -1,7 +1,7 @@
 import pytest
 
 
-def test_requires_json_n_rapid_json():
+def test_requires_json_n_rapid_json() -> None:
     from requires import requires
 
     @requires('json')
@@ -24,7 +24,7 @@ def test_requires_json_n_rapid_json():
     #     tres()  # Will err if not install with where to install instructions
 
 
-def test_requires_json_n_rapid_json_pkg_callable():
+def test_requires_json_n_rapid_json_pkg_callable() -> None:
     import requires
 
     @requires('json')

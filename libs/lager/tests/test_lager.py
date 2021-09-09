@@ -41,7 +41,7 @@ Tests for `lager` module.
 #     logger.info('yeah yeah yeah')
 
 
-def test_lager_port():
+def test_lager_port() -> None:
     from lager import const
 
     assert const.LAGER_PORT == 52437

@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.asyncio
-async def test_asyncify():
+async def test_asyncify() -> None:
     from asyncify import asyncify
 
     @asyncify
@@ -15,7 +15,7 @@ async def test_asyncify():
 
 
 @pytest.mark.asyncio
-async def test_asyncify_funkified():
+async def test_asyncify_funkified() -> None:
     import asyncify
 
     @asyncify
