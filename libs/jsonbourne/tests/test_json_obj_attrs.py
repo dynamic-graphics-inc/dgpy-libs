@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from typing import Dict
 import pytest
 
 from jsonbourne import JsonObj
@@ -21,7 +21,7 @@ def test_dictainer_property_attrs() -> None:
         a: int
         b: int
         c: str
-        d: dict
+        d: Dict[str, str]
 
         @property
         def a_property(self) -> str:

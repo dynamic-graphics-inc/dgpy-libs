@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Any
 
 import pytest
 
@@ -112,7 +112,7 @@ def test_jsonthing() -> None:
     import json
 
     @requires("json")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
         s = json.dumps(d)
         return s
@@ -124,7 +124,7 @@ def test_json_not_imported() -> None:
     #     import requires
 
     @requires("json")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
         s = json.dumps(d)
         return s
@@ -137,7 +137,7 @@ def test_requirement_as_decorator() -> None:
     json_dumps_req = string2requirement(import_string)
 
     @json_dumps_req
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
         s = dumps(d)
         return s
@@ -148,7 +148,7 @@ def test_requirement_as_decorator() -> None:
 def test_requirement_as_decorator_multiple_xfail() -> None:
     with pytest.raises(NameError):
 
-        def fn():
+        def fn() -> Tuple[str, Any]:
             d = {"herm": 1}
             s = dumps(d)
             f = loads(s)
