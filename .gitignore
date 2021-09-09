@@ -121,3 +121,4 @@ scratch/
 mypy_reports/ 
 pythonenv3.8/
 .idea/
+monkeytype.sqlite3

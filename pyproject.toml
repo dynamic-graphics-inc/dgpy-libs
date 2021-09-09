@@ -17,6 +17,13 @@ pytest-asyncio = "^0.14.0"
 mkdocs = "^1.1.2"
 mkdocs-material = "^7.1.2"
 mkdocstrings = "^0.15.0"
+h5py = "^3.4.0"
+pytest-cov = "^2.12.1"
+mypy = "^0.910"
+nox = "^2021.6.12"
+pydantic = "^1.8.2"
+orjson = "^3.6.3"
+python-rapidjson = "^1.4"
 
 asyncify = { path = "./libs/asyncify/", develop = true }
 lager = { path = "./libs/lager/", develop = true }
@@ -26,10 +33,6 @@ aiopen = { path = "./libs/aiopen/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 h5 = { path = "./libs/h5/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
-h5py = "^3.4.0"
-pytest-cov = "^2.12.1"
-mypy = "^0.910"
-nox = "^2021.6.12"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
