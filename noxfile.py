@@ -6,6 +6,7 @@ from shutil import which
 
 import nox
 
+
 libs = [
     'aiopen',
     'asyncify',
@@ -137,6 +138,7 @@ def update_metadata(session):
         with open(metadata_filepath, 'w') as f:
             f.write(metadata_file_string)
 
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs_serve(session):
     session.install('mkdocs')
@@ -144,10 +146,10 @@ def mkdocs_serve(session):
     session.install('mkdocs-jupyter')
     session.run('mkdocs', 'serve')
 
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs(session):
     session.install('mkdocs')
     session.install('mkdocs-material')
     session.install('mkdocs-jupyter')
     session.run('mkdocs', 'build')
-

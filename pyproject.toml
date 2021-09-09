@@ -85,11 +85,12 @@ exclude = '''
 line_length = 88
 force_single_line = false
 atomic = true
+src_paths = ["libs/*/test"]
 include_trailing_comma = true
 lines_after_imports = 2
 lines_between_types = 1
 multi_line_output = 3
-skip_glob = ["*/setup.py", ".nox*", "*/.nox*/**"]
+skip_glob = ["*/setup.py", ".nox*", "*/.nox*/**", ".venv*/**"]
 known_first_party = [
     "aiopen",
     "funkify",

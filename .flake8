@@ -21,4 +21,5 @@ exclude =
     __pycache__,
     .nox,
     .nox_win,
-    .nox_lin
+    .nox_lin,
+    .venv*

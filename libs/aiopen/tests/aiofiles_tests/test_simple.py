@@ -3,11 +3,13 @@
 import asyncio
 import sys
 
+from asyncio.unix_events import _UnixSelectorEventLoop
+
 import pytest
 
-import aiopen as aio
-from asyncio.unix_events import _UnixSelectorEventLoop
 from py._path.local import LocalPath
+
+import aiopen as aio
 
 
 @pytest.mark.asyncio
