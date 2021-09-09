@@ -1,4 +1,6 @@
-from typing import Union, Any
+# noqa: F821
+
+from typing import Any
 
 import pytest
 
@@ -58,7 +60,7 @@ def test_parse_from_xxx_import_yyy_as_zzz_nested() -> None:
     assert a.pkg_basename == "os"
 
 
-def test_parse_from_xxx_import_yyy() -> None:
+def test_parse_from_xxx_import_yyy_deeper_import() -> None:
     s = "import os.path.join as os_path_join"
     a = string2requirement(s)
     print(a)
@@ -264,7 +266,7 @@ def test_from_json_import_dumps_via_kwargs() -> None:
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_kwargs() -> None:
+def test_from_json_import_dumps_via_dict() -> None:
     @requires({"from": "json", "import": "dumps"})
     def fn():
         d = {"herm": 1}
@@ -274,7 +276,7 @@ def test_from_json_import_dumps_via_kwargs() -> None:
     assert fn() == '{"herm": 1}'
 
 
-def test_from_json_import_dumps_via_dict() -> None:
+def test_from_json_import_dumps_via_dict_simple() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn():
         d = {"herm": 1}
@@ -300,7 +302,7 @@ def test_from_json_import_dumps_via_dicts() -> None:
     assert f == {"herm": 1}
 
 
-def test_from_json_import_dumps_via_dict() -> None:
+def test_from_json_import_dumps_as_via_dict() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
         d = {"herm": 1}

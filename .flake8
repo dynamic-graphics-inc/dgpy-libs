@@ -14,7 +14,9 @@ extend-ignore =
     WPS202
     WPS305
     WPS326
-# per-file-ignores =
+per-file-ignores =
+    libs/requires/tests/test_requires.py:F821
+    libs/requires/tests/test_requires_w_json_libs.py:F821
     # path/to/file.py:E501,W605,W293,W291,XXX
 exclude =
     .tox,

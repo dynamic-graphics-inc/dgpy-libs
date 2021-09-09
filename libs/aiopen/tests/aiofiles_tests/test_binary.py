@@ -198,7 +198,7 @@ async def test_simple_close_ctx_mgr(
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mode", ["wb", "rb", "rb+", "wb+", "ab", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
-async def test_simple_close_ctx_mgr(
+async def test_simple_close_no_ctx_mgr(
     mode: str, buffering: int, tmpdir: LocalPath
 ) -> None:
     """Open a file, read a byte, and close it."""
