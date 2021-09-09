@@ -87,6 +87,7 @@ def _mypy(session):
     session.install('mypy')
     session.install('typing-extensions')
     session.install('pydantic')
+    session.install('orjson', 'types-orjson')
     session.run(
         'mypy',
         '--config-file',
