@@ -17,6 +17,8 @@ extend-ignore =
 per-file-ignores =
     libs/requires/tests/test_requires.py:F821
     libs/requires/tests/test_requires_w_json_libs.py:F821
+    libs/*/tests/test_version.py:E741
+    libs/*/noxfile.py:E741
     # path/to/file.py:E501,W605,W293,W291,XXX
 exclude =
     .tox,

@@ -7,12 +7,12 @@ import xtyping
 def _get_version() -> str:
     _dirpath = path.split(path.realpath(__file__))[0]
     version = "UNKNOWN???"
-    for i in range(3):
+    for _ in range(3):
         _filepath = path.join(_dirpath, "pyproject.toml")
         print(_filepath)
         if path.exists(_filepath):
             version = (
-                [l for l in open(_filepath).read().split("\n") if "version" in l][0]
+                [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
                 .replace("version = ", "")
                 .strip('"')
             )
@@ -27,7 +27,6 @@ def test_version() -> None:
 
 def test_xtyping_all() -> None:
     members = dir(xtyping)
-    a = xtyping.__all_typing__
     non_typing_members = [
         el
         for el in members

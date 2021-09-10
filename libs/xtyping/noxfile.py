@@ -68,7 +68,7 @@ def _get_package_site_packages_location(session):
 def _get_funkify_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        [l for l in open(_filepath).read().split("\n") if "version" in l][0]
+        [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
         .replace("version = ", "")
         .strip('"')
     )
@@ -101,48 +101,3 @@ def base_test(session):
         "not optdeps",
         TESTS_DIRPATH,
     )
-
-
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def gen(session):
-    from xtyping import _xtyping
-
-    session.install("black", "isort")
-
-    import_from_xtyping = [*_xtyping.__typing__, *_xtyping.__xtyping__]
-
-    xtyping_internal_imports = [
-        f"from xtyping._xtyping import {el}" for el in sorted(import_from_xtyping)
-    ]
-
-    init_lines = [
-        "# -*- coding: utf-8 -*-",
-        '"""xtyping ~ extended typing"""\n',
-        "from xtyping._meta import __version__",
-        "from xtyping import _xtyping as xt",
-        *xtyping_internal_imports,
-        "",
-        "__all__ = [",
-        *[
-            "    {}".format(el)
-            for el in [
-                "'__version__',",
-                "'xt',",
-                *["'{}',".format(el) for el in sorted(import_from_xtyping)],
-            ]
-        ],
-        "]",
-    ]
-    init_filepath = path.join(PWD, "xtyping", "__init__.py")
-    with open(path.join(PWD, "xtyping", "__init__.py"), "w") as f:
-        f.write("\n".join(init_lines))
-
-    session.run("isort", "--sp", "../../pyproject.toml", init_filepath)
-    session.run("black", "-S", "--config", "../../pyproject.toml", "-S", "xtyping")
-    # isort = isort --sp pyproject.toml libs
-
-
-#     '''
-#     isort = isort --sp pyproject.toml libs
-# black = black -S --config pyproject.toml -l 88 libs
-# '''

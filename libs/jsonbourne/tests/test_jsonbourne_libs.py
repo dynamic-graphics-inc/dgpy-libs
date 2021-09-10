@@ -105,9 +105,11 @@ def test_import_rapidjson() -> None:
     from jsonbourne.json import _import_rapidjson
 
     rj = _import_rapidjson()
+    assert rj
 
 
 def test_import_orjson() -> None:
     from jsonbourne.json import _import_orjson
 
     oj = _import_orjson()
+    assert oj
