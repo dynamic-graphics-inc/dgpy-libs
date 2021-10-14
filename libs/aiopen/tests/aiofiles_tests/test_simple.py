@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 """Simple tests verifying basic functionality."""
 import asyncio
+import os
 import sys
 
-from asyncio.unix_events import _UnixSelectorEventLoop
+
+if os.name == 'nt':
+    from asyncio.windows_events import SelectorEventLoop as _UnixSelectorEventLoop
+else:
+    from asyncio.unix_events import _UnixSelectorEventLoop
 
 import pytest
 

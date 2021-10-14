@@ -258,7 +258,6 @@ class ContextManagerAsync(
             BufferedReaderAsync,
             TextIOWrapperAsync,
             FileIOAsync,
-            None,
         ]
     ]
 ):
@@ -324,9 +323,11 @@ class ContextManagerAsync(
     async def __aenter__(
         self,
     ) -> Union[
-        BufferedIOBaseAsync, BufferedReaderAsync, TextIOWrapperAsync, FileIOAsync, None
+        BufferedIOBaseAsync, BufferedReaderAsync, TextIOWrapperAsync, FileIOAsync
     ]:
         self._obj = await self._coro
+        if self._obj is None:
+            raise ValueError('Unable to aiopen')
         return self._obj
 
     async def __aexit__(

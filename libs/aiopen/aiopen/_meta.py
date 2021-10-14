@@ -2,6 +2,6 @@
 """Package metadata/info"""
 
 __title__ = 'aiopen'
-__version__ = '0.3.0'
+__version__ = '0.4.0'
 __license__ = 'MIT'
-__description__ = 'Async file io'
+__description__ = 'async file io'
