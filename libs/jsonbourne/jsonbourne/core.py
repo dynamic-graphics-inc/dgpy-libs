@@ -12,6 +12,7 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Generic,
     ItemsView,
     Iterable,
     Iterator,
@@ -20,11 +21,15 @@ from typing import (
     Optional,
     Set,
     Tuple,
+    TypeVar,
     Union,
 )
 
 from jsonbourne import json
 
+
+_KT = TypeVar("_KT")
+_VT = TypeVar("_VT")
 
 if sys.version_info < (3, 7):
     from collections.abc import MutableMapping
@@ -33,7 +38,7 @@ if sys.version_info < (3, 7):
 else:
     from typing import MutableMapping
 
-    JsonObjMutableMapping = MutableMapping[str, Any]
+    JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = [
     "JsonObj",
@@ -109,10 +114,10 @@ def is_int(value: Any) -> bool:
     """Return True if value is a int"""
     if isinstance(value, int):
         return True
-    value = str(value)
-    if value[0] in ('-', '+'):
-        return value[1:].isdigit()
-    return value.isdigit()
+    _value: str = str(value)
+    if _value[0] in ('-', '+'):
+        return str(_value[1:]).isdigit()
+    return _value.isdigit()
 
 
 def is_number(value: Any) -> bool:
@@ -120,7 +125,7 @@ def is_number(value: Any) -> bool:
     return is_int(value) or is_float(value)
 
 
-class JsonObj(JsonObjMutableMapping):
+class JsonObj(JsonObjMutableMapping, Generic[_VT]):
     """JSON friendly python dictionary with dot notation and string only keys
 
     JsonObj(foo='bar')['foo'] == JsonObj(foo='bar').foo
@@ -189,7 +194,7 @@ class JsonObj(JsonObjMutableMapping):
 
     """
 
-    _data: Dict[str, Any]
+    _data: Dict[str, _VT]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Use the object dict"""
@@ -371,7 +376,7 @@ class JsonObj(JsonObjMutableMapping):
         """Return the keys view of the JsonObj object"""
         return self._data.keys()
 
-    def setdefault(self, key: Any, default: Optional[Any] = None) -> None:
+    def setdefault(self, key: str, default: Optional[_VT] = None) -> _VT:
         if default:
             return self._data.setdefault(key, default)
         return self._data.setdefault(key)

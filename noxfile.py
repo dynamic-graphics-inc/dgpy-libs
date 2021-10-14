@@ -92,7 +92,8 @@ def _mypy(session):
     session.run(
         'mypy',
         '--config-file',
-        './mypy.ini',
+        # './mypy.ini',
+        './pyproject.toml',
         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
     )
 

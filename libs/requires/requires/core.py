@@ -168,7 +168,7 @@ class Requirement:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()
-                    retval = await f(*args, **kwargs)  # type: ignore
+                    retval: T = await f(*args, **kwargs)  # type: ignore
                     return retval
                 except ModuleNotFoundError:
                     tb = sys.exc_info()[2]

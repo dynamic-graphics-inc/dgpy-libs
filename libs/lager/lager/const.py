@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Constants go here!"""
+from typing import Dict
 LAGER_PORT = 52437
 
 TORNADO_FMT = "".join(
@@ -25,7 +26,7 @@ LOGURU_DEFAULT_FMT = "".join(
     ]
 )
 
-LOG_LEVELS = {
+LOG_LEVELS: Dict[str, str] = {
     "notset": "NOTSET",
     "n": "NOTSET",
     "debug": "DEBUG",

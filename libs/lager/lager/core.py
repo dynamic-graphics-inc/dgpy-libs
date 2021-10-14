@@ -92,7 +92,7 @@ ln = LN = logger  # ln => natural log
 
 def loglevel(level: Union[str, int]) -> str:
     """Convert log-level abrev to a valid loguru log level"""
-    return LOG_LEVELS[str(level).strip("'").strip('"').lower()]
+    return str(LOG_LEVELS[str(level).strip("'").strip('"').lower()])
 
 
 def flog(
@@ -167,7 +167,7 @@ def flog(
                     kwargs,
                 )
             ti = time()
-            result = await funk(*args, **kwargs)  # type: ignore
+            result: T = await funk(*args, **kwargs)  # type: ignore
             tf = time()
             if exit:
                 logger_.log(

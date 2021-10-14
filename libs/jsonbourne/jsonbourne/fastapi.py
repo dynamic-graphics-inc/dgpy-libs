@@ -10,7 +10,7 @@ except ModuleNotFoundError:
     Response = object
 
 
-class JSONBOURNEResponse(Response):
+class JSONBOURNEResponse(Response):  # type: ignore
     """FastAPI/starlette json response to auto use jsonbourne"""
 
     media_type = "application/json"

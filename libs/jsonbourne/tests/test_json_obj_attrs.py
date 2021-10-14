@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from typing import Dict
+
 import pytest
 
 from jsonbourne import JsonObj

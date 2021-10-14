@@ -230,9 +230,9 @@ class JsonBaseModel(BaseModel, JsonObj):
             return object.__setattr__(self, name, value)
         elif name in self.__property_fields__:
             property_field = getattr(self.__class__, name)
-            return property_field.fset(self, value)
+            property_field.fset(self, value)
         else:
-            return super().__setattr__(name, value)
+            super().__setattr__(name, value)
 
     @property
     def __property_fields__(self) -> Set[str]:
