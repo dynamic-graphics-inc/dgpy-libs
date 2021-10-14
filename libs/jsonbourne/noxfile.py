@@ -20,12 +20,13 @@ def is_win() -> bool:
 nox.options.envdir = ".nox_win" if is_win() else ".nox"
 
 IS_GITLAB_CI = "GITLAB_CI" in os.environ
+IS_GITHUB_CI = "CI" in os.environ and os.environ.get('CI') == 'true'
 PWD = path.abspath(path.dirname(__file__))
 JSONBOURNE_PKG_DIRPATH = path.join(PWD, "jsonbourne")
 TESTS_DIRPATH = path.join(PWD, "tests")
 
 
-VENV_BACKEND = None if is_win() or not which("conda") else "conda"
+VENV_BACKEND = None if (is_win() or IS_GITHUB_CI or not which("conda")) else "conda"
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
