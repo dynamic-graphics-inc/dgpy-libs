@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.16.2"
+version = "0.17.0"
 description = "EZPZ JSON"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

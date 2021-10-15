@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""`jsonbourne` finds the best python-json-lib for the job
+"""jsonbourne the best undercover json lib
 
 Dynamic Graphics Python
 """
-from jsonbourne import json
+from jsonbourne import jsonlib
 from jsonbourne._meta import __version__
 from jsonbourne.core import (
     JSON,
@@ -16,14 +16,17 @@ from jsonbourne.core import (
     undefined,
 )
 from jsonbourne.helpers import rm_js_comments
-from jsonbourne.json import import_json
+from jsonbourne.jsonlib import import_json
 
 
-JSONLIB = json.__name__
+json = jsonlib
+
+JSONLIB = jsonlib.__name__
 
 __all__ = [
     "__version__",
     "JSON",  # js/ts JSON (THE ONE TO USE)
+    "jsonlib",  # json compat lib
     "json",  # json compat lib
     # core
     "JsonObjMutableMapping",

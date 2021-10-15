@@ -7,7 +7,7 @@ import pytest
 
 
 try:
-    from jsonbourne.json import JSON_STDLIB, ORJSON, RAPIDJSON
+    from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
 
     # from jsonbourne.jsonlib._json_stdlib import JSON_STDLIB
     # from jsonbourne.jsonlib._orjson import ORJSON
@@ -102,14 +102,14 @@ def test_datetime() -> None:
 
 
 def test_import_rapidjson() -> None:
-    from jsonbourne.json import _import_rapidjson
+    from jsonbourne.jsonlib import _import_rapidjson
 
     rj = _import_rapidjson()
     assert rj
 
 
 def test_import_orjson() -> None:
-    from jsonbourne.json import _import_orjson
+    from jsonbourne.jsonlib import _import_orjson
 
     oj = _import_orjson()
     assert oj

@@ -25,7 +25,7 @@ from typing import (
     Union,
 )
 
-from jsonbourne import json
+from jsonbourne import jsonlib
 
 
 _KT = TypeVar("_KT")
@@ -691,7 +691,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 pformat(self.to_dict(), width=width)[1:-1].replace("\n", "\n   "),
                 "\n})",
             ]
-        )
+        ).replace('JsonObj(**{}),', '{},')
 
     def __repr__(self) -> str:
         """Return the string representation of the object"""
@@ -827,7 +827,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             JsonObj: JsonObj object for the given JSON string
 
         """
-        return cls.from_dict(json.loads(json_string))
+        return cls.from_dict(jsonlib.loads(json_string))
 
     def to_json(
         self, pretty: bool = False, sort_keys: bool = False, **kwargs: Any
@@ -877,7 +877,9 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             str: JSON string of the JsonObj object
 
         """
-        return json.dumps(self.to_dict(), pretty=pretty, sort_keys=sort_keys, **kwargs)
+        return jsonlib.dumps(
+            self.to_dict(), pretty=pretty, sort_keys=sort_keys, **kwargs
+        )
 
     @classmethod
     def validate_type(cls, val: Any) -> "JsonObj":
@@ -906,7 +908,7 @@ def jsonify(value: Any) -> Any:
         return tuple([jsonify(el) for el in value])
     if isinstance(value, str):
         try:
-            data = json.loads(value)
+            data = jsonlib.loads(value)
             return jsonify(data)
         except Exception:
             pass
@@ -954,7 +956,7 @@ class JSON(metaclass=JSONMeta):
     ) -> str:
         """Return JSON stringified/dumps-ed data"""
         return str(
-            json.dumps(
+            jsonlib.dumps(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
             )
         )
@@ -969,7 +971,7 @@ class JSON(metaclass=JSONMeta):
     ) -> str:
         """Return JSON stringified/dumps-ed data"""
         return str(
-            json.dumps(
+            jsonlib.dumps(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
             )
         )
@@ -984,7 +986,7 @@ class JSON(metaclass=JSONMeta):
     ) -> bytes:
         """Return JSON string bytes for given data"""
         return bytes(
-            json.dumpb(
+            jsonlib.dumpb(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
             )
         )
@@ -999,7 +1001,7 @@ class JSON(metaclass=JSONMeta):
     ) -> bytes:
         """Return JSON string bytes for given data"""
         return bytes(
-            json.dumpb(
+            jsonlib.dumpb(
                 data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
             )
         )
@@ -1008,37 +1010,37 @@ class JSON(metaclass=JSONMeta):
     def loads(string: str, obj: bool = False, **kwargs: Any) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
-            return jsonify(json.loads(string, **kwargs))
-        return json.loads(string, **kwargs)
+            return jsonify(jsonlib.loads(string, **kwargs))
+        return jsonlib.loads(string, **kwargs)
 
     @staticmethod
     def parse(string: str, obj: bool = True) -> Any:
         """Parse JSON string/bytes and jsonify all dictionaries -> JsonObj"""
         if obj:
-            return jsonify(json.loads(string))
-        return json.loads(string)
+            return jsonify(jsonlib.loads(string))
+        return jsonlib.loads(string)
 
     @staticmethod
     def use_orjson() -> None:
-        json.use_orjson()
+        jsonlib.use_orjson()
 
     @staticmethod
     def use_rapidjson() -> None:
-        json.use_rapidjson()
+        jsonlib.use_rapidjson()
 
     @staticmethod
     def use_json_stdlib() -> None:
-        json.use_json_stdlib()
+        jsonlib.use_json_stdlib()
 
     @staticmethod
     def which() -> str:
         """Return the name of the JSON library being used as a backend"""
-        return json.which()
+        return jsonlib.which()
 
     @staticmethod
     def json_lib() -> str:
         """Return the name of the JSON library being used as a backend"""
-        return json.which()
+        return jsonlib.which()
 
     @staticmethod
     def jsonify(value: Any) -> Any:

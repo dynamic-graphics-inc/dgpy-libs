@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import json
+import json as pyjson
 
 from abc import ABC, abstractmethod
 from datetime import datetime, timedelta
@@ -125,9 +125,9 @@ class JsonLibABC(ABC):
 
 class JSON_STDLIB(JsonLibABC):
     lib = 'json'
-    JSONEncoder = json.JSONEncoder
-    JSONDecoder = json.JSONDecoder
-    JSONDecodeError = json.JSONDecodeError
+    JSONEncoder = pyjson.JSONEncoder
+    JSONDecoder = pyjson.JSONDecoder
+    JSONDecodeError = pyjson.JSONDecodeError
 
     @staticmethod
     def dumps(
@@ -139,7 +139,7 @@ class JSON_STDLIB(JsonLibABC):
         **kwargs: Any,
     ) -> str:
         separators = (",", ": ") if pretty else (",", ":")
-        dump_str = json.dumps(
+        dump_str = pyjson.dumps(
             data,
             indent=2 if pretty else None,
             sort_keys=sort_keys,
@@ -171,7 +171,7 @@ class JSON_STDLIB(JsonLibABC):
 
     @staticmethod
     def loads(string: str, **kwargs: Any) -> Any:
-        return json.loads(string, **kwargs)
+        return pyjson.loads(string, **kwargs)
 
     @staticmethod
     def useable() -> bool:

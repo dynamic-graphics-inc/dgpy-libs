@@ -14,7 +14,7 @@ from jsonbourne.core import (
     null,
     undefined,
 )
-from jsonbourne.json import import_json
+from jsonbourne.jsonlib import import_json
 
 
 sys.modules['JSON'].__class__ = JSONModuleCls
