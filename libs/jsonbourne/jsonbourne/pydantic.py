@@ -5,7 +5,7 @@ from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set
 
-from pydantic import BaseModel, Field, ValidationError  # type: ignore
+from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
 
 from jsonbourne.core import JSON, JsonObj
 
@@ -19,25 +19,25 @@ __all__ = [
 ]
 
 
-class JsonBaseModelDefaultConfig:
+class JsonBaseModelDefaultConfig(BaseConfig):
     """Pydantic model config class for JsonBaseModel; can be overridden"""
 
     # Sometimes hypothesis breaks and will try to add an attribute to
     # objects while testing. Ya can check for 'pytest' if hypothesis breaks
     # (which it sometimes does) with `'pytest' in sys.modules`
-    extra = "forbid"  # Forbid extras as strictness is good w/ python
+    extra = Extra.forbid  # Forbid extras as strictness is good w/ python
     arbitrary_types_allowed = True  # Allow
     allow_population_by_field_name = True
     json_loads = JSON.loads
     json_dumps = JSON.dumps
 
 
-class JsonBaseModel(BaseModel, JsonObj):
+class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
     Config = JsonBaseModelDefaultConfig
 
-    def __init__(self, *args: Any, **kwargs: Any):
+    def __init__(self, *args: Any, **kwargs: Any):  # type: ignore
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
         super().__init__(*args, **kwargs)
         self.__post_init__()
@@ -185,7 +185,7 @@ class JsonBaseModel(BaseModel, JsonObj):
 
     def __delattr__(self, item: str) -> Any:
         if item in self.__private_attributes__:
-            return object.__delattr__(self, item)  # type: ignore
+            return object.__delattr__(self, item)
         return super().__delattr__(item)
 
     def __getattr__(self, item: str) -> Any:
@@ -252,7 +252,7 @@ class JsonBaseModel(BaseModel, JsonObj):
     @classmethod
     def _cls_field_names(cls) -> Set[str]:
         """Return pydantic field names"""
-        return {el for el in cls.__fields__}  # type: ignore
+        return {el for el in cls.__fields__}
 
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""

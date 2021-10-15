@@ -209,7 +209,7 @@ class ORJSON(JsonLibABC):
     ) -> bytes:
         option = 0
         if pretty:
-            option |= orjson.OPT_INDENT_2  # type: ignore
+            option |= orjson.OPT_INDENT_2
         if sort_keys:
             option |= orjson.OPT_SORT_KEYS
         if append_newline:
