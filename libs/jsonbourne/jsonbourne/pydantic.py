@@ -15,6 +15,7 @@ JsonBaseModelT = TypeVar("JsonBaseModelT", bound='JsonBaseModel')
 __all__ = [
     'JsonBaseModelDefaultConfig',
     'JsonBaseModel',
+    'JsonBaseModelT',
     'BaseModel',
     'Field',
     'ValidationError',
