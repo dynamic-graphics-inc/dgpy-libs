@@ -3,12 +3,14 @@
 
 from functools import lru_cache
 from pprint import pformat
-from typing import Any, Dict, Set
+from typing import Any, Dict, Set, Type, TypeVar
 
 from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
 
 from jsonbourne.core import JSON, JsonObj
 
+
+JsonBaseModelT = TypeVar("JsonBaseModelT", bound='JsonBaseModel')
 
 __all__ = [
     'JsonBaseModelDefaultConfig',
@@ -160,7 +162,9 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         return self.eject()
 
     @classmethod
-    def from_dict_filtered(cls, dictionary: Dict[str, Any]) -> "JsonBaseModel":
+    def from_dict_filtered(
+        cls: Type[JsonBaseModelT], dictionary: Dict[str, Any]
+    ) -> JsonBaseModelT:
         """Create class from dict filtering keys not in (sub)class' fields"""
         attr_names: Set[str] = set(cls._cls_field_names())
         return cls(**{k: v for k, v in dictionary.items() if k in attr_names})

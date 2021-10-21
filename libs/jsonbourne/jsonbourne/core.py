@@ -21,6 +21,7 @@ from typing import (
     Optional,
     Set,
     Tuple,
+    Type,
     TypeVar,
     Union,
 )
@@ -28,7 +29,8 @@ from typing import (
 from jsonbourne import jsonlib
 
 
-_KT = TypeVar("_KT")
+JsonObjT = TypeVar("JsonObjT", bound='JsonObj')
+_KT = str
 _VT = TypeVar("_VT")
 
 if sys.version_info < (3, 7):
@@ -53,6 +55,7 @@ __all__ = [
     "Null",
     "null",
     "JSONModuleCls",
+    "JsonObjT",
 ]
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
@@ -194,7 +197,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
 
     """
 
-    _data: Dict[str, _VT]
+    _data: Dict[_KT, _VT]
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Use the object dict"""
@@ -220,7 +223,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Function place holder that is called after object initialization"""
         pass  # pylint: disable=unnecessary-pass
 
-    def __contains__(self, key: str) -> bool:  # type: ignore
+    def __contains__(self, key: _KT) -> bool:  # type: ignore
         """Check if a key or dot-key is contained within the JsonObj object
 
         Args:
@@ -250,7 +253,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             return isinstance(val, MutableMapping) and val.__contains__(rest)
         return key in self._data
 
-    def __setattr__(self, attr: str, value: Any) -> None:
+    def __setattr__(self, attr: _KT, value: _VT) -> None:
         if attr in self._cls_protected_attrs():
             raise ValueError(
                 f"Cannot set protected attribute ('{str(attr)}'),"
@@ -258,7 +261,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             )
         return self.__setitem__(attr, value)
 
-    def __setitem__(self, key: str, value: Any) -> None:
+    def __setitem__(self, key: _KT, value: _VT) -> None:
         """Set JsonObj item with 'key' to 'value'
 
         Args:
@@ -294,7 +297,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             )
         self._data[key] = value
 
-    def __getattr__(self, item: str) -> Any:
+    def __getattr__(self, item: _KT) -> Any:
         """Return an attr
 
         Examples:
@@ -318,6 +321,8 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             >>> d = JsonObj(d)
             >>> d.__getattr__('b')
             2
+            >>> d.b
+            2
 
         """
         if item == '_data':
@@ -336,7 +341,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
     def __object_getattribute__(self, item: str) -> Any:
         return object.__getattribute__(self, item)
 
-    def __getitem__(self, key: Union[str, Tuple[str, ...]]) -> Any:
+    def __getitem__(self, key: Union[_KT, Tuple[_KT, ...]]) -> Any:
         if isinstance(key, str):
             try:
                 return jsonify(self._data[key])
@@ -352,31 +357,31 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             ...
         raise KeyError(str(key))
 
-    def __delitem__(self, key: str) -> None:
+    def __delitem__(self, key: _KT) -> None:
         return self._data.__delitem__(key)
 
-    def __delattr__(self, item: str) -> None:
+    def __delattr__(self, item: _KT) -> None:
         return self.__delitem__(item)
 
-    def __iter__(self) -> Iterator[Any]:
+    def __iter__(self) -> Iterator[_KT]:
         return iter(self._data)
 
     def __len__(self) -> int:
         return len(self._data)
 
-    def items(self) -> ItemsView[str, Any]:
+    def items(self) -> ItemsView[_KT, _VT]:
         """Return an items view of the JsonObj object"""
         return self._data.items()
 
-    def entries(self) -> ItemsView[str, Any]:
+    def entries(self) -> ItemsView[_KT, _VT]:
         """Alias for items"""
         return self.items()
 
-    def keys(self) -> KeysView[str]:
+    def keys(self) -> KeysView[_KT]:
         """Return the keys view of the JsonObj object"""
         return self._data.keys()
 
-    def setdefault(self, key: str, default: Optional[_VT] = None) -> _VT:
+    def setdefault(self, key: _KT, default: Optional[_VT] = None) -> _VT:
         if default:
             return self._data.setdefault(key, default)
         return self._data.setdefault(key)
@@ -384,12 +389,12 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
     def clear(self) -> None:
         self._data.clear()
 
-    def pop(self, key: str, default: Optional[Any] = None) -> Any:
+    def pop(self, key: _KT, default: Optional[Any] = None) -> Any:
         if default:
             return self._data.pop(key, default)
         return self._data.pop(key)
 
-    def get(self, key: str, default: Optional[Any] = None) -> Any:
+    def get(self, key: _KT, default: Optional[Any] = None) -> Any:
         try:
             return self._data.get(key)
         except KeyError as ke:
@@ -769,7 +774,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Return attrs-attribute names for an object decorated with attrs"""
         return self.__class__._cls_field_names()
 
-    def eject(self) -> Dict[str, Any]:
+    def eject(self) -> Dict[_KT, Any]:
         """Eject to python-builtin dictionary object
 
         Examples:
@@ -790,21 +795,21 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 'JSON.stringify recursion err; cycle/circular-refs detected'
             )
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> Dict[_KT, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""
         return self.eject()
 
-    def asdict(self) -> Dict[str, Any]:
+    def asdict(self) -> Dict[_KT, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""
         return self.eject()
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "JsonObj":
+    def from_dict(cls: Type[JsonObjT], data: Dict[_KT, _VT]) -> JsonObjT:
         """Return a JsonObj object from a dictionary of data"""
         return cls(**data)
 
     @classmethod
-    def from_json(cls, json_string: str) -> "JsonObj":
+    def from_json(cls: Type[JsonObjT], json_string: str) -> JsonObjT:
         """Return a JsonObj object from a json string
 
         Args:
@@ -817,7 +822,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return cls._from_json(json_string)
 
     @classmethod
-    def _from_json(cls, json_string: str) -> "JsonObj":
+    def _from_json(cls: Type[JsonObjT], json_string: str) -> JsonObjT:
         """Return a JsonObj object from a json string
 
         Args:
@@ -882,9 +887,9 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         )
 
     @classmethod
-    def validate_type(cls, val: Any) -> "JsonObj":
+    def validate_type(cls: Type[JsonObjT], val: Any) -> JsonObjT:
         """Validate and convert a value to a JsonObj object"""
-        return JsonObj(val)
+        return cls(val)
 
     @classmethod
     def __get_validators__(cls) -> Iterator[Callable[[Any], Any]]:
@@ -1070,3 +1075,9 @@ def _cls_protected_attrs(cls: Any) -> Set[str]:
 
 stringify = JSON.stringify
 parse = JSON.parse
+
+
+if __name__ == '__main__':
+    import doctest
+
+    doctest.testmod()
