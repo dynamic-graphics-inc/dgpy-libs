@@ -23,3 +23,4 @@ def test_strip_comments_from_json() -> None:
         json.loads(rm_js_comments(rush_with_comments_string)), sort_keys=True, indent=2
     )
     expected = json.dumps(json.loads(rush_no_comments_string), sort_keys=True, indent=2)
+    assert removed_comments_str == expected

@@ -9,7 +9,6 @@ import pytest
 
 from _pytest.monkeypatch import MonkeyPatch
 
-# from dgpy.aio import _aiopen as aio
 import aiopen as aio
 
 

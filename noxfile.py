@@ -37,9 +37,9 @@ PWD = path.abspath(path.dirname(__file__))
 LIBS_DIR = path.join(PWD, "libs")
 
 VENV_BACKEND = None if is_win() or not which("conda") else "conda"
-LIB_DIRS = {el: path.join(LIBS_DIR, el) for el in os.listdir(LIBS_DIR) if el[0] != '.'}
+LIB_DIRS = {el: path.join(LIBS_DIR, el) for el in os.listdir(LIBS_DIR) if el[0] != '.' and el in libs}
 SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
-TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in os.listdir(LIBS_DIR)}
+TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 
 
 # #############
@@ -77,6 +77,7 @@ def _flake(session):
     session.install("flake8-print")
     session.install("flake8-eradicate")
     session.run("flake8", *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el])
+    session.run("flake8", *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el])
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -96,6 +97,7 @@ def _mypy(session):
         './mypy.ini',
         # './pyproject.toml',
         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
+        # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
     )
 
 

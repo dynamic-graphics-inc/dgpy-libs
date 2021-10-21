@@ -64,7 +64,7 @@ from typing import (
 )
 
 
-__all__ = [
+__all__ = (
     'AbstractSet',
     'Any',
     'AnyStr',
@@ -126,6 +126,6 @@ __all__ = [
     'no_type_check_decorator',
     'overload',
     '__all_typing__',
-]
+)
 
 __all_typing__ = __all__

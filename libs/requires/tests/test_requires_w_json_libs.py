@@ -20,21 +20,18 @@ def test_requires_json_n_rapid_json() -> None:
         with pytest.raises(ModuleNotFoundError):
             raise e
 
-    # with pytest.raises(ModuleNotFoundError):
-    #     tres()  # Will err if not install with where to install instructions
-
 
 def test_requires_json_n_rapid_json_pkg_callable() -> None:
     import requires
 
     @requires('json')
-    def uno():
+    def uno() -> str:
         return json.dumps({'a': 1, 'b': 2})
 
     @requires(
         _import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson'
     )
-    def tres():
+    def tres() -> str:
         return rapidjson.dumps({'a': 1, 'b': 2})
 
     try:
@@ -42,5 +39,3 @@ def test_requires_json_n_rapid_json_pkg_callable() -> None:
     except ModuleNotFoundError as e:
         with pytest.raises(ModuleNotFoundError):
             raise e
-    # with pytest.raises(ModuleNotFoundError):
-    #     tres()  # Will err if not install with where to install instructions

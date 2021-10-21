@@ -28,5 +28,3 @@ async def test_asyncify_funkified() -> None:
 
 if __name__ == "__main__":
     pass
-    # from doctest import testmod
-    # testmod()

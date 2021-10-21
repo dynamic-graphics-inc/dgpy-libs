@@ -22,7 +22,7 @@ from typing_extensions import (
 )
 
 
-__all__ = [
+__all__ = (
     'ClassVar',
     'ContextManager',
     'Counter',
@@ -42,6 +42,6 @@ __all__ = [
     'TypeAlias',
     'TYPE_CHECKING',
     '__all_typing_extensions__',
-]
+)
 
 __all_typing_extensions__ = __all__

@@ -12,7 +12,7 @@ try:
     from attr import attrs
 
 
-except:
+except ModuleNotFoundError:
     pass
 
 
@@ -34,7 +34,6 @@ def test_dictainer_property_attrs() -> None:
     assert thing_w_prop.c == thing_w_prop["c"]
     assert thing_w_prop.a_property == "prop_value"
     assert thing_w_prop["a_property"] == "prop_value"
-    print(thing_w_prop.d, type(thing_w_prop.d))
     assert thing_w_prop.d.nested == "nestedval"
 
 
@@ -98,11 +97,4 @@ def test_dictainer_property_attrs_str() -> None:
             "d": {"nested": "nestedval", **{"ok_" + str(i): i for i in range(20)}},
         }
     )
-    print(thing_w_prop)
     assert str(thing_w_prop) == EXPECTED_STRING
-
-
-if __name__ == "__main__":
-    pass
-    # from doctest import testmod
-    # testmod()

@@ -16,7 +16,7 @@ def test_dot_access_attr_vs_item() -> None:
     jd = JSON({"socket.io": "data"})
     assert jd['socket.io'] == "data"
     with pytest.raises(AttributeError):
-        socketiothing = jd.socket.io
+        jd.socket.io
 
 
 def test_dot_access_nested() -> None:
@@ -28,7 +28,7 @@ def test_dot_access_nested() -> None:
         (('socket.io', 'two'), 2),
     ]
     with pytest.raises(AttributeError):
-        socketiothing = jd.socket.io
+        jd.socket.io
 
 
 class Thingy(JsonObj):
@@ -47,7 +47,7 @@ def test_json_obj_basic() -> None:
 
 def test_dictainer_basic_unpacking() -> None:
     thing = Thingy({"a": 1, "b": 2, "c": 3, "d": ["list"]})
-    thing2 = Thingy({"a": 1, "b": 2, "c": 3, "d": ["different list"], "a": 234})
+    thing2 = Thingy({"b": 2, "c": 3, "d": ["different list"], "a": 234})
     assert thing.a == thing["a"]
 
     assert {**thing} == {"a": 1, "b": 2, "c": 3, "d": ["list"]}
@@ -64,6 +64,7 @@ def test_dictainer_breaks() -> None:
     assert thing2.c.herm == thing2["c"]["herm"]
     with pytest.raises(ValueError) as err:
         thing2["herm herm herm import"] = "should break"
+        assert err
 
 
 class ThingyWithMethod(JsonObj):
@@ -103,8 +104,6 @@ def test_json_obj_property() -> None:
     assert thing_w_prop.a_property == "prop_value"
     assert thing_w_prop["a_property"] == "prop_value"
     assert thing_w_prop.d.nested == "nestedval"
-    # with pytest.raises(ValueError) as err:
-    #     thing2['herm herm herm import'] = 'should break'
 
 
 def test_protected_attrs_slash_members() -> None:
@@ -114,7 +113,6 @@ def test_protected_attrs_slash_members() -> None:
     with pytest.raises(ValueError):
         j.items = [1, 2, 3, 4]
     j['items'] = [1, 2, 3, 4]
-    j_items = j.items
     assert j.items != [1, 2, 3, 4]
     assert j['items'] == [1, 2, 3, 4]
 
@@ -215,32 +213,20 @@ def test_dot_items() -> None:
         ('state', 'active'),
     ]
 
+    assert [('.'.join(el[0]), el[1]) for el in expected] == expected_strings
+
     dkl = jd.dot_items_list()
     assert expected == dkl
 
-    # from time import time
-    # ta = time()
-    # # for i in range(10):
-    # for i in range(100):
-    #     a = list(jd.dot_items_chain())
-    # tb = time()
-    # for i in range(100):
-    #     b = list(jd.dot_items_chain2())
-    # tc = time()
-    # for i in range(100):
-    #     c = list(jd.dot_items())
-    # td = time()
-    # print('yielding', tc-tb,'-- chain: ', tb-ta, '-- og: ', td-tc)
     expected_json_str = JSON.stringify(expected, sort_keys=True, pretty=True)
     output_json_str = JSON.stringify(dkl, sort_keys=True, pretty=True)
     assert output_json_str == expected_json_str
     try:
         from deepdiff import DeepDiff
 
-        print('deepdiff', DeepDiff(expected, dkl))
         assert not DeepDiff(expected, dkl)
     except ModuleNotFoundError as mnfe:
-        print(mnfe)
+        assert mnfe
 
 
 d1 = {
@@ -300,7 +286,7 @@ def test_dotlookup_no_dots() -> None:
 def test_dotlookup_dont_exist() -> None:
     d = JsonObj(d1)
     with pytest.raises(KeyError):
-        dot_lookup = d["subd.a.hermhermherm.ohno"]
+        d["subd.a.hermhermherm.ohno"]
 
 
 def test_dot_iter_keys() -> None:
@@ -319,7 +305,6 @@ def test_dot_iter_keys() -> None:
         "profile_id",
         "state",
     ]
-    print(set(d.dot_keys()))
     dot_keys_set = set(d.dot_keys())
     expected_tuples_set = set(tuple(el.split('.')) for el in expected)
     assert dot_keys_set == expected_tuples_set
@@ -360,7 +345,6 @@ def test_dot_list_keys_sorted() -> None:
         "profile_id",
         "state",
     ]
-    print(d.dot_keys_list(sort_keys=True))
     assert [tuple(el.split('.')) for el in sorted(expected)] == d.dot_keys_list(
         sort_keys=True
     )
@@ -369,7 +353,7 @@ def test_dot_list_keys_sorted() -> None:
 def test_json_dict_reject_non_string_key() -> None:
     t1 = {1: None, 2: 2}
     with pytest.raises(ValueError):
-        jd = JsonObj(t1)
+        JsonObj(t1)
 
 
 def test_filter_none() -> None:
@@ -535,6 +519,7 @@ def test_cycle_stringify() -> None:
     a.circle = b
     with pytest.raises((TypeError, ValueError)):
         json_str = a.to_json()
+        assert isinstance(json_str, str)
 
 
 def test_dataclass_stringify() -> None:

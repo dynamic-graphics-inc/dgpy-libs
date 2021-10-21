@@ -188,7 +188,7 @@ from xtyping.shed import (
 )
 
 
-__all__ = [
+__all__ = (
     'AF',
     'AbstractSet',
     'Any',
@@ -367,4 +367,4 @@ __all__ = [
     'runtime_checkable',
     'typing',
     'typing_extensions',
-]
+)

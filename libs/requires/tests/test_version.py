@@ -24,5 +24,5 @@ def _get_version() -> str:
     return version
 
 
-def test_version():
+def test_version() -> None:
     assert __version__ == _get_version()

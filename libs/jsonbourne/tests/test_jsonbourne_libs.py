@@ -8,10 +8,6 @@ import pytest
 
 try:
     from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
-
-    # from jsonbourne.jsonlib._json_stdlib import JSON_STDLIB
-    # from jsonbourne.jsonlib._orjson import ORJSON
-    # from jsonbourne.jsonlib._rapidjson import RAPIDJSON
 except (ImportError, ModuleNotFoundError):
     pass
 

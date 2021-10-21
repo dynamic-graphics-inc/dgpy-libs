@@ -9,7 +9,6 @@ def _get_version() -> str:
     version = "UNKNOWN???"
     for _ in range(3):
         _filepath = path.join(_dirpath, "pyproject.toml")
-        print(_filepath)
         if path.exists(_filepath):
             version = (
                 [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
@@ -63,16 +62,3 @@ def test_xtyping_imports_typing() -> None:
             missing.add(el)
     if missing:
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
-
-
-# def test_all_correct_order_no_dups():
-# correct_order = [
-#     *xtyping.__all_typing__,
-#     *xtyping.__all_typing_extensions__,
-#     *xtyping.__all_shed__,
-# ]
-# seen = set()
-# seen_add = seen.add
-# ordered_no_dupes = [x for x in correct_order if not (x in seen or seen_add(x))]
-# assert ordered_no_dupes == xtyping.__all__
-# assert len(correct_order) == len(set(correct_order))
