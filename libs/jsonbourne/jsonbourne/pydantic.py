@@ -9,7 +9,6 @@ from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
 
 from jsonbourne.core import JSON, JsonObj
 
-
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound='JsonBaseModel')
 
 __all__ = [

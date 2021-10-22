@@ -19,7 +19,6 @@ from h5.core import (
     h5py_obj_dataset_gen,
 )
 
-
 __all__ = [
     "__version__",
     "__h5py_version__",

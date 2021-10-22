@@ -3,7 +3,6 @@ from typing import Any
 
 from jsonbourne import JSON
 
-
 try:
     from starlette.responses import Response
 except ModuleNotFoundError:

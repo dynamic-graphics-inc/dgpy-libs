@@ -4,7 +4,6 @@ import pytest
 
 from funkify import __version__
 
-
 pytestmark = [pytest.mark.basic]
 
 

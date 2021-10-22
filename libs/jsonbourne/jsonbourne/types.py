@@ -4,7 +4,6 @@ import sys
 
 from typing import Any, Dict, List
 
-
 if sys.version_info < (3, 7):
     from collections.abc import MutableMapping
 

@@ -7,7 +7,6 @@ from typing import Dict, Iterable, Tuple, Union
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 from numpy import float64, int8, ndarray
 
-
 FsPath = Union[str, Path]
 
 __all__ = [

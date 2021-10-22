@@ -4,7 +4,6 @@ from aiopen._meta import __version__
 from aiopen.core import aiopen
 from funkify.core import funkify
 
-
 funkify(aiopen, name="aiopen")
 
 __all__ = [

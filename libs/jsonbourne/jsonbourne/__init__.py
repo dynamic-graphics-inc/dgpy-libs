@@ -18,7 +18,6 @@ from jsonbourne.core import (
 from jsonbourne.helpers import rm_js_comments
 from jsonbourne.jsonlib import import_json
 
-
 json = jsonlib
 
 JSONLIB = jsonlib.__name__

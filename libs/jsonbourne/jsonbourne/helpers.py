@@ -4,7 +4,6 @@ import re
 
 from typing import Match
 
-
 __all__ = ["rm_js_comments", "strip_comments"]
 
 STRIP_JSON_COMMENTS_REGEX = r"(\".*?(?<!\\)\"|\'.*?(?<!\\)\')|(/\*.*?\*/|//[^\r\n]*$)"

@@ -28,7 +28,6 @@ from typing import (
 
 from jsonbourne import jsonlib
 
-
 JsonObjT = TypeVar("JsonObjT", bound='JsonObj')
 _KT = str
 _VT = TypeVar("_VT")

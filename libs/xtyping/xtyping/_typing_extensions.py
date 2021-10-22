@@ -21,7 +21,6 @@ from typing_extensions import (
     runtime_checkable,
 )
 
-
 __all__ = (
     'ClassVar',
     'ContextManager',

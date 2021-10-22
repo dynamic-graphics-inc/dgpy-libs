@@ -5,7 +5,6 @@ from asyncify.core import asyncify, await_or_return, is_async, run
 
 from funkify import funkify
 
-
 funkify(asyncify, name="asyncify")
 
 __all__ = ('__version__', 'asyncify', 'run', 'await_or_return', 'is_async')

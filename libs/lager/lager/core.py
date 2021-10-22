@@ -14,7 +14,6 @@ from loguru._logger import Core as _Core, Logger as _Logger
 
 from lager.const import LOG_LEVELS
 
-
 T = TypeVar('T')
 
 try:

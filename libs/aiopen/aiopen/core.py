@@ -30,7 +30,6 @@ from typing import (
     cast,
 )
 
-
 T = TypeVar("T")
 
 PathType = Union[str, PathLike]

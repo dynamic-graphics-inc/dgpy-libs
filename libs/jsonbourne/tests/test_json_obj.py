@@ -8,7 +8,6 @@ import pytest
 
 from jsonbourne import JSON, JsonObj
 
-
 pytestmark = [pytest.mark.basic]
 
 

@@ -4,7 +4,6 @@ import pytest
 
 from asyncify import __version__
 
-
 pytestmark = [pytest.mark.basic]
 
 

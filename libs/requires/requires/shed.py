@@ -2,7 +2,6 @@
 """Pre-fab requirements"""
 from requires import Requirement
 
-
 __all__ = [
     'requires_boto3',
     'requires_toml',

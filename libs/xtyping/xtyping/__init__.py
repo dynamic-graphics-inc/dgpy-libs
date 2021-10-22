@@ -187,7 +187,6 @@ from xtyping.shed import (
     null,
 )
 
-
 __all__ = (
     'AF',
     'AbstractSet',

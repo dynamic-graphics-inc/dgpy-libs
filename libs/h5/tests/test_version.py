@@ -4,7 +4,6 @@ import pytest
 
 from h5 import __version__
 
-
 pytestmark = [pytest.mark.basic]
 
 

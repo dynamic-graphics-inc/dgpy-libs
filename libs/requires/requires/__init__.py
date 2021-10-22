@@ -11,7 +11,6 @@ from requires.core import (
     requires,
 )
 
-
 funkify(requires, name="requires")
 
 __all__ = [

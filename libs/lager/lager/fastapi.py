@@ -4,7 +4,6 @@ from typing import List, Optional, Set, Tuple, Union
 
 from lager.logging import intercept
 
-
 __all__ = ['FASTAPI_LOGGERS', 'fastapi_intercept']
 
 FASTAPI_LOGGERS = [

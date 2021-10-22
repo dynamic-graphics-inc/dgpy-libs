@@ -6,7 +6,6 @@ import pytest
 
 from jsonbourne import import_json
 
-
 os.path.dirname(os.path.abspath(__file__))
 
 pytestmark = [pytest.mark.rapidjson, pytest.mark.optdeps]

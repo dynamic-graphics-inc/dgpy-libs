@@ -5,7 +5,6 @@ from decimal import Decimal
 
 import pytest
 
-
 try:
     from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
 except (ImportError, ModuleNotFoundError):

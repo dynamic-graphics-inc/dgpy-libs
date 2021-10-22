@@ -5,7 +5,6 @@ from os import path
 
 from jsonbourne.helpers import rm_js_comments
 
-
 PWD = path.dirname(path.abspath(__file__))
 
 

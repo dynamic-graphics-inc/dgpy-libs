@@ -4,7 +4,6 @@ from typing import Any
 
 import httpx
 
-
 _SINKS = []
 
 

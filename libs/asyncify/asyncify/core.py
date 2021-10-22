@@ -9,7 +9,6 @@ from functools import partial, wraps
 from inspect import isawaitable
 from typing import Any, Awaitable, Callable, Optional, TypeVar, Union, cast
 
-
 AnyCallable = Callable[..., Any]
 FuncType = Callable[..., Any]
 

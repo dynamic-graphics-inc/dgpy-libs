@@ -45,7 +45,6 @@ from lager.core import (
     warning,
 )
 
-
 __all__ = [
     '__version__',
     'LAGER_PORT',

@@ -16,7 +16,6 @@ from jsonbourne.core import (
 )
 from jsonbourne.jsonlib import import_json
 
-
 sys.modules['JSON'].__class__ = JSONModuleCls
 stringify = JSON.stringify
 dumps = JSON.dumps

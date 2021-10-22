@@ -8,7 +8,6 @@ from pathlib import Path
 from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
 
-
 try:
     import dataclasses
 except ImportError:

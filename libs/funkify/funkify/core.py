@@ -5,7 +5,6 @@ import sys
 from types import ModuleType
 from typing import Any, Callable, Optional, TypeVar
 
-
 T = TypeVar('T')
 
 
