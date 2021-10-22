@@ -53,12 +53,8 @@ filterwarnings = [
     "ignore::DeprecationWarning"
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "exe",
-    "aws",
-    "datatest",
+    "asyncio"
 ]
 testpaths = [
     "tests",
-    "integration",
 ]
