@@ -242,6 +242,38 @@ def test_from_json_import_dumps() -> None:
     assert fn() == '{"herm": 1}'
 
 
+def test_from_json_import_dumps_alias() -> None:
+    @requires("from json import dumps as dumpz")
+    def fn():
+        d = {"herm": 1}
+        s = dumpz(d)
+        return s
+
+    assert fn() == '{"herm": 1}'
+
+
+def test_from_json_import_dumps_module_alias() -> None:
+    @requires("import json as jason")
+    def fn():
+        d = {"herm": 1}
+        s = jason.dumps(d)
+        return s
+
+    assert fn() == '{"herm": 1}'
+
+
+@pytest.mark.asyncio
+async def test_from_json_import_dumps_async() -> None:
+    @requires("from json import dumps")
+    async def fn():
+        d = {"herm": 1}
+        s = dumps(d)
+        return s
+
+    result = await fn()
+    assert result == '{"herm": 1}'
+
+
 def test_from_json_import_dumps_via_kwargs() -> None:
     @requires(_from="json", _import="dumps")
     def fn():
@@ -357,7 +389,6 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
 
 
 def test_requires() -> None:
-
     @requires("a_fake_module")
     def fn():
         return 123
@@ -373,7 +404,21 @@ def test_requires_name_error() -> None:
         def fn():
             _some_value = a_fake_module.a_fake_function()
             return _some_value
+
         fn()
+
+
+@pytest.mark.asyncio
+async def test_requires_name_error_async() -> None:
+    with pytest.raises(RequirementError) as re:
+        assert re
+
+        @requires("a_fake_module")
+        async def fn():
+            _some_value = a_fake_module.a_fake_function()
+            return _some_value
+
+        await fn()
 
 
 def test_requires_err_msg() -> None:
@@ -383,6 +428,7 @@ def test_requires_err_msg() -> None:
         @requires("a_fake_module")
         def fn():
             return a_fake_module.a_fake_function()
+
         fn()
 
 
@@ -412,7 +458,8 @@ def test_module_wrap() -> None:
 
     try:
         _v = mkvec([12, 3])
-        assert _v
+        assert _v is not None
+
     except ModuleNotFoundError as e:
         with pytest.raises(RequirementError) as re:
             raise e
