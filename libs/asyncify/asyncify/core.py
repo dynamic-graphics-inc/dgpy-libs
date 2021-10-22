@@ -6,14 +6,16 @@ import sys
 
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
-from typing import Any, Awaitable, Callable, Optional, TypeVar, cast
+from inspect import isawaitable
+from typing import Any, Awaitable, Callable, Optional, TypeVar, Union, cast
 
 
 AnyCallable = Callable[..., Any]
 FuncType = Callable[..., Any]
 
 T = TypeVar("T")
-__all__ = ['asyncify', 'run']
+
+__all__ = ('asyncify', 'run', 'await_or_return', 'is_async')
 
 
 def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
@@ -94,3 +96,20 @@ def run(aw: Awaitable[T]) -> T:
     finally:
         loop.close()
         asyncio.set_event_loop(None)
+
+
+def is_async(obj: Any) -> bool:
+    """Return True if function/object is async/awaitable
+
+    Args:
+        obj: Object (probably a function) that could be async
+
+    Returns:
+        bool: True if the object is async/awaitable; False otherwise
+
+    """
+    return asyncio.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
+
+
+async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
+    return await obj if isawaitable(obj) else obj  # type: ignore
