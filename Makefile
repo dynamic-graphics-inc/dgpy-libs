@@ -10,17 +10,19 @@ nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)
 pys = $(wildcard *.py)
 
-## FORMATTING
 .PHONY: fmt
 fmt:
-	echo $(LIBS)
-	$(isort)
-	$(black)
+	isort --sp pyproject.toml libs
+	black --config pyproject.toml libs
 
-## LINTING
 .PHONY: flake
 flake: fmt
 	python -m flake8 --config=./.flake8 --verbose $(PKG_NAME)
+
+.PHONY: lint
+lint:
+	isort --sp pyproject.toml libs --check
+	black --config pyproject.toml libs --check
 
 
 ###########

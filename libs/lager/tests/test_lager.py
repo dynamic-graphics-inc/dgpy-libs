@@ -6,6 +6,7 @@ test_lager
 Tests for `lager` module.
 """
 
+
 def test_lager_port() -> None:
     from lager import const
 
