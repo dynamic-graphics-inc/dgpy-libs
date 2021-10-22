@@ -49,7 +49,8 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target_version = ['py37']
+target-version = ['py36', 'py37', 'py38']
+skip-string-normalization = true
 include = '\.pyi?$'
 exclude = '''
 (
@@ -81,16 +82,37 @@ exclude = '''
 # \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 # =============================================================================
 
+#[tool.isort]
+#line_length = 88
+#force_single_line = false
+#atomic = true
+#src_paths = ["libs/*/test"]
+#include_trailing_comma = true
+#lines_after_imports = 2
+#lines_between_types = 1
+#multi_line_output = 3
+#skip_glob = ["*/setup.py", ".nox*", "*/.nox*/**", ".venv*/**"]
+
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
 [tool.isort]
+profile = "black"
 line_length = 88
-force_single_line = false
-atomic = true
-src_paths = ["libs/*/test"]
 include_trailing_comma = true
-lines_after_imports = 2
 lines_between_types = 1
 multi_line_output = 3
-skip_glob = ["*/setup.py", ".nox*", "*/.nox*/**", ".venv*/**"]
+skip_glob = ["*/setup.py", ".nox*", "*/.nox_win/**", "*/.pytype/*", "*/loguru_tests/*"]
+force_grid_wrap = 0
+ensure_newline_before_comments = true
+combine_as_imports = true
+use_parentheses = true
 known_first_party = [
     "aiopen",
     "funkify",
@@ -106,10 +128,6 @@ known_third_party = [
 ]
 
 
-
-force_grid_wrap=0
-combine_as_imports = true
-use_parentheses = true
 
 
 # =============================================================================
