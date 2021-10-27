@@ -41,7 +41,7 @@ else:
 
     JsonObjMutableMapping = MutableMapping[str, _VT]
 
-__all__ = [
+__all__ = (
     "JsonObj",
     "JsonDict",
     "JsonObjMutableMapping",
@@ -55,7 +55,7 @@ __all__ = [
     "null",
     "JSONModuleCls",
     "JsonObjT",
-]
+)
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
 
