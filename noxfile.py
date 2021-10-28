@@ -15,6 +15,7 @@ libs = [
     'jsonbourne',
     'lager',
     'requires',
+    'shellfish',
     'xtyping',
 ]
 

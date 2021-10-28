@@ -1,0 +1,193 @@
+# -*- coding: utf-8 -*-
+"""Current running process info"""
+import os
+import platform
+import sys
+
+from os import environ
+from typing import Dict, Iterator, Optional
+
+PYTHON_IMPLEMENTATION = platform.python_implementation()
+SYS_PATH_SEP = ";" if os.name == 'nt' else ":"
+
+__all__ = (
+    'ENV',
+    'Env',
+    'PYTHON_IMPLEMENTATION',
+    'SYS_PATH_SEP',
+    'env',
+    'env_dict',
+    'is_cpython',
+    'is_mac',
+    'is_notebook',
+    'is_pypy',
+    'is_win',
+    'is_wsl',
+    'ismac',
+    'iswin',
+    'iswsl',
+)
+
+
+class _EnvObjMeta(type):
+    def __contains__(cls, key: str) -> bool:
+        return key in environ
+
+    def __delitem__(cls, key: str) -> None:
+        return environ.__delitem__(key)
+
+    def __getitem__(cls, key: str) -> Optional[str]:
+        return environ.get(key)
+
+    def __len__(cls) -> int:
+        return len(environ)
+
+    def __iter__(cls) -> Iterator[str]:
+        return iter(environ)
+
+    def __setitem__(cls, key: str, value: str) -> None:
+        return environ.__setitem__(key, value)
+
+    def __str__(cls) -> str:
+        return environ.__str__()[8:-1]
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+    def __getattr__(cls, item: str) -> Optional[str]:
+        try:
+            return environ.__getattribute__(item)  # type: ignore
+        except AttributeError:
+            ...
+        return cls.__getitem__(item)
+
+    def __setattr__(cls, key: str, value: str) -> None:
+        if hasattr(environ, key):
+            raise ValueError(f"Key ({key}) is protected; set with __setitem__")
+        return cls.__setitem__(key, value)
+
+    def asdict(cls) -> Dict[str, str]:
+        return {**cls}
+
+    update = environ.update
+    get = environ.get
+    setdefault = environ.setdefault
+    clear = environ.clear
+    items = environ.items
+    keys = environ.keys
+
+
+class Env(metaclass=_EnvObjMeta):
+    """Env with attr access
+
+    Examples:
+        >>> from os import environ
+        >>> environ.get('SOMEENVVARIABLE')  # Does not exist in environ
+        >>> Env.SOMEENVVARIABLE
+        >>> Env.SOMEENVVARIABLE = 'value'
+        >>> Env.SOMEENVVARIABLE
+        'value'
+        >>> environ.get('SOMEENVVARIABLE')
+        'value'
+        >>> environ['SOMEENVVARIABLE']
+        'value'
+
+    """
+
+    ...
+
+
+env = ENV = Env
+
+
+def env_dict() -> Dict[str, str]:
+    """Return the current enviroment as a dictionary"""
+    return env.asdict()
+
+
+def is_mac() -> bool:
+    """Determine if current operating system is macos/osx
+
+    Returns:
+        True if on a mac; False otherwise
+
+    """
+    return "darwin" in platform.system().lower()
+
+
+def is_win() -> bool:
+    """Determine if current operating system is windows
+
+    Returns:
+        True if on a windows machine; False otherwise
+
+    """
+    return os.name == "nt"
+
+
+def is_wsl() -> bool:
+    """Return True if python is running under (WSL); Return False otherwise"""
+    if sys.platform in {"win32", "cygwin", "darwin"}:
+        return False
+
+    if "microsoft" in platform.release().lower():
+        return True
+
+    try:
+        with open('/proc/version') as f:
+            if 'microsoft' in f.read().lower():
+                return True
+    except FileNotFoundError:
+        pass
+
+    return False
+
+
+def is_notebook() -> bool:
+    """Determine if running in ipython/jupyter notebook; returns True/False"""
+    try:
+        shell = get_ipython().__class__.__name__  # type: ignore
+        if shell == "ZMQInteractiveShell":
+            return True  # Jupyter notebook or qtconsole
+        elif shell == "TerminalInteractiveShell":
+            return False  # Terminal running IPython
+        else:
+            return False  # Other type (?)
+    except NameError:
+        return False  # Probably standard Python interpreter
+
+
+def is_pypy() -> bool:
+    """Return True if running on pypy3; False otherwise"""
+    return 'pypy' in platform.python_implementation().lower()
+
+
+def is_cpython() -> bool:
+    """Return True if running on CPython; False otherwise"""
+    return 'cpython' in platform.python_implementation().lower()
+
+
+def opsys() -> str:
+    """Return the current process' os type: 'mac' | 'lin' | 'win' | 'wsl'"""
+    if is_win():
+        return "win"
+    if is_wsl():
+        return "wsl"
+    if is_mac():
+        return "mac"
+    return "lin"
+
+
+def hostname() -> str:
+    """Return the current computer's hostname"""
+    return platform.node()
+
+
+def sys_path_sep() -> str:
+    """Return the system path separator string (; on windows -- : otherwise)"""
+    return ";" if is_win() else ":"
+
+
+ismac = is_mac
+iswin = is_win
+iswsl = is_wsl

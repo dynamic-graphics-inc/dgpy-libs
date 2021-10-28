@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "xtyping"
-version = "0.2.2"
-description = "Extended typing"
+name = "shellfish"
+version = "0.0.1"
+description = "shellfish ~ shell and file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 packages = [
-    { include = "xtyping", from = "." },
+    { include = "shellfish", from = "." },
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -20,13 +20,13 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "typing", "dgpy", "typing", "types"
+    "typing", "dgpy", "shell", "filesystem"
 ]
 
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.1"
-typing-extensions = "^3.10.0"
+xtyping = "^0.2.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"

@@ -134,6 +134,11 @@ __all__ = [
 
 __all_shed__ = __all__
 
+#############
+## Aliases ##
+#############
+Opt = Optional
+
 ##########
 ## NONE ##
 ##########
@@ -280,8 +285,8 @@ HrTime = Tuple[int, int]  # node/js hrtime type annotation
 ###############################
 ## Function type annotations ##
 ###############################
-FsPath = Union[str, Path]
-FsPathLike = Union[str, PathLike]
+FsPath = Union[str, Path, PathLike]
+FsPathLike = PathLike
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
 CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
