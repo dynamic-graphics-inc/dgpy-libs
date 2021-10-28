@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.0.1"
+version = "0.0.2"
 description = "shellfish ~ shell and file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

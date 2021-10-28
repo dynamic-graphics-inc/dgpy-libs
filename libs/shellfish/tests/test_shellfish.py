@@ -22,4 +22,3 @@ def _get_version() -> str:
 
 def test_version() -> None:
     assert shellfish.__version__ == _get_version()
-
