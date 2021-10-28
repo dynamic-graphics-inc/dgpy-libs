@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  lint:
+  fast-lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -25,9 +25,13 @@ jobs:
         run: |
           make lint
 
+      - name: flake8 & mypy
+        run: |
+          pip install nox
+          nox -s lint
+
   lintjb:
     runs-on: ubuntu-latest
-#    runs-on: self-hosted
     strategy:
       matrix:
         python-version: [3.8]
