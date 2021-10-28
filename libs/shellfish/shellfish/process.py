@@ -66,15 +66,15 @@ class _EnvObjMeta(type):
             raise ValueError(f"Key ({key}) is protected; set with __setitem__")
         return cls.__setitem__(key, value)
 
-    def asdict(cls) -> Dict[str, str]:
-        return {**cls}
-
     update = environ.update
     get = environ.get
     setdefault = environ.setdefault
     clear = environ.clear
     items = environ.items
     keys = environ.keys
+
+    def asdict(cls) -> Dict[str, str]:
+        return {k: v for k, v in environ.items()}
 
 
 class Env(metaclass=_EnvObjMeta):

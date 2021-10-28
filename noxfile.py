@@ -38,7 +38,11 @@ PWD = path.abspath(path.dirname(__file__))
 LIBS_DIR = path.join(PWD, "libs")
 
 VENV_BACKEND = None if is_win() or not which("conda") else "conda"
-LIB_DIRS = {el: path.join(LIBS_DIR, el) for el in os.listdir(LIBS_DIR) if el[0] != '.' and el in libs}
+LIB_DIRS = {
+    el: path.join(LIBS_DIR, el)
+    for el in os.listdir(LIBS_DIR)
+    if el[0] != '.' and el in libs
+}
 SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 
@@ -104,6 +108,12 @@ def _mypy(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mypy(session):
+    _mypy(session)
+
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def lint(session):
+    _flake(session)
     _mypy(session)
 
 
