@@ -2,6 +2,6 @@
 """Package metadata/info"""
 
 __title__ = 'shellfish'
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 __license__ = 'MIT'
 __description__ = 'shellfish ~ shell and file-system utils'
