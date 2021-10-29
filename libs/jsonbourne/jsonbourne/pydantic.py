@@ -256,7 +256,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
     @classmethod
     def _cls_field_names(cls) -> Set[str]:
         """Return pydantic field names"""
-        return {el for el in cls.__fields__}
+        return set(cls.__fields__)
 
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""

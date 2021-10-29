@@ -4,4 +4,4 @@
 __title__ = 'aiopen'
 __version__ = '0.4.0'
 __license__ = 'MIT'
-__description__ = 'async file io'
+__description__ = 'Async file io'

@@ -20,6 +20,8 @@ nav:
       - lager: './libs/lager/README.ipynb'
       - requires: './libs/requires/README.ipynb'
       - xtyping: './libs/xtyping/README.ipynb'
+  - API:
+      - aiopen: './libs/aiopen/api/aiopen.md'
   - Notebooks:
       - Cache Money: './notebooks/cache_money.ipynb'
       - Filter None: './notebooks/filter_none.ipynb'
@@ -61,21 +63,36 @@ markdown_extensions:
 
 plugins:
   - search
-  - mkdocs-jupyter
+  - mkdocs-jupyter:
+      execute: False
 
-### MKDOCSTRINGS ###
-#  - mkdocstrings:
-#      default_handler: python
-#      selection:
-#        new_path_syntax: yes
-#      handlers:
-#        python:
-#          rendering:
-#            show_source: false
-#            show_root_heading: true
-#            show_root_full_path: true
-#            show_signature_annotations: true
-#            show_category_heading: true
-#      watch:
-#        - libs/jsonbourne/jsonbourne
-#
+  ### MKDOCSTRINGS ###
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.append("docs")
+          inherited_members: true
+          docstring_style: google
+          rendering:
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: true
+            show_signature_annotations: true
+            show_category_heading: true
+            show_root_members_full_path: true
+            show_object_full_path: true
+            show_if_no_docstring: true
+            show_root_toc_entry: true
+            heading_level: 2
+          selection:
+            members: true
+            filters:
+              - "!^_"  # exlude all members starting with _
+              - "^__init__$"  # but always include __init__ modules and methods
+            new_path_syntax: false
+      watch:
+        - libs/aiopen/aiopen
+        - libs/jsonbourne/jsonbourne

@@ -11,7 +11,7 @@ from py._path.local import LocalPath
 import aiopen
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_iteration(mode: str) -> None:
     """Test iterating over lines from a file."""
@@ -42,7 +42,7 @@ async def test_simple_iteration(mode: str) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_readlines(mode: str) -> None:
     """Test the readlines functionality."""
@@ -62,7 +62,7 @@ async def test_simple_readlines(mode: str) -> None:
     assert actual == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r+", "w", "a"])
 async def test_simple_flush(mode: str, tmpdir: LocalPath) -> None:
     """Test flushing to a file."""
@@ -85,7 +85,7 @@ async def test_simple_flush(mode: str, tmpdir: LocalPath) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_read(mode: str) -> None:
     """Just read some bytes from a test file."""
@@ -101,7 +101,7 @@ async def test_simple_read(mode: str) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "a"])
 async def test_simple_read_fail(mode: str, tmpdir: LocalPath) -> None:
     """Try reading some bytes and fail."""
@@ -119,7 +119,7 @@ async def test_simple_read_fail(mode: str, tmpdir: LocalPath) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_staggered_read(mode: str) -> None:
     """Read bytes repeatedly."""
@@ -151,7 +151,7 @@ async def test_staggered_read(mode: str) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_seek(mode: str, tmpdir: LocalPath) -> None:
     """Test seeking and then reading."""
@@ -168,7 +168,7 @@ async def test_simple_seek(mode: str, tmpdir: LocalPath) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "r", "r+", "w+", "a", "a+"])
 async def test_simple_close(mode: str, tmpdir: LocalPath) -> None:
     """Open a file, read a byte, and close it."""
@@ -186,7 +186,7 @@ async def test_simple_close(mode: str, tmpdir: LocalPath) -> None:
     assert file._file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r+", "w", "a+"])
 async def test_simple_truncate(mode: str, tmpdir: LocalPath) -> None:
     """Test truncating files."""
@@ -211,7 +211,7 @@ async def test_simple_truncate(mode: str, tmpdir: LocalPath) -> None:
     assert "" == full_file.read()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "r+", "w+", "a", "a+"])
 async def test_simple_write(mode: str, tmpdir: LocalPath) -> None:
     """Test writing into a file."""
@@ -231,7 +231,7 @@ async def test_simple_write(mode: str, tmpdir: LocalPath) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_simple_detach(tmpdir: LocalPath) -> None:
     """Test detaching for buffered streams."""
     filename = "file.bin"
@@ -251,7 +251,7 @@ async def test_simple_detach(tmpdir: LocalPath) -> None:
             assert b"0123456789" == raw_file.read(10)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_iteration_ctx_mgr(mode: str) -> None:
     """Test iterating over lines from a file."""

@@ -729,7 +729,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
     def _cls_field_names(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return {el for el in cls.__fields__}  # type: ignore
+            return set(cls.__fields__)  # type: ignore
         except AttributeError:
             raise AttributeError("Class does not inherit from pydantic.BaseModel")
 

@@ -305,7 +305,7 @@ def test_dot_iter_keys() -> None:
         "state",
     ]
     dot_keys_set = set(d.dot_keys())
-    expected_tuples_set = set(tuple(el.split('.')) for el in expected)
+    expected_tuples_set = {tuple(el.split('.')) for el in expected}
     assert dot_keys_set == expected_tuples_set
 
 
@@ -325,7 +325,7 @@ def test_dot_list_keys() -> None:
         "profile_id",
         "state",
     ]
-    assert set([tuple(el.split('.')) for el in expected]) == set(d.dot_keys_list())
+    assert {tuple(el.split('.')) for el in expected} == set(d.dot_keys_list())
 
 
 def test_dot_list_keys_sorted() -> None:

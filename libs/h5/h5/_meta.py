@@ -4,4 +4,4 @@
 __title__ = 'h5'
 __version__ = '0.4.1'
 __license__ = 'MIT'
-__description__ = 'h5py utilities'
+__description__ = 'H5py utils'

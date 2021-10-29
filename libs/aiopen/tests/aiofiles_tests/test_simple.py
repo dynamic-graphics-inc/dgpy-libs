@@ -16,7 +16,7 @@ from py._path.local import LocalPath
 import aiopen as aio
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_serve_small_bin_file_sync(
     event_loop: _UnixSelectorEventLoop, tmpdir: LocalPath, unused_tcp_port: int
 ) -> None:
@@ -64,7 +64,7 @@ async def test_serve_small_bin_file_sync(
     await server.wait_closed()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_serve_small_bin_file(
     event_loop: _UnixSelectorEventLoop, tmpdir: LocalPath, unused_tcp_port: int
 ) -> None:

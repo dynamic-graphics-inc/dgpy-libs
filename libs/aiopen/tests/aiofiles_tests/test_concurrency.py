@@ -12,7 +12,7 @@ from _pytest.monkeypatch import MonkeyPatch
 import aiopen as aio
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None:
     """Monkey patch open and file.read(), and assert the loop still works."""
     filename = join(dirname(__file__), "resources", "multiline_file.txt")
