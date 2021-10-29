@@ -52,6 +52,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          pwd
           poetry run pytest tests
 
 
