@@ -1,19 +1,13 @@
 # -*- coding: utf-8 -*-
 from functools import lru_cache
 from os import (
-    DirEntry,
     chdir,
     chmod as _chmod,
     environ,
     getcwd,
-    listdir,
     makedirs,
     mkdir as _mkdir,
     path,
-    remove,
-    scandir,
-    symlink,
-    unlink,
     utime,
 )
 from shlex import split as _shplit

@@ -103,6 +103,6 @@ def ldotenv(fspath: Optional[FsPath] = None) -> Dict[str, str]:
 
 
 if __name__ == "__main__":
-    pass
-    # from doctest import testmod
-    # testmod()
+    from doctest import testmod
+
+    testmod()
