@@ -35,7 +35,7 @@ T = TypeVar("T")
 PathType = Union[str, PathLike]
 
 _open = open
-__all__ = ("aiopen", )
+__all__ = ("aiopen",)
 
 
 def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
