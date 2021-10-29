@@ -16,7 +16,7 @@ libs = [
     'requires',
     'shellfish',
     'xtyping',
-    ]
+]
 
 
 def is_win() -> bool:
@@ -41,7 +41,7 @@ LIB_DIRS = {
     el: path.join(LIBS_DIR, el)
     for el in os.listdir(LIBS_DIR)
     if el[0] != '.' and el in libs
-    }
+}
 SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 
@@ -69,7 +69,7 @@ def _get_session_python_site_packages_dir(session):
                 "sys.stdout.write(get_python_lib())",
                 silent=True,
                 log=False,
-                )
+            )
             session._runner._site_packages_dir = site_packages_dir
         finally:
             session._runner.global_config.install_only = old_install_only_value
@@ -77,7 +77,10 @@ def _get_session_python_site_packages_dir(session):
 
 
 def _flake(session):
-    session.install("flake8", "flake8-print", "flake8-eradicate", "flake8-comprehensions", "flake8-pytest-style")
+    # TODO add using the package "flake8-pytest-style"
+    session.install(
+        "flake8", "flake8-print", "flake8-eradicate", "flake8-comprehensions"
+    )
     session.run("flake8", *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el])
     session.run("flake8", *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el])
 
@@ -100,7 +103,7 @@ def _mypy(session):
         # './pyproject.toml',
         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
-        )
+    )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -138,7 +141,7 @@ def update_metadata(session):
             "__version__ = '{}'".format(poetry_metadata["version"]),
             "__license__ = '{}'".format(poetry_metadata["license"]),
             "__description__ = '{}'".format(poetry_metadata["description"]),
-            ]
+        ]
         metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
 
         # check that is valid python...
