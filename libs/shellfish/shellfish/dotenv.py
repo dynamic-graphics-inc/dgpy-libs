@@ -8,6 +8,13 @@ from shellfish.fs import rstring
 from shellfish.sh import shplit
 from xtyping import Dict, FsPath, Optional
 
+__all__ = (
+    'strip_comments',
+    'parse_dotenv',
+    'ldotenv',
+    'parse_env',
+)
+
 
 def strip_comments(string: str) -> str:
     """Remove comments from python/shell scripts given the script as a string
