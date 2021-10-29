@@ -119,12 +119,11 @@ __all__ = (
     'TypeVar',
     'Union',
     'ValuesView',
+    '__all_typing__',
     'cast',
     'get_type_hints',
     'no_type_check',
     'no_type_check_decorator',
     'overload',
-    '__all_typing__',
 )
-
 __all_typing__ = __all__

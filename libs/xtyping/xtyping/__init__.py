@@ -61,7 +61,7 @@ from xtyping._typing import (
     TypeVar,
     Union,
     ValuesView,
-    __all_typing__,
+    __all__ as __all_typing__,
     cast,
     get_type_hints,
     no_type_check,
@@ -75,7 +75,7 @@ from xtyping._typing_extensions import (
     Protocol,
     TypeAlias,
     TypedDict,
-    __all_typing_extensions__,
+    __all__ as __all_typing_extensions__,
     final,
     runtime_checkable,
 )
@@ -86,11 +86,13 @@ from xtyping.shed import (
     _T,
     AF,
     DT,
+    FALSE,
     FN,
     KT,
     RT,
     STDIN,
     STDIO,
+    TRUE,
     VT,
     AnyCallable,
     AnyFunction,
@@ -188,6 +190,8 @@ from xtyping.shed import (
 )
 
 __all__ = (
+    'TRUE',
+    'FALSE',
     'AF',
     'AbstractSet',
     'Any',

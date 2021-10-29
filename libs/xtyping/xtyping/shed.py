@@ -24,7 +24,9 @@ from typing import (
     Union,
 )
 
-__all__ = [
+from typing_extensions import Literal
+
+__all__ = (
     'AF',
     'AnyCallable',
     'AnyFunction',
@@ -34,8 +36,8 @@ __all__ = [
     'ArrayShape',
     'Bytes',
     'CmdArgsType',
-    'Decimal',
     'DT',
+    'Decimal',
     'DictAny',
     'DictAnyAny',
     'DictFloat',
@@ -53,6 +55,7 @@ __all__ = [
     'EnvMap',
     'EnvType',
     'F',
+    'FALSE',
     'FN',
     'Flint',
     'FsPath',
@@ -114,6 +117,7 @@ __all__ = [
     'StrIntFloat',
     'StringEnum',
     'T',
+    'TRUE',
     'T_co',
     'T_contra',
     'TupleStrStr',
@@ -128,16 +132,21 @@ __all__ = [
     '_R',
     '_RT',
     '_T',
-    'null',
     '__all_shed__',
-]
-
+    'null',
+)
 __all_shed__ = __all__
 
 #############
 ## Aliases ##
 #############
 Opt = Optional
+
+###############
+## LITERALLY ##
+###############
+TRUE = Literal[True]
+FALSE = Literal[False]
 
 ##########
 ## NONE ##

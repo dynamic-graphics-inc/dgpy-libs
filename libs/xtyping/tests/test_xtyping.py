@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from os import path
+from pprint import pformat
+from typing import Tuple
 
 import xtyping
 
@@ -62,3 +64,35 @@ def test_xtyping_imports_typing() -> None:
             missing.add(el)
     if missing:
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+
+
+def _test_module_all_tuple(mod_name: str, mod_all: Tuple[str, ...]) -> None:
+
+    assert isinstance(mod_all, tuple), '__all__ should be tuple'
+    assert len(set(mod_all)) == len(mod_all)
+    sorted_all_tuple = tuple(sorted(mod_all))
+    try:
+        assert sorted_all_tuple == mod_all
+    except AssertionError as e:
+        print('{} should be:'.format(mod_name))
+        print(pformat(sorted_all_tuple))
+        raise e
+
+
+def test_xtypting_typing_all_list() -> None:
+    _test_module_all_tuple('xtyping._typing.__all__', xtyping.__all_typing__)
+    _test_module_all_tuple(
+        'xtyping._typing_extensions.__all__', xtyping.__all_typing_extensions__
+    )
+    _test_module_all_tuple('xtyping.shed.__all__', xtyping.__all_shed__)
+
+    assert isinstance(xtyping.__all_typing__, tuple), '__all__ should be tuple'
+    assert len(set(xtyping.__all_typing__)) == len(xtyping.__all_typing__)
+
+    sorted_xtyping_all = tuple(sorted(xtyping.__all_typing__))
+    try:
+        assert sorted_xtyping_all == xtyping.__all_typing__
+    except AssertionError as e:
+        print('xtyping._typing.__all__ should be:')
+        print(pformat(sorted_xtyping_all))
+        raise e
