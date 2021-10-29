@@ -52,7 +52,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pwd
+          cd libs/aiopen
           poetry run pytest tests
 
 
