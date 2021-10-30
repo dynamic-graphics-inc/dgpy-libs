@@ -2,7 +2,7 @@
 """Pre-fab requirements"""
 from requires import Requirement
 
-__all__ = [
+__all__ = (
     'requires_boto3',
     'requires_toml',
     'requires_imageio',
@@ -20,7 +20,7 @@ __all__ = [
     'requires_xarray',
     'requires_pydantic',
     'requires_zmq',
-]
+)
 
 requires_numpy = Requirement(
     _import='numpy',

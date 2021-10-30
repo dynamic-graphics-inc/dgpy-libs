@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """xtyping = typing | typing_extensions | misc"""
-from decimal import Decimal
 from enum import Enum
 from os import PathLike
 from pathlib import Path
@@ -37,7 +36,6 @@ __all__ = (
     'Bytes',
     'CmdArgsType',
     'DT',
-    'Decimal',
     'DictAny',
     'DictAnyAny',
     'DictFloat',

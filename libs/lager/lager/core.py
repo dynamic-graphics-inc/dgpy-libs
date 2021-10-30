@@ -256,7 +256,7 @@ success = LAGER.success
 trace = LAGER.trace
 warning = LAGER.warning
 
-__all__ = [
+__all__ = (
     'loglevel',
     'flog',
     'handlers',
@@ -267,4 +267,4 @@ __all__ = [
     'lager',
     'LAGER',
     *__hoisted__,
-]
+)

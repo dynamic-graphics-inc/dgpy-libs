@@ -45,7 +45,7 @@ from lager.core import (
     warning,
 )
 
-__all__ = [
+__all__ = (
     '__version__',
     'LAGER_PORT',
     'LOGURU_DEFAULT_FMT',
@@ -93,4 +93,4 @@ __all__ = [
     'success',
     'trace',
     'warning',
-]
+)

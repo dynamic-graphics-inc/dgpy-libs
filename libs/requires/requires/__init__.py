@@ -13,7 +13,7 @@ from requires.core import (
 
 funkify(requires, name="requires")
 
-__all__ = [
+__all__ = (
     "__version__",
     "requires",
     "require",
@@ -21,4 +21,4 @@ __all__ = [
     "Requirement",
     "RequirementProxy",
     "RequirementAttributeError",
-]
+)
