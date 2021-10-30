@@ -5,7 +5,7 @@ import sys
 
 from functools import lru_cache
 from itertools import chain
-from json.decoder import JSONDecodeError
+from json import JSONDecodeError
 from pprint import pformat
 from types import ModuleType
 from typing import (
