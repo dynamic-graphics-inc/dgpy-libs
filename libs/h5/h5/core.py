@@ -9,7 +9,7 @@ from numpy import float64, int8, ndarray
 
 FsPath = Union[str, Path]
 
-__all__ = [
+__all__ = (
     "__h5py_version__",
     "h5py_obj_attrs_gen",
     "h5py_obj_dataset_gen",
@@ -25,7 +25,7 @@ __all__ = [
     "h5_datasets_gen_from_fspath",
     "h5_attrs_dict",
     "h5_attrs_gen_from_fspath",
-]
+)
 
 
 def _fmt_h5_path(head: str, tail: str) -> str:

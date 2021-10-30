@@ -5,7 +5,7 @@ from funkify.core import _funkify, funkify
 
 _funkify(funkify, name="funkify")
 
-__all__ = [
+__all__ = (
     "__version__",
     "funkify",
-]
+)

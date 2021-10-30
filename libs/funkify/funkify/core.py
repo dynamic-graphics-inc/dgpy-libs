@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Funkify core"""
+import inspect
 import sys
 
 from types import ModuleType
@@ -13,6 +14,8 @@ def _funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[
         _name = name or funk.__module__
     except AttributeError:
         raise ValueError(f"Bad args: funk={funk} name={name}")
+    curframe = inspect.currentframe()
+    calframe = inspect.getouterframes(curframe, 2)
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
@@ -22,7 +25,6 @@ def _funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[
     return funk
 
 
-@_funkify
 def funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[..., T]:
     """Funkify a module"""
     return _funkify(funk=funk, name=name)
