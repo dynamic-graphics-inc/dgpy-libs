@@ -2,7 +2,7 @@
 import pytest
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_asyncify() -> None:
     from asyncify import asyncify
 
@@ -14,7 +14,7 @@ async def test_asyncify() -> None:
     assert res == 6
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_asyncify_funkified() -> None:
     import asyncify
 

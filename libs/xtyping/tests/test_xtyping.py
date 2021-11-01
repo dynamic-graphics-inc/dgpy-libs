@@ -74,8 +74,8 @@ def _test_module_all_tuple(mod_name: str, mod_all: Tuple[str, ...]) -> None:
     try:
         assert sorted_all_tuple == mod_all
     except AssertionError as e:
-        print('{} should be:'.format(mod_name))
-        print(pformat(sorted_all_tuple))
+        print('{} should be:'.format(mod_name))  # noqa: T001
+        print(pformat(sorted_all_tuple))  # noqa: T001
         raise e
 
 
@@ -85,14 +85,3 @@ def test_xtypting_typing_all_list() -> None:
         'xtyping._typing_extensions.__all__', xtyping.__all_typing_extensions__
     )
     _test_module_all_tuple('xtyping.shed.__all__', xtyping.__all_shed__)
-
-    assert isinstance(xtyping.__all_typing__, tuple), '__all__ should be tuple'
-    assert len(set(xtyping.__all_typing__)) == len(xtyping.__all_typing__)
-
-    sorted_xtyping_all = tuple(sorted(xtyping.__all_typing__))
-    try:
-        assert sorted_xtyping_all == xtyping.__all_typing__
-    except AssertionError as e:
-        print('xtyping._typing.__all__ should be:')
-        print(pformat(sorted_xtyping_all))
-        raise e

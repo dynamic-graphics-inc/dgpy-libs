@@ -262,7 +262,7 @@ def test_from_json_import_dumps_module_alias() -> None:
     assert fn() == '{"herm": 1}'
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_from_json_import_dumps_async() -> None:
     @requires("from json import dumps")
     async def fn():
@@ -408,7 +408,7 @@ def test_requires_name_error() -> None:
         fn()
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_requires_name_error_async() -> None:
     with pytest.raises(RequirementError) as re:
         assert re
