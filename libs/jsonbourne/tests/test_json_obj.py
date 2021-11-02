@@ -44,7 +44,7 @@ def test_json_obj_basic() -> None:
     assert thing2.c.herm == thing2["c"]["herm"]
 
 
-def test_dictainer_basic_unpacking() -> None:
+def test_jsonobj_basic_unpacking() -> None:
     thing = Thingy({"a": 1, "b": 2, "c": 3, "d": ["list"]})
     thing2 = Thingy({"b": 2, "c": 3, "d": ["different list"], "a": 234})
     assert thing.a == thing["a"]
@@ -54,15 +54,16 @@ def test_dictainer_basic_unpacking() -> None:
 
     merged = {**thing, **thing2}
     assert merged["a"] == 234
-    merged_dictainer = JsonObj({**thing, **thing2})
-    assert {**merged_dictainer} == merged
+    merged_jsonobj = JsonObj({**thing, **thing2})
+    assert {**merged_jsonobj} == merged
 
 
-def test_dictainer_breaks() -> None:
+def test_jsonobj_breaks() -> None:
     thing2 = Thingy({"a": 1, "b": 2, "c": {"herm": 23}})
     assert thing2.c.herm == thing2["c"]["herm"]
     with pytest.raises(ValueError) as err:
         thing2["herm herm herm import"] = "should break"
+        print(err)
         assert err
 
 

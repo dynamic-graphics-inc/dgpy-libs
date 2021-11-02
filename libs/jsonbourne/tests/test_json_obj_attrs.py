@@ -15,7 +15,7 @@ except ModuleNotFoundError:
     pass
 
 
-def test_dictainer_property_attrs() -> None:
+def test_jsonobj_property_attrs() -> None:
     @attrs(auto_attribs=True)
     class ThingyWithPropertyAndAttrs(JsonObj):
         a: int
@@ -74,7 +74,7 @@ EXPECTED_STRING = """ThingyWithPropertyAndAttrsStrTests(**{
 })"""
 
 
-def test_dictainer_property_attrs_str() -> None:
+def test_jsonobj_property_attrs_str() -> None:
     @attrs(auto_attribs=True)
     class ThingyWithPropertyAndAttrsStrTests(JsonObj):
         a: int
