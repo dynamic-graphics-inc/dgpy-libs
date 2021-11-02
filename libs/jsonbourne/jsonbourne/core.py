@@ -624,8 +624,12 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """
         if not isinstance(key, (str, list, tuple)):
             raise ValueError(
-                'dot_key arg must be tuple/list of strings or string; '
-                'strings will be split on \'.\''
+                ''.join(
+                    (
+                        'dot_key arg must be string or sequence of strings; ',
+                        "strings will be split on '.'",
+                    )
+                )
             )
         parts = key.split(".") if isinstance(key, str) else list(key)
         root_val: Any = self._data[parts[0]]
@@ -637,9 +641,11 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 reached = ".".join(parts[:ix])
                 err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
                 if isinstance(key, str):
-                    err_msg += (
-                        f'\nNOTE!!! lookup performed with string (\'{key}\') '
-                        f'PREFER lookup using List[str] or Tuple[str, ...]'
+                    err_msg += ''.join(
+                        (
+                            f"\nNOTE!!! lookup performed with string ('{key}') ",
+                            'PREFER lookup using List[str] or Tuple[str, ...]',
+                        )
                     )
                 raise KeyError(err_msg)
         return cur_val

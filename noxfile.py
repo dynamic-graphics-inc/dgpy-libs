@@ -79,7 +79,11 @@ def _get_session_python_site_packages_dir(session):
 def _flake(session):
     # TODO add using the package "flake8-pytest-style"
     session.install(
-        "flake8", "flake8-print", "flake8-eradicate", "flake8-comprehensions"
+        "flake8",
+        "flake8-print",
+        "flake8-eradicate",
+        "flake8-comprehensions",
+        "flake8-quotes",
     )
     session.run("flake8", *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el])
     session.run("flake8", *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el])
