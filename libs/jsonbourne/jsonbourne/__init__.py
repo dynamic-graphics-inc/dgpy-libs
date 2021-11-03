@@ -22,7 +22,7 @@ json = jsonlib
 
 JSONLIB = jsonlib.__name__
 
-__all__ = [
+__all__ = (
     "__version__",
     "JSON",  # js/ts JSON (THE ONE TO USE)
     "jsonlib",  # json compat lib
@@ -40,4 +40,4 @@ __all__ = [
     # undefined
     "undefined",
     "UNDEFINED",
-]
+)

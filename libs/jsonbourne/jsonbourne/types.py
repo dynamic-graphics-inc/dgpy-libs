@@ -13,12 +13,12 @@ else:
 
     _JsonDictMutableMapping = MutableMapping[str, Any]
 
-__all__ = [
+__all__ = (
     "JsonDictT",
     "JsonListT",
     "JsonArrT",
     "JsonObjT",
-]
+)
 
 # Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
 JsonDictT = Dict[str, Any]

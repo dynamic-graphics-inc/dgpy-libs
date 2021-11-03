@@ -11,14 +11,14 @@ from jsonbourne.core import JSON, JsonObj
 
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound='JsonBaseModel')
 
-__all__ = [
+__all__ = (
     'JsonBaseModelDefaultConfig',
     'JsonBaseModel',
     'JsonBaseModelT',
     'BaseModel',
     'Field',
     'ValidationError',
-]
+)
 
 
 class JsonBaseModelDefaultConfig(BaseConfig):
