@@ -6,10 +6,12 @@ from jsonbourne import JSON
 try:
     from starlette.responses import Response
 except ModuleNotFoundError:
-    Response = object
+    raise ModuleNotFoundError('starlette not found/installed; `pip install starlette`')
+
+__all__ = ('JSONBOURNEResponse',)
 
 
-class JSONBOURNEResponse(Response):  # type: ignore
+class JSONBOURNEResponse(Response):
     """FastAPI/starlette json response to auto use jsonbourne"""
 
     media_type = "application/json"

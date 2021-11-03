@@ -329,6 +329,70 @@ def import_json(
     return _import_json_stdlib()
 
 
+class JsonLib:
+    _jsonlib: Type[JsonLibABC]
+
+    def __init__(self, jsonlib: Optional[Type[JsonLibABC]] = None):
+        if jsonlib:
+            self._jsonlib = jsonlib
+        else:
+            self._jsonlib = import_json()
+
+    def dumps(
+        self,
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> str:
+        return self._jsonlib.dumps(
+            data=data,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
+
+    def dumpb(
+        self,
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> bytes:
+        return self._jsonlib.dumpb(
+            data=data,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
+
+    def loads(self, string: str, **kwargs: Any) -> Any:
+        return self._jsonlib.loads(string, **kwargs)
+
+    def use_orjson(self) -> None:
+        self._jsonlib = _import_orjson()
+
+    def use_rapidjson(self) -> None:
+        self._jsonlib = _import_rapidjson()
+
+    def use_json_stdlib(self) -> None:
+        self._jsonlib = _import_json_stdlib()
+
+    def use_json(self) -> None:
+        self.use_json_stdlib()
+
+    def which(self) -> str:
+        return self._jsonlib.lib
+
+
 JSONLIB: Type[JsonLibABC] = import_json()
 
 

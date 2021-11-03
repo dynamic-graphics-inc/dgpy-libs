@@ -60,7 +60,7 @@ def strip_comments(string: str) -> str:
         except AttributeError:
             return line
 
-    return "\n".join((_strip_comments_line(line) for line in filelines))  # type: ignore
+    return "\n".join((_strip_comments_line(line) for line in filelines))
 
 
 def parse_dotenv(string: str) -> Dict[str, str]:

@@ -62,7 +62,7 @@ def file_size(fspath: FsPath) -> int:
     return stat(fspath).st_size
 
 
-def scandir_list(dirpath: FsPath = '.') -> List[DirEntry]:  # type: ignore
+def scandir_list(dirpath: FsPath = '.') -> List[DirEntry]:
     """Return a list of os.DirEntry objects
 
     Args:

@@ -98,7 +98,15 @@ def _mypy(session):
     session.install('mypy')
     session.install('typing-extensions')
     session.install('pydantic')
-    session.install('orjson', 'types-orjson')
+    session.install('orjson', 'types-orjson', 'fastapi')
+    # session.run(
+    #     'mypy',
+    #     '--show-error-codes',
+    #     '--config-file',
+    #     './pyproject.toml',
+    #     *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
+    #     # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
+    #     )
     session.run(
         'mypy',
         '--show-error-codes',

@@ -666,7 +666,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                     yield k, value
         """
 
-        return chain.from_iterable(  # type: ignore
+        return chain.from_iterable(
             (
                 (
                     *(

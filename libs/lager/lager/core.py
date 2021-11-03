@@ -17,7 +17,7 @@ from lager.const import LOG_LEVELS
 T = TypeVar('T')
 
 try:
-    import orjson  # type: ignore
+    import orjson
 
     def _stringify_new_line(serializable: Any) -> str:
         return orjson.dumps(serializable, option=orjson.OPT_APPEND_NEWLINE).decode(
