@@ -66,22 +66,35 @@ def test_xtyping_imports_typing() -> None:
         raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
 
 
-def _test_module_all_tuple(mod_name: str, mod_all: Tuple[str, ...]) -> None:
-
+def _test_module_all_tuple(
+    mod_name: str, mod_all: Tuple[str, ...], check_sorted: bool = True
+) -> None:
     assert isinstance(mod_all, tuple), '__all__ should be tuple'
     assert len(set(mod_all)) == len(mod_all)
-    sorted_all_tuple = tuple(sorted(mod_all))
-    try:
-        assert sorted_all_tuple == mod_all
-    except AssertionError as e:
-        print('{} should be:'.format(mod_name))  # noqa: T001
-        print(pformat(sorted_all_tuple))  # noqa: T001
-        raise e
+    if check_sorted:
+        sorted_all_tuple = tuple(sorted(mod_all))
+        try:
+            assert sorted_all_tuple == mod_all
+        except AssertionError as e:
+            print('{} should be:'.format(mod_name))  # noqa: T001
+            print(pformat(sorted_all_tuple))  # noqa: T001
+            raise e
 
 
-def test_xtypting_typing_all_list() -> None:
+def test_root_has_everything():
+    xtyping_all_set = set(xtyping.__all__)
+    for el in xtyping.__all_typing__:
+        assert el in xtyping_all_set
+    for el in xtyping.__all_typing_extensions__:
+        assert el in xtyping_all_set
+    for el in xtyping.__all_shed__:
+        assert el in xtyping_all_set
+
+
+def test_xtypting_all_list() -> None:
     _test_module_all_tuple('xtyping._typing.__all__', xtyping.__all_typing__)
     _test_module_all_tuple(
         'xtyping._typing_extensions.__all__', xtyping.__all_typing_extensions__
     )
     _test_module_all_tuple('xtyping.shed.__all__', xtyping.__all_shed__)
+    _test_module_all_tuple('xtyping.__all__', xtyping.__all__)
