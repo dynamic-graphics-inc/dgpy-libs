@@ -147,7 +147,7 @@ def attrs_test(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 @nox.parametrize('numpy', ['1.19', '1.20'])
 def jsonlibs_test(session, numpy):
-    if numpy == '1.19' and sys.version_info[:2] != (3, 9):
+    if numpy == '1.19' and sys.version_info[:2] == (3, 9):
         session.skip()
 
     session.install("pytest")
