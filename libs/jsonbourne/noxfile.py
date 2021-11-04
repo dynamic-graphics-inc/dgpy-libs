@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import sys
 import os
+import sys
 
 from os import path
 from shutil import which
