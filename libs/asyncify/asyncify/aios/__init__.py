@@ -25,6 +25,3 @@ mkdir = asyncify(os.mkdir)
 makedirs = asyncify(os.makedirs)
 rmdir = asyncify(os.rmdir)
 removedirs = asyncify(os.removedirs)
-
-reveal_type(os.rmdir)
-reveal_type(rmdir)

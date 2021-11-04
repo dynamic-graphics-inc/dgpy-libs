@@ -60,7 +60,6 @@ __all__ = (
     'FsPathLike',
     'FuncType',
     'HrTime',
-    'IO',
     'IntStr',
     'IterableAny',
     'IterableFloat',
