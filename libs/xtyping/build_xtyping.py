@@ -1,9 +1,6 @@
 import os
 
-
-from xtyping import _typing as t
-from xtyping import _typing_extensions as te
-from xtyping import shed
+from xtyping import _typing as t, _typing_extensions as te, shed
 
 include_in_all = {
     '__version__',
