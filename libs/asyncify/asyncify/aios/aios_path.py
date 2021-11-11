@@ -5,7 +5,7 @@ from os import path
 from asyncify.core import asyncify
 
 __all__ = (
-    'exist',
+    'exists',
     'isfile',
     'isdir',
     'getsize',
@@ -16,7 +16,7 @@ __all__ = (
     'sameopenfile',
 )
 
-exist = asyncify(path.exists)
+exists = asyncify(path.exists)
 isfile = asyncify(path.isfile)
 isdir = asyncify(path.isdir)
 getsize = asyncify(path.getsize)
