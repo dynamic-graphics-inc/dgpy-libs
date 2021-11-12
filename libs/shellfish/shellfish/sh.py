@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""shell utils"""
 from functools import lru_cache
 from os import (
     chdir,

@@ -243,6 +243,7 @@ Procfile text
 
 ##### Language
 # Python
+.pylintrc text eol=lf
 *.cfg text eol=lf
 *.py text eol=lf
 *.pyx text eol=lf

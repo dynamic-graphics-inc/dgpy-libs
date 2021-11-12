@@ -3,7 +3,7 @@
 from os import DirEntry, fspath as _fspath, path, scandir, stat
 from time import time
 
-from xtyping import Any, Dict, FsPath, Iterable, List, Optional, Union
+from xtyping import FsPath, Iterable, List
 
 __all__ = (
     'fspath',
@@ -26,22 +26,22 @@ fspath = _fspath
 
 def is_file(fspath: FsPath) -> bool:
     """Return True if the given path is a file; False otherwise"""
-    return path.isfile(fspath(fspath))
+    return path.isfile(_fspath(fspath))
 
 
 def is_dir(fspath: FsPath) -> bool:
     """Return True if the given path is a directory; False otherwise"""
-    return path.isdir(fspath(fspath))
+    return path.isdir(_fspath(fspath))
 
 
 def is_link(fspath: FsPath) -> bool:
     """Return True if the given path is a link; False otherwise"""
-    return path.islink(fspath(fspath))
+    return path.islink(_fspath(fspath))
 
 
 def exists(fspath: FsPath) -> bool:
     """Return True if the given path exists; False otherwise"""
-    return path.exists(str(fspath))
+    return path.exists(_fspath(fspath))
 
 
 isfile = is_file
@@ -72,21 +72,20 @@ def scandir_list(dirpath: FsPath = '.') -> List[DirEntry]:
         List[DirEntry]: List of os.DirEntry objects
 
     """
-    return list(scandir(fspath(dirpath)))
+    return list(scandir(_fspath(dirpath)))
 
 
-def filepath_mtimedelta_sec(fspath: FsPath) -> float:
+def filepath_mtimedelta_sec(filepath: FsPath) -> float:
     """Return the seconds since the file(path) was last modified"""
-    return time() - path.getmtime(str(fspath))
+    return time() - path.getmtime(_fspath(filepath))
 
 
 def wbytes(
     filepath: FsPath,
     bites: bytes,
+    *,
     append: bool = False,
-    flags: Optional[int] = None,
-    mode: Optional[int] = None,
-) -> Union[bool, Dict[str, Any]]:
+) -> bool:
     """Write/Save bytes to a fspath
 
     The parameter 'bites' is used instead of 'bytes' so as to not redefine
@@ -97,9 +96,6 @@ def wbytes(
         bites: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
-        flags: Flags to write the file with (OS dependent)
-        mode: Mode/permissions to save json file with
-        s3_kwargs: s3 kwargs dictioanry/mapping
 
     Returns:
         None
@@ -262,6 +258,7 @@ sbytes = wbytes
 lstring = rstring
 sstring = wstring
 lbytes_gen = rbytes_gen
+
 if __name__ == "__main__":
     from doctest import testmod
 

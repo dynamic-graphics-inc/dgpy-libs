@@ -134,7 +134,7 @@ def is_wsl() -> bool:
         return True
 
     try:
-        with open('/proc/version') as f:
+        with open('/proc/version', 'r') as f:
             if 'microsoft' in f.read().lower():
                 return True
     except FileNotFoundError:
@@ -185,7 +185,7 @@ def hostname() -> str:
 
 def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)"""
-    return ";" if is_win() else ":"
+    return SYS_PATH_SEP
 
 
 ismac = is_mac

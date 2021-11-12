@@ -98,3 +98,43 @@ def test_xtypting_all_list() -> None:
     )
     _test_module_all_tuple('xtyping.shed.__all__', xtyping.__all_shed__)
     _test_module_all_tuple('xtyping.__all__', xtyping.__all__)
+
+
+def test_xtyping_shed_all_members():
+    from xtyping import _typing, _typing_extensions, shed
+
+    builtin_members = {
+        "__annotations__",
+        "__builtins__",
+        "__doc__",
+        "__loader__",
+        "__name__",
+        "__package__",
+        "__spec__",
+        "__file__",
+        "__all__",
+        "__cached__",
+    }
+
+    shed_all = shed.__all__
+    shed_all_set = set(shed_all)
+
+    tx_all = _typing_extensions.__all__
+    tx_all_set = set(tx_all)
+
+    typing_all_set = set(_typing.__all__)
+
+    missing_from_all = set()
+    for k, v in vars(shed).items():
+        member = k
+        if (
+            member not in shed_all_set
+            and member not in tx_all_set
+            and member not in typing_all_set
+            and member not in builtin_members
+        ):
+            missing_from_all.add(member)
+
+    assert len(missing_from_all) == 0, 'xtyping.shed is missing: {}'.format(
+        missing_from_all
+    )

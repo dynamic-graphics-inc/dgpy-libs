@@ -27,13 +27,18 @@ from typing_extensions import Literal
 
 __all__ = (
     'AF',
+    'AFn',
+    'AnyAsyncCallable',
     'AnyCallable',
     'AnyFunction',
     'AnyIterable',
     'AnyIterator',
     'ArrShape',
     'ArrayShape',
+    'AsyncFn',
+    'AsyncFuncType',
     'Bytes',
+    'CmdArgs',
     'CmdArgsType',
     'DT',
     'DictAny',
@@ -50,12 +55,14 @@ __all__ = (
     'DictStrStr',
     'El',
     'Element',
+    'Enum',
     'EnvMap',
     'EnvType',
     'F',
     'FALSE',
     'FN',
     'Flint',
+    'Fn',
     'FsPath',
     'FsPathLike',
     'FuncType',
@@ -72,6 +79,8 @@ __all__ = (
     'JsonListT',
     'JsonObjT',
     'KT',
+    'KT_co',
+    'KT_contra',
     'KeyT',
     'KeyType',
     'ListAny',
@@ -88,6 +97,8 @@ __all__ = (
     'NoneType',
     'Null',
     'Number',
+    'ONE',
+    'Opt',
     'OptFloat',
     'OptInt',
     'OptStr',
@@ -122,13 +133,24 @@ __all__ = (
     'Txt',
     'VT',
     'VT_co',
+    'VT_contra',
     'V_co',
     'ValT',
     'ValType',
+    'ZERO',
     '_DT',
+    '_KT',
+    '_KT_co',
+    '_KT_contra',
     '_R',
     '_RT',
     '_T',
+    '_T_co',
+    '_T_contra',
+    '_VT',
+    '_VT_co',
+    '_VT_contra',
+    '_V_co',
     '__all_shed__',
     'null',
 )
@@ -144,6 +166,8 @@ Opt = Optional
 ###############
 TRUE = Literal[True]
 FALSE = Literal[False]
+ZERO = Literal[0]
+ONE = Literal[1]
 
 ##########
 ## NONE ##
@@ -165,32 +189,49 @@ Flint = Union[int, float]  # float or int
 ## TypeVars ##
 ##############
 T = TypeVar('T')  # Any type.
-_T = TypeVar("_T")
+_T = TypeVar('_T')
 KT = TypeVar('KT')  # Key type.
+_KT = TypeVar('_KT')
 VT = TypeVar('VT')  # Value type.
+_VT = TypeVar('_VT')
 KeyT = TypeVar('KeyT')  # Key type.
 ValT = TypeVar('ValT')  # Value type.
 KeyType = TypeVar('KeyType')  # Key type.
 ValType = TypeVar('ValType')  # Value type.
-El = TypeVar("El")
-Element = TypeVar("Element")
-R = TypeVar("R")
-RT = TypeVar("RT")
-_R = TypeVar("_R")
-_RT = TypeVar("_RT")
-ReturnT = TypeVar("ReturnT")
-ReturnType = TypeVar("ReturnType")
-N = TypeVar("N", int, float)
-DT = TypeVar("DT")
-_DT = TypeVar("_DT")
+El = TypeVar('El')
+Element = TypeVar('Element')
+R = TypeVar('R')
+RT = TypeVar('RT')
+_R = TypeVar('_R')
+_RT = TypeVar('_RT')
+ReturnT = TypeVar('ReturnT')
+ReturnType = TypeVar('ReturnType')
+N = TypeVar('N', int, float)
+DT = TypeVar('DT')
+_DT = TypeVar('_DT')
 
 ########################
 ## Covariant TypeVars ##
 ########################
+KT_co = TypeVar('KT_co', covariant=True)
 T_co = TypeVar('T_co', covariant=True)  # Any type covariant containers.
 V_co = TypeVar('V_co', covariant=True)  # Any type covariant containers.
 VT_co = TypeVar('VT_co', covariant=True)  # Value type covariant containers.
+
+_KT_co = TypeVar('_KT_co', covariant=True)
+_T_co = TypeVar('_T_co', covariant=True)
+_V_co = TypeVar('_V_co', covariant=True)
+_VT_co = TypeVar('_VT_co', covariant=True)
+
+############################
+## Contravariant TypeVars ##
+############################
 T_contra = TypeVar('T_contra', contravariant=True)  # Ditto contravariant.
+_T_contra = TypeVar('_T_contra', contravariant=True)  # Ditto contravariant.
+VT_contra = TypeVar('VT_contra', contravariant=True)
+_VT_contra = TypeVar('_VT_contra', contravariant=True)
+KT_contra = TypeVar('KT_contra', contravariant=True)
+_KT_contra = TypeVar('_KT_contra', contravariant=True)
 
 
 class StringEnum(str, Enum):
@@ -209,10 +250,15 @@ class StrEnum(StringEnum):
 ## Function-y ##
 ################
 AnyCallable = Callable[..., Any]
-FN = TypeVar("FN", bound=AnyCallable)
+AnyAsyncCallable = Callable[..., Awaitable[Any]]
 FuncType = Callable[..., Any]
-F = TypeVar("F", bound=FuncType)
-AF = TypeVar("AF", bound=Awaitable)
+AsyncFuncType = Callable[..., Awaitable[Any]]
+F = TypeVar('F', bound=AnyCallable)
+FN = TypeVar('FN', bound=AnyCallable)
+Fn = TypeVar('Fn', bound=AnyCallable)
+AF = TypeVar('AF', bound=Awaitable)
+AFn = TypeVar('AFn', bound=Awaitable)
+AsyncFn = TypeVar('AsyncFn', bound=Awaitable)
 
 #################
 ## STDIO/STDIN ##
@@ -294,7 +340,7 @@ HrTime = Tuple[int, int]  # node/js hrtime type annotation
 FsPath = Union[str, Path, PathLike]
 FsPathLike = PathLike
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
-CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
+CmdArgs = CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
 ##############
 ## LISTLESS ##
