@@ -4,8 +4,9 @@ from itertools import chain
 from pathlib import Path
 from typing import Dict, Iterable, Tuple, Union
 
+import numpy as np
+
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
-from numpy import float64, int8, ndarray
 
 FsPath = Union[str, Path]
 
@@ -183,7 +184,7 @@ def h5_attrs_gen(
 
 def datasets_dict(
     fspath: str,
-) -> Dict[str, Union[ndarray, int8, float64]]:
+) -> Dict[str, Union[np.ndarray, np.int8, np.float64]]:
     """Load an HDF5 file from a fspath into a dictionary
 
     Given a fspath this method loads an HDF5 file into a dictionary where the
@@ -206,7 +207,7 @@ def datasets_dict(
 
 def h5_datasets_dict(
     fspath: str,
-) -> Dict[str, Union[ndarray, int8, float64]]:
+) -> Dict[str, Union[np.ndarray, np.int8, np.float64]]:
     """Alias for h5.datasets_dict"""
     return datasets_dict(fspath=fspath)
 
