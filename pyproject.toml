@@ -162,3 +162,18 @@ ignore_missing_imports = true
 implicit_reexport = false
 strict_equality = true
 # --strict end
+
+
+[tool.pyright]
+include = ["libs"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+    "src/experimental",
+    "src/typestubs",
+    "**/.nox",
+    "**/.nox_win"
+]
+stubPath = "src/stubs"
+reportMissingImports = true
+reportMissingTypeStubs = false
+pythonVersion = "3.8"

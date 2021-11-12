@@ -24,11 +24,15 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    overload,
 )
 
 from jsonbourne import jsonlib
 
+JsonPrimitiveT = TypeVar('JsonPrimitiveT', str, int, float, None)
 JsonObjT = TypeVar("JsonObjT", bound='JsonObj')
+KT = TypeVar("KT")
+VT = TypeVar("VT")
 _KT = str
 _VT = TypeVar("_VT")
 
@@ -650,7 +654,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 raise KeyError(err_msg)
         return cur_val
 
-    def dot_items(self) -> Iterator[Tuple[Tuple[str, ...], Any]]:
+    def dot_items(self) -> Iterator[Tuple[Tuple[str, ...], _VT]]:
         """Yield tuples of the form (dot-key, value)
 
         OG-version:
@@ -677,10 +681,10 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                             ),
                             dv,
                         )
-                        for dk, dv in jsonify(v).dot_items()
+                        for dk, dv in as_json_obj(v).dot_items()
                     ),
                 )
-                if isinstance(v, (JsonObj, dict)) or hasattr(v, 'dot_items')
+                if isinstance(v, (JsonObj, dict))
                 else (((str(k),), v),)
                 for k, v in self.items()
             )
@@ -908,8 +912,41 @@ class JsonDict(JsonObj):
     pass
 
 
+# @overload
+# def jsonify(value: Dict[_KT, _VT]) -> JsonObj[_VT]:
+#     ...
+
+
+def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
+    if isinstance(value, dict):
+        return JsonObj(value)
+    return value
+
+
+@overload
+def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT:
+    ...
+
+
+@overload
+def jsonify(value: List[JsonPrimitiveT]) -> List[JsonPrimitiveT]:
+    ...
+
+
+@overload
+def jsonify(value: Tuple[JsonPrimitiveT, ...]) -> Tuple[JsonPrimitiveT, ...]:
+    ...
+
+
+@overload
+def jsonify(value: _VT) -> _VT:
+    ...
+
+
 def jsonify(value: Any) -> Any:
     """Convert and return a value to a JsonObj if the value is a dict"""
+    if isinstance(value, (JsonObj, JsonDict)) or issubclass(value.__class__, JsonObj):
+        return value
     if isinstance(value, dict) and not isinstance(value, JsonObj):
         return JsonObj(value)
     if isinstance(value, list):
@@ -941,7 +978,7 @@ class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
     @staticmethod
-    def __call__(value=None):  # type: ignore
+    def __call__(value: Optional[Any] = None) -> Any:  # type: ignore
         if value is None:
             value = {}
         return jsonify(value)
@@ -1080,7 +1117,6 @@ def _cls_protected_attrs(cls: Any) -> Set[str]:
 
 stringify = JSON.stringify
 parse = JSON.parse
-
 
 if __name__ == '__main__':
     import doctest

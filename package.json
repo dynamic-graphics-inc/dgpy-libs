@@ -1,0 +1,12 @@
+{
+  "name": "dgpy-libs",
+  "version": "0.0.1",
+  "description": "dgpy libs",
+  "main": "index.js",
+  "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
+  "author": "jesse <jessekrubin@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "pyright": "^1.1.186"
+  }
+}
