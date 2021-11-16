@@ -127,22 +127,22 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "typing-extensions"
-version = "3.10.0.2"
-description = "Backported and Experimental Type Hints for Python 3.5+"
+version = "4.0.0"
+description = "Backported and Experimental Type Hints for Python 3.6+"
 category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [[package]]
 name = "xtyping"
-version = "0.4.0"
+version = "0.4.2"
 description = "Extended typing"
 category = "main"
 optional = false
 python-versions = ">=3.6.1,<4.0.0"
 
 [package.dependencies]
-typing-extensions = ">=3.10.0,<4.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [[package]]
 name = "zipp"
@@ -159,7 +159,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "==3.*,>=3.6.1"
-content-hash = "0c4da4264b91160eeb8143a392d88b24a065c53ef5e99611c50f18f314e801ed"
+content-hash = "e10311625492dd2b4764f80b810695618f64fbdd41a7e4983541626c52f5c86e"
 
 [metadata.files]
 atomicwrites = [
@@ -207,13 +207,12 @@ toml = [
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
-    {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
-    {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
+    {file = "typing_extensions-4.0.0-py3-none-any.whl", hash = "sha256:829704698b22e13ec9eaf959122315eabb370b0884400e9818334d8b677023d9"},
+    {file = "typing_extensions-4.0.0.tar.gz", hash = "sha256:2cdf80e4e04866a9b3689a51869016d36db0814d84b8d8a568d22781d45d27ed"},
 ]
 xtyping = [
-    {file = "xtyping-0.4.0-py3-none-any.whl", hash = "sha256:4b14181e54a131bec93d9b8704df05ce8f7826b407a9fc6fe929eb00372fcaca"},
-    {file = "xtyping-0.4.0.tar.gz", hash = "sha256:36a916bef9e803574ece3ccb259410c8d3cc01fc5fe31290c6e32fb359630cb3"},
+    {file = "xtyping-0.4.2-py3-none-any.whl", hash = "sha256:9db32e01496f96603a361774603594823f4bb5760f8f236edb440f0cd0c76fd7"},
+    {file = "xtyping-0.4.2.tar.gz", hash = "sha256:9eb19d49a65193076a79b870d4fb31ac25e12969889c4466ab251ba32bab2885"},
 ]
 zipp = [
     {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},
