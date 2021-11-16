@@ -8,7 +8,7 @@ from os import environ
 from typing import Dict, Iterator, Optional
 
 PYTHON_IMPLEMENTATION = platform.python_implementation()
-SYS_PATH_SEP = ";" if os.name == 'nt' else ":"
+SYS_PATH_SEP: str = os.pathsep
 
 __all__ = (
     'ENV',
@@ -185,7 +185,7 @@ def hostname() -> str:
 
 def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)"""
-    return SYS_PATH_SEP
+    return os.pathsep
 
 
 ismac = is_mac
