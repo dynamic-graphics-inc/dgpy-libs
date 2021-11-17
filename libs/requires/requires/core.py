@@ -87,9 +87,9 @@ class Requirement:
     def _details_str(self) -> str:
         if self.details is None:
             return ''
-        return (
-            self.details if isinstance(self.details, str) else '\n'.join(self.details)
-        )
+        if isinstance(self.details, str):
+            return self.details
+        return "\n".join(self.details)
 
     def err(self) -> RequirementError:
         _install_str = [
