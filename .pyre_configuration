@@ -1,0 +1,11 @@
+{
+  "source_directories": [
+    "libs"
+  ],
+  "exclude": [
+      ".*\/node_modules\/.*",
+      ".*\/.nox\/.*",
+      ".*\/.nox_win\/.*"
+  ],
+  "taint_models_path": "/home/jesse/dgpy-libs/.venv/lib"
+}
