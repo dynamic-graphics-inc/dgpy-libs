@@ -8,7 +8,8 @@ import pytest
 
 from py._path.local import LocalPath
 
-import aiopen
+import aiopen as _aiopen
+aiopen: _aiopen.aiopen = _aiopen  # type: ignore
 
 
 @pytest.mark.asyncio()

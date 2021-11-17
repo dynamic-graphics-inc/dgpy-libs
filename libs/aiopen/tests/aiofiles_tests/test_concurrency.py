@@ -44,7 +44,7 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
 
     counter = 0
 
-    async def spam_client():
+    async def spam_client() -> None:
         nonlocal counter
         while True:
             r, w = await asyncio.open_connection("127.0.0.1", port=30001)

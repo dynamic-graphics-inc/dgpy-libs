@@ -108,14 +108,23 @@ def _mypy(session):
     #     *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
     #     # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
     #     )
+
+    # for lib in libs:
+    #     session.run(
+    #         'mypy',
+    #         '--show-error-codes',
+    #         '--config-file',
+    #         './mypy.ini',
+    #         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
+    #         path.join('libs', lib, 'tests')
+    #         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
+    #         )
     session.run(
         'mypy',
         '--show-error-codes',
         '--config-file',
         './mypy.ini',
-        # './pyproject.toml',
         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
-        # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
     )
 
 
