@@ -144,7 +144,7 @@ set_log_record_factory = setLogRecordFactory
 set_logger_class = setLoggerClass
 
 
-def patch_logging():
+def patch_logging() -> None:
     for k, v in __aliases__.items():
         setattr(logging, k, getattr(logging, v))
 
