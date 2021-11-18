@@ -5,6 +5,7 @@ from os import (
     chdir,
     chmod as _chmod,
     environ,
+    fspath as _fspath,
     getcwd,
     makedirs,
     mkdir as _mkdir,
@@ -63,6 +64,11 @@ def pwd() -> str:
     Returns:
         str: present working directory as string
 
+    Examples:
+        >>> import os
+        >>> pwd() == os.getcwd()
+        True
+
     """
     return getcwd()
 
@@ -77,7 +83,7 @@ def dirname(fspath: FsPath) -> str:
         str: basename of path
 
     """
-    return path.dirname(str(fspath))
+    return path.dirname(_fspath(fspath))
 
 
 def basename(fspath: FsPath) -> str:
@@ -158,8 +164,8 @@ def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
 
     """
     if p or exist_ok:
-        return makedirs(str(fspath), exist_ok=p or exist_ok)
-    return _mkdir(str(fspath))
+        return makedirs(_fspath(fspath), exist_ok=p or exist_ok)
+    return _mkdir(_fspath(fspath))
 
 
 def mkdirp(fspath: FsPath) -> None:

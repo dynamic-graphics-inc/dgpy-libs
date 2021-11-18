@@ -25,13 +25,14 @@ pydantic = "^1.8.2"
 orjson = "^3.6.3"
 python-rapidjson = "^1.4"
 
+aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
-lager = { path = "./libs/lager/", develop = true }
 jsonbourne = { path = "./libs/jsonbourne/", develop = true }
 funkify = { path = "./libs/funkify/", develop = true }
-aiopen = { path = "./libs/aiopen/", develop = true }
-requires = { path = "./libs/requires/", develop = true }
 h5 = { path = "./libs/h5/", develop = true }
+lager = { path = "./libs/lager/", develop = true }
+requires = { path = "./libs/requires/", develop = true }
+shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
 
 [build-system]

@@ -777,6 +777,22 @@ type = "directory"
 url = "libs/requires"
 
 [[package]]
+name = "shellfish"
+version = "0.0.3"
+description = "shellfish ~ shell and file-system utils"
+category = "dev"
+optional = false
+python-versions = "==3.*,>=3.6.1"
+develop = true
+
+[package.dependencies]
+xtyping = "^0.4.2"
+
+[package.source]
+type = "directory"
+url = "libs/shellfish"
+
+[[package]]
 name = "six"
 version = "1.16.0"
 description = "Python 2 and 3 compatibility utilities"
@@ -881,7 +897,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b9351a8e0ff1eee1a3a0bb2c725a13198ff3a3614f4f83e3d3f7fa883d4f340a"
+content-hash = "3342164e1989eb56201051a6a47d04a8dfb4067a30e49fc7c527be0202049444"
 
 [metadata.files]
 aiopen = []
@@ -1431,6 +1447,7 @@ regex = [
     {file = "regex-2021.11.10.tar.gz", hash = "sha256:f341ee2df0999bfdf7a95e448075effe0db212a59387de1a70690e4acb03d4c6"},
 ]
 requires = []
+shellfish = []
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
