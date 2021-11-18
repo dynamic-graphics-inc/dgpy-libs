@@ -106,13 +106,30 @@ __all__ = (
     'warn',
     'warning',
     # lager.logging members
+    '__aliases__',
     'StdLoggingHandler',
     'loggers_dict',
     'intercept',
     'intercept_all',
+    'patch_logging',
 )
 
-# logging snake_case aliases
+__aliases__ = {
+    'add_level_name': 'addLevelName',
+    'basic_config': 'basicConfig',
+    'capture_warnings': 'captureWarnings',
+    'get_level_name': 'getLevelName',
+    'get_log_record_factory': 'getLogRecordFactory',
+    'get_logger': 'getLogger',
+    'get_logger_class': 'getLoggerClass',
+    'last_resort': 'lastResort',
+    'make_log_record': 'makeLogRecord',
+    'raise_exceptions': 'raiseExceptions',
+    'set_log_record_factory': 'setLogRecordFactory',
+    'set_logger_class': 'setLoggerClass',
+}
+
+# logging snake_case aliases bc I cannot stand camelCase
 add_level_name = addLevelName
 basic_config = basicConfig
 capture_warnings = captureWarnings
@@ -125,6 +142,11 @@ make_log_record = makeLogRecord
 raise_exceptions = raiseExceptions
 set_log_record_factory = setLogRecordFactory
 set_logger_class = setLoggerClass
+
+
+def patch_logging():
+    for k, v in __aliases__.items():
+        setattr(logging, k, getattr(logging, v))
 
 
 class StdLoggingHandler(logging.Handler):
