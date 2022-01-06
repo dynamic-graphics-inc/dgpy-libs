@@ -151,17 +151,15 @@ def update_metadata(session):
         data = toml.loads(pyproject_toml_str)
         print('____________________________')
         poetry_metadata = data["tool"]["poetry"]
-        print(poetry_metadata)
+        # print(poetry_metadata)
         assert "name" in poetry_metadata and poetry_metadata["name"] == libname
         assert "version" in poetry_metadata
         assert "description" in poetry_metadata and poetry_metadata["description"] != ""
-        assert "license" in poetry_metadata and poetry_metadata["license"] == "MIT"
         metadata_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',
             "__title__ = '{}'".format(poetry_metadata["name"]),
             "__version__ = '{}'".format(poetry_metadata["version"]),
-            "__license__ = '{}'".format(poetry_metadata["license"]),
             "__description__ = '{}'".format(poetry_metadata["description"]),
         ]
         metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"

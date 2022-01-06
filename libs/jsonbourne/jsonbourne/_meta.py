@@ -3,5 +3,4 @@
 
 __title__ = 'jsonbourne'
 __version__ = '0.17.2'
-__license__ = 'MIT'
 __description__ = 'EZPZ JSON'

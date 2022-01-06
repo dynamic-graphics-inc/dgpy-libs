@@ -56,7 +56,7 @@ class _EnvObjMeta(type):
 
     def __getattr__(cls, item: str) -> Optional[str]:
         try:
-            return environ.__getattribute__(item)
+            return environ.__getattribute__(item)  # type: ignore
         except AttributeError:
             ...
         return cls.__getitem__(item)

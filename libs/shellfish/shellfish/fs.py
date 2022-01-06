@@ -6,7 +6,7 @@ from os import (
     fspath as _fspath,
     makedirs,
     path,
-    scandir,
+    scandir as _scandir,
     sep,
     stat,
     utime,
@@ -17,7 +17,6 @@ from time import time
 
 from xtyping import (
     Any,
-    AnyStr,
     Callable,
     FsPath,
     Iterable,
@@ -73,7 +72,7 @@ __all__ = (
 )
 
 
-def fspath(fspath: FsPath) -> AnyStr:
+def fspath(fspath: FsPath) -> str:
     """Alias for os._fspath; returns fspath string for any type of path"""
     return _fspath(fspath)
 
@@ -116,6 +115,11 @@ def file_size(fspath: FsPath) -> int:
     return stat(fspath).st_size
 
 
+def scandir(dirpath: FsPath = '.') -> Iterable[DirEntry]:
+    """Typed version of os.scandir"""
+    return _scandir(fspath(dirpath))
+
+
 def scandir_list(dirpath: FsPath = '.') -> List[DirEntry]:
     """Return a list of os.DirEntry objects
 
@@ -126,7 +130,7 @@ def scandir_list(dirpath: FsPath = '.') -> List[DirEntry]:
         List[DirEntry]: List of os.DirEntry objects
 
     """
-    return list(scandir(_fspath(dirpath)))
+    return list(_scandir(_fspath(dirpath)))
 
 
 def filepath_mtimedelta_sec(filepath: FsPath) -> float:
@@ -764,14 +768,11 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
 
 
     """
-    if str(filepath).startswith("s3://"):
-        yield from fs3.file_lines_gen_s3(filepath=filepath, keepends=keepends)
-    else:
-        with open(filepath) as f:
-            if keepends:
-                yield from (line for line in f)
-            else:
-                yield from (line.rstrip("\n").rstrip("\r\n") for line in f)
+    with open(filepath) as f:
+        if keepends:
+            yield from (line for line in f)
+        else:
+            yield from (line.rstrip("\n").rstrip("\r\n") for line in f)
 
 
 def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
@@ -782,6 +783,40 @@ def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
             if not data:
                 break
             yield data
+
+
+def sbytes_gen(
+    filepath: FsPath,
+    bytes_gen: Iterable[bytes],
+    append: bool = False,
+) -> None:
+    """Write/Save bytes to a fspath
+
+    Args:
+        filepath: fspath to write to
+        bytes_gen: Bytes to be written
+        append (bool): Append to the file if True, overwrite otherwise; default
+            is False
+        flags: Flags to write the file with (OS dependent)
+        mode: Mode/permissions to save json file with
+
+    Examples:
+        >>> from shellfish.fs import rbytes, wbytes
+        >>> fspath = "wbytes_gen.doctest.txt"
+        >>> bites_to_save = b"These are some bytes"
+        >>> bites_to_save  # they are bytes!
+        b'These are some bytes'
+        >>> wbytes(fspath, bites_to_save)
+        True
+        >>> rbytes(fspath)
+        b'These are some bytes'
+        >>> import os; os.remove(fspath)
+
+    """
+    _write_mode = "ab" if append else "wb"
+    with open(filepath, _write_mode) as fd:
+        for chunk in bytes_gen:
+            fd.write(chunk)
 
 
 def rstring(filepath: FsPath) -> str:

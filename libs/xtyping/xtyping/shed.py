@@ -220,7 +220,7 @@ T_Retval = TypeVar('T_Retval')
 ###############
 P = ParamSpec('P')
 PT = ParamSpec('PT')
-T_ParamSpec = ParamSpec('P')
+T_ParamSpec = ParamSpec('T_ParamSpec')
 
 
 ########################

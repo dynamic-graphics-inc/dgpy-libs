@@ -10,19 +10,21 @@ from os import (
     environ,
     fspath as _fspath,
     getcwd,
+    listdir,
     makedirs,
     mkdir as _mkdir,
     path,
-    utime,
+    remove,
+    scandir,
 )
 from pathlib import Path
 from shlex import split as _shplit
-from shutil import which as _which
+from shutil import move, rmtree, which as _which
 
 from shellfish import fs
 from xtyping import IO, Any, Callable, FsPath, Iterator, List, Optional, Tuple, Union
 
-__all__ = (
+__all__og = (
     'Flag',
     'Stdio',
     'cd',
@@ -33,6 +35,36 @@ __all__ = (
     'touch',
     'which_lru',
     'where',
+)
+
+__all__ = (
+    "Stdio",
+    "shplit",
+    "basename",
+    "cd",
+    "chmod",
+    "cp",
+    "cp_dir",
+    "cp_file",
+    "dirname",
+    "echo",
+    "export",
+    "ls",
+    "ls_dirs",
+    "ls_files",
+    "ls_files_dirs",
+    "mkdir",
+    "mkdirp",
+    "mv",
+    "pwd",
+    "rm",
+    "setenv",
+    "touch",
+    "tree",
+    "where",
+    "which",
+    "which_lru",
+    "source",
 )
 
 
@@ -201,16 +233,13 @@ def setenv(key: str, val: Optional[str] = None) -> None:
 
 
 def touch(fspath: FsPath) -> None:
-    """Create an empty file given a fspath
+    """Alias for shellfish.fs.touch
 
     Args:
         fspath (FsPath): File-system path for where to make an empty file
 
     """
-    if not path.exists(str(fspath)):
-        makedirs(path.dirname(str(fspath)), exist_ok=True)
-        with open(fspath, "a"):
-            utime(fspath, None)
+    return fs.touch(fspath=fspath)
 
 
 def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:
@@ -496,6 +525,130 @@ def cp(src: str, target: str, *, force: bool = True, recursive: bool = False) ->
             cp_file(src, _dest)
         if path.isdir(src):
             cp_dir(src, _dest)
+
+
+def rm(fspath: FsPath, *, r: bool = False, v: bool = False) -> None:
+    """Remove files & directories in the style of the shell
+
+    Args:
+        fspath (FsPath): Path to file or directory to remove
+        r (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
+        v (bool): Flag to be verbose
+
+    """
+    for _path_str in iglob(str(fspath), recursive=True):
+        try:
+            remove(_path_str)
+            if v:
+                echo(f"Removed file: {_path_str}")
+
+        except Exception:
+            if r:
+                rmtree(_path_str)
+                if v:
+                    echo(f"Removed dir: {_path_str}")
+            else:
+                raise ValueError(_path_str + " is a directory -- use r=True")
+
+
+def ls(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+    """List files and dirs given a dirpath (defaults to pwd)
+
+    Args:
+        dirpath (FsPath): path-string to directory to list
+        abspath (bool): Give absolute paths
+
+    Returns:
+        List of the directory items
+
+    """
+    if abspath:
+        return [el.path for el in scandir(str(dirpath))]
+    return listdir(str(dirpath))
+
+
+def ls_files(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
+    """List the files in a given directory path
+
+    Args:
+        dirpath (FsPath): Directory path for which one might want to list files
+        abspath (bool): Return absolute filepaths
+
+    Returns:
+        List of files as strings
+
+    """
+    files = (el for el in scandir(str(dirpath)) if el.is_file())
+    if abspath:
+        return list(map(lambda el: el.path, files))
+    return list(map(lambda el: el.name, files))
+
+
+def ls_dirs(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
+    """List the directories in a given directory path
+
+    Args:
+        dirpath (FsPath): Directory path for which one might want list directories
+        abspath (bool): Return absolute directory paths
+
+    Returns:
+        List of directories as strings
+
+    """
+    dirs = (el for el in scandir(str(dirpath)) if el.is_dir())
+    if abspath:
+        return list(map(lambda el: el.path, dirs))
+    return list(map(lambda el: el.name, dirs))
+
+
+def ls_files_dirs(
+    dirpath: FsPath = ".", *, abspath: bool = False
+) -> Tuple[List[str], List[str]]:
+    """List the files and directories given directory path
+
+    Args:
+        dirpath (FsPath): Directory path to execute on
+        abspath (bool): Return absolute file/directory paths
+
+    Returns:
+        Two lists of strings; the first is a list of the files and the second
+            is a list of the directories
+
+    """
+    dir_items = fs.scandir_list(dirpath)
+    dir_dir_entries = (el for el in dir_items if el.is_dir())
+    file_dir_entries = (el for el in dir_items if el.is_file())
+    if not abspath:
+        return [el.name for el in file_dir_entries], [el.name for el in dir_dir_entries]
+    return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
+
+
+def mv(src: FsPath, dst: FsPath) -> None:
+    """Move file(s) like on the command line
+
+    Args:
+        src (FsPath): source file(s)
+        dst (FsPath): destination
+
+    """
+    _dst_str = str(dst)
+    for file in iglob(str(src), recursive=True):
+        move(file, _dst_str)
+
+
+def source(filepath: FsPath, _globals: bool = True) -> None:
+    """Execute/run a python file given a fspath and put globals in globasl
+
+    Args:
+        filepath (FsPath): Path to python file
+        _globals (bool): Exec using globals
+
+    """
+    string = fs.lstring(str(filepath))
+    if _globals:
+        exec(string, globals())
+    else:
+        exec(string)
 
 
 if __name__ == "__main__":

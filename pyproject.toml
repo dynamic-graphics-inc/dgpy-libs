@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "dgpylibs"
+name = "dgpylibsdev"
 version = "0.1.0"
 description = "\"Dynamic Graphics Python\""
 authors = ["jessekrubin <jesse@dgi.com>"]
@@ -131,6 +131,7 @@ testpaths = [
     "libs/jsonbourne",
     "libs/lager",
     "libs/requires",
+    "libs/shellfish",
     "libs/xtyping",
 ]
 
@@ -144,7 +145,6 @@ testpaths = [
 # =============================================================================
 
 [tool.mypy]
-# --strict
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
@@ -162,7 +162,6 @@ warn_return_any = true
 ignore_missing_imports = true
 implicit_reexport = false
 strict_equality = true
-# --strict end
 
 
 [tool.pyright]

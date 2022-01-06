@@ -5,7 +5,7 @@ Inspired by aiofiles
 """
 import asyncio
 
-from asyncio import BaseEventLoop  # type: ignore
+from asyncio import AbstractEventLoop, BaseEventLoop  # type: ignore
 from collections.abc import Coroutine
 from functools import partial, singledispatch, wraps
 from io import (
@@ -52,7 +52,7 @@ def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
 
 class BaseAsync:
     _file: Union[BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader]
-    _loop: BaseEventLoop
+    _loop: AbstractEventLoop
     _executor: Optional[BaseEventLoop] = None
 
     def __init__(
@@ -60,7 +60,7 @@ class BaseAsync:
         file: Union[
             BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader
         ],
-        loop: BaseEventLoop,
+        loop: AbstractEventLoop,
         executor: None,
     ) -> None:
         self._file = file
@@ -212,7 +212,7 @@ def _aiopen_dispatch(
         TextIOBase, BufferedWriter, BufferedReader, BufferedRandom, FileIO, Any
     ],
     *,
-    loop: BaseEventLoop,
+    loop: AbstractEventLoop,
     executor: Any = None,
 ) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
     raise TypeError("Unsupported io type: {}.".format(file))
@@ -220,14 +220,14 @@ def _aiopen_dispatch(
 
 @_aiopen_dispatch.register(TextIOBase)
 def _textio_base_dispatcher(
-    file: FileIO, *, loop: BaseEventLoop, executor: Any = None
+    file: FileIO, *, loop: AbstractEventLoop, executor: Any = None
 ) -> TextIOWrapperAsync:
     return TextIOWrapperAsync(file, loop=loop, executor=executor)
 
 
 @_aiopen_dispatch.register(BufferedWriter)
 def _buffered_io_base_async_dispatcher(
-    file: BufferedWriter, *, loop: BaseEventLoop, executor: Any = None
+    file: BufferedWriter, *, loop: AbstractEventLoop, executor: Any = None
 ) -> BufferedIOBaseAsync:
     return BufferedIOBaseAsync(file, loop=loop, executor=executor)
 
@@ -237,7 +237,7 @@ def _buffered_io_base_async_dispatcher(
 def _buffered_reader_async_dispatcher(
     file: Union[BufferedReader, BufferedRandom],
     *,
-    loop: BaseEventLoop,
+    loop: AbstractEventLoop,
     executor: Any = None,
 ) -> BufferedReaderAsync:
     return BufferedReaderAsync(file, loop=loop, executor=executor)
@@ -245,7 +245,7 @@ def _buffered_reader_async_dispatcher(
 
 @_aiopen_dispatch.register(FileIO)
 def _fileio_async_dispatcher(
-    file: FileIO, *, loop: BaseEventLoop, executor: Any = None
+    file: FileIO, *, loop: AbstractEventLoop, executor: Any = None
 ) -> FileIOAsync:
     return FileIOAsync(file, loop, executor)
 
@@ -350,12 +350,11 @@ async def _aiopen(
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[BaseEventLoop] = None,
+    loop: Optional[AbstractEventLoop] = None,
     executor: Any = None,
 ) -> Union[FileIOAsync, BufferedIOBaseAsync, TextIOWrapperAsync, BufferedReaderAsync]:
     """Open an asyncio file."""
-    if loop is None:
-        _loop = asyncio.get_event_loop()
+    _loop = loop if loop is not None else asyncio.get_event_loop()
     cb = partial(
         _open,
         str(file),
@@ -381,7 +380,7 @@ def aiopen(
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[BaseEventLoop] = None,
+    loop: Optional[AbstractEventLoop] = None,
     executor: Any = None,
 ) -> ContextManagerAsync:
     """Async version of the `open` builtin"""
