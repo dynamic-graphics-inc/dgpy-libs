@@ -7,17 +7,19 @@ import sys
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
 from inspect import isawaitable
-from typing import Any, Awaitable, Callable, Optional, TypeVar, Union, cast
+
+from xtyping import Any, Awaitable, Callable, Optional, ParamSpec, TypeVar, Union, cast
 
 AnyCallable = Callable[..., Any]
 FuncType = Callable[..., Any]
 
+P = ParamSpec("P")
 T = TypeVar("T")
 
 __all__ = ('asyncify', 'run', 'await_or_return', 'is_async')
 
 
-def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
+def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     """Makes a sync function async
 
     Args:
@@ -43,10 +45,10 @@ def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
 
     @wraps(funk)
     async def _async_funk(
-        *args: Any,
+        *args: P.args,  # type: ignore
         loop: Optional[AbstractEventLoop] = None,
         executor: Optional[Any] = None,
-        **kwargs: Any,
+        **kwargs: P.kwargs,  # type: ignore
     ) -> T:
         """Async wrapper function
 
@@ -61,10 +63,10 @@ def asyncify(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
 
         """
         loop = loop if loop else get_event_loop()
-        pfunc: Callable[..., T] = partial(funk, *args, **kwargs)
+        pfunc: Callable[P, T] = partial(funk, *args, **kwargs)
         return await loop.run_in_executor(executor, pfunc)
 
-    return cast(Callable[..., Awaitable[T]], _async_funk)
+    return cast(Callable[P, Awaitable[T]], _async_funk)
 
 
 def run(aw: Awaitable[T]) -> T:

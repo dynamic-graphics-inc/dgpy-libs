@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """shell utils"""
+from distutils.dir_util import copy_tree
+from enum import IntEnum
 from functools import lru_cache
+from glob import iglob
 from os import (
     chdir,
     chmod as _chmod,
@@ -12,20 +15,33 @@ from os import (
     path,
     utime,
 )
+from pathlib import Path
 from shlex import split as _shplit
 from shutil import which as _which
 
-from xtyping import IO, Any, FsPath, List, Optional
+from shellfish import fs
+from xtyping import IO, Any, Callable, FsPath, Iterator, List, Optional, Tuple, Union
 
 __all__ = (
     'Flag',
+    'Stdio',
     'cd',
     'echo',
     'export',
     'setenv',
     'which',
+    'touch',
+    'which_lru',
     'where',
 )
+
+
+class Stdio(IntEnum):
+    """Standard-io enum object"""
+
+    stdin = 0
+    stdout = 1
+    stderr = 2
 
 
 class _FlagMeta(type):
@@ -228,6 +244,258 @@ def where(cmd: str, path: Optional[str] = None) -> Optional[str]:
 
     """
     return which(cmd, path=path)
+
+
+@lru_cache(maxsize=128)
+def which_lru(cmd: str, path: Optional[str] = None) -> Optional[str]:
+    """Return the result of `shutil.which` and cache the results
+
+    Args:
+        cmd (str): Command/exe to find path of
+        path (str): System path to use
+
+    Returns:
+        Optional[str]: path to command/exe
+
+    """
+    return which(cmd, path=path)
+
+
+class _DirTree:
+    """DirTree object for use by the tree command"""
+
+    _filename_prefix_mid: str = "├──"
+    _filename_prefix_last: str = "└──"
+    _parent_prefix_middle: str = "    "
+    _parent_refix_last: str = "│   "
+
+    def __init__(
+        self, path: Union[str, Path], parent_path: Optional["_DirTree"], is_last: bool
+    ) -> None:
+        """Construct a DirTree object
+
+        Args:
+            path: Path-string to start the directory tree at
+            parent_path: The parent path to start the directory tree at
+            is_last: Is the current tree the last diretory in the tree
+
+        """
+        self.path = Path(str(path))
+        self.parent = parent_path
+        self.is_last = is_last
+        self.depth: int = self.parent.depth + 1 if self.parent else 0
+
+    @classmethod
+    def make_tree(
+        cls,
+        root: Path,
+        parent: Optional["_DirTree"] = None,
+        is_last: bool = False,
+        filterfn: Optional[Callable[..., bool]] = None,
+    ) -> Iterator["_DirTree"]:
+        """Make a DirTree object
+
+        Args:
+            root: Root directory
+            parent: Parent directory
+            is_last: Is last
+            filterfn: Function to filter with
+
+        Yields:
+            DirTree object
+
+        """
+        root = Path(str(root))
+        filterfn = filterfn or _DirTree._default_filter
+
+        displayable_root = cls(str(root), parent, is_last)
+        yield displayable_root
+
+        children = sorted(
+            (fspath for fspath in root.iterdir() if filterfn(str(fspath))),
+            key=lambda s: str(s).lower(),
+        )
+        count = 1
+        for _path in children:
+            is_last = count == len(children)
+            if _path.is_dir():
+                yield from cls.make_tree(
+                    _path, parent=displayable_root, is_last=is_last, filterfn=filterfn
+                )
+            else:
+                yield cls(_path, displayable_root, is_last)
+            count += 1
+
+    @staticmethod
+    def _default_filter(path_string: str) -> bool:
+        """Return True/False if the fspath is to be filtered/ignored"""
+        ignore_strings = (".pyc", "__pycache__")
+        return not any(
+            ignored in str(path_string).lower() for ignored in ignore_strings
+        )
+
+    @property
+    def displayname(self) -> str:
+        """Diplay name for DirTree root path name
+
+        Returns:
+            str: root path name as a string
+
+        """
+        if self.path.is_dir():
+            return self.path.name + "/"
+        return self.path.name
+
+    def displayable(self) -> str:
+        """Return displayable tree string
+
+        Returns:
+            str: displayable tree string
+
+        """
+        if self.parent is None:
+            return self.displayname
+
+        _filename_prefix = (
+            self._filename_prefix_last if self.is_last else self._filename_prefix_mid
+        )
+
+        parts = [f"{_filename_prefix!s} {self.displayname!s}"]
+
+        parent = self.parent
+        while parent and parent.parent is not None:
+            parts.append(
+                self._parent_prefix_middle
+                if parent.is_last
+                else self._parent_refix_last
+            )
+            parent = parent.parent
+
+        return "".join(reversed(parts))
+
+
+def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> str:
+    """Create a directory tree string given a directory path
+
+    Args:
+        dirpath (FsPath): Directory string to make tree for
+        filterfn: Function to filter sub-directories and sub-files with
+
+    Returns:
+        str: Directory-tree string
+
+    Examples:
+        >>> tmpdir = 'tree.doctest'
+        >>> from os import makedirs; makedirs(tmpdir, exist_ok=True)
+        >>> filepath_parts = [
+        ...     ("dir", "file1.txt"),
+        ...     ("dir", "file2.txt"),
+        ...     ("dir", "file3.txt"),
+        ...     ("dir", "dir2", "file1.txt"),
+        ...     ("dir", "dir2", "file2.txt"),
+        ...     ("dir", "dir2", "file3.txt"),
+        ...     ("dir", "dir2a", "file1.txt"),
+        ...     ("dir", "dir2a", "file2.txt"),
+        ...     ("dir", "dir2a", "file3.txt"),
+        ... ]
+        >>> from shellfish.sh import touch
+        >>> expected_files = []
+        >>> for f in filepath_parts:
+        ...     fspath = path.join(*f)
+        ...     fspath = path.join(tmpdir, fspath)
+        ...     dirpath = path.dirname(fspath)
+        ...     expected_files.append(fspath)
+        ...     makedirs(dirpath, exist_ok=True)
+        ...     touch(fspath)
+        >>> print(tree(tmpdir))
+        tree.doctest/
+        └── dir/
+            ├── dir2/
+            │   ├── file1.txt
+            │   ├── file2.txt
+            │   └── file3.txt
+            ├── dir2a/
+            │   ├── file1.txt
+            │   ├── file2.txt
+            │   └── file3.txt
+            ├── file1.txt
+            ├── file2.txt
+            └── file3.txt
+        >>> print(tree(tmpdir, lambda s: _DirTree._default_filter(s) and not "file2" in s))
+        tree.doctest/
+        └── dir/
+            ├── dir2/
+            │   ├── file1.txt
+            │   └── file3.txt
+            ├── dir2a/
+            │   ├── file1.txt
+            │   └── file3.txt
+            ├── file1.txt
+            └── file3.txt
+        >>> from shutil import rmtree
+        >>> rmtree(tmpdir)
+
+    """
+    return "\n".join(
+        p.displayable() for p in _DirTree.make_tree(Path(dirpath), filterfn=filterfn)
+    )
+
+
+########
+## CP ##
+########
+
+
+def cp_file(src: str, target: str) -> None:
+    """Copy a file given a source-path and a destination-path
+
+    Args:
+        src (str): Source fspath
+        target (str): Destination fspath
+
+    """
+    try:
+        makedirs(path.dirname(target), exist_ok=True)
+    except FileNotFoundError:
+        pass
+    fs.sbytes_gen(target, fs.lbytes_gen(src, blocksize=2 ** 18))
+
+
+def cp_dir(src: str, target: str) -> None:
+    """Copy a directory given a source and destination directory paths
+
+    Args:
+        src (str): Source directory path
+        target (str): Destination directory path
+
+    """
+    if not path.exists(target):
+        makedirs(target)
+    copy_tree(src, target)
+
+
+def cp(src: str, target: str, *, force: bool = True, recursive: bool = False) -> None:
+    """Copy the directory/file src to the directory/file target
+
+    Args:
+        src (str): Source directory/file to copy
+        target: Destination directory/file to copy
+        force: Force the copy (like -f flag for cp in shell)
+        recursive: Recursive copy (like -r flag for cp in shell)
+
+    """
+    for src in iglob(src, recursive=True):
+        _dest = target
+        if (path.exists(target) and not force) or src == target:
+            return
+        if path.isdir(src) and not recursive:
+            raise ValueError("Source ({}) is directory; use r=True")
+        if path.isfile(src) and path.isdir(target):
+            _dest = path.join(target, path.basename(src))
+        if path.isfile(src) or path.islink(src):
+            cp_file(src, _dest)
+        if path.isdir(src):
+            cp_dir(src, _dest)
 
 
 if __name__ == "__main__":

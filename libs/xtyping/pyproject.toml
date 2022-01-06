@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xtyping"
-version = "0.4.2"
+version = "0.4.4"
 description = "Extended typing"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -25,7 +25,7 @@ keywords = [
 
 
 [tool.poetry.dependencies]
-python = "==3.*,>=3.6.1"
+python = "==3.*,>=3.6.2"
 typing-extensions = "^4.0.0"
 
 [tool.poetry.dev-dependencies]

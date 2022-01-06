@@ -23,7 +23,7 @@ from typing import (
     Union,
 )
 
-from typing_extensions import Literal
+from typing_extensions import Literal, ParamSpec
 
 __all__ = (
     'AF',
@@ -105,6 +105,8 @@ __all__ = (
     'OptionalFloat',
     'OptionalInt',
     'OptionalStr',
+    'P',
+    'PT',
     'Path',
     'PathLike',
     'R',
@@ -126,6 +128,8 @@ __all__ = (
     'StringEnum',
     'T',
     'TRUE',
+    'T_ParamSpec',
+    'T_Retval',
     'T_co',
     'T_contra',
     'TupleStrStr',
@@ -209,6 +213,15 @@ ReturnType = TypeVar('ReturnType')
 N = TypeVar('N', int, float)
 DT = TypeVar('DT')
 _DT = TypeVar('_DT')
+T_Retval = TypeVar('T_Retval')
+
+###############
+## ParamSpec ##
+###############
+P = ParamSpec('P')
+PT = ParamSpec('PT')
+T_ParamSpec = ParamSpec('P')
+
 
 ########################
 ## Covariant TypeVars ##

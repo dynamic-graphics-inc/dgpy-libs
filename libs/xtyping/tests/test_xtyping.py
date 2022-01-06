@@ -3,6 +3,7 @@ from os import path
 from pprint import pformat
 from typing import Tuple
 
+import typing_extensions as tx
 import xtyping
 
 
@@ -77,7 +78,7 @@ def _test_module_all_tuple(
             assert sorted_all_tuple == mod_all
         except AssertionError as e:
             print('{} should be:'.format(mod_name))  # noqa: T001
-            print(pformat(sorted_all_tuple))  # noqa: T001
+            print('__all__ = ' + pformat(sorted_all_tuple))  # noqa: T001
             raise e
 
 
@@ -138,3 +139,11 @@ def test_xtyping_shed_all_members():
     assert len(missing_from_all) == 0, 'xtyping.shed is missing: {}'.format(
         missing_from_all
     )
+
+
+def test_all_typing_extensions_reexported():
+    xtyping_all_set = set(xtyping.__all__)
+    for el in [
+        t_el for t_el in tx.__all__ if t_el not in {'Self', 'NotRequired', 'Required'}
+    ]:
+        assert el in xtyping_all_set

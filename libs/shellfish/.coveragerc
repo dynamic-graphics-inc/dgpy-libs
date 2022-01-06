@@ -1,0 +1,19 @@
+[paths]
+source =
+   shellfish
+
+[run]
+branch = true
+source =
+    shellfish
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+exclude_lines =
+    if 0:
+    if __name__ == .__main__.:
+    if sys.version_info < (3, 7):
+
+    class BaseAsync:

@@ -25,7 +25,7 @@ keywords = [
 
 
 [tool.poetry.dependencies]
-python = "==3.*,>=3.6.1"
+python = "==3.*,>=3.6.2"
 xtyping = "^0.4.2"
 
 [tool.poetry.dev-dependencies]

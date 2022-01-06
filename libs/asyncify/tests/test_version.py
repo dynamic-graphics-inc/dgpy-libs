@@ -1,10 +1,6 @@
 from os import path
 
-import pytest
-
 from asyncify import __version__
-
-pytestmark = [pytest.mark.basic]
 
 
 def _get_version() -> str:
