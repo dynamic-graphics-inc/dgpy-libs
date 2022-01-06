@@ -33,12 +33,12 @@ init_all = [
 ]
 init_parts = [
     header,
-    *[f"from xtyping._typing import {el}" for el in imports['typing']],
+    *[f'from xtyping._typing import {el}' for el in imports['typing']],
     *[
-        f"from xtyping._typing_extensions import {el}"
+        f'from xtyping._typing_extensions import {el}'
         for el in imports['typing_extensions']
     ],
-    *[f"from xtyping.shed import {el}" for el in imports['shed']],
+    *[f'from xtyping.shed import {el}' for el in imports['shed']],
     *init_all,
 ]
 

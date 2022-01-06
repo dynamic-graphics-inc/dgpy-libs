@@ -30,7 +30,7 @@ jobs:
           pip install nox
           nox -s lint
 
-  test:
+  test-xtyping:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,7 +42,40 @@ jobs:
       - name: Run image
         uses: abatilo/actions-poetry@v2.0.0
         with:
-          poetry-version: 1.1.11
+          poetry-version: 1.1.12
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: test xtyping
+        run: |
+          cd libs/xtyping
+          poetry run pytest tests
+
+      - name: test funkify
+        run: |
+          cd libs/funkify
+          poetry run pytest tests
+
+      - name: test requires
+        run: |
+          cd libs/requires
+          poetry run pytest tests
+
+  test-aiopen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: 1.1.12
 
       - name: Install dependencies
         run: |
@@ -54,7 +87,6 @@ jobs:
         run: |
           cd libs/aiopen
           poetry run pytest tests
-
 
   lintjb:
     runs-on: ubuntu-latest

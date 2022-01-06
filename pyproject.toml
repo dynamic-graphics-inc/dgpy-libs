@@ -11,7 +11,6 @@ python = "^3.7"
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.4"
 isort = "^5.7.0"
-black = "^20.8b1"
 pytest = "^6.2.2"
 pytest-asyncio = "^0.14.0"
 mkdocs = "^1.1.2"
@@ -19,7 +18,7 @@ mkdocs-material = "^7.1.2"
 mkdocstrings = "^0.15.0"
 h5py = "^3.4.0"
 pytest-cov = "^2.12.1"
-mypy = "^0.910"
+mypy = "^0.930"
 nox = "^2021.10.1"
 pydantic = "^1.8.2"
 orjson = "^3.6.3"
@@ -34,6 +33,7 @@ lager = { path = "./libs/lager/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
+black = "^21.12b0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

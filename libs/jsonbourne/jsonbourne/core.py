@@ -30,11 +30,11 @@ from typing import (
 from jsonbourne import jsonlib
 
 JsonPrimitiveT = TypeVar('JsonPrimitiveT', str, int, float, None)
-JsonObjT = TypeVar("JsonObjT", bound='JsonObj')
-KT = TypeVar("KT")
-VT = TypeVar("VT")
+JsonObjT = TypeVar('JsonObjT', bound='JsonObj')
+KT = TypeVar('KT')
+VT = TypeVar('VT')
 _KT = str
-_VT = TypeVar("_VT")
+_VT = TypeVar('_VT')
 
 if sys.version_info < (3, 7):
     from collections.abc import MutableMapping
@@ -211,7 +211,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         except AssertionError:
             d = {k: v for k, v in self._data.items() if not isinstance(k, str)}
             raise ValueError(
-                "JsonObj keys MUST be strings! Bad key values: {}".format(str(d))
+                'JsonObj keys MUST be strings! Bad key values: {}'.format(str(d))
             )
         self.recurse()
 
@@ -250,8 +250,8 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             False
 
         """
-        if "." in key:
-            first_key, _, rest = key.partition(".")
+        if '.' in key:
+            first_key, _, rest = key.partition('.')
             val = self._data.get(first_key)
             return isinstance(val, MutableMapping) and val.__contains__(rest)
         return key in self._data
@@ -296,7 +296,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             return None
         if not is_identifier(key):
             raise ValueError(
-                f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
+                f'Invalid key: ({key}).\n' f'Key(s) is not a valid python identifier'
             )
         self._data[key] = value
 
@@ -405,7 +405,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 return default
             raise ke
 
-    def filter_none(self, recursive: bool = False) -> "JsonObj":
+    def filter_none(self, recursive: bool = False) -> 'JsonObj':
         """Filter key-values where the value is `None` but not false-y
 
         Args:
@@ -490,7 +490,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             )
         return JsonObj({k: v for k, v in self.items() if v is not None})
 
-    def filter_false(self, recursive: bool = False) -> "JsonObj":
+    def filter_false(self, recursive: bool = False) -> 'JsonObj':
         """Filter key-values where the value is false-y
 
         Args:
@@ -635,15 +635,15 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                     )
                 )
             )
-        parts = key.split(".") if isinstance(key, str) else list(key)
+        parts = key.split('.') if isinstance(key, str) else list(key)
         root_val: Any = self._data[parts[0]]
         cur_val = root_val
         for ix, part in enumerate(parts[1:], start=1):
             try:
                 cur_val = cur_val[part]
             except TypeError:
-                reached = ".".join(parts[:ix])
-                err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
+                reached = '.'.join(parts[:ix])
+                err_msg = f'Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}'
                 if isinstance(key, str):
                     err_msg += ''.join(
                         (
@@ -697,13 +697,13 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
     def to_str(self, minify: bool = False, width: int = 88) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
-            return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
-        return "".join(
+            return type(self).__name__ + '(**' + str(self.to_dict()) + ')'
+        return ''.join(
             [
                 type(self).__name__,
-                "(**{\n    ",
-                pformat(self.to_dict(), width=width)[1:-1].replace("\n", "\n   "),
-                "\n})",
+                '(**{\n    ',
+                pformat(self.to_dict(), width=width)[1:-1].replace('\n', '\n   '),
+                '\n})',
             ]
         ).replace('JsonObj(**{}),', '{},')
 
@@ -717,7 +717,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
 
     def _repr_html_(self) -> str:
         """Return the HTML representation of the JsonObj object"""
-        return "<pre>{}</pre>".format(self.__str__())
+        return '<pre>{}</pre>'.format(self.__str__())
 
     @classmethod
     def _cls_attr_names(cls) -> Set[str]:
@@ -725,7 +725,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         try:
             return {el.name for el in cls.__attrs_attrs__}  # type: ignore
         except AttributeError:
-            raise AttributeError("Class is not decorated with attr.attrs")
+            raise AttributeError('Class is not decorated with attr.attrs')
 
     @classmethod
     def _cls_fields(cls) -> Set[str]:
@@ -733,7 +733,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         try:
             return cls.__fields__  # type: ignore
         except AttributeError:
-            raise AttributeError("Class does not inherit from pydantic.BaseModel")
+            raise AttributeError('Class does not inherit from pydantic.BaseModel')
 
     @classmethod
     def _cls_field_names(cls) -> Set[str]:
@@ -741,7 +741,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         try:
             return set(cls.__fields__)  # type: ignore
         except AttributeError:
-            raise AttributeError("Class does not inherit from pydantic.BaseModel")
+            raise AttributeError('Class does not inherit from pydantic.BaseModel')
 
     @classmethod
     def _cls_protected_attrs(cls) -> Set[str]:
@@ -1004,7 +1004,11 @@ class JSON(metaclass=JSONMeta):
         """Return JSON stringified/dumps-ed data"""
         return str(
             jsonlib.dumps(
-                data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                default=default,
+                **kwargs,
             )
         )
 
@@ -1019,7 +1023,11 @@ class JSON(metaclass=JSONMeta):
         """Return JSON stringified/dumps-ed data"""
         return str(
             jsonlib.dumps(
-                data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                default=default,
+                **kwargs,
             )
         )
 
@@ -1034,7 +1042,11 @@ class JSON(metaclass=JSONMeta):
         """Return JSON string bytes for given data"""
         return bytes(
             jsonlib.dumpb(
-                data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                default=default,
+                **kwargs,
             )
         )
 
@@ -1049,7 +1061,11 @@ class JSON(metaclass=JSONMeta):
         """Return JSON string bytes for given data"""
         return bytes(
             jsonlib.dumpb(
-                data, pretty=pretty, sort_keys=sort_keys, default=default, **kwargs
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                default=default,
+                **kwargs,
             )
         )
 

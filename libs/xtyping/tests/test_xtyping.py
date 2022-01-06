@@ -9,13 +9,13 @@ import xtyping
 
 def _get_version() -> str:
     _dirpath = path.split(path.realpath(__file__))[0]
-    version = "UNKNOWN???"
+    version = 'UNKNOWN???'
     for _ in range(3):
-        _filepath = path.join(_dirpath, "pyproject.toml")
+        _filepath = path.join(_dirpath, 'pyproject.toml')
         if path.exists(_filepath):
             version = (
-                [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
-                .replace("version = ", "")
+                [ln for ln in open(_filepath).read().split('\n') if 'version' in ln][0]
+                .replace('version = ', '')
                 .strip('"')
             )
             return version
@@ -105,16 +105,16 @@ def test_xtyping_shed_all_members():
     from xtyping import _typing, _typing_extensions, shed
 
     builtin_members = {
-        "__annotations__",
-        "__builtins__",
-        "__doc__",
-        "__loader__",
-        "__name__",
-        "__package__",
-        "__spec__",
-        "__file__",
-        "__all__",
-        "__cached__",
+        '__annotations__',
+        '__builtins__',
+        '__doc__',
+        '__loader__',
+        '__name__',
+        '__package__',
+        '__spec__',
+        '__file__',
+        '__all__',
+        '__cached__',
     }
 
     shed_all = shed.__all__

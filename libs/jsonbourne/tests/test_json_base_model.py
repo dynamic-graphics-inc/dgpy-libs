@@ -33,7 +33,7 @@ def test_json_base_model_w_prop() -> None:
         #
         @property
         def a_property(self) -> str:
-            return "prop_value"
+            return 'prop_value'
 
         def to_json(self, *args, **kwargs):
             return self.json()
@@ -43,10 +43,16 @@ def test_json_base_model_w_prop() -> None:
             return cls(**json.loads(json_string))
 
     thing_w_prop = JsonObjModel(
-        **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}, "e": {"herm": 2}}
+        **{
+            'a': 1,
+            'b': 2,
+            'c': 'herm',
+            'd': {'nested': 'nestedval'},
+            'e': {'herm': 2},
+        }
     )
-    assert thing_w_prop.c == thing_w_prop["c"]
-    assert thing_w_prop.a_property == "prop_value"
-    assert thing_w_prop["a_property"] == "prop_value"
+    assert thing_w_prop.c == thing_w_prop['c']
+    assert thing_w_prop.a_property == 'prop_value'
+    assert thing_w_prop['a_property'] == 'prop_value'
 
-    assert thing_w_prop.d.nested == "nestedval"
+    assert thing_w_prop.d.nested == 'nestedval'

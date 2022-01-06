@@ -9,7 +9,9 @@ def test_requires_json_n_rapid_json() -> None:
         return json.dumps({'a': 1, 'b': 2})
 
     @requires(
-        _import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson'
+        _import='rapidjson',
+        pip='python-rapidjson',
+        conda_forge='python-rapidjson',
     )
     def tres():
         return rapidjson.dumps({'a': 1, 'b': 2})
@@ -29,7 +31,9 @@ def test_requires_json_n_rapid_json_pkg_callable() -> None:
         return json.dumps({'a': 1, 'b': 2})
 
     @requires(
-        _import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson'
+        _import='rapidjson',
+        pip='python-rapidjson',
+        conda_forge='python-rapidjson',
     )
     def tres() -> str:
         return rapidjson.dumps({'a': 1, 'b': 2})

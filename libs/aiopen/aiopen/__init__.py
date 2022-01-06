@@ -4,9 +4,9 @@ from aiopen._meta import __version__
 from aiopen.core import aiopen
 from funkify.core import funkify
 
-funkify(aiopen, name="aiopen")
+funkify(aiopen, name='aiopen')
 
 __all__ = (
-    "__version__",
-    "aiopen",
+    '__version__',
+    'aiopen',
 )

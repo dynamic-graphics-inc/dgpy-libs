@@ -60,7 +60,10 @@ requires_msgpack = Requirement(
 )
 requires_toml = Requirement(_import='toml', pip=True, conda=True, conda_forge=True)
 requires_ruamel_yaml = Requirement(
-    _import='ruamel.yaml', pip='ruamel.yaml', conda=False, conda_forge='ruamel_yaml'
+    _import='ruamel.yaml',
+    pip='ruamel.yaml',
+    conda=False,
+    conda_forge='ruamel_yaml',
 )
 requires_ipython = Requirement(
     _import='IPython', pip='ipython', conda='ipython', conda_forge='ipython'

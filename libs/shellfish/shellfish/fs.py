@@ -147,12 +147,12 @@ def touch(fspath: FsPath) -> None:
     """
     if not path.exists(str(fspath)):
         makedirs(path.dirname(str(fspath)), exist_ok=True)
-        with open(fspath, "a"):
+        with open(fspath, 'a'):
             utime(fspath, None)
 
 
 def files_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = True,
     topdown: bool = True,
@@ -236,11 +236,14 @@ def files_gen(
     """
     dirpath = str(dirpath)
     return (
-        filepath if abspath else str(filepath).replace(dirpath, "").strip(sep)
+        filepath if abspath else str(filepath).replace(dirpath, '').strip(sep)
         for filepath in (
             path.join(pwd, filename)
             for pwd, dirs, files in walk(
-                str(dirpath), topdown=topdown, onerror=onerror, followlinks=followlinks
+                str(dirpath),
+                topdown=topdown,
+                onerror=onerror,
+                followlinks=followlinks,
             )
             for filename in files
         )
@@ -248,7 +251,7 @@ def files_gen(
 
 
 def dirs_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = True,
     topdown: bool = True,
@@ -351,18 +354,21 @@ def dirs_gen(
 
     """
     return (
-        dirpath if abspath else str(dirpath).replace(dirpath, "").strip(sep)
+        dirpath if abspath else str(dirpath).replace(dirpath, '').strip(sep)
         for dirpath in (
             pwd
             for pwd, dirs, files in walk(
-                str(dirpath), onerror=onerror, topdown=topdown, followlinks=followlinks
+                str(dirpath),
+                onerror=onerror,
+                topdown=topdown,
+                followlinks=followlinks,
             )
         )
     )
 
 
 def files_dirs_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = True,
     topdown: bool = True,
@@ -482,7 +488,7 @@ def files_dirs_gen(
 
 
 def walk_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = True,
     topdown: bool = True,
@@ -583,7 +589,7 @@ def walk_gen(
     return (
         str(path_string)
         if abspath
-        else str(path_string).replace(dirpath, "").strip(sep)
+        else str(path_string).replace(dirpath, '').strip(sep)
         for path_string in chain.from_iterable(
             (
                 pwd,
@@ -591,14 +597,17 @@ def walk_gen(
                 *(path.join(pwd, _file) for _file in files),
             )
             for pwd, dirs, files in walk(
-                dirpath, topdown=topdown, followlinks=followlinks, onerror=onerror
+                dirpath,
+                topdown=topdown,
+                followlinks=followlinks,
+                onerror=onerror,
             )
         )
     )
 
 
 def filepath_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = False,
     topdown: bool = True,
@@ -619,7 +628,7 @@ def filepath_gen(
 
 
 def dirpath_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = False,
     topdown: bool = True,
@@ -640,7 +649,7 @@ def dirpath_gen(
 
 
 def path_gen(
-    dirpath: FsPath = ".",
+    dirpath: FsPath = '.',
     *,
     abspath: bool = False,
     topdown: bool = True,
@@ -693,7 +702,7 @@ def wbytes(
         >>> import os; os.remove(fspath)
 
     """
-    _write_mode = "ab" if append else "wb"
+    _write_mode = 'ab' if append else 'wb'
     with open(filepath, _write_mode) as fd:
         fd.write(bites)
     return True
@@ -721,7 +730,7 @@ def rbytes(filepath: FsPath) -> bytes:
         >>> import os; os.remove(fspath)
 
     """
-    with open(filepath, "rb") as file:
+    with open(filepath, 'rb') as file:
         return bytes(file.read())
 
 
@@ -772,12 +781,12 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
         if keepends:
             yield from (line for line in f)
         else:
-            yield from (line.rstrip("\n").rstrip("\r\n") for line in f)
+            yield from (line.rstrip('\n').rstrip('\r\n') for line in f)
 
 
 def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
     """Yield bytes from a given fspath"""
-    with open(filepath, "rb") as f:
+    with open(filepath, 'rb') as f:
         while True:
             data = f.read(blocksize)
             if not data:
@@ -813,7 +822,7 @@ def sbytes_gen(
         >>> import os; os.remove(fspath)
 
     """
-    _write_mode = "ab" if append else "wb"
+    _write_mode = 'ab' if append else 'wb'
     with open(filepath, _write_mode) as fd:
         for chunk in bytes_gen:
             fd.write(chunk)
@@ -842,17 +851,17 @@ def rstring(filepath: FsPath) -> str:
     """
     _bytes = rbytes(filepath=filepath)
     try:
-        return _bytes.decode(encoding="utf-8")
+        return _bytes.decode(encoding='utf-8')
     except UnicodeDecodeError:  # Catch the unicode decode error
         pass
-    return _bytes.decode(encoding="latin2")
+    return _bytes.decode(encoding='latin2')
 
 
 def wstring(
     filepath: FsPath,
     string: str,
     *,
-    encoding: str = "utf-8",
+    encoding: str = 'utf-8',
     append: bool = False,
 ) -> None:
     """Save/Write a string to fspath
@@ -883,7 +892,11 @@ def wstring(
 
 
 def filecmp(
-    left: FsPath, right: FsPath, *, shallow: bool = True, blocksize: int = 65536
+    left: FsPath,
+    right: FsPath,
+    *,
+    shallow: bool = True,
+    blocksize: int = 65536,
 ) -> bool:
     """Compare 2 files for equality given their filepaths
 
@@ -945,12 +958,12 @@ def shebang(fspath: FsPath) -> Union[None, str]:
         >>> remove(script)
 
     """
-    with open(fspath, "r") as f:
+    with open(fspath, 'r') as f:
         first = f.readline().replace('\r\n', '\n').strip('\n')
-        return first if "#!" in first[:2] else None
+        return first if '#!' in first[:2] else None
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     from doctest import testmod
 
     testmod()

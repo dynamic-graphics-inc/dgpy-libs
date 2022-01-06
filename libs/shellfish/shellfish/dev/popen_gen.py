@@ -10,7 +10,7 @@ __all__ = ('popen_gen',)
 
 
 def _enqueue_output(fileio: IO[AnyStr], queue: Queue) -> None:
-    for line in iter(fileio.readline, ""):
+    for line in iter(fileio.readline, ''):
         queue.put(line)
     fileio.close()
 
@@ -45,7 +45,7 @@ def _popen_pipes_gen(proc: Popen) -> Iterable[Tuple[Stdio, str]]:
                 pass
 
 
-def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str]]:  # type: ignore
+def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str]]:
     """Create and open a subprocess and yield tuples with stdout/stderr lines
 
     Args:

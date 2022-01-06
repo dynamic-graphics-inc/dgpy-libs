@@ -23,21 +23,21 @@ json = jsonlib
 JSONLIB = jsonlib.__name__
 
 __all__ = (
-    "__version__",
-    "JSON",  # js/ts JSON (THE ONE TO USE)
-    "jsonlib",  # json compat lib
-    "json",  # json compat lib
+    '__version__',
+    'JSON',  # js/ts JSON (THE ONE TO USE)
+    'jsonlib',  # json compat lib
+    'json',  # json compat lib
     # core
-    "JsonObjMutableMapping",
-    "JsonObj",
-    "JsonDict",
+    'JsonObjMutableMapping',
+    'JsonObj',
+    'JsonDict',
     # import
-    "import_json",
+    'import_json',
     # util funks
-    "stringify",
-    "parse",
-    "rm_js_comments",
+    'stringify',
+    'parse',
+    'rm_js_comments',
     # undefined
-    "undefined",
-    "UNDEFINED",
+    'undefined',
+    'UNDEFINED',
 )

@@ -13,17 +13,17 @@ except (ImportError, ModuleNotFoundError):
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
 
 D = {
-    "key": "value",
-    "list": [1, 2, 3, 4, 5],
-    "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    "sub": {
+    'key': 'value',
+    'list': [1, 2, 3, 4, 5],
+    'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+    'sub': {
         'b': 3,
         'key': 'val',
         'a': 1,
     },
-    "apath": pathlib.Path.home(),
-    "Decimal": Decimal(1.4),
-    "timedelta": datetime.timedelta(days=2),
+    'apath': pathlib.Path.home(),
+    'Decimal': Decimal(1.4),
+    'timedelta': datetime.timedelta(days=2),
 }
 
 
@@ -80,7 +80,7 @@ def test_dump_numpy_array() -> None:
 
 def test_datetime() -> None:
     data = {
-        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
     rj = RAPIDJSON.dumps(data)
     oj = ORJSON.dumps(data)

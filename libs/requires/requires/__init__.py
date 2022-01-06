@@ -11,14 +11,14 @@ from requires.core import (
     requires,
 )
 
-funkify(requires, name="requires")
+funkify(requires, name='requires')
 
 __all__ = (
-    "__version__",
-    "requires",
-    "require",
-    "RequirementError",
-    "Requirement",
-    "RequirementProxy",
-    "RequirementAttributeError",
+    '__version__',
+    'requires',
+    'require',
+    'RequirementError',
+    'Requirement',
+    'RequirementProxy',
+    'RequirementAttributeError',
 )

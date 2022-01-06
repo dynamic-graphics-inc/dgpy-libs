@@ -25,15 +25,15 @@ def test_jsonobj_property_attrs() -> None:
 
         @property
         def a_property(self) -> str:
-            return "prop_value"
+            return 'prop_value'
 
     thing_w_prop = ThingyWithPropertyAndAttrs(
-        **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}}
+        **{'a': 1, 'b': 2, 'c': 'herm', 'd': {'nested': 'nestedval'}}
     )
-    assert thing_w_prop.c == thing_w_prop["c"]
-    assert thing_w_prop.a_property == "prop_value"
-    assert thing_w_prop["a_property"] == "prop_value"
-    assert thing_w_prop.d.nested == "nestedval"
+    assert thing_w_prop.c == thing_w_prop['c']
+    assert thing_w_prop.a_property == 'prop_value'
+    assert thing_w_prop['a_property'] == 'prop_value'
+    assert thing_w_prop.d.nested == 'nestedval'
 
 
 EXPECTED_STRING = """ThingyWithPropertyAndAttrsStrTests(**{
@@ -85,15 +85,18 @@ def test_jsonobj_property_attrs_str() -> None:
 
         @property
         def a_property(self):
-            return "prop_value"
+            return 'prop_value'
 
     thing_w_prop = ThingyWithPropertyAndAttrsStrTests(
         **{
-            "a": 1,
-            "b": 2,
-            "c": "herm",
-            "stuff": {"herm_" + str(i): i for i in range(10)},
-            "d": {"nested": "nestedval", **{"ok_" + str(i): i for i in range(20)}},
+            'a': 1,
+            'b': 2,
+            'c': 'herm',
+            'stuff': {'herm_' + str(i): i for i in range(10)},
+            'd': {
+                'nested': 'nestedval',
+                **{'ok_' + str(i): i for i in range(20)},
+            },
         }
     )
     assert str(thing_w_prop) == EXPECTED_STRING

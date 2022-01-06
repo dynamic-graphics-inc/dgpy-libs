@@ -8,11 +8,11 @@ from functools import wraps
 from importlib import import_module
 from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
 
-T = TypeVar("T")
+T = TypeVar('T')
 
 
 def _fn_globals(f: Any) -> Any:
-    if hasattr(f, "__wrapped__"):
+    if hasattr(f, '__wrapped__'):
         return _fn_globals(f.__wrapped__)
     return f.__globals__
 
@@ -45,55 +45,55 @@ class Requirement:
     @property
     def pkg_basename(self) -> str:
         if self._from:
-            if "." in self._from:
-                return self._from.split(".")[0]
+            if '.' in self._from:
+                return self._from.split('.')[0]
             return self._from
 
-        if "." in self._import:
-            return self._import.split(".")[0]
+        if '.' in self._import:
+            return self._import.split('.')[0]
         return self._import
 
     @property
     def import_string(self) -> str:
         if self._from and self._as:
-            return f"from {self._from} import {self._import} as {self._as}"
+            return f'from {self._from} import {self._import} as {self._as}'
         elif self._as:
-            return f"import {self._import} as {self._as}"
+            return f'import {self._import} as {self._as}'
         elif self._from:
-            return f"from {self._from} import {self._import}"
-        return f"import {self._import}"
+            return f'from {self._from} import {self._import}'
+        return f'import {self._import}'
 
     def _pip_install_str(self) -> str:
         if self.pip:
             if isinstance(self.pip, str):
-                return f"pip install {self.pip}"
-            return f"pip install {self.pkg_basename}"
-        return f"pip install {self.pkg_basename} (pip install info unspecified)"
+                return f'pip install {self.pip}'
+            return f'pip install {self.pkg_basename}'
+        return f'pip install {self.pkg_basename} (pip install info unspecified)'
 
     def _conda_install_str(self) -> str:
         if self.conda:
             if isinstance(self.conda, str):
-                return f"conda install {self.conda}"
-            return f"conda install {self.pkg_basename}"
-        return f"conda install {self.pkg_basename} (conda install info unspecified)"
+                return f'conda install {self.conda}'
+            return f'conda install {self.pkg_basename}'
+        return f'conda install {self.pkg_basename} (conda install info unspecified)'
 
     def _conda_forge_install_str(self) -> str:
         if self.conda_forge:
             if isinstance(self.conda_forge, str):
-                return f"conda install -c conda-forge {self.conda_forge}"
-            return f"conda install -c conda-forge {self.pkg_basename}"
-        return f"conda install -c conda-forge {self.pkg_basename} (conda-forge install info unspecified)"
+                return f'conda install -c conda-forge {self.conda_forge}'
+            return f'conda install -c conda-forge {self.pkg_basename}'
+        return f'conda install -c conda-forge {self.pkg_basename} (conda-forge install info unspecified)'
 
     def _details_str(self) -> str:
         if self.details is None:
             return ''
         if isinstance(self.details, str):
             return self.details
-        return "\n".join(self.details)
+        return '\n'.join(self.details)
 
     def err(self) -> RequirementError:
         _install_str = [
-            f"    {el}"
+            f'    {el}'
             for el in filter(
                 None,
                 [
@@ -105,10 +105,10 @@ class Requirement:
             )
         ]
         msg_parts = [
-            f"Module/Package(s) not found/installed; could not import: `{self.import_string}`",
+            f'Module/Package(s) not found/installed; could not import: `{self.import_string}`',
             *_install_str,
         ]
-        return RequirementError("\n".join(msg_parts))
+        return RequirementError('\n'.join(msg_parts))
 
     def error(self) -> RequirementError:
         return self.err()
@@ -133,10 +133,10 @@ class Requirement:
                 return getattr(req, self._import)
             except AttributeError as ae:
                 raise RequirementAttributeError(
-                    "\n".join(
+                    '\n'.join(
                         [
-                            f"Module/Package(s) import AttributeError: `{self.import_string}`",
-                            f"    AttributeError: {str(ae)}",
+                            f'Module/Package(s) import AttributeError: `{self.import_string}`',
+                            f'    AttributeError: {str(ae)}',
                         ]
                     )
                 )
@@ -232,19 +232,19 @@ def parse_name_error(ne: NameError) -> List[str]:
         ['path']
 
     """
-    return [el.split(" ")[1].strip(("'")) for el in ne.args]
+    return [el.split(' ')[1].strip(("'")) for el in ne.args]
 
 
 def parse_import_string(string: str) -> Requirement:
-    parts = [el for el in string.split(" ") if el]
+    parts = [el for el in string.split(' ') if el]
     parts_set = {*parts}
-    if "as" in parts_set and "from" in parts_set:
+    if 'as' in parts_set and 'from' in parts_set:
         _f, _from, _i, _import, _a, _as = parts
         return Requirement(_from=_from, _import=_import, _as=_as)
-    elif "from" in parts_set:
+    elif 'from' in parts_set:
         _f, _from, _i, _import = parts
         return Requirement(_from=_from, _import=_import)
-    elif "as" in parts_set:
+    elif 'as' in parts_set:
         _i, _import, _a, _as = parts
         return Requirement(_import=_import, _as=_as)
     else:
@@ -253,7 +253,7 @@ def parse_import_string(string: str) -> Requirement:
 
 
 def string2requirement(string: str) -> Requirement:
-    if "import" in string:
+    if 'import' in string:
         return parse_import_string(string)
     return Requirement(_import=string)
 
@@ -266,15 +266,15 @@ def make_requirement(
     elif isinstance(requirement, str):
         return string2requirement(string=requirement)
     elif isinstance(requirement, dict):
-        if "import" in requirement:
-            requirement["_import"] = requirement.pop("import")
-        if "from" in requirement:
-            requirement["_from"] = requirement.pop("from")
-        if "as" in requirement:
-            requirement["_as"] = requirement.pop("as")
+        if 'import' in requirement:
+            requirement['_import'] = requirement.pop('import')
+        if 'from' in requirement:
+            requirement['_from'] = requirement.pop('from')
+        if 'as' in requirement:
+            requirement['_as'] = requirement.pop('as')
         return Requirement(**requirement)
     raise RequirementError(
-        "Unable to create requirement (type: {}): {}".format(
+        'Unable to create requirement (type: {}): {}'.format(
             str(type(requirement)), str(requirement)
         )
     )
@@ -323,7 +323,7 @@ def requires(
     _kwargs = (_import, _from, _as, pip, conda, conda_forge)
     if any(kw for kw in _kwargs):
         if requirements:
-            raise ValueError("*requirements and **kwargs are mutually exclusive")
+            raise ValueError('*requirements and **kwargs are mutually exclusive')
         _requirements = [
             Requirement(
                 _import=str(_import),
@@ -348,7 +348,7 @@ def requires(
     return _requires_dec
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     import doctest
 
     doctest.testmod()

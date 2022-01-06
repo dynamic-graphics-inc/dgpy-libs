@@ -5,7 +5,7 @@ Inspired by aiofiles
 """
 import asyncio
 
-from asyncio import AbstractEventLoop, BaseEventLoop  # type: ignore
+from asyncio import AbstractEventLoop, BaseEventLoop
 from collections.abc import Coroutine
 from functools import partial, singledispatch, wraps
 from io import (
@@ -30,12 +30,12 @@ from typing import (
     cast,
 )
 
-T = TypeVar("T")
+T = TypeVar('T')
 
 PathType = Union[str, PathLike]
 
 _open = open
-__all__ = ("aiopen",)
+__all__ = ('aiopen',)
 
 
 def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
@@ -58,7 +58,11 @@ class BaseAsync:
     def __init__(
         self,
         file: Union[
-            BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader
+            BufferedWriter,
+            TextIOWrapper,
+            FileIO,
+            BufferedRandom,
+            BufferedReader,
         ],
         loop: AbstractEventLoop,
         executor: None,
@@ -67,12 +71,12 @@ class BaseAsync:
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> "BaseAsync":
+    def __aiter__(self) -> 'BaseAsync':
         return self
 
     async def __anext__(self) -> Union[bytes, str]:
         """Simulate normal file iteration."""
-        line = await self.readline()  # type: ignore
+        line = await self.readline()
         if line:
             return line  # type: ignore
         else:
@@ -215,7 +219,7 @@ def _aiopen_dispatch(
     loop: AbstractEventLoop,
     executor: Any = None,
 ) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
-    raise TypeError("Unsupported io type: {}.".format(file))
+    raise TypeError('Unsupported io type: {}.'.format(file))
 
 
 @_aiopen_dispatch.register(TextIOBase)
@@ -260,7 +264,7 @@ class ContextManagerAsync(
         ]
     ]
 ):
-    __slots__ = ("_coro", "_obj")
+    __slots__ = ('_coro', '_obj')
 
     def __init__(self, coro: Any) -> None:
         self._coro: Coroutine[Any, Any, Any] = coro
@@ -322,7 +326,10 @@ class ContextManagerAsync(
     async def __aenter__(
         self,
     ) -> Union[
-        BufferedIOBaseAsync, BufferedReaderAsync, TextIOWrapperAsync, FileIOAsync
+        BufferedIOBaseAsync,
+        BufferedReaderAsync,
+        TextIOWrapperAsync,
+        FileIOAsync,
     ]:
         self._obj = await self._coro
         if self._obj is None:
@@ -342,7 +349,7 @@ class ContextManagerAsync(
 
 async def _aiopen(
     file: PathType,
-    mode: str = "r",
+    mode: str = 'r',
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: None = None,
@@ -372,7 +379,7 @@ async def _aiopen(
 
 def aiopen(
     file: PathType,
-    mode: str = "r",
+    mode: str = 'r',
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: None = None,

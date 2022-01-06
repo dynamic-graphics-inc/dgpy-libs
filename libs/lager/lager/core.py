@@ -29,45 +29,54 @@ try:
 
     _stringify = (
         _stringify_new_line
-        if hasattr(orjson, "OPT_APPEND_NEWLINE")
+        if hasattr(orjson, 'OPT_APPEND_NEWLINE')
         else _stringify_no_new_line
     )
 
     def _serialize_record(text: str, record: Dict[str, Any]) -> str:
-        exception = record["exception"]
+        exception = record['exception']
 
         if exception is not None:
             exception = {
-                "type": None if exception.type is None else exception.type.__name__,
-                "value": exception.value,
-                "traceback": bool(record["exception"].traceback),
+                'type': None if exception.type is None else exception.type.__name__,
+                'value': exception.value,
+                'traceback': bool(record['exception'].traceback),
             }
 
         serializable = {
-            "text": text,
-            "record": {
-                "elapsed": {
-                    "repr": record["elapsed"],
-                    "seconds": record["elapsed"].total_seconds(),
+            'text': text,
+            'record': {
+                'elapsed': {
+                    'repr': record['elapsed'],
+                    'seconds': record['elapsed'].total_seconds(),
                 },
-                "exception": exception,
-                "extra": record["extra"],
-                "file": {"name": record["file"].name, "path": record["file"].path},
-                "function": record["function"],
-                "level": {
-                    "icon": record["level"].icon,
-                    "name": record["level"].name,
-                    "no": record["level"].no,
+                'exception': exception,
+                'extra': record['extra'],
+                'file': {
+                    'name': record['file'].name,
+                    'path': record['file'].path,
                 },
-                "line": record["line"],
-                "message": record["message"],
-                "module": record["module"],
-                "name": record["name"],
-                "process": {"id": record["process"].id, "name": record["process"].name},
-                "thread": {"id": record["thread"].id, "name": record["thread"].name},
-                "time": {
-                    "repr": record["time"],
-                    "timestamp": record["time"].timestamp(),
+                'function': record['function'],
+                'level': {
+                    'icon': record['level'].icon,
+                    'name': record['level'].name,
+                    'no': record['level'].no,
+                },
+                'line': record['line'],
+                'message': record['message'],
+                'module': record['module'],
+                'name': record['name'],
+                'process': {
+                    'id': record['process'].id,
+                    'name': record['process'].name,
+                },
+                'thread': {
+                    'id': record['thread'].id,
+                    'name': record['thread'].name,
+                },
+                'time': {
+                    'repr': record['time'],
+                    'timestamp': record['time'].timestamp(),
                 },
             },
         }
@@ -96,7 +105,7 @@ def loglevel(level: Union[str, int]) -> str:
 
 def flog(
     funk: Optional[Callable[..., T]] = None,
-    level: str = "debug",
+    level: str = 'debug',
     enter: bool = True,
     exit: bool = True,
 ) -> T:

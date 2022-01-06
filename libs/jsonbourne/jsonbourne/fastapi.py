@@ -21,7 +21,7 @@ __all__ = ('JSONBOURNEResponse',)
 class JSONBOURNEResponse(Response):
     """FastAPI/starlette json response to auto use jsonbourne"""
 
-    media_type = "application/json"
+    media_type = 'application/json'
 
     def render(self, content: Any) -> bytes:
         """Return JSON string for content as bytes"""

@@ -12,7 +12,7 @@ def _funkify(funk: Callable[..., T], *, name: Optional[str] = None) -> Callable[
     try:
         _name = name or funk.__module__
     except AttributeError:
-        raise ValueError(f"Bad args: funk={funk} name={name}")
+        raise ValueError(f'Bad args: funk={funk} name={name}')
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
