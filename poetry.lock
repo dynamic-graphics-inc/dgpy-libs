@@ -860,7 +860,7 @@ dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 
 [[package]]
 name = "xtyping"
-version = "0.4.6"
+version = "0.4.7"
 description = "xtyping = typing + typing_extensions"
 category = "dev"
 optional = false
