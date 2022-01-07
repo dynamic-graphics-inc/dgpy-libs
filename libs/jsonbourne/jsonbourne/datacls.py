@@ -18,7 +18,7 @@ try:
     # use `pydantic.dataclasses.dataclass` if available
     from pydantic.dataclasses import dataclass
 except ImportError:
-    from dataclasses import dataclass
+    from dataclasses import dataclass  # type: ignore
 
 
 __all__ = (

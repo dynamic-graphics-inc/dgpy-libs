@@ -326,15 +326,6 @@ SetFloat = Set[float]
 SetNumber = Set[Number]
 
 ##########
-## JSON ##
-##########
-# Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
-JsonDictT = Dict[str, Any]
-JsonObjT = Dict[str, Any]
-JsonListT = List[Any]
-JsonArrT = List[Any]
-
-##########
 ## MISC ##
 ##########
 IntStr = Union[int, str]
@@ -374,3 +365,12 @@ OptionalStr = Optional[str]
 OptStr = Optional[str]
 OptionalFloat = Optional[float]
 OptFloat = Optional[float]
+
+##########
+## JSON ##
+##########
+# Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
+JsonDictT = Dict[str, Any]
+JsonObjT = Dict[str, Any]
+JsonListT = List[Any]
+JsonArrT = List[Any]

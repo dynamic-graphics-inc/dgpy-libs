@@ -5,15 +5,10 @@ from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set, Type, TypeVar
 
-# try:
 from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
 from pydantic.generics import GenericModel
 
 from jsonbourne.core import JSON, JsonObj
-
-# except ImportError as ie:
-#     raise ImportError('pydantic not found; install pydantid (`pip install pydantic`)')
-
 
 JsonBaseModelT = TypeVar('JsonBaseModelT', bound='JsonBaseModel')
 
@@ -289,7 +284,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         return self.__class__._cls_field_names()
 
 
-class JsonGenericModel(GenericModel, JsonBaseModel):
+class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore
     """Hybrid `pydantic.generics.GenericModel` and `jsonbourne.JsonObj`"""
 
     ...
