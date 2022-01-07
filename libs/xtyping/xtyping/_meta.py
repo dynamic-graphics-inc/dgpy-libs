@@ -2,5 +2,5 @@
 """Package metadata/info"""
 
 __title__ = 'xtyping'
-__version__ = '0.4.5'
-__description__ = 'Extended typing'
+__version__ = '0.4.6'
+__description__ = 'xtyping = typing + typing_extensions'

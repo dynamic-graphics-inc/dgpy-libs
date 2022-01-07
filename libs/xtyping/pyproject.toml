@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xtyping"
-version = "0.4.5"
+version = "0.4.6"
 description = "xtyping = typing + typing_extensions"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
