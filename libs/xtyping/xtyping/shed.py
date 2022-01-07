@@ -186,8 +186,8 @@ NoneStrBytes = Optional[StrBytes]
 ############
 ## NUMBER ##
 ############
-Number = Union[int, float]  # float or int
-Flint = Union[int, float]  # float or int
+Number = Union[float, int]  # float or int
+Flint = Union[float, int]  # float or int
 
 ##############
 ## TypeVars ##
@@ -210,7 +210,7 @@ _R = TypeVar('_R')
 _RT = TypeVar('_RT')
 ReturnT = TypeVar('ReturnT')
 ReturnType = TypeVar('ReturnType')
-N = TypeVar('N', int, float)
+N = TypeVar('N', float, int)
 DT = TypeVar('DT')
 _DT = TypeVar('_DT')
 T_Retval = TypeVar('T_Retval')
@@ -335,7 +335,7 @@ EnvMap = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
 AnyIterable = Union[Iterable[T], AsyncIterable[T]]
 AnyIterator = Union[Iterator[T], AsyncIterator[T]]
 AnyFunction = Union[Callable[..., R], Callable[..., Awaitable[R]]]
-StrIntFloat = Union[str, int, float]
+StrIntFloat = Union[str, float, int]
 HrTime = Tuple[int, int]  # node/js hrtime type annotation
 
 ###############################
