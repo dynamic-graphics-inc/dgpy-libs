@@ -292,7 +292,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.17.2"
+version = "0.18.2"
 description = "EZPZ JSON"
 category = "dev"
 optional = false
@@ -300,9 +300,6 @@ python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.extras]
-rec = ["orjson (>=3.0.0,<4.0.0)"]
-rj = ["python-rapidjson (>=0.9.1)"]
-oj = ["orjson (>=3.0.0,<4.0.0)"]
 rapidjson = ["python-rapidjson (>=0.9.1)"]
 orjson = ["orjson (>=3.0.0,<4.0.0)"]
 pydantic = ["pydantic (>=1.8.2)"]
@@ -332,7 +329,7 @@ url = "libs/lager"
 [[package]]
 name = "listless"
 version = "0.0.2"
-description = "generator utils; aka 'listless'"
+description = "generator utils; aka listless"
 category = "dev"
 optional = false
 python-versions = "==3.*,>=3.6.2"
@@ -863,8 +860,8 @@ dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 
 [[package]]
 name = "xtyping"
-version = "0.4.4"
-description = "Extended typing"
+version = "0.4.6"
+description = "xtyping = typing + typing_extensions"
 category = "dev"
 optional = false
 python-versions = "==3.*,>=3.6.2"
