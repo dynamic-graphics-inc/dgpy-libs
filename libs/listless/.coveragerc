@@ -1,0 +1,20 @@
+[paths]
+source =
+   listless
+
+[run]
+branch = true
+source =
+    listless
+parallel = true
+
+[report]
+show_missing = true
+precision = 2
+exclude_lines =
+    if 0:
+    if __name__ == .__main__.:
+    if sys.version_info < (3, 7):
+
+    pragma: not covered
+    @overload
