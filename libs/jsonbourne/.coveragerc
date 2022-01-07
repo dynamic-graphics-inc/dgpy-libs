@@ -1,6 +1,7 @@
 [paths]
 source =
-   jsonbourne.py
+   jsonbourne
+   JSON.py
 
 [run]
 branch = true
@@ -15,3 +16,4 @@ exclude_lines =
     if 0:
     if __name__ == .__main__.:
     if sys.version_info < (3, 7):
+    except ImportError:

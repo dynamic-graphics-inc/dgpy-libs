@@ -37,9 +37,6 @@ orjson = { version = "==3.*,>=3.0.0", optional = true }
 pytest = "^6.2.4"
 
 [tool.poetry.extras]
-rec = ["orjson"]
-rj = ["python-rapidjson"]
-oj = ["orjson"]
 rapidjson = ["python-rapidjson"]
 orjson = ["orjson"]
 pydantic = ["pydantic"]

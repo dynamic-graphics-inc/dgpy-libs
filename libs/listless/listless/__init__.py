@@ -233,7 +233,7 @@ def it_product(it: Iterable[Union[int, float]]) -> Union[int, float]:
 
 def spliterable(
     it: Iterable[T], fn: Callable[[T], bool]
-) -> Tuple[Iterable[Any], Iterable[Any]]:
+) -> Tuple[Iterable[T], Iterable[T]]:
     """1 generator + True/False-function => 2 generators (True-gen, False-gen)
 
     Args:

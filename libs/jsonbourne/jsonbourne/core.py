@@ -214,6 +214,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 'JsonObj keys MUST be strings! Bad key values: {}'.format(str(d))
             )
         self.recurse()
+        self.__post_init__()
 
     def recurse(self) -> None:
         """Recusively convert all sub dictionaries to JsonObj objects"""

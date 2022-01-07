@@ -5,9 +5,15 @@ from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set, Type, TypeVar
 
+# try:
 from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
+from pydantic.generics import GenericModel
 
 from jsonbourne.core import JSON, JsonObj
+
+# except ImportError as ie:
+#     raise ImportError('pydantic not found; install pydantid (`pip install pydantic`)')
+
 
 JsonBaseModelT = TypeVar('JsonBaseModelT', bound='JsonBaseModel')
 
@@ -18,6 +24,8 @@ __all__ = (
     'BaseModel',
     'Field',
     'ValidationError',
+    'JsonGenericModel',
+    'GenericModel',
 )
 
 
@@ -32,6 +40,7 @@ class JsonBaseModelDefaultConfig(BaseConfig):
     allow_population_by_field_name = True
     json_loads = JSON.loads
     json_dumps = JSON.dumps
+    use_enum_values = True
 
 
 class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
@@ -180,7 +189,24 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         return any(val.required for val in cls.__fields__.values())
 
     def is_default(self) -> bool:
-        """"""
+        """Check if the object is equal to the default value for its fields
+
+        Returns:
+            True if object is equal to the default value for all fields; False otherwise
+
+        Examples:
+            >>> class Thing(JsonBaseModel):
+            ...    a: int = 1
+            ...    b: str = 'b'
+            ...
+            >>> t = Thing()
+            >>> t.is_default()
+            True
+            >>> t = Thing(a=2)
+            >>> t.is_default()
+            False
+
+        """
         if self.has_required_fields():
             return False
         return all(
@@ -261,3 +287,9 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""
         return self.__class__._cls_field_names()
+
+
+class JsonGenericModel(GenericModel, JsonBaseModel):
+    """Hybrid `pydantic.generics.GenericModel` and `jsonbourne.JsonObj`"""
+
+    ...
