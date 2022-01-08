@@ -135,11 +135,11 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "xtyping"
-version = "0.4.2"
-description = "Extended typing"
+version = "0.4.7"
+description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
-python-versions = ">=3.6.1,<4.0.0"
+python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
 typing-extensions = ">=4.0.0,<5.0.0"
@@ -158,8 +158,8 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [metadata]
 lock-version = "1.1"
-python-versions = "==3.*,>=3.6.1"
-content-hash = "e10311625492dd2b4764f80b810695618f64fbdd41a7e4983541626c52f5c86e"
+python-versions = "==3.*,>=3.6.2"
+content-hash = "07bf7ace8fad61ef8b870749c9360a2226805e6996793759c23638649549c6f9"
 
 [metadata.files]
 atomicwrites = [
@@ -211,8 +211,8 @@ typing-extensions = [
     {file = "typing_extensions-4.0.0.tar.gz", hash = "sha256:2cdf80e4e04866a9b3689a51869016d36db0814d84b8d8a568d22781d45d27ed"},
 ]
 xtyping = [
-    {file = "xtyping-0.4.2-py3-none-any.whl", hash = "sha256:9db32e01496f96603a361774603594823f4bb5760f8f236edb440f0cd0c76fd7"},
-    {file = "xtyping-0.4.2.tar.gz", hash = "sha256:9eb19d49a65193076a79b870d4fb31ac25e12969889c4466ab251ba32bab2885"},
+    {file = "xtyping-0.4.7-py3-none-any.whl", hash = "sha256:86e64f35f7cdfed2c9ab64d62410100c55dd412a172064f16c65e930cf38d77d"},
+    {file = "xtyping-0.4.7.tar.gz", hash = "sha256:4ee87b3f08fc49b3e0a644c23fad4ae4f8b1f05f9bcb6b3ee387fb5191d2b758"},
 ]
 zipp = [
     {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},
