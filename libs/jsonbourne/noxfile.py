@@ -93,11 +93,13 @@ def flake(session):
 #     session.run("flake8", TESTS_DIRPATH)
 
 
+def install_common_test_deps(session):
+    session.install('pytest', 'pytest-cov', 'coverage', 'xtyping')
+
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def base_test(session):
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
+    install_common_test_deps(session)
     session.run(
         'pytest',
         '--cov',
@@ -110,12 +112,8 @@ def base_test(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def pydantic_test(session):
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
-    session.install('pydantic')
-    session.install('httpx')
-    session.install('orjson')
+    install_common_test_deps(session)
+    session.install('pydantic', 'fastapi', 'httpx', 'orjson')
     session.run(
         'pytest',
         '--cov',
@@ -130,9 +128,7 @@ def pydantic_test(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def attrs_test(session):
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
+    install_common_test_deps(session)
     session.install('attrs')
     session.run(
         'pytest',
@@ -150,9 +146,7 @@ def jsonlibs_test(session, numpy):
     if numpy == '1.19' and sys.version_info[:2] == (3, 9):
         session.skip()
 
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
+    install_common_test_deps(session)
     session.install('orjson')
     session.install('python-rapidjson')
     session.install(f'numpy=={numpy}')
@@ -186,9 +180,7 @@ def jsonlibs_test(session, numpy):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def orjson_test(session):
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
+    install_common_test_deps(session)
     session.install('orjson')
     session.run(
         'pytest',
@@ -202,8 +194,7 @@ def orjson_test(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def rapidjson_test(session):
-    session.install('pytest')
-    session.install('pytest-cov')
+    install_common_test_deps(session)
     session.install('python-rapidjson')
     session.run(
         'pytest',
@@ -217,7 +208,5 @@ def rapidjson_test(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def coverage_report(session):
-    session.install('pytest')
-    session.install('pytest-cov')
-    session.install('coverage')
+    install_common_test_deps(session)
     session.run('coverage', 'report')
