@@ -62,7 +62,25 @@ def test_is_tuple() -> None:
     assert isinstance(point, tuple)
 
 
-def test_basic() -> None:
+def test_jsoncp() -> None:
+    _d = {
+        'a': 1,
+        'b': 2,
+        'c': 3,
+        'd': {
+            'key': 'value',
+        },
+    }
+    rj = RAPIDJSON.jsoncp(_d)
+    assert rj == _d
+    oj = ORJSON.jsoncp(_d)
+    assert oj == _d
+    sj = JSON_STDLIB.jsoncp(_d)
+    assert sj == _d
+
+
+# dumps tests
+def test_basic_dumps() -> None:
     rj = RAPIDJSON.dumps(D)
     oj = ORJSON.dumps(D)
     sj = JSON_STDLIB.dumps(D)
@@ -70,7 +88,7 @@ def test_basic() -> None:
     assert len(set(a)) == 1
 
 
-def test_pretty() -> None:
+def test_pretty_dumps() -> None:
     rj = RAPIDJSON.dumps(D, pretty=True)
     oj = ORJSON.dumps(D, pretty=True)
     sj = JSON_STDLIB.dumps(D, pretty=True)
@@ -78,7 +96,7 @@ def test_pretty() -> None:
     assert len(set(a)) == 1
 
 
-def test_sort_keys() -> None:
+def test_sort_keys_dumps() -> None:
     rj = RAPIDJSON.dumps(D, sort_keys=True)
     oj = ORJSON.dumps(D, sort_keys=True)
     sj = JSON_STDLIB.dumps(D, sort_keys=True)
@@ -86,7 +104,7 @@ def test_sort_keys() -> None:
     assert len(set(a)) == 1
 
 
-def test_append_newline() -> None:
+def test_append_newline_dumps() -> None:
     rj = RAPIDJSON.dumps(D, append_newline=True)
     oj = ORJSON.dumps(D, append_newline=True)
     sj = JSON_STDLIB.dumps(D, append_newline=True)
@@ -94,7 +112,7 @@ def test_append_newline() -> None:
     assert len(set(a)) == 1
 
 
-def test_pretty_sort_keys() -> None:
+def test_pretty_sort_keys_dumps() -> None:
     rj = RAPIDJSON.dumps(D, pretty=True, sort_keys=True)
     oj = ORJSON.dumps(D, pretty=True, sort_keys=True)
     sj = JSON_STDLIB.dumps(D, pretty=True, sort_keys=True)
@@ -102,7 +120,7 @@ def test_pretty_sort_keys() -> None:
     assert len(set(a)) == 1
 
 
-def test_dump_numpy_array() -> None:
+def test_dump_numpy_array_dumps() -> None:
     import numpy as np
 
     arr = np.array([[1, 2], [3, 4]])
@@ -113,7 +131,7 @@ def test_dump_numpy_array() -> None:
     assert len(set(a)) == 1
 
 
-def test_datetime() -> None:
+def test_datetime_dumps() -> None:
     data = {
         'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
@@ -129,6 +147,79 @@ def test_datetime() -> None:
     sj_bin = JSON_STDLIB.dumpb(data)
     b = [rj_bin, oj_bin, sj_bin]
     assert all(isinstance(el, bytes) for el in b)
+
+
+# dumpb tests
+def test_basic_dumpb() -> None:
+    rj = RAPIDJSON.dumpb(D)
+    oj = ORJSON.dumpb(D)
+    sj = JSON_STDLIB.dumpb(D)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_pretty_dumpb() -> None:
+    rj = RAPIDJSON.dumpb(D, pretty=True)
+    oj = ORJSON.dumpb(D, pretty=True)
+    sj = JSON_STDLIB.dumpb(D, pretty=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_sort_keys_dumpb() -> None:
+    rj = RAPIDJSON.dumpb(D, sort_keys=True)
+    oj = ORJSON.dumpb(D, sort_keys=True)
+    sj = JSON_STDLIB.dumpb(D, sort_keys=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_append_newline_dumpb() -> None:
+    rj = RAPIDJSON.dumpb(D, append_newline=True)
+    oj = ORJSON.dumpb(D, append_newline=True)
+    sj = JSON_STDLIB.dumpb(D, append_newline=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_pretty_sort_keys_dumpb() -> None:
+    rj = RAPIDJSON.dumpb(D, pretty=True, sort_keys=True)
+    oj = ORJSON.dumpb(D, pretty=True, sort_keys=True)
+    sj = JSON_STDLIB.dumpb(D, pretty=True, sort_keys=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_dump_numpy_array_dumpb() -> None:
+    import numpy as np
+
+    arr = np.array([[1, 2], [3, 4]])
+    rj = RAPIDJSON.dumpb(arr)
+    oj = ORJSON.dumpb(arr)
+    sj = JSON_STDLIB.dumpb(arr)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
+def test_datetime_dumpb() -> None:
+    data = {
+        'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+    }
+    rj = RAPIDJSON.dumpb(data)
+    oj = ORJSON.dumpb(data)
+    sj = JSON_STDLIB.dumpb(data)
+    a = [rj, oj, sj]
+
+    assert all(isinstance(el, bytes) for el in a)
+    assert len(set(a)) == 1
+    rj_bin = RAPIDJSON.dumpb(data)
+    oj_bin = ORJSON.dumpb(data)
+    sj_bin = JSON_STDLIB.dumpb(data)
+    b = [rj_bin, oj_bin, sj_bin]
+    assert all(isinstance(el, bytes) for el in b)
+
+
+# import tests
 
 
 def test_import_rapidjson() -> None:

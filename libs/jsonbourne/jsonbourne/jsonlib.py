@@ -109,7 +109,7 @@ class JsonLibABC(ABC):
 
     @staticmethod
     @abstractmethod
-    def loads(string: str, **kwargs: Any) -> Any:
+    def loads(string: Union[str, bytes], **kwargs: Any) -> Any:
         ...
 
     @staticmethod
@@ -190,7 +190,7 @@ class JSON_STDLIB(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: str, **kwargs: Any) -> Any:
+    def loads(string: Union[str, bytes], **kwargs: Any) -> Any:
         return pyjson.loads(string, **kwargs)
 
     @staticmethod
@@ -263,7 +263,7 @@ class ORJSON(JsonLibABC):
         )
 
     @staticmethod
-    def loads(string: str, **kwargs: Any) -> Any:
+    def loads(string: Union[str, bytes], **kwargs: Any) -> Any:
         return orjson.loads(string)
 
     @staticmethod
@@ -341,7 +341,7 @@ class RAPIDJSON(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: str, **kwargs: Any) -> Any:
+    def loads(string: Union[str, bytes], **kwargs: Any) -> Any:
         return rapidjson.loads(string, **kwargs)
 
     @staticmethod
@@ -458,7 +458,7 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(self, string: str, **kwargs: Any) -> Any:
+    def loads(self, string: Union[str, bytes], **kwargs: Any) -> Any:
         return self._jsonlib.loads(string, **kwargs)
 
     def use_orjson(self) -> None:
