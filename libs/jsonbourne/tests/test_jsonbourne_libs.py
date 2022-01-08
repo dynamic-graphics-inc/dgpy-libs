@@ -5,12 +5,39 @@ from decimal import Decimal
 
 import pytest
 
+from xtyping import NamedTuple
+
 try:
     from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
 except (ImportError, ModuleNotFoundError):
     pass
 
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
+
+
+class Point3d(NamedTuple):
+    x: int
+    y: int
+    z: int
+
+
+class Point3dDumpable(NamedTuple):
+    x: int
+    y: int
+    z: int
+
+    def __dumpable__(self):
+        return tuple(self)
+
+
+class Point3dJsonInterface(NamedTuple):
+    x: int
+    y: int
+    z: int
+
+    def __json_interface__(self):
+        return tuple(self)
+
 
 D = {
     'key': 'value',
@@ -24,7 +51,15 @@ D = {
     'apath': pathlib.Path.home(),
     'Decimal': Decimal(1.4),
     'timedelta': datetime.timedelta(days=2),
+    'point': Point3d(1, 2, 3),
+    'point_dumpable': Point3dDumpable(1, 2, 3),
+    'poin_json_interface': Point3dJsonInterface(1, 2, 3),
 }
+
+
+def test_is_tuple() -> None:
+    point = Point3d(1, 2, 3)
+    print(isinstance(point, tuple))
 
 
 def test_basic() -> None:

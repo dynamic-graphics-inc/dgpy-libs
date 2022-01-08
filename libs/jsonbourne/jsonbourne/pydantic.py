@@ -5,7 +5,14 @@ from functools import lru_cache
 from pprint import pformat
 from typing import Any, Dict, Set, Type, TypeVar
 
-from pydantic import BaseConfig, BaseModel, Extra, Field, ValidationError
+from pydantic import (
+    VERSION as __pydantic_version__,
+    BaseConfig,
+    BaseModel,
+    Extra,
+    Field,
+    ValidationError,
+)
 from pydantic.generics import GenericModel
 
 from jsonbourne.core import JSON, JsonObj
@@ -13,6 +20,7 @@ from jsonbourne.core import JSON, JsonObj
 JsonBaseModelT = TypeVar('JsonBaseModelT', bound='JsonBaseModel')
 
 __all__ = (
+    '__pydantic_version__',
     'JsonBaseModelDefaultConfig',
     'JsonBaseModel',
     'JsonBaseModelT',
@@ -140,7 +148,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         """Eject to JsonObj and filter key-values where the value is None"""
         return JsonObj(self.to_dict_filter_none())
 
-    def to_json_dict(self) -> JsonObj:
+    def to_json_obj(self):
         """Eject object and sub-objects to `jsonbourne.JsonObj`
 
         Examples:
@@ -160,6 +168,22 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
                 for k, v in self.__dict__.items()
             }
         )
+
+    def to_json_dict(self) -> JsonObj:
+        """Eject object and sub-objects to `jsonbourne.JsonObj`
+
+        Examples:
+            >>> d = JsonObj(**{'uno': 'ONE', 'tres': 3, 'dos': 2})
+            >>> d
+            JsonObj(**{'uno': 'ONE', 'tres': 3, 'dos': 2})
+            >>> plain_ol_dict = d.eject()
+            >>> plain_ol_dict
+            {'uno': 'ONE', 'tres': 3, 'dos': 2}
+            >>> type(plain_ol_dict)
+            <class 'dict'>
+
+        """
+        return self.to_json_obj()
 
     def to_dict(self) -> Dict[str, Any]:
         """Eject and return object as plain jane dictionary"""

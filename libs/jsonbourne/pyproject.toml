@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.18.2"
+version = "0.18.3"
 description = "EZPZ JSON"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -29,6 +29,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.2"
+xtyping = "^0.4.7"
 pydantic = { version = ">=1.8.2", optional = true }
 python-rapidjson = { version = ">=0.9.1", optional = true }
 orjson = { version = "==3.*,>=3.0.0", optional = true }

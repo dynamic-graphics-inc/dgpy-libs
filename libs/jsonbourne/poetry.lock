@@ -177,6 +177,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "xtyping"
+version = "0.4.7"
+description = "xtyping = typing + typing_extensions"
+category = "main"
+optional = false
+python-versions = ">=3.6.2,<4.0.0"
+
+[package.dependencies]
+typing-extensions = ">=4.0.0,<5.0.0"
+
+[[package]]
 name = "zipp"
 version = "3.6.0"
 description = "Backport of pathlib-compatible object wrapper for zip files"
@@ -198,7 +209,7 @@ rapidjson = ["python-rapidjson"]
 [metadata]
 lock-version = "1.1"
 python-versions = "==3.*,>=3.6.2"
-content-hash = "5c83e67bfaab68bf69fd64395adc2914621161ee5bf7093a2c3cae0e315df358"
+content-hash = "f2e86631c7821958155b474611f0a2837f6a676fa8da3450bf856961d0fc20d9"
 
 [metadata.files]
 atomicwrites = [
@@ -351,6 +362,10 @@ toml = [
 typing-extensions = [
     {file = "typing_extensions-4.0.1-py3-none-any.whl", hash = "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"},
     {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
+]
+xtyping = [
+    {file = "xtyping-0.4.7-py3-none-any.whl", hash = "sha256:86e64f35f7cdfed2c9ab64d62410100c55dd412a172064f16c65e930cf38d77d"},
+    {file = "xtyping-0.4.7.tar.gz", hash = "sha256:4ee87b3f08fc49b3e0a644c23fad4ae4f8b1f05f9bcb6b3ee387fb5191d2b758"},
 ]
 zipp = [
     {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},

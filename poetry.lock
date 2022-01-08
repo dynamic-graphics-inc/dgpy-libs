@@ -292,12 +292,15 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.18.2"
+version = "0.18.3"
 description = "EZPZ JSON"
 category = "dev"
 optional = false
 python-versions = "==3.*,>=3.6.2"
 develop = true
+
+[package.dependencies]
+xtyping = "^0.4.7"
 
 [package.extras]
 rapidjson = ["python-rapidjson (>=0.9.1)"]

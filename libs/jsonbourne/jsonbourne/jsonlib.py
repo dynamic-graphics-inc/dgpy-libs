@@ -2,7 +2,7 @@
 import json as pyjson
 
 from abc import ABC, abstractmethod
-from datetime import datetime, timedelta
+from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
@@ -37,10 +37,17 @@ try:
 except ImportError:
     np = None
 
-JSONLIB_DEFAULT_PREFERENCE = ['orjson', 'rapidjson']
+JSONLIB_DEFAULT_PREFERENCE = (
+    'orjson',
+    'rapidjson',
+)
 
 
 def _json_encode_default(obj: Any) -> Any:
+    if hasattr(obj, '__json_interface__'):
+        return obj.__json_interface__()
+    if hasattr(obj, '__dumpable__'):
+        return obj.__dumpable__()
     if np:
         if isinstance(obj, np.floating):
             return float(obj)
@@ -53,14 +60,16 @@ def _json_encode_default(obj: Any) -> Any:
             return dataclasses.asdict(obj)
     if isinstance(obj, bytes):
         return str(obj, encoding='utf-8')
+    if isinstance(obj, tuple):
+        return tuple(obj)
     if isinstance(obj, Path):
         return str(obj)
-    if isinstance(obj, datetime):
+    if isinstance(obj, (datetime, dttime, dtdate)):
         return obj.isoformat()
     if isinstance(obj, timedelta):
         return obj.total_seconds()
     if isinstance(obj, Decimal):
-        return str(obj)
+        return float(obj)
     if hasattr(obj, 'eject'):
         return obj.eject()
     if hasattr(obj, 'to_dict'):
