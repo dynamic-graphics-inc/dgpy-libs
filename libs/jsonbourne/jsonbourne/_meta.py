@@ -2,5 +2,5 @@
 """Package metadata/info"""
 
 __title__ = 'jsonbourne'
-__version__ = '0.19.1'
+__version__ = '0.20.0'
 __description__ = 'EZPZ JSON'

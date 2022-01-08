@@ -130,6 +130,18 @@ class JsonLibABC(ABC):
     def has_orjson() -> bool:
         return orjson is not None
 
+    @staticmethod
+    @abstractmethod
+    def jsoncp(
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        ...
+
 
 class JSON_STDLIB(JsonLibABC):
     lib = 'json'
@@ -185,6 +197,27 @@ class JSON_STDLIB(JsonLibABC):
     def useable() -> bool:
         return True
 
+    @staticmethod
+    @abstractmethod
+    def jsoncp(
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        return JSON_STDLIB.loads(
+            JSON_STDLIB.dumps(
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                append_newline=append_newline,
+                default=default or _json_encode_default,
+                **kwargs,
+            )
+        )
+
 
 class ORJSON(JsonLibABC):
     lib = 'orjson'
@@ -236,6 +269,27 @@ class ORJSON(JsonLibABC):
     @staticmethod
     def useable() -> bool:
         return JsonLibABC.has_orjson()
+
+    @staticmethod
+    @abstractmethod
+    def jsoncp(
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        return ORJSON.loads(
+            ORJSON.dumpb(
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                append_newline=append_newline,
+                default=default or _json_encode_default,
+                **kwargs,
+            )
+        )
 
 
 class RAPIDJSON(JsonLibABC):
@@ -293,6 +347,27 @@ class RAPIDJSON(JsonLibABC):
     @staticmethod
     def useable() -> bool:
         return JsonLibABC.has_rapidjson()
+
+    @staticmethod
+    @abstractmethod
+    def jsoncp(
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        return RAPIDJSON.loads(
+            RAPIDJSON.dumps(
+                data,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                append_newline=append_newline,
+                default=default or _json_encode_default,
+                **kwargs,
+            )
+        )
 
 
 def pick_lib() -> 'Type[JsonLibABC]':
@@ -401,6 +476,24 @@ class JsonLib:
     def which(self) -> str:
         return self._jsonlib.lib
 
+    def jsoncp(
+        self,
+        data: Any,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        return self._jsonlib.jsoncp(
+            data=data,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
+
 
 JSONLIB: Type[JsonLibABC] = import_json()
 
@@ -443,6 +536,24 @@ def dumpb(
 
 def loads(string: str, **kwargs: Any) -> Any:
     return JSONLIB.loads(string, **kwargs)
+
+
+def jsoncp(
+    data: Any,
+    pretty: bool = False,
+    sort_keys: bool = False,
+    append_newline: bool = False,
+    default: Optional[Callable[[Any], Any]] = None,
+    **kwargs: Any,
+) -> Any:
+    return JSONLIB.jsoncp(
+        data=data,
+        pretty=pretty,
+        sort_keys=sort_keys,
+        append_newline=append_newline,
+        default=default,
+        **kwargs,
+    )
 
 
 def use_orjson() -> None:
