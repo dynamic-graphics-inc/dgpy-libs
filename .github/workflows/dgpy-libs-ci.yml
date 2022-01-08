@@ -29,7 +29,7 @@ jobs:
           pip install nox
           nox -s lint
 
-  test-xtyping:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -87,26 +87,6 @@ jobs:
           cd libs/aiopen
           poetry run pytest tests
 
-  lint-jsonbourne:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: [3.8]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest nox
-      - name: Lint with flake8
-        run: |
-          cd libs/jsonbourne
-          nox -s flake
 
   test-jsonbourne:
     needs: [lint]
@@ -140,3 +120,27 @@ jobs:
 #        with:
 #          name: pypi_files
 #          path: dist
+
+###########################
+## ci workflow purgatory ##
+###########################
+#  lint-jsonbourne:
+#    runs-on: ubuntu-latest
+#    strategy:
+#      matrix:
+#        python-version: [3.8]
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip
+#          pip install flake8 pytest nox
+#      - name: Lint with flake8
+#        run: |
+#          cd libs/jsonbourne
+#          nox -s flake
