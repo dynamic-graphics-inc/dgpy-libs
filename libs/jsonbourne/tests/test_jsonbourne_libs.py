@@ -219,7 +219,7 @@ def test_datetime_dumpb() -> None:
     assert all(isinstance(el, bytes) for el in b)
 
 
-# import tests
+# library import tests
 
 
 def test_import_rapidjson() -> None:
