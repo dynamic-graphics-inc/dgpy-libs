@@ -2,10 +2,9 @@ name: Python package
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: [ master, main, dev ]
   pull_request:
-    branches: [ master ]
-
+    branches: [ master, main, dev ]
 
 jobs:
   lint:
@@ -88,7 +87,7 @@ jobs:
           cd libs/aiopen
           poetry run pytest tests
 
-  lintjb:
+  lint-jsonbourne:
     runs-on: ubuntu-latest
     strategy:
       matrix:
