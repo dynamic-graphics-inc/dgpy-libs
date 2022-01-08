@@ -1,4 +1,4 @@
-name: Python package
+name: dgpy-libs-ci
 
 on:
   push:
