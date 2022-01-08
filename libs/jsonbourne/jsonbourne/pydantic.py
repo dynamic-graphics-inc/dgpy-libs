@@ -148,7 +148,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         """Eject to JsonObj and filter key-values where the value is None"""
         return JsonObj(self.to_dict_filter_none())
 
-    def to_json_obj(self):
+    def to_json_obj(self) -> JsonObj:
         """Eject object and sub-objects to `jsonbourne.JsonObj`
 
         Examples:

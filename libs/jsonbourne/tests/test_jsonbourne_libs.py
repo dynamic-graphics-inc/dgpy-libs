@@ -59,7 +59,7 @@ D = {
 
 def test_is_tuple() -> None:
     point = Point3d(1, 2, 3)
-    print(isinstance(point, tuple))
+    assert isinstance(point, tuple)
 
 
 def test_basic() -> None:
