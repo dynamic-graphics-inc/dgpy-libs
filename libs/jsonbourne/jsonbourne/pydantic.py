@@ -60,6 +60,9 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         """Function place holder that is called after object initialization"""
         pass  # pylint: disable=unnecessary-pass
 
+    def __json_interface__(self) -> Dict[str, Any]:
+        return self.dict()
+
     def to_str(
         self, minify: bool = False, width: int = 120, fmt_kwargs: bool = False
     ) -> str:

@@ -8,6 +8,8 @@ from pathlib import Path
 from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
 
+from jsonbourne.protocols import Dumpable, JsonInterface
+
 try:
     import dataclasses
 except ImportError:
@@ -43,11 +45,19 @@ JSONLIB_DEFAULT_PREFERENCE = (
 )
 
 
+def _json_interface(obj: JsonInterface) -> Any:
+    return obj.__json_interface__()
+
+
+def _dumpable(obj: Dumpable) -> Any:
+    return obj.__dumpable__()
+
+
 def _json_encode_default(obj: Any) -> Any:
     if hasattr(obj, '__json_interface__'):
-        return obj.__json_interface__()
+        return _json_interface(obj)
     if hasattr(obj, '__dumpable__'):
-        return obj.__dumpable__()
+        return _dumpable(obj)
     if np:
         if isinstance(obj, np.floating):
             return float(obj)

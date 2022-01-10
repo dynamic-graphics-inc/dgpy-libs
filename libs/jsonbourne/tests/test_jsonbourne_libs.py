@@ -39,6 +39,16 @@ class Point3dJsonInterface(NamedTuple):
         return tuple(self)
 
 
+class Point3dJsonInterfaceProperty(NamedTuple):
+    x: int
+    y: int
+    z: int
+
+    @property
+    def __json_interface__(self):
+        return tuple(self)
+
+
 D = {
     'key': 'value',
     'list': [1, 2, 3, 4, 5],
@@ -54,6 +64,7 @@ D = {
     'point': Point3d(1, 2, 3),
     'point_dumpable': Point3dDumpable(1, 2, 3),
     'poin_json_interface': Point3dJsonInterface(1, 2, 3),
+    'poin_json_interface_property': Point3dJsonInterfaceProperty(1, 2, 3),
 }
 
 

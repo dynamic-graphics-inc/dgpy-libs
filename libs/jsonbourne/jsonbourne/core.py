@@ -913,11 +913,6 @@ class JsonDict(JsonObj):
     pass
 
 
-# @overload
-# def jsonify(value: Dict[_KT, _VT]) -> JsonObj[_VT]:
-#     ...
-
-
 def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
     if isinstance(value, dict):
         return JsonObj(value)
