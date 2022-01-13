@@ -5,6 +5,7 @@ __pycache__/
 
 *_tests/
 *.bak/
+*.bak
 
 # C extensions
 *.so
