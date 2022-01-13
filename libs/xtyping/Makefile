@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml xtyping tests
-black = black -S --config ../../pyproject.toml -l 88 xtyping tests
+black = black --config ../../pyproject.toml -l 88 xtyping tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

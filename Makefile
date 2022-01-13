@@ -4,7 +4,7 @@ LIBS := $(shell ls libs)
 PWD_DIRPATH = .
 
 isort = isort --sp pyproject.toml libs
-black = black -S --config pyproject.toml -l 88 libs
+black = black --config pyproject.toml -l 88 libs
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)
