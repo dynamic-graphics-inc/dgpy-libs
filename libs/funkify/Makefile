@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml funkify tests
-black = black --config ../../pyproject.toml -l 88 funkify tests
+black = black --config ../../pyproject.toml funkify tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

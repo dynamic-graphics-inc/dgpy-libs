@@ -4,7 +4,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml lager tests
-black = black --config ../../pyproject.toml -l 88 lager tests
+black = black --config ../../pyproject.toml lager tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

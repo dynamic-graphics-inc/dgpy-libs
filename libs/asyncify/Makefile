@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml asyncify tests
-black = black --config ../../pyproject.toml -l 88 asyncify tests
+black = black --config ../../pyproject.toml asyncify tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

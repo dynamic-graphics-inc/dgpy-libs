@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml shellfish tests
-black = black --config ../../pyproject.toml -l 88 shellfish tests
+black = black --config ../../pyproject.toml shellfish tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

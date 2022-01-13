@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml aiopen tests
-black = black --config ../../pyproject.toml -l 88 aiopen tests
+black = black --config ../../pyproject.toml aiopen tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)

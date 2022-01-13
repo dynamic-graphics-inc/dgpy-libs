@@ -5,7 +5,7 @@ PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
 isort = isort --sp ../../pyproject.toml jsonbourne JSON.py david_webb.py tests
-black = black --config ../../pyproject.toml -l 88 jsonbourne JSON.py david_webb.py tests
+black = black --config ../../pyproject.toml jsonbourne JSON.py david_webb.py tests
 
 nbs = $(wildcard *.ipynb)
 mds = $(nbs:%.ipynb=%.md)
