@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funkify"
-version = "0.3.0"
+version = "0.4.0"
 description = "Funkify modules so that they are callable"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -27,6 +27,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.2"
+xtyping = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

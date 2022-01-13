@@ -7,16 +7,16 @@ import nox
 
 
 libs = [
-    'aiopen',
-    'asyncify',
-    'funkify',
-    'h5',
-    'jsonbourne',
-    'lager',
-    'listless',
-    'requires',
-    'shellfish',
-    'xtyping',
+    "aiopen",
+    "asyncify",
+    "funkify",
+    "h5",
+    "jsonbourne",
+    "lager",
+    "listless",
+    "requires",
+    "shellfish",
+    "xtyping",
 ]
 
 
@@ -33,7 +33,7 @@ def is_win() -> bool:
 nox.options.envdir = ".nox_win" if is_win() else ".nox"
 
 IS_GITLAB_CI = "GITLAB_CI" in os.environ
-IS_GITHUB_CI = 'CI' in os.environ and os.environ['CI'] == 'true'
+IS_GITHUB_CI = "CI" in os.environ and os.environ["CI"] == "true"
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 PWD = path.abspath(path.dirname(__file__))
 LIBS_DIR = path.join(PWD, "libs")
@@ -42,7 +42,7 @@ VENV_BACKEND = None if is_win() or IS_GITHUB_CI or not which("conda") else "cond
 LIB_DIRS = {
     el: path.join(LIBS_DIR, el)
     for el in os.listdir(LIBS_DIR)
-    if el[0] != '.' and el in libs
+    if el[0] != "." and el in libs
 }
 SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
@@ -87,8 +87,8 @@ def _flake(session):
         "flake8-comprehensions",
         "flake8-quotes",
     )
-    session.run("flake8", *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el])
-    session.run("flake8", *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el])
+    session.run("flake8", *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el])
+    session.run("flake8", *[el for el in TESTS_DIRS.values() if ".DS_Store" not in el])
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -97,10 +97,10 @@ def flake(session):
 
 
 def _mypy(session):
-    session.install('mypy')
-    session.install('typing-extensions')
-    session.install('pydantic')
-    session.install('orjson', 'types-orjson', 'fastapi')
+    session.install("mypy")
+    session.install("typing-extensions")
+    session.install("pydantic")
+    session.install("orjson", "types-orjson", "fastapi")
     # session.run(
     #     'mypy',
     #     '--show-error-codes',
@@ -121,11 +121,11 @@ def _mypy(session):
     #         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
     #         )
     session.run(
-        'mypy',
-        '--show-error-codes',
-        '--config-file',
-        './mypy.ini',
-        *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
+        "mypy",
+        "--show-error-codes",
+        "--config-file",
+        "./mypy.ini",
+        *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el],
     )
 
 
@@ -147,24 +147,27 @@ def homepage(session):
     # "# -*- coding: utf-8 -*-"
     for libname, dirpath in LIB_DIRS.items():
         print(libname, dirpath)
-        pyproject_toml_fspath = path.join(dirpath, 'pyproject.toml')
+        pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
         with open(pyproject_toml_fspath) as f:
             pyproject_toml_str = f.read()
         data = toml.loads(pyproject_toml_str)
-        print('____________________________')
-        print('Package: {} ~ Dirpath: {}'.format(libname, dirpath))
+        print("____________________________")
+        print("Package: {} ~ Dirpath: {}".format(libname, dirpath))
         poetry_metadata = data["tool"]["poetry"]
-        lib_homepage = 'https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/{}'.format(libname)
-        data['tool']['poetry'] = poetry_metadata
+        lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/{}".format(
+            libname
+        )
+        data["tool"]["poetry"] = poetry_metadata
         print(data)
-        repository_line = 'repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"'
+        repository_line = (
+            'repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"'
+        )
         edited = pyproject_toml_str.replace(
-            repository_line, repository_line + '\nhomepage = "{}"'.format(lib_homepage))
+            repository_line, repository_line + '\nhomepage = "{}"'.format(lib_homepage)
+        )
         print(edited)
         # with open(pyproject_toml_fspath, 'w') as f:
         #     f.write(edited)
-
-
 
         # with open(pyproject_toml_fspath, 'w') as f:
         #     f.write(toml.dumps(data))
@@ -189,6 +192,8 @@ def homepage(session):
         # metadata_filepath = path.join(dirpath, libname, '_meta.py')
         # with open(metadata_filepath, 'w') as f:
         #     f.write(metadata_file_string)
+
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def update_metadata(session):
     import toml
@@ -199,7 +204,7 @@ def update_metadata(session):
         with open(path.join(dirpath, "pyproject.toml")) as f:
             pyproject_toml_str = f.read()
         data = toml.loads(pyproject_toml_str)
-        print('____________________________')
+        print("____________________________")
         poetry_metadata = data["tool"]["poetry"]
         # print(poetry_metadata)
         assert "name" in poetry_metadata and poetry_metadata["name"] == libname
@@ -216,26 +221,33 @@ def update_metadata(session):
 
         # check that is valid python...
         exec(metadata_file_string)
-        print('~~~')
+        print("~~~")
         print(metadata_file_string)
-        print('~~~')
-        metadata_filepath = path.join(dirpath, libname, '_meta.py')
-        with open(metadata_filepath, 'w') as f:
+        print("~~~")
+        metadata_filepath = path.join(dirpath, libname, "_meta.py")
+        with open(metadata_filepath, "w") as f:
             f.write(metadata_file_string)
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs_serve(session):
-    session.install('mkdocs')
-    session.install('mkdocs-material')
-    session.install('mkdocs-jupyter')
-    session.install('mkdocstrings')
-    session.run('mkdocs', 'serve')
+    session.install("mkdocs")
+    session.install("mkdocs-material")
+    session.install("mkdocs-jupyter")
+    session.install("mkdocstrings")
+    session.run("mkdocs", "serve")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs(session):
-    session.install('mkdocs')
-    session.install('mkdocs-material')
-    session.install('mkdocs-jupyter')
-    session.run('mkdocs', 'build')
+    session.install("mkdocs")
+    session.install("mkdocs-material")
+    session.install("mkdocs-jupyter")
+    session.run("mkdocs", "build")
+
+
+@nox.session(reuse_venv=True)
+def freeze(session):
+    for lib in libs:
+        session.install(lib)
+    _freeze = session.run("pip", "freeze", "--local", "-l")

@@ -57,7 +57,7 @@ jobs:
       - name: test funkify
         run: |
           cd libs/funkify
-          poetry run pytest tests
+          poetry run pytest --cov=funkify tests
 
       - name: test requires
         run: |
