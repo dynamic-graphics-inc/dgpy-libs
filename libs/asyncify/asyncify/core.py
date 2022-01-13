@@ -13,10 +13,10 @@ from xtyping import Any, Awaitable, Callable, Optional, ParamSpec, TypeVar, Unio
 AnyCallable = Callable[..., Any]
 FuncType = Callable[..., Any]
 
-P = ParamSpec('P')
-T = TypeVar('T')
+P = ParamSpec("P")
+T = TypeVar("T")
 
-__all__ = ('asyncify', 'run', 'await_or_return', 'is_async')
+__all__ = ("asyncify", "run", "await_or_return", "is_async")
 
 
 def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:

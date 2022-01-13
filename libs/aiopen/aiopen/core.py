@@ -30,12 +30,12 @@ from typing import (
     cast,
 )
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 PathType = Union[str, PathLike]
 
 _open = open
-__all__ = ('aiopen',)
+__all__ = ("aiopen",)
 
 
 def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
@@ -71,7 +71,7 @@ class BaseAsync:
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> 'BaseAsync':
+    def __aiter__(self) -> "BaseAsync":
         return self
 
     async def __anext__(self) -> Union[bytes, str]:
@@ -219,7 +219,7 @@ def _aiopen_dispatch(
     loop: AbstractEventLoop,
     executor: Any = None,
 ) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
-    raise TypeError('Unsupported io type: {}.'.format(file))
+    raise TypeError("Unsupported io type: {}.".format(file))
 
 
 @_aiopen_dispatch.register(TextIOBase)
@@ -264,7 +264,7 @@ class ContextManagerAsync(
         ]
     ]
 ):
-    __slots__ = ('_coro', '_obj')
+    __slots__ = ("_coro", "_obj")
 
     def __init__(self, coro: Any) -> None:
         self._coro: Coroutine[Any, Any, Any] = coro
@@ -333,7 +333,7 @@ class ContextManagerAsync(
     ]:
         self._obj = await self._coro
         if self._obj is None:
-            raise ValueError('Unable to aiopen')
+            raise ValueError("Unable to aiopen")
         return self._obj
 
     async def __aexit__(
@@ -349,7 +349,7 @@ class ContextManagerAsync(
 
 async def _aiopen(
     file: PathType,
-    mode: str = 'r',
+    mode: str = "r",
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: None = None,
@@ -379,7 +379,7 @@ async def _aiopen(
 
 def aiopen(
     file: PathType,
-    mode: str = 'r',
+    mode: str = "r",
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: None = None,

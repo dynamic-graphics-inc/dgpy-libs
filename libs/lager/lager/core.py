@@ -14,14 +14,14 @@ from loguru._logger import Core as _Core, Logger as _Logger
 
 from lager.const import LOG_LEVELS
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 try:
     import orjson
 
     def _stringify_new_line(serializable: Any) -> str:
         return orjson.dumps(serializable, option=orjson.OPT_APPEND_NEWLINE).decode(
-            'utf-8'
+            "utf-8"
         )
 
     def _stringify_no_new_line(serializable: Any) -> str:
@@ -29,54 +29,54 @@ try:
 
     _stringify = (
         _stringify_new_line
-        if hasattr(orjson, 'OPT_APPEND_NEWLINE')
+        if hasattr(orjson, "OPT_APPEND_NEWLINE")
         else _stringify_no_new_line
     )
 
     def _serialize_record(text: str, record: Dict[str, Any]) -> str:
-        exception = record['exception']
+        exception = record["exception"]
 
         if exception is not None:
             exception = {
-                'type': None if exception.type is None else exception.type.__name__,
-                'value': exception.value,
-                'traceback': bool(record['exception'].traceback),
+                "type": None if exception.type is None else exception.type.__name__,
+                "value": exception.value,
+                "traceback": bool(record["exception"].traceback),
             }
 
         serializable = {
-            'text': text,
-            'record': {
-                'elapsed': {
-                    'repr': record['elapsed'],
-                    'seconds': record['elapsed'].total_seconds(),
+            "text": text,
+            "record": {
+                "elapsed": {
+                    "repr": record["elapsed"],
+                    "seconds": record["elapsed"].total_seconds(),
                 },
-                'exception': exception,
-                'extra': record['extra'],
-                'file': {
-                    'name': record['file'].name,
-                    'path': record['file'].path,
+                "exception": exception,
+                "extra": record["extra"],
+                "file": {
+                    "name": record["file"].name,
+                    "path": record["file"].path,
                 },
-                'function': record['function'],
-                'level': {
-                    'icon': record['level'].icon,
-                    'name': record['level'].name,
-                    'no': record['level'].no,
+                "function": record["function"],
+                "level": {
+                    "icon": record["level"].icon,
+                    "name": record["level"].name,
+                    "no": record["level"].no,
                 },
-                'line': record['line'],
-                'message': record['message'],
-                'module': record['module'],
-                'name': record['name'],
-                'process': {
-                    'id': record['process'].id,
-                    'name': record['process'].name,
+                "line": record["line"],
+                "message": record["message"],
+                "module": record["module"],
+                "name": record["name"],
+                "process": {
+                    "id": record["process"].id,
+                    "name": record["process"].name,
                 },
-                'thread': {
-                    'id': record['thread'].id,
-                    'name': record['thread'].name,
+                "thread": {
+                    "id": record["thread"].id,
+                    "name": record["thread"].name,
                 },
-                'time': {
-                    'repr': record['time'],
-                    'timestamp': record['time'].timestamp(),
+                "time": {
+                    "repr": record["time"],
+                    "timestamp": record["time"].timestamp(),
                 },
             },
         }
@@ -105,7 +105,7 @@ def loglevel(level: Union[str, int]) -> str:
 
 def flog(
     funk: Optional[Callable[..., T]] = None,
-    level: str = 'debug',
+    level: str = "debug",
     enter: bool = True,
     exit: bool = True,
 ) -> T:
@@ -205,35 +205,35 @@ def reset() -> None:
 
 
 __hoisted__ = [
-    '_change_activation',
-    '_core',
-    '_dynamic_level',
-    '_find_iter',
-    '_log',
-    '_options',
-    'add',
-    'bind',
-    'catch',
-    'complete',
-    'configure',
-    'contextualize',
-    'critical',
-    'debug',
-    'disable',
-    'enable',
-    'error',
-    'exception',
-    'info',
-    'level',
-    'opt',
-    'parse',
-    'patch',
-    'remove',
-    'start',
-    'stop',
-    'success',
-    'trace',
-    'warning',
+    "_change_activation",
+    "_core",
+    "_dynamic_level",
+    "_find_iter",
+    "_log",
+    "_options",
+    "add",
+    "bind",
+    "catch",
+    "complete",
+    "configure",
+    "contextualize",
+    "critical",
+    "debug",
+    "disable",
+    "enable",
+    "error",
+    "exception",
+    "info",
+    "level",
+    "opt",
+    "parse",
+    "patch",
+    "remove",
+    "start",
+    "stop",
+    "success",
+    "trace",
+    "warning",
 ]
 _change_activation = LAGER._change_activation
 _core = LAGER._core
@@ -266,14 +266,14 @@ trace = LAGER.trace
 warning = LAGER.warning
 
 __all__ = (
-    'loglevel',
-    'flog',
-    'handlers',
-    'logger',
-    'log',
-    'LOG',
-    'ln',
-    'lager',
-    'LAGER',
+    "loglevel",
+    "flog",
+    "handlers",
+    "logger",
+    "log",
+    "LOG",
+    "ln",
+    "lager",
+    "LAGER",
     *__hoisted__,
 )

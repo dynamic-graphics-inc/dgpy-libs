@@ -17,18 +17,18 @@ from pydantic.generics import GenericModel
 
 from jsonbourne.core import JSON, JsonObj
 
-JsonBaseModelT = TypeVar('JsonBaseModelT', bound='JsonBaseModel')
+JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
-    '__pydantic_version__',
-    'JsonBaseModelDefaultConfig',
-    'JsonBaseModel',
-    'JsonBaseModelT',
-    'BaseModel',
-    'Field',
-    'ValidationError',
-    'JsonGenericModel',
-    'GenericModel',
+    "__pydantic_version__",
+    "JsonBaseModelDefaultConfig",
+    "JsonBaseModel",
+    "JsonBaseModelT",
+    "BaseModel",
+    "Field",
+    "ValidationError",
+    "JsonGenericModel",
+    "GenericModel",
 )
 
 
@@ -53,8 +53,8 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
 
     def __init__(self, *args: Any, **kwargs: Any):  # type: ignore
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
-        if self.__custom_root_type__ and len(args) == 1 and '__root__' not in kwargs:
-            super().__init__(**{**kwargs, '__root__': args[0]})
+        if self.__custom_root_type__ and len(args) == 1 and "__root__" not in kwargs:
+            super().__init__(**{**kwargs, "__root__": args[0]})
         else:
             super().__init__(*args, **kwargs)
         self.__post_init__()
@@ -70,17 +70,17 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         self, minify: bool = False, width: int = 120, fmt_kwargs: bool = False
     ) -> str:
         if fmt_kwargs:
-            return type(self).__name__ + '(' + self.__repr_str__(', ') + ')'
+            return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"
         if minify:
-            return type(self).__name__ + '(**' + str(self.to_dict_filter_none()) + ')'
-        return ''.join(
+            return type(self).__name__ + "(**" + str(self.to_dict_filter_none()) + ")"
+        return "".join(
             [
                 type(self).__name__,
-                '(**{\n     ',
+                "(**{\n     ",
                 pformat(self.to_dict_filter_none(), width=width)[1:-1].replace(
-                    '\n', '\n    '
+                    "\n", "\n    "
                 ),
-                '\n})',
+                "\n})",
             ]
         )
 
@@ -92,7 +92,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
 
     def _repr_html_(self) -> str:
         """Return the HTML representation of the object"""
-        return '<pre>{}</pre>'.format(self.__str__())
+        return "<pre>{}</pre>".format(self.__str__())
 
     def to_dict_filter_none(self) -> Dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default

@@ -35,7 +35,7 @@ def test_json_base_model_w_prop() -> None:
         #
         @property
         def a_property(self) -> str:
-            return 'prop_value'
+            return "prop_value"
 
         def to_json(self, *args, **kwargs):
             return self.json()
@@ -46,18 +46,18 @@ def test_json_base_model_w_prop() -> None:
 
     thing_w_prop = JsonObjModel(
         **{
-            'a': 1,
-            'b': 2,
-            'c': 'herm',
-            'd': {'nested': 'nestedval'},
-            'e': {'herm': 2},
+            "a": 1,
+            "b": 2,
+            "c": "herm",
+            "d": {"nested": "nestedval"},
+            "e": {"herm": 2},
         }
     )
-    assert thing_w_prop.c == thing_w_prop['c']
-    assert thing_w_prop.a_property == 'prop_value'
-    assert thing_w_prop['a_property'] == 'prop_value'
+    assert thing_w_prop.c == thing_w_prop["c"]
+    assert thing_w_prop.a_property == "prop_value"
+    assert thing_w_prop["a_property"] == "prop_value"
 
-    assert thing_w_prop.d.nested == 'nestedval'
+    assert thing_w_prop.d.nested == "nestedval"
 
 
 def test_json_base_model_root_type() -> None:
@@ -72,7 +72,7 @@ def test_json_base_model_root_type() -> None:
 
     assert not JsonModelNoRootType.__custom_root_type__
     assert JsonModelHasRootType.__custom_root_type__
-    obj = JsonModelHasRootType(__root__=['a', 'b', 'c'])
+    obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
-    obj2 = JsonModelHasRootType(['a', 'b', 'c'])
+    obj2 = JsonModelHasRootType(["a", "b", "c"])
     assert obj == obj2

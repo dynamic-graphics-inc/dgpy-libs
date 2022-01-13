@@ -6,11 +6,11 @@ from subprocess import PIPE, Popen
 from shellfish.sh import Stdio
 from xtyping import IO, Any, AnyStr, Iterable, Tuple
 
-__all__ = ('popen_gen',)
+__all__ = ("popen_gen",)
 
 
 def _enqueue_output(fileio: IO[AnyStr], queue: Queue) -> None:
-    for line in iter(fileio.readline, ''):
+    for line in iter(fileio.readline, ""):
         queue.put(line)
     fileio.close()
 

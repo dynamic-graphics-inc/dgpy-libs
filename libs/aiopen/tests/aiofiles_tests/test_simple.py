@@ -4,7 +4,7 @@ import asyncio
 import os
 import sys
 
-if os.name == 'nt':
+if os.name == "nt":
     from asyncio.windows_events import SelectorEventLoop as _UnixSelectorEventLoop
 else:
     from asyncio.unix_events import _UnixSelectorEventLoop

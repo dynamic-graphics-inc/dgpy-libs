@@ -5,15 +5,15 @@ from asyncify.aios import aios_path
 from asyncify.core import asyncify
 
 __all__ = (
-    'stat',
-    'rename',
-    'rename',
-    'replace',
-    'mkdir',
-    'makedirs',
-    'rmdir',
-    'removedirs',
-    'path',
+    "stat",
+    "rename",
+    "rename",
+    "replace",
+    "mkdir",
+    "makedirs",
+    "rmdir",
+    "removedirs",
+    "path",
 )
 
 path = aios_path

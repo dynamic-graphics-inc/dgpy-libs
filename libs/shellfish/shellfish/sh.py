@@ -25,46 +25,46 @@ from shellfish import fs
 from xtyping import IO, Any, Callable, FsPath, Iterator, List, Optional, Tuple, Union
 
 __all__og = (
-    'Flag',
-    'Stdio',
-    'cd',
-    'echo',
-    'export',
-    'setenv',
-    'which',
-    'touch',
-    'which_lru',
-    'where',
+    "Flag",
+    "Stdio",
+    "cd",
+    "echo",
+    "export",
+    "setenv",
+    "which",
+    "touch",
+    "which_lru",
+    "where",
 )
 
 __all__ = (
-    'Stdio',
-    'shplit',
-    'basename',
-    'cd',
-    'chmod',
-    'cp',
-    'cp_dir',
-    'cp_file',
-    'dirname',
-    'echo',
-    'export',
-    'ls',
-    'ls_dirs',
-    'ls_files',
-    'ls_files_dirs',
-    'mkdir',
-    'mkdirp',
-    'mv',
-    'pwd',
-    'rm',
-    'setenv',
-    'touch',
-    'tree',
-    'where',
-    'which',
-    'which_lru',
-    'source',
+    "Stdio",
+    "shplit",
+    "basename",
+    "cd",
+    "chmod",
+    "cp",
+    "cp_dir",
+    "cp_file",
+    "dirname",
+    "echo",
+    "export",
+    "ls",
+    "ls_dirs",
+    "ls_files",
+    "ls_files_dirs",
+    "mkdir",
+    "mkdirp",
+    "mv",
+    "pwd",
+    "rm",
+    "setenv",
+    "touch",
+    "tree",
+    "where",
+    "which",
+    "which_lru",
+    "source",
 )
 
 
@@ -83,7 +83,7 @@ class _FlagMeta(type):
     @lru_cache(maxsize=None)
     def attr2flag(string: str) -> str:
         """Convert and return attr to string"""
-        return string.replace('_', '-')
+        return string.replace("_", "-")
 
     def __getattr__(self, name: str) -> str:
         return self.attr2flag(string=name)
@@ -169,7 +169,7 @@ def chmod(fspath: FsPath, mode: int) -> None:
 
 
 def echo(
-    *args: Any, sep: str = ' ', end: str = '\n', file: Optional[IO[Any]] = None
+    *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
 ) -> None:
     """Print/echo function
 
@@ -194,11 +194,11 @@ def export(key: str, val: Optional[str] = None) -> None:
     if val:
         environ[key] = val
         return
-    if '=' in key:
-        _key = key.split('=')[0]
+    if "=" in key:
+        _key = key.split("=")[0]
         return export(_key, key[len(_key) + 1 :])
     raise ValueError(
-        f'Unable to parse env variable - key: {str(key)}, value: {str(val)}'
+        f"Unable to parse env variable - key: {str(key)}, value: {str(val)}"
     )
 
 
@@ -293,15 +293,15 @@ def which_lru(cmd: str, path: Optional[str] = None) -> Optional[str]:
 class _DirTree:
     """DirTree object for use by the tree command"""
 
-    _filename_prefix_mid: str = '├──'
-    _filename_prefix_last: str = '└──'
-    _parent_prefix_middle: str = '    '
-    _parent_refix_last: str = '│   '
+    _filename_prefix_mid: str = "├──"
+    _filename_prefix_last: str = "└──"
+    _parent_prefix_middle: str = "    "
+    _parent_refix_last: str = "│   "
 
     def __init__(
         self,
         path: Union[str, Path],
-        parent_path: Optional['_DirTree'],
+        parent_path: Optional["_DirTree"],
         is_last: bool,
     ) -> None:
         """Construct a DirTree object
@@ -321,10 +321,10 @@ class _DirTree:
     def make_tree(
         cls,
         root: Path,
-        parent: Optional['_DirTree'] = None,
+        parent: Optional["_DirTree"] = None,
         is_last: bool = False,
         filterfn: Optional[Callable[..., bool]] = None,
-    ) -> Iterator['_DirTree']:
+    ) -> Iterator["_DirTree"]:
         """Make a DirTree object
 
         Args:
@@ -364,7 +364,7 @@ class _DirTree:
     @staticmethod
     def _default_filter(path_string: str) -> bool:
         """Return True/False if the fspath is to be filtered/ignored"""
-        ignore_strings = ('.pyc', '__pycache__')
+        ignore_strings = (".pyc", "__pycache__")
         return not any(
             ignored in str(path_string).lower() for ignored in ignore_strings
         )
@@ -378,7 +378,7 @@ class _DirTree:
 
         """
         if self.path.is_dir():
-            return self.path.name + '/'
+            return self.path.name + "/"
         return self.path.name
 
     def displayable(self) -> str:
@@ -395,7 +395,7 @@ class _DirTree:
             self._filename_prefix_last if self.is_last else self._filename_prefix_mid
         )
 
-        parts = [f'{_filename_prefix!s} {self.displayname!s}']
+        parts = [f"{_filename_prefix!s} {self.displayname!s}"]
 
         parent = self.parent
         while parent and parent.parent is not None:
@@ -406,7 +406,7 @@ class _DirTree:
             )
             parent = parent.parent
 
-        return ''.join(reversed(parts))
+        return "".join(reversed(parts))
 
 
 def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> str:
@@ -471,7 +471,7 @@ def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> s
         >>> rmtree(tmpdir)
 
     """
-    return '\n'.join(
+    return "\n".join(
         p.displayable() for p in _DirTree.make_tree(Path(dirpath), filterfn=filterfn)
     )
 
@@ -524,7 +524,7 @@ def cp(src: str, target: str, *, force: bool = True, recursive: bool = False) ->
         if (path.exists(target) and not force) or src == target:
             return
         if path.isdir(src) and not recursive:
-            raise ValueError('Source ({}) is directory; use r=True')
+            raise ValueError("Source ({}) is directory; use r=True")
         if path.isfile(src) and path.isdir(target):
             _dest = path.join(target, path.basename(src))
         if path.isfile(src) or path.islink(src):
@@ -546,18 +546,18 @@ def rm(fspath: FsPath, *, r: bool = False, v: bool = False) -> None:
         try:
             remove(_path_str)
             if v:
-                echo(f'Removed file: {_path_str}')
+                echo(f"Removed file: {_path_str}")
 
         except Exception:
             if r:
                 rmtree(_path_str)
                 if v:
-                    echo(f'Removed dir: {_path_str}')
+                    echo(f"Removed dir: {_path_str}")
             else:
-                raise ValueError(_path_str + ' is a directory -- use r=True')
+                raise ValueError(_path_str + " is a directory -- use r=True")
 
 
-def ls(dirpath: FsPath = '.', abspath: bool = False) -> List[str]:
+def ls(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
     Args:
@@ -573,7 +573,7 @@ def ls(dirpath: FsPath = '.', abspath: bool = False) -> List[str]:
     return listdir(str(dirpath))
 
 
-def ls_files(dirpath: FsPath = '.', *, abspath: bool = False) -> List[str]:
+def ls_files(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
     """List the files in a given directory path
 
     Args:
@@ -590,7 +590,7 @@ def ls_files(dirpath: FsPath = '.', *, abspath: bool = False) -> List[str]:
     return list(map(lambda el: el.name, files))
 
 
-def ls_dirs(dirpath: FsPath = '.', *, abspath: bool = False) -> List[str]:
+def ls_dirs(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
     """List the directories in a given directory path
 
     Args:
@@ -608,7 +608,7 @@ def ls_dirs(dirpath: FsPath = '.', *, abspath: bool = False) -> List[str]:
 
 
 def ls_files_dirs(
-    dirpath: FsPath = '.', *, abspath: bool = False
+    dirpath: FsPath = ".", *, abspath: bool = False
 ) -> Tuple[List[str], List[str]]:
     """List the files and directories given directory path
 
@@ -657,7 +657,7 @@ def source(filepath: FsPath, _globals: bool = True) -> None:
         exec(string)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from doctest import testmod
 
     testmod()

@@ -40,8 +40,8 @@ except ImportError:
     np = None
 
 JSONLIB_DEFAULT_PREFERENCE = (
-    'orjson',
-    'rapidjson',
+    "orjson",
+    "rapidjson",
 )
 
 
@@ -60,9 +60,9 @@ def _dumpable(obj: DumpableProtocol) -> Any:
 
 
 def _json_encode_default(obj: Any) -> Any:
-    if hasattr(obj, '__json_interface__'):
+    if hasattr(obj, "__json_interface__"):
         return _json_interface(obj)
-    if hasattr(obj, '__dumpable__'):
+    if hasattr(obj, "__dumpable__"):
         return _dumpable(obj)
     if np:
         if isinstance(obj, np.floating):
@@ -75,7 +75,7 @@ def _json_encode_default(obj: Any) -> Any:
         if dataclasses.is_dataclass(obj):
             return dataclasses.asdict(obj)
     if isinstance(obj, bytes):
-        return str(obj, encoding='utf-8')
+        return str(obj, encoding="utf-8")
     if isinstance(obj, tuple):
         return tuple(obj)
     if isinstance(obj, Path):
@@ -86,18 +86,18 @@ def _json_encode_default(obj: Any) -> Any:
         return obj.total_seconds()
     if isinstance(obj, Decimal):
         return float(obj)
-    if hasattr(obj, 'eject'):
+    if hasattr(obj, "eject"):
         return obj.eject()
-    if hasattr(obj, 'to_dict'):
+    if hasattr(obj, "to_dict"):
         return obj.to_dict()
-    if hasattr(obj, 'dict'):
+    if hasattr(obj, "dict"):
         return obj.dict()
 
-    raise TypeError('Cannot encode obj as JSON: {}'.format(str(obj)))
+    raise TypeError("Cannot encode obj as JSON: {}".format(str(obj)))
 
 
 class JsonLibABC(ABC):
-    lib = 'json'
+    lib = "json"
 
     @staticmethod
     @abstractmethod
@@ -160,7 +160,7 @@ class JsonLibABC(ABC):
 
 
 class JSON_STDLIB(JsonLibABC):
-    lib = 'json'
+    lib = "json"
     JSONEncoder = pyjson.JSONEncoder
     JSONDecoder = pyjson.JSONDecoder
     JSONDecodeError = pyjson.JSONDecodeError
@@ -174,7 +174,7 @@ class JSON_STDLIB(JsonLibABC):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        separators = (',', ': ') if pretty else (',', ':')
+        separators = (",", ": ") if pretty else (",", ":")
         dump_str = pyjson.dumps(
             data,
             indent=2 if pretty else None,
@@ -184,7 +184,7 @@ class JSON_STDLIB(JsonLibABC):
             **kwargs,
         )
         if append_newline:
-            return f'{dump_str}\n'
+            return f"{dump_str}\n"
         return dump_str
 
     @staticmethod
@@ -236,7 +236,7 @@ class JSON_STDLIB(JsonLibABC):
 
 
 class ORJSON(JsonLibABC):
-    lib = 'orjson'
+    lib = "orjson"
 
     @staticmethod
     def dumps(
@@ -253,7 +253,7 @@ class ORJSON(JsonLibABC):
             sort_keys=sort_keys,
             append_newline=append_newline,
             default=default or _json_encode_default,
-        ).decode(encoding='utf-8')
+        ).decode(encoding="utf-8")
 
     @staticmethod
     def dumpb(
@@ -271,7 +271,7 @@ class ORJSON(JsonLibABC):
             option |= orjson.OPT_SORT_KEYS
         if append_newline:
             option |= orjson.OPT_APPEND_NEWLINE
-        if 'numpy' in _sys_modules:
+        if "numpy" in _sys_modules:
             option |= orjson.OPT_SERIALIZE_NUMPY
 
         return orjson.dumps(
@@ -309,7 +309,7 @@ class ORJSON(JsonLibABC):
 
 
 class RAPIDJSON(JsonLibABC):
-    lib = 'rapidjson'
+    lib = "rapidjson"
 
     JSONEncoder = RapidJSONEncoder
     JSONDecoder = RapidJSONDecoder
@@ -335,7 +335,7 @@ class RAPIDJSON(JsonLibABC):
             )
         )
         if append_newline:
-            return f'{dump_str}\n'
+            return f"{dump_str}\n"
         return dump_str
 
     @staticmethod
@@ -386,7 +386,7 @@ class RAPIDJSON(JsonLibABC):
         )
 
 
-def pick_lib() -> 'Type[JsonLibABC]':
+def pick_lib() -> "Type[JsonLibABC]":
     if ORJSON.useable():
         return ORJSON
     if RAPIDJSON.useable():
@@ -394,29 +394,29 @@ def pick_lib() -> 'Type[JsonLibABC]':
     return JSON_STDLIB
 
 
-def _import_rapidjson() -> 'Type[RAPIDJSON]':
+def _import_rapidjson() -> "Type[RAPIDJSON]":
     if RAPIDJSON.useable():
         return RAPIDJSON
-    raise ImportError('rapidjson (python-rapidjson) not installed')
+    raise ImportError("rapidjson (python-rapidjson) not installed")
 
 
-def _import_orjson() -> 'Type[ORJSON]':
+def _import_orjson() -> "Type[ORJSON]":
     if ORJSON.useable():
         return ORJSON
-    raise ImportError('orjson not installed')
+    raise ImportError("orjson not installed")
 
 
-def _import_json_stdlib() -> 'Type[JSON_STDLIB]':
+def _import_json_stdlib() -> "Type[JSON_STDLIB]":
     return JSON_STDLIB
 
 
 def import_json(
     jsonlibs: Optional[Union[Tuple[str, ...], List[str]]] = None
-) -> 'Type[JsonLibABC]':
+) -> "Type[JsonLibABC]":
     lib2funk = {
-        'rapidjson': _import_rapidjson,
-        'orjson': _import_orjson,
-        'json': _import_json_stdlib,
+        "rapidjson": _import_rapidjson,
+        "orjson": _import_orjson,
+        "json": _import_json_stdlib,
     }
     jsonlibs = jsonlibs or JSONLIB_DEFAULT_PREFERENCE
 

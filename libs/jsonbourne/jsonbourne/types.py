@@ -2,12 +2,12 @@
 from xtyping import Any, Protocol, Union
 
 __all__ = (
-    'JsonInterface',
-    'JsonInterfaceProperty',
-    'JsonInterfaceProtocol',
-    'DumpableProtocol',
-    'Dumpable',
-    'DumpableProperty',
+    "JsonInterface",
+    "JsonInterfaceProperty",
+    "JsonInterfaceProtocol",
+    "DumpableProtocol",
+    "Dumpable",
+    "DumpableProperty",
 )
 
 

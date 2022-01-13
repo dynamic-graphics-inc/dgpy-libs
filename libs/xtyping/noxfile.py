@@ -13,17 +13,17 @@ def is_win() -> bool:
         True if on a windows machine; False otherwise
 
     """
-    return os.name == 'nt'
+    return os.name == "nt"
 
 
-nox.options.envdir = '.nox_win' if is_win() else '.nox'
+nox.options.envdir = ".nox_win" if is_win() else ".nox"
 
-IS_GITLAB_CI = 'GITLAB_CI' in os.environ
+IS_GITLAB_CI = "GITLAB_CI" in os.environ
 PWD = path.abspath(path.dirname(__file__))
-PKG_DIRPATH = path.join(PWD, 'xtyping')
-TESTS_DIRPATH = path.join(PWD, 'tests')
+PKG_DIRPATH = path.join(PWD, "xtyping")
+TESTS_DIRPATH = path.join(PWD, "tests")
 
-VENV_BACKEND = None if is_win() else 'conda'
+VENV_BACKEND = None if is_win() else "conda"
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
@@ -31,7 +31,7 @@ REUSE_TEST_ENVS = IS_GITLAB_CI or True
 ### UTILS ###
 #############
 def latest_wheel():
-    wheels = sorted([el for el in os.listdir('dist') if el.endswith('.whl')])
+    wheels = sorted([el for el in os.listdir("dist") if el.endswith(".whl")])
     latest = wheels[-1]
     return latest
 
@@ -47,11 +47,11 @@ def _get_session_python_site_packages_dir(session):
             #   https://github.com/theacodes/nox/pull/181
             session._runner.global_config.install_only = False
             site_packages_dir = session.run(
-                'python',
-                '-c'
-                'import sys; '
-                'from distutils.sysconfig import get_python_lib; '
-                'sys.stdout.write(get_python_lib())',
+                "python",
+                "-c"
+                "import sys; "
+                "from distutils.sysconfig import get_python_lib; "
+                "sys.stdout.write(get_python_lib())",
                 silent=True,
                 log=False,
             )
@@ -62,14 +62,14 @@ def _get_session_python_site_packages_dir(session):
 
 
 def _get_package_site_packages_location(session):
-    return path.join(_get_session_python_site_packages_dir(session), 'funkify')
+    return path.join(_get_session_python_site_packages_dir(session), "funkify")
 
 
 def _get_funkify_version() -> str:
-    _filepath = path.join(PWD, 'pyproject.toml')
+    _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        [ln for ln in open(_filepath).read().split('\n') if 'version' in ln][0]
-        .replace('version = ', '')
+        [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
+        .replace("version = ", "")
         .strip('"')
     )
     return version
@@ -80,10 +80,10 @@ def _get_funkify_version() -> str:
 ################
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def flake(session):
-    session.install('flake8')
-    session.install('flake8-print')
-    session.install('flake8-eradicate')
-    session.run('flake8', PKG_DIRPATH)
+    session.install("flake8")
+    session.install("flake8-print")
+    session.install("flake8-eradicate")
+    session.run("flake8", PKG_DIRPATH)
 
 
 # @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -94,10 +94,10 @@ def flake(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def base_test(session):
-    session.install('pytest')
+    session.install("pytest")
     session.run(
-        'pytest',
-        '-m',
-        'not optdeps',
+        "pytest",
+        "-m",
+        "not optdeps",
         TESTS_DIRPATH,
     )

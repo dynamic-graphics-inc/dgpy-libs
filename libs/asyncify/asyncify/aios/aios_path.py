@@ -5,15 +5,15 @@ from os import path
 from asyncify.core import asyncify
 
 __all__ = (
-    'exists',
-    'isfile',
-    'isdir',
-    'getsize',
-    'getmtime',
-    'getatime',
-    'getctime',
-    'samefile',
-    'sameopenfile',
+    "exists",
+    "isfile",
+    "isdir",
+    "getsize",
+    "getmtime",
+    "getatime",
+    "getctime",
+    "samefile",
+    "sameopenfile",
 )
 
 exists = asyncify(path.exists)

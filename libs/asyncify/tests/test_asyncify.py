@@ -26,5 +26,5 @@ async def test_asyncify_funkified() -> None:
     assert res == 6
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     pass

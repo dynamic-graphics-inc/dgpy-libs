@@ -21,18 +21,18 @@ from typing import (
 from listless._meta import __version__
 
 __all__ = (
-    '__version__',
-    'filter_none',
-    'filter_is_none',
-    'chunks',
-    'exhaust',
-    'it_product',
-    'unique',
-    'unique_gen',
+    "__version__",
+    "filter_none",
+    "filter_is_none",
+    "chunks",
+    "exhaust",
+    "it_product",
+    "unique",
+    "unique_gen",
 )
 
-T = TypeVar('T')
-K = TypeVar('K')
+T = TypeVar("T")
+K = TypeVar("K")
 
 
 @overload

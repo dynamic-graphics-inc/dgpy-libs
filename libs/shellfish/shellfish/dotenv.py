@@ -9,10 +9,10 @@ from shellfish.sh import shplit
 from xtyping import Dict, FsPath, Optional
 
 __all__ = (
-    'strip_comments',
-    'parse_dotenv',
-    'ldotenv',
-    'parse_env',
+    "strip_comments",
+    "parse_dotenv",
+    "ldotenv",
+    "parse_env",
 )
 
 
@@ -60,18 +60,18 @@ def strip_comments(string: str) -> str:
         except AttributeError:
             return line
 
-    return '\n'.join((_strip_comments_line(line) for line in filelines))
+    return "\n".join((_strip_comments_line(line) for line in filelines))
 
 
 def parse_dotenv(string: str) -> Dict[str, str]:
     """Parse env string to dictionary"""
     return {
-        key: ' '.join(shplit(val))
+        key: " ".join(shplit(val))
         for key, _, val in (
-            el.partition('=')
+            el.partition("=")
             for el in filter(
                 None,
-                strip_comments(string.replace('\r\n', '\n').strip('\n')).splitlines(
+                strip_comments(string.replace("\r\n", "\n").strip("\n")).splitlines(
                     keepends=False
                 ),
             )
@@ -90,26 +90,26 @@ def ldotenv(fspath: Optional[FsPath] = None) -> Dict[str, str]:
         if path.exists(str(fspath)):
             if path.isfile(str(fspath)):
                 return {
-                    key: ' '.join(shplit(val))
+                    key: " ".join(shplit(val))
                     for key, _, val in (
-                        el.partition('=')
+                        el.partition("=")
                         for el in filter(
                             None,
                             strip_comments(
-                                rstring(fspath).replace('\r\n', '\n').strip('\n')
-                            ).split('\n'),
+                                rstring(fspath).replace("\r\n", "\n").strip("\n")
+                            ).split("\n"),
                         )
                     )
                 }
             if path.isdir(str(fspath)):
-                dotenv_filepath = path.join(str(fspath), '.env')
+                dotenv_filepath = path.join(str(fspath), ".env")
                 if path.exists(dotenv_filepath):
                     return ldotenv(dotenv_filepath)
-        raise ValueError(f'Given fspath/dirpath does not exist: {str(fspath)}')
+        raise ValueError(f"Given fspath/dirpath does not exist: {str(fspath)}")
     return ldotenv(getcwd())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from doctest import testmod
 
     testmod()

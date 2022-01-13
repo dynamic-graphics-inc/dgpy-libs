@@ -50,21 +50,21 @@ class Point3dJsonInterfaceProperty(NamedTuple):
 
 
 D = {
-    'key': 'value',
-    'list': [1, 2, 3, 4, 5],
-    'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    'sub': {
-        'b': 3,
-        'key': 'val',
-        'a': 1,
+    "key": "value",
+    "list": [1, 2, 3, 4, 5],
+    "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+    "sub": {
+        "b": 3,
+        "key": "val",
+        "a": 1,
     },
-    'apath': pathlib.Path.home(),
-    'Decimal': Decimal(1.4),
-    'timedelta': datetime.timedelta(days=2),
-    'point': Point3d(1, 2, 3),
-    'point_dumpable': Point3dDumpable(1, 2, 3),
-    'poin_json_interface': Point3dJsonInterface(1, 2, 3),
-    'poin_json_interface_property': Point3dJsonInterfaceProperty(1, 2, 3),
+    "apath": pathlib.Path.home(),
+    "Decimal": Decimal(1.4),
+    "timedelta": datetime.timedelta(days=2),
+    "point": Point3d(1, 2, 3),
+    "point_dumpable": Point3dDumpable(1, 2, 3),
+    "poin_json_interface": Point3dJsonInterface(1, 2, 3),
+    "poin_json_interface_property": Point3dJsonInterfaceProperty(1, 2, 3),
 }
 
 
@@ -75,11 +75,11 @@ def test_is_tuple() -> None:
 
 def test_jsoncp() -> None:
     _d = {
-        'a': 1,
-        'b': 2,
-        'c': 3,
-        'd': {
-            'key': 'value',
+        "a": 1,
+        "b": 2,
+        "c": 3,
+        "d": {
+            "key": "value",
         },
     }
     rj = RAPIDJSON.jsoncp(_d)
@@ -144,7 +144,7 @@ def test_dump_numpy_array_dumps() -> None:
 
 def test_datetime_dumps() -> None:
     data = {
-        'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
     rj = RAPIDJSON.dumps(data)
     oj = ORJSON.dumps(data)
@@ -214,7 +214,7 @@ def test_dump_numpy_array_dumpb() -> None:
 
 def test_datetime_dumpb() -> None:
     data = {
-        'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
     rj = RAPIDJSON.dumpb(data)
     oj = ORJSON.dumpb(data)

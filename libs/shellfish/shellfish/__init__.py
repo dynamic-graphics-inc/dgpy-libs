@@ -7,10 +7,10 @@ from shellfish._meta import __version__
 ps = process
 
 __all__ = (
-    '__version__',
+    "__version__",
     # modules
-    'fs',
-    'ps',
-    'sh',
-    'dotenv',
+    "fs",
+    "ps",
+    "sh",
+    "dotenv",
 )

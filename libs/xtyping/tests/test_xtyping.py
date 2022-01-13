@@ -9,13 +9,13 @@ import xtyping
 
 def _get_version() -> str:
     _dirpath = path.split(path.realpath(__file__))[0]
-    version = 'UNKNOWN???'
+    version = "UNKNOWN???"
     for _ in range(3):
-        _filepath = path.join(_dirpath, 'pyproject.toml')
+        _filepath = path.join(_dirpath, "pyproject.toml")
         if path.exists(_filepath):
             version = (
-                [ln for ln in open(_filepath).read().split('\n') if 'version' in ln][0]
-                .replace('version = ', '')
+                [ln for ln in open(_filepath).read().split("\n") if "version" in ln][0]
+                .replace("version = ", "")
                 .strip('"')
             )
             return version
@@ -33,29 +33,29 @@ def test_xtyping_all() -> None:
         el
         for el in members
         if el not in set(xtyping.__all_typing__)
-        and not el.startswith('__')
-        and el not in {'_typing', '_typing_extensions', 'shed', '_meta'}
+        and not el.startswith("__")
+        and el not in {"_typing", "_typing_extensions", "shed", "_meta"}
     ]
     xtyping_all = xtyping.__all__
     if not all(el in xtyping_all for el in non_typing_members):
         missing = sorted([el for el in non_typing_members if el not in xtyping_all])
-        raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
 
 
 def test_xtyping_imports() -> None:
     for el in xtyping.__all__:
-        if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
+        if el not in {"_typing", "_typing_extensions", "shed", "_meta"}:
             assert hasattr(xtyping, el)
 
 
 def test_xtyping_imports_shed() -> None:
     missing = set()
     for el in xtyping.__all_shed__:
-        if el not in {'_typing', '_typing_extensions', 'shed', '_meta'}:
+        if el not in {"_typing", "_typing_extensions", "shed", "_meta"}:
             if not hasattr(xtyping, el):
                 missing.add(el)
     if missing:
-        raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
 
 
 def test_xtyping_imports_typing() -> None:
@@ -64,24 +64,24 @@ def test_xtyping_imports_typing() -> None:
         if not hasattr(xtyping, el):
             missing.add(el)
     if missing:
-        raise ValueError('MISSING from __all__: {}'.format('\n'.join(missing)))
+        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
 
 
 def _test_module_all_tuple(
     mod_name: str, mod_all: Tuple[str, ...], check_sorted: bool = True
 ) -> None:
-    assert isinstance(mod_all, tuple), '__all__ should be tuple'
+    assert isinstance(mod_all, tuple), "__all__ should be tuple"
     assert len(set(mod_all)) == len(mod_all)
     if check_sorted:
         sorted_all_tuple = tuple(sorted(mod_all))
         try:
             assert sorted_all_tuple == mod_all
         except AssertionError as e:
-            print('{} should be:'.format(mod_name))  # noqa: T001
+            print("{} should be:".format(mod_name))  # noqa: T001
             if len(sorted_all_tuple) > 10:
-                print('__all__ = ' + str(sorted_all_tuple))  # noqa: T001
+                print("__all__ = " + str(sorted_all_tuple))  # noqa: T001
             else:
-                print('__all__ = ' + pformat(sorted_all_tuple))  # noqa: T001
+                print("__all__ = " + pformat(sorted_all_tuple))  # noqa: T001
             raise e
 
 
@@ -96,28 +96,28 @@ def test_root_has_everything():
 
 
 def test_xtypting_all_list() -> None:
-    _test_module_all_tuple('xtyping._typing.__all__', xtyping.__all_typing__)
+    _test_module_all_tuple("xtyping._typing.__all__", xtyping.__all_typing__)
     _test_module_all_tuple(
-        'xtyping._typing_extensions.__all__', xtyping.__all_typing_extensions__
+        "xtyping._typing_extensions.__all__", xtyping.__all_typing_extensions__
     )
-    _test_module_all_tuple('xtyping.shed.__all__', xtyping.__all_shed__)
-    _test_module_all_tuple('xtyping.__all__', xtyping.__all__)
+    _test_module_all_tuple("xtyping.shed.__all__", xtyping.__all_shed__)
+    _test_module_all_tuple("xtyping.__all__", xtyping.__all__)
 
 
 def test_xtyping_shed_all_members():
     from xtyping import _typing, _typing_extensions, shed
 
     builtin_members = {
-        '__annotations__',
-        '__builtins__',
-        '__doc__',
-        '__loader__',
-        '__name__',
-        '__package__',
-        '__spec__',
-        '__file__',
-        '__all__',
-        '__cached__',
+        "__annotations__",
+        "__builtins__",
+        "__doc__",
+        "__loader__",
+        "__name__",
+        "__package__",
+        "__spec__",
+        "__file__",
+        "__all__",
+        "__cached__",
     }
 
     shed_all = shed.__all__
@@ -139,7 +139,7 @@ def test_xtyping_shed_all_members():
         ):
             missing_from_all.add(member)
 
-    assert len(missing_from_all) == 0, 'xtyping.shed is missing: {}'.format(
+    assert len(missing_from_all) == 0, "xtyping.shed is missing: {}".format(
         missing_from_all
     )
 
@@ -147,6 +147,6 @@ def test_xtyping_shed_all_members():
 def test_all_typing_extensions_reexported():
     xtyping_all_set = set(xtyping.__all__)
     for el in [
-        t_el for t_el in tx.__all__ if t_el not in {'Self', 'NotRequired', 'Required'}
+        t_el for t_el in tx.__all__ if t_el not in {"Self", "NotRequired", "Required"}
     ]:
         assert el in xtyping_all_set

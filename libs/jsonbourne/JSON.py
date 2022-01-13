@@ -16,7 +16,7 @@ from jsonbourne.core import (
 )
 from jsonbourne.jsonlib import import_json
 
-sys.modules['JSON'].__class__ = JSONModuleCls
+sys.modules["JSON"].__class__ = JSONModuleCls
 stringify = JSON.stringify
 dumps = JSON.dumps
 binify = JSON.binify
@@ -33,30 +33,30 @@ unjsonify = JSON.unjsonify
 JSONDecodeError = JSON.JSONDecodeError
 
 __all__ = [
-    '__version__',
-    'json',  # json compat lib
+    "__version__",
+    "json",  # json compat lib
     # core
-    'JsonObjMutableMapping',
-    'JsonObj',
-    'JsonDict',
-    'JSONModuleCls',
+    "JsonObjMutableMapping",
+    "JsonObj",
+    "JsonDict",
+    "JSONModuleCls",
     # import
-    'import_json',
-    'use_orjson',
-    'use_rapidjson',
-    'use_json_stdlib',
+    "import_json",
+    "use_orjson",
+    "use_rapidjson",
+    "use_json_stdlib",
     # util funks
-    'stringify',
-    'binify',
-    'dumps',
-    'dumpb',
-    'loads',
-    'json_lib',
-    'jsonify',
-    'unjsonify',
-    'parse',
-    'undefined',
-    'UNDEFINED',
-    'Null',
-    'null',
+    "stringify",
+    "binify",
+    "dumps",
+    "dumpb",
+    "loads",
+    "json_lib",
+    "jsonify",
+    "unjsonify",
+    "parse",
+    "undefined",
+    "UNDEFINED",
+    "Null",
+    "null",
 ]

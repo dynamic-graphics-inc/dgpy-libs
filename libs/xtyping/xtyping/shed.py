@@ -26,276 +26,276 @@ from typing import (
 from typing_extensions import Literal, ParamSpec
 
 __all__ = (
-    'AF',
-    'AFn',
-    'AnyAsyncCallable',
-    'AnyCallable',
-    'AnyFunction',
-    'AnyIterable',
-    'AnyIterator',
-    'ArrShape',
-    'ArrayShape',
-    'AsyncFn',
-    'AsyncFuncType',
-    'Bytes',
-    'CmdArgs',
-    'CmdArgsType',
-    'DT',
-    'DictAny',
-    'DictAnyAny',
-    'DictFloat',
-    'DictFloatFloat',
-    'DictInt',
-    'DictIntInt',
-    'DictNumber',
-    'DictNumberNumber',
-    'DictStr',
-    'DictStrAny',
-    'DictStrInt',
-    'DictStrStr',
-    'El',
-    'Element',
-    'Enum',
-    'EnvMap',
-    'EnvType',
-    'F',
-    'FALSE',
-    'FN',
-    'Flint',
-    'Fn',
-    'FsPath',
-    'FsPathLike',
-    'FuncType',
-    'HrTime',
-    'IntStr',
-    'IterableAny',
-    'IterableFloat',
-    'IterableInt',
-    'IterableNumber',
-    'IterableStr',
-    'IterableT',
-    'Json',
-    'JsonArrT',
-    'JsonDictT',
-    'JsonListT',
-    'JsonObjT',
-    'JsonPrimitive',
-    'JsonT',
-    'KT',
-    'KT_co',
-    'KT_contra',
-    'KeyT',
-    'KeyType',
-    'ListAny',
-    'ListFloat',
-    'ListInt',
-    'ListListStr',
-    'ListNumber',
-    'ListStr',
-    'ListT',
-    'N',
-    'NoneBytes',
-    'NoneStr',
-    'NoneStrBytes',
-    'NoneType',
-    'Null',
-    'Number',
-    'ONE',
-    'Opt',
-    'OptFloat',
-    'OptInt',
-    'OptStr',
-    'OptionalFloat',
-    'OptionalInt',
-    'OptionalStr',
-    'P',
-    'PT',
-    'Path',
-    'PathLike',
-    'R',
-    'RT',
-    'ReturnT',
-    'ReturnType',
-    'STDIN',
-    'STDIO',
-    'SetAny',
-    'SetFloat',
-    'SetInt',
-    'SetNumber',
-    'SetStr',
-    'SetT',
-    'ShapeType',
-    'StrBytes',
-    'StrEnum',
-    'StrIntFloat',
-    'StringEnum',
-    'T',
-    'TRUE',
-    'T_ParamSpec',
-    'T_Retval',
-    'T_co',
-    'T_contra',
-    'TupleStrStr',
-    'TupleStrs',
-    'Txt',
-    'VT',
-    'VT_co',
-    'VT_contra',
-    'V_co',
-    'ValT',
-    'ValType',
-    'ZERO',
-    '_DT',
-    '_KT',
-    '_KT_co',
-    '_KT_contra',
-    '_R',
-    '_RT',
-    '_T',
-    '_T_co',
-    '_T_contra',
-    '_VT',
-    '_VT_co',
-    '_VT_contra',
-    '_V_co',
-    '__all_shed__',
-    'null',
+    "AF",
+    "AFn",
+    "AnyAsyncCallable",
+    "AnyCallable",
+    "AnyFunction",
+    "AnyIterable",
+    "AnyIterator",
+    "ArrShape",
+    "ArrayShape",
+    "AsyncFn",
+    "AsyncFuncType",
+    "Bytes",
+    "CmdArgs",
+    "CmdArgsType",
+    "DT",
+    "DictAny",
+    "DictAnyAny",
+    "DictFloat",
+    "DictFloatFloat",
+    "DictInt",
+    "DictIntInt",
+    "DictNumber",
+    "DictNumberNumber",
+    "DictStr",
+    "DictStrAny",
+    "DictStrInt",
+    "DictStrStr",
+    "El",
+    "Element",
+    "Enum",
+    "EnvMap",
+    "EnvType",
+    "F",
+    "FALSE",
+    "FN",
+    "Flint",
+    "Fn",
+    "FsPath",
+    "FsPathLike",
+    "FuncType",
+    "HrTime",
+    "IntStr",
+    "IterableAny",
+    "IterableFloat",
+    "IterableInt",
+    "IterableNumber",
+    "IterableStr",
+    "IterableT",
+    "Json",
+    "JsonArrT",
+    "JsonDictT",
+    "JsonListT",
+    "JsonObjT",
+    "JsonPrimitive",
+    "JsonT",
+    "KT",
+    "KT_co",
+    "KT_contra",
+    "KeyT",
+    "KeyType",
+    "ListAny",
+    "ListFloat",
+    "ListInt",
+    "ListListStr",
+    "ListNumber",
+    "ListStr",
+    "ListT",
+    "N",
+    "NoneBytes",
+    "NoneStr",
+    "NoneStrBytes",
+    "NoneType",
+    "Null",
+    "Number",
+    "ONE",
+    "Opt",
+    "OptFloat",
+    "OptInt",
+    "OptStr",
+    "OptionalFloat",
+    "OptionalInt",
+    "OptionalStr",
+    "P",
+    "PT",
+    "Path",
+    "PathLike",
+    "R",
+    "RT",
+    "ReturnT",
+    "ReturnType",
+    "STDIN",
+    "STDIO",
+    "SetAny",
+    "SetFloat",
+    "SetInt",
+    "SetNumber",
+    "SetStr",
+    "SetT",
+    "ShapeType",
+    "StrBytes",
+    "StrEnum",
+    "StrIntFloat",
+    "StringEnum",
+    "T",
+    "TRUE",
+    "T_ParamSpec",
+    "T_Retval",
+    "T_co",
+    "T_contra",
+    "TupleStrStr",
+    "TupleStrs",
+    "Txt",
+    "VT",
+    "VT_co",
+    "VT_contra",
+    "V_co",
+    "ValT",
+    "ValType",
+    "ZERO",
+    "_DT",
+    "_KT",
+    "_KT_co",
+    "_KT_contra",
+    "_R",
+    "_RT",
+    "_T",
+    "_T_co",
+    "_T_contra",
+    "_VT",
+    "_VT_co",
+    "_VT_contra",
+    "_V_co",
+    "__all_shed__",
+    "null",
 )
 __all__ = (
-    'AF',
-    'AFn',
-    'AnyAsyncCallable',
-    'AnyCallable',
-    'AnyFunction',
-    'AnyIterable',
-    'AnyIterator',
-    'ArrShape',
-    'ArrayShape',
-    'AsyncFn',
-    'AsyncFuncType',
-    'Bytes',
-    'CmdArgs',
-    'CmdArgsType',
-    'DT',
-    'DictAny',
-    'DictAnyAny',
-    'DictFloat',
-    'DictFloatFloat',
-    'DictInt',
-    'DictIntInt',
-    'DictNumber',
-    'DictNumberNumber',
-    'DictStr',
-    'DictStrAny',
-    'DictStrInt',
-    'DictStrStr',
-    'El',
-    'Element',
-    'Enum',
-    'EnvMap',
-    'EnvType',
-    'F',
-    'FALSE',
-    'FN',
-    'Flint',
-    'Fn',
-    'FsPath',
-    'FsPathLike',
-    'FuncType',
-    'HrTime',
-    'IntStr',
-    'IterableAny',
-    'IterableFloat',
-    'IterableInt',
-    'IterableNumber',
-    'IterableStr',
-    'IterableT',
-    'Json',
-    'JsonArrT',
-    'JsonDictT',
-    'JsonListT',
-    'JsonObjT',
-    'JsonPrimitive',
-    'JsonT',
-    'KT',
-    'KT_co',
-    'KT_contra',
-    'KeyT',
-    'KeyType',
-    'ListAny',
-    'ListFloat',
-    'ListInt',
-    'ListListStr',
-    'ListNumber',
-    'ListStr',
-    'ListT',
-    'N',
-    'NoneBytes',
-    'NoneStr',
-    'NoneStrBytes',
-    'NoneType',
-    'Null',
-    'Number',
-    'ONE',
-    'Opt',
-    'OptFloat',
-    'OptInt',
-    'OptStr',
-    'OptionalFloat',
-    'OptionalInt',
-    'OptionalStr',
-    'P',
-    'PT',
-    'Path',
-    'PathLike',
-    'R',
-    'RT',
-    'ReturnT',
-    'ReturnType',
-    'STDIN',
-    'STDIO',
-    'SetAny',
-    'SetFloat',
-    'SetInt',
-    'SetNumber',
-    'SetStr',
-    'SetT',
-    'ShapeType',
-    'StrBytes',
-    'StrEnum',
-    'StrIntFloat',
-    'StringEnum',
-    'T',
-    'TRUE',
-    'T_ParamSpec',
-    'T_Retval',
-    'T_co',
-    'T_contra',
-    'TupleStrStr',
-    'TupleStrs',
-    'Txt',
-    'VT',
-    'VT_co',
-    'VT_contra',
-    'V_co',
-    'ValT',
-    'ValType',
-    'ZERO',
-    '_DT',
-    '_KT',
-    '_KT_co',
-    '_KT_contra',
-    '_R',
-    '_RT',
-    '_T',
-    '_T_co',
-    '_T_contra',
-    '_VT',
-    '_VT_co',
-    '_VT_contra',
-    '_V_co',
-    '__all_shed__',
-    'null',
+    "AF",
+    "AFn",
+    "AnyAsyncCallable",
+    "AnyCallable",
+    "AnyFunction",
+    "AnyIterable",
+    "AnyIterator",
+    "ArrShape",
+    "ArrayShape",
+    "AsyncFn",
+    "AsyncFuncType",
+    "Bytes",
+    "CmdArgs",
+    "CmdArgsType",
+    "DT",
+    "DictAny",
+    "DictAnyAny",
+    "DictFloat",
+    "DictFloatFloat",
+    "DictInt",
+    "DictIntInt",
+    "DictNumber",
+    "DictNumberNumber",
+    "DictStr",
+    "DictStrAny",
+    "DictStrInt",
+    "DictStrStr",
+    "El",
+    "Element",
+    "Enum",
+    "EnvMap",
+    "EnvType",
+    "F",
+    "FALSE",
+    "FN",
+    "Flint",
+    "Fn",
+    "FsPath",
+    "FsPathLike",
+    "FuncType",
+    "HrTime",
+    "IntStr",
+    "IterableAny",
+    "IterableFloat",
+    "IterableInt",
+    "IterableNumber",
+    "IterableStr",
+    "IterableT",
+    "Json",
+    "JsonArrT",
+    "JsonDictT",
+    "JsonListT",
+    "JsonObjT",
+    "JsonPrimitive",
+    "JsonT",
+    "KT",
+    "KT_co",
+    "KT_contra",
+    "KeyT",
+    "KeyType",
+    "ListAny",
+    "ListFloat",
+    "ListInt",
+    "ListListStr",
+    "ListNumber",
+    "ListStr",
+    "ListT",
+    "N",
+    "NoneBytes",
+    "NoneStr",
+    "NoneStrBytes",
+    "NoneType",
+    "Null",
+    "Number",
+    "ONE",
+    "Opt",
+    "OptFloat",
+    "OptInt",
+    "OptStr",
+    "OptionalFloat",
+    "OptionalInt",
+    "OptionalStr",
+    "P",
+    "PT",
+    "Path",
+    "PathLike",
+    "R",
+    "RT",
+    "ReturnT",
+    "ReturnType",
+    "STDIN",
+    "STDIO",
+    "SetAny",
+    "SetFloat",
+    "SetInt",
+    "SetNumber",
+    "SetStr",
+    "SetT",
+    "ShapeType",
+    "StrBytes",
+    "StrEnum",
+    "StrIntFloat",
+    "StringEnum",
+    "T",
+    "TRUE",
+    "T_ParamSpec",
+    "T_Retval",
+    "T_co",
+    "T_contra",
+    "TupleStrStr",
+    "TupleStrs",
+    "Txt",
+    "VT",
+    "VT_co",
+    "VT_contra",
+    "V_co",
+    "ValT",
+    "ValType",
+    "ZERO",
+    "_DT",
+    "_KT",
+    "_KT_co",
+    "_KT_contra",
+    "_R",
+    "_RT",
+    "_T",
+    "_T_co",
+    "_T_contra",
+    "_VT",
+    "_VT_co",
+    "_VT_contra",
+    "_V_co",
+    "__all_shed__",
+    "null",
 )
 __all_shed__ = __all__
 
@@ -331,59 +331,59 @@ Flint = Union[float, int]  # float or int
 ##############
 ## TypeVars ##
 ##############
-T = TypeVar('T')  # Any type.
-_T = TypeVar('_T')
-KT = TypeVar('KT')  # Key type.
-_KT = TypeVar('_KT')
-VT = TypeVar('VT')  # Value type.
-_VT = TypeVar('_VT')
-KeyT = TypeVar('KeyT')  # Key type.
-ValT = TypeVar('ValT')  # Value type.
-KeyType = TypeVar('KeyType')  # Key type.
-ValType = TypeVar('ValType')  # Value type.
-El = TypeVar('El')
-Element = TypeVar('Element')
-R = TypeVar('R')
-RT = TypeVar('RT')
-_R = TypeVar('_R')
-_RT = TypeVar('_RT')
-ReturnT = TypeVar('ReturnT')
-ReturnType = TypeVar('ReturnType')
-N = TypeVar('N', float, int)
-DT = TypeVar('DT')
-_DT = TypeVar('_DT')
-T_Retval = TypeVar('T_Retval')
+T = TypeVar("T")  # Any type.
+_T = TypeVar("_T")
+KT = TypeVar("KT")  # Key type.
+_KT = TypeVar("_KT")
+VT = TypeVar("VT")  # Value type.
+_VT = TypeVar("_VT")
+KeyT = TypeVar("KeyT")  # Key type.
+ValT = TypeVar("ValT")  # Value type.
+KeyType = TypeVar("KeyType")  # Key type.
+ValType = TypeVar("ValType")  # Value type.
+El = TypeVar("El")
+Element = TypeVar("Element")
+R = TypeVar("R")
+RT = TypeVar("RT")
+_R = TypeVar("_R")
+_RT = TypeVar("_RT")
+ReturnT = TypeVar("ReturnT")
+ReturnType = TypeVar("ReturnType")
+N = TypeVar("N", float, int)
+DT = TypeVar("DT")
+_DT = TypeVar("_DT")
+T_Retval = TypeVar("T_Retval")
 
 ###############
 ## ParamSpec ##
 ###############
-P = ParamSpec('P')
-PT = ParamSpec('PT')
-T_ParamSpec = ParamSpec('T_ParamSpec')
+P = ParamSpec("P")
+PT = ParamSpec("PT")
+T_ParamSpec = ParamSpec("T_ParamSpec")
 
 
 ########################
 ## Covariant TypeVars ##
 ########################
-KT_co = TypeVar('KT_co', covariant=True)
-T_co = TypeVar('T_co', covariant=True)  # Any type covariant containers.
-V_co = TypeVar('V_co', covariant=True)  # Any type covariant containers.
-VT_co = TypeVar('VT_co', covariant=True)  # Value type covariant containers.
+KT_co = TypeVar("KT_co", covariant=True)
+T_co = TypeVar("T_co", covariant=True)  # Any type covariant containers.
+V_co = TypeVar("V_co", covariant=True)  # Any type covariant containers.
+VT_co = TypeVar("VT_co", covariant=True)  # Value type covariant containers.
 
-_KT_co = TypeVar('_KT_co', covariant=True)
-_T_co = TypeVar('_T_co', covariant=True)
-_V_co = TypeVar('_V_co', covariant=True)
-_VT_co = TypeVar('_VT_co', covariant=True)
+_KT_co = TypeVar("_KT_co", covariant=True)
+_T_co = TypeVar("_T_co", covariant=True)
+_V_co = TypeVar("_V_co", covariant=True)
+_VT_co = TypeVar("_VT_co", covariant=True)
 
 ############################
 ## Contravariant TypeVars ##
 ############################
-T_contra = TypeVar('T_contra', contravariant=True)  # Ditto contravariant.
-_T_contra = TypeVar('_T_contra', contravariant=True)  # Ditto contravariant.
-VT_contra = TypeVar('VT_contra', contravariant=True)
-_VT_contra = TypeVar('_VT_contra', contravariant=True)
-KT_contra = TypeVar('KT_contra', contravariant=True)
-_KT_contra = TypeVar('_KT_contra', contravariant=True)
+T_contra = TypeVar("T_contra", contravariant=True)  # Ditto contravariant.
+_T_contra = TypeVar("_T_contra", contravariant=True)  # Ditto contravariant.
+VT_contra = TypeVar("VT_contra", contravariant=True)
+_VT_contra = TypeVar("_VT_contra", contravariant=True)
+KT_contra = TypeVar("KT_contra", contravariant=True)
+_KT_contra = TypeVar("_KT_contra", contravariant=True)
 
 
 class StringEnum(str, Enum):
@@ -405,12 +405,12 @@ AnyCallable = Callable[..., Any]
 AnyAsyncCallable = Callable[..., Awaitable[Any]]
 FuncType = Callable[..., Any]
 AsyncFuncType = Callable[..., Awaitable[Any]]
-F = TypeVar('F', bound=AnyCallable)
-FN = TypeVar('FN', bound=AnyCallable)
-Fn = TypeVar('Fn', bound=AnyCallable)
-AF = TypeVar('AF', bound=Awaitable)
-AFn = TypeVar('AFn', bound=Awaitable)
-AsyncFn = TypeVar('AsyncFn', bound=Awaitable)
+F = TypeVar("F", bound=AnyCallable)
+FN = TypeVar("FN", bound=AnyCallable)
+Fn = TypeVar("Fn", bound=AnyCallable)
+AF = TypeVar("AF", bound=Awaitable)
+AFn = TypeVar("AFn", bound=Awaitable)
+AsyncFn = TypeVar("AsyncFn", bound=Awaitable)
 
 #################
 ## STDIO/STDIN ##
@@ -510,7 +510,7 @@ OptFloat = Optional[float]
 ##########
 # Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
 JsonPrimitive = Union[None, bool, int, float, str]
-Json = Union[Dict[str, 'Json'], List['Json'], str, int, float, bool, None]  # type: ignore
-JsonT = Union[Dict[str, 'JsonT'], List['JsonT'], str, int, float, bool, None]  # type: ignore
+Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]  # type: ignore
+JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]  # type: ignore
 JsonObjT = JsonDictT = Dict[str, Any]
 JsonArrT = JsonListT = List[Any]

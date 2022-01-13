@@ -22,16 +22,16 @@ except ImportError:
 
 
 __all__ = (
-    'Field',
-    'FrozenInstanceError',
-    'InitVar',
-    'MISSING',
-    'asdict',
-    'astuple',
-    'dataclass',
-    'field',
-    'fields',
-    'is_dataclass',
-    'make_dataclass',
-    'replace',
+    "Field",
+    "FrozenInstanceError",
+    "InitVar",
+    "MISSING",
+    "asdict",
+    "astuple",
+    "dataclass",
+    "field",
+    "fields",
+    "is_dataclass",
+    "make_dataclass",
+    "replace",
 )

@@ -11,21 +11,21 @@ PYTHON_IMPLEMENTATION = platform.python_implementation()
 SYS_PATH_SEP: str = os.pathsep
 
 __all__ = (
-    'ENV',
-    'Env',
-    'PYTHON_IMPLEMENTATION',
-    'SYS_PATH_SEP',
-    'env',
-    'env_dict',
-    'is_cpython',
-    'is_mac',
-    'is_notebook',
-    'is_pypy',
-    'is_win',
-    'is_wsl',
-    'ismac',
-    'iswin',
-    'iswsl',
+    "ENV",
+    "Env",
+    "PYTHON_IMPLEMENTATION",
+    "SYS_PATH_SEP",
+    "env",
+    "env_dict",
+    "is_cpython",
+    "is_mac",
+    "is_notebook",
+    "is_pypy",
+    "is_win",
+    "is_wsl",
+    "ismac",
+    "iswin",
+    "iswsl",
 )
 
 
@@ -63,7 +63,7 @@ class _EnvObjMeta(type):
 
     def __setattr__(cls, key: str, value: str) -> None:
         if hasattr(environ, key):
-            raise ValueError(f'Key ({key}) is protected; set with __setitem__')
+            raise ValueError(f"Key ({key}) is protected; set with __setitem__")
         return cls.__setitem__(key, value)
 
     update = environ.update
@@ -112,7 +112,7 @@ def is_mac() -> bool:
         True if on a mac; False otherwise
 
     """
-    return 'darwin' in platform.system().lower()
+    return "darwin" in platform.system().lower()
 
 
 def is_win() -> bool:
@@ -122,20 +122,20 @@ def is_win() -> bool:
         True if on a windows machine; False otherwise
 
     """
-    return os.name == 'nt'
+    return os.name == "nt"
 
 
 def is_wsl() -> bool:
     """Return True if python is running under (WSL); Return False otherwise"""
-    if sys.platform in {'win32', 'cygwin', 'darwin'}:
+    if sys.platform in {"win32", "cygwin", "darwin"}:
         return False
 
-    if 'microsoft' in platform.release().lower():
+    if "microsoft" in platform.release().lower():
         return True
 
     try:
-        with open('/proc/version', 'r') as f:
-            if 'microsoft' in f.read().lower():
+        with open("/proc/version", "r") as f:
+            if "microsoft" in f.read().lower():
                 return True
     except FileNotFoundError:
         pass
@@ -147,9 +147,9 @@ def is_notebook() -> bool:
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
         shell = get_ipython().__class__.__name__  # type: ignore
-        if shell == 'ZMQInteractiveShell':
+        if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
-        elif shell == 'TerminalInteractiveShell':
+        elif shell == "TerminalInteractiveShell":
             return False  # Terminal running IPython
         else:
             return False  # Other type (?)
@@ -159,23 +159,23 @@ def is_notebook() -> bool:
 
 def is_pypy() -> bool:
     """Return True if running on pypy3; False otherwise"""
-    return 'pypy' in platform.python_implementation().lower()
+    return "pypy" in platform.python_implementation().lower()
 
 
 def is_cpython() -> bool:
     """Return True if running on CPython; False otherwise"""
-    return 'cpython' in platform.python_implementation().lower()
+    return "cpython" in platform.python_implementation().lower()
 
 
 def opsys() -> str:
     """Return the current process' os type: 'mac' | 'lin' | 'win' | 'wsl'"""
     if is_win():
-        return 'win'
+        return "win"
     if is_wsl():
-        return 'wsl'
+        return "wsl"
     if is_mac():
-        return 'mac'
-    return 'lin'
+        return "mac"
+    return "lin"
 
 
 def hostname() -> str:
