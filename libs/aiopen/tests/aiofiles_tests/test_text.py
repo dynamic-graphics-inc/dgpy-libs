@@ -219,8 +219,6 @@ async def test_simple_write(mode: str, tmp_path: Path) -> None:
     content = "0" * 4 * io.DEFAULT_BUFFER_SIZE
 
     full_file = tmp_path.joinpath(filename)
-    # full_file = tmpdir.joinpath(filename)
-
     if "r" in mode:
         full_file.touch(exist_ok=True)  # Read modes want it to already exist.
 

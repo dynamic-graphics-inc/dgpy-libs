@@ -11,11 +11,6 @@ import pytest
 
 import aiopen as aio
 
-# if os.name == "nt":
-#     from asyncio.windows_events import SelectorEventLoop as _UnixSelectorEventLoop
-# else:
-#     from asyncio.unix_events import _UnixSelectorEventLoop
-
 
 @pytest.mark.asyncio()
 async def test_serve_small_bin_file_sync(
