@@ -1,10 +1,12 @@
 name: dgpy-libs-ci
 
-on:
-  push:
-    branches: [ master, main, dev ]
-  pull_request:
-    branches: [ master, main, dev ]
+on: [push, pull_request]
+
+#on:
+#  push:
+#    branches: [ master, main, dev ]
+#  pull_request:
+#    branches: [ master, main, dev ]
 
 jobs:
   lint:
