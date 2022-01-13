@@ -1,6 +1,8 @@
 import os
 
-from xtyping import _typing as t, _typing_extensions as te, shed
+from subprocess import run
+
+from xtyping.shed import __all_shed__, __all_typing__, __all_typing_extensions__
 
 include_in_all = {
     "__version__",
@@ -16,31 +18,42 @@ import typing_extensions
 from xtyping._meta import __version__
 '''
 
-imports = {
-    "typing": (el for el in t.__all__ if el not in te.__all__),
-    "typing_extensions": te.__all__,
-    "shed": shed.__all__,
-}
+
+def main():
+    imports = {
+        "typing": (el for el in __all_typing__ if el not in __all_typing_extensions__),
+        "typing_extensions": __all_typing_extensions__,
+        "shed": __all_shed__,
+    }
+
+    init_all = [
+        "__all__ = (",
+        *[
+            f"    '{el}',"
+            for el in sorted(
+                {
+                    *__all_typing__,
+                    *__all_typing_extensions__,
+                    *__all_shed__,
+                    *include_in_all,
+                }
+            )
+        ],
+        ")",
+    ]
+    init_parts = [
+        header,
+        *[f"from typing import {el}" for el in imports["typing"]],
+        *[f"from typing_extensions import {el}" for el in imports["typing_extensions"]],
+        *[f"from xtyping.shed import {el}" for el in imports["shed"]],
+        *init_all,
+    ]
+
+    with open(os.path.join("xtyping", "__init__.py"), "w") as f:
+        f.write("\n".join(init_parts))
+
+    run(args=["make", "fmt"])
 
 
-init_all = [
-    "__all__ = (",
-    *[
-        f"    '{el}',"
-        for el in sorted({*t.__all__, *te.__all__, *shed.__all__, *include_in_all})
-    ],
-    ")",
-]
-init_parts = [
-    header,
-    *[f"from xtyping._typing import {el}" for el in imports["typing"]],
-    *[
-        f"from xtyping._typing_extensions import {el}"
-        for el in imports["typing_extensions"]
-    ],
-    *[f"from xtyping.shed import {el}" for el in imports["shed"]],
-    *init_all,
-]
-
-with open(os.path.join("xtyping", "__init__.py"), "w") as f:
-    f.write("\n".join(init_parts))
+if __name__ == "__main__":
+    main()

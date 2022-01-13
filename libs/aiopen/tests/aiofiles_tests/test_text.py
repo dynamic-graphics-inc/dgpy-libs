@@ -7,8 +7,6 @@ from pathlib import Path
 
 import pytest
 
-from py._path.local import LocalPath
-
 from aiopen import aiopen
 
 

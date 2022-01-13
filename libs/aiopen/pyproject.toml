@@ -5,6 +5,7 @@ description = "Async file io"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/aiopen"
 packages = [
     { include = "aiopen", from = "." },
 ]
@@ -18,6 +19,7 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
     "Typing :: Typed"
 ]
 keywords = [

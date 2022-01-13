@@ -2,10 +2,7 @@
 """typing + typing_extensions + misc types/aliases"""
 import typing
 
-import typing_extensions
-
-from xtyping._meta import __version__
-from xtyping._typing import (
+from typing import (
     IO,
     AbstractSet,
     Any,
@@ -45,12 +42,14 @@ from xtyping._typing import (
     TypeVar,
     Union,
     ValuesView,
-    __all_typing__,
     cast,
     no_type_check,
     no_type_check_decorator,
 )
-from xtyping._typing_extensions import (
+
+import typing_extensions
+
+from typing_extensions import (
     TYPE_CHECKING,
     Annotated,
     AsyncContextManager,
@@ -82,7 +81,6 @@ from xtyping._typing_extensions import (
     TypeAlias,
     TypedDict,
     TypeGuard,
-    __all_typing_extensions__,
     final,
     get_args,
     get_origin,
@@ -91,6 +89,7 @@ from xtyping._typing_extensions import (
     runtime,
     runtime_checkable,
 )
+from xtyping._meta import __version__
 from xtyping.shed import (
     _DT,
     _KT,
@@ -122,6 +121,7 @@ from xtyping.shed import (
     AsyncFn,
     AsyncFuncType,
     Bytes,
+    BytesPath,
     CmdArgs,
     CmdArgsType,
     DictAny,
@@ -180,6 +180,14 @@ from xtyping.shed import (
     NoneType,
     Null,
     Number,
+    OpenBinaryMode,
+    OpenBinaryModeReading,
+    OpenBinaryModeUpdating,
+    OpenBinaryModeWriting,
+    OpenTextMode,
+    OpenTextModeReading,
+    OpenTextModeUpdating,
+    OpenTextModeWriting,
     Opt,
     OptFloat,
     OptInt,
@@ -193,6 +201,7 @@ from xtyping.shed import (
     R,
     ReturnT,
     ReturnType,
+    Self,
     SetAny,
     SetFloat,
     SetInt,
@@ -204,6 +213,8 @@ from xtyping.shed import (
     StrEnum,
     StringEnum,
     StrIntFloat,
+    StrOrBytesPath,
+    StrPath,
     T,
     T_co,
     T_contra,
@@ -218,6 +229,8 @@ from xtyping.shed import (
     VT_co,
     VT_contra,
     __all_shed__,
+    __all_typing__,
+    __all_typing_extensions__,
     _KT_co,
     _KT_contra,
     _T_co,
@@ -251,6 +264,7 @@ __all__ = (
     "Awaitable",
     "ByteString",
     "Bytes",
+    "BytesPath",
     "Callable",
     "ChainMap",
     "ClassVar",
@@ -347,6 +361,14 @@ __all__ = (
     "Null",
     "Number",
     "ONE",
+    "OpenBinaryMode",
+    "OpenBinaryModeReading",
+    "OpenBinaryModeUpdating",
+    "OpenBinaryModeWriting",
+    "OpenTextMode",
+    "OpenTextModeReading",
+    "OpenTextModeUpdating",
+    "OpenTextModeWriting",
     "Opt",
     "OptFloat",
     "OptInt",
@@ -371,6 +393,7 @@ __all__ = (
     "Reversible",
     "STDIN",
     "STDIO",
+    "Self",
     "Sequence",
     "Set",
     "SetAny",
@@ -384,6 +407,8 @@ __all__ = (
     "StrBytes",
     "StrEnum",
     "StrIntFloat",
+    "StrOrBytesPath",
+    "StrPath",
     "StringEnum",
     "SupportsAbs",
     "SupportsBytes",

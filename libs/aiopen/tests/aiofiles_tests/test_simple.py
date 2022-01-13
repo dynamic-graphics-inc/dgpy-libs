@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Simple tests verifying basic functionality."""
 import asyncio
-import os
 import sys
 
 from asyncio import AbstractEventLoop
@@ -9,8 +8,6 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-
-from py._path.local import LocalPath
 
 import aiopen as aio
 

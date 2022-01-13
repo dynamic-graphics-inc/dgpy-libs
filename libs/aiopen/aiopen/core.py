@@ -23,6 +23,7 @@ from typing import (
     AsyncContextManager,
     Awaitable,
     Callable,
+    Generic,
     Optional,
     Type,
     TypeVar,
@@ -50,7 +51,7 @@ def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
     return cast(Callable[..., Awaitable[T]], _async_funk)
 
 
-class BaseAsync:
+class AsyncBase(Generic[T]):
     _file: Union[BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader]
     _loop: AbstractEventLoop
     _executor: Optional[BaseEventLoop] = None
@@ -71,10 +72,11 @@ class BaseAsync:
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> "BaseAsync":
+    def __aiter__(self) -> "AsyncBase":
         return self
 
-    async def __anext__(self) -> Union[bytes, str]:
+    # async def __anext__(self) -> Union[bytes, str]:
+    async def __anext__(self) -> T:
         """Simulate normal file iteration."""
         line = await self.readline()
         if line:
@@ -153,14 +155,14 @@ class BaseAsync:
         return self._file.closed
 
 
-class BaseAsyncDetachable(BaseAsync):
+class AsyncBaseDetachable(AsyncBase):
     _file: Union[BufferedReader, BufferedRandom, BufferedWriter, TextIOWrapper]
 
     def detach(self) -> Any:
         return self._file.detach()
 
 
-class TextIOWrapperAsync(BaseAsyncDetachable):
+class TextIOWrapperAsync(AsyncBaseDetachable):
     """Async version of io.TextIOWrapper"""
 
     _file: TextIOWrapper
@@ -186,7 +188,7 @@ class TextIOWrapperAsync(BaseAsyncDetachable):
         return self._file.newlines
 
 
-class BufferedIOBaseAsync(BaseAsyncDetachable):
+class BufferedIOAsyncBase(AsyncBaseDetachable):
     """Async version of io.BufferedWriter"""
 
     _file: Union[BufferedReader, BufferedRandom, BufferedWriter]
@@ -196,7 +198,7 @@ class BufferedIOBaseAsync(BaseAsyncDetachable):
         return self._file.raw
 
 
-class BufferedReaderAsync(BufferedIOBaseAsync):
+class BufferedReaderAsync(BufferedIOAsyncBase):
     """The asyncio executor version of io.BufferedReader and Random."""
 
     @aio_hoist
@@ -204,7 +206,7 @@ class BufferedReaderAsync(BufferedIOBaseAsync):
         ...
 
 
-class FileIOAsync(BaseAsync):
+class FileIOAsync(AsyncBase):
     """The asyncio executor version of io.FileIO."""
 
     _file: FileIO
@@ -218,7 +220,7 @@ def _aiopen_dispatch(
     *,
     loop: AbstractEventLoop,
     executor: Any = None,
-) -> Union[TextIOWrapperAsync, BufferedIOBaseAsync, BufferedReaderAsync, FileIOAsync]:
+) -> Union[TextIOWrapperAsync, BufferedIOAsyncBase, BufferedReaderAsync, FileIOAsync]:
     raise TypeError("Unsupported io type: {}.".format(file))
 
 
@@ -232,8 +234,8 @@ def _textio_base_dispatcher(
 @_aiopen_dispatch.register(BufferedWriter)
 def _buffered_io_base_async_dispatcher(
     file: BufferedWriter, *, loop: AbstractEventLoop, executor: Any = None
-) -> BufferedIOBaseAsync:
-    return BufferedIOBaseAsync(file, loop=loop, executor=executor)
+) -> BufferedIOAsyncBase:
+    return BufferedIOAsyncBase(file, loop=loop, executor=executor)
 
 
 @_aiopen_dispatch.register(BufferedReader)
@@ -257,7 +259,7 @@ def _fileio_async_dispatcher(
 class ContextManagerAsync(
     AsyncContextManager[
         Union[
-            BufferedIOBaseAsync,
+            BufferedIOAsyncBase,
             BufferedReaderAsync,
             TextIOWrapperAsync,
             FileIOAsync,
@@ -270,7 +272,7 @@ class ContextManagerAsync(
         self._coro: Coroutine[Any, Any, Any] = coro
         self._obj: Optional[
             Union[
-                BufferedIOBaseAsync,
+                BufferedIOAsyncBase,
                 BufferedReaderAsync,
                 TextIOWrapperAsync,
                 FileIOAsync,
@@ -326,7 +328,7 @@ class ContextManagerAsync(
     async def __aenter__(
         self,
     ) -> Union[
-        BufferedIOBaseAsync,
+        BufferedIOAsyncBase,
         BufferedReaderAsync,
         TextIOWrapperAsync,
         FileIOAsync,
@@ -359,7 +361,7 @@ async def _aiopen(
     *,
     loop: Optional[AbstractEventLoop] = None,
     executor: Any = None,
-) -> Union[FileIOAsync, BufferedIOBaseAsync, TextIOWrapperAsync, BufferedReaderAsync]:
+) -> Union[FileIOAsync, BufferedIOAsyncBase, TextIOWrapperAsync, BufferedReaderAsync]:
     """Open an asyncio file."""
     _loop = loop if loop is not None else asyncio.get_event_loop()
     cb = partial(

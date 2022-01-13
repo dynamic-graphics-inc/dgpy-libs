@@ -55,7 +55,7 @@ def test_xtyping_imports_shed() -> None:
             if not hasattr(xtyping, el):
                 missing.add(el)
     if missing:
-        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
+        raise ValueError("MISSING from __all__: {}".format(str(tuple(missing))))
 
 
 def test_xtyping_imports_typing() -> None:
@@ -105,7 +105,7 @@ def test_xtypting_all_list() -> None:
 
 
 def test_xtyping_shed_all_members():
-    from xtyping import _typing, _typing_extensions, shed
+    from xtyping import __all_shed__, __all_typing__, __all_typing_extensions__, shed
 
     builtin_members = {
         "__annotations__",
@@ -119,14 +119,9 @@ def test_xtyping_shed_all_members():
         "__all__",
         "__cached__",
     }
-
-    shed_all = shed.__all__
-    shed_all_set = set(shed_all)
-
-    tx_all = _typing_extensions.__all__
-    tx_all_set = set(tx_all)
-
-    typing_all_set = set(_typing.__all__)
+    shed_all_set = set(__all_shed__)
+    tx_all_set = set(__all_typing_extensions__)
+    typing_all_set = set(__all_typing__)
 
     missing_from_all = set()
     for k, v in vars(shed).items():
