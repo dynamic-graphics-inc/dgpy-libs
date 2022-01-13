@@ -256,7 +256,7 @@ def _fileio_async_dispatcher(
     return FileIOAsync(file, loop, executor)
 
 
-class ContextManagerAsync(
+class AiopenContextManager(
     AsyncContextManager[
         Union[
             BufferedIOAsyncBase,
@@ -283,7 +283,10 @@ class ContextManagerAsync(
         return self._coro.send(value)
 
     def throw(
-        self, typ: Any, val: Any = None, tb: Optional[TracebackType] = None
+        self,
+        typ: Type[BaseException],
+        val: Any = None,
+        tb: Optional[TracebackType] = None,
     ) -> Any:
         if val is None:
             return self._coro.throw(typ)
@@ -391,9 +394,9 @@ def aiopen(
     *,
     loop: Optional[AbstractEventLoop] = None,
     executor: Any = None,
-) -> ContextManagerAsync:
+) -> AiopenContextManager:
     """Async version of the `open` builtin"""
-    return ContextManagerAsync(
+    return AiopenContextManager(
         _aiopen(
             str(file),
             mode=mode,
