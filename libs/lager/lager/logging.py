@@ -162,7 +162,7 @@ class StdLoggingHandler(logging.Handler):
         # Find caller from where originated the logging call
         frame = logging.currentframe()
         depth = 2
-        while frame.f_code.co_filename == logging.__file__:
+        while frame.f_code.co_filename == logging.__file__:  # type: ignore
             frame = frame.f_back  # type: ignore
             depth += 1
 

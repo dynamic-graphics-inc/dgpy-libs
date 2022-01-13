@@ -1,4 +1,5 @@
 # noqa: F821
+# pyright: reportUndefinedVariable=false
 
 from typing import Any
 

@@ -4,10 +4,9 @@ import asyncio
 import os
 import sys
 
-if os.name == "nt":
-    from asyncio.windows_events import SelectorEventLoop as _UnixSelectorEventLoop
-else:
-    from asyncio.unix_events import _UnixSelectorEventLoop
+from asyncio import AbstractEventLoop
+from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -15,10 +14,15 @@ from py._path.local import LocalPath
 
 import aiopen as aio
 
+# if os.name == "nt":
+#     from asyncio.windows_events import SelectorEventLoop as _UnixSelectorEventLoop
+# else:
+#     from asyncio.unix_events import _UnixSelectorEventLoop
+
 
 @pytest.mark.asyncio()
 async def test_serve_small_bin_file_sync(
-    event_loop: _UnixSelectorEventLoop, tmpdir: LocalPath, unused_tcp_port: int
+    event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
 ) -> None:
     """Fire up a small simple file server, and fetch a file.
 
@@ -28,10 +32,10 @@ async def test_serve_small_bin_file_sync(
     # First we'll write a small file.
     filename = "test.bin"
     file_content = b"0123456789"
-    file = tmpdir.join(filename)
-    file.write_binary(file_content)
+    file = tmp_path.joinpath(filename)
+    file.write_bytes(file_content)
 
-    async def serve_file(reader, writer):
+    async def serve_file(reader: Any, writer: Any) -> None:
         full_filename = str(file)
         with open(full_filename, "rb") as f:
             writer.write(f.read())
@@ -66,16 +70,16 @@ async def test_serve_small_bin_file_sync(
 
 @pytest.mark.asyncio()
 async def test_serve_small_bin_file(
-    event_loop: _UnixSelectorEventLoop, tmpdir: LocalPath, unused_tcp_port: int
+    event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
 ) -> None:
     """Fire up a small simple file server, and fetch a file."""
     # First we'll write a small file.
     filename = "test.bin"
     file_content = b"0123456789"
-    file = tmpdir.join(filename)
-    file.write_binary(file_content)
+    file = tmp_path.joinpath(filename)
+    file.write_bytes(file_content)
 
-    async def serve_file(reader, writer):
+    async def serve_file(reader: Any, writer: Any) -> None:
         full_filename = str(file)
         f = await aio.aiopen(full_filename, mode="rb")
         writer.write((await f.read()))

@@ -166,15 +166,38 @@ strict_equality = true
 
 
 [tool.pyright]
-include = ["libs"]
-exclude = ["**/node_modules",
+include = [
+    #    "libs/aiopen",
+    "libs/asyncify",
+    "libs/funkify",
+    "libs/h5",
+    #    "libs/jsonbourne",
+    "libs/lager",
+    "libs/requires",
+    "libs/shellfish",
+    "libs/listless",
+    "libs/xtyping",
+]
+extraPaths = [
+    #    "libs/aiopen",
+    "libs/asyncify",
+    "libs/funkify",
+    "libs/h5",
+    #    "libs/jsonbourne",
+    "libs/lager",
+    "libs/requires",
+    "libs/shellfish",
+    "libs/listless",
+    "libs/xtyping",
+]
+exclude = [
+    "**/.pytype",
+    "**/node_modules",
     "**/__pycache__",
-    "src/experimental",
-    "src/typestubs",
+    "docs",
     "**/.nox",
     "**/.nox_win"
 ]
-stubPath = "src/stubs"
 reportMissingImports = true
 reportMissingTypeStubs = false
 pythonVersion = "3.8"

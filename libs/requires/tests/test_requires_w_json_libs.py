@@ -1,3 +1,4 @@
+# pyright: reportUndefinedVariable=false
 import pytest
 
 

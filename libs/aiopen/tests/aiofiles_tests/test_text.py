@@ -3,14 +3,13 @@
 import io
 
 from os.path import dirname, join
+from pathlib import Path
 
 import pytest
 
 from py._path.local import LocalPath
 
-import aiopen as _aiopen
-
-aiopen: _aiopen.aiopen = _aiopen  # type: ignore
+from aiopen import aiopen
 
 
 @pytest.mark.asyncio()
@@ -66,14 +65,15 @@ async def test_simple_readlines(mode: str) -> None:
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r+", "w", "a"])
-async def test_simple_flush(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_flush(mode: str, tmp_path: Path) -> None:
     """Test flushing to a file."""
+    assert isinstance(tmp_path, Path)
     filename = "file.bin"
 
-    full_file = tmpdir.join(filename)
+    full_file = tmp_path.joinpath(filename)
 
     if "r" in mode:
-        full_file.ensure()  # Read modes want it to already exist.
+        full_file.touch()  # Read modes want it to already exist.
 
     async with aiopen(str(full_file), mode=mode) as file:
         await file.write("0")  # Shouldn't flush.
@@ -105,13 +105,13 @@ async def test_simple_read(mode: str) -> None:
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "a"])
-async def test_simple_read_fail(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_read_fail(mode: str, tmp_path: Path) -> None:
     """Try reading some bytes and fail."""
     filename = "bigfile.bin"
     content = "0123456789" * 4 * io.DEFAULT_BUFFER_SIZE
 
-    full_file = tmpdir.join(filename)
-    full_file.write(content)
+    full_file = tmp_path.joinpath(filename)
+    full_file.write_text(content)
     with pytest.raises(ValueError):
         async with aiopen(str(full_file), mode=mode) as file:
             await file.seek(0)  # Needed for the append mode.
@@ -155,13 +155,13 @@ async def test_staggered_read(mode: str) -> None:
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
-async def test_simple_seek(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_seek(mode: str, tmp_path: Path) -> None:
     """Test seeking and then reading."""
     filename = "bigfile.bin"
     content = "0123456789" * 4 * io.DEFAULT_BUFFER_SIZE
 
-    full_file = tmpdir.join(filename)
-    full_file.write(content)
+    full_file = tmp_path.joinpath(filename)
+    full_file.write_text(content)
 
     async with aiopen(str(full_file), mode=mode) as file:
         await file.seek(4)
@@ -172,13 +172,13 @@ async def test_simple_seek(mode: str, tmpdir: LocalPath) -> None:
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "r", "r+", "w+", "a", "a+"])
-async def test_simple_close(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_close(mode: str, tmp_path: Path) -> None:
     """Open a file, read a byte, and close it."""
     filename = "bigfile.bin"
     content = "0" * 4 * io.DEFAULT_BUFFER_SIZE
 
-    full_file = tmpdir.join(filename)
-    full_file.write(content)
+    full_file = tmp_path.joinpath(filename)
+    full_file.write_text(content)
 
     async with aiopen(str(full_file), mode=mode) as file:
         assert not file.closed
@@ -190,13 +190,13 @@ async def test_simple_close(mode: str, tmpdir: LocalPath) -> None:
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["r+", "w", "a+"])
-async def test_simple_truncate(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_truncate(mode: str, tmp_path: Path) -> None:
     """Test truncating files."""
     filename = "bigfile.bin"
     content = "0123456789" * 4 * io.DEFAULT_BUFFER_SIZE
 
-    full_file = tmpdir.join(filename)
-    full_file.write(content)
+    full_file = tmp_path.joinpath(filename)
+    full_file.write_text(content)
 
     async with aiopen(str(full_file), mode=mode) as file:
         # The append modes want us to seek first.
@@ -210,36 +210,37 @@ async def test_simple_truncate(mode: str, tmpdir: LocalPath) -> None:
 
         await file.truncate()
 
-    assert "" == full_file.read()
+    assert "" == full_file.read_text()
 
 
 @pytest.mark.asyncio()
 @pytest.mark.parametrize("mode", ["w", "r+", "w+", "a", "a+"])
-async def test_simple_write(mode: str, tmpdir: LocalPath) -> None:
+async def test_simple_write(mode: str, tmp_path: Path) -> None:
     """Test writing into a file."""
     filename = "bigfile.bin"
     content = "0" * 4 * io.DEFAULT_BUFFER_SIZE
 
-    full_file = tmpdir.join(filename)
+    full_file = tmp_path.joinpath(filename)
+    # full_file = tmpdir.joinpath(filename)
 
     if "r" in mode:
-        full_file.ensure()  # Read modes want it to already exist.
+        full_file.touch(exist_ok=True)  # Read modes want it to already exist.
 
     async with aiopen(str(full_file), mode=mode) as file:
         bytes_written = await file.write(content)
 
     assert bytes_written == len(content)
-    assert content == full_file.read()
+    assert content == full_file.read_text()
     assert file.closed
 
 
 @pytest.mark.asyncio()
-async def test_simple_detach(tmpdir: LocalPath) -> None:
+async def test_simple_detach(tmp_path: Path) -> None:
     """Test detaching for buffered streams."""
     filename = "file.bin"
 
-    full_file = tmpdir.join(filename)
-    full_file.write("0123456789")
+    full_file = tmp_path.joinpath(filename)
+    full_file.write_text("0123456789")
 
     with pytest.raises(ValueError):  # Close will error out.
         async with aiopen(str(full_file), mode="r") as file:

@@ -24,6 +24,11 @@ lint:
 	isort --sp pyproject.toml libs --check
 	black --config pyproject.toml libs --check
 
+.PHONY: mypy
+mypy:
+	mypy --version
+	mypy --config-file pyproject.toml libs
+
 
 ###########
 ## CLEAN ##

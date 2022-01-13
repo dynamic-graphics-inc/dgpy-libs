@@ -4,6 +4,7 @@ import asyncio
 import time
 
 from os.path import dirname, join
+from typing import Any, Dict, List, Optional, Tuple
 
 import pytest
 
@@ -20,13 +21,13 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
     with open(filename, mode="rb") as f:
         contents = f.read()
 
-    def new_open(*args, **kwargs):
+    def new_open(*args: Any, **kwargs: Any) -> Any:
         time.sleep(1)
         return open(*args, **kwargs)
 
     monkeypatch.setattr(aio.core, "_open", value=new_open)
 
-    async def serve_file(_, writer):
+    async def serve_file(_: Any, writer: Any) -> None:
         async with aio.aiopen(filename, mode="rb") as f:
             while True:
                 data = await f.read(1)
@@ -37,7 +38,7 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
             await writer.drain()
         writer.close()
 
-    async def return_one(_, writer):
+    async def return_one(_: Any, writer: Any) -> None:
         writer.write(b"1")
         await writer.drain()
         writer.close()

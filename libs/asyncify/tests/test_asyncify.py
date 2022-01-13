@@ -7,7 +7,7 @@ async def test_asyncify() -> None:
     from asyncify import asyncify
 
     @asyncify
-    def add(a, b):
+    def add(a: float, b: float) -> float:
         return a + b
 
     res = await add(1, 5)
@@ -18,13 +18,9 @@ async def test_asyncify() -> None:
 async def test_asyncify_funkified() -> None:
     import asyncify
 
-    @asyncify
-    def add(a, b):
+    @asyncify  # type: ignore
+    def add(a: float, b: float) -> float:
         return a + b
 
-    res = await add(1, 5)
+    res = await add(1, 5)  # type: ignore
     assert res == 6
-
-
-if __name__ == "__main__":
-    pass

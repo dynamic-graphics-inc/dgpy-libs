@@ -2,7 +2,6 @@
 """HDF5 functions, and utils, and generators, OH MY!"""
 from h5._meta import __version__
 from h5.core import (
-    __h5py_version__,
     attrs_dict,
     attrs_gen,
     attrs_gen_from_fspath,
@@ -18,6 +17,7 @@ from h5.core import (
     h5py_obj_attrs_gen,
     h5py_obj_dataset_gen,
 )
+from h5py import __version__ as __h5py_version__
 
 __all__ = (
     "__version__",

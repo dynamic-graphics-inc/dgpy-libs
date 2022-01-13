@@ -25,24 +25,27 @@ def _popen_pipes_gen(proc: Popen) -> Iterable[Tuple[Stdio, str]]:
         Tuple[Stdio, str]: Tuples with stdio enum marker followed by a string
 
     """
-    with ThreadPoolExecutor(2) as pool:
-        q_stdout: Queue = Queue()
-        q_stderr: Queue = Queue()
-        pool.submit(_enqueue_output, proc.stdout, q_stdout)
-        pool.submit(_enqueue_output, proc.stderr, q_stderr)
-        while True:
-            if proc.poll() is not None and q_stdout.empty() and q_stderr.empty():
-                break
+    if proc.stdout is not None and proc.stderr is not None:
+        with ThreadPoolExecutor(2) as pool:
+            q_stdout: Queue = Queue()
+            q_stderr: Queue = Queue()
+            pool.submit(_enqueue_output, proc.stdout, q_stdout)
+            pool.submit(_enqueue_output, proc.stderr, q_stderr)
+            while True:
+                if proc.poll() is not None and q_stdout.empty() and q_stderr.empty():
+                    break
 
-            try:
-                yield Stdio.stdout, q_stdout.get_nowait()
-            except Empty:
-                pass
+                try:
+                    yield Stdio.stdout, q_stdout.get_nowait()
+                except Empty:
+                    pass
 
-            try:
-                yield Stdio.stderr, q_stderr.get_nowait()
-            except Empty:
-                pass
+                try:
+                    yield Stdio.stderr, q_stderr.get_nowait()
+                except Empty:
+                    pass
+    else:
+        raise ValueError("proc.stdout and proc.stderr must be not None")
 
 
 def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str]]:

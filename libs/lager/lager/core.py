@@ -82,7 +82,7 @@ try:
         }
         return _stringify(serializable)
 
-    Handler._serialize_record = staticmethod(_serialize_record)
+    Handler._serialize_record = staticmethod(_serialize_record)  # type: ignore
 except ModuleNotFoundError:
     pass
 
@@ -204,7 +204,7 @@ def reset() -> None:
     logger.add(_sys.stderr)
 
 
-__hoisted__ = [
+__hoisted__ = (
     "_change_activation",
     "_core",
     "_dynamic_level",
@@ -234,7 +234,7 @@ __hoisted__ = [
     "success",
     "trace",
     "warning",
-]
+)
 _change_activation = LAGER._change_activation
 _core = LAGER._core
 _dynamic_level = LAGER._dynamic_level
@@ -275,5 +275,33 @@ __all__ = (
     "ln",
     "lager",
     "LAGER",
-    *__hoisted__,
+    "_change_activation",
+    "_core",
+    "_dynamic_level",
+    "_find_iter",
+    "_log",
+    "_options",
+    "add",
+    "bind",
+    "catch",
+    "complete",
+    "configure",
+    "contextualize",
+    "critical",
+    "debug",
+    "disable",
+    "enable",
+    "error",
+    "exception",
+    "info",
+    "level",
+    "opt",
+    "parse",
+    "patch",
+    "remove",
+    "start",
+    "stop",
+    "success",
+    "trace",
+    "warning",
 )

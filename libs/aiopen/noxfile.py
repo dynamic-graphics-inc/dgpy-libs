@@ -24,21 +24,25 @@ PKG_DIRPATH = path.join(PWD, "aiopen")
 TESTS_DIRPATH = path.join(PWD, "tests")
 
 VENV_BACKEND = None if is_win() else "conda"
+# VENV_BACKEND = None
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
 #############
 ### UTILS ###
 #############
-def latest_wheel():
+def latest_wheel() -> str:
     wheels = sorted([el for el in os.listdir("dist") if el.endswith(".whl")])
     latest = wheels[-1]
     return latest
 
 
-def _get_session_python_site_packages_dir(session):
+def _get_session_python_site_packages_dir(session: nox.Session) -> str:
+    if is_win():
+        return path.join(session.virtualenv.location, "Lib", "site-packages")
     try:
-        site_packages_dir = session._runner._site_packages_dir
+        site_packages_dir = session._runner._site_packages_dir  # type: ignore
+        print(site_packages_dir)
     except AttributeError:
         old_install_only_value = session._runner.global_config.install_only
         try:
@@ -55,13 +59,15 @@ def _get_session_python_site_packages_dir(session):
                 silent=True,
                 log=False,
             )
-            session._runner._site_packages_dir = site_packages_dir
+            session._runner._site_packages_dir = site_packages_dir  # type: ignore
         finally:
             session._runner.global_config.install_only = old_install_only_value
-    return site_packages_dir
+    if isinstance(site_packages_dir, str):
+        return site_packages_dir
+    raise ValueError("Unable to determine site-packages dir")
 
 
-def _get_package_site_packages_location(session):
+def _get_package_site_packages_location(session: nox.Session) -> str:
     return path.join(_get_session_python_site_packages_dir(session), "funkify")
 
 
@@ -76,21 +82,18 @@ def _get_funkify_version() -> str:
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake(session):
-    session.install("flake8")
-    session.install("flake8-print")
-    session.install("flake8-eradicate")
-    session.run("flake8", PKG_DIRPATH)
-
-
-# @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-# def flake_tests(session):
-#     session.install("flake8")
-#     session.run("flake8", TESTS_DIRPATH)
+def noxutils(session: nox.Session) -> None:
+    print(_get_session_python_site_packages_dir(session))
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def base_test(session):
+def flake(session: nox.Session) -> None:
+    session.install("flake8", "flake8-print", "flake8-eradicate")
+    session.run("flake8", PKG_DIRPATH)
+
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def base_test(session: nox.Session) -> None:
     session.install("pytest")
     session.run(
         "pytest",

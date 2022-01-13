@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# pyright: reportInvalidTypeVarUse=false
 """Listless generator utils"""
 from collections import deque
 from functools import reduce
