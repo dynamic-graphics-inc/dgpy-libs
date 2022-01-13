@@ -53,7 +53,10 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
 
     def __init__(self, *args: Any, **kwargs: Any):  # type: ignore
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
-        super().__init__(*args, **kwargs)
+        if self.__custom_root_type__ and len(args) == 1 and '__root__' not in kwargs:
+            super().__init__(**{**kwargs, '__root__': args[0]})
+        else:
+            super().__init__(*args, **kwargs)
         self.__post_init__()
 
     def __post_init__(self) -> Any:

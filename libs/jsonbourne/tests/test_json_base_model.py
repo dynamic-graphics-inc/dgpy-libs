@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 import pytest
 
 from jsonbourne import JsonObj, json
@@ -56,3 +58,21 @@ def test_json_base_model_w_prop() -> None:
     assert thing_w_prop['a_property'] == 'prop_value'
 
     assert thing_w_prop.d.nested == 'nestedval'
+
+
+def test_json_base_model_root_type() -> None:
+    from jsonbourne.pydantic import JsonBaseModel
+
+    class JsonModelNoRootType(JsonBaseModel):
+        x: int
+        y: int
+
+    class JsonModelHasRootType(JsonBaseModel):
+        __root__: List[str]
+
+    assert not JsonModelNoRootType.__custom_root_type__
+    assert JsonModelHasRootType.__custom_root_type__
+    obj = JsonModelHasRootType(__root__=['a', 'b', 'c'])
+
+    obj2 = JsonModelHasRootType(['a', 'b', 'c'])
+    assert obj == obj2
