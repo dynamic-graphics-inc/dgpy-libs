@@ -7,6 +7,5 @@
   "author": "jesse <jessekrubin@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "pyright": "^1.1.186"
   }
 }
