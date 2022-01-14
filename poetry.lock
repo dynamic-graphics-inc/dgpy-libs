@@ -1,6 +1,6 @@
 [[package]]
 name = "aiopen"
-version = "0.4.0"
+version = "0.5.0"
 description = "Async file io"
 category = "dev"
 optional = false
@@ -8,7 +8,7 @@ python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-funkify = "^0.3.0"
+funkify = "^0.4.0"
 
 [package.source]
 type = "directory"
@@ -30,7 +30,7 @@ test = ["coverage", "flake8", "pexpect", "wheel"]
 
 [[package]]
 name = "asyncify"
-version = "0.4.0"
+version = "0.5.0"
 description = "sync 2 async"
 category = "dev"
 optional = false
@@ -38,8 +38,8 @@ python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-funkify = "^0.3.0"
-xtyping = "^0.4.3"
+funkify = "^0.4.0"
+xtyping = "^0.5.0"
 
 [package.source]
 type = "directory"
@@ -183,7 +183,7 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "funkify"
-version = "0.3.0"
+version = "0.4.0"
 description = "Funkify modules so that they are callable"
 category = "dev"
 optional = false
@@ -291,7 +291,7 @@ i18n = ["Babel (>=2.7)"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.20.0"
+version = "0.20.1"
 description = "EZPZ JSON"
 category = "dev"
 optional = false
@@ -299,7 +299,7 @@ python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-xtyping = "^0.4.7"
+xtyping = "^0.5.0"
 
 [package.extras]
 rapidjson = ["python-rapidjson (>=0.9.1)"]
@@ -747,15 +747,15 @@ pyyaml = "*"
 
 [[package]]
 name = "requires"
-version = "0.9.0"
-description = "Require and import dependencies at runtime"
+version = "0.10.0"
+description = "Runtime imports and dependency utils"
 category = "dev"
 optional = false
 python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-funkify = "^0.3.0"
+funkify = "^0.4.0"
 
 [package.source]
 type = "directory"
@@ -763,15 +763,15 @@ url = "libs/requires"
 
 [[package]]
 name = "shellfish"
-version = "0.0.3"
-description = "shellfish ~ shell and file-system utils"
+version = "0.0.4"
+description = "shellfish ~ shell & file-system utils"
 category = "dev"
 optional = false
 python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-xtyping = "^0.4.2"
+xtyping = "^0.5.0"
 
 [package.source]
 type = "directory"
@@ -859,8 +859,26 @@ python-versions = ">=3.5"
 dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
 
 [[package]]
+name = "xdoctest"
+version = "0.15.10"
+description = "A rewrite of the builtin doctest module"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = "*"
+
+[package.extras]
+all = ["six", "codecov", "scikit-build", "cmake", "ninja", "pybind11", "pygments", "colorama", "pytest", "pytest", "pytest-cov", "pytest", "pytest", "pytest-cov", "typing", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel", "pytest", "pytest-cov"]
+colors = ["pygments", "colorama"]
+jupyter = ["nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
+optional = ["pygments", "colorama", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel"]
+tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pytest", "pytest-cov", "pytest", "pytest", "pytest-cov", "typing", "nbformat", "nbconvert", "jupyter-client", "ipython", "ipykernel", "pytest", "pytest-cov"]
+
+[[package]]
 name = "xtyping"
-version = "0.4.7"
+version = "0.5.0"
 description = "xtyping = typing + typing_extensions"
 category = "dev"
 optional = false
@@ -889,7 +907,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "71f44303f142349548c9b481554dda17e156e91f3a2092c686009c20bfdc9a2a"
+content-hash = "4f8855416ccdbce1810ad26c44403001b7eff30fc83ba6f6de1ceb107566a3b3"
 
 [metadata.files]
 aiopen = []
@@ -1463,6 +1481,10 @@ watchdog = [
 win32-setctime = [
     {file = "win32_setctime-1.0.4-py3-none-any.whl", hash = "sha256:7964234073ad9bc7a689ef2ebe6ce931976b644fe73fd50cf7729c996b7d8385"},
     {file = "win32_setctime-1.0.4.tar.gz", hash = "sha256:2b72b798fdc1d909fb3cc0d25e0be52a42f4848857e3588dd3947c6a18b42609"},
+]
+xdoctest = [
+    {file = "xdoctest-0.15.10-py3-none-any.whl", hash = "sha256:7666bd0511df59275dfe94ef94b0fde9654afd14f00bf88902fdc9bcee77d527"},
+    {file = "xdoctest-0.15.10.tar.gz", hash = "sha256:5f16438f2b203860e75ec594dbc38020df7524db0b41bb88467ea0a6030e6685"},
 ]
 xtyping = []
 zipp = [

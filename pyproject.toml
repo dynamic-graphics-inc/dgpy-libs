@@ -35,6 +35,7 @@ listless = { path = "./libs/listless/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
+xdoctest = "^0.15.10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
