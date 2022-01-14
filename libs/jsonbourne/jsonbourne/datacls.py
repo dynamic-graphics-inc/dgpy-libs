@@ -14,12 +14,22 @@ from dataclasses import (
     replace,
 )
 
+_PYDANTIC_AVAILABLE: bool = False
+
 try:
     # use `pydantic.dataclasses.dataclass` if available
-    from pydantic.dataclasses import dataclass
-except ImportError:
-    from dataclasses import dataclass  # type: ignore
+    from pydantic.dataclasses import dataclass as _dataclass
 
+    _PYDANTIC_AVAILABLE = True
+except ImportError:
+    from dataclasses import dataclass as _dataclass  # type: ignore
+    from functools import wraps
+
+    dataclass = wraps(_dataclass)(
+        lambda *args, **kwargs: _dataclass(
+            *args, **{k: v for k, v in kwargs.items() if k != "config"}
+        )
+    )
 
 __all__ = (
     "Field",
