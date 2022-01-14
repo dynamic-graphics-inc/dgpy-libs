@@ -10,7 +10,7 @@ import pytest
 from aiopen import aiopen
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_iteration(mode: str, buffering: int) -> None:
@@ -42,7 +42,7 @@ async def test_simple_iteration(mode: str, buffering: int) -> None:
     assert file.closed
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_readlines(mode: str, buffering: int) -> None:
@@ -61,7 +61,7 @@ async def test_simple_readlines(mode: str, buffering: int) -> None:
     assert actual == expected
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb+", "wb", "ab"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_flush(mode: str, buffering: int, tmp_path: Path) -> None:
@@ -86,7 +86,7 @@ async def test_simple_flush(mode: str, buffering: int, tmp_path: Path) -> None:
         assert b"0" == full_file.read_bytes()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb+", "wb+", "ab+"])
 async def test_simple_peek(mode: str, tmp_path: Path) -> None:
     """Test flushing to a file."""
@@ -110,7 +110,7 @@ async def test_simple_peek(mode: str, tmp_path: Path) -> None:
             assert peeked.startswith(read)
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_read(mode: str, buffering: int) -> None:
@@ -125,7 +125,7 @@ async def test_simple_read(mode: str, buffering: int) -> None:
     assert actual == open(filename, mode="rb").read()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_staggered_read(mode: str, buffering: int) -> None:
@@ -156,7 +156,7 @@ async def test_staggered_read(mode: str, buffering: int) -> None:
     assert actual == expected
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_seek(mode: str, buffering: int, tmp_path: Path) -> None:
@@ -173,7 +173,7 @@ async def test_simple_seek(mode: str, buffering: int, tmp_path: Path) -> None:
         assert b"4" == (await file.read(1))
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["wb", "rb", "rb+", "wb+", "ab", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_close_ctx_mgr(mode: str, buffering: int, tmp_path: Path) -> None:
@@ -192,7 +192,7 @@ async def test_simple_close_ctx_mgr(mode: str, buffering: int, tmp_path: Path) -
     assert file._file.closed
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["wb", "rb", "rb+", "wb+", "ab", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_close_no_ctx_mgr(
@@ -215,7 +215,7 @@ async def test_simple_close_no_ctx_mgr(
     assert file._file.closed
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb", "rb+", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_readinto(mode: str, buffering: int) -> None:
@@ -231,7 +231,7 @@ async def test_simple_readinto(mode: str, buffering: int) -> None:
         assert array == open(filename, mode="rb").read(4)
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["rb+", "wb", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_truncate(mode: str, buffering: int, tmp_path: Path) -> None:
@@ -257,7 +257,7 @@ async def test_simple_truncate(mode: str, buffering: int, tmp_path: Path) -> Non
     assert b"" == full_file.read_bytes()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 @pytest.mark.parametrize("mode", ["wb", "rb+", "wb+", "ab", "ab+"])
 @pytest.mark.parametrize("buffering", [-1, 0])
 async def test_simple_write(mode: str, buffering: int, tmp_path: Path) -> None:
@@ -277,7 +277,7 @@ async def test_simple_write(mode: str, buffering: int, tmp_path: Path) -> None:
     assert content == full_file.read_bytes()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 async def test_simple_detach(tmp_path: Path) -> None:
     """Test detaching for buffered streams."""
     filename = "file.bin"
@@ -297,7 +297,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
     assert b"0123456789" == raw_file.read(10)
 
 
-@pytest.mark.asyncio()
+@pytest.mark.anyio
 async def test_simple_readall(tmp_path: Path) -> None:
     """Test the readall function by reading a large file in.
 
