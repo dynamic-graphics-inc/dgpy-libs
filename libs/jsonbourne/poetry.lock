@@ -178,7 +178,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "xtyping"
-version = "0.4.7"
+version = "0.5.0"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
@@ -209,7 +209,7 @@ rapidjson = ["python-rapidjson"]
 [metadata]
 lock-version = "1.1"
 python-versions = "==3.*,>=3.6.2"
-content-hash = "f2e86631c7821958155b474611f0a2837f6a676fa8da3450bf856961d0fc20d9"
+content-hash = "5e16eedb141c1dafa78cf22cf8328d0afda1c2fdfa73299e2d7fd237e0d60b06"
 
 [metadata.files]
 atomicwrites = [
@@ -364,8 +364,8 @@ typing-extensions = [
     {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
 ]
 xtyping = [
-    {file = "xtyping-0.4.7-py3-none-any.whl", hash = "sha256:86e64f35f7cdfed2c9ab64d62410100c55dd412a172064f16c65e930cf38d77d"},
-    {file = "xtyping-0.4.7.tar.gz", hash = "sha256:4ee87b3f08fc49b3e0a644c23fad4ae4f8b1f05f9bcb6b3ee387fb5191d2b758"},
+    {file = "xtyping-0.5.0-py3-none-any.whl", hash = "sha256:0919fa6e049386ce99a16650add69d68f0df85d2cd44fab445d7b3787b49fbd8"},
+    {file = "xtyping-0.5.0.tar.gz", hash = "sha256:eaac195200f9624dc77b48b5d226cda398a51291b80fb83bba05beef5ca00834"},
 ]
 zipp = [
     {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},

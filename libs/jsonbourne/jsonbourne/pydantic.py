@@ -336,7 +336,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         return self.__class__._cls_field_names()
 
 
-class JsonBaseSettings(BaseSettings, JsonBaseModel):
+class JsonBaseSettings(BaseSettings, JsonBaseModel):  # type: ignore
     """pydantic BaseSettings + JsonBaseModel"""
 
     ...
