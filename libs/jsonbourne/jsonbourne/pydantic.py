@@ -9,6 +9,7 @@ from pydantic import (
     VERSION as __pydantic_version__,
     BaseConfig,
     BaseModel,
+    BaseSettings,
     Extra,
     Field,
     ValidationError,
@@ -24,7 +25,9 @@ __all__ = (
     "JsonBaseModelDefaultConfig",
     "JsonBaseModel",
     "JsonBaseModelT",
+    "JsonBaseSettings",
     "BaseModel",
+    "BaseSettings",
     "Field",
     "ValidationError",
     "JsonGenericModel",
@@ -331,6 +334,12 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""
         return self.__class__._cls_field_names()
+
+
+class JsonBaseSettings(BaseSettings, JsonBaseModel):
+    """pydantic BaseSettings + JsonBaseModel"""
+
+    ...
 
 
 class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore

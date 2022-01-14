@@ -1053,6 +1053,7 @@ class JSON(metaclass=JSONMeta):
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
@@ -1063,6 +1064,7 @@ class JSON(metaclass=JSONMeta):
                 fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
+                append_newline=append_newline,
                 default=default,
                 **kwargs,
             )
@@ -1074,6 +1076,7 @@ class JSON(metaclass=JSONMeta):
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
@@ -1084,6 +1087,7 @@ class JSON(metaclass=JSONMeta):
                 fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
+                append_newline=append_newline,
                 default=default,
                 **kwargs,
             )
@@ -1095,6 +1099,7 @@ class JSON(metaclass=JSONMeta):
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
@@ -1105,6 +1110,7 @@ class JSON(metaclass=JSONMeta):
                 fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
+                append_newline=append_newline,
                 default=default,
                 **kwargs,
             )
@@ -1116,6 +1122,7 @@ class JSON(metaclass=JSONMeta):
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
+        append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> bytes:
@@ -1126,9 +1133,30 @@ class JSON(metaclass=JSONMeta):
                 fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
+                append_newline=append_newline,
                 default=default,
                 **kwargs,
             )
+        )
+
+    @staticmethod
+    def jsoncp(
+        data: Any,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> Any:
+        return jsonlib.jsoncp(
+            data=data,
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
         )
 
     @staticmethod
