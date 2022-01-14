@@ -11,7 +11,7 @@ from requires.core import (
     requires,
 )
 
-funkify(requires, name="requires")
+funkify(requires, key="requires")
 
 __all__ = (
     "__version__",
