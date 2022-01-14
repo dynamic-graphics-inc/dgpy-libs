@@ -3,32 +3,38 @@
 import sys
 
 from types import ModuleType
-from typing import Any, Callable, Optional
-
-from xtyping import T
+from typing import Any, Callable, Optional, TypeVar
 
 from funkify._meta import __version__
+
+T = TypeVar("T")
+
+__all__ = (
+    "__version__",
+    "default_export",
+    "funkify",
+)
 
 
 def default_export(
     funk: Callable[..., T],
     *,
-    module: Optional[str] = None,
+    key: Optional[str] = None,
 ) -> Callable[..., T]:
     """
 
     Args:
         funk: function to be made callable
-        module (str): module name as it would appear in sys.modules
+        key (str): module name as it would appear in sys.modules
 
     Returns:
 
     """
     try:
-        _module: str = module or funk.__module__
+        _module: str = key or funk.__module__
     except AttributeError:
         raise AttributeError(
-            f"funk ({funk}) has no __module__ attribute; provide module name"
+            f"funk ({funk}) has no __module__ attribute; provide module key"
         )
 
     class ModuleCls(ModuleType):
@@ -43,15 +49,6 @@ def default_export(
 
 
 @default_export
-def funkify(
-    funk: Callable[..., T], *, module: Optional[str] = None
-) -> Callable[..., T]:
+def funkify(funk: Callable[..., T], *, key: Optional[str] = None) -> Callable[..., T]:
     """Funkify a module"""
-    return default_export(funk=funk, module=module)
-
-
-__all__ = (
-    "__version__",
-    "default_export",
-    "funkify",
-)
+    return default_export(funk=funk, key=key)

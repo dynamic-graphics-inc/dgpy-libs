@@ -7,6 +7,8 @@ __pycache__/
 *.bak/
 *.bak
 
+f.py
+
 # C extensions
 *.so
 

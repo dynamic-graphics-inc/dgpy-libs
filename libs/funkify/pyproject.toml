@@ -19,7 +19,8 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"]
+    "Typing :: Typed"
+]
 keywords = [
     "funk", "dgpy", "python", "modules", "funky"
 ]
@@ -27,7 +28,6 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "==3.*,>=3.6.2"
-xtyping = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
