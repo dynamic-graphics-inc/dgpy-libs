@@ -845,47 +845,99 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return cls.from_dict(jsonlib.loads(json_string))
 
     def to_json(
-        self, pretty: bool = False, sort_keys: bool = False, **kwargs: Any
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
     ) -> str:
         """Return a JSON string of the JsonObj object
 
         Args:
-            minify (bool): Return a 'minified' version of the JSON string
             sort_keys (bool): Sort the keys when converting to JSON
-            indent (int): Indent level of the json string
+            fmt (bool): format with indent=2
+            pretty (bool): format with indent=2
             **kwargs: Keyword args to be passed on to the JSON dumps method
 
         Returns:
             str: JSON string of the JsonObj object
 
         """
-        return self._to_json(pretty=pretty, sort_keys=sort_keys, **kwargs)
+        return self._to_json(
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
 
     def stringify(
-        self, pretty: bool = False, sort_keys: bool = False, **kwargs: Any
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
     ) -> str:
-        """Return a JSON string of the JsonObj; `JsonObj.to_json` alias
+        """Return a JSON string of the JsonObj object
 
         Args:
-            pretty (bool): If a 'minified' version of the JSON string
             sort_keys (bool): Sort the keys when converting to JSON
+            fmt (bool): format with indent=2
+            pretty (bool): format with indent=2
             **kwargs: Keyword args to be passed on to the JSON dumps method
 
         Returns:
             str: JSON string of the JsonObj object
 
         """
-        return self.to_json(pretty=pretty, sort_keys=sort_keys, **kwargs)
+        return self._to_json(
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
+
+    def JSON(
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> str:
+        return jsonlib.dumps(
+            self.to_dict(),
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
 
     def _to_json(
-        self, pretty: bool = False, sort_keys: bool = False, **kwargs: Any
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
     ) -> str:
         """Return a JSON string of the JsonObj object
 
         Args:
-            minify (bool): Return a 'minified' version of the JSON string
+            fmt (bool): format with indent=2
+            pretty (bool): format with indent=2
             sort_keys (bool): Sort the keys when converting to JSON
-            indent (int): Indent level of the json string
             **kwargs: Keyword args to be passed on to the JSON dumps method
 
         Returns:
@@ -893,7 +945,13 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
 
         """
         return jsonlib.dumps(
-            self.to_dict(), pretty=pretty, sort_keys=sort_keys, **kwargs
+            self.to_dict(),
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
         )
 
     @classmethod
@@ -992,6 +1050,7 @@ class JSON(metaclass=JSONMeta):
     @staticmethod
     def stringify(
         data: Any,
+        fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
@@ -1001,6 +1060,7 @@ class JSON(metaclass=JSONMeta):
         return str(
             jsonlib.dumps(
                 data,
+                fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
                 default=default,
@@ -1011,6 +1071,7 @@ class JSON(metaclass=JSONMeta):
     @staticmethod
     def dumps(
         data: Any,
+        fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
@@ -1020,6 +1081,7 @@ class JSON(metaclass=JSONMeta):
         return str(
             jsonlib.dumps(
                 data,
+                fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
                 default=default,
@@ -1030,6 +1092,7 @@ class JSON(metaclass=JSONMeta):
     @staticmethod
     def binify(
         data: Any,
+        fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
@@ -1039,6 +1102,7 @@ class JSON(metaclass=JSONMeta):
         return bytes(
             jsonlib.dumpb(
                 data,
+                fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
                 default=default,
@@ -1049,6 +1113,7 @@ class JSON(metaclass=JSONMeta):
     @staticmethod
     def dumpb(
         data: Any,
+        fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
@@ -1058,6 +1123,7 @@ class JSON(metaclass=JSONMeta):
         return bytes(
             jsonlib.dumpb(
                 data,
+                fmt=fmt,
                 pretty=pretty,
                 sort_keys=sort_keys,
                 default=default,

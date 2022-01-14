@@ -99,6 +99,14 @@ def test_basic_dumps() -> None:
     assert len(set(a)) == 1
 
 
+def test_fmt_dumps() -> None:
+    rj = RAPIDJSON.dumps(D, fmt=True)
+    oj = ORJSON.dumps(D, fmt=True)
+    sj = JSON_STDLIB.dumps(D, fmt=True)
+    a = [rj, oj, sj]
+    assert len(set(a)) == 1
+
+
 def test_pretty_dumps() -> None:
     rj = RAPIDJSON.dumps(D, pretty=True)
     oj = ORJSON.dumps(D, pretty=True)

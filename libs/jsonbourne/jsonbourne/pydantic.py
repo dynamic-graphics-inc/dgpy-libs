@@ -3,7 +3,7 @@
 
 from functools import lru_cache
 from pprint import pformat
-from typing import Any, Dict, Set, Type, TypeVar
+from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar
 
 from pydantic import (
     VERSION as __pydantic_version__,
@@ -194,6 +194,25 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
     def to_dict(self) -> Dict[str, Any]:
         """Eject and return object as plain jane dictionary"""
         return self.eject()
+
+    def JSON(
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> str:
+        return JSON.dumps(
+            self.dict(),
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
 
     @classmethod
     def from_dict_filtered(
