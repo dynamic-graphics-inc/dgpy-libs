@@ -30,11 +30,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "funkify"
-version = "0.3.0"
+version = "0.4.0"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
-python-versions = ">=3.6.1,<4.0.0"
+python-versions = ">=3.6.2,<4.0.0"
 
 [[package]]
 name = "importlib-metadata"
@@ -170,7 +170,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "==3.*,>=3.6.2"
-content-hash = "53047f5d15380918da8dd3701537772b67e91a1a20f851b8a0634246b7a5adde"
+content-hash = "ba6e33af2d321d1a787f3c26708a7335b70589898fb2f505c33c76fff4fb5fc0"
 
 [metadata.files]
 atomicwrites = [
@@ -186,8 +186,8 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 funkify = [
-    {file = "funkify-0.3.0-py3-none-any.whl", hash = "sha256:50068de04ca6397d5e6c70d16c17d2503d4a62e33b091ddbb3c617b7c7fe8740"},
-    {file = "funkify-0.3.0.tar.gz", hash = "sha256:a7273eac299f37d0785b7b99a581ee20885451637355e589e653a32d8bd6eaad"},
+    {file = "funkify-0.4.0-py3-none-any.whl", hash = "sha256:41e6494f09c59e0d37dcae66ec83c8d9be1feebc1809906f126c0bd31c24c98e"},
+    {file = "funkify-0.4.0.tar.gz", hash = "sha256:5bf2fb47ef681a723427205fda2af81a4575c9e30132304a9474a8b3c50ec936"},
 ]
 importlib-metadata = [
     {file = "importlib_metadata-4.8.2-py3-none-any.whl", hash = "sha256:53ccfd5c134223e497627b9815d5030edf77d2ed573922f7a0b8f8bb81a1c100"},
