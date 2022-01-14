@@ -3,7 +3,7 @@
 """Listless generator utils"""
 from collections import deque
 from functools import reduce
-from itertools import tee
+from itertools import tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
@@ -34,6 +34,72 @@ __all__ = (
 
 T = TypeVar("T")
 K = TypeVar("K")
+
+
+def partition(
+    it: Sequence[T], n: int, *, pad: bool = False, padval: Any = None
+) -> Iterable[Sequence[T]]:
+    """Partition an iterable into chunks of size n
+
+    Args:
+        it: Iterable to partition
+        n (int): Size of the partition chunks
+        pad (bool): Pad parts with padval if True, else do not pad
+        padval (Any): Value to pad with
+
+    Returns:
+        Iterable of the partitioned chunks
+
+    Examples:
+        >>> list(partition([1, 2, 3, 4, 5, 6], 3))
+        [(1, 2, 3), (4, 5, 6)]
+        >>> list(partition([1, 2, 3, 4, 5, 6], 2))
+        [(1, 2), (3, 4), (5, 6)]
+        >>> for part in partition('abcdefghijklmnopqrstuvwxyz', 13):
+        ...    print(part)
+        ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm')
+        ('n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z')
+        >>> for part in partition('abcdefghijklmnopqrstuvwxyz', 4):
+        ...    print(part)
+        ('a', 'b', 'c', 'd')
+        ('e', 'f', 'g', 'h')
+        ('i', 'j', 'k', 'l')
+        ('m', 'n', 'o', 'p')
+        ('q', 'r', 's', 't')
+        ('u', 'v', 'w', 'x')
+        >>> for part in partition('abcdefghijklmnopqrstuvwxyz', 4, pad=True):
+        ...    print(part)
+        ('a', 'b', 'c', 'd')
+        ('e', 'f', 'g', 'h')
+        ('i', 'j', 'k', 'l')
+        ('m', 'n', 'o', 'p')
+        ('q', 'r', 's', 't')
+        ('u', 'v', 'w', 'x')
+        ('y', 'z', None, None)
+        >>> for part in partition('abcdefghijklmnopqrstuvwxyz', 4, pad=True, padval=...):
+        ...   print(part)
+        ('a', 'b', 'c', 'd')
+        ('e', 'f', 'g', 'h')
+        ('i', 'j', 'k', 'l')
+        ('m', 'n', 'o', 'p')
+        ('q', 'r', 's', 't')
+        ('u', 'v', 'w', 'x')
+        ('y', 'z', Ellipsis, Ellipsis)
+
+    Raises:
+        TypeError: If `n` is not and int
+        ValueError: if `n` is less than 1
+
+    """
+    if not isinstance(n, int):
+        raise TypeError("n must be an integer")
+    if n < 1:
+        raise ValueError("n must be >= 1")
+    args = [iter(it)] * n
+    if pad:
+        return zip_longest(*args, fillvalue=padval)
+    else:
+        return zip(*args)
 
 
 @overload
@@ -75,7 +141,7 @@ def chunks(it: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
         ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
 
     """
-    yield from (it[i : i + chunk_size] for i in range(0, len(it), chunk_size))
+    return (it[i : i + chunk_size] for i in range(0, len(it), chunk_size))
 
 
 def exhaust(it: Iterable[Any]) -> None:

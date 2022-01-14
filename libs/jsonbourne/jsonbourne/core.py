@@ -231,7 +231,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Check if a key or dot-key is contained within the JsonObj object
 
         Args:
-            key (str): root level key or a dot-key
+            key (_KT): root level key or a dot-key
 
         Returns:
             bool: True if the key/dot-key is in the JsonObj; False otherwise
@@ -269,7 +269,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Set JsonObj item with 'key' to 'value'
 
         Args:
-            key (str): Key/item to set
+            key (_KT): Key/item to set
             value: Value to set
 
         Returns:
@@ -625,6 +625,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
 
         Raises:
             KeyError: Raised if the dot-key is not in in the object
+            ValueError: Raised if key is not a str/Tuple[str, ...]/List[str]
 
         """
         if not isinstance(key, (str, list, tuple)):
@@ -784,7 +785,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Return attrs-attribute names for an object decorated with attrs"""
         return self.__class__._cls_field_names()
 
-    def eject(self) -> Dict[_KT, Any]:
+    def eject(self) -> Dict[_KT, _VT]:
         """Eject to python-builtin dictionary object
 
         Examples:
@@ -826,7 +827,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             json_string (str): JSON string to convert to a JsonObj
 
         Returns:
-            JsonObj: JsonObj object for the given JSON string
+            JsonObjT: JsonObj object for the given JSON string
 
         """
         return cls._from_json(json_string)
@@ -839,10 +840,43 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             json_string (str): JSON string to convert to a JsonObj
 
         Returns:
-            JsonObj: JsonObj object for the given JSON string
+            JsonObjT: JsonObj object for the given JSON string
 
         """
         return cls.from_dict(jsonlib.loads(json_string))
+
+    def JSON(
+        self,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> str:
+        """Return JSON string of the JsonObj object (and children)
+
+        Args:
+            fmt (bool): If True, return a JSON string with newlines and indentation
+            pretty (bool): If True, return a JSON string with newlines and indentation
+            sort_keys (bool): Sort dictionary keys if True
+            append_newline (bool): Append a newline '\n' to JSON string if True
+            default: default function hook for JSON serialization
+            **kwargs (Any): additional kwargs to be passed down to jsonlib.dumps
+
+        Returns:
+            str: JSON string of the JsonObj object
+
+        """
+        return jsonlib.dumps(
+            self.to_dict(),
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
 
     def to_json(
         self,
@@ -853,13 +887,15 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return a JSON string of the JsonObj object
+        """Return JSON string of the JsonObj object (and children)
 
         Args:
-            sort_keys (bool): Sort the keys when converting to JSON
-            fmt (bool): format with indent=2
-            pretty (bool): format with indent=2
-            **kwargs: Keyword args to be passed on to the JSON dumps method
+            fmt (bool): If True, return a JSON string with newlines and indentation
+            pretty (bool): If True, return a JSON string with newlines and indentation
+            sort_keys (bool): Sort dictionary keys if True
+            append_newline (bool): Append a newline '\n' to JSON string if True
+            default: default function hook for JSON serialization
+            **kwargs (Any): additional kwargs to be passed down to jsonlib.dumps
 
         Returns:
             str: JSON string of the JsonObj object
@@ -883,38 +919,21 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return a JSON string of the JsonObj object
+        """Return JSON string of the JsonObj object (and children)
 
         Args:
-            sort_keys (bool): Sort the keys when converting to JSON
-            fmt (bool): format with indent=2
-            pretty (bool): format with indent=2
-            **kwargs: Keyword args to be passed on to the JSON dumps method
+            fmt (bool): If True, return a JSON string with newlines and indentation
+            pretty (bool): If True, return a JSON string with newlines and indentation
+            sort_keys (bool): Sort dictionary keys if True
+            append_newline (bool): Append a newline '\n' to JSON string if True
+            default: default function hook for JSON serialization
+            **kwargs (Any): additional kwargs to be passed down to jsonlib.dumps
 
         Returns:
             str: JSON string of the JsonObj object
 
         """
         return self._to_json(
-            fmt=fmt,
-            pretty=pretty,
-            sort_keys=sort_keys,
-            append_newline=append_newline,
-            default=default,
-            **kwargs,
-        )
-
-    def JSON(
-        self,
-        fmt: bool = False,
-        pretty: bool = False,
-        sort_keys: bool = False,
-        append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
-        **kwargs: Any,
-    ) -> str:
-        return jsonlib.dumps(
-            self.to_dict(),
             fmt=fmt,
             pretty=pretty,
             sort_keys=sort_keys,
@@ -932,18 +951,21 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return a JSON string of the JsonObj object
+        """Return JSON string of the JsonObj object (and children)
 
         Args:
-            fmt (bool): format with indent=2
-            pretty (bool): format with indent=2
-            sort_keys (bool): Sort the keys when converting to JSON
-            **kwargs: Keyword args to be passed on to the JSON dumps method
+            fmt (bool): If True, return a JSON string with newlines and indentation
+            pretty (bool): If True, return a JSON string with newlines and indentation
+            sort_keys (bool): Sort dictionary keys if True
+            append_newline (bool): Append a newline '\n' to JSON string if True
+            default: default function hook for JSON serialization
+            **kwargs (Any): additional kwargs to be passed down to jsonlib.dumps
 
         Returns:
             str: JSON string of the JsonObj object
 
         """
+
         return jsonlib.dumps(
             self.to_dict(),
             fmt=fmt,

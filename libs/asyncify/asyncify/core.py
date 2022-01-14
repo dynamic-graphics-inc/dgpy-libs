@@ -69,14 +69,18 @@ def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     return cast(Callable[P, Awaitable[T]], _async_funk)
 
 
-def run(aw: Awaitable[T]) -> T:
+def run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
     added in python3.7.
 
+    Args:
+        aw (Awaitable[T]): Async/awaitable function to run
+        debug (Optional[bool]): If True run event loop in debug mode
+
     Returns:
-        Return the result of running the async function
+        T: Return the result of running the async function
 
     Examples:
         >>> async def add(a, b):
@@ -88,11 +92,13 @@ def run(aw: Awaitable[T]) -> T:
 
     """
     if sys.version_info >= (3, 7):
-        return asyncio.run(aw)
+        return asyncio.run(aw, debug=debug)
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
     try:
+        if debug is not None:
+            loop.set_debug(debug)
         return loop.run_until_complete(aw)
     finally:
         loop.close()
@@ -113,4 +119,5 @@ def is_async(obj: Any) -> bool:
 
 
 async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
+    """Return the result of an awaitable or return the object"""
     return await obj if isawaitable(obj) else obj  # type: ignore

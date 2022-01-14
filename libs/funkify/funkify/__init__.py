@@ -21,13 +21,18 @@ def default_export(
     *,
     key: Optional[str] = None,
 ) -> Callable[..., T]:
-    """
+    """Assign a function to a module's __call__ attr
 
     Args:
         funk: function to be made callable
         key (str): module name as it would appear in sys.modules
 
     Returns:
+        Callable[..., T]: the function passed in
+
+    Raises:
+        AttributeError: if key is None and exported obj no __module__ attr
+        ValueError: if key is not in sys.modules
 
     """
     try:
@@ -50,5 +55,14 @@ def default_export(
 
 @default_export
 def funkify(funk: Callable[..., T], *, key: Optional[str] = None) -> Callable[..., T]:
-    """Funkify a module"""
+    """Assign a function to a module's __call__ attr
+
+    Args:
+        funk: function to be made callable
+        key (str): module name as it would appear in sys.modules
+
+    Returns:
+        Callable[..., T]: the function passed in
+
+    """
     return default_export(funk=funk, key=key)

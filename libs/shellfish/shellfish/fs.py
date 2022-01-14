@@ -22,6 +22,7 @@ from xtyping import (
     Iterable,
     Iterator,
     List,
+    Literal,
     Optional,
     Tuple,
     Union,
@@ -674,11 +675,11 @@ def wbytes(
     bites: bytes,
     *,
     append: bool = False,
-) -> bool:
+) -> int:
     """Write/Save bytes to a fspath
 
-    The parameter 'bites' is used instead of 'bytes' so as to not redefine
-    the built-in python bytes object.
+    The parameter 'bites' is used instead of 'bytes' to not redefine the
+    built-in python bytes object.
 
     Args:
         filepath: fspath to write to
@@ -687,16 +688,16 @@ def wbytes(
             is False
 
     Returns:
-        None
+        int: Number of bytes written
 
     Examples:
         >>> from shellfish.fs import rbytes, wbytes
-        >>> fspath = "sbytes.doctest.txt"
+        >>> fspath = "wbytes.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
         >>> wbytes(fspath, bites_to_save)
-        True
+        20
         >>> rbytes(fspath)
         b'These are some bytes'
         >>> import os; os.remove(fspath)
@@ -704,8 +705,8 @@ def wbytes(
     """
     _write_mode = "ab" if append else "wb"
     with open(filepath, _write_mode) as fd:
-        fd.write(bites)
-    return True
+        nbytes = fd.write(bites)
+    return nbytes
 
 
 def rbytes(filepath: FsPath) -> bytes:
@@ -719,10 +720,10 @@ def rbytes(filepath: FsPath) -> bytes:
 
     Examples:
         >>> from shellfish.fs import rbytes, wbytes
-        >>> fspath = "lbytes.doctest.txt"
+        >>> fspath = "rbytes.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
         >>> wbytes(fspath, bites_to_save)
-        True
+        20
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
         >>> rbytes(fspath)
@@ -794,11 +795,11 @@ def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
             yield data
 
 
-def sbytes_gen(
+def wbytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
-) -> None:
+) -> int:
     """Write/Save bytes to a fspath
 
     Args:
@@ -806,26 +807,27 @@ def sbytes_gen(
         bytes_gen: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
-        flags: Flags to write the file with (OS dependent)
-        mode: Mode/permissions to save json file with
+
+    Returns:
+        int: Number of bytes written
 
     Examples:
         >>> from shellfish.fs import rbytes, wbytes
         >>> fspath = "wbytes_gen.doctest.txt"
-        >>> bites_to_save = b"These are some bytes"
+        >>> bites_to_save = (b"These are some bytes... ", b"more bytes!")
         >>> bites_to_save  # they are bytes!
-        b'These are some bytes'
-        >>> wbytes(fspath, bites_to_save)
-        True
+        (b'These are some bytes... ', b'more bytes!')
+        >>> wbytes_gen(fspath, (b for b in bites_to_save))
+        35
         >>> rbytes(fspath)
-        b'These are some bytes'
+        b'These are some bytes... more bytes!'
         >>> import os; os.remove(fspath)
 
     """
-    _write_mode = "ab" if append else "wb"
-    with open(filepath, _write_mode) as fd:
-        for chunk in bytes_gen:
-            fd.write(chunk)
+    _mode: Literal["ab", "wb"] = "ab" if append else "wb"
+    with open(filepath, mode=_mode) as fd:
+        nbytes_written = sum(fd.write(chunk) for chunk in bytes_gen)
+    return nbytes_written
 
 
 def rstring(filepath: FsPath) -> str:
@@ -842,6 +844,7 @@ def rstring(filepath: FsPath) -> str:
         >>> from shellfish.fs import rstring, wstring
         >>> fspath = "lstring.doctest.txt"
         >>> sstring(fspath, r'Check out this string')
+        21
         >>> lstring(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
@@ -863,7 +866,7 @@ def wstring(
     *,
     encoding: str = "utf-8",
     append: bool = False,
-) -> None:
+) -> int:
     """Save/Write a string to fspath
 
     Args:
@@ -879,12 +882,13 @@ def wstring(
         >>> from shellfish.fs import rstring, wstring
         >>> fspath = "sstring.doctest.txt"
         >>> wstring(fspath, r'Check out this string')
+        21
         >>> rstring(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
 
     """
-    sbytes(
+    return wbytes(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
@@ -935,13 +939,14 @@ sbytes = wbin = sbin = wbytes
 lstring = rstr = lstr = rstring
 sstring = wstr = sstr = wstring
 lbytes_gen = rbin_gen = rbytes_gen
+sbytes_gen = wbin_gen = wbytes_gen
 
 
 def shebang(fspath: FsPath) -> Union[None, str]:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
     Args:
-        fspath (str): Path to file that might have a shebang
+        fspath (fspath): Path to file that might have a shebang
 
     Returns:
         Optional[str]: The shebang string if it exists, None otherwise

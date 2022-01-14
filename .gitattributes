@@ -45,6 +45,7 @@
 *.whl binary
 *.tar.gz binary
 
+
 ###########
 ### GIT ###
 ###########
@@ -244,6 +245,8 @@ Procfile text
 ##### Language
 # Python
 .pylintrc text eol=lf
+.darglint text eol=lf
+.flake8 text eol=lf
 *.cfg text eol=lf
 *.py text eol=lf
 *.pyx text eol=lf

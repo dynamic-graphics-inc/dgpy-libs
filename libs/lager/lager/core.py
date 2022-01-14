@@ -105,7 +105,7 @@ def loglevel(level: Union[str, int]) -> str:
 
 def flog(
     funk: Optional[Callable[..., T]] = None,
-    level: str = "debug",
+    level: Union[str, int] = "debug",
     enter: bool = True,
     exit: bool = True,
 ) -> T:

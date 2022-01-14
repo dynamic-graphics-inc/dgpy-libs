@@ -312,12 +312,23 @@ def requires(
     a `RequirementError` will be thrown with instructions on how to install
     the required packages.
 
+
     Args:
         *requirements: Any number of required package names as strings
+        _import ('str'): `IMPORT` part of `from {FROM} import {IMPORT} as {AS}`
+        _as ('str'): `AS` part of `from {FROM} import {IMPORT} as {AS}`
+        _from ('str'): `FROM` part of `from {FROM} import {IMPORT} as {AS}`
+        pip (Optional[Union[str, bool]]): pip install name
+        conda (Optional[Union[str, bool]]): conda install name
+        conda_forge (Optional[Union[str, bool]]): conda-forge install name
+        details (str): details to be displayed in the error message
 
     Returns:
         Function wrapped such that in the event of a `NameError` a helpful
         error is raised.
+
+    Raises:
+        ValueError: If requirements or kwargs are given
 
     """
     _kwargs = (_import, _from, _as, pip, conda, conda_forge)

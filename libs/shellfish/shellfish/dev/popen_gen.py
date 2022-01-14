@@ -24,7 +24,12 @@ def _popen_pipes_gen(proc: Popen) -> Iterable[Tuple[Stdio, str]]:
     Yields:
         Tuple[Stdio, str]: Tuples with stdio enum marker followed by a string
 
+    Raises:
+        ValueError: if proc is not Popen or proc.stdout or proc.stderr is None
+
     """
+    if not isinstance(proc, Popen):
+        raise ValueError("proc must be a Popen object")
     if proc.stdout is not None and proc.stderr is not None:
         with ThreadPoolExecutor(2) as pool:
             q_stdout: Queue = Queue()

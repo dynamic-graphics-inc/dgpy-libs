@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
 from itertools import chain
+from os import PathLike
 from pathlib import Path
 from typing import Dict, Iterable, Tuple, Union
 
@@ -8,7 +9,7 @@ import numpy as np
 
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
-FsPath = Union[str, Path]
+FsPath = Union[str, Path, PathLike]
 
 __all__ = (
     "__h5py_version__",
@@ -73,7 +74,7 @@ def attrs_gen_from_fspath(
     """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
 
     Args:
-        fspath (str): fspath to h5 format file
+        fspath (FsPath): fspath to h5 format file
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples
@@ -88,7 +89,7 @@ def h5_attrs_gen_from_fspath(
     """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
 
     Args:
-        fspath (str): fspath to h5 format file
+        fspath (FsPath): fspath to h5 format file
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples
