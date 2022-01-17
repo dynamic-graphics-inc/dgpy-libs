@@ -15,10 +15,10 @@ from anyio._core._fileio import (  # type: ignore[attr-defined]
 from xtyping import Generic, OpenBinaryMode, OpenTextMode, Optional
 
 
-class AsyncFileCtx(Generic[AnyStr]):
+class AsyncFileContextManager(Generic[AnyStr]):
     __slots__ = ("_coro", "_obj")
-    _obj: Optional[AsyncFile[AnyStr]] = None
     _coro: Awaitable[AsyncFile[AnyStr]]
+    _obj: Optional[AsyncFile[AnyStr]]
 
     def __init__(self, coro: Awaitable[AsyncFile[AnyStr]]):
         self._coro = coro
@@ -28,7 +28,7 @@ class AsyncFileCtx(Generic[AnyStr]):
     def obj(self) -> AsyncFile[AnyStr]:
         if self._obj is not None:
             return self._obj
-        raise RuntimeError("AsyncFileCtx not initialized")
+        raise RuntimeError("AsyncFileContextManager not initialized")
 
     async def init_async(self) -> AsyncFile[AnyStr]:
         if self._obj is None:
@@ -61,7 +61,7 @@ def aiopen(  # type: ignore[misc]
     newline: Optional[str] = ...,
     closefd: bool = ...,
     opener: Optional[Callable[[str, int], int]] = ...,
-) -> AsyncFileCtx[bytes]:
+) -> AsyncFileContextManager[bytes]:
     ...
 
 
@@ -75,7 +75,7 @@ def aiopen(
     newline: Optional[str] = ...,
     closefd: bool = ...,
     opener: Optional[Callable[[str, int], int]] = ...,
-) -> AsyncFileCtx[str]:
+) -> AsyncFileContextManager[str]:
     ...
 
 
@@ -88,8 +88,8 @@ def aiopen(
     newline: Optional[str] = None,
     closefd: bool = True,
     opener: Optional[Callable[[str, int], int]] = None,
-) -> AsyncFileCtx:
-    return AsyncFileCtx(
+) -> AsyncFileContextManager:
+    return AsyncFileContextManager(
         coro=open_file(  # type: ignore
             file=file,
             mode=mode,
