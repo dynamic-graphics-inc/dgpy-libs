@@ -124,7 +124,8 @@ def _mypy(session):
         "mypy",
         "--show-error-codes",
         "--config-file",
-        "./mypy.ini",
+        # "./mypy.ini",
+        "./pyproject.toml",
         *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el],
     )
 

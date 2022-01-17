@@ -184,6 +184,7 @@ warn_return_any = true
 ignore_missing_imports = true
 implicit_reexport = false
 strict_equality = true
+show_error_context = true
 
 
 [tool.pyright]
