@@ -53,7 +53,7 @@ class AsyncFileCtx(Generic[AnyStr]):
 
 @overload
 def aiopen(  # type: ignore[misc]
-    file: Union[str, PathLike, int],
+    file: Union[str, PathLike[str], int],
     mode: OpenBinaryMode = ...,
     buffering: int = ...,
     encoding: Optional[str] = ...,
@@ -67,7 +67,7 @@ def aiopen(  # type: ignore[misc]
 
 @overload
 def aiopen(
-    file: Union[str, PathLike, int],
+    file: Union[str, PathLike[str], int],
     mode: OpenTextMode = ...,
     buffering: int = ...,
     encoding: Optional[str] = ...,
