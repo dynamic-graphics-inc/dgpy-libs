@@ -118,10 +118,15 @@ combine_as_imports = true
 use_parentheses = true
 known_first_party = [
     "aiopen",
+    "asyncify",
     "funkify",
-    "lager",
-    "requires",
+    "h5",
     "jsonbourne",
+    "lager",
+    "listless",
+    "requires",
+    "shellfish",
+    "xtyping",
 ]
 known_third_party = [
     "pytest",
