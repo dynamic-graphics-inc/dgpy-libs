@@ -9,13 +9,13 @@
 
 import os
 
+from asyncio import run as aiorun
 from os import environ, mkdir, path, sep
 from pathlib import Path
 from typing import Set
 
 import pytest
 
-from dgpy import aio
 from shellfish import fs, sh
 
 PWD = path.split(path.realpath(__file__))[0]
@@ -243,7 +243,7 @@ def test_sh_ls_files_n_ls_dirs(tmp_path: Path) -> None:
 def test_do_and_do_async():
     sh.cd(PWD)
     proc_sync = sh.do(["ls"])
-    proc_async = aio.run(sh.do_async(["ls"]))
+    proc_async = aiorun(sh.do_async(["ls"]))
     assert proc_sync.stdout == proc_async.stdout
     assert proc_sync.async_proc is False
     assert proc_async.async_proc
