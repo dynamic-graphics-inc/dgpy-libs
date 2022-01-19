@@ -91,6 +91,12 @@ requires_pydantic = Requirement(
     conda=True,
     conda_forge=True,
 )
+requires_anyio = Requirement(
+    _import="anyio",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
 requires_httpx = Requirement(
     _import="httpx",
     pip=True,
