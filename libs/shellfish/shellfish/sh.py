@@ -48,11 +48,10 @@ from typing import (
 )
 
 from asyncify import asyncify
+from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
-
-from jsonbourne.pydantic import JsonBaseModel
 
 __all__ = (
     "Done",

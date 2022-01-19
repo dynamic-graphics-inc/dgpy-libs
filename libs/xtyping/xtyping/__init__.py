@@ -89,6 +89,7 @@ from typing_extensions import (
     runtime,
     runtime_checkable,
 )
+
 from xtyping._meta import __version__
 from xtyping.shed import (
     _DT,

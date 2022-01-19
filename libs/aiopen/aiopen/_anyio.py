@@ -12,6 +12,7 @@ from anyio._core._fileio import (  # type: ignore[attr-defined]
     PathLike,
     open_file,
 )
+
 from xtyping import Generic, OpenBinaryMode, OpenTextMode, Optional
 
 
