@@ -64,6 +64,11 @@ jobs:
           cd libs/requires
           poetry run pytest tests
 
+      - name: test shellfish
+        run: |
+          cd libs/shellfish
+          poetry run pytest --doctest-modules tests shellfish
+
   test-aiopen:
     runs-on: ubuntu-latest
     steps:

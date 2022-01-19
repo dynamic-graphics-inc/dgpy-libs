@@ -8,14 +8,15 @@
 # =============================================================================
 
 import os
+
 from os import environ, mkdir, path, sep
 from pathlib import Path
+from typing import Set
 
 import pytest
 
 from dgpy import aio
-from shellfish import sh
-from shellfish.fs import sstring, files_gen
+from shellfish import fs, sh
 
 PWD = path.split(path.realpath(__file__))[0]
 
@@ -24,10 +25,10 @@ def mk_dummy_dir() -> None:
     os.makedirs(os.path.join("dir", "a", "b", "c"), exist_ok=True)
     os.makedirs(os.path.join("dir", "a", "b", "d"), exist_ok=True)
     os.makedirs(os.path.join("dir", "e", "f"), exist_ok=True)
-    sstring(os.path.join("dir", "a", "b", "c", "uno.txt"), "uno")
-    sstring(os.path.join("dir", "a", "b", "dos.txt"), "dos")
-    sstring(os.path.join("dir", "a", "b", "d", "three.txt"), "three")
-    sstring(os.path.join("dir", "e", "f", "quatro.txt"), "four")
+    fs.sstring(os.path.join("dir", "a", "b", "c", "uno.txt"), "uno")
+    fs.sstring(os.path.join("dir", "a", "b", "dos.txt"), "dos")
+    fs.sstring(os.path.join("dir", "a", "b", "d", "three.txt"), "three")
+    fs.sstring(os.path.join("dir", "e", "f", "quatro.txt"), "four")
 
 
 def test_mv_uno(tmp_path: Path) -> None:
@@ -46,15 +47,15 @@ def test_mv_uno(tmp_path: Path) -> None:
     for f in filepath_parts:
         filepath = path.join(tmp_path, *f)
         sh.touch(filepath)
-    files = list(sorted(files_gen(tmp_path)))
+    files = sorted(fs.files_gen(tmp_path))
     sh.cd(tmp_path)
     mkdir("out")
     sh.mv("dir", "out")
-    files = list(
-        sorted((e.replace(str(tmp_path), "").strip(sep) for e in files_gen(tmp_path)))
+    files = sorted(
+        (e.replace(str(tmp_path), "").strip(sep) for e in fs.files_gen(tmp_path))
     )
 
-    expected = set(path.join("out", *f) for f in filepath_parts)
+    expected: Set[str] = {path.join("out", *f) for f in filepath_parts}
     got = set(files)
     assert expected == got
 
@@ -75,16 +76,18 @@ def test_mv_multi(tmp_path: Path) -> None:
     for f in filepath_parts:
         filepath = path.join(tmp_path, *f)
         sh.touch(filepath)
-    files = list(sorted(files_gen(tmp_path)))
+    files = sorted(fs.files_gen(tmp_path))
     sh.cd(tmp_path)
     mkdir("out")
     sh.mv("dir/*", "out")
-    files = list(
-        sorted((e.replace(str(tmp_path), "").strip(sep) for e in files_gen(tmp_path)))
+    files = sorted(
+        (e.replace(str(tmp_path), "").strip(sep) for e in fs.files_gen(tmp_path))
     )
-    expected = set(
+
+    expected = {
         path.join("out", *f).replace(sep + "dir" + sep, sep) for f in filepath_parts
-    )
+    }
+
     got = set(files)
     assert expected == got
 
@@ -224,9 +227,9 @@ def test_sh_ls_files_n_ls_dirs(tmp_path: Path) -> None:
     os.makedirs("b", exist_ok=True)
     os.makedirs("c", exist_ok=True)
     os.makedirs("herm", exist_ok=True)
-    sstring("f1.txt", "f1")
-    sstring("f2.txt", "f2")
-    sstring("f3.txt", "f3")
+    fs.sstring("f1.txt", "f1")
+    fs.sstring("f2.txt", "f2")
+    fs.sstring("f3.txt", "f3")
     files_abs, dirs_abs = sh.ls_files_dirs(tmp_path, abspath=True)
     files_not_abs, dirs_not_abs = sh.ls_files_dirs(tmp_path, abspath=False)
     _f1 = [os.path.split(el)[-1] for el in files_abs]
@@ -236,6 +239,7 @@ def test_sh_ls_files_n_ls_dirs(tmp_path: Path) -> None:
     assert _f1 == _f2
     assert _d1 == _d2
 
+
 def test_do_and_do_async():
     sh.cd(PWD)
     proc_sync = sh.do(["ls"])
@@ -243,5 +247,6 @@ def test_do_and_do_async():
     assert proc_sync.stdout == proc_async.stdout
     assert proc_sync.async_proc is False
     assert proc_async.async_proc
+
 
 #
