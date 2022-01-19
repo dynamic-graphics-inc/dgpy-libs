@@ -35,3 +35,24 @@ pytest = "^6.2.2"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "--strict-config",
+    "--strict-markers",
+    "--doctest-modules",
+    "--disable-warnings"
+]
+xfail_strict = true
+filterwarnings = [
+    "error",
+    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+    "ignore::RuntimeWarning",
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+    "ignore::DeprecationWarning"
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "timeout",
+]
