@@ -752,6 +752,7 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
         >>> fspath = "file_lines_gen.doctest.txt"
         >>> from shellfish.fs import wstring
         >>> wstring(fspath, string)
+        17
         >>> for file_line in file_lines_gen(fspath):
         ...     file_line
         '1\n'
@@ -933,15 +934,6 @@ def filecmp(
     )
 
 
-# IO function aliases
-lbytes = rbin = lbin = rbytes
-sbytes = wbin = sbin = wbytes
-lstring = rstr = lstr = rstring
-sstring = wstr = sstr = wstring
-lbytes_gen = rbin_gen = rbytes_gen
-sbytes_gen = wbin_gen = wbytes_gen
-
-
 def shebang(fspath: FsPath) -> Union[None, str]:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
@@ -966,6 +958,15 @@ def shebang(fspath: FsPath) -> Union[None, str]:
     with open(fspath, "r") as f:
         first = f.readline().replace("\r\n", "\n").strip("\n")
         return first if "#!" in first[:2] else None
+
+
+# IO function aliases
+lbytes = rbin = lbin = rbytes
+sbytes = wbin = sbin = wbytes
+lstring = rstr = lstr = rstring
+sstring = wstr = sstr = wstring
+lbytes_gen = rbin_gen = rbytes_gen
+sbytes_gen = wbin_gen = wbytes_gen
 
 
 if __name__ == "__main__":

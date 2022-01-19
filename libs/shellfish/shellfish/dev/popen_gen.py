@@ -3,8 +3,9 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from queue import Empty, Queue
 from subprocess import PIPE, Popen
 
-from shellfish.sh import Stdio
 from xtyping import IO, Any, AnyStr, Iterable, Tuple
+
+from ..sh import Stdio
 
 __all__ = ("popen_gen",)
 

@@ -82,6 +82,8 @@ class Env(metaclass=_EnvObjMeta):
 
     Examples:
         >>> from os import environ
+        >>> if 'SOMEENVVARIABLE' in environ:
+        ...     del environ['SOMEENVVARIABLE']
         >>> environ.get('SOMEENVVARIABLE')  # Does not exist in environ
         >>> Env.SOMEENVVARIABLE
         >>> Env.SOMEENVVARIABLE = 'value'

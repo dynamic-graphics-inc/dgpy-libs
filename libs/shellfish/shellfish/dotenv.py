@@ -3,10 +3,11 @@
 import re
 
 from os import getcwd, path
+from shlex import split as shplit
 
-from shellfish.fs import rstring
-from shellfish.sh import shplit
 from xtyping import Dict, FsPath, Optional
+
+from .fs import rstring
 
 __all__ = (
     "strip_comments",
