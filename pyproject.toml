@@ -144,7 +144,13 @@ known_third_party = [
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+    "--doctest-modules",
+    "--disable-warnings"
+]
 testpaths = [
     "libs/aiopen",
     "libs/asyncify",
@@ -156,12 +162,7 @@ testpaths = [
     "libs/shellfish",
     "libs/xtyping",
 ]
-addopts = [
-    "--strict-config",
-    "--strict-markers",
-    "--doctest-modules",
-    "--disable-warnings"
-]
+
 xfail_strict = true
 filterwarnings = [
     "error",
