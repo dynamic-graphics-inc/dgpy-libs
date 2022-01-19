@@ -21,7 +21,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "typing", "dgpy", "shell", "filesystem"
+    "dgpy", "shell", "fs", "filesystem", "typed"
 ]
 
 
