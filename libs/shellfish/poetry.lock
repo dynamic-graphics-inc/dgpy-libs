@@ -215,7 +215,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "a88ad66d5723969de74abcf8fa5ff1e52b4ce9554c9cd1fd55a3605fa528b334"
+content-hash = "5ebea0ed0e4083b0f6430aeab9d466250d5b6f94815ce2d65b43bb32c9de5662"
 
 [metadata.files]
 asyncify = [
