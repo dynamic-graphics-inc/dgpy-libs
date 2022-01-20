@@ -7,13 +7,29 @@ import sys
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
 from inspect import isawaitable
+from typing import AsyncIterable, AsyncIterator, Iterable
 
 from xtyping import Any, Awaitable, Callable, Optional, ParamSpec, TypeVar, Union, cast
 
 P = ParamSpec("P")
 T = TypeVar("T")
 
-__all__ = ("asyncify", "run", "await_or_return", "is_async")
+__all__ = ("aiterable", "asyncify", "run", "await_or_return", "is_async")
+
+
+def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
+    """Convert any-iterable to an async iterator"""
+    if isinstance(it, AsyncIterator):
+        return it
+
+    if isinstance(it, AsyncIterable):
+        return it.__aiter__()
+
+    async def gen() -> AsyncIterator[T]:
+        for item in cast(Iterable[T], it):
+            yield item
+
+    return gen()
 
 
 def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:

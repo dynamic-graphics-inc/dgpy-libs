@@ -1,27 +1,29 @@
 # -*- coding: utf-8 -*-
 import os
 
-from asyncify.aios import aios_path
+from asyncify.aios import _path
 from asyncify.core import asyncify
 
 __all__ = (
-    "stat",
-    "rename",
+    "makedirs",
+    "mkdir",
+    "path",
+    "remove",
+    "removedirs",
     "rename",
     "replace",
-    "mkdir",
-    "makedirs",
     "rmdir",
-    "removedirs",
-    "path",
+    "stat",
 )
 
-path = aios_path
-stat = asyncify(os.stat)
+path = _path
+
+makedirs = asyncify(os.makedirs)
 rename = asyncify(os.rename)
 replace = asyncify(os.replace)
 remove = asyncify(os.remove)
-mkdir = asyncify(os.mkdir)
-makedirs = asyncify(os.makedirs)
-rmdir = asyncify(os.rmdir)
 removedirs = asyncify(os.removedirs)
+mkdir = asyncify(os.mkdir)
+rmdir = asyncify(os.rmdir)
+stat = asyncify(os.stat)
+lstat = asyncify(os.lstat)

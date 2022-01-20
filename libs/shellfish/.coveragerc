@@ -17,3 +17,5 @@ exclude_lines =
     if __name__ == .__main__.:
     if sys.version_info < (3, 7):
     class BaseAsync:
+    class LIN:
+    class WIN:

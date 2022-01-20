@@ -6,22 +6,24 @@ from asyncify.core import asyncify
 
 __all__ = (
     "exists",
-    "isfile",
-    "isdir",
-    "getsize",
-    "getmtime",
     "getatime",
     "getctime",
+    "getmtime",
+    "getsize",
+    "isdir",
+    "isfile",
+    "islink",
     "samefile",
     "sameopenfile",
 )
 
 exists = asyncify(path.exists)
-isfile = asyncify(path.isfile)
-isdir = asyncify(path.isdir)
-getsize = asyncify(path.getsize)
-getmtime = asyncify(path.getmtime)
 getatime = asyncify(path.getatime)
 getctime = asyncify(path.getctime)
+getmtime = asyncify(path.getmtime)
+getsize = asyncify(path.getsize)
+isdir = asyncify(path.isdir)
+isfile = asyncify(path.isfile)
+islink = asyncify(path.islink)
 samefile = asyncify(path.samefile)
 sameopenfile = asyncify(path.sameopenfile)

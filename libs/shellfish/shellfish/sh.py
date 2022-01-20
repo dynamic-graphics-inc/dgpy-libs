@@ -2197,7 +2197,7 @@ def ls_files_dirs(
             is a list of the directories
 
     """
-    dir_items = fs.scandir_list(dirpath)
+    dir_items = list(fs.scandir_gen(dirpath, files=True, dirs=True))
     dir_dir_entries = (el for el in dir_items if el.is_dir())
     file_dir_entries = (el for el in dir_items if el.is_file())
     if not abspath:

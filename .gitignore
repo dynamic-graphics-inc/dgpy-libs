@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.doctest.txt
 
 *_tests/
 *.bak/
@@ -120,8 +121,8 @@ node_modules/
 *~
 .*.sw[po]
 scratch/
-.pytype/ 
-mypy_reports/ 
+.pytype/
+mypy_reports/
 pythonenv3.8/
 .idea/
 monkeytype.sqlite3

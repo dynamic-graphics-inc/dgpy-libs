@@ -15,6 +15,7 @@ from os import (
 from pathlib import Path
 from time import time
 
+from asyncify import aios
 from xtyping import (
     Any,
     Callable,
@@ -50,6 +51,7 @@ __all__ = (
     "lbin",
     "lbytes",
     "lbytes_gen",
+    "listdir_gen",
     "lstr",
     "lstring",
     "path_gen",
@@ -61,6 +63,7 @@ __all__ = (
     "rstring",
     "sbin",
     "sbytes",
+    "scandir_gen",
     "scandir_list",
     "sep_join",
     "sep_lstrip",
@@ -84,17 +87,17 @@ def fspath(fspath: FsPath) -> str:
     return _fspath(fspath)
 
 
-def is_file(fspath: FsPath) -> bool:
+def isfile(fspath: FsPath) -> bool:
     """Return True if the given path is a file; False otherwise"""
     return path.isfile(_fspath(fspath))
 
 
-def is_dir(fspath: FsPath) -> bool:
+def isdir(fspath: FsPath) -> bool:
     """Return True if the given path is a directory; False otherwise"""
     return path.isdir(_fspath(fspath))
 
 
-def is_link(fspath: FsPath) -> bool:
+def islink(fspath: FsPath) -> bool:
     """Return True if the given path is a link; False otherwise"""
     return path.islink(_fspath(fspath))
 
@@ -104,9 +107,33 @@ def exists(fspath: FsPath) -> bool:
     return path.exists(_fspath(fspath))
 
 
-isfile = is_file
-isdir = is_dir
-islink = is_link
+is_dir = isdir
+is_file = isfile
+is_link = islink
+
+
+async def isfile_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; False otherwise"""
+    return await aios.path.isfile(_fspath(fspath))
+
+
+async def isdir_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; False otherwise"""
+    return await aios.path.isfile(_fspath(fspath))
+
+
+async def islink_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a link; False otherwise"""
+    return await aios.path.islink(_fspath(fspath))
+
+
+async def exists_async(fspath: FsPath) -> bool:
+    return await aios.path.exists(_fspath(fspath))
+
+
+is_dir_async = isdir_async
+is_file_async = isfile_async
+is_link_async = islink_async
 
 
 def file_size(fspath: FsPath) -> int:
@@ -138,6 +165,125 @@ def scandir_list(dirpath: FsPath = ".") -> List[DirEntry]:
 
     """
     return list(_scandir(_fspath(dirpath)))
+
+
+def scandir_gen(
+    fspath: FsPath = ".",
+    *,
+    follow_symlinks: bool = True,
+    files: bool = True,
+    dirs: bool = True,
+    symlinks: bool = True,
+) -> Iterator[DirEntry]:
+    """Return an iterator of os.DirEntry objects
+
+    Args:
+        fspath: (FsPath): dirpath to look through
+        follow_symlinks (bool): follow symlinks when checking for dirs and files
+        files (bool): include files
+        dirs (bool): include directories
+        symlinks (bool): include symlinks
+
+    Returns:
+        Iterator[DirEntry]: Iterator of os.DirEntry objects
+
+    """
+    if files and dirs and symlinks:  # all
+        return (el for el in scandir(fspath))
+    elif files and not dirs and not symlinks:  # files
+        return (
+            el for el in scandir(fspath) if el.is_file(follow_symlinks=follow_symlinks)
+        )
+    elif not files and dirs and not symlinks:  # dirs
+        return (
+            el for el in scandir(fspath) if el.is_dir(follow_symlinks=follow_symlinks)
+        )
+    elif not files and not dirs and symlinks:  # symlinks
+        return (el for el in scandir(fspath) if el.is_symlink())
+    elif files and dirs and not symlinks:  # files and dirs
+        return (el for el in scandir(fspath) if not el.is_symlink())
+    elif files and not dirs and symlinks:  # files and symlinks
+        return (
+            el
+            for el in scandir(fspath)
+            if not el.is_dir(follow_symlinks=follow_symlinks)
+        )
+    elif not files and dirs and symlinks:  # dirs and symlinks
+        return (
+            el
+            for el in scandir(fspath)
+            if not el.is_file(follow_symlinks=follow_symlinks)
+        )
+    raise ValueError(
+        f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
+    )
+
+
+def listdir_gen(
+    fspath: FsPath = ".",
+    *,
+    abspath: bool = False,
+    follow_symlinks: bool = True,
+    files: bool = True,
+    dirs: bool = True,
+    symlinks: bool = True,
+) -> Iterator[Path]:
+    r"""Return an iterator of strings from DirEntries
+
+    Examples
+        >>> tmpdir = 'listdir_gen.doctest'
+        >>> from shellfish import sh
+        >>> from os import makedirs, path, chdir
+        >>> from shutil import rmtree
+        >>> makedirs(tmpdir, exist_ok=True)
+        >>> sh.cd(tmpdir)
+        >>> filepath_parts = [
+        ...     ("dir", "file1.txt"),
+        ...     ("dir", "file2.txt"),
+        ...     ("dir", "file3.txt"),
+        ...     ("dir", "data1.json"),
+        ...     ("dir", "dir2", "file1.txt"),
+        ...     ("dir", "dir2", "file2.txt"),
+        ...     ("dir", "dir2", "file3.txt"),
+        ...     ("dir", "dir2a", "file1.txt"),
+        ...     ("dir", "dir2a", "file2.txt"),
+        ...     ("dir", "dir2a", "file3.txt"),
+        ... ]
+        >>> from shellfish.fs import touch
+        >>> expected_files = []
+        >>> for f in filepath_parts:
+        ...     fspath = path.join(*f)
+        ...     fspath = path.join(tmpdir, fspath)
+        ...     dirpath = path.dirname(fspath)
+        ...     expected_files.append(fspath)
+        ...     makedirs(dirpath, exist_ok=True)
+        ...     touch(fspath)
+        >>> dirpath = path.join(tmpdir, 'dir')
+        >>> dirpath.replace("\\", "/")
+        'listdir_gen.doctest/dir'
+        >>> sorted(listdir_gen(dirpath, dirs=False, symlinks=False))
+        ['data1.json', 'file1.txt', 'file2.txt', 'file3.txt']
+        >>> abspaths = sorted(listdir_gen(dirpath, abspath=True, dirs=False, symlinks=False))
+        >>> for abspath in [p.replace("\\", "/") for p in abspaths]:
+        ...    print(abspath)
+        listdir_gen.doctest/dir/data1.json
+        listdir_gen.doctest/dir/file1.txt
+        listdir_gen.doctest/dir/file2.txt
+        listdir_gen.doctest/dir/file3.txt
+        >>> rmtree(tmpdir)
+
+    """
+    _attr = "path" if abspath else "name"
+    return (
+        getattr(el, _attr)
+        for el in scandir_gen(
+            fspath,
+            follow_symlinks=follow_symlinks,
+            files=files,
+            dirs=dirs,
+            symlinks=symlinks,
+        )
+    )
 
 
 def filepath_mtimedelta_sec(filepath: FsPath) -> float:
@@ -1003,7 +1149,6 @@ lstring = rstr = lstr = rstring
 sstring = wstr = sstr = wstring
 lbytes_gen = rbin_gen = rbytes_gen
 sbytes_gen = wbin_gen = wbytes_gen
-
 
 if __name__ == "__main__":
     from doctest import testmod

@@ -50,7 +50,7 @@ mypy:
 ###############
 .PHONY:test
 test:
-	pytest --doctest-modules tests $(PKG_NAME)
+	pytest --doctest-modules tests $(PKG_NAME) -x --cov=shellfish
 
 .PHONY:testcov
 testcov:
