@@ -3,24 +3,13 @@
 import os
 
 from os import fspath as _fspath
-from typing import AsyncIterable, cast
+from typing import AsyncIterable
 
-from typing_extensions import AsyncGenerator, AsyncIterator
+from typing_extensions import AsyncIterator
 
 from aiopen import aiopen
 from asyncify import aios
-from xtyping import (
-    Any,
-    Callable,
-    FsPath,
-    Iterable,
-    Iterator,
-    List,
-    Literal,
-    Optional,
-    Tuple,
-    Union,
-)
+from xtyping import FsPath, Iterable, Union
 
 
 async def isfile_async(fspath: FsPath) -> bool:
@@ -55,6 +44,7 @@ async def lstat_async(fspath: FsPath) -> os.stat_result:
 is_dir_async = isdir_async
 is_file_async = isfile_async
 is_link_async = islink_async
+
 
 # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO #
 async def wbytes_async(
@@ -329,7 +319,6 @@ async def wstring_async(
 
 
 if __name__ == "__main__":
-
     import doctest
 
     doctest.testmod()
