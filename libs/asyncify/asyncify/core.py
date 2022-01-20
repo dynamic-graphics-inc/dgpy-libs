@@ -92,7 +92,7 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
     asyncio.set_event_loop(loop)
     try:
         if debug is not None:
-            loop.set_debug(debug)
+            loop.set_debug(debug)  # pragma: no cover
         return loop.run_until_complete(aw)
     finally:
         loop.close()
@@ -123,8 +123,7 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
     """
     if sys.version_info >= (3, 7):
         return asyncio.run(aw, debug=debug)
-
-    return _run(aw=aw, debug=debug)
+    return _run(aw=aw, debug=debug)  # pragma: no cover
 
 
 def is_async(obj: Any) -> bool:

@@ -23,10 +23,10 @@ def asyncify(
     """asyncify decorator/wrapper that for use w/ anyio"""
 
     @wraps(funk)
-    async def _asyncified(*args: P.args, **kwargs: P.kwargs) -> R:
+    async def _async_fn(*args: P.args, **kwargs: P.kwargs) -> R:
         partial_f = partial(funk, *args, **kwargs)
         return await to_thread.run_sync(
             partial_f, cancellable=cancellable, limiter=limiter
         )
 
-    return _asyncified
+    return _async_fn
