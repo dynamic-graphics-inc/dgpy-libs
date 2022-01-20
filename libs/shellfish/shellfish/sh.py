@@ -48,7 +48,6 @@ from typing import (
 )
 
 from asyncify import asyncify
-from funkify import funkify
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish.process import is_win
@@ -2234,7 +2233,6 @@ def source(filepath: FsPath, _globals: bool = True) -> None:
         exec(string)
 
 
-# funkify(do, key="shellfish.sh")
 if __name__ == "__main__":
     from doctest import testmod
 
