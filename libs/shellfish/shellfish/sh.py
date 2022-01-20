@@ -810,7 +810,6 @@ async def _do_async(
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
                 shell=True,
-                loop=loop,
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )
@@ -823,8 +822,6 @@ async def _do_async(
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
-                shell=False,  # type: ignore
-                loop=loop,
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )

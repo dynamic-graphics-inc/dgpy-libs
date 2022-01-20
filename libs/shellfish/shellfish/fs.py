@@ -32,6 +32,7 @@ __all__ = (
     "dirpath_gen",
     "dirs_gen",
     "exists",
+    "extension",
     "file_lines_gen",
     "file_size",
     "filecmp",
@@ -61,6 +62,11 @@ __all__ = (
     "sbin",
     "sbytes",
     "scandir_list",
+    "sep_join",
+    "sep_lstrip",
+    "sep_rstrip",
+    "sep_split",
+    "sep_strip",
     "shebang",
     "sstr",
     "sstring",
@@ -894,6 +900,36 @@ def wstring(
         bites=string.encode(encoding),
         append=append,
     )
+
+
+def extension(fspath: str) -> str:
+    """Return the extension for a fspath"""
+    return "".join(Path(fspath).suffixes).lstrip(".")
+
+
+def sep_split(fspath: FsPath) -> Tuple[str, ...]:
+    """Split a string on the current platform os.path.sep value"""
+    return tuple((el for el in str(fspath).split(sep) if el != sep and el != ""))
+
+
+def sep_join(path_strings: Iterator[str]) -> str:
+    """Join iterable of strings on the current platform os.path.sep value"""
+    return sep.join(path_strings)
+
+
+def sep_strip(fspath: FsPath) -> str:
+    """Strip a string of the current platform's os.path.sep value"""
+    return str(fspath).strip(sep)
+
+
+def sep_lstrip(fspath: FsPath) -> str:
+    """Left-strip a string of the current platform's os.path.sep value"""
+    return str(fspath).lstrip(sep)
+
+
+def sep_rstrip(fspath: FsPath) -> str:
+    """Right-strip a string of the current platform's os.path.sep value"""
+    return str(fspath).rstrip(sep)
 
 
 def filecmp(

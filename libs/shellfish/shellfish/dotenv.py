@@ -9,12 +9,7 @@ from xtyping import Dict, FsPath, Optional
 
 from .fs import rstring
 
-__all__ = (
-    "strip_comments",
-    "parse_dotenv",
-    "ldotenv",
-    "parse_env",
-)
+__all__ = ("ldotenv", "parse_dotenv", "parse_env", "strip_comments")
 
 
 def strip_comments(string: str) -> str:

@@ -10,6 +10,7 @@ from typing import Dict, Iterator, Optional
 PYTHON_IMPLEMENTATION = platform.python_implementation()
 SYS_PATH_SEP: str = os.pathsep
 
+
 __all__ = (
     "ENV",
     "Env",
@@ -26,6 +27,8 @@ __all__ = (
     "ismac",
     "iswin",
     "iswsl",
+    "opsys",
+    "sys_path_sep",
 )
 
 
