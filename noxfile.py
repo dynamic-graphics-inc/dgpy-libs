@@ -97,9 +97,7 @@ def flake(session):
 
 
 def _mypy(session):
-    session.install("mypy")
-    session.install("typing-extensions")
-    session.install("pydantic")
+    session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
     # session.run(
     #     'mypy',
