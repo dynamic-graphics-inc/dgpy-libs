@@ -7,13 +7,17 @@ import sys
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
 from inspect import isawaitable
-from typing import AsyncIterable, AsyncIterator, Coroutine, Dict, Iterable
 
 from xtyping import (
     TYPE_CHECKING,
     Any,
+    AsyncIterable,
+    AsyncIterator,
     Awaitable,
     Callable,
+    Coroutine,
+    Dict,
+    Iterable,
     Optional,
     ParamSpec,
     TypeVar,
@@ -21,24 +25,24 @@ from xtyping import (
     cast,
 )
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from anyio import CapacityLimiter
 else:
     CapacityLimiter = None
 
+__all__ = (
+    "ANYIO",
+    "aiterable",
+    "anyio_asyncify",
+    "anyio_run",
+    "asyncify",
+    "await_or_return",
+    "is_async",
+    "run",
+)
 P = ParamSpec("P")
 T = TypeVar("T")
 T_Retval = TypeVar("T_Retval")
-
-__all__ = (
-    "aiterable",
-    "asyncify",
-    "run",
-    "await_or_return",
-    "is_async",
-    "anyio_asyncify",
-    "anyio_run",
-)
 ANYIO = False
 try:
     from asyncify._anyio import anyio_run, asyncify as anyio_asyncify
