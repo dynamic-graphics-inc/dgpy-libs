@@ -1,6 +1,6 @@
 [[package]]
 name = "asyncify"
-version = "0.6.0"
+version = "0.7.0"
 description = "sync 2 async"
 category = "main"
 optional = false
@@ -75,7 +75,7 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.20.1"
+version = "0.20.3"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -215,12 +215,12 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "5ebea0ed0e4083b0f6430aeab9d466250d5b6f94815ce2d65b43bb32c9de5662"
+content-hash = "b5df3e822b5433cf37d2e8a7c187ab91b798357217e3ce485597417da6bd9bf3"
 
 [metadata.files]
 asyncify = [
-    {file = "asyncify-0.6.0-py3-none-any.whl", hash = "sha256:45ebbbc76622820130c484ed1b924195406c03eacc8b86c249add7e1ae680b32"},
-    {file = "asyncify-0.6.0.tar.gz", hash = "sha256:7a3006efc01c2af7457130d252815b2505bb86c42a90771057195d6dfc1538a1"},
+    {file = "asyncify-0.7.0-py3-none-any.whl", hash = "sha256:90877fce0c7a3a405220122802affc8fc85750bf36431354e5bef8499e96b249"},
+    {file = "asyncify-0.7.0.tar.gz", hash = "sha256:a5f7eda2702f665a10ada1fe732b8f2b60b70de60fc558d7d3f16466b2c987c5"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -247,8 +247,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.20.1-py3-none-any.whl", hash = "sha256:12da77ced3fd1848ec02d0483d336df1776a2afb5d76b8f14ec7c1fabf5284c8"},
-    {file = "jsonbourne-0.20.1.tar.gz", hash = "sha256:e05243f081b8230408b30f66954ba92fd47c8df21113cc80734e28a0efdf0e16"},
+    {file = "jsonbourne-0.20.3-py3-none-any.whl", hash = "sha256:1f61c76dab0524c6e298487d4f44d596ef6a789cc22cb2eeca1423e4e09a4b33"},
+    {file = "jsonbourne-0.20.3.tar.gz", hash = "sha256:8b080c5f61c566b1609222599b9574e1eeebdfe7f8a0d9c2b1eab39ab7b974d1"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
