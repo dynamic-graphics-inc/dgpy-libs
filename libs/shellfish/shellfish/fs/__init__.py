@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """file-system utils"""
-from itertools import chain
+from itertools import chain, count
 from os import (
     DirEntry,
     fspath as _fspath,
@@ -15,7 +15,44 @@ from os import (
 from pathlib import Path
 from time import time
 
-from asyncify import aios
+from jsonbourne import JSON
+from shellfish.fs.promises import (
+    exists_async as exists_async,
+    filesize_async as filesize_async,
+    is_dir_async as is_dir_async,
+    is_file_async as is_file_async,
+    is_link_async as is_link_async,
+    isdir_async as isdir_async,
+    isfile_async as isfile_async,
+    islink_async as islink_async,
+    lbytes_async as lbytes_async,
+    lbytes_gen_async as lbytes_gen_async,
+    ljson_async as ljson_async,
+    lstat_async as lstat_async,
+    lstr_async as lstr_async,
+    lstring_async as lstring_async,
+    rbin_async as rbin_async,
+    rbin_gen_async as rbin_gen_async,
+    rbytes_async as rbytes_async,
+    rbytes_gen_async as rbytes_gen_async,
+    rjson_async as rjson_async,
+    rstr_async as rstr_async,
+    rstring_async as rstring_async,
+    sbin_async as sbin_async,
+    sbytes_async as sbytes_async,
+    sbytes_gen_async as sbytes_gen_async,
+    sjson_async as sjson_async,
+    sstr_async as sstr_async,
+    sstring_async as sstring_async,
+    stat_async as stat_async,
+    wbin_async as wbin_async,
+    wbin_gen_async as wbin_gen_async,
+    wbytes_async as wbytes_async,
+    wbytes_gen_async as wbytes_gen_async,
+    wjson_async as wjson_async,
+    wstr_async as wstr_async,
+    wstring_async as wstring_async,
+)
 from xtyping import (
     Any,
     Callable,
@@ -27,58 +64,6 @@ from xtyping import (
     Optional,
     Tuple,
     Union,
-)
-
-__all__ = (
-    "dirpath_gen",
-    "dirs_gen",
-    "exists",
-    "extension",
-    "file_lines_gen",
-    "file_size",
-    "filecmp",
-    "filepath_gen",
-    "filepath_mtimedelta_sec",
-    "files_dirs_gen",
-    "files_gen",
-    "fspath",
-    "is_dir",
-    "is_file",
-    "is_link",
-    "isdir",
-    "isfile",
-    "islink",
-    "lbin",
-    "lbytes",
-    "lbytes_gen",
-    "listdir_gen",
-    "lstr",
-    "lstring",
-    "path_gen",
-    "rbin",
-    "rbin_gen",
-    "rbytes",
-    "rbytes_gen",
-    "rstr",
-    "rstring",
-    "sbin",
-    "sbytes",
-    "scandir_gen",
-    "scandir_list",
-    "sep_join",
-    "sep_lstrip",
-    "sep_rstrip",
-    "sep_split",
-    "sep_strip",
-    "shebang",
-    "sstr",
-    "sstring",
-    "touch",
-    "walk_gen",
-    "wbin",
-    "wbytes",
-    "wstr",
-    "wstring",
 )
 
 
@@ -112,28 +97,24 @@ is_file = isfile
 is_link = islink
 
 
-async def isfile_async(fspath: FsPath) -> bool:
-    """Return True if the given path is a file; False otherwise"""
-    return await aios.path.isfile(_fspath(fspath))
+def safepath(fspath: FsPath) -> str:
+    """Check if a file/dir path is save/unused; returns an unused path.
 
+    Args:
+        fspath: file-system path; file or directory path string or Path obj
 
-async def isdir_async(fspath: FsPath) -> bool:
-    """Return True if the given path is a file; False otherwise"""
-    return await aios.path.isfile(_fspath(fspath))
+    Returns:
+        str: file/dir path that does not exist and contains the given path
 
-
-async def islink_async(fspath: FsPath) -> bool:
-    """Return True if the given path is a link; False otherwise"""
-    return await aios.path.islink(_fspath(fspath))
-
-
-async def exists_async(fspath: FsPath) -> bool:
-    return await aios.path.exists(_fspath(fspath))
-
-
-is_dir_async = isdir_async
-is_file_async = isfile_async
-is_link_async = islink_async
+    """
+    path_str = str(fspath)
+    if path.exists(path_str):
+        f_bn, f_ext = path.splitext(path_str)
+        for n in count(1):
+            safe_save_path = f"{f_bn}_{str(n).zfill(3)}.{f_ext}"
+            if not path.exists(safe_save_path):
+                return safe_save_path
+    return path_str
 
 
 def file_size(fspath: FsPath) -> int:
@@ -983,7 +964,7 @@ def wbytes_gen(
     return nbytes_written
 
 
-def rstring(filepath: FsPath) -> str:
+def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     r"""Load/Read a string given a fspath
 
     Args:
@@ -1007,7 +988,7 @@ def rstring(filepath: FsPath) -> str:
     """
     _bytes = rbytes(filepath=filepath)
     try:
-        return _bytes.decode(encoding="utf-8")
+        return _bytes.decode(encoding=encoding)
     except UnicodeDecodeError:  # Catch the unicode decode error
         pass
     return _bytes.decode(encoding="latin2")
@@ -1046,6 +1027,116 @@ def wstring(
         bites=string.encode(encoding),
         append=append,
     )
+
+
+def wjson(
+    filepath: FsPath,
+    data: Any,
+    *,
+    fmt: bool = False,
+    pretty: bool = False,
+    sort_keys: bool = False,
+    append_newline: bool = False,
+    default: Optional[Callable[[Any], Any]] = None,
+    **kwargs: Any,
+) -> int:
+    """Save/Write json-serial-ize-able data to a fspath
+
+    Args:
+        filepath: fspath to write to
+        data (Any): json-serial-ize-able data
+        fmt (bool): Indented (2 spaces) or minify data (default=False)
+        pretty (bool): Indented (2 spaces) or minify data (default=False)
+        sort_keys (bool): Sort the data keys if the data is a dictionary.
+        append_newline (bool): Sort the data keys if the data is a dictionary.
+        default: default function hook
+
+    Returns:
+        int: Number of bytes written
+
+    Examples:
+        Imports:
+
+        >>> from shellfish.fs import rjson, wjson
+
+        Dictionaries:
+
+        >>> data = {'a': 1, 'b': 2, 'c': 3}
+        >>> fspath = "rjson_dict.doctest.json"
+        >>> wjson(fspath, data)
+        19
+        >>> rjson(fspath)
+        {'a': 1, 'b': 2, 'c': 3}
+        >>> import os; os.remove(fspath)
+
+        Lists:
+
+        >>> data = {'a': 1, 'b': 2, 'c': 3}
+        >>> data = list(data.items())
+        >>> data  # has tuples, but will be saved as strings
+        [('a', 1), ('b', 2), ('c', 3)]
+        >>> fspath = "rjson_dict.doctest.json"
+        >>> wjson(fspath, data)
+        25
+        >>> rjson(fspath)
+        [['a', 1], ['b', 2], ['c', 3]]
+        >>> os.remove(fspath)
+
+
+    """
+    return wbytes(
+        filepath=filepath,
+        bites=JSON.dumpb(
+            data=data,
+            fmt=fmt,
+            pretty=pretty,
+            append_newline=append_newline,
+            default=default,
+            sort_keys=sort_keys,
+            **kwargs,
+        ),
+    )
+
+
+def rjson(filepath: FsPath) -> Any:
+    """Load/Read-&-parse json data given a fspath
+
+    Args:
+        filepath: Filepath to load/read data from
+
+    Returns:
+        Parsed JSON data
+
+    Examples:
+        Imports:
+
+        >>> from shellfish.fs import rjson, wjson
+
+        Dictionaries:
+
+        >>> data = {'a': 1, 'b': 2, 'c': 3}
+        >>> fspath = "rjson_dict.doctest.json"
+        >>> wjson(fspath, data)
+        19
+        >>> rjson(fspath)
+        {'a': 1, 'b': 2, 'c': 3}
+        >>> import os; os.remove(fspath)
+
+        Lists:
+
+        >>> data = {'a': 1, 'b': 2, 'c': 3}
+        >>> data = list(data.items())
+        >>> data  # has tuples, but will be saved as strings
+        [('a', 1), ('b', 2), ('c', 3)]
+        >>> fspath = "rjson_dict.doctest.json"
+        >>> wjson(fspath, data)
+        25
+        >>> rjson(fspath)
+        [['a', 1], ['b', 2], ['c', 3]]
+        >>> os.remove(fspath)
+
+    """
+    return JSON.loads(lstring(filepath=filepath))  # type: ignore
 
 
 def extension(fspath: str) -> str:
@@ -1142,15 +1233,103 @@ def shebang(fspath: FsPath) -> Union[None, str]:
         return first if "#!" in first[:2] else None
 
 
-# IO function aliases
+# IO function aliases ~ for backwards compatibility and convenience
 lbytes = rbin = lbin = rbytes
 sbytes = wbin = sbin = wbytes
-lstring = rstr = lstr = rstring
-sstring = wstr = sstr = wstring
 lbytes_gen = rbin_gen = rbytes_gen
 sbytes_gen = wbin_gen = wbytes_gen
-
-if __name__ == "__main__":
-    from doctest import testmod
-
-    testmod()
+lstring = rstr = lstr = rstring
+sstring = wstr = sstr = wstring
+ljson = rjson
+sjson = wjson
+__all__ = (
+    "dirpath_gen",
+    "dirs_gen",
+    "exists",
+    "exists_async",
+    "extension",
+    "file_lines_gen",
+    "file_size",
+    "filecmp",
+    "filepath_gen",
+    "filepath_mtimedelta_sec",
+    "files_dirs_gen",
+    "files_gen",
+    "filesize_async",
+    "fspath",
+    "is_dir",
+    "is_dir_async",
+    "is_file",
+    "is_file_async",
+    "is_link",
+    "is_link_async",
+    "isdir",
+    "isdir_async",
+    "isfile",
+    "isfile_async",
+    "islink",
+    "islink_async",
+    "lbin",
+    "lbytes",
+    "lbytes_async",
+    "lbytes_gen",
+    "lbytes_gen_async",
+    "listdir_gen",
+    "ljson",
+    "ljson_async",
+    "lstat_async",
+    "lstr",
+    "lstr_async",
+    "lstring",
+    "lstring_async",
+    "path_gen",
+    "rbin",
+    "rbin_async",
+    "rbin_gen",
+    "rbin_gen_async",
+    "rbytes",
+    "rbytes_async",
+    "rbytes_gen",
+    "rbytes_gen_async",
+    "rjson",
+    "rjson_async",
+    "rstr",
+    "rstr_async",
+    "rstring",
+    "rstring_async",
+    "sbin",
+    "sbin_async",
+    "sbytes",
+    "sbytes_async",
+    "sbytes_gen",
+    "sbytes_gen_async",
+    "scandir_gen",
+    "scandir_list",
+    "sep_join",
+    "sep_lstrip",
+    "sep_rstrip",
+    "sep_split",
+    "sep_strip",
+    "shebang",
+    "sjson",
+    "sjson_async",
+    "sstr",
+    "sstr_async",
+    "sstring",
+    "sstring_async",
+    "stat_async",
+    "touch",
+    "walk_gen",
+    "wbin",
+    "wbin_async",
+    "wbin_gen_async",
+    "wbytes",
+    "wbytes_async",
+    "wbytes_gen_async",
+    "wjson",
+    "wjson_async",
+    "wstr",
+    "wstr_async",
+    "wstring",
+    "wstring_async",
+)
