@@ -6,7 +6,7 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import Any, AnyStr, Callable, List, Optional, Tuple, Type, Union
+from typing import Any, Callable, List, Optional, Tuple, Type, Union
 
 from jsonbourne.types import DumpableProtocol, JsonInterfaceProtocol
 
@@ -127,7 +127,7 @@ class JsonLibABC(ABC):
 
     @staticmethod
     @abstractmethod
-    def loads(string: AnyStr, **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
         ...
 
     @staticmethod
@@ -213,7 +213,7 @@ class JSON_STDLIB(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: AnyStr, **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
         return pyjson.loads(string, **kwargs)
 
     @staticmethod
@@ -291,7 +291,7 @@ class ORJSON(JsonLibABC):
         )
 
     @staticmethod
-    def loads(string: AnyStr, **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
         return orjson.loads(string)
 
     @staticmethod
@@ -374,7 +374,7 @@ class RAPIDJSON(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: AnyStr, **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
         return rapidjson.loads(string, **kwargs)
 
     @staticmethod
@@ -497,7 +497,7 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(self, string: AnyStr, **kwargs: Any) -> Any:
+    def loads(self, string: Union[bytes, str], **kwargs: Any) -> Any:
         return self._jsonlib.loads(string, **kwargs)
 
     def use_orjson(self) -> None:
@@ -579,7 +579,7 @@ def dumpb(
     )
 
 
-def loads(string: AnyStr, **kwargs: Any) -> Any:
+def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
     return JSONLIB.loads(string, **kwargs)
 
 

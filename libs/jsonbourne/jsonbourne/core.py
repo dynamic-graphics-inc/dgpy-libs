@@ -10,7 +10,6 @@ from pprint import pformat
 from types import ModuleType
 from typing import (
     Any,
-    AnyStr,
     Callable,
     Dict,
     Generic,
@@ -821,7 +820,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return cls(**data)
 
     @classmethod
-    def from_json(cls: Type[JsonObjT], json_string: AnyStr) -> JsonObjT:
+    def from_json(cls: Type[JsonObjT], json_string: Union[bytes, str]) -> JsonObjT:
         """Return a JsonObj object from a json string
 
         Args:
@@ -834,7 +833,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return cls._from_json(json_string)
 
     @classmethod
-    def _from_json(cls: Type[JsonObjT], json_string: AnyStr) -> JsonObjT:
+    def _from_json(cls: Type[JsonObjT], json_string: Union[bytes, str]) -> JsonObjT:
         """Return a JsonObj object from a json string
 
         Args:
@@ -1183,14 +1182,14 @@ class JSON(metaclass=JSONMeta):
         )
 
     @staticmethod
-    def loads(string: AnyStr, obj: bool = False, **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], obj: bool = False, **kwargs: Any) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
             return jsonify(jsonlib.loads(string, **kwargs))
         return jsonlib.loads(string, **kwargs)
 
     @staticmethod
-    def parse(string: AnyStr, obj: bool = True) -> Any:
+    def parse(string: Union[bytes, str], obj: bool = True) -> Any:
         """Parse JSON string/bytes and jsonify all dictionaries -> JsonObj"""
         if obj:
             return jsonify(jsonlib.loads(string))
