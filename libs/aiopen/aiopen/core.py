@@ -20,6 +20,7 @@ from os import PathLike
 from types import TracebackType
 from typing import (
     Any,
+    AnyStr,
     AsyncContextManager,
     Awaitable,
     Callable,
@@ -31,6 +32,9 @@ from typing import (
     cast,
 )
 
+from xtyping import ParamSpec
+
+P = ParamSpec("P")
 T = TypeVar("T")
 
 PathType = Union[str, PathLike]
@@ -39,19 +43,19 @@ _open = open
 __all__ = ("aiopen",)
 
 
-def aio_hoist(funk: Callable[..., T]) -> Callable[..., Awaitable[T]]:
+def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     @wraps(funk)
-    async def _async_funk(self: Any, *args: Any, **kwargs: Any) -> T:
+    async def _async_funk(self: Any, *args: P.args, **kwargs: P.kwargs) -> T:
         fn = getattr(self._file, funk.__name__)
         retval = await self._loop.run_in_executor(
             self._executor, partial(fn, *args, **kwargs)
         )
         return cast(T, retval)
 
-    return cast(Callable[..., Awaitable[T]], _async_funk)
+    return cast(Callable[P, Awaitable[T]], _async_funk)
 
 
-class AsyncBase(Generic[T]):
+class AsyncBase(Generic[AnyStr]):
     _file: Union[BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader]
     _loop: AbstractEventLoop
     _executor: Optional[BaseEventLoop] = None

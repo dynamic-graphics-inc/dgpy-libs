@@ -121,7 +121,7 @@ async def wbytes_async(
     _write_mode = "ab" if append else "wb"
     async with aiopen(filepath, _write_mode) as fd:
         nbytes = await fd.write(bites)
-    return nbytes
+    return int(nbytes)
 
 
 async def rbytes_async(filepath: FsPath) -> bytes:
