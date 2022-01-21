@@ -7,18 +7,88 @@ import sys
 from asyncio import AbstractEventLoop, get_event_loop
 from functools import partial, wraps
 from inspect import isawaitable
-from typing import AsyncIterable, AsyncIterator, Iterable
+from typing import AsyncIterable, AsyncIterator, Coroutine, Dict, Iterable
 
-from xtyping import Any, Awaitable, Callable, Optional, ParamSpec, TypeVar, Union, cast
+from xtyping import (
+    TYPE_CHECKING,
+    Any,
+    Awaitable,
+    Callable,
+    Optional,
+    ParamSpec,
+    TypeVar,
+    Union,
+    cast,
+)
+
+if TYPE_CHECKING:
+    from anyio import CapacityLimiter
+else:
+    CapacityLimiter = None
 
 P = ParamSpec("P")
 T = TypeVar("T")
+T_Retval = TypeVar("T_Retval")
 
-__all__ = ("aiterable", "asyncify", "run", "await_or_return", "is_async")
+__all__ = (
+    "aiterable",
+    "asyncify",
+    "run",
+    "await_or_return",
+    "is_async",
+    "anyio_asyncify",
+    "anyio_run",
+)
+ANYIO = False
+try:
+    from asyncify._anyio import anyio_run, asyncify as anyio_asyncify
+
+    ANYIO = True
+except ImportError:  # pragma: no cover
+
+    def anyio_asyncify(
+        funk: Callable[P, T],
+        *,
+        cancellable: bool = False,
+        limiter: Optional[CapacityLimiter] = None,
+    ) -> Callable[P, Awaitable[T]]:
+        raise ImportError("install anyio; `pip install anyio`")
+
+    def anyio_run(
+        func: Callable[..., Coroutine[Any, Any, T_Retval]],
+        *args: object,
+        backend: str = "asyncio",
+        backend_options: Optional[Dict[str, Any]] = None,
+    ) -> T_Retval:
+        raise ImportError("install anyio; `pip install anyio`")
 
 
 def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
-    """Convert any-iterable to an async iterator"""
+    """Convert any-iterable to an async iterator
+
+    Examples:
+        >>> from os import remove
+        >>> from asyncio import run
+        >>> plain_jane_list = list(range(10))
+        >>> async def consume_aiterable(it):
+        ...     stuff = []
+        ...     async for el in aiterable(it):
+        ...         stuff.append(el)
+        ...     return stuff
+        >>> run(consume_aiterable(plain_jane_list))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> async def async_gen():
+        ...     for b in range(10):
+        ...        yield b
+        >>> run(consume_aiterable(async_gen()))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> class AsyncIterable:
+        ...     def __aiter__(self):
+        ...         return async_gen()
+        >>> run(consume_aiterable(AsyncIterable()))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    """
     if isinstance(it, AsyncIterator):
         return it
 
@@ -115,7 +185,7 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
         asyncio.set_event_loop(None)
 
 
-def run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
+def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -178,3 +248,9 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
 
     """
     return await obj if isawaitable(obj) else obj  # type: ignore
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+"""aios = asyncio + os"""
 import os
 
+from asyncify import asyncify
 from asyncify.aios import _path
-from asyncify.core import asyncify
 
 __all__ = (
     "makedirs",

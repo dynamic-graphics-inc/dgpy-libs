@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-
+"""aios = asyncio + os"""
 from os import path
 
-from asyncify.core import asyncify
+from asyncify import asyncify
 
 __all__ = (
     "exists",
