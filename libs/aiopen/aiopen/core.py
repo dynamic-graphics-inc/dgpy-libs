@@ -19,8 +19,8 @@ from io import (
 from os import PathLike
 from types import TracebackType
 from typing import (
-    Any,
     AnyStr,
+    Any,
     AsyncContextManager,
     Awaitable,
     Callable,

@@ -286,11 +286,22 @@ sortedcontainers = "*"
 
 [[package]]
 name = "typing-extensions"
-version = "3.10.0.2"
-description = "Backported and Experimental Type Hints for Python 3.5+"
-category = "dev"
+version = "4.0.1"
+description = "Backported and Experimental Type Hints for Python 3.6+"
+category = "main"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
+
+[[package]]
+name = "xtyping"
+version = "0.5.0"
+description = "xtyping = typing + typing_extensions"
+category = "main"
+optional = false
+python-versions = ">=3.6.2,<4.0.0"
+
+[package.dependencies]
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [[package]]
 name = "zipp"
@@ -307,7 +318,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "==3.*,>=3.6.2"
-content-hash = "835c1064cc348cbae3884a91e749d5bf9d5cfdd6b9c93b9e5a24554fe3024113"
+content-hash = "b15dd91af4facecc64f2032c968a17efcbbca73b22e88c14324a828c649f127a"
 
 [metadata.files]
 anyio = [
@@ -483,9 +494,12 @@ trio = [
     {file = "trio-0.19.0.tar.gz", hash = "sha256:895e318e5ec5e8cea9f60b473b6edb95b215e82d99556a03eb2d20c5e027efe1"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
-    {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
-    {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
+    {file = "typing_extensions-4.0.1-py3-none-any.whl", hash = "sha256:7f001e5ac290a0c0401508864c7ec868be4e701886d5b573a9528ed3973d9d3b"},
+    {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
+]
+xtyping = [
+    {file = "xtyping-0.5.0-py3-none-any.whl", hash = "sha256:0919fa6e049386ce99a16650add69d68f0df85d2cd44fab445d7b3787b49fbd8"},
+    {file = "xtyping-0.5.0.tar.gz", hash = "sha256:eaac195200f9624dc77b48b5d226cda398a51291b80fb83bba05beef5ca00834"},
 ]
 zipp = [
     {file = "zipp-3.6.0-py3-none-any.whl", hash = "sha256:9fe5ea21568a0a70e50f273397638d39b03353731e6cbbb3fd8502a33fec40bc"},
