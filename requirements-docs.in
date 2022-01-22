@@ -1,0 +1,4 @@
+-c requirements-dev.txt
+mkdocs
+mkdocs-material
+mkdocstrings

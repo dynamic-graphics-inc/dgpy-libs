@@ -2,5 +2,6 @@
 """Package metadata/info"""
 
 __title__ = "aiopen"
-__version__ = "0.5.0"
 __description__ = "Async file io"
+__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
+__version__ = "0.5.0"

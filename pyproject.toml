@@ -14,7 +14,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
@@ -34,9 +33,6 @@ black = "^21.12b0"
 isort = "^5.7.0"
 pytest = "^6.2.2"
 pytest-asyncio = "^0.16.0"
-mkdocs = "^1.1.2"
-mkdocs-material = "^7.1.2"
-mkdocstrings = "^0.16.2"
 h5py = "^3.4.0"
 pytest-cov = "^2.12.1"
 mypy = "^0.931"
@@ -44,7 +40,7 @@ nox = "^2022.1.7"
 pydantic = "^1.8.2"
 orjson = "^3.6.3"
 python-rapidjson = "^1.4"
-
+xdoctest = "^0.15.10"
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
 jsonbourne = { path = "./libs/jsonbourne/", develop = true }
@@ -55,7 +51,7 @@ listless = { path = "./libs/listless/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
-xdoctest = "^0.15.10"
+pip-tools = "^6.4.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -72,9 +68,9 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.black]
 line-length = 88
-target-version = ['py36', 'py37', 'py38']
+target-version = ['py37', 'py38']
 skip-string-normalization = false
-#include = '\.pyi?$'
+include = '\.pyi?$'
 exclude = '''
 (
   /(
@@ -128,15 +124,6 @@ known_first_party = [
     "shellfish",
     "xtyping",
 ]
-known_third_party = [
-    "pytest",
-    "pydantic",
-    "starlette",
-    "loguru"
-]
-
-
-
 
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/

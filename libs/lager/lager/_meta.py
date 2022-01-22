@@ -2,5 +2,6 @@
 """Package metadata/info"""
 
 __title__ = "lager"
-__version__ = "0.15.2"
 __description__ = "EZ-PZ logging based on loguru"
+__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
+__version__ = "0.15.2"

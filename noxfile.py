@@ -5,7 +5,6 @@ from shutil import which
 
 import nox
 
-
 libs = [
     "aiopen",
     "asyncify",
@@ -193,6 +192,23 @@ def homepage(session):
         #     f.write(metadata_file_string)
 
 
+def _pkg_entry_point(pkg_name):
+    return "\n".join(
+        [
+            "# -*- coding: utf-8 -*-",
+            '"""pkg entry ~ `python -m {}`"""'.format(pkg_name),
+            "import sys",
+            "",
+            "from {}._meta import __pkgroot__, __title__, __version__".format(pkg_name),
+            "",
+            "sys.stdout.write(",
+            '    f"package: {__title__}\\nversion: {__version__}\\npkgroot: {__pkgroot__}\\n"',
+            ")",
+            "",
+        ]
+    )
+
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def update_metadata(session):
     import toml
@@ -212,9 +228,10 @@ def update_metadata(session):
         metadata_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',
-            "__title__ = '{}'".format(poetry_metadata["name"]),
-            "__version__ = '{}'".format(poetry_metadata["version"]),
-            "__description__ = '{}'".format(poetry_metadata["description"]),
+            '__title__ = "{}"'.format(poetry_metadata["name"]),
+            '__description__ = "{}"'.format(poetry_metadata["description"]),
+            '__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\\\")',
+            '__version__ = "{}"'.format(poetry_metadata["version"]),
         ]
         metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
 
@@ -224,8 +241,22 @@ def update_metadata(session):
         print(metadata_file_string)
         print("~~~")
         metadata_filepath = path.join(dirpath, libname, "_meta.py")
+        pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
         with open(metadata_filepath, "w") as f:
             f.write(metadata_file_string)
+
+        s = _pkg_entry_point(libname)
+        if path.exists(pkg_main_filepath):
+            with open(pkg_main_filepath, "r") as f:
+                pkg_main_file_str = f.read()
+            if pkg_main_file_str != s:
+                print("updating __main__.py")
+                with open(pkg_main_filepath, "w") as f:
+                    f.write(s)
+        else:
+            print("creating __main__.py")
+            with open(pkg_main_filepath, "w") as f:
+                f.write(s)
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

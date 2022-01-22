@@ -127,3 +127,5 @@ pythonenv3.8/
 .idea/
 monkeytype.sqlite3
 .parcel-cache/
+
+package-lock.json
