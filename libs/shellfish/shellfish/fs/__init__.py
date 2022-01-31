@@ -16,7 +16,7 @@ from pathlib import Path
 from time import time
 
 from jsonbourne import JSON
-from shellfish.fs.promises import (
+from shellfish.fs._async import (
     exists_async as exists_async,
     filesize_async as filesize_async,
     is_dir_async as is_dir_async,
