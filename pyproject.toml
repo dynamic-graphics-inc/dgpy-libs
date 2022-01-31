@@ -30,7 +30,7 @@ python = "^3.7"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
-black = "^21.12b0"
+black = "^22.1"
 isort = "^5.7.0"
 pytest = "^6.2.2"
 pytest-asyncio = "^0.16.0"
