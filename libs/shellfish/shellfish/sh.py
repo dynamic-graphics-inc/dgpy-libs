@@ -6,6 +6,7 @@ import asyncio
 import signal
 import sys
 
+from abc import ABC, abstractmethod
 from distutils.dir_util import copy_tree
 from enum import IntEnum
 from functools import lru_cache, reduce
@@ -1039,7 +1040,89 @@ def chunks(iterable: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
     )
 
 
-class LIN:
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+
+
+class OSABC(ABC):
+    """Abstract base class for OS-specific fns"""
+
+    @staticmethod
+    @abstractmethod
+    def sync(
+        src: str,
+        dest: str,
+        *,
+        delete: bool = False,
+        mkdirs: bool = False,
+        dry_run: bool = False,
+        exclude: Optional[IterableStr] = None,
+        include: Optional[IterableStr] = None,
+    ) -> Done:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_dirs(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_files(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_dir(link: str) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_dirs(links: IterableStr) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_file(link: str) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_files(links: IterableStr) -> None:
+        ...
+
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+
+
+class LIN(OSABC):
     """Linux (and Mac) shell commands/methods container"""
 
     @staticmethod
@@ -1303,7 +1386,7 @@ class LIN:
 # =============================================================================
 
 
-class WIN:
+class WIN(OSABC):
     """Windows shell commands/methods container"""
 
     _MAX_CMD_LENGTH: int = 8192
@@ -1381,8 +1464,8 @@ class WIN:
         *,
         mkdirs: bool = True,
         delete: bool = False,
-        exclude_files: Optional[List[str]] = None,
-        exclude_dirs: Optional[List[str]] = None,
+        exclude_files: Optional[Iterable[str]] = None,
+        exclude_dirs: Optional[Iterable[str]] = None,
         dry_run: bool = False,
     ) -> Done:
         """Robocopy wrapper function (crude in that it opens a subprocess)
@@ -1422,26 +1505,43 @@ class WIN:
             8. Several files did not copy.
 
         """
-        if exclude_files is None:
-            exclude_files = []
-        if exclude_dirs is None:
-            exclude_dirs = []
+        _exclude_files = [] if exclude_files is None else list(exclude_files)
+        _exclude_dirs = [] if exclude_dirs is None else list(exclude_dirs)
         if mkdirs and not dry_run:
             makedirs(dest, exist_ok=True)
         _args = WIN.robocopy_args(
             src=src,
             dest=dest,
             delete=delete,
-            exclude_files=exclude_files,
-            exclude_dirs=exclude_dirs,
+            exclude_files=_exclude_files,
+            exclude_dirs=_exclude_dirs,
             dry_run=dry_run,
         )
         return do(args=_args)
 
-    sync = robocopy
+    @staticmethod
+    def sync(
+        src: str,
+        dest: str,
+        *,
+        delete: bool = False,
+        mkdirs: bool = False,
+        dry_run: bool = False,
+        exclude: Optional[IterableStr] = None,
+        include: Optional[IterableStr] = None,
+    ) -> Done:
+        return WIN.robocopy(
+            src=src,
+            dest=dest,
+            mkdirs=mkdirs,
+            delete=delete,
+            exclude_files=exclude,
+            exclude_dirs=include,
+            dry_run=dry_run,
+        )
 
     @staticmethod
-    def link_dir(linkpath: str, targetpath: str) -> None:
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
         """Make a directory symlink
 
         Args:
@@ -1456,7 +1556,9 @@ class WIN:
             do(args=["mklink", "/D", linkpath, targetpath], shell=True)
 
     @staticmethod
-    def link_dirs(link_target_tuples: List[Tuple[str, str]]) -> None:
+    def link_dirs(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
         """Make multiple directory symlinks
 
         Args:
@@ -1467,7 +1569,7 @@ class WIN:
         """
         try:
             for link, target in link_target_tuples:
-                WIN.link_dir(link, target)
+                WIN.link_dir(link, target, exist_ok=exist_ok)
         except OSError:
             _exists = [
                 f"mklink /D {link} {target}"
@@ -1484,7 +1586,7 @@ class WIN:
                     WIN.link_dirs(list(tuple_chunk))
 
     @staticmethod
-    def link_file(linkpath: str, targetpath: str) -> None:
+    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
         """Make a file symlink
 
         Args:
@@ -1499,7 +1601,9 @@ class WIN:
             do(args=["mklink", linkpath, targetpath], shell=True)
 
     @staticmethod
-    def link_files(link_target_tuples: List[Tuple[str, str]]) -> None:
+    def link_files(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
         """Make multiple file symlinks
 
         Args:
@@ -1510,7 +1614,7 @@ class WIN:
         """
         try:
             for link, target in link_target_tuples:
-                WIN.link_file(link, target)
+                WIN.link_file(link, target, exist_ok=exist_ok)
         except OSError:
             link_target_tuples = list(link_target_tuples)
             _exists = [
@@ -2084,9 +2188,10 @@ def cp(
 
     """
     _recursive = recursive or r
+    _force = force or f
     for src in iglob(src, recursive=True):
         _dest = target
-        if (path.exists(target) and not force) or src == target:
+        if (path.exists(target) and not _force) or src == target:
             return
         if path.isdir(src) and not _recursive:
             raise ValueError("Source ({}) is directory; use r=True")
