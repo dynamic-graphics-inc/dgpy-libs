@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lager"
-version = "0.15.2"
+version = "0.16.0"
 description = "EZ-PZ logging based on loguru"
 authors = ["jesse rubin <jesse@dgi.com>"]
 license = "MIT"
@@ -22,13 +22,15 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "lager", "logging", "dgpy", "dgi", "dgpy-libs", "loguru", "json", "JSON",
-    "beer", "brews"
+    "logging", "dgpy",
+    "dgi",
+    "loguru",
+    "beer",
 ]
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
-loguru = "^0.5.2"
+loguru = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
