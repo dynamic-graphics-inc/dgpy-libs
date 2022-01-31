@@ -769,7 +769,7 @@ async def _do_async(
         done.async_proc = True
         return done
 
-    _default_asyncio_stream_limit = 2 ** 16
+    _default_asyncio_stream_limit = 2**16
 
     if input:
         input = validate_stdin(input)
@@ -2047,7 +2047,7 @@ def cp_file(src: str, target: str) -> None:
         makedirs(path.dirname(target), exist_ok=True)
     except FileNotFoundError:
         pass
-    fs.wbytes_gen(target, fs.lbytes_gen(src, blocksize=2 ** 18))
+    fs.wbytes_gen(target, fs.lbytes_gen(src, blocksize=2**18))
 
 
 def cp_dir(src: str, target: str) -> None:

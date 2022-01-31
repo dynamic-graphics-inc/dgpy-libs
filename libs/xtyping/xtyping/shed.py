@@ -136,6 +136,8 @@ Opt = Optional
 ###############
 ## LITERALLY ##
 ###############
+Lit = Literal
+L = Literal
 TRUE = Literal[True]
 FALSE = Literal[False]
 ZERO = Literal[0]
@@ -488,6 +490,7 @@ __all__ = (
     "KT_contra",
     "KeyT",
     "KeyType",
+    "L",
     "ListAny",
     "ListFloat",
     "ListInt",
@@ -495,6 +498,7 @@ __all__ = (
     "ListNumber",
     "ListStr",
     "ListT",
+    "Lit",
     "N",
     "NoneBytes",
     "NoneStr",

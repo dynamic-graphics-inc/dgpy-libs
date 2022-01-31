@@ -28,30 +28,30 @@ keywords = [
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
+black = "^22.1.0"
 flake8 = "^4.0.1"
-black = "^21.12b0"
-isort = "^5.7.0"
-pytest = "^6.2.2"
-pytest-asyncio = "^0.16.0"
 h5py = "^3.4.0"
-pytest-cov = "^2.12.1"
+isort = "^5.7.0"
 mypy = "^0.931"
 nox = "^2022.1.7"
-pydantic = "^1.8.2"
 orjson = "^3.6.3"
+pip-tools = "^6.4.0"
+pydantic = "^1.8.2"
+pytest = "^6.2.2"
+pytest-asyncio = "^0.16.0"
+pytest-cov = "^2.12.1"
 python-rapidjson = "^1.4"
 xdoctest = "^0.15.10"
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
-jsonbourne = { path = "./libs/jsonbourne/", develop = true }
 funkify = { path = "./libs/funkify/", develop = true }
 h5 = { path = "./libs/h5/", develop = true }
+jsonbourne = { path = "./libs/jsonbourne/", develop = true }
 lager = { path = "./libs/lager/", develop = true }
 listless = { path = "./libs/listless/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
-pip-tools = "^6.4.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
