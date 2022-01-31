@@ -28,7 +28,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.6.1"
-loguru = "^0.5.2"
+loguru = ">=0.5.2,<0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
