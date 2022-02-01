@@ -24,8 +24,11 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "json", "jsonbourne", "pydantic", "orjson", "rapidjson",
-    "python-rapidjson", "mattdamon", "dgpy", "dgpy-libs", "dgi"
+    "dgpy",
+    "pydantic",
+    "json",
+    "orjson",
+    "rapidjson",
 ]
 
 
