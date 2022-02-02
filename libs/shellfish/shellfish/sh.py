@@ -7,6 +7,7 @@ import signal
 import sys
 
 from abc import ABC, abstractmethod
+from asyncio import TimeoutError
 from distutils.dir_util import copy_tree
 from enum import IntEnum
 from functools import lru_cache, reduce
@@ -58,10 +59,12 @@ from typing import (
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
+from shellfish._meta import __version__
 from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
 
 __all__ = (
+    "__version__",
     "Done",
     "DoneError",
     "DoneObj",
@@ -319,7 +322,7 @@ class Done(JsonBaseModel):
 
         """
         if self.returncode and self.stderr:
-            raise self._error()
+            raise DoneError(done=self)
 
     def sys_print(self) -> None:
         """Write self.stdout to sys.stdout and self.stderr to sys.stderr"""
@@ -563,16 +566,21 @@ def _do(
     Args:
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
+        text: Flag to decode the output as text
         timeout (Optional[int]): Timeout in seconds for the process if not None
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        ValueError: If args has pipe character (`|`)
 
     """
     _input = validate_stdin(input)
@@ -641,6 +649,7 @@ def do(
         *popenargs: Args given as `*args`; Cannot use both *popenargs and args
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
@@ -652,9 +661,12 @@ def do(
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
 
+    Raises:
+        ValueError: if args and *popenargs are both given
+
     """
     if args and popenargs:
-        raise ValueError("Cannot give *args and args-keyword-argument")
+        raise ValueError("Cannot give *popenargs and `args` kwargs")
     args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
     if is_win():
         args = validate_popen_args_windows(args, env)
@@ -689,6 +701,7 @@ def shx(
         *popenargs: Args given as `*args`; Cannot use both *popenargs and args
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         check: Check the outputs (generally useless)
         input: Stdin to give to the subprocess
@@ -797,15 +810,21 @@ async def _do_async(
         args: Args as strings for the subprocess
         check (bool): Check the result returncode
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        loop: Event loop to use if have you use asyncified version (`do_asyncify`)
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        CalledProcessError: If check is True and the returncode is not 0
+        TimeoutError: If the process takes longer than timeout if given
 
     """
     # if is windows and python is below 3.7, use the asyncified-do func:w
@@ -889,8 +908,8 @@ async def _do_async(
                     timeout=timeout,
                 )
                 tf = time()
-            except asyncio.TimeoutError as te:
-                raise asyncio.TimeoutError(
+            except TimeoutError as te:
+                raise TimeoutError(
                     str(
                         {
                             "args": args,
@@ -959,6 +978,7 @@ async def do_async(
         args: Args as strings for the subprocess
         check (bool): Check the result returncode
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         input: Stdin to give to the subprocess
@@ -969,6 +989,9 @@ async def do_async(
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        ValueError: If both *popenargs and args are given
 
     """
     if args and popenargs:
@@ -1601,6 +1624,7 @@ class WIN(OSABC):
         Args:
             linkpath (str): Path to the link to be made
             targetpath (str): Path to the target of the link to be made
+            exist_ok (bool): If True, do not raise an exception if the link exists
 
         """
         makedirs(path.split(linkpath)[0], exist_ok=True)
@@ -1619,6 +1643,7 @@ class WIN(OSABC):
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
+            exist_ok (bool): If True, do not raise an exception if the link(s) exist
 
         """
         try:
@@ -1646,6 +1671,7 @@ class WIN(OSABC):
         Args:
             linkpath (str): Path to the link to be made
             targetpath (str): Path to the target of the link to be made
+            exist_ok (bool): If True, don't raise an exception if the link exists
 
         """
         try:
@@ -1664,6 +1690,7 @@ class WIN(OSABC):
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
+            exist_ok (bool): If True, don't raise an exception if the link exists
 
         """
         try:
@@ -1885,17 +1912,20 @@ def echo(
     print(*args, sep=sep, end=end, file=file)  # noqa: T001
 
 
-def export(key: str, val: Optional[str] = None) -> None:
+def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
         key (str): environment variable name/key
         val (str): environment variable value
 
+    Raises:
+        ValueError: if unable to parse key/val
+
     """
     if val:
         environ[key] = val
-        return
+        return (key, val)
     if "=" in key:
         _key = key.split("=")[0]
         return export(_key, key[len(_key) + 1 :])
@@ -1912,6 +1942,9 @@ def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
         p (bool): Make parent dirs if True; do not make parent dirs if False
         exist_ok (bool): Throw error if directory exists and exist_ok is False
 
+    Returns:
+         None
+
     """
     if p or exist_ok:
         return makedirs(_fspath(fspath), exist_ok=p or exist_ok)
@@ -1923,12 +1956,15 @@ def mkdirp(fspath: FsPath) -> None:
     return mkdir(fspath=fspath, p=True)
 
 
-def setenv(key: str, val: Optional[str] = None) -> None:
+def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
         key (str): environment variable name/key
         val (str): environment variable value
+
+    Returns:
+        Tuple[str, str]: environment variable key/value pair
 
     """
     return export(key=key, val=val)
@@ -1941,7 +1977,7 @@ def touch(fspath: FsPath) -> None:
         fspath (FsPath): File-system path for where to make an empty file
 
     """
-    return fs.touch(fspath=fspath)
+    fs.touch(fspath=fspath)
 
 
 def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:
@@ -2240,6 +2276,9 @@ def cp(
         r: alias for recursive
         f: alias for force
 
+    Raises:
+        ValueError: If src is a directory and recursive and r are both `False`
+
     """
     _recursive = recursive or r
     _force = force or f
@@ -2273,6 +2312,9 @@ def rm(
         verbose (bool): Flag to be verbose
         v (bool): alias for verbose
         r (bool): alias for recursive kwarg
+
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
 
     """
     _recursive = recursive or r

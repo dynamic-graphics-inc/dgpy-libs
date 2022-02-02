@@ -3,6 +3,7 @@
 
 from functools import lru_cache
 from pprint import pformat
+from shutil import get_terminal_size
 from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar
 
 from pydantic import (
@@ -66,21 +67,28 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
         """Function place holder that is called after object initialization"""
         pass  # pylint: disable=unnecessary-pass
 
+    def __dumpable__(self) -> Dict[str, Any]:
+        return self.dict()
+
     def __json_interface__(self) -> Dict[str, Any]:
         return self.dict()
 
     def to_str(
-        self, minify: bool = False, width: int = 120, fmt_kwargs: bool = False
+        self,
+        minify: bool = False,
+        width: Optional[int] = None,
+        fmt_kwargs: bool = False,
     ) -> str:
         if fmt_kwargs:
             return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict_filter_none()) + ")"
+        _width = width or get_terminal_size((88, 24)).columns - 12
         return "".join(
             [
                 type(self).__name__,
                 "(**{\n     ",
-                pformat(self.to_dict_filter_none(), width=width)[1:-1].replace(
+                pformat(self.to_dict_filter_none(), width=_width)[1:-1].replace(
                     "\n", "\n    "
                 ),
                 "\n})",

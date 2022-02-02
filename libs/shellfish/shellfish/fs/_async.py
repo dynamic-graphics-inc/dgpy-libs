@@ -161,8 +161,8 @@ async def rbytes_gen_async(
         filepath: fspath to read from
         blocksize (int): size of the block to read
 
-    Returns:
-        AsyncIterable[bytes] of the file bytes
+    Yields:
+        bytes from AsyncIterable[bytes] of the file bytes
 
     Examples:
         >>> from os import remove
@@ -422,6 +422,7 @@ async def wjson_async(
         sort_keys (bool): Sort the data keys if the data is a dictionary.
         append_newline (bool): Sort the data keys if the data is a dictionary.
         default: default function hook
+        **kwargs: Additional keyword arguments to pass to jsonbourne.JSON.dump
 
     Returns:
         int: Number of bytes written

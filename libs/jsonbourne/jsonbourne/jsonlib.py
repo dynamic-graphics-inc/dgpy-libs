@@ -8,7 +8,7 @@ from pathlib import Path
 from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
 
-from jsonbourne.types import DumpableProtocol, JsonInterfaceProtocol
+from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:
     import dataclasses
@@ -52,18 +52,15 @@ def _json_interface(obj: JsonInterfaceProtocol) -> Any:
     return _json_interface
 
 
-def _dumpable(obj: DumpableProtocol) -> Any:
-    _json_interface = obj.__dumpable__
-    if callable(_json_interface):
-        _json_interface = _json_interface()
-    return _json_interface
+def _dumpable(obj: Dumpable) -> Any:
+    return obj.__dumpable__()
 
 
 def _json_encode_default(obj: Any) -> Any:
-    if hasattr(obj, "__json_interface__"):
-        return _json_interface(obj)
     if hasattr(obj, "__dumpable__"):
         return _dumpable(obj)
+    if hasattr(obj, "__json_interface__"):
+        return _json_interface(obj)
     if np:
         if isinstance(obj, np.floating):
             return float(obj)
