@@ -31,7 +31,14 @@ from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
 from shutil import move, rmtree, which as _which
-from subprocess import PIPE, CalledProcessError, CompletedProcess, SubprocessError, run
+from subprocess import (
+    DEVNULL,
+    PIPE,
+    CalledProcessError,
+    CompletedProcess,
+    SubprocessError,
+    run,
+)
 from time import time
 from typing import (
     IO,
@@ -100,6 +107,7 @@ __all__ = (
     "run",
     "setenv",
     "shplit",
+    "shx",
     "source",
     "sync",
     "touch",
@@ -111,6 +119,7 @@ __all__ = (
     "where",
     "which",
     "which_lru",
+    "x",
 )
 
 IS_WIN: bool = is_win()
@@ -663,6 +672,51 @@ def do(
     )
 
 
+def shx(
+    *popenargs: PopenArgs,
+    args: Optional[PopenArgs] = None,
+    env: Optional[Dict[str, str]] = None,
+    extenv: bool = True,
+    cwd: Optional[FsPath] = None,
+    check: bool = False,
+    verbose: bool = False,
+    input: STDIN = None,
+    timeout: Optional[int] = None,
+) -> Done:
+    """Run a subprocess synchronously in current shell
+
+    Args:
+        *popenargs: Args given as `*args`; Cannot use both *popenargs and args
+        args: Args as strings for the subprocess
+        env: Environment variables as a dictionary (Default value = None)
+        cwd: Current working directory (Default value = None)
+        check: Check the outputs (generally useless)
+        input: Stdin to give to the subprocess
+        verbose (bool): Flag to write the subprocess stdout and stderr to
+            sys.stdout and sys.stderr
+        timeout (Optional[int]): Timeout in seconds for the process if not None
+
+    Returns:
+        Finished PRun object which is a dictionary, so a dictionary
+
+    """
+    return do(
+        *popenargs,
+        args=args,
+        shell=True,
+        env=env,
+        extenv=extenv,
+        cwd=cwd,
+        check=check,
+        verbose=verbose,
+        input=input,
+        timeout=timeout,
+    )
+
+
+x = shx
+
+
 def args2cmd(args: PopenArgs) -> Union[str, bytes]:
     """Return single command string from given popenargs"""
     if isinstance(args, (str, bytes)):
@@ -783,15 +837,17 @@ async def _do_async(
     else:
         _args = list(map(str, args))
 
+    # stdin kwarg is DEVNULL if input is None else aio.PIPE
+    _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
+    # input is None or bytes
+    _input = input if not isinstance(input, str) else input.encode()
+
     _env = None if env is None else mkenv(env, extenv=extenv)
     _cwd = pwd()
     if cwd and path.exists(cwd) and path.isdir(cwd):
         _cwd = cwd
 
     if is_win():
-        shell = True
-
-        # exe path
         _syspath = None
         if env:
             _syspath = env.get("PATH", environ["PATH"])
@@ -806,7 +862,7 @@ async def _do_async(
             ti = time()
             _proc = await asyncio.create_subprocess_shell(
                 cmd=_cmd,
-                stdin=asyncio.subprocess.PIPE,
+                stdin=_stdin,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
@@ -814,27 +870,25 @@ async def _do_async(
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )
-            tf = time()
         else:
             ti = time()
             _proc = await asyncio.create_subprocess_exec(
                 *_args,
-                stdin=asyncio.subprocess.PIPE,
+                stdin=_stdin,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )
-            tf = time()
 
         if timeout:
             try:
-                _stdin = input if not isinstance(input, str) else input.encode()
                 (stdout, stderr) = await asyncio.wait_for(
-                    _proc.communicate(input=_stdin),  # wait for subprocess to finish
+                    _proc.communicate(input=_input),  # wait for subprocess to finish
                     timeout=timeout,
                 )
+                tf = time()
             except asyncio.TimeoutError as te:
                 raise asyncio.TimeoutError(
                     str(
@@ -850,8 +904,8 @@ async def _do_async(
                 )
 
         else:
-            _input = input if not isinstance(input, str) else input.encode()
             (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
+            tf = time()
         if _proc.returncode and stderr and check:
             raise CalledProcessError(
                 returncode=_proc.returncode, output=stdout, stderr=stderr, cmd=str(args)
