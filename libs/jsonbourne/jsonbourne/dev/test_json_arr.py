@@ -1,7 +1,41 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from jsonbourne.dev.json_arr import JsonArr
+from typing import Any
+
+from jsonbourne.dev.json_arr import JsonArr, n_args
+
+
+def test_get_fn_args_count() -> None:
+    assert n_args(lambda a, b: b % 4 == 0 and a % 2 == 0) == 2  # type: ignore
+
+    def fn2() -> None:
+        pass
+
+    assert n_args(fn2) == 0
+
+    def fn3(a: Any, b: Any, c: Any) -> None:
+        pass
+
+    assert n_args(fn3) == 3
+
+    class OBJ:
+        def __init__(self) -> None:
+            pass
+
+        def __call__(self, a: Any, b: Any, c: Any) -> None:
+            pass
+
+    assert n_args(OBJ()) == 3
+
+    class OBJ_initializer:
+        def __init__(self, a: Any, b: Any, c: Any) -> None:
+            pass
+
+        def __call__(self, a: Any, b: Any, c: Any) -> None:
+            pass
+
+    assert n_args(OBJ_initializer) == 3
 
 
 def test_enumerate() -> None:

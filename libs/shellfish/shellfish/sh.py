@@ -64,7 +64,6 @@ from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
 
 __all__ = (
-    "__version__",
     "Done",
     "DoneError",
     "DoneObj",
@@ -74,6 +73,7 @@ __all__ = (
     "LIN",
     "Stdio",
     "WIN",
+    "__version__",
     "basename",
     "cd",
     "chmod",
@@ -124,6 +124,7 @@ __all__ = (
     "which_lru",
     "x",
 )
+
 
 IS_WIN: bool = is_win()
 
