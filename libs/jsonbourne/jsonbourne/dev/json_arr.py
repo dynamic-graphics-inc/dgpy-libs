@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import (
+from typing import cast, overload
+
+from xtyping import (
     Any,
     Callable,
     Generic,
     Iterable,
     Iterator,
     List,
+    Literal,
     MutableSequence,
     Optional,
+    Protocol,
     SupportsIndex,
     Tuple,
     Type,
     TypeVar,
     Union,
-    cast,
-    overload,
 )
-
-from xtyping import Literal, Protocol
 
 __all__ = (
     "JsonArr",
