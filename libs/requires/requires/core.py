@@ -6,9 +6,24 @@ import sys
 from dataclasses import dataclass
 from functools import wraps
 from importlib import import_module
-from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Coroutine,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    TypeVar,
+    Union,
+    overload,
+)
+
+from xtyping import ParamSpec
 
 T = TypeVar("T")
+R = TypeVar("R")
+P = ParamSpec("P")
 
 
 def _fn_globals(f: Any) -> Any:
@@ -151,11 +166,21 @@ class Requirement:
     def alias(self) -> str:
         return self._as or self._import
 
-    def __call__(self, f: Callable[..., T]) -> Callable[..., T]:
+    @overload
+    def __call__(self, f: Callable[P, T]) -> Callable[P, T]:
+        ...
+
+    @overload
+    def __call__(
+        self, f: Callable[P, Coroutine[Any, Any, R]]
+    ) -> Callable[P, Coroutine[Any, Any, R]]:
+        ...
+
+    def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
-            @wraps(f)
-            async def _requires_dec_async(*args: Any, **kwargs: Any) -> T:
+            # @wraps(f)
+            async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> R:
                 try:
                     return await f(*args, **kwargs)  # type: ignore
                 except NameError as ne:
@@ -167,7 +192,7 @@ class Requirement:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()
-                    retval: T = await f(*args, **kwargs)  # type: ignore
+                    retval: R = await f(*args, **kwargs)  # type: ignore
                     return retval
                 except ModuleNotFoundError:
                     tb = sys.exc_info()[2]
@@ -176,7 +201,7 @@ class Requirement:
             return _requires_dec_async  # type: ignore
 
         @wraps(f)
-        def _requires_dec(*args: Any, **kwargs: Any) -> T:
+        def _requires_dec(*args: P.args, **kwargs: P.kwargs) -> R:
             try:
                 return f(*args, **kwargs)
             except NameError as ne:
@@ -189,8 +214,7 @@ class Requirement:
                 _f_globals = _fn_globals(f)
                 if self.alias not in _f_globals:
                     _f_globals[self.alias] = self.import_requirement()
-                retval = f(*args, **kwargs)
-                return retval
+                return f(*args, **kwargs)
             except ModuleNotFoundError:
                 tb = sys.exc_info()[2]
                 raise self.err().with_traceback(tb)
@@ -284,6 +308,9 @@ def make_requirements(
     requirements: Union[
         List[Union[str, Requirement, Dict[str, str]]],
         Tuple[Union[str, Requirement, Dict[str, str]]],
+        str,
+        Requirement,
+        Dict[str, str],
     ]
 ) -> List[Requirement]:
     if isinstance(requirements, (list, tuple)):

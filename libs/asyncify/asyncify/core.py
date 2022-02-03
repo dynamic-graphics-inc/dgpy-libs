@@ -106,7 +106,12 @@ def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
     return gen()
 
 
-def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
+def asyncify(
+    funk: Callable[P, T],
+    *,
+    loop: Optional[AbstractEventLoop] = None,
+    executor: Optional[Any] = None,
+) -> Callable[P, Awaitable[T]]:
     """Makes a sync function async
 
     Args:
@@ -129,12 +134,12 @@ def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
         6
 
     """
+    _loop = loop
+    _executor = executor
 
     @wraps(funk)
     async def _async_funk(
         *args: P.args,  # type: ignore
-        loop: Optional[AbstractEventLoop] = None,
-        executor: Optional[Any] = None,
         **kwargs: P.kwargs,  # type: ignore
     ) -> T:
         """Async wrapper function
@@ -149,9 +154,9 @@ def asyncify(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
             An asynchronous coroutine
 
         """
-        loop = loop if loop else get_event_loop()
+        loop = _loop if _loop else get_event_loop()
         pfunc: Callable[P, T] = partial(funk, *args, **kwargs)
-        return await loop.run_in_executor(executor, pfunc)
+        return await loop.run_in_executor(_executor, pfunc)
 
     return cast(Callable[P, Awaitable[T]], _async_funk)
 
