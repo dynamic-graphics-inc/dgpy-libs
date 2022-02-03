@@ -8,7 +8,7 @@ from shellfish import aios, dotenv, fs, process, sh
 from shellfish.aios import _path as aiospath
 from shellfish.fs import promises as fsp
 
-modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios]
+modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
 
 
 def _test_module_all_tuple(mod, check_sorted: bool = True) -> None:

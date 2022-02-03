@@ -27,11 +27,11 @@ def test_requires_json_n_rapid_json() -> None:
 def test_requires_json_n_rapid_json_pkg_callable() -> None:
     import requires
 
-    @requires("json")
+    @requires("json")  # type: ignore
     def uno() -> str:
         return json.dumps({"a": 1, "b": 2})
 
-    @requires(
+    @requires(  # type: ignore
         _import="rapidjson",
         pip="python-rapidjson",
         conda_forge="python-rapidjson",

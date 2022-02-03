@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """Json Bourne -- EZ-PZ-JSON with lots o goodies"""
 import keyword
-import sys
 
 from functools import lru_cache
 from itertools import chain
 from json import JSONDecodeError
 from pprint import pformat
+from shutil import get_terminal_size
 from types import ModuleType
 from typing import (
     Any,
@@ -18,6 +18,7 @@ from typing import (
     Iterator,
     KeysView,
     List,
+    MutableMapping,
     Optional,
     Set,
     Tuple,
@@ -35,15 +36,7 @@ KT = TypeVar("KT")
 VT = TypeVar("VT")
 _KT = str
 _VT = TypeVar("_VT")
-
-if sys.version_info < (3, 7):
-    from collections.abc import MutableMapping
-
-    JsonObjMutableMapping = MutableMapping
-else:
-    from typing import MutableMapping
-
-    JsonObjMutableMapping = MutableMapping[str, _VT]
+JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = (
     "JsonObj",
@@ -696,15 +689,16 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         """Return list of tuples of the form (dot-key, value)"""
         return list(self.dot_items())
 
-    def to_str(self, minify: bool = False, width: int = 88) -> str:
+    def to_str(self, minify: bool = False, width: Optional[int] = None) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
+        _width = get_terminal_size(fallback=(88, 24)).columns - 12
         return "".join(
             [
                 type(self).__name__,
                 "(**{\n    ",
-                pformat(self.to_dict(), width=width)[1:-1].replace("\n", "\n   "),
+                pformat(self.to_dict(), width=_width)[1:-1].replace("\n", "\n   "),
                 "\n})",
             ]
         ).replace("JsonObj(**{}),", "{},")

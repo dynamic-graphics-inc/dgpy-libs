@@ -16,7 +16,8 @@ from pathlib import Path
 from time import time
 
 from jsonbourne import JSON
-from shellfish.fs.promises import (
+from shellfish._meta import __version__
+from shellfish.fs._async import (
     exists_async as exists_async,
     filesize_async as filesize_async,
     is_dir_async as is_dir_async,
@@ -167,6 +168,9 @@ def scandir_gen(
 
     Returns:
         Iterator[DirEntry]: Iterator of os.DirEntry objects
+
+    Raises:
+        ValueError: if any of the kwargs (`dirs`, `files` and `symlinks`) are not True
 
     """
     if files and dirs and symlinks:  # all
@@ -969,6 +973,7 @@ def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
 
     Args:
         filepath: Filepath for file to read
+        encoding: Encoding to use for reading the file
 
     Returns:
         str: String read from given fspath
@@ -1050,6 +1055,7 @@ def wjson(
         sort_keys (bool): Sort the data keys if the data is a dictionary.
         append_newline (bool): Sort the data keys if the data is a dictionary.
         default: default function hook
+        **kwargs: Additional keyword arguments to pass to jsonbourne.JSON.dumpb
 
     Returns:
         int: Number of bytes written
@@ -1211,7 +1217,7 @@ def shebang(fspath: FsPath) -> Union[None, str]:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
     Args:
-        fspath (fspath): Path to file that might have a shebang
+        fspath (FsPath): Path to file that might have a shebang
 
     Returns:
         Optional[str]: The shebang string if it exists, None otherwise
@@ -1243,6 +1249,7 @@ sstring = wstr = sstr = wstring
 ljson = rjson
 sjson = wjson
 __all__ = (
+    "__version__",
     "dirpath_gen",
     "dirs_gen",
     "exists",

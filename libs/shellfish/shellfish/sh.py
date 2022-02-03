@@ -6,6 +6,8 @@ import asyncio
 import signal
 import sys
 
+from abc import ABC, abstractmethod
+from asyncio import TimeoutError
 from distutils.dir_util import copy_tree
 from enum import IntEnum
 from functools import lru_cache, reduce
@@ -30,7 +32,14 @@ from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
 from shutil import move, rmtree, which as _which
-from subprocess import PIPE, CalledProcessError, CompletedProcess, SubprocessError, run
+from subprocess import (
+    DEVNULL,
+    PIPE,
+    CalledProcessError,
+    CompletedProcess,
+    SubprocessError,
+    run,
+)
 from time import time
 from typing import (
     IO,
@@ -50,6 +59,7 @@ from typing import (
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
+from shellfish._meta import __version__
 from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
 
@@ -63,6 +73,7 @@ __all__ = (
     "LIN",
     "Stdio",
     "WIN",
+    "__version__",
     "basename",
     "cd",
     "chmod",
@@ -99,6 +110,7 @@ __all__ = (
     "run",
     "setenv",
     "shplit",
+    "shx",
     "source",
     "sync",
     "touch",
@@ -110,7 +122,9 @@ __all__ = (
     "where",
     "which",
     "which_lru",
+    "x",
 )
+
 
 IS_WIN: bool = is_win()
 
@@ -309,7 +323,7 @@ class Done(JsonBaseModel):
 
         """
         if self.returncode and self.stderr:
-            raise self._error()
+            raise DoneError(done=self)
 
     def sys_print(self) -> None:
         """Write self.stdout to sys.stdout and self.stderr to sys.stderr"""
@@ -553,16 +567,21 @@ def _do(
     Args:
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
+        text: Flag to decode the output as text
         timeout (Optional[int]): Timeout in seconds for the process if not None
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        ValueError: If args has pipe character (`|`)
 
     """
     _input = validate_stdin(input)
@@ -631,6 +650,7 @@ def do(
         *popenargs: Args given as `*args`; Cannot use both *popenargs and args
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
@@ -642,9 +662,12 @@ def do(
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
 
+    Raises:
+        ValueError: if args and *popenargs are both given
+
     """
     if args and popenargs:
-        raise ValueError("Cannot give *args and args-keyword-argument")
+        raise ValueError("Cannot give *popenargs and `args` kwargs")
     args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
     if is_win():
         args = validate_popen_args_windows(args, env)
@@ -660,6 +683,52 @@ def do(
         input=_input,
         timeout=timeout,
     )
+
+
+def shx(
+    *popenargs: PopenArgs,
+    args: Optional[PopenArgs] = None,
+    env: Optional[Dict[str, str]] = None,
+    extenv: bool = True,
+    cwd: Optional[FsPath] = None,
+    check: bool = False,
+    verbose: bool = False,
+    input: STDIN = None,
+    timeout: Optional[int] = None,
+) -> Done:
+    """Run a subprocess synchronously in current shell
+
+    Args:
+        *popenargs: Args given as `*args`; Cannot use both *popenargs and args
+        args: Args as strings for the subprocess
+        env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend the environment with the current environment (Default value = True)
+        cwd: Current working directory (Default value = None)
+        check: Check the outputs (generally useless)
+        input: Stdin to give to the subprocess
+        verbose (bool): Flag to write the subprocess stdout and stderr to
+            sys.stdout and sys.stderr
+        timeout (Optional[int]): Timeout in seconds for the process if not None
+
+    Returns:
+        Finished PRun object which is a dictionary, so a dictionary
+
+    """
+    return do(
+        *popenargs,
+        args=args,
+        shell=True,
+        env=env,
+        extenv=extenv,
+        cwd=cwd,
+        check=check,
+        verbose=verbose,
+        input=input,
+        timeout=timeout,
+    )
+
+
+x = shx
 
 
 def args2cmd(args: PopenArgs) -> Union[str, bytes]:
@@ -742,15 +811,21 @@ async def _do_async(
         args: Args as strings for the subprocess
         check (bool): Check the result returncode
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        loop: Event loop to use if have you use asyncified version (`do_asyncify`)
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        CalledProcessError: If check is True and the returncode is not 0
+        TimeoutError: If the process takes longer than timeout if given
 
     """
     # if is windows and python is below 3.7, use the asyncified-do func:w
@@ -782,15 +857,17 @@ async def _do_async(
     else:
         _args = list(map(str, args))
 
+    # stdin kwarg is DEVNULL if input is None else aio.PIPE
+    _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
+    # input is None or bytes
+    _input = input if not isinstance(input, str) else input.encode()
+
     _env = None if env is None else mkenv(env, extenv=extenv)
     _cwd = pwd()
     if cwd and path.exists(cwd) and path.isdir(cwd):
         _cwd = cwd
 
     if is_win():
-        shell = True
-
-        # exe path
         _syspath = None
         if env:
             _syspath = env.get("PATH", environ["PATH"])
@@ -805,7 +882,7 @@ async def _do_async(
             ti = time()
             _proc = await asyncio.create_subprocess_shell(
                 cmd=_cmd,
-                stdin=asyncio.subprocess.PIPE,
+                stdin=_stdin,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
@@ -813,29 +890,27 @@ async def _do_async(
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )
-            tf = time()
         else:
             ti = time()
             _proc = await asyncio.create_subprocess_exec(
                 *_args,
-                stdin=asyncio.subprocess.PIPE,
+                stdin=_stdin,
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=_env,
                 limit=_default_asyncio_stream_limit,
                 cwd=_cwd,
             )
-            tf = time()
 
         if timeout:
             try:
-                _stdin = input if not isinstance(input, str) else input.encode()
                 (stdout, stderr) = await asyncio.wait_for(
-                    _proc.communicate(input=_stdin),  # wait for subprocess to finish
+                    _proc.communicate(input=_input),  # wait for subprocess to finish
                     timeout=timeout,
                 )
-            except asyncio.TimeoutError as te:
-                raise asyncio.TimeoutError(
+                tf = time()
+            except TimeoutError as te:
+                raise TimeoutError(
                     str(
                         {
                             "args": args,
@@ -849,8 +924,8 @@ async def _do_async(
                 )
 
         else:
-            _input = input if not isinstance(input, str) else input.encode()
             (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
+            tf = time()
         if _proc.returncode and stderr and check:
             raise CalledProcessError(
                 returncode=_proc.returncode, output=stdout, stderr=stderr, cmd=str(args)
@@ -904,6 +979,7 @@ async def do_async(
         args: Args as strings for the subprocess
         check (bool): Check the result returncode
         env: Environment variables as a dictionary (Default value = None)
+        extenv: Extend environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         shell: Run in shell or sub-shell
         input: Stdin to give to the subprocess
@@ -914,6 +990,9 @@ async def do_async(
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
+
+    Raises:
+        ValueError: If both *popenargs and args are given
 
     """
     if args and popenargs:
@@ -1039,7 +1118,89 @@ def chunks(iterable: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
     )
 
 
-class LIN:
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+
+
+class OSABC(ABC):
+    """Abstract base class for OS-specific fns"""
+
+    @staticmethod
+    @abstractmethod
+    def sync(
+        src: str,
+        dest: str,
+        *,
+        delete: bool = False,
+        mkdirs: bool = False,
+        dry_run: bool = False,
+        exclude: Optional[IterableStr] = None,
+        include: Optional[IterableStr] = None,
+    ) -> Done:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_dirs(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def link_files(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_dir(link: str) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_dirs(links: IterableStr) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_file(link: str) -> None:
+        ...
+
+    @staticmethod
+    @abstractmethod
+    def unlink_files(links: IterableStr) -> None:
+        ...
+
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+
+
+class LIN(OSABC):
     """Linux (and Mac) shell commands/methods container"""
 
     @staticmethod
@@ -1303,7 +1464,7 @@ class LIN:
 # =============================================================================
 
 
-class WIN:
+class WIN(OSABC):
     """Windows shell commands/methods container"""
 
     _MAX_CMD_LENGTH: int = 8192
@@ -1381,8 +1542,8 @@ class WIN:
         *,
         mkdirs: bool = True,
         delete: bool = False,
-        exclude_files: Optional[List[str]] = None,
-        exclude_dirs: Optional[List[str]] = None,
+        exclude_files: Optional[Iterable[str]] = None,
+        exclude_dirs: Optional[Iterable[str]] = None,
         dry_run: bool = False,
     ) -> Done:
         """Robocopy wrapper function (crude in that it opens a subprocess)
@@ -1422,31 +1583,49 @@ class WIN:
             8. Several files did not copy.
 
         """
-        if exclude_files is None:
-            exclude_files = []
-        if exclude_dirs is None:
-            exclude_dirs = []
+        _exclude_files = [] if exclude_files is None else list(exclude_files)
+        _exclude_dirs = [] if exclude_dirs is None else list(exclude_dirs)
         if mkdirs and not dry_run:
             makedirs(dest, exist_ok=True)
         _args = WIN.robocopy_args(
             src=src,
             dest=dest,
             delete=delete,
-            exclude_files=exclude_files,
-            exclude_dirs=exclude_dirs,
+            exclude_files=_exclude_files,
+            exclude_dirs=_exclude_dirs,
             dry_run=dry_run,
         )
         return do(args=_args)
 
-    sync = robocopy
+    @staticmethod
+    def sync(
+        src: str,
+        dest: str,
+        *,
+        delete: bool = False,
+        mkdirs: bool = False,
+        dry_run: bool = False,
+        exclude: Optional[IterableStr] = None,
+        include: Optional[IterableStr] = None,
+    ) -> Done:
+        return WIN.robocopy(
+            src=src,
+            dest=dest,
+            mkdirs=mkdirs,
+            delete=delete,
+            exclude_files=exclude,
+            exclude_dirs=include,
+            dry_run=dry_run,
+        )
 
     @staticmethod
-    def link_dir(linkpath: str, targetpath: str) -> None:
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
         """Make a directory symlink
 
         Args:
             linkpath (str): Path to the link to be made
             targetpath (str): Path to the target of the link to be made
+            exist_ok (bool): If True, do not raise an exception if the link exists
 
         """
         makedirs(path.split(linkpath)[0], exist_ok=True)
@@ -1456,18 +1635,21 @@ class WIN:
             do(args=["mklink", "/D", linkpath, targetpath], shell=True)
 
     @staticmethod
-    def link_dirs(link_target_tuples: List[Tuple[str, str]]) -> None:
+    def link_dirs(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
         """Make multiple directory symlinks
 
         Args:
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
+            exist_ok (bool): If True, do not raise an exception if the link(s) exist
 
         """
         try:
             for link, target in link_target_tuples:
-                WIN.link_dir(link, target)
+                WIN.link_dir(link, target, exist_ok=exist_ok)
         except OSError:
             _exists = [
                 f"mklink /D {link} {target}"
@@ -1484,12 +1666,13 @@ class WIN:
                     WIN.link_dirs(list(tuple_chunk))
 
     @staticmethod
-    def link_file(linkpath: str, targetpath: str) -> None:
+    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
         """Make a file symlink
 
         Args:
             linkpath (str): Path to the link to be made
             targetpath (str): Path to the target of the link to be made
+            exist_ok (bool): If True, don't raise an exception if the link exists
 
         """
         try:
@@ -1499,18 +1682,21 @@ class WIN:
             do(args=["mklink", linkpath, targetpath], shell=True)
 
     @staticmethod
-    def link_files(link_target_tuples: List[Tuple[str, str]]) -> None:
+    def link_files(
+        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+    ) -> None:
         """Make multiple file symlinks
 
         Args:
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
+            exist_ok (bool): If True, don't raise an exception if the link exists
 
         """
         try:
             for link, target in link_target_tuples:
-                WIN.link_file(link, target)
+                WIN.link_file(link, target, exist_ok=exist_ok)
         except OSError:
             link_target_tuples = list(link_target_tuples)
             _exists = [
@@ -1727,17 +1913,20 @@ def echo(
     print(*args, sep=sep, end=end, file=file)  # noqa: T001
 
 
-def export(key: str, val: Optional[str] = None) -> None:
+def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
         key (str): environment variable name/key
         val (str): environment variable value
 
+    Raises:
+        ValueError: if unable to parse key/val
+
     """
     if val:
         environ[key] = val
-        return
+        return (key, val)
     if "=" in key:
         _key = key.split("=")[0]
         return export(_key, key[len(_key) + 1 :])
@@ -1754,6 +1943,9 @@ def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
         p (bool): Make parent dirs if True; do not make parent dirs if False
         exist_ok (bool): Throw error if directory exists and exist_ok is False
 
+    Returns:
+         None
+
     """
     if p or exist_ok:
         return makedirs(_fspath(fspath), exist_ok=p or exist_ok)
@@ -1765,12 +1957,15 @@ def mkdirp(fspath: FsPath) -> None:
     return mkdir(fspath=fspath, p=True)
 
 
-def setenv(key: str, val: Optional[str] = None) -> None:
+def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
         key (str): environment variable name/key
         val (str): environment variable value
+
+    Returns:
+        Tuple[str, str]: environment variable key/value pair
 
     """
     return export(key=key, val=val)
@@ -1783,7 +1978,7 @@ def touch(fspath: FsPath) -> None:
         fspath (FsPath): File-system path for where to make an empty file
 
     """
-    return fs.touch(fspath=fspath)
+    fs.touch(fspath=fspath)
 
 
 def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:
@@ -2082,11 +2277,15 @@ def cp(
         r: alias for recursive
         f: alias for force
 
+    Raises:
+        ValueError: If src is a directory and recursive and r are both `False`
+
     """
     _recursive = recursive or r
+    _force = force or f
     for src in iglob(src, recursive=True):
         _dest = target
-        if (path.exists(target) and not force) or src == target:
+        if (path.exists(target) and not _force) or src == target:
             return
         if path.isdir(src) and not _recursive:
             raise ValueError("Source ({}) is directory; use r=True")
@@ -2114,6 +2313,9 @@ def rm(
         verbose (bool): Flag to be verbose
         v (bool): alias for verbose
         r (bool): alias for recursive kwarg
+
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
 
     """
     _recursive = recursive or r

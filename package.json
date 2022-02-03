@@ -1,19 +1,20 @@
 {
-    "name": "dgpy-libs",
-    "version": "0.0.1",
-    "description": "dgpy libs",
-    "main": "index.js",
-    "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
-    "author": "jesse <jessekrubin@gmail.com>",
-    "license": "MIT",
-    "scripts": {
-        "pyright": "pyright",
-        "pyrightw": "pyright -w",
-        "nuke": "npx rimraf ./**/node_modules",
-        "nukenox": "npx rimraf ./**/.nox*"
-    },
-    "devDependencies": {
-        "dprint": "^0.20.0",
-        "pyright": "^1.1.212"
-    }
+  "name": "dgpy-libs",
+  "version": "0.0.1",
+  "description": "dgpy libs",
+  "main": "index.js",
+  "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
+  "author": "jesse <jessekrubin@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "pyright": "pyright",
+    "pyrightw": "pyright -w",
+    "pyrighth": "pyright -h",
+    "nuke": "npx rimraf ./**/node_modules",
+    "nukenox": "npx rimraf ./**/.nox*"
+  },
+  "devDependencies": {
+    "dprint": "^0.22.0",
+    "pyright": "^1.1.212"
+  }
 }

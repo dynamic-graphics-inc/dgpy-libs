@@ -3,8 +3,6 @@ from os import path
 from pprint import pformat
 from typing import Tuple
 
-import typing_extensions as tx
-
 import xtyping
 
 
@@ -141,8 +139,12 @@ def test_xtyping_shed_all_members():
 
 
 def test_all_typing_extensions_reexported():
-    xtyping_all_set = set(xtyping.__all__)
+    __xtyping_all__ = xtyping.__all__  # type: ignore
+    xtyping_all_set = set(__xtyping_all__)
+    __typing_extensions_all__ = xtyping.__all_typing_extensions__
     for el in [
-        t_el for t_el in tx.__all__ if t_el not in {"Self", "NotRequired", "Required"}
+        t_el
+        for t_el in __typing_extensions_all__
+        if t_el not in {"Self", "NotRequired", "Required"}
     ]:
         assert el in xtyping_all_set

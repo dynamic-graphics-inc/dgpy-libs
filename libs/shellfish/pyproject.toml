@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.0.7"
+version = "0.0.9"
 description = "shellfish ~ shell & file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -35,6 +35,8 @@ funkify = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
+pytest-asyncio = "^0.17.2"
+pytest-cov = "^2.12.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -60,4 +62,5 @@ markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "timeout",
     "aio",
+    "asyncio",
 ]
