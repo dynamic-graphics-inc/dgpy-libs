@@ -32,13 +32,13 @@ __all__ = (
     "unique_gen",
 )
 
-T = TypeVar("T")
-K = TypeVar("K")
+_T = TypeVar("_T")
+_K = TypeVar("_K")
 
 
 def partition(
-    it: Sequence[T], n: int, *, pad: bool = False, padval: Any = None
-) -> Iterable[Sequence[T]]:
+    it: Sequence[_T], n: int, *, pad: bool = False, padval: Any = None
+) -> Iterable[Sequence[_T]]:
     """Partition an iterable into chunks of size n
 
     Args:
@@ -108,16 +108,16 @@ def chunks(it: str, chunk_size: int) -> List[str]:
 
 
 @overload
-def chunks(it: List[T], chunk_size: int) -> Iterable[List[T]]:
+def chunks(it: List[_T], chunk_size: int) -> Iterable[List[_T]]:
     ...
 
 
 @overload
-def chunks(it: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
+def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
     ...
 
 
-def chunks(it: Sequence[T], chunk_size: int) -> Iterable[Sequence[T]]:
+def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
     """Yield chunks of something slice-able with length <= chunk_size
 
     Args:
@@ -171,7 +171,7 @@ def exhaust(it: Iterable[Any]) -> None:
     deque(it, maxlen=0)
 
 
-def filter_none(it: Iterable[Union[T, None]]) -> Iterable[T]:
+def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     """Filter `None` values from an iterable
 
     Args:
@@ -233,7 +233,7 @@ def filter_none(it: Iterable[Union[T, None]]) -> Iterable[T]:
     return filter(None, it)
 
 
-def filter_is_none(it: Iterable[Union[T, None]]) -> Iterable[T]:
+def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     """Filter values that `is None`; checkout filter_none for false-y filtering
 
     Args:
@@ -253,7 +253,7 @@ def filter_is_none(it: Iterable[Union[T, None]]) -> Iterable[T]:
     return filter(None.__ne__, it)  # type: ignore
 
 
-def flatten(*args: Union[T, List[T], Tuple[T, ...]]) -> List[T]:
+def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
     """Flatten possibly nested iterables of sequences to a flat list
 
     Examples:
@@ -299,8 +299,8 @@ def it_product(it: Iterable[Union[int, float]]) -> Union[int, float]:
 
 
 def spliterable(
-    it: Iterable[T], fn: Callable[[T], bool]
-) -> Tuple[Iterable[T], Iterable[T]]:
+    it: Iterable[_T], fn: Callable[[_T], bool]
+) -> Tuple[Iterable[_T], Iterable[_T]]:
     """1 generator + True/False-function => 2 generators (True-gen, False-gen)
 
     Args:
@@ -325,7 +325,9 @@ def spliterable(
     return (i for p, i in _true_gen if p), (i for p, i in _false_gen if not p)
 
 
-def unique_gen(it: Iterable[T], key: Optional[Callable[[T], K]] = None) -> Iterable[T]:
+def unique_gen(
+    it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None
+) -> Iterable[_T]:
     """Yield unique values (ordered) from an iterable
 
     Args:
@@ -344,11 +346,11 @@ def unique_gen(it: Iterable[T], key: Optional[Callable[[T], K]] = None) -> Itera
 
     """
     if key is None:
-        have: Set[T] = set()
+        have: Set[_T] = set()
         have_add = have.add
         return (x for x in it if not (x in have or have_add(x)))
     else:
-        havek: Set[K] = set()
+        havek: Set[_K] = set()
         havek_add = havek.add
 
         return (
@@ -358,7 +360,7 @@ def unique_gen(it: Iterable[T], key: Optional[Callable[[T], K]] = None) -> Itera
         )
 
 
-def unique(it: Iterable[T], key: Optional[Callable[[T], K]] = None) -> Iterable[T]:
+def unique(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterable[_T]:
     """Alias for unique_gen
 
     Examples:

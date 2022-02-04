@@ -29,9 +29,10 @@ keywords = [
 python = "^3.7"
 xtyping = "^0.5.0"
 asyncify = "^0.7.0"
-jsonbourne = "^0.20.3"
+jsonbourne = ">=0.20.3"
 pydantic = "^1.9.0"
 funkify = "^0.4.0"
+listless = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"

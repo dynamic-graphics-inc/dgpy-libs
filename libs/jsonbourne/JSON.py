@@ -4,34 +4,33 @@ import sys
 
 from jsonbourne import __version__, json
 from jsonbourne.core import (
-    JSON,
-    UNDEFINED,
-    JsonDict,
+    JSON as _JSON,
+    UNDEFINED as UNDEFINED,
+    JsonDict as JsonDict,
     JSONModuleCls,
-    JsonObj,
+    JsonObj as JsonObj,
     JsonObjMutableMapping,
-    Null,
-    null,
-    undefined,
+    Null as Null,
+    null as null,
+    undefined as undefined,
 )
 from jsonbourne.jsonlib import import_json
 
-sys.modules["JSON"].__class__ = JSONModuleCls
-stringify = JSON.stringify
-dumps = JSON.dumps
-binify = JSON.binify
-dumpb = JSON.dumpb
-loads = JSON.loads
-parse = JSON.parse
-jsoncp = JSON.jsoncp
-json_lib = JSON.json_lib
-which = JSON.which
-use_orjson = JSON.use_orjson
-use_rapidjson = JSON.use_rapidjson
-use_json_stdlib = JSON.use_json_stdlib
-jsonify = JSON.jsonify
-unjsonify = JSON.unjsonify
-JSONDecodeError = JSON.JSONDecodeError
+stringify = _JSON.stringify
+dumps = _JSON.dumps
+binify = _JSON.binify
+dumpb = _JSON.dumpb
+loads = _JSON.loads
+parse = _JSON.parse
+jsoncp = _JSON.jsoncp
+json_lib = _JSON.json_lib
+which = _JSON.which
+use_orjson = _JSON.use_orjson
+use_rapidjson = _JSON.use_rapidjson
+use_json_stdlib = _JSON.use_json_stdlib
+jsonify = _JSON.jsonify
+unjsonify = _JSON.unjsonify
+JSONDecodeError = _JSON.JSONDecodeError
 
 __all__ = (
     "JSONModuleCls",
@@ -59,3 +58,7 @@ __all__ = (
     "use_orjson",
     "use_rapidjson",
 )
+
+# if __name__ is NOT __main__, funkify module
+if __name__ != "__main__":
+    sys.modules["JSON"].__class__ = JSONModuleCls

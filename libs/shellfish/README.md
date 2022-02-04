@@ -18,3 +18,9 @@
  - Pydantic models
  - Asyncio
  - Type annotated
+
+
+**TODO:**
+
+ - [ ] Add support for acceptable return codes
+ - [ ] Look into breaking down shellfish.sh into smaller modules

@@ -103,6 +103,14 @@ rapidjson = ["python-rapidjson (>=0.9.1)"]
 orjson = ["orjson (>=3.0.0,<4.0.0)"]
 
 [[package]]
+name = "listless"
+version = "0.0.2"
+description = "generator utils; aka 'listless'"
+category = "main"
+optional = false
+python-versions = ">=3.6.2,<4.0.0"
+
+[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -257,7 +265,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "cc41dfca4579db1e31bfbefb9bda4e1743b797daab1fb96935cdb878b42fd4dc"
+content-hash = "ec9a4af9b2c37995ba522ccf020fa5b350869912479801cf63e2fd4f24e517de"
 
 [metadata.files]
 asyncify = [
@@ -334,6 +342,10 @@ iniconfig = [
 jsonbourne = [
     {file = "jsonbourne-0.20.3-py3-none-any.whl", hash = "sha256:1f61c76dab0524c6e298487d4f44d596ef6a789cc22cb2eeca1423e4e09a4b33"},
     {file = "jsonbourne-0.20.3.tar.gz", hash = "sha256:8b080c5f61c566b1609222599b9574e1eeebdfe7f8a0d9c2b1eab39ab7b974d1"},
+]
+listless = [
+    {file = "listless-0.0.2-py3-none-any.whl", hash = "sha256:b1d7c335e00df60d3b84dc661dd1743f4e8503b21870fc5aa9e38e9f88becc11"},
+    {file = "listless-0.0.2.tar.gz", hash = "sha256:fada2bf7fcbb7a34d873b5e948d3606f14233ccbe68b1fbf36fa25cbe88400ff"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
