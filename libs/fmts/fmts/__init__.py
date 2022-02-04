@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """String utils"""
 import re
-from functools import lru_cache
 
 from binascii import hexlify
 from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
-from functools import wraps
+from functools import lru_cache, wraps
 from os import path, stat, urandom
 from random import choice
 from string import ascii_letters, ascii_lowercase, ascii_uppercase, digits, printable
@@ -26,6 +25,7 @@ from typing import (
     TypeVar,
     Union,
 )
+
 from fmts._meta import __version__
 
 # END IMPORTS

@@ -179,6 +179,19 @@ pycodestyle = ">=2.8.0,<2.9.0"
 pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
+name = "fmts"
+version = "0.0.1"
+description = "str transformation utils"
+category = "dev"
+optional = false
+python-versions = "==3.*,>=3.6.2"
+develop = true
+
+[package.source]
+type = "directory"
+url = "libs/fmts"
+
+[[package]]
 name = "funkify"
 version = "0.4.0"
 description = "Funkify modules so that they are callable"
@@ -737,7 +750,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e4f5f9232d436cd99d468fc9f9d0369a4a7e4a038af21ceaf7f7f3b4f50b49ed"
+content-hash = "949374074888f44b84fd36209f53131cd8d9e18f8b0f891f07f7ef71dc1dfb59"
 
 [metadata.files]
 aiopen = []
@@ -850,6 +863,7 @@ flake8 = [
     {file = "flake8-4.0.1-py2.py3-none-any.whl", hash = "sha256:479b1304f72536a55948cb40a32dce8bb0ffe3501e26eaf292c7e60eb5e0428d"},
     {file = "flake8-4.0.1.tar.gz", hash = "sha256:806e034dda44114815e23c16ef92f95c91e4c71100ff52813adf7132a6ad870d"},
 ]
+fmts = []
 funkify = []
 h5 = []
 h5py = [

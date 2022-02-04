@@ -44,6 +44,7 @@ python-rapidjson = "^1.4"
 xdoctest = "^0.15.10"
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
+fmts = { path = "./libs/fmts/", develop = true }
 funkify = { path = "./libs/funkify/", develop = true }
 h5 = { path = "./libs/h5/", develop = true }
 jsonbourne = { path = "./libs/jsonbourne/", develop = true }
