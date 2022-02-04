@@ -136,7 +136,6 @@ Lit = Literal
 L = Literal
 Ls = List
 Opt = Optional
-O = Optional
 U = Union
 Seq = Sequence
 
@@ -513,7 +512,6 @@ __all__ = (
     "NoneType",
     "Null",
     "Number",
-    "O",
     "ONE",
     "OpenBinaryMode",
     "OpenBinaryModeReading",

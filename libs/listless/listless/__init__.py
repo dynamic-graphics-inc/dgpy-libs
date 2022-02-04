@@ -141,7 +141,7 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
         ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
 
     """
-    return (it[i: i + chunk_size] for i in range(0, len(it), chunk_size))
+    return (it[i : i + chunk_size] for i in range(0, len(it), chunk_size))
 
 
 def exhaust(it: Iterable[Any]) -> None:
@@ -325,7 +325,9 @@ def spliterable(
     return (i for p, i in _true_gen if p), (i for p, i in _false_gen if not p)
 
 
-def unique_gen(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterable[_T]:
+def unique_gen(
+    it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None
+) -> Iterable[_T]:
     """Yield unique values (ordered) from an iterable
 
     Args:
