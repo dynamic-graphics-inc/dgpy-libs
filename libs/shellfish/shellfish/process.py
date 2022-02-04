@@ -7,6 +7,7 @@ import sys
 from os import environ
 from typing import Dict, Iterator, Optional
 
+IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
 SYS_PATH_SEP: str = os.pathsep
 
@@ -129,7 +130,7 @@ def is_win() -> bool:
         True if on a windows machine; False otherwise
 
     """
-    return os.name == "nt"
+    return IS_WIN
 
 
 def is_wsl() -> bool:

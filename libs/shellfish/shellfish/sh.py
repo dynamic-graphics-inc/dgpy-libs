@@ -8,22 +8,17 @@ import sys
 
 from abc import ABC, abstractmethod
 from asyncio import TimeoutError
-from distutils.dir_util import copy_tree
-from enum import IntEnum
 from functools import lru_cache, reduce
 from glob import iglob
 from operator import iconcat
 from os import (
     chdir,
-    chmod as _chmod,
     environ,
     fspath as _fspath,
     getcwd,
     listdir,
     makedirs,
-    mkdir as _mkdir,
     path,
-    remove,
     scandir,
     symlink,
     unlink,
@@ -31,7 +26,7 @@ from os import (
 from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
-from shutil import move, rmtree, which as _which
+from shutil import move, which as _which
 from subprocess import (
     DEVNULL,
     PIPE,
@@ -58,8 +53,17 @@ from typing import (
 
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
+from listless import exhaust
 from shellfish import fs
 from shellfish._meta import __version__
+from shellfish.fs import (
+    Stdio as Stdio,
+    chmod as chmod,
+    cp as cp,
+    mkdir as mkdir,
+    mkdirp as mkdirp,
+    touch as touch,
+)
 from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
 
@@ -78,8 +82,6 @@ __all__ = (
     "cd",
     "chmod",
     "cp",
-    "cp_dir",
-    "cp_file",
     "decode_stdio_bytes",
     "dirname",
     "do",
@@ -125,18 +127,9 @@ __all__ = (
     "x",
 )
 
-
 IS_WIN: bool = is_win()
 
 PopenArgs = Union[bytes, str, Sequence[str], Sequence[FsPath]]
-
-
-class Stdio(IntEnum):
-    """Standard-io enum object"""
-
-    stdin = 0
-    stdout = 1
-    stderr = 2
 
 
 class FlagMeta(type):
@@ -1887,17 +1880,6 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def chmod(fspath: FsPath, mode: int) -> None:
-    """Change the access permissions of a file
-
-    Args:
-        fspath (FsPath): Path to file to chmod
-        mode (int): Permissions mode as an int
-
-    """
-    return _chmod(path=str(fspath), mode=mode)
-
-
 def echo(
     *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
 ) -> None:
@@ -1935,28 +1917,6 @@ def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     )
 
 
-def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
-    """Make directory at given fspath
-
-    Args:
-        fspath (FsPath): Directory path to create
-        p (bool): Make parent dirs if True; do not make parent dirs if False
-        exist_ok (bool): Throw error if directory exists and exist_ok is False
-
-    Returns:
-         None
-
-    """
-    if p or exist_ok:
-        return makedirs(_fspath(fspath), exist_ok=p or exist_ok)
-    return _mkdir(_fspath(fspath))
-
-
-def mkdirp(fspath: FsPath) -> None:
-    """Make directory and parents"""
-    return mkdir(fspath=fspath, p=True)
-
-
 def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
@@ -1969,16 +1929,6 @@ def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
 
     """
     return export(key=key, val=val)
-
-
-def touch(fspath: FsPath) -> None:
-    """Alias for shellfish.fs.touch
-
-    Args:
-        fspath (FsPath): File-system path for where to make an empty file
-
-    """
-    fs.touch(fspath=fspath)
 
 
 def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:
@@ -2225,116 +2175,6 @@ def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> s
     )
 
 
-########
-## CP ##
-########
-
-
-def cp_file(src: str, target: str) -> None:
-    """Copy a file given a source-path and a destination-path
-
-    Args:
-        src (str): Source fspath
-        target (str): Destination fspath
-
-    """
-    try:
-        makedirs(path.dirname(target), exist_ok=True)
-    except FileNotFoundError:
-        pass
-    fs.wbytes_gen(target, fs.lbytes_gen(src, blocksize=2**18))
-
-
-def cp_dir(src: str, target: str) -> None:
-    """Copy a directory given a source and destination directory paths
-
-    Args:
-        src (str): Source directory path
-        target (str): Destination directory path
-
-    """
-    if not path.exists(target):
-        makedirs(target)
-    copy_tree(src, target)
-
-
-def cp(
-    src: str,
-    target: str,
-    *,
-    force: bool = True,
-    recursive: bool = False,
-    r: bool = False,
-    f: bool = True,
-) -> None:
-    """Copy the directory/file src to the directory/file target
-
-    Args:
-        src (str): Source directory/file to copy
-        target: Destination directory/file to copy
-        force: Force the copy (like -f flag for cp in shell)
-        recursive: Recursive copy (like -r flag for cp in shell)
-        r: alias for recursive
-        f: alias for force
-
-    Raises:
-        ValueError: If src is a directory and recursive and r are both `False`
-
-    """
-    _recursive = recursive or r
-    _force = force or f
-    for src in iglob(src, recursive=True):
-        _dest = target
-        if (path.exists(target) and not _force) or src == target:
-            return
-        if path.isdir(src) and not _recursive:
-            raise ValueError("Source ({}) is directory; use r=True")
-        if path.isfile(src) and path.isdir(target):
-            _dest = path.join(target, path.basename(src))
-        if path.isfile(src) or path.islink(src):
-            cp_file(src, _dest)
-        if path.isdir(src):
-            cp_dir(src, _dest)
-
-
-def rm(
-    fspath: FsPath,
-    *,
-    recursive: bool = False,
-    verbose: bool = False,
-    r: bool = False,
-    v: bool = False,
-) -> None:
-    """Remove files & directories in the style of the shell
-
-    Args:
-        fspath (FsPath): Path to file or directory to remove
-        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
-        verbose (bool): Flag to be verbose
-        v (bool): alias for verbose
-        r (bool): alias for recursive kwarg
-
-    Raises:
-        ValueError: If recursive and r are `False` and fspath is a directory
-
-    """
-    _recursive = recursive or r
-    _verbose = verbose or v
-    for _path_str in iglob(str(fspath), recursive=_recursive):
-        try:
-            remove(_path_str)
-            if _verbose:
-                echo(f"Removed file: {_path_str}")
-
-        except Exception:
-            if _recursive:
-                rmtree(_path_str)
-                if _verbose:
-                    echo(f"Removed dir: {_path_str}")
-            else:
-                raise ValueError(_path_str + " is a directory -- use r=True")
-
-
 def ls(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
@@ -2405,6 +2245,39 @@ def ls_files_dirs(
     if not abspath:
         return [el.name for el in file_dir_entries], [el.name for el in dir_dir_entries]
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
+
+
+def rm(
+    fspath: FsPath,
+    *,
+    recursive: bool = False,
+    verbose: bool = False,
+    r: bool = False,
+    v: bool = False,
+    dryrun: bool = False,
+) -> None:
+    """Remove files & directories in the style of the shell
+
+    Args:
+        fspath (FsPath): Path to file or directory to remove
+        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
+        verbose (bool): Flag to be verbose
+        v (bool): alias for verbose
+        r (bool): alias for recursive kwarg
+        dryrun (bool): Flag to not actually remove anything
+
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
+
+    """
+    if verbose or v:
+        exhaust(map(echo, fs.rm_gen(fspath, recursive=recursive, dryrun=dryrun)))
+        return None
+    fs.rm(
+        fspath,
+        recursive=recursive or r,
+        dryrun=dryrun,
+    )
 
 
 def mv(src: FsPath, dst: FsPath) -> None:

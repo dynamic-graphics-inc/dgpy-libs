@@ -25,7 +25,7 @@ from typing import (
 
 from typing_extensions import Literal, ParamSpec
 
-__all_typing__ = (
+__all_typing__: Tuple[str, ...] = (
     "AbstractSet",
     "Any",
     "AnyStr",
@@ -131,13 +131,17 @@ __all_typing_extensions__: Tuple[str, ...] = (
 #############
 ## Aliases ##
 #############
+D = Dict
+Lit = Literal
+L = Literal
+Ls = List
 Opt = Optional
+U = Union
+Seq = Sequence
 
 ###############
 ## LITERALLY ##
 ###############
-Lit = Literal
-L = Literal
 TRUE = Literal[True]
 FALSE = Literal[False]
 ZERO = Literal[0]
@@ -444,6 +448,7 @@ __all__ = (
     "BytesPath",
     "CmdArgs",
     "CmdArgsType",
+    "D",
     "DT",
     "DictAny",
     "DictAnyAny",
@@ -499,6 +504,7 @@ __all__ = (
     "ListStr",
     "ListT",
     "Lit",
+    "Ls",
     "N",
     "NoneBytes",
     "NoneStr",
@@ -533,6 +539,7 @@ __all__ = (
     "STDIN",
     "STDIO",
     "Self",
+    "Seq",
     "SetAny",
     "SetFloat",
     "SetInt",
@@ -555,6 +562,7 @@ __all__ = (
     "TupleStrStr",
     "TupleStrs",
     "Txt",
+    "U",
     "VT",
     "VT_co",
     "VT_contra",

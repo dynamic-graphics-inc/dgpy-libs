@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import funkify
 
 default_export = "default_export"

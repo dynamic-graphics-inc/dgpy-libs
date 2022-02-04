@@ -1,18 +1,27 @@
 # -*- coding: utf-8 -*-
 """file-system utils"""
+from enum import IntEnum
+from glob import iglob
 from itertools import chain, count
 from os import (
     DirEntry,
+    chmod as _chmod,
     fspath as _fspath,
-    makedirs,
+    makedirs as _makedirs,
+    mkdir as _mkdir,
     path,
+    remove,
+    rmdir as _rmdir,
     scandir as _scandir,
     sep,
-    stat,
+    stat as _stat,
+    stat_result as os_stat_result,
+    symlink as _symlink,
     utime,
     walk,
 )
 from pathlib import Path
+from shutil import copytree, move, rmtree
 from time import time
 
 from jsonbourne import JSON
@@ -54,6 +63,7 @@ from shellfish.fs._async import (
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
+from shellfish.process import is_win
 from xtyping import (
     Any,
     Callable,
@@ -66,6 +76,14 @@ from xtyping import (
     Tuple,
     Union,
 )
+
+
+class Stdio(IntEnum):
+    """Standard-io enum object"""
+
+    stdin = 0
+    stdout = 1
+    stderr = 2
 
 
 def fspath(fspath: FsPath) -> str:
@@ -220,7 +238,7 @@ def listdir_gen(
         >>> from shellfish import sh
         >>> from os import makedirs, path, chdir
         >>> from shutil import rmtree
-        >>> makedirs(tmpdir, exist_ok=True)
+        >>> _makedirs(tmpdir, exist_ok=True)
         >>> sh.cd(tmpdir)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
@@ -241,7 +259,7 @@ def listdir_gen(
         ...     fspath = path.join(tmpdir, fspath)
         ...     dirpath = path.dirname(fspath)
         ...     expected_files.append(fspath)
-        ...     makedirs(dirpath, exist_ok=True)
+        ...     _makedirs(dirpath, exist_ok=True)
         ...     touch(fspath)
         >>> dirpath = path.join(tmpdir, 'dir')
         >>> dirpath.replace("\\", "/")
@@ -284,7 +302,7 @@ def touch(fspath: FsPath) -> None:
 
     """
     if not path.exists(str(fspath)):
-        makedirs(path.dirname(str(fspath)), exist_ok=True)
+        _makedirs(path.dirname(str(fspath)), exist_ok=True)
         with open(fspath, "a"):
             utime(fspath, None)
 
@@ -311,7 +329,7 @@ def files_gen(
 
     Examples:
         >>> tmpdir = 'files_gen.doctest'
-        >>> from os import makedirs; makedirs(tmpdir, exist_ok=True)
+        >>> from os import makedirs; _makedirs(tmpdir, exist_ok=True)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
         ...     ("dir", "file2.txt"),
@@ -330,7 +348,7 @@ def files_gen(
         ...     fspath = path.join(tmpdir, fspath)
         ...     dirpath = path.dirname(fspath)
         ...     expected_files.append(fspath)
-        ...     makedirs(dirpath, exist_ok=True)
+        ...     _makedirs(dirpath, exist_ok=True)
         ...     touch(fspath)
         >>> from pprint import pprint
         >>> expected_files = [el.replace('\\', '/') for el in expected_files]
@@ -410,7 +428,7 @@ def dirs_gen(
 
     Examples:
         >>> tmpdir = 'dirs_gen.doctest'
-        >>> from os import makedirs; makedirs(tmpdir, exist_ok=True)
+        >>> from os import makedirs; _makedirs(tmpdir, exist_ok=True)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
         ...     ("dir", "file2.txt"),
@@ -431,7 +449,7 @@ def dirs_gen(
         ...     dirpath = path.dirname(fspath)
         ...     expected_files.append(fspath)
         ...     expected_dirs.append(dirpath)
-        ...     makedirs(dirpath, exist_ok=True)
+        ...     _makedirs(dirpath, exist_ok=True)
         ...     touch(fspath)
         >>> expected_dirs = list(sorted(set(expected_dirs)))
         >>> from pprint import pprint
@@ -528,7 +546,7 @@ def files_dirs_gen(
 
     Examples:
         >>> tmpdir = 'files_dirs_gen.doctest'
-        >>> from os import makedirs; makedirs(tmpdir, exist_ok=True)
+        >>> from os import makedirs; _makedirs(tmpdir, exist_ok=True)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
         ...     ("dir", "file2.txt"),
@@ -549,7 +567,7 @@ def files_dirs_gen(
         ...     dirpath = path.dirname(fspath)
         ...     expected_files.append(fspath)
         ...     expected_dirs.append(dirpath)
-        ...     makedirs(dirpath, exist_ok=True)
+        ...     _makedirs(dirpath, exist_ok=True)
         ...     touch(fspath)
         >>> expected_dirs = list(sorted(set(expected_dirs)))
         >>> from pprint import pprint
@@ -647,7 +665,7 @@ def walk_gen(
 
     Examples:
         >>> tmpdir = 'walk_gen.doctest'
-        >>> from os import makedirs; makedirs(tmpdir, exist_ok=True)
+        >>> from os import makedirs; _makedirs(tmpdir, exist_ok=True)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
         ...     ("dir", "file2.txt"),
@@ -668,7 +686,7 @@ def walk_gen(
         ...     dirpath = path.dirname(fspath)
         ...     expected_files.append(fspath)
         ...     expected_dirs.append(dirpath)
-        ...     makedirs(dirpath, exist_ok=True)
+        ...     _makedirs(dirpath, exist_ok=True)
         ...     touch(fspath)
         >>> expected_dirs = [el.replace('\\', '/') for el in sorted(set(expected_dirs))]
         >>> from pprint import pprint
@@ -1237,6 +1255,218 @@ def shebang(fspath: FsPath) -> Union[None, str]:
     with open(fspath, "r") as f:
         first = f.readline().replace("\r\n", "\n").strip("\n")
         return first if "#!" in first[:2] else None
+
+
+def chmod(fspath: FsPath, mode: int) -> None:
+    """Change the access permissions of a file
+
+    Args:
+        fspath (FsPath): Path to file to chmod
+        mode (int): Permissions mode as an int
+
+    """
+    return _chmod(path=str(fspath), mode=mode)
+
+
+def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
+    """Make directory at given fspath
+
+    Args:
+        fspath (FsPath): Directory path to create
+        p (bool): Make parent dirs if True; do not make parent dirs if False
+        exist_ok (bool): Throw error if directory exists and exist_ok is False
+
+    Returns:
+         None
+
+    """
+    if p or exist_ok:
+        return _makedirs(_fspath(fspath), exist_ok=p or exist_ok)
+    return _mkdir(_fspath(fspath))
+
+
+def mkdirp(fspath: FsPath) -> None:
+    """Make directory and parents"""
+    return mkdir(fspath=fspath, p=True)
+
+
+def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
+    if not dryrun:
+        move(src, dest)
+    return (src, dest)
+
+
+def rmfile(fspath: FsPath, *, dryrun: bool = False) -> str:
+    """Remove a file at given fspath
+
+    Args:
+        fspath (FsPath): Filepath to remove
+        dryrun (bool): Do not remove file if True
+
+    Returns:
+        None
+
+    """
+    if not dryrun:
+        remove(_fspath(fspath))
+    return _fspath(fspath)
+
+
+def rmdir(fspath: FsPath, *, recursive: bool = False) -> None:
+    """Remove directory at given fspath
+
+    Args:
+        fspath (FsPath): Directory path to remove
+        recursive (bool): Recursively remove all contents if True
+
+    Returns:
+        None
+
+    """
+    if recursive:
+        return rmtree(_fspath(fspath))
+    return _rmdir(_fspath(fspath))
+
+
+def rm_gen(
+    fspath: FsPath,
+    *,
+    recursive: bool = False,
+    dryrun: bool = False,
+) -> Iterator[str]:
+    """Remove files & directories in the style of the shell
+    Args:
+        fspath (FsPath): Path to file or directory to remove
+        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
+        verbose (bool): Flag to be verbose
+        v (bool): alias for verbose
+        r (bool): alias for recursive kwarg
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
+    """
+    if dryrun:
+        yield from iglob(_fspath(fspath), recursive=recursive)
+    else:
+        for _path_str in iglob(str(fspath), recursive=recursive):
+            try:
+                remove(_path_str)
+                yield _path_str
+
+            except Exception:
+                if recursive:
+                    rmtree(_path_str)
+                    yield _path_str
+                else:
+                    raise ValueError(_path_str + " is a directory -- use r=True")
+
+
+def rm(
+    fspath: FsPath,
+    *,
+    recursive: bool = False,
+    dryrun: bool = False,
+) -> None:
+    """Remove files & directories in the style of the shell
+    Args:
+        fspath (FsPath): Path to file or directory to remove
+        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
+        dryrun (bool): Do not remove file if True
+
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
+
+    """
+    if not dryrun:
+        for _path_str in iglob(str(fspath), recursive=recursive):
+            try:
+                remove(_path_str)
+
+            except Exception:
+                if recursive:
+                    rmtree(_path_str)
+                else:
+                    raise ValueError(_path_str + " is a directory -- use r=True")
+
+
+def stat(fspath: FsPath) -> os_stat_result:
+    """Return the os.stat_result object for a given fspath
+
+    Args:
+        fspath (FsPath): Path to file or directory
+
+    Returns:
+        os.stat_result: stat_result object
+
+    """
+    return _stat(_fspath(fspath))
+
+
+SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
+
+
+def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:
+    if is_win():
+        raise NotImplementedError("TODO")
+    _symlink(str(link), str(target))
+
+
+def copy_file(
+    src: FsPath, dest: FsPath, *, dryrun: bool = False, mkdirp: bool = False
+) -> None:
+    """Copy a file given a source-path and a destination-path
+
+    Args:
+        src (str): Source fspath
+        dest (str): Destination fspath
+
+    """
+    _dest = Path(dest)
+    if mkdirp:
+        _dest.parent.mkdir(parents=mkdirp, exist_ok=True)
+    elif not _dest.parent.exists() or not _dest.parent.is_dir():
+        raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
+    wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+
+
+def cp(
+    src: FsPath,
+    dest: FsPath,
+    *,
+    force: bool = True,
+    recursive: bool = False,
+    r: bool = False,
+    f: bool = True,
+) -> None:
+    """Copy the directory/file src to the directory/file dest
+
+    Args:
+        src (str): Source directory/file to copy
+        dest: Destination directory/file to copy
+        force: Force the copy (like -f flag for cp in shell)
+        recursive: Recursive copy (like -r flag for cp in shell)
+        r: alias for recursive
+        f: alias for force
+
+    Raises:
+        ValueError: If src is a directory and recursive and r are both `False`
+
+    """
+    _recursive = recursive or r
+    _force = force or f
+    for _src in iglob(_fspath(src), recursive=True):
+        _dest = dest
+        if (path.exists(dest) and not _force) or _src == dest:
+            return
+        if path.isdir(_src) and not _recursive:
+            raise ValueError("Source ({}) is directory; use r=True")
+        if path.isfile(_src) and path.isdir(dest):
+            _dest = path.join(dest, path.basename(_src))
+        if path.isfile(_src) or path.islink(src):
+            copy_file(_src, _dest)
+        if path.isdir(_src):
+            if not path.exists(dest):
+                _makedirs(dest)
+            copytree(src, dest, dirs_exist_ok=True)
 
 
 # IO function aliases ~ for backwards compatibility and convenience
