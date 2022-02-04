@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """file-system utils"""
+from enum import IntEnum
 from glob import iglob
 from itertools import chain, count
 from os import (
     DirEntry,
+    chmod as _chmod,
     fspath as _fspath,
     makedirs as _makedirs,
     mkdir as _mkdir,
@@ -12,12 +14,14 @@ from os import (
     rmdir as _rmdir,
     scandir as _scandir,
     sep,
-    stat,
+    stat as _stat,
+    stat_result as os_stat_result,
+    symlink as _symlink,
     utime,
     walk,
 )
 from pathlib import Path
-from shutil import copytree, rmtree
+from shutil import copytree, move, rmtree
 from time import time
 
 from jsonbourne import JSON
@@ -59,6 +63,7 @@ from shellfish.fs._async import (
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
+from shellfish.process import is_win
 from xtyping import (
     Any,
     Callable,
@@ -71,6 +76,14 @@ from xtyping import (
     Tuple,
     Union,
 )
+
+
+class Stdio(IntEnum):
+    """Standard-io enum object"""
+
+    stdin = 0
+    stdout = 1
+    stderr = 2
 
 
 def fspath(fspath: FsPath) -> str:
@@ -1244,6 +1257,17 @@ def shebang(fspath: FsPath) -> Union[None, str]:
         return first if "#!" in first[:2] else None
 
 
+def chmod(fspath: FsPath, mode: int) -> None:
+    """Change the access permissions of a file
+
+    Args:
+        fspath (FsPath): Path to file to chmod
+        mode (int): Permissions mode as an int
+
+    """
+    return _chmod(path=str(fspath), mode=mode)
+
+
 def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
     """Make directory at given fspath
 
@@ -1264,6 +1288,12 @@ def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
 def mkdirp(fspath: FsPath) -> None:
     """Make directory and parents"""
     return mkdir(fspath=fspath, p=True)
+
+
+def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
+    if not dryrun:
+        move(src, dest)
+    return (src, dest)
 
 
 def rmfile(fspath: FsPath, *, dryrun: bool = False) -> str:
@@ -1356,6 +1386,28 @@ def rm(
                     rmtree(_path_str)
                 else:
                     raise ValueError(_path_str + " is a directory -- use r=True")
+
+
+def stat(fspath: FsPath) -> os_stat_result:
+    """Return the os.stat_result object for a given fspath
+
+    Args:
+        fspath (FsPath): Path to file or directory
+
+    Returns:
+        os.stat_result: stat_result object
+
+    """
+    return _stat(_fspath(fspath))
+
+
+SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
+
+
+def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:
+    if is_win():
+        raise NotImplementedError("TODO")
+    _symlink(str(link), str(target))
 
 
 def copy_file(

@@ -216,7 +216,7 @@ def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
             for l in lists:
                 a = list(filter_one(l))
 
-        180 ms +/- 184 µs/loop (mean +/- std. dev. of 7 runs, 10 loops each)
+        180 ms +/- 184 Ã‚Âµs/loop (mean +/- std. dev. of 7 runs, 10 loops each)
 
 
     Timing the second function (filter)::
@@ -226,7 +226,7 @@ def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
             for l in lists:
                 a = list(filter_two(l))
 
-        42.5 ms +/- 112 µs/loop (mean +/- std. dev. of 7 runs, 10 loops each)
+        42.5 ms +/- 112 Ã‚Âµs/loop (mean +/- std. dev. of 7 runs, 10 loops each)
 
 
     """
