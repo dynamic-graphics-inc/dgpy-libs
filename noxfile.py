@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+
 from os import path
 from shutil import which
 
@@ -134,8 +135,8 @@ def mypy(session):
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def lint(session):
-    _flake(session)
     _mypy(session)
+    _flake(session)
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

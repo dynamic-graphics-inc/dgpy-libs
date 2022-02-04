@@ -8,13 +8,11 @@ import sys
 
 from abc import ABC, abstractmethod
 from asyncio import TimeoutError
-from enum import IntEnum
 from functools import lru_cache, reduce
 from glob import iglob
 from operator import iconcat
 from os import (
     chdir,
-    chmod as _chmod,
     environ,
     fspath as _fspath,
     getcwd,
@@ -58,7 +56,14 @@ from jsonbourne.pydantic import JsonBaseModel
 from listless import exhaust
 from shellfish import fs
 from shellfish._meta import __version__
-from shellfish.fs import cp as cp, mkdir as mkdir, mkdirp as mkdirp
+from shellfish.fs import (
+    Stdio as Stdio,
+    chmod as chmod,
+    cp as cp,
+    mkdir as mkdir,
+    mkdirp as mkdirp,
+    touch as touch,
+)
 from shellfish.process import is_win
 from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
 
@@ -125,14 +130,6 @@ __all__ = (
 IS_WIN: bool = is_win()
 
 PopenArgs = Union[bytes, str, Sequence[str], Sequence[FsPath]]
-
-
-class Stdio(IntEnum):
-    """Standard-io enum object"""
-
-    stdin = 0
-    stdout = 1
-    stderr = 2
 
 
 class FlagMeta(type):
@@ -1883,17 +1880,6 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def chmod(fspath: FsPath, mode: int) -> None:
-    """Change the access permissions of a file
-
-    Args:
-        fspath (FsPath): Path to file to chmod
-        mode (int): Permissions mode as an int
-
-    """
-    return _chmod(path=str(fspath), mode=mode)
-
-
 def echo(
     *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
 ) -> None:
@@ -1943,16 +1929,6 @@ def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
 
     """
     return export(key=key, val=val)
-
-
-def touch(fspath: FsPath) -> None:
-    """Alias for shellfish.fs.touch
-
-    Args:
-        fspath (FsPath): File-system path for where to make an empty file
-
-    """
-    fs.touch(fspath=fspath)
 
 
 def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:

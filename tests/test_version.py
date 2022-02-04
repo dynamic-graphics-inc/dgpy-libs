@@ -3,7 +3,7 @@ from os import path
 
 import pytest
 
-from funkify import __version__
+from dgpylibs import __version__
 
 pytestmark = [pytest.mark.basic]
 

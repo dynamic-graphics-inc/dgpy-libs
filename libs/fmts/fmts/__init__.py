@@ -398,8 +398,8 @@ def nseconds(nsec: float) -> str:
         ...
         (1, '1.000 sec')
         (0.01, '10.000 ms')
-        (0.0001, '100.000 μs')
-        (1e-06, '1.000 μs')
+        (0.0001, '100.000 ÃŽÂ¼s')
+        (1e-06, '1.000 ÃŽÂ¼s')
         (1e-08, '10.000 ns')
 
         Greater than or equal to one second
@@ -418,7 +418,7 @@ def nseconds(nsec: float) -> str:
     elif 0.000001 > nsec >= 0.000000001:
         return f"{(10 ** 9) * nsec:.3f} ns"
     elif 0.001 > nsec >= 0.000001:
-        return f"{(10 ** 6) * nsec:.3f} μs"
+        return f"{(10 ** 6) * nsec:.3f} ÃŽÂ¼s"
     elif 1 > nsec >= 0.001:
         return f"{(10 ** 3) * nsec:.3f} ms"
     elif nsec < 60:
@@ -453,8 +453,8 @@ def dseconds(ti: Union[float, int], tf: Union[float, int]) -> str:
         ...
         (1, '1.000 sec')
         (0.01, '10.000 ms')
-        (0.0001, '100.000 μs')
-        (1e-06, '1.000 μs')
+        (0.0001, '100.000 ÃŽÂ¼s')
+        (1e-06, '1.000 ÃŽÂ¼s')
         (1e-08, '10.000 ns')
 
         Greater than or equal to one second
@@ -502,9 +502,9 @@ def strip_ascii(string: str) -> str:
         string of only the non-ascii characters
 
     Examples:
-        >>> string_w_non_ascii_chars = 'Three fourths: ¾'
+        >>> string_w_non_ascii_chars = 'Three fourths: Ã‚Â¾'
         >>> strip_ascii(string_w_non_ascii_chars)
-        '¾'
+        'Ã‚Â¾'
 
     """
     return "".join(filter(lambda x: ord(x) > 128, string))
@@ -521,7 +521,7 @@ def strip_non_ascii(s: str) -> str:
         string of only the non-ascii characters
 
     Examples:
-        >>> string_w_non_ascii_chars = 'Three fourths: ¾'
+        >>> string_w_non_ascii_chars = 'Three fourths: Ã‚Â¾'
         >>> strip_non_ascii(string_w_non_ascii_chars)
         'Three fourths: '
 
@@ -1386,6 +1386,7 @@ def space_pad_strings(strings: List[str]) -> List[str]:
 
 
 __all__ = (
+    "__version__",
     "ALL_CAP_RE",
     "CAMEL_CHARACTERS",
     "FIRST_CAP_RE",

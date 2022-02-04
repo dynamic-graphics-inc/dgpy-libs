@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "dgpylibs"
 version = "0.0.2"
-description = "Dynamic Graphics Python"
+description = "Dynamic Graphics Python libraries"
 authors = ["jessekrubin <jesse@dgi.com>"]
 license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-#packages = [
-#    { include = "dgpydev.py", from = "." },
-#]
+packages = [
+    { include = "dgpylibs", from = "." },
+]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -26,6 +26,17 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
+aiopen = "*"
+asyncify = "*"
+fmts = "*"
+funkify = "*"
+h5 = "*"
+jsonbourne = "*"
+lager = "*"
+listless = "*"
+requires = "*"
+shellfish = "*"
+xtyping = "*"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
