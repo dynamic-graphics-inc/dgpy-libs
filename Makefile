@@ -29,6 +29,9 @@ mypy:
 	mypy --version
 	mypy --config-file pyproject.toml libs
 
+.PHONY: nukepoetry
+nukepoetry:
+	poetry cache clear pypi --all -v
 
 ###########
 ## CLEAN ##
