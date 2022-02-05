@@ -20,7 +20,6 @@ async def test_subproc_async() -> None:
     assert prun.async_proc
 
 
-
 @pytest.mark.asyncio
 @pytest.mark.aio
 async def test_run_async_shell_false() -> None:
@@ -37,7 +36,7 @@ async def test_run_async_shell_true() -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.timeout
-async def test_timeout_subprocess_async(tmp_path: Path) -> None:
+async def test_timeout_subprocess_aio(tmp_path: Path) -> None:
     sh.cd(str(tmp_path))
     script_2sec = (
         "from time import sleep\n"

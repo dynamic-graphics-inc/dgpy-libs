@@ -52,7 +52,7 @@ from typing import (
 
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
-from listless import exhaust
+from listless import chunks, exhaust
 from shellfish import fs
 from shellfish._meta import __version__
 from shellfish.fs import (
@@ -65,7 +65,7 @@ from shellfish.fs import (
 )
 from shellfish.process import is_win
 from shellfish.sh._dirtree import _DirTree
-from xtyping import STDIN, FsPath, IterableStr, T, TypedDict
+from xtyping import STDIN, FsPath, IterableStr, TypedDict
 
 __all__ = (
     "Done",
