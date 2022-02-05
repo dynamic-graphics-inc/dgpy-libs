@@ -44,6 +44,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+asyncio_mode = "auto"
 minversion = "6.0"
 addopts = [
     "--strict-config",
@@ -57,7 +58,8 @@ filterwarnings = [
     'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
     "ignore::RuntimeWarning",
     "ignore::pytest.PytestUnraisableExceptionWarning",
-    "ignore::DeprecationWarning"
+    "ignore::DeprecationWarning",
+    "ignore:unclosed transport <_ProactorSocketTransport.*:ResourceWarning",
 ]
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",

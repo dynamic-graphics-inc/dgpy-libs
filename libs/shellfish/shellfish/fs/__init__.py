@@ -77,6 +77,8 @@ from xtyping import (
     Union,
 )
 
+# END-IMPORTS
+
 
 class Stdio(IntEnum):
     """Standard-io enum object"""
@@ -1478,8 +1480,13 @@ lstring = rstr = lstr = rstring
 sstring = wstr = sstr = wstring
 ljson = rjson
 sjson = wjson
+
 __all__ = (
+    "Stdio",
     "__version__",
+    "chmod",
+    "copy_file",
+    "cp",
     "dirpath_gen",
     "dirs_gen",
     "exists",
@@ -1519,6 +1526,8 @@ __all__ = (
     "lstr_async",
     "lstring",
     "lstring_async",
+    "mkdir",
+    "mkdirp",
     "path_gen",
     "rbin",
     "rbin_async",

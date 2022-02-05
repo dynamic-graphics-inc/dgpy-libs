@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-# =============================================================================
-#  (c) Copyright 2022, Dynamic Graphics, Inc.
-#  ALL RIGHTS RESERVED
-#  Permission to use, copy, modify, or distribute this software for any
-#  purpose is prohibited without specific, written prior permission from
-#  Dynamic Graphics, Inc.
-# =============================================================================
 import sys
 
 from os import path
