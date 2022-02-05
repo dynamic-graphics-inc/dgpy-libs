@@ -65,8 +65,8 @@ def check_encoding():
         Path(filepath)
         for filepath in fs.files_gen()
         if filepath.endswith(".py")
-        and "nox" not in filepath
-        and ".venv" not in filepath
+           and "nox" not in filepath
+           and ".venv" not in filepath
     )
     ENCODING = "# -*- coding: utf-8 -*-"
 
@@ -96,14 +96,14 @@ def main():
             shell=True,
         )
         chdir(REPO_ROOT)
-        run(args=["nox", "-s", "update_metadata"], shell=True)
+        run(args=["nox", "-s", "update_metadata"], shell=True, capture_output=True)
         run(args=["make", "fmt"], shell=True)
         chdir(LIBS_DIR / el)
 
         run(args=["make", "test"], shell=True)
 
         if el not in DONT_PUBLISH:
-            run(args=["poetry", "publish", "--build", "--dry-run"], shell=True)
+            run(args=["poetry", "publish", "--build", "--no-interaction", "--dry-run"], shell=True)
 
 
 if __name__ == "__main__":
