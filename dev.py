@@ -65,8 +65,8 @@ def check_encoding():
         Path(filepath)
         for filepath in fs.files_gen()
         if filepath.endswith(".py")
-           and "nox" not in filepath
-           and ".venv" not in filepath
+        and "nox" not in filepath
+        and ".venv" not in filepath
     )
     ENCODING = "# -*- coding: utf-8 -*-"
 
@@ -103,7 +103,10 @@ def main():
         run(args=["make", "test"], shell=True)
 
         if el not in DONT_PUBLISH:
-            run(args=["poetry", "publish", "--build", "--no-interaction", "--dry-run"], shell=True)
+            run(
+                args=["poetry", "publish", "--build", "--no-interaction", "--dry-run"],
+                shell=True,
+            )
 
 
 if __name__ == "__main__":

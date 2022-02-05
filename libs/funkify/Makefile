@@ -49,11 +49,11 @@ mypy:
 ###############
 .PHONY:test
 test:
-	pytest --doctest-modules tests $(PKG_NAME)
+	pytest tests $(PKG_NAME)
 
 .PHONY:testcov
 testcov:
-	pytest --cov=dgpy_pkg --doctest-modules tests $(PKG_NAME)
+	pytest --cov=dgpy_pkg tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:
