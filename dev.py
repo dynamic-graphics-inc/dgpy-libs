@@ -86,7 +86,9 @@ LIBS_GRAPH = {
     },
 }
 
-
+DONT_PUBLISH = {
+    "xtyping",
+}
 ts = TopologicalSorter(LIBS_GRAPH)
 static_order = ts.static_order()
 
@@ -96,6 +98,34 @@ for el in static_order:
     print(LIBS_DIR / el)
     chdir(LIBS_DIR / el)
     run(
-        args=["poetry", "update"],
+        args=["poetry", "update", "--lock"],
         shell=True,
     )
+
+    run(
+        args=["poetry", "version", "patch"],
+        shell=True,
+    )
+    chdir(REPO_ROOT)
+    run(
+        args=["nox", "-s", "update_metadata"],
+        shell=True
+    )
+    run(
+        args=["make","fmt"],
+        shell=True
+    )
+    chdir(LIBS_DIR / el)
+
+    run(
+        args=["make", "test"],
+        shell=True
+    )
+
+    if el not in DONT_PUBLISH:
+        run(
+            args=["poetry", "publish", "--build", "--dry-run"],
+            shell=True
+        )
+
+
