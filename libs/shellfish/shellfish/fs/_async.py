@@ -42,6 +42,10 @@ __all__ = (
     "wbytes_gen_async",
     "wstr_async",
     "wstring_async",
+    "ljson_async",
+    "rjson_async",
+    "sjson_async",
+    "wjson_async",
 )
 
 

@@ -903,6 +903,7 @@ async def _do_async(
                 )
                 tf = time()
             except TimeoutError as te:
+                _proc.terminate()
                 raise TimeoutError(
                     str(
                         {

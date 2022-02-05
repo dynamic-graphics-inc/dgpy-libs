@@ -28,6 +28,7 @@ __all__ = (
     "chunks",
     "exhaust",
     "it_product",
+    "partition",
     "unique",
     "unique_gen",
 )

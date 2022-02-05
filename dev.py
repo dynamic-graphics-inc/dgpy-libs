@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from graphlib import TopologicalSorter
 from os import listdir, path
 from pathlib import Path
 from typing import Callable, Iterable, List, Optional, Tuple, TypeVar
@@ -60,3 +61,30 @@ for pyfile in pyfiles:
         print(f"{pyfile} is not encoded in utf-8")
         _txt = ENCODING + "\n" + txt
         pyfile.write_text(_txt, encoding="utf-8")
+
+LIBS_GRAPH = {
+    # no inter deps
+    "fmts": {},
+    "funkify": {},
+    "h5": {},
+    "lager": {},
+    "listless": {},
+    "xtyping": {},
+    # has inter deps
+    "jsonbourne": {"xtyping"},
+    "aiopen": {"funkify", "xtyping"},
+    "asyncify": {"funkify", "xtyping"},
+    "requires": {"funkify", "xtyping"},
+    "shellfish": {
+        "aiopen",
+        "asyncify",
+        "funkify",
+        "jsonbourne",
+        "listless",
+        "xtyping",
+    },
+}
+
+
+ts = TopologicalSorter(LIBS_GRAPH)
+static_order = ts.static_order()

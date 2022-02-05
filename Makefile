@@ -12,8 +12,8 @@ pys = $(wildcard *.py)
 
 .PHONY: fmt
 fmt:
-	isort --sp pyproject.toml libs
-	black --config pyproject.toml libs
+	isort --sp pyproject.toml libs dgpylibs dev.py tests
+	black --config pyproject.toml libs dgpylibs dev.py tests
 
 .PHONY: flake
 flake: fmt
