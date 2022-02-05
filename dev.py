@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from graphlib import TopologicalSorter
-from os import listdir, path
+from os import chdir, listdir, path
 from pathlib import Path
+from subprocess import run
 from typing import Callable, Iterable, List, Optional, Tuple, TypeVar
 
 from listless import unique
@@ -88,3 +89,13 @@ LIBS_GRAPH = {
 
 ts = TopologicalSorter(LIBS_GRAPH)
 static_order = ts.static_order()
+
+for el in static_order:
+    print("==========")
+    print(el)
+    print(LIBS_DIR / el)
+    chdir(LIBS_DIR / el)
+    run(
+        args=["poetry", "update"],
+        shell=True,
+    )
