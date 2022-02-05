@@ -4,4 +4,4 @@
 __title__ = "asyncify"
 __description__ = "sync 2 async"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.7.0"
+__version__ = "0.7.1"

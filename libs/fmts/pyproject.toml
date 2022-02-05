@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fmts"
-version = "0.0.1"
+version = "0.0.2"
 description = "str transformation utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

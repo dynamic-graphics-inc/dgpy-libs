@@ -90,11 +90,11 @@ def main():
             args=["poetry", "update", "--lock"],
             shell=True,
         )
-
-        run(
-            args=["poetry", "version", "patch"],
-            shell=True,
-        )
+        if el not in DONT_PUBLISH:
+            run(
+                args=["poetry", "version", "patch"],
+                shell=True,
+            )
         chdir(REPO_ROOT)
         run(args=["nox", "-s", "update_metadata"], shell=True, capture_output=True)
         run(args=["make", "fmt"], shell=True)
@@ -104,7 +104,7 @@ def main():
 
         if el not in DONT_PUBLISH:
             run(
-                args=["poetry", "publish", "--build", "--no-interaction", "--dry-run"],
+                args=["poetry", "publish", "--build", "--no-interaction"],
                 shell=True,
             )
 
