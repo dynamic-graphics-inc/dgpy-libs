@@ -5,19 +5,7 @@ from os import path
 from shutil import which
 
 import nox
-
-libs = [
-    "aiopen",
-    "asyncify",
-    "funkify",
-    "h5",
-    "jsonbourne",
-    "lager",
-    "listless",
-    "requires",
-    "shellfish",
-    "xtyping",
-]
+from dev import LIBS
 
 
 def is_win() -> bool:
@@ -42,9 +30,9 @@ VENV_BACKEND = None if is_win() or IS_GITHUB_CI or not which("conda") else "cond
 LIB_DIRS = {
     el: path.join(LIBS_DIR, el)
     for el in os.listdir(LIBS_DIR)
-    if el[0] != "." and el in libs
+    if el[0] != "." and el in LIBS
 }
-SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in libs}
+SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in LIBS}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 
 
@@ -279,6 +267,6 @@ def mkdocs(session):
 
 @nox.session(reuse_venv=True)
 def freeze(session):
-    for lib in libs:
+    for lib in LIBS:
         session.install(lib)
     _freeze = session.run("pip", "freeze", "--local", "-l")

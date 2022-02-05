@@ -64,7 +64,9 @@ def check_encoding():
     pyfiles = (
         Path(filepath)
         for filepath in fs.files_gen()
-        if filepath.endswith(".py") and "nox" not in filepath and ".venv" not in filepath
+        if filepath.endswith(".py")
+        and "nox" not in filepath
+        and ".venv" not in filepath
     )
     ENCODING = "# -*- coding: utf-8 -*-"
 
@@ -104,5 +106,5 @@ def main():
             run(args=["poetry", "publish", "--build", "--dry-run"], shell=True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
