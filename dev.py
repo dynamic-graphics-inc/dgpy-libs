@@ -3,9 +3,8 @@ from graphlib import TopologicalSorter
 from os import chdir, listdir, path
 from pathlib import Path
 from subprocess import run
-from typing import Callable, Iterable, List, Optional, Tuple, TypeVar
+from typing import TypeVar
 
-from listless import unique
 from shellfish import fs
 
 _T = TypeVar("_T")
@@ -28,40 +27,6 @@ LIBS = (
     "shellfish",
     "xtyping",
 )
-ENCODING = "# -*- coding: utf-8 -*-"
-
-
-def sorted_unique(
-    iterable: Iterable[_T], key: Optional[Callable[[_T], _K]] = None
-) -> List[_T]:
-    return list(sorted(unique(iterable, key=key), key=key))
-
-
-def sorted_tuple(
-    iterable: Iterable[_T],
-    unique: bool = False,
-    key: Optional[Callable[[_T], _K]] = None,
-) -> Tuple[_T, ...]:
-    if unique:
-        return tuple(sorted_unique(iterable, key=key))
-    return tuple(sorted(iterable))
-
-
-assert sorted(tuple(set(LIBS))) == listdir(LIBS_DIR)
-
-pyfiles = (
-    Path(filepath)
-    for filepath in fs.files_gen()
-    if filepath.endswith(".py") and "nox" not in filepath and ".venv" not in filepath
-)
-
-for pyfile in pyfiles:
-    print("Pyfile:", pyfile)
-    txt = pyfile.read_text(encoding="utf-8")
-    if ENCODING not in txt:
-        print(f"{pyfile} is not encoded in utf-8")
-        _txt = ENCODING + "\n" + txt
-        pyfile.write_text(_txt, encoding="utf-8")
 
 LIBS_GRAPH = {
     # no inter deps
@@ -92,40 +57,52 @@ DONT_PUBLISH = {
 ts = TopologicalSorter(LIBS_GRAPH)
 static_order = ts.static_order()
 
-for el in static_order:
-    print("==========")
-    print(el)
-    print(LIBS_DIR / el)
-    chdir(LIBS_DIR / el)
-    run(
-        args=["poetry", "update", "--lock"],
-        shell=True,
-    )
+assert sorted(tuple(set(LIBS))) == listdir(LIBS_DIR)
 
-    run(
-        args=["poetry", "version", "patch"],
-        shell=True,
-    )
-    chdir(REPO_ROOT)
-    run(
-        args=["nox", "-s", "update_metadata"],
-        shell=True
-    )
-    run(
-        args=["make","fmt"],
-        shell=True
-    )
-    chdir(LIBS_DIR / el)
 
-    run(
-        args=["make", "test"],
-        shell=True
+def check_encoding():
+    pyfiles = (
+        Path(filepath)
+        for filepath in fs.files_gen()
+        if filepath.endswith(".py") and "nox" not in filepath and ".venv" not in filepath
     )
+    ENCODING = "# -*- coding: utf-8 -*-"
 
-    if el not in DONT_PUBLISH:
+    for pyfile in pyfiles:
+        print("Pyfile:", pyfile)
+        txt = pyfile.read_text(encoding="utf-8")
+
+        if ENCODING not in txt:
+            print(f"{pyfile} is not encoded in utf-8")
+            _txt = ENCODING + "\n" + txt
+            pyfile.write_text(_txt, encoding="utf-8")
+
+
+def main():
+    for el in static_order:
+        print("==========")
+        print(el)
+        print(LIBS_DIR / el)
+        chdir(LIBS_DIR / el)
         run(
-            args=["poetry", "publish", "--build", "--dry-run"],
-            shell=True
+            args=["poetry", "update", "--lock"],
+            shell=True,
         )
 
+        run(
+            args=["poetry", "version", "patch"],
+            shell=True,
+        )
+        chdir(REPO_ROOT)
+        run(args=["nox", "-s", "update_metadata"], shell=True)
+        run(args=["make", "fmt"], shell=True)
+        chdir(LIBS_DIR / el)
 
+        run(args=["make", "test"], shell=True)
+
+        if el not in DONT_PUBLISH:
+            run(args=["poetry", "publish", "--build", "--dry-run"], shell=True)
+
+
+if __name__ == '__main__':
+    main()
