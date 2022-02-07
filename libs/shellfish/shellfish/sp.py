@@ -21,7 +21,13 @@ __subprocess_all__ = (
 __all__ = (
     "CompletedProcessObj",
     "completed_process_obj",
-) + __subprocess_all__
+    # from subprocess
+    "CompletedProcess",
+    "run",
+    "Popen",
+    "PIPE",
+    "DEVNULL",
+)
 
 
 class CompletedProcessObj(TypedDict):
