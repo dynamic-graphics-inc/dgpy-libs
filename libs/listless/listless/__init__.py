@@ -7,6 +7,8 @@ from itertools import tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
+    AsyncIterable,
+    AsyncIterator,
     Callable,
     Iterable,
     List,
@@ -16,6 +18,7 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
+    cast,
     overload,
 )
 
@@ -23,18 +26,60 @@ from listless._meta import __version__
 
 __all__ = (
     "__version__",
-    "filter_none",
-    "filter_is_none",
+    "aiterable",
     "chunks",
     "exhaust",
+    "filter_is_none",
+    "filter_none",
+    "flatten",
     "it_product",
     "partition",
+    "spliterable",
     "unique",
     "unique_gen",
 )
 
 _T = TypeVar("_T")
 _K = TypeVar("_K")
+
+
+def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
+    """Convert any-iterable to an async iterator
+
+    Examples:
+        >>> from os import remove
+        >>> from asyncio import run
+        >>> plain_jane_list = list(range(10))
+        >>> async def consume_aiterable(it):
+        ...     stuff = []
+        ...     async for el in aiterable(it):
+        ...         stuff.append(el)
+        ...     return stuff
+        >>> run(consume_aiterable(plain_jane_list))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> async def async_gen():
+        ...     for b in range(10):
+        ...        yield b
+        >>> run(consume_aiterable(async_gen()))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        >>> class AsyncIterable:
+        ...     def __aiter__(self):
+        ...         return async_gen()
+        >>> run(consume_aiterable(AsyncIterable()))
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    """
+    if isinstance(it, AsyncIterator):
+        return it
+
+    if isinstance(it, AsyncIterable):
+        return it.__aiter__()
+
+    async def gen() -> AsyncIterator[_T]:
+        for item in cast(Iterable[_T], it):
+            yield item
+
+    return gen()
 
 
 def partition(
@@ -93,9 +138,9 @@ def partition(
 
     """
     if not isinstance(n, int):
-        raise TypeError("n must be an integer")
+        raise TypeError("n must be an integer")  # pragma: no cover
     if n < 1:
-        raise ValueError("n must be >= 1")
+        raise ValueError("n must be >= 1")  # pragma: no cover
     args = [iter(it)] * n
     if pad:
         return zip_longest(*args, fillvalue=padval)

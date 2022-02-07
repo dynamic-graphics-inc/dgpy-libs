@@ -71,6 +71,19 @@ def anystr(fn: Callable[[str], _R]) -> Callable[[AnyStr], _R]:
     Returns:
         Callable[[AnyStr], R]: function that accepts one arg that is a string
 
+    Examples:
+        >>> def _is_upper(string: str) -> bool:
+        ...     return string == string.upper()
+        >>> is_upper = anystr(_is_upper)
+        >>> is_upper('hello')
+        False
+        >>> is_upper('HELLO')
+        True
+        >>> is_upper(b'hello')
+        False
+        >>> is_upper(b'HELLO')
+        True
+
     """
 
     @wraps(fn)
@@ -144,6 +157,16 @@ def kebab_characters_set() -> Set[str]:
 
 @lru_cache(maxsize=1)
 def printable_characters_set() -> Set[str]:
+    """Return set of all printable characters
+
+    Returns:
+        Set[str]: set of all printable characters
+
+    Examples:
+        >>> printable_characters_set() == {c for c in printable}
+        True
+
+    """
     return set(printable)
 
 
@@ -170,8 +193,6 @@ def is_snake(string: AnyStr) -> bool:
         False
 
     """
-    if isinstance(string, bytes):
-        return is_snake(string.decode())
     return all(c in snake_characters_set() for c in set(string))
 
 
@@ -296,7 +317,23 @@ def snake2camel(string: AnyStr) -> AnyStr:
 
 
 def ensure_trailing_newline(string: AnyStr) -> AnyStr:
-    """Return a string that has only one trailing new line"""
+    r"""Return a string that has only one trailing new line
+
+    Examples:
+        >>> ensure_trailing_newline("foo")
+        'foo\n'
+        >>> ensure_trailing_newline('foo\n')
+        'foo\n'
+        >>> ensure_trailing_newline("foo\n\n")
+        'foo\n'
+        >>> ensure_trailing_newline(b'foo')
+        b'foo\n'
+        >>> ensure_trailing_newline(b'foo\n')
+        b'foo\n'
+        >>> ensure_trailing_newline(b'foo\n\n')
+        b'foo\n'
+
+    """
     if isinstance(string, bytes):
         return string.rstrip(b"\n") + b"\n"
     return "{}\n".format(string.strip("\n"))
@@ -312,7 +349,7 @@ def nbytes_str(nbytes: Union[int, float]) -> str:
         str: nbytesber of bytes formatted
 
     Raises:
-        ValueError: If given nbytesber of bytes is invalid/negative
+        ValueError: If given number of bytes is invalid/negative
 
     Examples:
         >>> nbytes_str(100)
@@ -348,7 +385,42 @@ def nbytes_str(nbytes: Union[int, float]) -> str:
             _str = f"{nbytes:3.1f} {x}"
             return _str
         nbytes /= 1024.0
-    raise ValueError(f"Invalid nbytesber of bytes: {nbytes}")
+    raise ValueError(f"Invalid number of bytes: {nbytes}")  # pragma: no cover
+
+
+def nbytes(nbytes: Union[int, float]) -> str:
+    """Alias for nbytes_str (for backward compatibility)
+
+    Examples:
+        >>> nbytes(100)
+        '100.0 bytes'
+        >>> nbytes(1000)
+        '1000.0 bytes'
+        >>> nbytes(10000)
+        '9.8 KB'
+        >>> nbytes(100000)
+        '97.7 KB'
+        >>> nbytes(1000000)
+        '976.6 KB'
+        >>> nbytes(10_000_000)
+        '9.5 MB'
+        >>> nbytes(100_000_000)
+        '95.4 MB'
+        >>> nbytes(1000000000)
+        '953.7 MB'
+        >>> nbytes(10000000000)
+        '9.3 GB'
+        >>> nbytes(100000000000)
+        '93.1 GB'
+        >>> nbytes(1000000000000)
+        '931.3 GB'
+        >>> nbytes(10000000000000)
+        '9.1 TB'
+        >>> nbytes(100000000000000)
+        '90.9 TB'
+
+    """
+    return nbytes_str(nbytes)
 
 
 def filesize_str(filepath: str) -> str:
@@ -376,7 +448,7 @@ def filesize_str(filepath: str) -> str:
     if path.isfile(filepath):
         file_info = stat(filepath)
         return nbytes_str(file_info.st_size)
-    raise FileNotFoundError(filepath)
+    raise FileNotFoundError(filepath)  # pragma: no cover
 
 
 def nseconds(nsec: float) -> str:
@@ -411,9 +483,17 @@ def nseconds(nsec: float) -> str:
         ('100 seconds', '01:40 (mm:ss)')
         ('1000 seconds', '16:40 (mm:ss)')
         ('10000 seconds', '02:46:40 (hh:mm:ss)')
+        >>> nseconds(-60)
+        '01:00 (mm:ss)'
+        >>> nseconds(60)
+        '01:00 (mm:ss)'
+        >>> nseconds(0)
+        '0 sec'
 
     """
-    if nsec == 0.0:
+    if nsec < 0:
+        return nseconds(abs(nsec))
+    elif nsec == 0.0:
         return "0 sec"
     elif 0.000001 > nsec >= 0.000000001:
         return f"{(10 ** 9) * nsec:.3f} ns"

@@ -17,4 +17,5 @@ exclude_lines =
     if sys.version_info < (3, 7):
 
     pragma: not covered
+    pragma: no cover
     @overload
