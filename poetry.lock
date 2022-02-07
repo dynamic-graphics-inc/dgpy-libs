@@ -1,6 +1,6 @@
 [[package]]
 name = "aiopen"
-version = "0.5.0"
+version = "0.5.2"
 description = "Async file io"
 category = "main"
 optional = false
@@ -31,7 +31,7 @@ test = ["coverage", "flake8", "pexpect", "wheel"]
 
 [[package]]
 name = "asyncify"
-version = "0.7.0"
+version = "0.7.2"
 description = "sync 2 async"
 category = "main"
 optional = false
@@ -180,7 +180,7 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "fmts"
-version = "0.0.1"
+version = "0.0.3"
 description = "str transformation utils"
 category = "main"
 optional = false
@@ -193,7 +193,7 @@ url = "libs/fmts"
 
 [[package]]
 name = "funkify"
-version = "0.4.0"
+version = "0.4.2"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
@@ -206,7 +206,7 @@ url = "libs/funkify"
 
 [[package]]
 name = "h5"
-version = "0.5.0"
+version = "0.5.2"
 description = "H5py utils"
 category = "main"
 optional = false
@@ -273,7 +273,7 @@ plugins = ["setuptools"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.0"
+version = "0.21.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -296,7 +296,7 @@ url = "libs/jsonbourne"
 
 [[package]]
 name = "lager"
-version = "0.16.0"
+version = "0.16.2"
 description = "EZ-PZ logging based on loguru"
 category = "main"
 optional = false
@@ -312,7 +312,7 @@ url = "libs/lager"
 
 [[package]]
 name = "listless"
-version = "0.0.2"
+version = "0.0.4"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
@@ -596,7 +596,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "requires"
-version = "0.10.0"
+version = "0.10.2"
 description = "Runtime imports and dependency utils"
 category = "main"
 optional = false
@@ -613,7 +613,7 @@ url = "libs/requires"
 
 [[package]]
 name = "shellfish"
-version = "0.0.10"
+version = "0.0.12"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
@@ -625,7 +625,7 @@ aiopen = "^0.5.0"
 asyncify = "^0.7.0"
 funkify = "^0.4.0"
 jsonbourne = ">=0.20.3"
-listless = "^0.0.2"
+listless = ">=0.0.2"
 pydantic = "^1.9.0"
 xtyping = "^0.5.0"
 
@@ -675,7 +675,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "virtualenv"
-version = "20.13.0"
+version = "20.13.1"
 description = "Virtual Python Environment builder"
 category = "dev"
 optional = false
@@ -1162,8 +1162,8 @@ typing-extensions = [
     {file = "typing_extensions-4.0.1.tar.gz", hash = "sha256:4ca091dea149f945ec56afb48dae714f21e8692ef22a395223bcd328961b6a0e"},
 ]
 virtualenv = [
-    {file = "virtualenv-20.13.0-py2.py3-none-any.whl", hash = "sha256:339f16c4a86b44240ba7223d0f93a7887c3ca04b5f9c8129da7958447d079b09"},
-    {file = "virtualenv-20.13.0.tar.gz", hash = "sha256:d8458cf8d59d0ea495ad9b34c2599487f8a7772d796f9910858376d1600dd2dd"},
+    {file = "virtualenv-20.13.1-py2.py3-none-any.whl", hash = "sha256:45e1d053cad4cd453181ae877c4ffc053546ae99e7dd049b9ff1d9be7491abf7"},
+    {file = "virtualenv-20.13.1.tar.gz", hash = "sha256:e0621bcbf4160e4e1030f05065c8834b4e93f4fcc223255db2a823440aca9c14"},
 ]
 win32-setctime = [
     {file = "win32_setctime-1.1.0-py3-none-any.whl", hash = "sha256:231db239e959c2fe7eb1d7dc129f11172354f98361c4fa2d6d2d7e278baa8aad"},
