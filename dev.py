@@ -86,6 +86,9 @@ def main():
         print(el)
         print(LIBS_DIR / el)
         chdir(LIBS_DIR / el)
+        from shutil import rmtree
+
+        rmtree("dist")
         run(
             args=["poetry", "update", "--lock"],
             shell=True,

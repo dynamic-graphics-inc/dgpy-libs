@@ -4,4 +4,4 @@
 __title__ = "fmts"
 __description__ = "str transformation utils"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.0.2"
+__version__ = "0.0.3"
