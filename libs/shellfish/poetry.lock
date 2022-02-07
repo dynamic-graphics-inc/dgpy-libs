@@ -1,10 +1,10 @@
 [[package]]
 name = "asyncify"
-version = "0.7.0"
+version = "0.7.2"
 description = "sync 2 async"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
@@ -269,8 +269,8 @@ content-hash = "ec9a4af9b2c37995ba522ccf020fa5b350869912479801cf63e2fd4f24e517de
 
 [metadata.files]
 asyncify = [
-    {file = "asyncify-0.7.0-py3-none-any.whl", hash = "sha256:90877fce0c7a3a405220122802affc8fc85750bf36431354e5bef8499e96b249"},
-    {file = "asyncify-0.7.0.tar.gz", hash = "sha256:a5f7eda2702f665a10ada1fe732b8f2b60b70de60fc558d7d3f16466b2c987c5"},
+    {file = "asyncify-0.7.2-py3-none-any.whl", hash = "sha256:30343b59fe6c667beb4f9b41bd0591530540f756d2eed3b6167539c6f7d557f4"},
+    {file = "asyncify-0.7.2.tar.gz", hash = "sha256:c86b7ce6da4ede8a789363ad7fed0f0677cc32f0e16b6ece7e71eeef21f2a5e9"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
