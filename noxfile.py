@@ -5,8 +5,20 @@ from os import path
 from shutil import which
 
 import nox
-from dev import LIBS
 
+LIBS = (
+    "aiopen",
+    "asyncify",
+    "fmts",
+    "funkify",
+    "h5",
+    "jsonbourne",
+    "lager",
+    "listless",
+    "requires",
+    "shellfish",
+    "xtyping",
+)
 
 def is_win() -> bool:
     """Determine if current operating system is windows
