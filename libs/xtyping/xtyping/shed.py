@@ -347,8 +347,10 @@ OptFloat = Optional[float]
 JsonPrimitive = Union[None, bool, int, float, str]
 Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]  # type: ignore
 JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]  # type: ignore
-JsonObjT = JsonDictT = Dict[str, Any]
-JsonArrT = JsonListT = List[Any]
+JsonDictT = Dict[str, Any]
+JsonListT = List[Any]
+JsonObjT = Dict[str, Any]
+JsonArrT = List[Any]
 
 ###################
 ## FROM TYPESHED ##

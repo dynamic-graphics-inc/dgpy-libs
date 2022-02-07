@@ -32,7 +32,7 @@ aiopen = "^0.5.0"
 asyncify = "^0.7.0"
 funkify = "^0.4.0"
 jsonbourne = ">=0.20.3"
-listless = "^0.0.2"
+listless = ">=0.0.2"
 xtyping = "^0.5.0"
 
 [tool.poetry.dev-dependencies]

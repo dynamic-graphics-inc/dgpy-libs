@@ -1,21 +1,22 @@
 [[package]]
 name = "aiopen"
-version = "0.5.0"
+version = "0.5.2"
 description = "Async file io"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [[package]]
 name = "asyncify"
-version = "0.7.0"
+version = "0.7.2"
 description = "sync 2 async"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
@@ -64,7 +65,7 @@ toml = ["tomli"]
 
 [[package]]
 name = "funkify"
-version = "0.4.0"
+version = "0.4.2"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
@@ -97,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.0"
+version = "0.21.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -115,8 +116,8 @@ orjson = ["orjson (>=3.0.0,<4.0.0)"]
 
 [[package]]
 name = "listless"
-version = "0.0.2"
-description = "generator utils; aka 'listless'"
+version = "0.0.4"
+description = "generator utils; aka listless"
 category = "main"
 optional = false
 python-versions = ">=3.6.2,<4.0.0"
@@ -276,16 +277,16 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8c379c260b610d31a81ada11190eaf964ec5f0ba18e171e2dcfd938edb35a8c8"
+content-hash = "1b923bb89d21487e10143180f46477137f23886066e80ab9558f68a59e3a9815"
 
 [metadata.files]
 aiopen = [
-    {file = "aiopen-0.5.0-py3-none-any.whl", hash = "sha256:c7fbebcf1786af7650f6e6b16abb9d2a7eda546fac084660c7036a8b766de44e"},
-    {file = "aiopen-0.5.0.tar.gz", hash = "sha256:5dac41d3163922c2feb6a3518263d18f2c8cbe7dbecc46bb9b1625369414bc1e"},
+    {file = "aiopen-0.5.2-py3-none-any.whl", hash = "sha256:167ef73468851c03a6deba1a519ce60d7297ff807f004b16f949e0dcd9552be8"},
+    {file = "aiopen-0.5.2.tar.gz", hash = "sha256:5727ff8f475445f4a67807f0d830def7a2c99bf250ecaa6e0d7451757f723e5f"},
 ]
 asyncify = [
-    {file = "asyncify-0.7.0-py3-none-any.whl", hash = "sha256:90877fce0c7a3a405220122802affc8fc85750bf36431354e5bef8499e96b249"},
-    {file = "asyncify-0.7.0.tar.gz", hash = "sha256:a5f7eda2702f665a10ada1fe732b8f2b60b70de60fc558d7d3f16466b2c987c5"},
+    {file = "asyncify-0.7.2-py3-none-any.whl", hash = "sha256:30343b59fe6c667beb4f9b41bd0591530540f756d2eed3b6167539c6f7d557f4"},
+    {file = "asyncify-0.7.2.tar.gz", hash = "sha256:c86b7ce6da4ede8a789363ad7fed0f0677cc32f0e16b6ece7e71eeef21f2a5e9"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -343,8 +344,8 @@ coverage = [
     {file = "coverage-6.3.1.tar.gz", hash = "sha256:6c3f6158b02ac403868eea390930ae64e9a9a2a5bbfafefbb920d29258d9f2f8"},
 ]
 funkify = [
-    {file = "funkify-0.4.0-py3-none-any.whl", hash = "sha256:41e6494f09c59e0d37dcae66ec83c8d9be1feebc1809906f126c0bd31c24c98e"},
-    {file = "funkify-0.4.0.tar.gz", hash = "sha256:5bf2fb47ef681a723427205fda2af81a4575c9e30132304a9474a8b3c50ec936"},
+    {file = "funkify-0.4.2-py3-none-any.whl", hash = "sha256:ed19aa823a8cde2d2c9ca15dea0e676b13bd5583356de2aae0ab28fbf5ce5da8"},
+    {file = "funkify-0.4.2.tar.gz", hash = "sha256:47d1028b8b384bf1cc4e0e13d54c8d0322c64b4de6511c0465cb7498e24340f3"},
 ]
 importlib-metadata = [
     {file = "importlib_metadata-4.10.1-py3-none-any.whl", hash = "sha256:899e2a40a8c4a1aec681feef45733de8a6c58f3f6a0dbed2eb6574b4387a77b6"},
@@ -355,12 +356,12 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.21.0-py3-none-any.whl", hash = "sha256:5d58830180a765c824d561f42f1b01275db6de654087db2f567c54e166c3480e"},
-    {file = "jsonbourne-0.21.0.tar.gz", hash = "sha256:ba2651c11b750ddefa5bd59ec6e979e2e0f8e8e6975e195d415d11a392a4024d"},
+    {file = "jsonbourne-0.21.2-py3-none-any.whl", hash = "sha256:796d2a30249bdc9b2049e4d35717b035ebc502aee9d73c9847c7519e8bab6072"},
+    {file = "jsonbourne-0.21.2.tar.gz", hash = "sha256:16795feb2cebaa75631c21970f0726c8c5d5472ef2fe657a49c341d43af30da5"},
 ]
 listless = [
-    {file = "listless-0.0.2-py3-none-any.whl", hash = "sha256:b1d7c335e00df60d3b84dc661dd1743f4e8503b21870fc5aa9e38e9f88becc11"},
-    {file = "listless-0.0.2.tar.gz", hash = "sha256:fada2bf7fcbb7a34d873b5e948d3606f14233ccbe68b1fbf36fa25cbe88400ff"},
+    {file = "listless-0.0.4-py3-none-any.whl", hash = "sha256:8ce0666091f40dc73ebe8ebbd2db3a715a9bdd030a14e491e69b83e361e91bf6"},
+    {file = "listless-0.0.4.tar.gz", hash = "sha256:6d675cf90781b8d684dd36098f6805bfae7c3662e15013e325d91562a47adbbf"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
