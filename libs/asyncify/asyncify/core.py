@@ -4,7 +4,7 @@
 import asyncio
 import sys
 
-from asyncio import AbstractEventLoop, get_event_loop
+from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
 from inspect import isawaitable
 
@@ -32,6 +32,9 @@ else:
 
 __all__ = (
     "ANYIO",
+    "aiorun",
+    "aiorun_anyio",
+    "aiorun_asyncio",
     "aiterable",
     "anyio_asyncify",
     "anyio_run",
@@ -211,8 +214,8 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
         >>> async def add(a, b):
         ...     return a + b
         ...
-        >>> from asyncify.core import run as aiorun
-        >>> aiorun(add(1, 4))
+        >>> from asyncify.core import run
+        >>> run(add(1, 4))
         5
 
     """
@@ -257,6 +260,67 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
 
     """
     return await obj if isawaitable(obj) else obj  # type: ignore
+
+
+def aiorun_anyio(
+    awaitable_or_func: Union[
+        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
+    ],
+    *args: object,
+    backend: str = "asyncio",
+    backend_options: Optional[Dict[str, Any]] = None,
+) -> T_Retval:
+    if asyncio.iscoroutine(awaitable_or_func):
+        if args:
+            raise ValueError("args must be empty when calling a coroutine")
+
+        def _aw() -> Coroutine[Any, Any, T_Retval]:
+            return cast(Coroutine[Any, Any, T_Retval], awaitable_or_func)
+
+        return anyio_run(_aw, backend=backend, backend_options=backend_options)
+    return anyio_run(
+        awaitable_or_func, *args, backend=backend, backend_options=backend_options
+    )
+
+
+def aiorun_asyncio(
+    awaitable_or_func: Union[
+        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
+    ],
+    *args: object,
+    backend: str = "asyncio",
+    backend_options: Optional[Dict[str, Any]] = None,
+) -> T_Retval:
+    if backend != "asyncio":
+        raise ValueError(
+            f"anyio not installed, backend must be 'asyncio' not '{backend}'"
+        )
+    _backend_options = backend_options or {}
+    _debug = _backend_options.get("debug", False)
+    if asyncio.iscoroutine(awaitable_or_func):
+        if args:
+            raise ValueError("args must be empty when calling a coroutine")
+        return asyncio_run(awaitable_or_func, debug=_debug)
+    return asyncio_run(awaitable_or_func(*args), debug=_debug)
+
+
+def aiorun(
+    awaitable_or_func: Union[
+        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
+    ],
+    *args: object,
+    backend: str = "asyncio",
+    backend_options: Optional[Dict[str, Any]] = None,
+) -> T_Retval:
+    return (
+        aiorun_asyncio(
+            awaitable_or_func, *args, backend=backend, backend_options=backend_options
+        )
+        if not ANYIO
+        else aiorun_anyio(
+            awaitable_or_func, *args, backend=backend, backend_options=backend_options
+        )
+    )
 
 
 if __name__ == "__main__":
