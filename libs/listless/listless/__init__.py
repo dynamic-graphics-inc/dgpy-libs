@@ -338,9 +338,7 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
     )
 
 
-def flatten_strings(
-    *args: Union[str, List[str], Tuple[str, ...], Set[str]]
-) -> List[str]:
+def flatten_strings(*args: Union[str, List[str], Tuple[str, ...]]) -> List[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
