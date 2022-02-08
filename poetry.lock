@@ -312,7 +312,7 @@ url = "libs/lager"
 
 [[package]]
 name = "listless"
-version = "0.0.5"
+version = "0.0.9"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
@@ -613,7 +613,7 @@ url = "libs/requires"
 
 [[package]]
 name = "shellfish"
-version = "0.0.12"
+version = "0.0.13"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
