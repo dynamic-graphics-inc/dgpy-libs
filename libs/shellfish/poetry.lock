@@ -12,7 +12,7 @@ xtyping = ">=0.5.0,<0.6.0"
 
 [[package]]
 name = "asyncify"
-version = "0.7.2"
+version = "0.9.0"
 description = "sync 2 async"
 category = "main"
 optional = false
@@ -277,7 +277,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "0169b562687583ef641d752638df7051506c9676a10ba5f265701f37094e91fe"
+content-hash = "b8f33e45d98286d876b54d03086bf26e7576c7eccc341ea879ccee3ca5d757bc"
 
 [metadata.files]
 aiopen = [
@@ -285,8 +285,8 @@ aiopen = [
     {file = "aiopen-0.5.2.tar.gz", hash = "sha256:5727ff8f475445f4a67807f0d830def7a2c99bf250ecaa6e0d7451757f723e5f"},
 ]
 asyncify = [
-    {file = "asyncify-0.7.2-py3-none-any.whl", hash = "sha256:30343b59fe6c667beb4f9b41bd0591530540f756d2eed3b6167539c6f7d557f4"},
-    {file = "asyncify-0.7.2.tar.gz", hash = "sha256:c86b7ce6da4ede8a789363ad7fed0f0677cc32f0e16b6ece7e71eeef21f2a5e9"},
+    {file = "asyncify-0.9.0-py3-none-any.whl", hash = "sha256:2f0b86a3229ab4afd3209d8b27dbcae2f19d154d366a1783ade47898336b9f9e"},
+    {file = "asyncify-0.9.0.tar.gz", hash = "sha256:06ab3c34353bf4f3444239cd4d60c1d5be14b362068c91b00d890d03dcf691f5"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
