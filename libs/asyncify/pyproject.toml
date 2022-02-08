@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncify"
-version = "0.8.0"
+version = "0.9.0"
 description = "sync 2 async"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

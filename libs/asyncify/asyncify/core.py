@@ -20,6 +20,7 @@ from xtyping import (
     Iterable,
     Optional,
     ParamSpec,
+    TypeGuard,
     TypeVar,
     Union,
     cast,
@@ -246,6 +247,10 @@ def is_async(obj: Any) -> bool:
     return asyncio.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
 
 
+def is_coro(obj: Any) -> TypeGuard[Awaitable]:
+    return asyncio.iscoroutine(obj)
+
+
 async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
     """Return the result of an awaitable or return the object
 
@@ -270,7 +275,9 @@ def aiorun_anyio(
     backend: str = "asyncio",
     backend_options: Optional[Dict[str, Any]] = None,
 ) -> T_Retval:
-    if asyncio.iscoroutine(awaitable_or_func):
+    # if asyncio.iscoroutine(awaitable_or_func):
+    # if asyncio.iscoroutine(awaitable_or_func):
+    if is_coro(awaitable_or_func):
         if args:
             raise ValueError("args must be empty when calling a coroutine")
 
@@ -279,7 +286,10 @@ def aiorun_anyio(
 
         return anyio_run(_aw, backend=backend, backend_options=backend_options)
     return anyio_run(
-        awaitable_or_func, *args, backend=backend, backend_options=backend_options
+        cast(Callable[..., Coroutine[Any, Any, T_Retval]], awaitable_or_func),
+        *args,
+        backend=backend,
+        backend_options=backend_options,
     )
 
 
@@ -297,11 +307,14 @@ def aiorun_asyncio(
         )
     _backend_options = backend_options or {}
     _debug = _backend_options.get("debug", False)
-    if asyncio.iscoroutine(awaitable_or_func):
-        if args:
-            raise ValueError("args must be empty when calling a coroutine")
-        return asyncio_run(awaitable_or_func, debug=_debug)
-    return asyncio_run(awaitable_or_func(*args), debug=_debug)
+    if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):
+        return asyncio_run(
+            cast(Awaitable[T_Retval], awaitable_or_func(*args)), debug=_debug
+        )
+
+    if args:
+        raise ValueError("args must be empty when calling a coroutine")
+    return asyncio_run(cast(Awaitable[T_Retval], awaitable_or_func), debug=_debug)
 
 
 def aiorun(
