@@ -88,6 +88,14 @@ class Stdio(IntEnum):
     stderr = 2
 
 
+class Stdio(IntEnum):
+    """Standard-io enum object"""
+
+    stdin = 0
+    stdout = 1
+    stderr = 2
+
+
 def fspath(fspath: FsPath) -> str:
     """Alias for os._fspath; returns fspath string for any type of path"""
     return _fspath(fspath)
