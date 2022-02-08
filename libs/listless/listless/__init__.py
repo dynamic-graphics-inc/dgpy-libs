@@ -31,16 +31,25 @@ __all__ = (
     "__version__",
     "aiterable",
     "chunks",
+    "deque",
+    "enumerate_async",
     "exhaust",
     "filter_is_none",
     "filter_none",
     "flatten",
     "flatten_strings",
     "it_product",
+    "iter_async",
+    "itlen",
+    "list_async",
+    "next_async",
     "partition",
+    "set_async",
     "spliterable",
     "unique",
     "unique_gen",
+    "zip_async",
+    "zip_longest",
 )
 
 _T = TypeVar("_T")
@@ -568,9 +577,3 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
             yield values
         except (StopIteration, StopAsyncIteration):
             break
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
