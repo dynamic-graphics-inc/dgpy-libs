@@ -20,6 +20,7 @@ LIBS = (
     "xtyping",
 )
 
+
 def is_win() -> bool:
     """Determine if current operating system is windows
 

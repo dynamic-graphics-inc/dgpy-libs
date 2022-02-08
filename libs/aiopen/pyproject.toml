@@ -25,14 +25,13 @@ keywords = [
     "anyio", "fs", "aiopen", "async", "dgpy"
 ]
 
-
 [tool.poetry.dependencies]
 python = "^3.7"
 funkify = "^0.4.0"
 xtyping = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.2"
+pytest = "^6.2.4"
 #pytest = "^6.2.4"
 pytest-asyncio = "^0.17.2"
 anyio = {extras = ["trio"], version = "^3.5.0"}

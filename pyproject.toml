@@ -21,7 +21,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 keywords = [
-    "generators", "itertools", "dgpy", "typed",
+    "dgpy", "dgi", "typed", "python3",
 ]
 
 [tool.poetry.dependencies]
@@ -48,7 +48,7 @@ nox = "^2022.1.7"
 orjson = "^3.6.3"
 pip-tools = "^6.4.0"
 pydantic = "^1.8.2"
-pytest = "^6.2.2"
+pytest = "^6.2.4"
 pytest-asyncio = "^0.17.2"
 pytest-cov = "^2.12.1"
 python-rapidjson = "^1.4"
@@ -83,7 +83,7 @@ line-length = 88
 target-version = ['py37', 'py38']
 skip-string-normalization = false
 include = '\.pyi?$'
-exclude = '''
+extend-exclude = '''
 (
   /(
       \.eggs         # exclude a few common directories in the
