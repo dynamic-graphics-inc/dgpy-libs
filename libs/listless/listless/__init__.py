@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
 """Listless generator utils"""
+import asyncio
+
 from collections import deque
 from functools import reduce
-from itertools import tee, zip_longest
+from itertools import count, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
@@ -11,6 +13,7 @@ from typing import (
     AsyncIterator,
     Callable,
     Iterable,
+    Iterator,
     List,
     Optional,
     Sequence,
@@ -32,6 +35,7 @@ __all__ = (
     "filter_is_none",
     "filter_none",
     "flatten",
+    "flatten_strings",
     "it_product",
     "partition",
     "spliterable",
@@ -41,6 +45,8 @@ __all__ = (
 
 _T = TypeVar("_T")
 _K = TypeVar("_K")
+AnyIterable = Union[Iterable[_T], AsyncIterable[_T]]
+AnyIterator = Union[Iterator[_T], AsyncIterator[_T]]
 
 
 def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
@@ -80,6 +86,9 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
             yield item
 
     return gen()
+
+
+iter_async = aiterable
 
 
 def partition(
@@ -321,6 +330,62 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
     )
 
 
+def flatten_strings(
+    *args: Union[str, List[str], Tuple[str, ...], Set[str]]
+) -> List[str]:
+    """Flatten possibly nested iterables of sequences to a list of strings
+
+    Examples:
+        >>> from listless import flatten_strings
+        >>> list(flatten_strings("cmd", ["uno", "dos", "tres"]))
+        ['cmd', 'uno', 'dos', 'tres']
+        >>> list(flatten_strings("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+
+    """
+    return list(
+        reduce(
+            iconcat,
+            [
+                flatten_strings(*arg)
+                if isinstance(arg, (list, tuple))
+                else (str(arg),)
+                if isinstance(arg, (int, float))
+                else (arg,)
+                for arg in args
+            ],
+            [],
+        )
+    )
+
+
+def itlen(iterable: Iterable[Any], unique: bool = False) -> int:
+    """Return the length/num-items in an iterable
+
+    This consumes the iterable.
+
+    Args:
+        iterable: Iterable
+        unique: Count unique values
+
+    Returns:
+        Length of an iterable
+
+    Examples:
+        >>> itlen(x for x in range(1000000) if x % 3 == 0)
+        333334
+        >>> l = [x for x in range(1000000) if x % 3 == 0]
+        >>> itlen(l + l, unique=True)
+        333334
+
+    """
+    if unique:
+        return len(set(iterable))
+    counter = count()
+    deque(zip(iterable, counter), maxlen=0)
+    return next(counter)
+
+
 def it_product(it: Iterable[Union[int, float]]) -> Union[int, float]:
     """Product of all the elements in an iterable of numbers
 
@@ -418,3 +483,94 @@ def unique(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterab
 
     """
     return unique_gen(it=it, key=key)
+
+
+#########################
+# ASYNC ~ ASYNC ~ ASYNC #
+#########################
+
+
+async def next_async(it: AnyIterator[_T]) -> _T:
+    """Return the next item of any iterator/iterable (sync or async"""
+    if isinstance(it, AsyncIterator):
+        return await it.__anext__()
+
+    try:
+        return next(it)
+    except StopIteration:
+        raise StopAsyncIteration
+
+
+async def list_async(itr: AnyIterable[_T]) -> List[_T]:
+    """Consume any iterable (async/sync) and return as a list
+
+    Examples:
+        >>> async def t():
+        ...     return await list_async(range(5))
+        >>> from asyncio import run as aiorun
+        >>> aiorun(t())
+        [0, 1, 2, 3, 4]
+
+    """
+    return [item async for item in iter_async(itr)]
+
+
+async def set_async(itr: AnyIterable[_T]) -> Set[_T]:
+    """Consume any iterable (async/sync) and return as a list
+
+    Examples:
+        >>> async def t():
+        ...     return await set_async(range(5))
+        >>> from asyncio import run as aiorun
+        >>> aiorun(t())
+        {0, 1, 2, 3, 4}
+
+    """
+    return {item async for item in iter_async(itr)}
+
+
+async def enumerate_async(
+    itr: AnyIterable[_T], start: int = 0
+) -> AsyncIterator[Tuple[int, _T]]:
+    """Enumerate (async) over any iterable
+
+    Examples:
+        >>> async def t():
+        ...     return await list_async(enumerate_async('abcde'))
+        >>> from asyncio import run as aiorun
+        >>> aiorun(t())
+        [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e')]
+
+    """
+    index = start
+    async for item in iter_async(itr):
+        yield index, item
+        index += 1
+
+
+async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ...]]:
+    """Async verstion of builtin zip function
+
+    Example:
+        >>> from asyncio import run as aiorun
+        >>> from listless import zip_async
+        >>> from listless import list_async, iter_async  # for fake async iters
+        >>> a, b, c = iter_async(range(4)), iter_async(range(6)), iter_async(range(5))
+        >>> aiorun(list_async(zip_async(a, b, c)))
+        [[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]]
+
+    """
+    its: List[AsyncIterator[Any]] = [iter_async(itr) for itr in iterables]
+
+    while True:
+        try:
+            values = await asyncio.gather(*[it.__anext__() for it in its])
+            yield values
+        except (StopIteration, StopAsyncIteration):
+            break
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
