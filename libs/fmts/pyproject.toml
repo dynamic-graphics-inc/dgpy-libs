@@ -1,6 +1,32 @@
+[project]
+name = "fmts"
+version = "0.0.4"
+description = "str transformation utils"
+authors = [
+    { name = "jesse", email = "jessekrubin@gmail.com" },
+    { name = "jesse", email = "jesse@dgi.com" }
+]
+dependencies = []
+requires-python = ">=3.6.2,<4.0"
+license = { text = "MIT" }
+classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.6", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Typing :: Typed"]
+keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/fmts"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+
+[tool.pdm]
+includes = ["./fmts"]
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest<7.0.0,>=6.2.2",
+]
+
 [tool.poetry]
 name = "fmts"
-version = "0.0.1"
+version = "0.0.4"
 description = "str transformation utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -30,8 +56,20 @@ keywords = [
 python = "==3.*,>=3.6.2"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.2"
+pytest = "^6.2.4"
+
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+# POETRY BUILD SYSTEM
+#[build-system]
+#requires = ["poetry-core>=1.0.0"]
+#build-backend = "poetry.core.masonry.api"
+
+# PDM BUILD SYSTEM
+#[build-system]
+#requires = ["pdm-pep517"]
+#build-backend = "pdm.pep517.api"
+

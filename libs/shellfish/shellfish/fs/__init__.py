@@ -77,6 +77,8 @@ from xtyping import (
     Union,
 )
 
+# END-IMPORTS
+
 
 class Stdio(IntEnum):
     """Standard-io enum object"""
@@ -136,7 +138,7 @@ def safepath(fspath: FsPath) -> str:
     return path_str
 
 
-def file_size(fspath: FsPath) -> int:
+def filesize(fspath: FsPath) -> int:
     """Return the size of the given file(path) in bytes
 
     Args:
@@ -229,7 +231,7 @@ def listdir_gen(
     follow_symlinks: bool = True,
     files: bool = True,
     dirs: bool = True,
-    symlinks: bool = True,
+    symlinks: bool = False,
 ) -> Iterator[Path]:
     r"""Return an iterator of strings from DirEntries
 
@@ -1478,20 +1480,27 @@ lstring = rstr = lstr = rstring
 sstring = wstr = sstr = wstring
 ljson = rjson
 sjson = wjson
+
+# module exports
 __all__ = (
+    "Stdio",
+    "SymlinkType",
     "__version__",
+    "chmod",
+    "copy_file",
+    "cp",
     "dirpath_gen",
     "dirs_gen",
     "exists",
     "exists_async",
     "extension",
     "file_lines_gen",
-    "file_size",
     "filecmp",
     "filepath_gen",
     "filepath_mtimedelta_sec",
     "files_dirs_gen",
     "files_gen",
+    "filesize",
     "filesize_async",
     "fspath",
     "is_dir",
@@ -1519,6 +1528,8 @@ __all__ = (
     "lstr_async",
     "lstring",
     "lstring_async",
+    "mkdir",
+    "mkdirp",
     "path_gen",
     "rbin",
     "rbin_async",
@@ -1528,18 +1539,25 @@ __all__ = (
     "rbytes_async",
     "rbytes_gen",
     "rbytes_gen_async",
+    "rename",
     "rjson",
     "rjson_async",
+    "rm",
+    "rm_gen",
+    "rmdir",
+    "rmfile",
     "rstr",
     "rstr_async",
     "rstring",
     "rstring_async",
+    "safepath",
     "sbin",
     "sbin_async",
     "sbytes",
     "sbytes_async",
     "sbytes_gen",
     "sbytes_gen_async",
+    "scandir",
     "scandir_gen",
     "scandir_list",
     "sep_join",
@@ -1554,14 +1572,18 @@ __all__ = (
     "sstr_async",
     "sstring",
     "sstring_async",
+    "stat",
     "stat_async",
+    "symlink",
     "touch",
     "walk_gen",
     "wbin",
     "wbin_async",
+    "wbin_gen",
     "wbin_gen_async",
     "wbytes",
     "wbytes_async",
+    "wbytes_gen",
     "wbytes_gen_async",
     "wjson",
     "wjson_async",

@@ -4,4 +4,4 @@
 __title__ = "shellfish"
 __description__ = "shellfish ~ shell & file-system utils"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.0.9"
+__version__ = "0.0.13"
