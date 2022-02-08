@@ -61,7 +61,6 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
     """Convert any-iterable to an async iterator
 
     Examples:
-        >>> from os import remove
         >>> from asyncio import run
         >>> plain_jane_list = list(range(10))
         >>> async def consume_aiterable(it):
@@ -497,13 +496,30 @@ def unique(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterab
 
 
 async def next_async(it: AnyIterator[_T]) -> _T:
-    """Return the next item of any iterator/iterable (sync or async"""
+    """Return the next item of any iterator/iterable (sync or async
+
+    Examples:
+        >>> from asyncio import run as aiorun
+        >>> async def async_gen():
+        ...     for b in range(10):
+        ...        yield b
+        >>> gen = async_gen()
+        >>> async def fn(gen):
+        ...     first = await next_async(gen)
+        ...     second = await next_async(gen)
+        ...     return first, second
+        >>> aiorun(fn(gen))
+        (0, 1)
+        >>> aiorun(fn(iter(range(2))))
+        (0, 1)
+
+    """
     if isinstance(it, AsyncIterator):
         return await it.__anext__()
 
     try:
         return next(it)
-    except StopIteration:
+    except StopIteration:  # pragma: no cover
         raise StopAsyncIteration
 
 
@@ -518,7 +534,7 @@ async def list_async(itr: AnyIterable[_T]) -> List[_T]:
         [0, 1, 2, 3, 4]
 
     """
-    return [item async for item in iter_async(itr)]
+    return [item async for item in aiterable(itr)]
 
 
 async def set_async(itr: AnyIterable[_T]) -> Set[_T]:
@@ -532,24 +548,24 @@ async def set_async(itr: AnyIterable[_T]) -> Set[_T]:
         {0, 1, 2, 3, 4}
 
     """
-    return {item async for item in iter_async(itr)}
+    return {item async for item in aiterable(itr)}
 
 
 async def enumerate_async(
-    itr: AnyIterable[_T], start: int = 0
+    it: AnyIterable[_T], start: int = 0
 ) -> AsyncIterator[Tuple[int, _T]]:
     """Enumerate (async) over any iterable
 
     Examples:
         >>> async def t():
-        ...     return await list_async(enumerate_async('abcde'))
+        ...     return [item async for item in enumerate_async('abcde')]
         >>> from asyncio import run as aiorun
         >>> aiorun(t())
         [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e')]
 
     """
     index = start
-    async for item in iter_async(itr):
+    async for item in aiterable(it):  # pragma: no cover
         yield index, item
         index += 1
 
@@ -566,7 +582,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
         [[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]]
 
     """
-    its: List[AsyncIterator[Any]] = [iter_async(itr) for itr in iterables]
+    its: List[AsyncIterator[Any]] = [aiterable(it) for it in iterables]
 
     while True:
         try:
