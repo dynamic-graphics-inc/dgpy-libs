@@ -442,7 +442,7 @@ zipp = {version = "*", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "pip-tools"
-version = "6.5.0"
+version = "6.5.1"
 description = "pip-tools keeps your pinned dependencies fresh."
 category = "dev"
 optional = false
@@ -751,7 +751,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "9e5f84b8b3e0c0afc04216e5d573b61bdc715e3137be3247510d004130319111"
+content-hash = "61ab533428d7b795c41b6152326304fa73e14699a4c28f315ee236b688265235"
 
 [metadata.files]
 aiopen = []
@@ -1007,8 +1007,8 @@ pep517 = [
     {file = "pep517-0.12.0.tar.gz", hash = "sha256:931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"},
 ]
 pip-tools = [
-    {file = "pip-tools-6.5.0.tar.gz", hash = "sha256:d14ea4fc2c118db2a6af65a4345a8b9b355e792aedad6bf64dd3eb97c5fc5fee"},
-    {file = "pip_tools-6.5.0-py3-none-any.whl", hash = "sha256:9cf69a020e3c208a7a1bcc78cbfd436dab323efc187919df6182eca98efbe3f2"},
+    {file = "pip-tools-6.5.1.tar.gz", hash = "sha256:80f562aa699fc76a424539697e0bef41e490a050e57a6a21468531981a9d419e"},
+    {file = "pip_tools-6.5.1-py3-none-any.whl", hash = "sha256:80f1cfc7156e4a4465b1a46a6bb3599587909537db1a149cf3a6b73eed979ee4"},
 ]
 platformdirs = [
     {file = "platformdirs-2.4.1-py3-none-any.whl", hash = "sha256:1d7385c7db91728b83efd0ca99a5afb296cab9d0ed8313a45ed8ba17967ecfca"},
