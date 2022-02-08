@@ -31,7 +31,6 @@ __all__ = (
     "__version__",
     "aiterable",
     "chunks",
-    "deque",
     "enumerate_async",
     "exhaust",
     "filter_is_none",
