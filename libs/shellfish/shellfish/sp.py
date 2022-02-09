@@ -38,6 +38,31 @@ class CompletedProcessObj(TypedDict):
 
 
 def completed_process_obj(completed_process: CompletedProcess) -> CompletedProcessObj:
+    """
+
+    Args:
+        completed_process:
+
+    Returns:
+
+    Examples:
+        >>> from subprocess import CompletedProcess
+        >>> from shellfish.sp import completed_process_obj
+        >>> cp = CompletedProcess(
+        ...     args=['some', 'args'],
+        ...     stdout="stdout string",
+        ...     stderr="stderr string",
+        ...     returncode=0
+        ... )
+        >>> from pprint import pprint
+        >>> cp_typed_dict = completed_process_obj(completed_process=cp)
+        >>> pprint(cp_typed_dict)
+        {'args': ['some', 'args'],
+         'returncode': 0,
+         'stderr': 'stderr string',
+         'stdout': 'stdout string'}
+
+    """
     return CompletedProcessObj(
         args=completed_process.args,
         stdout=completed_process.stdout,
