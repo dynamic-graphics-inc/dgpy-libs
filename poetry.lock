@@ -31,7 +31,7 @@ test = ["coverage", "flake8", "pexpect", "wheel"]
 
 [[package]]
 name = "asyncify"
-version = "0.7.2"
+version = "0.9.0"
 description = "sync 2 async"
 category = "main"
 optional = false
@@ -180,7 +180,7 @@ pyflakes = ">=2.4.0,<2.5.0"
 
 [[package]]
 name = "fmts"
-version = "0.0.4"
+version = "0.1.0"
 description = "str transformation utils"
 category = "main"
 optional = false
@@ -312,7 +312,7 @@ url = "libs/lager"
 
 [[package]]
 name = "listless"
-version = "0.0.9"
+version = "0.1.0"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
@@ -613,7 +613,7 @@ url = "libs/requires"
 
 [[package]]
 name = "shellfish"
-version = "0.0.13"
+version = "0.1.0"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
@@ -622,10 +622,10 @@ develop = true
 
 [package.dependencies]
 aiopen = "^0.5.0"
-asyncify = "^0.7.0"
+asyncify = ">=0.9.0"
 funkify = "^0.4.0"
 jsonbourne = ">=0.20.3"
-listless = ">=0.0.2"
+listless = ">=0.1.0"
 pydantic = "^1.9.0"
 xtyping = "^0.5.0"
 
