@@ -38,12 +38,13 @@ class CompletedProcessObj(TypedDict):
 
 
 def completed_process_obj(completed_process: CompletedProcess) -> CompletedProcessObj:
-    """
+    """Convert CompletedProcess to CompletedProcessObj (typed dict)
 
     Args:
-        completed_process:
+        completed_process: CompletedProcess object
 
     Returns:
+        CompletedProcessObj typed dict
 
     Examples:
         >>> from subprocess import CompletedProcess
