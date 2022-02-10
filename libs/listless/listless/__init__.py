@@ -12,6 +12,7 @@ from typing import (
     AsyncIterable,
     AsyncIterator,
     Callable,
+    Deque,
     Iterable,
     Iterator,
     List,
@@ -47,12 +48,14 @@ __all__ = (
     "spliterable",
     "unique",
     "unique_gen",
+    "xmap",
     "zip_async",
     "zip_longest",
 )
 
-_T = TypeVar("_T")
 _K = TypeVar("_K")
+_T = TypeVar("_T")
+_R = TypeVar("_R")
 AnyIterable = Union[Iterable[_T], AsyncIterable[_T]]
 AnyIterator = Union[Iterator[_T], AsyncIterator[_T]]
 
@@ -206,7 +209,7 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
     return (it[i : i + chunk_size] for i in range(0, len(it), chunk_size))
 
 
-def exhaust(it: Iterable[Any]) -> None:
+def exhaust(it: Iterable[_T], *, maxlen: int = 0) -> Deque[_T]:
     """Exhaust an interable; useful for evaluating a map object.
 
     Args:
@@ -216,21 +219,43 @@ def exhaust(it: Iterable[Any]) -> None:
         >>> a = [1, 2, 3, 4, 5, 6]
         >>> a_map = map(lambda x: x*2, a)
         >>> a_exhausted = exhaust(a_map)
-        >>> a_exhausted is None # will be none after being exhausted
-        True
         >>> a = [1, 2, 3, 4, 5, 6]
         >>> b = []
         >>> def square_and_append_to_b(n):
         ...     b.append(n**2)
         >>> a_map = map(square_and_append_to_b, a)
         >>> a_exhausted = exhaust(a_map)
-        >>> a_exhausted is None # will be none after being exhausted
-        True
+        >>> a_exhausted
+        deque([], maxlen=0)
         >>> b
         [1, 4, 9, 16, 25, 36]
+        >>> another_map = map(lambda x: x*2, a)
+        >>> another_exhausted = exhaust(another_map, maxlen=2)
+        >>> another_exhausted
+        deque([10, 12], maxlen=2)
 
     """
-    deque(it, maxlen=0)
+    return deque(it, maxlen=maxlen)
+
+
+def xmap(func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: int = 0) -> Deque[_R]:
+    """Apply a function to each element of an iterable immediately
+
+    Args:
+        func: Function to apply to each element
+        it: iterable to apply func to
+
+    Returns:
+        Deque of the possible results if maxlen is greater than 0
+
+    Examples:
+        >>> xmap(lambda x: x*2, list(range(1, 7)))
+        deque([], maxlen=0)
+        >>> xmap(lambda x: x*2, list(range(1, 7)), maxlen=2)
+        deque([10, 12], maxlen=2)
+
+    """
+    return exhaust(map(func, it), maxlen=maxlen)
 
 
 def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:

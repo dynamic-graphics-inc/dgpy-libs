@@ -57,3 +57,29 @@ markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "timeout",
 ]
+
+[tool.coverage.run]
+branch = true
+source = ['listless']
+omit = [
+    '_meta.py'
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+    '@overload',
+    # Re-enable the standard pragma (with extra strictness)
+    '# pragma: no cover\b',
+    # Code for static type checkers
+    'if TYPE_CHECKING:',
+    # Scripts
+    'if __name__ == .__main__.:',
+    'if 0:',
+    'if sys.version_info < (3, 7):',
+    'if sys.version_info >= (3, 8):',
+    'pragma: no cover',
+    'pragma: nocov',
+]
