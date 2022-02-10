@@ -308,15 +308,19 @@ class Done(JsonBaseModel):
         """Returns a CalledProcessError object"""
         return DoneError(done=self)
 
-    def check(self) -> None:
+    def check(self, ok_code: Union[int, Sequence[int]] = 0) -> None:
         """Check returncode and stderr
 
         Raises:
             DoneError: If return code is non-zero and stderr is not None
 
         """
-        if self.returncode and self.stderr:
-            raise DoneError(done=self)
+        if isinstance(ok_code, int):
+            if self.returncode != ok_code and self.stderr:
+                raise DoneError(done=self)
+        else:
+            if self.returncode not in ok_code:
+                raise DoneError(done=self)
 
     def sys_print(self) -> None:
         """Write self.stdout to sys.stdout and self.stderr to sys.stderr"""
@@ -554,6 +558,7 @@ def _do(
     input: STDIN = None,
     timeout: Optional[int] = None,
     text: bool = False,
+    ok_code: Union[int, Sequence[int]] = 0,
 ) -> Done:
     """Run a subprocess synchronously
 
@@ -620,8 +625,8 @@ def _do(
         verbose=verbose,
         stdin=_input,
     )
-    if check:
-        done.check()
+    if check or ok_code != 0:
+        done.check(ok_code=ok_code)
     return done
 
 
@@ -636,6 +641,7 @@ def do(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[int] = None,
+    ok_code: Union[int, Sequence[int]] = 0,
 ) -> Done:
     """Run a subprocess synchronously
 
@@ -651,6 +657,7 @@ def do(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        ok_code: Return code(s) to check against
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -675,6 +682,7 @@ def do(
         verbose=verbose,
         input=_input,
         timeout=timeout,
+        ok_code=ok_code,
     )
 
 
@@ -688,6 +696,7 @@ def shx(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[int] = None,
+    ok_code: Union[int, Sequence[int]] = 0,
 ) -> Done:
     """Run a subprocess synchronously in current shell
 
@@ -718,6 +727,7 @@ def shx(
         verbose=verbose,
         input=input,
         timeout=timeout,
+        ok_code=ok_code,
     )
 
 
@@ -767,6 +777,7 @@ async def do_asyncify(
     check: bool = False,
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
+    ok_code: Union[int, Sequence[int]] = 0,
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
     done = await _do_asyncify(  # type: ignore[call-arg]
@@ -780,6 +791,7 @@ async def do_asyncify(
         check=check,
         loop=loop,
         timeout=timeout,
+        ok_code=ok_code,
     )
     done.async_proc = True
     return done
@@ -797,6 +809,7 @@ async def _do_async(
     check: bool = False,
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
+    ok_code: Union[int, Sequence[int]] = 0,
 ) -> Done:
     """Run a subprocess and await completion
 
@@ -920,10 +933,16 @@ async def _do_async(
         else:
             (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
             tf = time()
-        if _proc.returncode and stderr and check:
-            raise CalledProcessError(
-                returncode=_proc.returncode, output=stdout, stderr=stderr, cmd=str(args)
-            )
+
+        if check or ok_code != 0:
+            _ok_codes = {ok_code} if isinstance(ok_code, int) else set(ok_code)
+            if _proc.returncode and _proc.returncode not in _ok_codes:
+                raise CalledProcessError(
+                    returncode=_proc.returncode,
+                    output=stdout,
+                    stderr=stderr,
+                    cmd=str(args),
+                )
         return Done(
             args=args,
             returncode=_proc.returncode,
@@ -950,6 +969,8 @@ async def _do_async(
         verbose=verbose,
         input=input,
         timeout=timeout,
+        check=check,
+        ok_code=ok_code,
     )
 
 

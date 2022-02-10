@@ -25,6 +25,7 @@ from shutil import copytree, move, rmtree
 from time import time
 
 from jsonbourne import JSON
+from shellfish import const
 from shellfish._meta import __version__
 from shellfish.fs._async import (
     exists_async as exists_async,
@@ -832,6 +833,7 @@ def wbytes(
     bites: bytes,
     *,
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -843,6 +845,7 @@ def wbytes(
         bites: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
+        chmod (Optional[int]): chmod the file after writing; default is None
 
     Returns:
         int: Number of bytes written
@@ -863,6 +866,8 @@ def wbytes(
     _write_mode = "ab" if append else "wb"
     with open(filepath, _write_mode) as fd:
         nbytes = fd.write(bites)
+    if chmod is not None:
+        _chmod(filepath, chmod)
     return nbytes
 
 
@@ -957,6 +962,7 @@ def wbytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -965,6 +971,7 @@ def wbytes_gen(
         bytes_gen: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
+        chmod (Optional[int]): chmod the file after writing; default is None
 
     Returns:
         int: Number of bytes written
@@ -982,9 +989,11 @@ def wbytes_gen(
         >>> import os; os.remove(fspath)
 
     """
-    _mode: Literal["ab", "wb"] = "ab" if append else "wb"
+    _mode: Literal["ab", "wb"] = const.ab if append else const.wb
     with open(filepath, mode=_mode) as fd:
         nbytes_written = sum(fd.write(chunk) for chunk in bytes_gen)
+    if chmod is not None:
+        _chmod(filepath, chmod)
     return nbytes_written
 
 
@@ -1025,6 +1034,7 @@ def wstring(
     *,
     encoding: str = "utf-8",
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Save/Write a string to fspath
 
@@ -1033,6 +1043,7 @@ def wstring(
         string (str): string to be written
         encoding: String encoding to write file with
         append (bool): Flag to append to file; default = False
+        chmod (Optional[int]): Optional chmod to set on file
 
     Returns:
         None
@@ -1051,6 +1062,7 @@ def wstring(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
+        chmod=chmod,
     )
 
 
@@ -1063,6 +1075,8 @@ def wjson(
     sort_keys: bool = False,
     append_newline: bool = False,
     default: Optional[Callable[[Any], Any]] = None,
+    chmod: Optional[int] = None,
+    append: bool = False,
     **kwargs: Any,
 ) -> int:
     """Save/Write json-serial-ize-able data to a fspath
@@ -1121,6 +1135,8 @@ def wjson(
             sort_keys=sort_keys,
             **kwargs,
         ),
+        chmod=chmod,
+        append=append,
     )
 
 

@@ -6,6 +6,7 @@ from asyncify import asyncify
 from shellfish.aios import _path
 
 __all__ = (
+    "chmod",
     "makedirs",
     "mkdir",
     "path",
@@ -19,6 +20,7 @@ __all__ = (
 
 path = _path
 
+chmod = asyncify(os.chmod)
 makedirs = asyncify(os.makedirs)
 rename = asyncify(os.rename)
 replace = asyncify(os.replace)
