@@ -277,7 +277,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "20c5771425222f5b1d2357991942350fa47c2bc24c5c9067e5cd724e5cc896f1"
+content-hash = "66ce46e97afcf5faf2a839e27b21d40c00c38ab8d2cd96aac8023a5605796b1f"
 
 [metadata.files]
 aiopen = [
