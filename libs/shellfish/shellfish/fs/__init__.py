@@ -67,6 +67,7 @@ from shellfish.fs._async import (
 from shellfish.process import is_win
 from xtyping import (
     Any,
+    AnyStr,
     Callable,
     FsPath,
     Iterable,
@@ -76,6 +77,7 @@ from xtyping import (
     Optional,
     Tuple,
     Union,
+    cast,
 )
 
 # END-IMPORTS
@@ -152,12 +154,12 @@ def filesize(fspath: FsPath) -> int:
     return stat(fspath).st_size
 
 
-def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry]:
+def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     """Typed version of os.scandir"""
-    return _scandir(fspath(dirpath))
+    return cast(Iterable[DirEntry[AnyStr]], _scandir(fspath(dirpath)))
 
 
-def scandir_list(dirpath: FsPath = ".") -> List[DirEntry]:
+def scandir_list(dirpath: FsPath = ".") -> List[DirEntry[AnyStr]]:
     """Return a list of os.DirEntry objects
 
     Args:
@@ -167,7 +169,7 @@ def scandir_list(dirpath: FsPath = ".") -> List[DirEntry]:
         List[DirEntry]: List of os.DirEntry objects
 
     """
-    return list(_scandir(_fspath(dirpath)))
+    return list(scandir(dirpath))
 
 
 def scandir_gen(
@@ -177,7 +179,7 @@ def scandir_gen(
     files: bool = True,
     dirs: bool = True,
     symlinks: bool = True,
-) -> Iterator[DirEntry]:
+) -> Iterator[DirEntry[str]]:
     """Return an iterator of os.DirEntry objects
 
     Args:

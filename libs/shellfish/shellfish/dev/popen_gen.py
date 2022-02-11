@@ -3,20 +3,19 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from queue import Empty, Queue
 from subprocess import PIPE, Popen
 
+from shellfish.fs import Stdio
 from xtyping import IO, Any, AnyStr, Iterable, Tuple
-
-from ..sh import Stdio
 
 __all__ = ("popen_gen",)
 
 
-def _enqueue_output(fileio: IO[AnyStr], queue: Queue) -> None:
+def _enqueue_output(fileio: IO[AnyStr], queue: Queue[AnyStr]) -> None:
     for line in iter(fileio.readline, ""):
         queue.put(line)
     fileio.close()
 
 
-def _popen_pipes_gen(proc: Popen) -> Iterable[Tuple[Stdio, str]]:
+def _popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
     """Yield stdout and stderr lines from a subprocess
 
     Args:
@@ -33,8 +32,8 @@ def _popen_pipes_gen(proc: Popen) -> Iterable[Tuple[Stdio, str]]:
         raise ValueError("proc must be a Popen object")
     if proc.stdout is not None and proc.stderr is not None:
         with ThreadPoolExecutor(2) as pool:
-            q_stdout: Queue = Queue()
-            q_stderr: Queue = Queue()
+            q_stdout: Queue[AnyStr] = Queue()
+            q_stderr: Queue[AnyStr] = Queue()
             pool.submit(_enqueue_output, proc.stdout, q_stdout)
             pool.submit(_enqueue_output, proc.stderr, q_stderr)
             while True:

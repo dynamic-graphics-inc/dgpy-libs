@@ -7,12 +7,14 @@ from pathlib import Path
 from subprocess import CompletedProcess, run
 from typing import Sequence
 
-from xtyping import FsPath, Tuple, Union
+from xtyping import AnyStr, FsPath, Tuple, Union
 
 MAX_CMD_LENGTH: int = 8192
 
 
-def bat(fspath: FsPath, *, check: bool = False, text: bool = True) -> CompletedProcess:
+def bat(
+    fspath: FsPath, *, check: bool = False, text: bool = True
+) -> CompletedProcess[AnyStr]:
     """Run a bat file"""
     fspath_obj = Path(fspath)
     if not fspath_obj.exists():
@@ -28,11 +30,11 @@ def bat(fspath: FsPath, *, check: bool = False, text: bool = True) -> CompletedP
     )
 
 
-def run_cmd(cmd: str) -> CompletedProcess:
-    return run(cmd, check=True, capture_output=True, text=True, shell=True)
+def run_cmd(cmd: str, *, text: bool = True) -> CompletedProcess[AnyStr]:
+    return run(cmd, check=True, capture_output=True, text=text, shell=True)
 
 
-def run_cmds(cmds: Sequence[str]) -> CompletedProcess:
+def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
     _commands = ["CALL " + cmd for cmd in cmds]
     if len(_commands) == 0:
         raise ValueError("no commands given")
@@ -42,8 +44,8 @@ def run_cmds(cmds: Sequence[str]) -> CompletedProcess:
 
 
 def run_cmds_as_bat_file(
-    commands: Sequence[Union[Tuple[str, ...], str]]
-) -> CompletedProcess:
+    commands: Sequence[Union[Tuple[str, ...], str]], *, text: bool = True
+) -> CompletedProcess[AnyStr]:
     if len(commands) == 0:
         raise ValueError("no commands given")
     _commands = [
@@ -55,7 +57,7 @@ def run_cmds_as_bat_file(
         with bat_filepath.open(mode="w", newline="\r\n") as f:
             bat_file_str = "\r\n".join(_commands)
             f.write(bat_file_str)
-        return bat(bat_filepath)
+        return bat(bat_filepath, text=text)
 
 
 def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, None]:
@@ -93,7 +95,7 @@ def MKLINK(
     H: bool = False,
     J: bool = False,
     check: bool = False,
-) -> CompletedProcess:
+) -> CompletedProcess[str]:
     """
     Creates a symbolic link.
 
@@ -168,7 +170,7 @@ def RD(
     Z: bool = False,
     A: bool = False,
     check: bool = False,
-) -> CompletedProcess:
+) -> CompletedProcess[str]:
     """
     Removes a directory.
 
@@ -210,7 +212,7 @@ def DEL_ARGS(fspath: FsPath) -> Tuple[str, str]:
 _DEL = DEL_ARGS
 
 
-def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess:
+def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess[str]:
     return run(
         args=("DEL", _fspath(Path(fspath))),
         check=check,

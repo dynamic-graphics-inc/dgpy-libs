@@ -65,7 +65,7 @@ from shellfish.fs import (
 )
 from shellfish.process import is_win
 from shellfish.sh._dirtree import _DirTree
-from xtyping import STDIN, FsPath, IterableStr, TypedDict
+from xtyping import STDIN, AnyStr, FsPath, IterableStr, TypedDict
 
 __all__ = (
     "Done",
@@ -327,7 +327,7 @@ class Done(JsonBaseModel):
         sys.stdout.write(self.stdout)
         sys.stderr.write(self.stderr)
 
-    def write_stdout(self, filepath: str, *, append: bool = False) -> None:
+    def write_stdout(self, filepath: FsPath, *, append: bool = False) -> None:
         """Write stdout as a string to a fspath
 
         Args:
@@ -337,7 +337,7 @@ class Done(JsonBaseModel):
         """
         fs.wstring(Path(filepath), self.stdout, append=append)
 
-    def write_stderr(self, filepath: str, *, append: bool = False) -> None:
+    def write_stderr(self, filepath: FsPath, *, append: bool = False) -> None:
         """Write stderr as a string to a fspath
 
         Args:
@@ -347,7 +347,7 @@ class Done(JsonBaseModel):
         """
         fs.wstring(Path(filepath), self.stderr, append=append)
 
-    def __gt__(self, filepath: str) -> None:  # type: ignore
+    def __gt__(self, filepath: FsPath) -> None:  # type: ignore
         """Operator overload for writing a stdout to a fspath
 
         Args:
@@ -356,7 +356,7 @@ class Done(JsonBaseModel):
         """
         self.write_stdout(filepath)
 
-    def __ge__(self, filepath: str) -> "Done":
+    def __ge__(self, filepath: FsPath) -> "Done":
         """Operator overload for writing stderr to fspath
 
         Args:
@@ -369,7 +369,7 @@ class Done(JsonBaseModel):
         self.write_stderr(filepath)
         return self
 
-    def __rshift__(self, filepath: str) -> None:
+    def __rshift__(self, filepath: FsPath) -> None:
         """Operator overload for appending stdout to fspath
 
         Args:
@@ -378,7 +378,7 @@ class Done(JsonBaseModel):
         """
         self.write_stdout(filepath, append=True)
 
-    def __irshift__(self, filepath: str) -> "Done":
+    def __irshift__(self, filepath: FsPath) -> "Done":
         """Operator overload for appending stderr to fspath
 
         Args:
@@ -407,7 +407,7 @@ class Done(JsonBaseModel):
         ]
 
 
-def decode_stdio_bytes(stdio_bytes: bytes, lf: bool = True) -> str:
+def decode_stdio_bytes(stdio_bytes: AnyStr, lf: bool = True) -> str:
     """Return Stdio bytes from stdout/stderr as a string
 
     Args:
@@ -418,6 +418,8 @@ def decode_stdio_bytes(stdio_bytes: bytes, lf: bool = True) -> str:
         str: decoded stdio bytes
 
     """
+    if isinstance(stdio_bytes, str):
+        return stdio_bytes
     if lf:
         return decode_stdio_bytes(stdio_bytes, lf=False).replace("\r\n", "\n")
     try:
@@ -434,33 +436,37 @@ def decode_stdio_bytes(stdio_bytes: bytes, lf: bool = True) -> str:
     return str(stdio_bytes.decode("latin-1"))
 
 
-def pstdout(proc: CompletedProcess) -> str:
+def pstdout(proc: CompletedProcess[AnyStr]) -> str:
     """Get the STDOUT as a string from a subprocess
 
     Args:
         proc: python subprocess.process object with stdout
 
     Returns:
-        STDOUT for the proc as as string
+        STDOUT for the proc as string
 
     """
-    return decode_stdio_bytes(proc.stdout or b"")
+    if proc.stdout is None:
+        return ""
+    return decode_stdio_bytes(proc.stdout)
 
 
-def pstderr(proc: CompletedProcess) -> str:
+def pstderr(proc: CompletedProcess[AnyStr]) -> str:
     """Get the STDERR as a string from a subprocess
 
     Args:
         proc: python subprocess.process object with STDERR
 
     Returns:
-        STDERR for the proc as as string
+        STDERR for the proc as string
 
     """
-    return decode_stdio_bytes(proc.stderr or b"")
+    if proc.stderr is None:
+        return ""
+    return decode_stdio_bytes(proc.stderr)
 
 
-def pstdout_pstderr(proc: CompletedProcess) -> Tuple[str, str]:
+def pstdout_pstderr(proc: CompletedProcess[AnyStr]) -> Tuple[str, str]:
     """Get the STDOUT and STDERR as strings from a subprocess
 
     Args:
@@ -746,21 +752,41 @@ _do_asyncify = asyncify(do)
 
 
 async def run_async(
-    *popenargs: PopenArgs,
+    args: PopenArgs,
+    *,
+    stdin: Optional[Union[IO[AnyStr], int]] = None,
     input: Optional[str] = None,
+    stdout: Optional[Union[IO[AnyStr], int]] = None,
+    stderr: Optional[Union[IO[AnyStr], int]] = None,
     capture_output: bool = False,
+    shell: bool = False,
+    cwd: Optional[FsPath] = None,
     timeout: Optional[int] = None,
     check: bool = False,
-    **kwargs: Any,
-) -> CompletedProcess:
-    args = validate_popen_args(popenargs)
+    encoding: Optional[str] = None,
+    errors: Optional[str] = None,
+    text: bool = False,
+    env: Optional[Dict[str, str]] = None,
+    universal_newlines: bool = False,
+    **other_popen_kwargs: Any,
+) -> CompletedProcess[Any]:
+    args = validate_popen_args(args)
     complete_subprocess = await _run_async(
         args=args,
         input=input,
-        capture_output=capture_output,
+        stdin=stdin,
+        stdout=stdout,
+        stderr=stderr,
+        shell=shell,
+        cwd=cwd,
         timeout=timeout,
         check=check,
-        **kwargs,
+        errors=errors,
+        env=env,
+        capture_output=capture_output,
+        universal_newlines=universal_newlines | text,
+        encoding=encoding,
+        **other_popen_kwargs,
     )
     return complete_subprocess
 
@@ -834,7 +860,7 @@ async def _do_async(
         TimeoutError: If the process takes longer than timeout if given
 
     """
-    # if is windows and python is below 3.7, use the asyncified-do func:w
+    # if is windows and python is below 3.7, use the asyncified-do func
     if is_win() and sys.version_info < (3, 8):
         done = await do_asyncify(  # type: ignore[call-arg]
             args=args,
@@ -882,95 +908,78 @@ async def _do_async(
         if exe_path:
             _args[0] = exe_path
 
-    try:
-        if shell:
-            _cmd = args2cmd(_args)
-            ti = time()
-            _proc = await asyncio.create_subprocess_shell(
-                cmd=_cmd,
-                stdin=_stdin,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                env=_env,
-                shell=True,
-                limit=_default_asyncio_stream_limit,
-                cwd=_cwd,
-            )
-        else:
-            ti = time()
-            _proc = await asyncio.create_subprocess_exec(
-                *_args,
-                stdin=_stdin,
-                stdout=asyncio.subprocess.PIPE,
-                stderr=asyncio.subprocess.PIPE,
-                env=_env,
-                limit=_default_asyncio_stream_limit,
-                cwd=_cwd,
-            )
-
-        if timeout:
-            try:
-                (stdout, stderr) = await asyncio.wait_for(
-                    _proc.communicate(input=_input),  # wait for subprocess to finish
-                    timeout=timeout,
-                )
-                tf = time()
-            except TimeoutError as te:
-                _proc.terminate()
-                raise TimeoutError(
-                    str(
-                        {
-                            "args": args,
-                            "input": input,
-                            "env": env,
-                            "cwd": cwd,
-                            "shell": shell,
-                            "asyncio.TimeoutError": str(te),
-                        }
-                    )
-                )
-
-        else:
-            (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
-            tf = time()
-
-        if check or ok_code != 0:
-            _ok_codes = {ok_code} if isinstance(ok_code, int) else set(ok_code)
-            if _proc.returncode and _proc.returncode not in _ok_codes:
-                raise CalledProcessError(
-                    returncode=_proc.returncode,
-                    output=stdout,
-                    stderr=stderr,
-                    cmd=str(args),
-                )
-        return Done(
-            args=args,
-            returncode=_proc.returncode,
-            stdout=decode_stdio_bytes(stdout),
-            stderr=decode_stdio_bytes(stderr),
-            stdin=input,
-            ti=ti,
-            tf=tf,
-            dt=tf - ti,
-            hrdt=HrTime.from_seconds(tf - ti),
-            verbose=verbose,
-            async_proc=True,
+    if shell:
+        _cmd = args2cmd(_args)
+        ti = time()
+        _proc = await asyncio.create_subprocess_shell(
+            cmd=_cmd,
+            stdin=_stdin,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=_env,
+            shell=True,
+            limit=_default_asyncio_stream_limit,
+            cwd=_cwd,
+        )
+    else:
+        ti = time()
+        _proc = await asyncio.create_subprocess_exec(
+            *_args,
+            stdin=_stdin,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            env=_env,
+            limit=_default_asyncio_stream_limit,
+            cwd=_cwd,
         )
 
-    except NotImplementedError:  # windows python 3.7
-        ...
+    if timeout:
+        try:
+            (stdout, stderr) = await asyncio.wait_for(
+                _proc.communicate(input=_input),  # wait for subprocess to finish
+                timeout=timeout,
+            )
+            tf = time()
+        except TimeoutError as te:
+            _proc.terminate()
+            raise TimeoutError(
+                str(
+                    {
+                        "args": args,
+                        "input": input,
+                        "env": env,
+                        "cwd": cwd,
+                        "shell": shell,
+                        "asyncio.TimeoutError": str(te),
+                    }
+                )
+            )
 
-    return do(
-        args,
-        env=env,
-        extenv=extenv,
-        cwd=cwd,
-        shell=shell,
+    else:
+        (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
+        tf = time()
+
+    if check or ok_code != 0:
+        _ok_codes = {ok_code} if isinstance(ok_code, int) else set(ok_code)
+        if _proc.returncode and _proc.returncode not in _ok_codes:
+            raise CalledProcessError(
+                returncode=_proc.returncode,
+                output=stdout,
+                stderr=stderr,
+                cmd=str(args),
+            )
+    return Done(
+        args=args,
+        returncode=_proc.returncode,
+        stdout=decode_stdio_bytes(stdout),
+        stderr=decode_stdio_bytes(stderr),
+        stdin=input,
+        ti=ti,
+        tf=tf,
+        dt=tf - ti,
+        hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
-        input=input,
-        timeout=timeout,
-        check=check,
-        ok_code=ok_code,
+        async_proc=True,
     )
 
 

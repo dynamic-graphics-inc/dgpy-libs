@@ -247,7 +247,7 @@ def is_async(obj: Any) -> bool:
     return asyncio.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
 
 
-def is_coro(obj: Any) -> TypeGuard[Awaitable]:
+def is_coro(obj: Any) -> TypeGuard[Awaitable[T]]:
     return asyncio.iscoroutine(obj)
 
 

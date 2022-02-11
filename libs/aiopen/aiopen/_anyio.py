@@ -89,7 +89,7 @@ def aiopen(
     newline: Optional[str] = None,
     closefd: bool = True,
     opener: Optional[Callable[[str, int], int]] = None,
-) -> AsyncFileContextManager:
+) -> AsyncFileContextManager[AnyStr]:
     return AsyncFileContextManager(
         coro=open_file(  # type: ignore
             file=file,

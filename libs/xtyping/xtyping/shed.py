@@ -243,9 +243,9 @@ AsyncFuncType = Callable[..., Awaitable[Any]]
 F = TypeVar("F", bound=AnyCallable)
 FN = TypeVar("FN", bound=AnyCallable)
 Fn = TypeVar("Fn", bound=AnyCallable)
-AF = TypeVar("AF", bound=Awaitable)
-AFn = TypeVar("AFn", bound=Awaitable)
-AsyncFn = TypeVar("AsyncFn", bound=Awaitable)
+AF = TypeVar("AF", bound=Awaitable[Any])
+AFn = TypeVar("AFn", bound=Awaitable[Any])
+AsyncFn = TypeVar("AsyncFn", bound=Awaitable[Any])
 
 #################
 ## STDIO/STDIN ##

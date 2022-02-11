@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Json Bourne -- EZ-PZ-JSON with lots o goodies"""
+from __future__ import annotations
+
 import keyword
 
 from functools import lru_cache
@@ -31,7 +33,7 @@ from typing import (
 from jsonbourne import jsonlib
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)
-JsonObjT = TypeVar("JsonObjT", bound="JsonObj")
+JsonObjT = TypeVar("JsonObjT", bound="JsonObj[Any]")
 KT = TypeVar("KT")
 VT = TypeVar("VT")
 _KT = str
@@ -124,7 +126,7 @@ def is_number(value: Any) -> bool:
     return is_int(value) or is_float(value)
 
 
-class JsonObj(JsonObjMutableMapping, Generic[_VT]):
+class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     """JSON friendly python dictionary with dot notation and string only keys
 
     JsonObj(foo='bar')['foo'] == JsonObj(foo='bar').foo
@@ -399,7 +401,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
                 return default
             raise ke
 
-    def filter_none(self, recursive: bool = False) -> "JsonObj":
+    def filter_none(self, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is `None` but not false-y
 
         Args:
@@ -484,7 +486,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
             )
         return JsonObj({k: v for k, v in self.items() if v is not None})
 
-    def filter_false(self, recursive: bool = False) -> "JsonObj":
+    def filter_false(self, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is false-y
 
         Args:
@@ -809,12 +811,14 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return self.eject()
 
     @classmethod
-    def from_dict(cls: Type[JsonObjT], data: Dict[_KT, _VT]) -> JsonObjT:
+    def from_dict(cls: Type[JsonObj[_VT]], data: Dict[_KT, _VT]) -> JsonObj[_VT]:
         """Return a JsonObj object from a dictionary of data"""
         return cls(**data)
 
     @classmethod
-    def from_json(cls: Type[JsonObjT], json_string: Union[bytes, str]) -> JsonObjT:
+    def from_json(
+        cls: Type[JsonObj[_VT]], json_string: Union[bytes, str]
+    ) -> JsonObj[_VT]:
         """Return a JsonObj object from a json string
 
         Args:
@@ -827,7 +831,9 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         return cls._from_json(json_string)
 
     @classmethod
-    def _from_json(cls: Type[JsonObjT], json_string: Union[bytes, str]) -> JsonObjT:
+    def _from_json(
+        cls: Type[JsonObj[_VT]], json_string: Union[bytes, str]
+    ) -> JsonObj[_VT]:
         """Return a JsonObj object from a json string
 
         Args:
@@ -971,7 +977,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         )
 
     @classmethod
-    def validate_type(cls: Type[JsonObjT], val: Any) -> JsonObjT:
+    def validate_type(cls: Type[JsonObj[_VT]], val: Any) -> JsonObj[_VT]:
         """Validate and convert a value to a JsonObj object"""
         return cls(val)
 
@@ -981,7 +987,7 @@ class JsonObj(JsonObjMutableMapping, Generic[_VT]):
         yield cls.validate_type
 
 
-class JsonDict(JsonObj):
+class JsonDict(JsonObj[_VT], Generic[_VT]):
     """Alias for JsonObj"""
 
     pass

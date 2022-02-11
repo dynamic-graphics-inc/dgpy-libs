@@ -37,7 +37,9 @@ class CompletedProcessObj(TypedDict):
     returncode: int
 
 
-def completed_process_obj(completed_process: CompletedProcess) -> CompletedProcessObj:
+def completed_process_obj(
+    completed_process: CompletedProcess[str],
+) -> CompletedProcessObj:
     """Convert CompletedProcess to CompletedProcessObj (typed dict)
 
     Args:
@@ -64,6 +66,10 @@ def completed_process_obj(completed_process: CompletedProcess) -> CompletedProce
          'stdout': 'stdout string'}
 
     """
+    if not isinstance(completed_process, CompletedProcess):
+        raise TypeError(
+            f"completed_process must be CompletedProcess object, not {type(completed_process)}"
+        )
     return CompletedProcessObj(
         args=completed_process.args,
         stdout=completed_process.stdout,

@@ -192,7 +192,7 @@ markers = [
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
-disallow_any_generics = false
+disallow_any_generics = true
 disallow_subclassing_any = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
@@ -205,6 +205,7 @@ warn_unused_ignores = false
 warn_return_any = true
 ignore_missing_imports = true
 implicit_reexport = false
+strict = true
 strict_equality = true
 show_error_context = true
 
