@@ -5,9 +5,8 @@ import os
 from os import fspath as _fspath
 from typing import Any, AsyncIterable, Callable, Optional
 
-import JSON
-
 from aiopen import aiopen
+from jsonbourne import JSON
 from shellfish import aios
 from xtyping import AsyncIterator, FsPath, Iterable, Union
 
