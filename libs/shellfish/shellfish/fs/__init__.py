@@ -158,7 +158,7 @@ def filesize(fspath: FsPath) -> int:
 
 def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     """Typed version of os.scandir"""
-    return cast(Iterable[DirEntry[AnyStr]], _scandir(fspath(dirpath)))
+    return cast("Iterable[DirEntry[AnyStr]]", _scandir(fspath(dirpath)))
 
 
 def scandir_list(dirpath: FsPath = ".") -> List[DirEntry[AnyStr]]:
