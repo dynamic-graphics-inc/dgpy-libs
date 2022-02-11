@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """batman = bat(ch) file utils"""
+from __future__ import annotations
+
 import tempfile
 
 from os import fspath as _fspath

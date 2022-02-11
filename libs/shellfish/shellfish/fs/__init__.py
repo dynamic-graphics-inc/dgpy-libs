@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """file-system utils"""
+from __future__ import annotations
+
 from enum import IntEnum
 from glob import iglob
 from itertools import chain, count

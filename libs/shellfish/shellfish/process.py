@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Current running process info"""
+from __future__ import annotations
+
 import os
 import platform
 import sys

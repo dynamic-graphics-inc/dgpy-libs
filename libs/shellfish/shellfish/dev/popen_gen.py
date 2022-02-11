@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from concurrent.futures.thread import ThreadPoolExecutor
 from queue import Empty, Queue
 from subprocess import PIPE, Popen

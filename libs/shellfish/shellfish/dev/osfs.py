@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
 
