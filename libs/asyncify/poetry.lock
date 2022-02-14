@@ -285,7 +285,7 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 
 [[package]]
 name = "xtyping"
-version = "0.5.1"
+version = "0.5.2"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
@@ -309,7 +309,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "83930c677cc54046c6cec69743b2fa2403dbf41f21ddc071b46ac7fbd94bc55e"
+content-hash = "13d3897b46b81c271aa309a8107d7f30affa99a4ad3660d5c5c676a9ba885f28"
 
 [metadata.files]
 anyio = [
@@ -461,8 +461,8 @@ xdoctest = [
     {file = "xdoctest-0.15.10.tar.gz", hash = "sha256:5f16438f2b203860e75ec594dbc38020df7524db0b41bb88467ea0a6030e6685"},
 ]
 xtyping = [
-    {file = "xtyping-0.5.1-py3-none-any.whl", hash = "sha256:7fc8ad8f6672a0718a9b3ffff20a319e0a7ca3054354500646f706884db51eac"},
-    {file = "xtyping-0.5.1.tar.gz", hash = "sha256:a8e6c68295393bbe7b90c07f06270c3e3baa3471c1a5a60d73f874b6b7cee70b"},
+    {file = "xtyping-0.5.2-py3-none-any.whl", hash = "sha256:9f6f886ef65aade1fe8a34b05349f5d8f1dcc0453f125ecb5ce7a668c4f2f25b"},
+    {file = "xtyping-0.5.2.tar.gz", hash = "sha256:9d5537923fe685c33c59188bc95b9b721d2bf14a006694b41319061dc675729f"},
 ]
 zipp = [
     {file = "zipp-3.7.0-py3-none-any.whl", hash = "sha256:b47250dd24f92b7dd6a0a8fc5244da14608f3ca90a5efcd37a3b1642fac9a375"},

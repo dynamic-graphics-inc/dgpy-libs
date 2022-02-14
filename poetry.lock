@@ -9,7 +9,7 @@ develop = true
 
 [package.dependencies]
 funkify = "^0.4.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.source]
 type = "directory"
@@ -40,7 +40,7 @@ develop = true
 
 [package.dependencies]
 funkify = "^0.4.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.source]
 type = "directory"
@@ -281,7 +281,7 @@ python-versions = "^3.7"
 develop = true
 
 [package.dependencies]
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.extras]
 rapidjson = ["python-rapidjson (>=0.9.1)"]
@@ -605,7 +605,7 @@ develop = true
 
 [package.dependencies]
 funkify = "^0.4.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.source]
 type = "directory"
@@ -627,7 +627,7 @@ funkify = "^0.4.0"
 jsonbourne = ">=0.20.3"
 listless = ">=0.1.0"
 pydantic = "^1.9.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.source]
 type = "directory"
@@ -723,7 +723,7 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 
 [[package]]
 name = "xtyping"
-version = "0.6.0"
+version = "0.5.2"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
@@ -731,7 +731,7 @@ python-versions = "==3.*,>=3.6.2"
 develop = true
 
 [package.dependencies]
-typing-extensions = "^4.1.1"
+typing-extensions = "^4.0.0"
 
 [package.source]
 type = "directory"
