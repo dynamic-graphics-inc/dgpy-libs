@@ -19,7 +19,20 @@ from xtyping._meta import __version__
 '''
 
 
+def build_typing_extensions_all():
+    from typing_extensions import __all__ as typing_extensions_all
+
+    missing_from_all_typing_extensions = [
+        el for el in typing_extensions_all if el not in __all_typing_extensions__
+    ]
+
+    assert (
+        len(missing_from_all_typing_extensions) == 0
+    ), missing_from_all_typing_extensions
+
+
 def main():
+    build_typing_extensions_all()
     imports = {
         "typing": (el for el in __all_typing__ if el not in __all_typing_extensions__),
         "typing_extensions": __all_typing_extensions__,
