@@ -31,7 +31,7 @@ funkify = "^0.4.0"
 xtyping = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
+pytest = "^7.0.1"
 #pytest = "^6.2.4"
 pytest-asyncio = "^0.17.2"
 anyio = {extras = ["trio"], version = "^3.5.0"}
