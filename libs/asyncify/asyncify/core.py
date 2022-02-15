@@ -143,8 +143,8 @@ def asyncify(
 
     @wraps(funk)
     async def _async_funk(
-        *args: P.args,  # type: ignore
-        **kwargs: P.kwargs,  # type: ignore
+        *args: P.args,
+        **kwargs: P.kwargs,
     ) -> T:
         """Async wrapper function
 

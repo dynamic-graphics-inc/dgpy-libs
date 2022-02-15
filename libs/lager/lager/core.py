@@ -82,7 +82,7 @@ try:
         }
         return _stringify(serializable)
 
-    Handler._serialize_record = staticmethod(_serialize_record)  # type: ignore
+    Handler._serialize_record = staticmethod(_serialize_record)
 except ModuleNotFoundError:
     pass
 

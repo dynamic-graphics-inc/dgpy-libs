@@ -347,7 +347,7 @@ class Done(JsonBaseModel):
         """
         fs.wstring(Path(filepath), self.stderr, append=append)
 
-    def __gt__(self, filepath: FsPath) -> None:  # type: ignore
+    def __gt__(self, filepath: FsPath) -> None:
         """Operator overload for writing a stdout to a fspath
 
         Args:
@@ -862,7 +862,7 @@ async def _do_async(
     """
     # if is windows and python is below 3.7, use the asyncified-do func
     if is_win() and sys.version_info < (3, 8):
-        done = await do_asyncify(  # type: ignore[call-arg]
+        done = await do_asyncify(
             args=args,
             env=env,
             cwd=cwd,
@@ -973,7 +973,7 @@ async def _do_async(
         returncode=_proc.returncode,
         stdout=decode_stdio_bytes(stdout),
         stderr=decode_stdio_bytes(stderr),
-        stdin=input,
+        stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,
         ti=ti,
         tf=tf,
         dt=tf - ti,
@@ -1023,7 +1023,7 @@ async def do_async(
         raise ValueError("Cannot give *args and args-keyword-argument")
     args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
     if is_win() and sys.version_info < (3, 8):
-        done = await do_asyncify(  # type: ignore[call-arg]
+        done = await do_asyncify(
             args=args,
             env=env,
             extenv=extenv,
@@ -1249,7 +1249,7 @@ class LIN(OSABC):
             dest = f"{dest}/"
         if not src.endswith("/"):
             src = f"{src}/"
-        _args: List[Union[str, None]] = [  # type: ignore
+        _args: List[Union[str, None]] = [
             "rsync",
             "-a",
             "-O",
@@ -1263,7 +1263,7 @@ class LIN(OSABC):
             src,
             dest,
         ]
-        return list(filter(None, _args))  # type: ignore
+        return list(filter(None, _args))
 
     @staticmethod
     def rsync(

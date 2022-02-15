@@ -1182,7 +1182,7 @@ def rjson(filepath: FsPath) -> Any:
         >>> os.remove(fspath)
 
     """
-    return JSON.loads(lstring(filepath=filepath))  # type: ignore
+    return JSON.loads(lstring(filepath=filepath))
 
 
 def extension(fspath: str) -> str:

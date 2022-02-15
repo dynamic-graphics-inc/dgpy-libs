@@ -55,7 +55,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
 
     Config = JsonBaseModelDefaultConfig
 
-    def __init__(self, *args: Any, **kwargs: Any):  # type: ignore
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
         if self.__custom_root_type__ and len(args) == 1 and "__root__" not in kwargs:
             super().__init__(**{**kwargs, "__root__": args[0]})
