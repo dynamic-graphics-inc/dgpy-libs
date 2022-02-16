@@ -9,7 +9,6 @@ import sys
 from abc import ABC, abstractmethod
 from asyncio import TimeoutError
 from functools import lru_cache, reduce
-from glob import iglob
 from operator import iconcat
 from os import (
     chdir,
@@ -26,7 +25,7 @@ from os import (
 from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
-from shutil import move, which as _which
+from shutil import which as _which
 from subprocess import (
     DEVNULL,
     PIPE,
@@ -2146,7 +2145,7 @@ def rm(
 
     """
     if verbose or v:
-        exhaust(map(echo, fs.rm_gen(fspath, recursive=recursive, dryrun=dryrun)))
+        exhaust(map(echo, fs.rm_gen(fspath, recursive=recursive or r, dryrun=dryrun)))
         return None
     fs.rm(
         fspath,
@@ -2155,17 +2154,15 @@ def rm(
     )
 
 
-def mv(src: FsPath, dst: FsPath) -> None:
+def mv(src: FsPath, dest: FsPath) -> None:
     """Move file(s) like on the command line
 
     Args:
         src (FsPath): source file(s)
-        dst (FsPath): destination
+        dest (FsPath): destination path
 
     """
-    _dst_str = str(dst)
-    for file in iglob(str(src), recursive=True):
-        move(file, _dst_str)
+    fs.move(src, dest)
 
 
 def source(filepath: FsPath, _globals: bool = True) -> None:

@@ -23,7 +23,7 @@ from os import (
     walk,
 )
 from pathlib import Path
-from shutil import copytree, move, rmtree
+from shutil import copytree, move as _move, rmtree
 from time import time
 
 from jsonbourne import JSON
@@ -1290,32 +1290,64 @@ def chmod(fspath: FsPath, mode: int) -> None:
     return _chmod(path=str(fspath), mode=mode)
 
 
-def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
+def mkdir(
+    fspath: FsPath, *, parents: bool = False, p: bool = False, exist_ok: bool = False
+) -> None:
     """Make directory at given fspath
 
     Args:
         fspath (FsPath): Directory path to create
-        p (bool): Make parent dirs if True; do not make parent dirs if False
+        parents (bool): Make parent dirs if True; do not make parent dirs if False
+        p (bool): Make parent dirs if True; do not make parent dirs if False (alias of parents)
         exist_ok (bool): Throw error if directory exists and exist_ok is False
 
     Returns:
          None
 
     """
-    if p or exist_ok:
-        return _makedirs(_fspath(fspath), exist_ok=p or exist_ok)
+    _parents = parents or p
+    if _parents or exist_ok:
+        return _makedirs(_fspath(fspath), exist_ok=_parents or exist_ok)
     return _mkdir(_fspath(fspath))
 
 
 def mkdirp(fspath: FsPath) -> None:
     """Make directory and parents"""
-    return mkdir(fspath=fspath, p=True)
+    return mkdir(fspath=fspath, parents=True)
+
+
+def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[str]:
+    """Return an iterator of fspaths matching the given glob pattern
+
+    Args:
+        fspath: Glob pattern
+        recursive: Recursively search directories if True
+        r: Recursively search directories if True (Alias for recursive)
+
+    Returns:
+        Iterator[str]: Iterator of fspaths matching the glob pattern
+
+    """
+    return iglob(pattern, recursive=recursive or r)
 
 
 def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
     if not dryrun:
-        move(src, dest)
+        _move(src, dest)
     return (src, dest)
+
+
+def move(src: FsPath, dest: FsPath) -> None:
+    """Move file(s) like on the command line
+
+    Args:
+        src (FsPath): source file(s)
+        dest (FsPath): destination path
+
+    """
+    _dst_str = str(dest)
+    for file in iglob(str(src), recursive=True):
+        _move(file, _dst_str)
 
 
 def rmfile(fspath: FsPath, *, dryrun: bool = False) -> str:
@@ -1360,11 +1392,10 @@ def rm_gen(
     Args:
         fspath (FsPath): Path to file or directory to remove
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
-        verbose (bool): Flag to be verbose
-        v (bool): alias for verbose
-        r (bool): alias for recursive kwarg
+
     Raises:
-        ValueError: If recursive and r are `False` and fspath is a directory
+        ValueError: If recursive are `False` and fspath is a directory
+
     """
     if dryrun:
         yield from iglob(_fspath(fspath), recursive=recursive)
@@ -1491,6 +1522,9 @@ def cp(
             copytree(src, dest, dirs_exist_ok=True)
 
 
+# aliases
+mv = move
+
 # IO function aliases ~ for backwards compatibility and convenience
 lbytes = rbin = lbin = rbytes
 sbytes = wbin = sbin = wbytes
@@ -1550,6 +1584,8 @@ __all__ = (
     "lstring_async",
     "mkdir",
     "mkdirp",
+    "move",
+    "mv",
     "path_gen",
     "rbin",
     "rbin_async",
