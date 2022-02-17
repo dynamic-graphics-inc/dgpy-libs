@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import tempfile
 
-from os import fspath as _fspath
+from os import fspath as _fspath, getenv as _getenv
 from pathlib import Path
+from shutil import which
 from subprocess import CompletedProcess, run
 from typing import Sequence
 
@@ -13,19 +14,31 @@ from xtyping import AnyStr, FsPath, Tuple, Union
 
 MAX_CMD_LENGTH: int = 8192
 
+WIN_DEFAULT_PATHEXT: str = ".COM;.EXE;.BAT;.CMD;.VBS;.JS;.WS;.MSC"
+
+
+def pathext() -> Tuple[str, ...]:
+    pathext_source = _getenv("PATHEXT") or WIN_DEFAULT_PATHEXT
+    return tuple(pathext_source.split(";"))
+
 
 def bat(
-    fspath: FsPath, *, check: bool = False, text: bool = True
+    fspath: FsPath, *, check: bool = False, text: bool = True, shell: bool = False
 ) -> CompletedProcess[AnyStr]:
     """Run a bat file"""
-    fspath_obj = Path(fspath)
-    if not fspath_obj.exists():
-        raise FileNotFoundError(fspath)
-    _args = [str(fspath_obj)]
+    bat_filepath = which(fspath)
+    if bat_filepath is None:
+        fspath_obj = Path(fspath)
+        if not fspath_obj.exists():
+            raise FileNotFoundError(fspath)
+    else:
+        fspath_obj = Path(bat_filepath)
+
+    _args = [str(fspath)] if shell else ["cmd", "/c", _fspath(fspath_obj)]
     return run(
         args=_args,
-        shell=True,
         capture_output=True,
+        shell=shell,
         text=text,
         check=check,
         cwd=fspath_obj.parent,

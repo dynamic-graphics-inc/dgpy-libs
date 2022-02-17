@@ -1,15 +1,29 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+from os import PathLike
 from subprocess import (
     DEVNULL as DEVNULL,
     PIPE as PIPE,
+    CalledProcessError as CalledProcessError,
     CompletedProcess as CompletedProcess,
     Popen as Popen,
     run as run,
 )
 
-from xtyping import TypedDict
+from xtyping import (
+    IO,
+    Any,
+    FsPath,
+    List,
+    Mapping,
+    Optional,
+    Sequence,
+    Set,
+    Tuple,
+    TypedDict,
+    Union,
+)
 
 __subprocess_all__ = (
     "CompletedProcess",
@@ -21,6 +35,9 @@ __subprocess_all__ = (
 __all__ = (
     "CompletedProcessObj",
     "completed_process_obj",
+    "PopenArgs",
+    "PopenEnv",
+    "runb",
     # from subprocess
     "CompletedProcess",
     "run",
@@ -28,6 +45,11 @@ __all__ = (
     "PIPE",
     "DEVNULL",
 )
+
+PopenArgs = Union[
+    bytes, str, Sequence[Union[str, bytes, PathLike[str], PathLike[bytes]]]
+]
+PopenEnv = Mapping[str, str]
 
 
 class CompletedProcessObj(TypedDict):
@@ -76,3 +98,74 @@ def completed_process_obj(
         stderr=completed_process.stderr,
         returncode=completed_process.returncode,
     )
+
+
+def pcheck(
+    process: CompletedProcess[Any],
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+) -> None:
+    """
+
+    Args:
+        process: CompletedProcess object
+        ok_code: OK code or sequence of codes, default is 0
+
+    Returns:
+        None
+
+    Raises:
+        CompletedProcessError: if process.returncode not in ok_code
+
+    """
+    if isinstance(ok_code, int):
+        if process.returncode != ok_code:
+            raise CalledProcessError(
+                process.returncode,
+                process.args,
+                output=process.stdout,
+                stderr=process.stderr,
+            )
+    else:
+        if process.returncode not in ok_code:
+            raise CalledProcessError(
+                process.returncode,
+                process.args,
+                output=process.stdout,
+                stderr=process.stderr,
+            )
+
+
+def runb(
+    args: PopenArgs,
+    *,
+    executable: Optional[str] = None,
+    stdin: Optional[Union[IO[Any], int]] = None,
+    input: Optional[str] = None,
+    stdout: Optional[Union[IO[Any], int]] = None,
+    stderr: Optional[Union[IO[Any], int]] = None,
+    shell: bool = False,
+    cwd: Optional[FsPath] = None,
+    timeout: Optional[float] = None,
+    capture_output: bool = False,
+    check: bool = False,
+    env: Optional[Mapping[str, str]] = None,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    **other_popen_kwargs: Any,
+) -> CompletedProcess[bytes]:
+    process = run(
+        args=args,
+        input=input,
+        executable=executable,
+        stdin=stdin,
+        stdout=stdout,
+        stderr=stderr,
+        shell=shell,
+        cwd=cwd,
+        timeout=timeout,
+        env=env,
+        capture_output=capture_output,
+        **other_popen_kwargs,
+    )
+    if check:
+        pcheck(process=process, ok_code=ok_code)
+    return process
