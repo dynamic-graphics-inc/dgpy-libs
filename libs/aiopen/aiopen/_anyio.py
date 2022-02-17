@@ -3,6 +3,7 @@
 
 Inspired by aiofiles
 """
+from __future__ import annotations
 
 from types import TracebackType
 from typing import AnyStr, Awaitable, Callable, Type, Union, overload
