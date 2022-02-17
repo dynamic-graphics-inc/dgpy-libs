@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """shellfish.fs.promises"""
+from __future__ import annotations
 
 from shellfish.fs._async import (
     exists_async as exists,

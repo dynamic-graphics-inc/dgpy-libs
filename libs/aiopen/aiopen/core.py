@@ -76,7 +76,7 @@ class AsyncBase(Generic[AnyStr]):
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> "AsyncBase":
+    def __aiter__(self) -> "AsyncBase[AnyStr]":
         return self
 
     # async def __anext__(self) -> Union[bytes, str]:
@@ -159,7 +159,8 @@ class AsyncBase(Generic[AnyStr]):
         return self._file.closed
 
 
-class AsyncBaseDetachable(AsyncBase):
+# TODO: Fix generics...
+class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
     _file: Union[BufferedReader, BufferedRandom, BufferedWriter, TextIOWrapper]
 
     def detach(self) -> Any:
@@ -210,7 +211,8 @@ class BufferedReaderAsync(BufferedIOAsyncBase):
         ...
 
 
-class FileIOAsync(AsyncBase):
+# TODO: Fix generics...
+class FileIOAsync(AsyncBase):  # type: ignore[type-arg]
     """The asyncio executor version of io.FileIO."""
 
     _file: FileIO

@@ -55,7 +55,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
 
     Config = JsonBaseModelDefaultConfig
 
-    def __init__(self, *args: Any, **kwargs: Any):  # type: ignore
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
         if self.__custom_root_type__ and len(args) == 1 and "__root__" not in kwargs:
             super().__init__(**{**kwargs, "__root__": args[0]})
@@ -157,15 +157,15 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
             if k not in defaults or v != defaults[k]
         }
 
-    def to_json_obj_filter_defaults(self) -> JsonObj:
+    def to_json_obj_filter_defaults(self) -> JsonObj[Any]:
         """Eject to JsonObj and filter key-values equal to (sub)class' default"""
         return JsonObj(self.to_dict_filter_defaults())
 
-    def to_json_obj_filter_none(self) -> JsonObj:
+    def to_json_obj_filter_none(self) -> JsonObj[Any]:
         """Eject to JsonObj and filter key-values where the value is None"""
         return JsonObj(self.to_dict_filter_none())
 
-    def to_json_obj(self) -> JsonObj:
+    def to_json_obj(self) -> JsonObj[Any]:
         """Eject object and sub-objects to `jsonbourne.JsonObj`
 
         Examples:
@@ -186,7 +186,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
             }
         )
 
-    def to_json_dict(self) -> JsonObj:
+    def to_json_dict(self) -> JsonObj[Any]:
         """Eject object and sub-objects to `jsonbourne.JsonObj`
 
         Examples:

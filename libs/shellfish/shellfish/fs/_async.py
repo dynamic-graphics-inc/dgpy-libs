@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """async file-system utils"""
+from __future__ import annotations
+
 import os
 
 from os import fspath as _fspath
 from typing import Any, AsyncIterable, Callable, Optional
 
-import JSON
-
 from aiopen import aiopen
+from jsonbourne import JSON
 from shellfish import aios
 from xtyping import AsyncIterator, FsPath, Iterable, Union
 
@@ -93,7 +94,9 @@ is_link_async = islink_async
 async def wbytes_async(
     filepath: FsPath,
     bites: bytes,
+    *,
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """(ASYNC) Write/Save bytes to a fspath
 
@@ -125,6 +128,8 @@ async def wbytes_async(
     _write_mode = "ab" if append else "wb"
     async with aiopen(filepath, _write_mode) as fd:
         nbytes = await fd.write(bites)
+    if chmod is not None:
+        await aios.chmod(str(filepath), chmod)
     return int(nbytes)
 
 
@@ -237,7 +242,9 @@ async def rbytes_gen_async(
 async def wbytes_gen_async(
     filepath: FsPath,
     bytes_gen: Union[Iterable[bytes], AsyncIterable[bytes]],
+    *,
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Write/save bytes to a filepath from an (async)iterable/iterator of bytes
 
@@ -245,6 +252,7 @@ async def wbytes_gen_async(
         filepath: fspath to write to
         bytes_gen: AsyncIterable/Iterator of bytes to write
         append: Append to the fspath if True; otherwise overwrite
+        chmod: chmod the fspath if not None
 
     Returns:
         int: number of bytes written
@@ -319,10 +327,12 @@ async def wbytes_gen_async(
         else:
             for b in bytes_gen:
                 _bytes_written += await f.write(b)
+    if chmod is not None:
+        await aios.chmod(filepath, chmod)
     return _bytes_written
 
 
-async def rstring_async(filepath: FsPath) -> str:
+async def rstring_async(filepath: FsPath, encoding: str = "utf-8") -> str:
     r"""(ASYNC) Load/Read a string given a fspath
 
     Args:
@@ -332,7 +342,7 @@ async def rstring_async(filepath: FsPath) -> str:
         str: String read from given fspath
 
     """
-    return (await rbytes_async(filepath)).decode()
+    return (await rbytes_async(filepath)).decode(encoding=encoding)
 
 
 async def wstring_async(
@@ -341,6 +351,7 @@ async def wstring_async(
     *,
     encoding: str = "utf-8",
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """(ASYNC) Save/Write a string to fspath
 
@@ -349,6 +360,7 @@ async def wstring_async(
         string (str): string to be written
         encoding (str): File encoding (Default='utf-8')
         append (bool): Append to the fspath if True; default is False
+        chmod (Optional[int]): chmod the fspath if not None
 
     Returns:
         int: number of bytes written
@@ -358,6 +370,7 @@ async def wstring_async(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
+        chmod=chmod,
     )
 
 
@@ -414,6 +427,8 @@ async def wjson_async(
     sort_keys: bool = False,
     append_newline: bool = False,
     default: Optional[Callable[[Any], Any]] = None,
+    append: bool = False,
+    chmod: Optional[int] = None,
     **kwargs: Any,
 ) -> int:
     """Save/Write json-serial-ize-able data to a fspath
@@ -426,6 +441,8 @@ async def wjson_async(
         sort_keys (bool): Sort the data keys if the data is a dictionary.
         append_newline (bool): Sort the data keys if the data is a dictionary.
         default: default function hook
+        append (bool): Append to the fspath if True; default is False
+        chmod (Optional[int]): chmod the fspath if not None
         **kwargs: Additional keyword arguments to pass to jsonbourne.JSON.dump
 
     Returns:
@@ -473,6 +490,8 @@ async def wjson_async(
             sort_keys=sort_keys,
             **kwargs,
         ),
+        append=append,
+        chmod=chmod,
     )
 
 

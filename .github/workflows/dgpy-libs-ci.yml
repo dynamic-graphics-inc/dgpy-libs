@@ -49,6 +49,16 @@ jobs:
         run: |
           poetry install
 
+      - name: test listless
+        run: |
+          cd libs/listless
+          poetry run pytest --doctest-modules tests listless
+
+      - name: test fmts
+        run: |
+          cd libs/fmts
+          poetry run pytest --doctest-modules tests fmts
+
       - name: test xtyping
         run: |
           cd libs/xtyping
@@ -59,40 +69,62 @@ jobs:
           cd libs/funkify
           poetry run pytest --cov=funkify tests
 
+      - name: test asyncify
+        run: |
+          cd libs/asyncify
+          poetry install
+          poetry run pytest --cov=asyncify tests asyncify --doctest-modules
+
       - name: test requires
         run: |
           cd libs/requires
           poetry run pytest tests
+
+      - name: test aiopen
+        run: |
+          cd libs/aiopen
+          poetry install
+          poetry run pytest --doctest-modules tests aiopen
+
+      - name: test lager
+        run: |
+          cd libs/lager
+          poetry run pytest tests lager
+
+      - name: test jsonbourne
+        run: |
+          cd libs/jsonbourne
+          poetry run pytest --doctest-modules tests jsonbourne
 
       - name: test shellfish
         run: |
           cd libs/shellfish
           poetry run pytest --doctest-modules tests shellfish
 
-  test-aiopen:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: 1.1.12
-
-      - name: Install dependencies
-        run: |
-          cd libs
-          cd aiopen
-          poetry install
-
-      - name: Install dependencies
-        run: |
-          cd libs/aiopen
-          poetry run pytest tests
+#  test-aiopen:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up Python 3
+#        uses: actions/setup-python@v2
+#        with:
+#          python-version: 3.8
+#
+#      - name: Run image
+#        uses: abatilo/actions-poetry@v2.0.0
+#        with:
+#          poetry-version: 1.1.12
+#
+#      - name: Install dependencies
+#        run: |
+#          cd libs
+#          cd aiopen
+#          poetry install
+#
+#      - name: Install dependencies
+#        run: |
+#          cd libs/aiopen
+#          poetry run pytest tests
 
 
   test-jsonbourne:

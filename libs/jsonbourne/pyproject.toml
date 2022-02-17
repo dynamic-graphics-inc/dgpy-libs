@@ -34,7 +34,7 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-xtyping = "^0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 pydantic = { version = ">=1.8.2", optional = true }
 python-rapidjson = { version = ">=0.9.1", optional = true }
 orjson = { version = "==3.*,>=3.0.0", optional = true }
@@ -52,3 +52,41 @@ all = ["orjson", "pydantic", "python-rapidjson"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+    "--doctest-modules",
+    "--disable-warnings",
+    "--doctest-ignore-import-errors"
+]
+xfail_strict = true
+filterwarnings = [
+    "error",
+    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+    "ignore::RuntimeWarning",
+    "ignore::pytest.PytestUnraisableExceptionWarning",
+    "ignore::DeprecationWarning"
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "timeout",
+    "skip: skip test",
+    "anyio: anyio tests",
+    "aio: asyncio tests",
+    "basic: basic tests",
+    "version",
+    "orjson: orjson tests",
+    "rapidjson: rapidjson tests",
+    "pydantic: pydantic tests",
+    "attrs: attrs tests",
+    "optdeps: optional dependencies",
+    "jsonlibs: jsonlibs tests",
+]
+testpaths = [
+    "jsonbourne",
+    "tests"
+]

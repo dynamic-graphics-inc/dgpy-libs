@@ -3,6 +3,7 @@
 
 Inspired by aiofiles
 """
+from __future__ import annotations
 
 from types import TracebackType
 from typing import AnyStr, Awaitable, Callable, Type, Union, overload
@@ -89,7 +90,7 @@ def aiopen(
     newline: Optional[str] = None,
     closefd: bool = True,
     opener: Optional[Callable[[str, int], int]] = None,
-) -> AsyncFileContextManager:
+) -> AsyncFileContextManager[AnyStr]:
     return AsyncFileContextManager(
         coro=open_file(  # type: ignore
             file=file,

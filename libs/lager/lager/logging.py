@@ -162,7 +162,7 @@ class StdLoggingHandler(logging.Handler):
         # Find caller from where originated the logging call
         frame = logging.currentframe()
         depth = 2
-        while frame.f_code.co_filename == logging.__file__:  # type: ignore
+        while frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back  # type: ignore
             depth += 1
 
@@ -170,11 +170,11 @@ class StdLoggingHandler(logging.Handler):
 
 
 def _logger_dict() -> Any:
-    return logging.root.manager.loggerDict  # type: ignore
+    return logging.root.manager.loggerDict
 
 
 def loggers_dict() -> Dict[str, logging.Logger]:
-    return {name: logging.getLogger(name) for name in _logger_dict()}  # type: ignore
+    return {name: logging.getLogger(name) for name in _logger_dict()}
 
 
 def intercept(loggers: List[str]) -> None:

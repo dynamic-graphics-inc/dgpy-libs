@@ -43,7 +43,7 @@ flake: fmt
 ## TYPE CHECKING
 .PHONY: mypy
 mypy:
-	mypy --config-file ../../pyproject.toml $(PKG_NAME)
+	mypy --config-file ../../pyproject.toml $(PKG_NAME) tests
 
 ###############
 ### TESTING ###

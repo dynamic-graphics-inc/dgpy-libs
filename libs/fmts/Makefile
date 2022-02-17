@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := all
 
-PKG_NAME := $(shell cat pyproject.toml | grep name | awk '{print $$3}' | sed 's/"//g')
+PKG_NAME := $(shell cat pyproject.toml | grep name | head -n 1 | awk '{print $$3}' | sed 's/"//g')
 PWD_DIRPATH = .
 TESTS_DIRPATH = ${PWD}/tests
 
@@ -50,6 +50,7 @@ mypy:
 ###############
 .PHONY:test
 test:
+	echo ${PKG_NAME}
 	pytest --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testcov

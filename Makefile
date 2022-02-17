@@ -17,7 +17,7 @@ fmt:
 
 .PHONY: flake
 flake: fmt
-	python -m flake8 --config=./.flake8 --verbose $(PKG_NAME)
+	python -m flake8 --config=./.flake8 libs
 
 .PHONY: lint
 lint:

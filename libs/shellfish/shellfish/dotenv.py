@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """dot.env utils"""
+from __future__ import annotations
+
 import re
 
 from os import getcwd, path
 from shlex import split as shplit
 
+from shellfish.fs import rstring
 from xtyping import Dict, FsPath, Optional
-
-from .fs import rstring
 
 __all__ = ("ldotenv", "parse_dotenv", "parse_env", "strip_comments")
 

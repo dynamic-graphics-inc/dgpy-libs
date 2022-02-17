@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
 
@@ -234,7 +237,7 @@ class WIN(OsFsAbc):
         link = str(link)
         target = str(target)
         try:
-            assert path.exists(target) and path.isdir(target)
+            assert path.isdir(target)
             makedirs(path.split(link)[0], exist_ok=True)
         except Exception:
             ...

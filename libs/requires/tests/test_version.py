@@ -5,7 +5,7 @@ import pytest
 
 from requires import __version__
 
-pytestmark = [pytest.mark.basic]
+pytestmark = [pytest.mark.version]
 
 
 def _get_version() -> str:
