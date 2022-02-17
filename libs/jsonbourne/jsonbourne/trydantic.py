@@ -22,7 +22,7 @@ try:
 
     PYDANTIC_AVAILABLE = True
 except ImportError:
-    from dataclasses import dataclass as _dataclass  # type: ignore
+    from dataclasses import dataclass as _dataclass
     from functools import wraps
 
     dataclass = wraps(_dataclass)(

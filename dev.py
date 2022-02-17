@@ -81,6 +81,22 @@ def check_encoding():
 
 
 def main():
+
+    pypi_cache_parts = "cache", "repositories", "pypi"
+    proc = run(
+        args=["poetry", "config", "cache-dir"],
+        shell=True,
+        capture_output=True,
+        text=True,
+    )
+
+    poetry_cache_root = proc.stdout.splitlines(keepends=False)[0]
+    poetry_pypi_cache_dir = Path(poetry_cache_root, *pypi_cache_parts)
+
+    def clear_cache():
+        print("Clearing poetry cache")
+        poetry_pypi_cache_dir.rmdir()
+
     for el in static_order:
         print("==========")
         print(el)
@@ -104,12 +120,12 @@ def main():
         chdir(LIBS_DIR / el)
 
         run(args=["make", "test"], shell=True)
-
-        if el not in DONT_PUBLISH:
-            run(
-                args=["poetry", "publish", "--build", "--no-interaction"],
-                shell=True,
-            )
+        #
+        # if el not in DONT_PUBLISH:
+        #     run(
+        #         args=["poetry", "publish", "--build", "--no-interaction"],
+        #         shell=True,
+        #     )
 
 
 if __name__ == "__main__":

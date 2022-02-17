@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""jsonbourne jsonlib api"""
+# pyright: reportOptionalMemberAccess=false
 import json as pyjson
 
 from abc import ABC, abstractmethod

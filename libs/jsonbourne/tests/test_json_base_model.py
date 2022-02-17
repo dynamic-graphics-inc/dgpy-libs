@@ -4,7 +4,7 @@ from typing import List
 
 import pytest
 
-from jsonbourne import JsonObj, json
+from jsonbourne import JSON, JsonObj
 
 pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
@@ -23,7 +23,8 @@ def test_json_base_model_w_prop() -> None:
 
         @classmethod
         def from_json(cls, json_string: str):
-            return JsonSubObj(json.loads(json_string))
+            d = JSON.loads(json_string)
+            return cls(**d)
 
     class JsonObjModel(JsonBaseModel):
         a: int
@@ -42,7 +43,7 @@ def test_json_base_model_w_prop() -> None:
 
         @classmethod
         def from_json(cls, json_string: str):
-            return cls(**json.loads(json_string))
+            return cls(**JSON.loads(json_string))
 
     thing_w_prop = JsonObjModel(
         **{
@@ -74,5 +75,5 @@ def test_json_base_model_root_type() -> None:
     assert JsonModelHasRootType.__custom_root_type__
     obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
-    obj2 = JsonModelHasRootType(["a", "b", "c"])
+    obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore
     assert obj == obj2

@@ -2,7 +2,7 @@
 """Lager & pydantic"""
 from datetime import datetime, timedelta
 from types import TracebackType
-from typing import Optional, Type, Union
+from typing import Any, Dict, Optional, Type, Union
 
 from jsonbourne.pydantic import JsonBaseModel
 
@@ -37,7 +37,7 @@ class RecordException(JsonBaseModel):
 class Record(JsonBaseModel):
     elapsed: timedelta
     exception: Optional[RecordException]
-    extra: dict
+    extra: Dict[Any, Any]
     file: RecordFile
     function: str
     level: RecordLevel

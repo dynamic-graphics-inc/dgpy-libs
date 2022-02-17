@@ -13,29 +13,29 @@ from shellfish import fs, process, sh
 PWD = path.split(path.realpath(__file__))[0]
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_subproc_async() -> None:
     prun = await sh.do_async("ls")
     assert isinstance(prun, sh.Done)
     assert prun.async_proc
 
 
-@pytest.mark.asyncio
-@pytest.mark.aio
+@pytest.mark.asyncio()
+@pytest.mark.aio()
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)
     assert res.async_proc
 
 
-@pytest.mark.asyncio
-@pytest.mark.aio
+@pytest.mark.asyncio()
+@pytest.mark.aio()
 async def test_run_async_shell_true() -> None:
     res = await sh.do_async(["ls"], shell=True)
     assert res.async_proc
 
 
-@pytest.mark.asyncio
-@pytest.mark.timeout
+@pytest.mark.asyncio()
+@pytest.mark.timeout()
 async def test_timeout_subprocess_aio(tmp_path: Path) -> None:
     sh.cd(str(tmp_path))
     script_2sec = (

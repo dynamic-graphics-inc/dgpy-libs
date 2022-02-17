@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """file-system utils"""
+from __future__ import annotations
+
 from enum import IntEnum
 from glob import iglob
 from itertools import chain, count
@@ -21,10 +23,11 @@ from os import (
     walk,
 )
 from pathlib import Path
-from shutil import copytree, move, rmtree
+from shutil import copytree, move as _move, rmtree
 from time import time
 
 from jsonbourne import JSON
+from shellfish import const
 from shellfish._meta import __version__
 from shellfish.fs._async import (
     exists_async as exists_async,
@@ -66,6 +69,7 @@ from shellfish.fs._async import (
 from shellfish.process import is_win
 from xtyping import (
     Any,
+    AnyStr,
     Callable,
     FsPath,
     Iterable,
@@ -75,6 +79,7 @@ from xtyping import (
     Optional,
     Tuple,
     Union,
+    cast,
 )
 
 # END-IMPORTS
@@ -151,12 +156,12 @@ def filesize(fspath: FsPath) -> int:
     return stat(fspath).st_size
 
 
-def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry]:
+def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     """Typed version of os.scandir"""
-    return _scandir(fspath(dirpath))
+    return cast("Iterable[DirEntry[AnyStr]]", _scandir(fspath(dirpath)))
 
 
-def scandir_list(dirpath: FsPath = ".") -> List[DirEntry]:
+def scandir_list(dirpath: FsPath = ".") -> List[DirEntry[AnyStr]]:
     """Return a list of os.DirEntry objects
 
     Args:
@@ -166,7 +171,7 @@ def scandir_list(dirpath: FsPath = ".") -> List[DirEntry]:
         List[DirEntry]: List of os.DirEntry objects
 
     """
-    return list(_scandir(_fspath(dirpath)))
+    return list(scandir(dirpath))
 
 
 def scandir_gen(
@@ -176,7 +181,7 @@ def scandir_gen(
     files: bool = True,
     dirs: bool = True,
     symlinks: bool = True,
-) -> Iterator[DirEntry]:
+) -> Iterator[DirEntry[str]]:
     """Return an iterator of os.DirEntry objects
 
     Args:
@@ -832,6 +837,7 @@ def wbytes(
     bites: bytes,
     *,
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -843,6 +849,7 @@ def wbytes(
         bites: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
+        chmod (Optional[int]): chmod the file after writing; default is None
 
     Returns:
         int: Number of bytes written
@@ -863,6 +870,8 @@ def wbytes(
     _write_mode = "ab" if append else "wb"
     with open(filepath, _write_mode) as fd:
         nbytes = fd.write(bites)
+    if chmod is not None:
+        _chmod(filepath, chmod)
     return nbytes
 
 
@@ -957,6 +966,7 @@ def wbytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -965,6 +975,7 @@ def wbytes_gen(
         bytes_gen: Bytes to be written
         append (bool): Append to the file if True, overwrite otherwise; default
             is False
+        chmod (Optional[int]): chmod the file after writing; default is None
 
     Returns:
         int: Number of bytes written
@@ -982,9 +993,11 @@ def wbytes_gen(
         >>> import os; os.remove(fspath)
 
     """
-    _mode: Literal["ab", "wb"] = "ab" if append else "wb"
+    _mode: Literal["ab", "wb"] = const.ab if append else const.wb
     with open(filepath, mode=_mode) as fd:
         nbytes_written = sum(fd.write(chunk) for chunk in bytes_gen)
+    if chmod is not None:
+        _chmod(filepath, chmod)
     return nbytes_written
 
 
@@ -1025,6 +1038,7 @@ def wstring(
     *,
     encoding: str = "utf-8",
     append: bool = False,
+    chmod: Optional[int] = None,
 ) -> int:
     """Save/Write a string to fspath
 
@@ -1033,6 +1047,7 @@ def wstring(
         string (str): string to be written
         encoding: String encoding to write file with
         append (bool): Flag to append to file; default = False
+        chmod (Optional[int]): Optional chmod to set on file
 
     Returns:
         None
@@ -1051,6 +1066,7 @@ def wstring(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
+        chmod=chmod,
     )
 
 
@@ -1063,6 +1079,8 @@ def wjson(
     sort_keys: bool = False,
     append_newline: bool = False,
     default: Optional[Callable[[Any], Any]] = None,
+    chmod: Optional[int] = None,
+    append: bool = False,
     **kwargs: Any,
 ) -> int:
     """Save/Write json-serial-ize-able data to a fspath
@@ -1121,6 +1139,8 @@ def wjson(
             sort_keys=sort_keys,
             **kwargs,
         ),
+        chmod=chmod,
+        append=append,
     )
 
 
@@ -1162,7 +1182,7 @@ def rjson(filepath: FsPath) -> Any:
         >>> os.remove(fspath)
 
     """
-    return JSON.loads(lstring(filepath=filepath))  # type: ignore
+    return JSON.loads(lstring(filepath=filepath))
 
 
 def extension(fspath: str) -> str:
@@ -1270,32 +1290,64 @@ def chmod(fspath: FsPath, mode: int) -> None:
     return _chmod(path=str(fspath), mode=mode)
 
 
-def mkdir(fspath: FsPath, *, p: bool = False, exist_ok: bool = False) -> None:
+def mkdir(
+    fspath: FsPath, *, parents: bool = False, p: bool = False, exist_ok: bool = False
+) -> None:
     """Make directory at given fspath
 
     Args:
         fspath (FsPath): Directory path to create
-        p (bool): Make parent dirs if True; do not make parent dirs if False
+        parents (bool): Make parent dirs if True; do not make parent dirs if False
+        p (bool): Make parent dirs if True; do not make parent dirs if False (alias of parents)
         exist_ok (bool): Throw error if directory exists and exist_ok is False
 
     Returns:
          None
 
     """
-    if p or exist_ok:
-        return _makedirs(_fspath(fspath), exist_ok=p or exist_ok)
+    _parents = parents or p
+    if _parents or exist_ok:
+        return _makedirs(_fspath(fspath), exist_ok=_parents or exist_ok)
     return _mkdir(_fspath(fspath))
 
 
 def mkdirp(fspath: FsPath) -> None:
     """Make directory and parents"""
-    return mkdir(fspath=fspath, p=True)
+    return mkdir(fspath=fspath, parents=True)
+
+
+def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[str]:
+    """Return an iterator of fspaths matching the given glob pattern
+
+    Args:
+        fspath: Glob pattern
+        recursive: Recursively search directories if True
+        r: Recursively search directories if True (Alias for recursive)
+
+    Returns:
+        Iterator[str]: Iterator of fspaths matching the glob pattern
+
+    """
+    return iglob(pattern, recursive=recursive or r)
 
 
 def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
     if not dryrun:
-        move(src, dest)
+        _move(src, dest)
     return (src, dest)
+
+
+def move(src: FsPath, dest: FsPath) -> None:
+    """Move file(s) like on the command line
+
+    Args:
+        src (FsPath): source file(s)
+        dest (FsPath): destination path
+
+    """
+    _dst_str = str(dest)
+    for file in iglob(str(src), recursive=True):
+        _move(file, _dst_str)
 
 
 def rmfile(fspath: FsPath, *, dryrun: bool = False) -> str:
@@ -1340,11 +1392,10 @@ def rm_gen(
     Args:
         fspath (FsPath): Path to file or directory to remove
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
-        verbose (bool): Flag to be verbose
-        v (bool): alias for verbose
-        r (bool): alias for recursive kwarg
+
     Raises:
-        ValueError: If recursive and r are `False` and fspath is a directory
+        ValueError: If recursive are `False` and fspath is a directory
+
     """
     if dryrun:
         yield from iglob(_fspath(fspath), recursive=recursive)
@@ -1471,6 +1522,9 @@ def cp(
             copytree(src, dest, dirs_exist_ok=True)
 
 
+# aliases
+mv = move
+
 # IO function aliases ~ for backwards compatibility and convenience
 lbytes = rbin = lbin = rbytes
 sbytes = wbin = sbin = wbytes
@@ -1530,6 +1584,8 @@ __all__ = (
     "lstring_async",
     "mkdir",
     "mkdirp",
+    "move",
+    "mv",
     "path_gen",
     "rbin",
     "rbin_async",

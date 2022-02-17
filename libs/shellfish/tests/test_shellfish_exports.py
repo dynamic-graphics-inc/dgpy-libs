@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from pprint import pformat
+from types import ModuleType
 
 import pytest
 
@@ -12,7 +13,7 @@ from shellfish.fs import promises as fsp
 modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
 
 
-def _test_module_all_tuple(mod, check_sorted: bool = True) -> None:
+def _test_module_all_tuple(mod: ModuleType, check_sorted: bool = True) -> None:
     assert hasattr(mod, "__all__"), f"{mod} has no __all__"
     mod_all = getattr(mod, "__all__")
     mod_name = mod.__name__
@@ -34,5 +35,5 @@ def _test_module_all_tuple(mod, check_sorted: bool = True) -> None:
 
 
 @pytest.mark.parametrize("mod", modules)
-def test_module_exports(mod) -> None:
+def test_module_exports(mod: ModuleType) -> None:
     _test_module_all_tuple(mod, check_sorted=True)

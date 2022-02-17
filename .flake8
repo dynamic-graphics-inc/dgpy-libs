@@ -1,6 +1,7 @@
 [flake8]
 # Black formatting length
 max-line-length = 120
+color = auto
 extend-ignore =
     BLK100
     D400
@@ -14,6 +15,7 @@ extend-ignore =
     WPS202
     WPS305
     WPS326
+    PT011
 per-file-ignores =
     libs/requires/tests/test_requires.py:F821
     libs/requires/tests/test_requires_w_json_libs.py:F821
@@ -27,3 +29,4 @@ exclude =
     .nox_win,
     .nox_lin,
     .venv*
+    f.py

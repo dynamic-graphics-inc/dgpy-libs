@@ -682,7 +682,7 @@ def strip_comments(string: str) -> str:
         except AttributeError:
             return line
 
-    return "\n".join((_strip_comments_line(line) for line in filelines))  # type: ignore
+    return "\n".join((_strip_comments_line(line) for line in filelines))
 
 
 def multi_replace(
@@ -723,7 +723,12 @@ def multi_replace(
     if isinstance(replacements, dict):
         return multi_replace(string, replacements.items())
     for rep in replacements:
-        string = string.replace(*rep)
+        if isinstance(rep, list):
+            if len(rep) != 2:
+                raise ValueError("Replacement must be a list of length 2")
+            string = string.replace(rep[0], rep[1])
+        else:
+            string = string.replace(*rep)
     return string
 
 
@@ -1078,8 +1083,8 @@ class pstr(str):
     def __new__(cls, content: str) -> "pstr":
         """Create and return new pstr from a str"""
         if "\n" in content and (content[0] == "\n" or content[-1] == "\n"):
-            return str.__new__(cls, content.strip("\n"))  # type: ignore
-        return str.__new__(cls, content)  # type: ignore
+            return str.__new__(cls, content.strip("\n"))
+        return str.__new__(cls, content)
 
     def _repr_parts(self) -> str:
         string = f'"""{self}"""' if "\n" in self else f"'{self}'"

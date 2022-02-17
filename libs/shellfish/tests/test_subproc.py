@@ -16,7 +16,7 @@ def test_subproc() -> None:
     assert isinstance(prun, sh.Done)
 
 
-@pytest.mark.asyncio
+@pytest.mark.asyncio()
 async def test_subproc_async() -> None:
     prun = await sh.do_async("ls")
     assert isinstance(prun, sh.Done)
@@ -81,21 +81,21 @@ def test_pipe_stderr(tmp_path: Path) -> None:
     assert stdout == proc.stderr * 2
 
 
-@pytest.mark.asyncio
-@pytest.mark.aio
+@pytest.mark.asyncio()
+@pytest.mark.aio()
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)
     assert res.async_proc
 
 
-@pytest.mark.asyncio
-@pytest.mark.aio
+@pytest.mark.asyncio()
+@pytest.mark.aio()
 async def test_run_async_shell_true() -> None:
     res = await sh.do_async(["ls"], shell=True)
     assert res.async_proc
 
 
-@pytest.mark.timeout
+@pytest.mark.timeout()
 def test_timeout_subprocess(tmp_path: Path) -> None:
     sh.cd(str(tmp_path))
     script_2sec = (

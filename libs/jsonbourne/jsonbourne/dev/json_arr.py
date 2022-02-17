@@ -23,13 +23,10 @@ from xtyping import (
 
 __all__ = (
     "JsonArr",
-    "JsonArrT",
     "n_args",
 )
 _T = TypeVar("_T")
 _R = TypeVar("_R")
-
-JsonArrT = TypeVar("JsonArrT", bound="JsonArr")
 
 
 class SupportsDunderLT(Protocol):
@@ -218,7 +215,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         return tuple(self.__arr)
 
     @classmethod
-    def validate_type(cls: Type[JsonArrT], val: Any) -> JsonArr[_T]:
+    def validate_type(cls: Type[JsonArr[_T]], val: Any) -> JsonArr[_T]:
         """Validate and convert a value to a JsonObj object"""
         return cls(val)
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgpylibs"
-version = "0.0.2"
+version = "0.0.3"
 description = "Dynamic Graphics Python libraries"
 authors = ["jessekrubin <jesse@dgi.com>"]
 license = "MIT"
@@ -178,6 +178,11 @@ filterwarnings = [
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "timeout",
+    "skip: skip test",
+    "anyio: anyio tests",
+    "aio: asyncio tests",
+    "basic: basic tests",
+    "version"
 ]
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -192,7 +197,7 @@ markers = [
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
-disallow_any_generics = false
+disallow_any_generics = true
 disallow_subclassing_any = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
@@ -201,34 +206,41 @@ check_untyped_defs = true
 disallow_untyped_decorators = true
 no_implicit_optional = true
 warn_redundant_casts = true
-warn_unused_ignores = false
+warn_unused_ignores = true
 warn_return_any = true
 ignore_missing_imports = true
 implicit_reexport = false
+strict = true
 strict_equality = true
 show_error_context = true
 
 
+
 [tool.pyright]
+pythonVersion = "3.8"
 include = [
     #    "libs/aiopen",
     "libs/asyncify",
     "libs/funkify",
+    "libs/fmts",
     "libs/h5",
-    #    "libs/jsonbourne",
+    "libs/jsonbourne",
     "libs/lager",
+    "libs/listless",
     "libs/requires",
-    "libs/shellfish",
+#    "libs/shellfish",
     "libs/listless",
     "libs/xtyping",
 ]
 extraPaths = [
-    #    "libs/aiopen",
+    "libs/aiopen",
     "libs/asyncify",
     "libs/funkify",
+    "libs/fmts",
     "libs/h5",
-    #    "libs/jsonbourne",
+    "libs/jsonbourne",
     "libs/lager",
+    "libs/listless",
     "libs/requires",
     "libs/shellfish",
     "libs/listless",
@@ -242,6 +254,7 @@ exclude = [
     "**/.nox",
     "**/.nox_win"
 ]
+reportGeneralTypeIssues = false
+reportInvalidTypeVarUse = false
 reportMissingImports = true
 reportMissingTypeStubs = false
-pythonVersion = "3.8"

@@ -1,38 +1,55 @@
 # -*- coding: utf-8 -*-
 """batman = bat(ch) file utils"""
+from __future__ import annotations
+
 import tempfile
 
-from os import fspath as _fspath
+from os import fspath as _fspath, getenv as _getenv
 from pathlib import Path
+from shutil import which
 from subprocess import CompletedProcess, run
 from typing import Sequence
 
-from xtyping import FsPath, Tuple, Union
+from xtyping import AnyStr, FsPath, Tuple, Union
 
 MAX_CMD_LENGTH: int = 8192
 
+WIN_DEFAULT_PATHEXT: str = ".COM;.EXE;.BAT;.CMD;.VBS;.JS;.WS;.MSC"
 
-def bat(fspath: FsPath, *, check: bool = False, text: bool = True) -> CompletedProcess:
+
+def pathext() -> Tuple[str, ...]:
+    pathext_source = _getenv("PATHEXT") or WIN_DEFAULT_PATHEXT
+    return tuple(pathext_source.split(";"))
+
+
+def bat(
+    fspath: FsPath, *, check: bool = False, text: bool = True, shell: bool = False
+) -> CompletedProcess[AnyStr]:
     """Run a bat file"""
-    fspath_obj = Path(fspath)
-    if not fspath_obj.exists():
-        raise FileNotFoundError(fspath)
-    _args = [str(fspath_obj)]
+    bat_filepath = which(fspath)
+    if bat_filepath is None:
+        fspath_obj = Path(fspath)
+        if not fspath_obj.exists():
+            raise FileNotFoundError(fspath)
+    else:
+        fspath_obj = Path(bat_filepath)
+
+    _args = [str(fspath)] if shell else ["cmd", "/c", _fspath(fspath_obj)]
     return run(
         args=_args,
-        shell=True,
         capture_output=True,
+        shell=shell,
         text=text,
         check=check,
         cwd=fspath_obj.parent,
     )
 
 
-def run_cmd(cmd: str) -> CompletedProcess:
-    return run(cmd, check=True, capture_output=True, text=True, shell=True)
+def run_cmd(cmd: str, *, text: bool = True) -> CompletedProcess[AnyStr]:
+    return run(cmd, check=True, capture_output=True, text=text, shell=True)
 
 
-def run_cmds(cmds: Sequence[str]) -> CompletedProcess:
+def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
     _commands = ["CALL " + cmd for cmd in cmds]
     if len(_commands) == 0:
         raise ValueError("no commands given")
@@ -42,8 +59,8 @@ def run_cmds(cmds: Sequence[str]) -> CompletedProcess:
 
 
 def run_cmds_as_bat_file(
-    commands: Sequence[Union[Tuple[str, ...], str]]
-) -> CompletedProcess:
+    commands: Sequence[Union[Tuple[str, ...], str]], *, text: bool = True
+) -> CompletedProcess[AnyStr]:
     if len(commands) == 0:
         raise ValueError("no commands given")
     _commands = [
@@ -55,7 +72,7 @@ def run_cmds_as_bat_file(
         with bat_filepath.open(mode="w", newline="\r\n") as f:
             bat_file_str = "\r\n".join(_commands)
             f.write(bat_file_str)
-        return bat(bat_filepath)
+        return bat(bat_filepath, text=text)
 
 
 def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, None]:
@@ -93,7 +110,7 @@ def MKLINK(
     H: bool = False,
     J: bool = False,
     check: bool = False,
-) -> CompletedProcess:
+) -> CompletedProcess[str]:
     """
     Creates a symbolic link.
 
@@ -168,7 +185,7 @@ def RD(
     Z: bool = False,
     A: bool = False,
     check: bool = False,
-) -> CompletedProcess:
+) -> CompletedProcess[str]:
     """
     Removes a directory.
 
@@ -210,7 +227,7 @@ def DEL_ARGS(fspath: FsPath) -> Tuple[str, str]:
 _DEL = DEL_ARGS
 
 
-def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess:
+def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess[str]:
     return run(
         args=("DEL", _fspath(Path(fspath))),
         check=check,
