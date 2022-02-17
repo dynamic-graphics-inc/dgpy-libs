@@ -3,7 +3,7 @@
 import sys
 
 from types import ModuleType
-from typing import Any, Callable, Optional, TypeVar
+from typing import Any, Callable, Optional, TypeVar, cast
 
 from funkify._meta import __version__
 
@@ -44,7 +44,7 @@ def default_export(
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
-            return funk(*args, **kwargs)
+            return cast(T, funk(*args, **kwargs))  # type: ignore[operator]
 
     class ModuleClsStaticValue(ModuleCls):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
