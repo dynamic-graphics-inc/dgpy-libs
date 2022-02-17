@@ -24,13 +24,13 @@ class TestWindowsSubproccess:
         proc = sh.do("bat_command")
         assert proc.stdout == "Hello\nBAT file\n"
 
-    @pytest.mark.asyncio
+    @pytest.mark.asyncio()
     async def test_cmd_command_async(self) -> None:
         sh.cd(self.windows_scripts_dirpath)
         proc = await sh.do_async("cmd_command")
         assert proc.stdout == "Hello\nCMD file\n"
 
-    @pytest.mark.asyncio
+    @pytest.mark.asyncio()
     async def test_bat_command_async(self) -> None:
         sh.cd(self.windows_scripts_dirpath)
         proc = await sh.do_async("bat_command")

@@ -35,3 +35,21 @@ pytest = "^6.2.4"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+    "-ra",
+    "--strict-config",
+    "--strict-markers",
+    "--disable-warnings"
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "timeout",
+    "skip: skip test",
+    "anyio: anyio tests",
+    "aio: asyncio tests",
+    "basic: basic tests",
+    "version"
+]

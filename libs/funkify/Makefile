@@ -49,7 +49,7 @@ mypy:
 ###############
 .PHONY:test
 test:
-	pytest tests $(PKG_NAME)
+	pytest tests
 
 .PHONY:testcov
 testcov:

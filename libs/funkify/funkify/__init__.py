@@ -17,10 +17,10 @@ __all__ = (
 
 
 def default_export(
-    funk: Callable[..., T],
+    funk: T,
     *,
     key: Optional[str] = None,
-) -> Callable[..., T]:
+) -> T:
     """Assign a function to a module's __call__ attr
 
     Args:
@@ -39,15 +39,21 @@ def default_export(
         _module: str = key or funk.__module__
     except AttributeError:
         raise AttributeError(
-            f"funk ({funk}) has no __module__ attribute; provide module key"
+            f"funk ({funk}) has no __module__ attribute; plz provide module key"
         )
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
             return funk(*args, **kwargs)
 
+    class ModuleClsStaticValue(ModuleCls):
+        def __call__(self, *args: Any, **kwargs: Any) -> T:
+            return funk
+
+    mod_cls = ModuleCls if callable(funk) else ModuleClsStaticValue
+
     try:
-        sys.modules[_module].__class__ = ModuleCls
+        sys.modules[_module].__class__ = mod_cls
     except KeyError:
         raise ValueError(f"{_module} not found in sys.modules")
     return funk

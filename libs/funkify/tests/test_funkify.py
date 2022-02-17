@@ -62,7 +62,6 @@ def test_funkify_module_async() -> None:
 def test_funkify_no_such_module() -> None:
     with pytest.raises(ValueError):
         from . import no_such_module
-
         assert no_such_module() == 123
 
 

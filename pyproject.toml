@@ -181,6 +181,7 @@ markers = [
     "skip: skip test",
     "anyio: anyio tests",
     "aio: asyncio tests",
+    "basic: basic tests",
     "version"
 ]
 # =============================================================================

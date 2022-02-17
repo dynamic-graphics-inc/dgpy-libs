@@ -12,7 +12,7 @@ import pytest
 import aiopen as aio
 
 
-@pytest.mark.anyio
+@pytest.mark.anyio()
 async def test_serve_small_bin_file_sync(
     event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
 ) -> None:
@@ -60,7 +60,7 @@ async def test_serve_small_bin_file_sync(
     await server.wait_closed()
 
 
-@pytest.mark.anyio
+@pytest.mark.anyio()
 async def test_serve_small_bin_file(
     event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
 ) -> None:
