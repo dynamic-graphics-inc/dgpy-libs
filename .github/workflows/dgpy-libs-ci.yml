@@ -83,7 +83,7 @@ jobs:
       - name: test lager
         run: |
           cd libs/lager
-          poetry run pytest --doctest-modules tests lager
+          poetry run pytest tests lager
 
       - name: test jsonbourne
         run: |
