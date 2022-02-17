@@ -57,7 +57,7 @@ jobs:
       - name: test fmts
         run: |
           cd libs/fmts
-          poetry run pytest --doctest-modules tests listless
+          poetry run pytest --doctest-modules tests fmts
 
       - name: test xtyping
         run: |
