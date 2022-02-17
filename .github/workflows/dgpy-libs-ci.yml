@@ -69,6 +69,11 @@ jobs:
           cd libs/funkify
           poetry run pytest --cov=funkify tests
 
+      - name: test asyncify
+        run: |
+          cd libs/asyncify
+          poetry run pytest --cov=asyncify tests asyncify --doctest-modules
+
       - name: test requires
         run: |
           cd libs/requires
