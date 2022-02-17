@@ -49,6 +49,7 @@ mypy:
 ###############
 .PHONY:test
 test:
+
 	pytest tests
 
 .PHONY:testcov
