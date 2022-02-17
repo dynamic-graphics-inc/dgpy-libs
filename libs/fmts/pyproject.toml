@@ -1,6 +1,6 @@
 [project]
 name = "fmts"
-version = "0.1.0"
+version = "0.1.1"
 description = "str transformation utils"
 authors = [
     { name = "jesse", email = "jessekrubin@gmail.com" },
@@ -26,7 +26,7 @@ dev = [
 
 [tool.poetry]
 name = "fmts"
-version = "0.1.0"
+version = "0.1.1"
 description = "str transformation utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
