@@ -64,6 +64,7 @@ from shellfish.fs import (
 )
 from shellfish.process import is_win
 from shellfish.sh._dirtree import _DirTree
+from shellfish.sp import PopenArgs
 from xtyping import STDIN, AnyStr, FsPath, IterableStr, TypedDict
 
 __all__ = (
@@ -127,8 +128,6 @@ __all__ = (
 )
 
 IS_WIN: bool = is_win()
-
-PopenArgs = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
 
 class FlagMeta(type):

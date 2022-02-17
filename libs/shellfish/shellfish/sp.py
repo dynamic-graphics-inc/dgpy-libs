@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from os import PathLike
+import os
+
 from subprocess import (
     DEVNULL as DEVNULL,
     PIPE as PIPE,
@@ -13,6 +14,7 @@ from subprocess import (
 
 from xtyping import (
     IO,
+    TYPE_CHECKING,
     Any,
     FsPath,
     List,
@@ -46,9 +48,17 @@ __all__ = (
     "DEVNULL",
 )
 
-PopenArgs = Union[
-    bytes, str, Sequence[Union[str, bytes, PathLike[str], PathLike[bytes]]]
-]
+if TYPE_CHECKING:
+    PathLikeStr = os.PathLike[str]
+    PathLikeBytes = os.PathLike[bytes]
+    PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
+else:
+    PathLikeStr = os.PathLike
+    PathLikeBytes = os.PathLike
+    PathLikeStrBytes = os.PathLike
+
+
+PopenArgs = Union[bytes, str, Sequence[Union[str, bytes, PathLikeStrBytes]]]
 PopenEnv = Mapping[str, str]
 
 
