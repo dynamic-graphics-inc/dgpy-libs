@@ -9,9 +9,8 @@ import pytest
 
 from aiopen import aiopen
 
-xtyping = ">=0.5.0,<0.6.0"
 
-
+@pytest.mark.anyio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_iteration(mode: str) -> None:
     """Test iterating over lines from a file."""
@@ -42,9 +41,7 @@ async def test_simple_iteration(mode: str) -> None:
     assert file.closed
 
 
-xtyping = ">=0.5.0,<0.6.0"
-
-
+@pytest.mark.anyio()
 @pytest.mark.parametrize("mode", ["r", "r+", "a+"])
 async def test_simple_readlines(mode: str) -> None:
     """Test the readlines functionality."""
