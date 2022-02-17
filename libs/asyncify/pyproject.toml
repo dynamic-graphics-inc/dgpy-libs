@@ -58,7 +58,8 @@ filterwarnings = [
     "ignore::DeprecationWarning"
 ]
 markers = [
-    "asyncio"
+    "asyncio",
+    "anyio"
 ]
 testpaths = [
     "tests",
