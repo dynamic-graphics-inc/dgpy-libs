@@ -7,7 +7,6 @@ try:
 
     _SINKS = []
 
-
     class HttpxSink(object):
         def __init__(self, url: str, *args: Any, **kwargs: Any) -> None:
             self.url = url
@@ -22,5 +21,6 @@ try:
 
         async def await_delete_channels(self) -> None:
             await self.client.aclose()
+
 except ImportError:
     pass

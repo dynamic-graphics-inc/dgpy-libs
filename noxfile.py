@@ -91,10 +91,27 @@ def _flake(session):
     session.run("flake8", *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el])
     session.run("flake8", *[el for el in TESTS_DIRS.values() if ".DS_Store" not in el])
 
+def _flake_w_pytest(session):
+    # TODO add using the package "flake8-pytest-style"
+    session.install(
+        "flake8",
+        "flake8-print",
+        "flake8-eradicate",
+        "flake8-comprehensions",
+        "flake8-quotes",
+        "flake8-pytest-style",
+    )
+    session.run("flake8", *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el])
+    session.run("flake8", *[el for el in TESTS_DIRS.values() if ".DS_Store" not in el])
+
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def flake(session):
     _flake(session)
+
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def flake_strict(session):
+    _flake_w_pytest(session)
 
 
 def _mypy(session):

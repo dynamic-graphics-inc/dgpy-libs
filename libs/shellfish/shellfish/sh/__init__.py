@@ -1776,7 +1776,8 @@ class WIN(OSABC):
         link = str(link)
         target = str(target)
         try:
-            assert path.exists(target) and path.isdir(target)
+            assert path.exists(target), "Target does not exist: {}".format(target)
+            assert path.isdir(target), "Target is not a directory: {}".format(target)
             makedirs(path.split(link)[0], exist_ok=True)
         except Exception:
             ...
