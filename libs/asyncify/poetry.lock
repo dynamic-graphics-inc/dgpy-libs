@@ -68,7 +68,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "funkify"
-version = "0.4.2"
+version = "0.4.4"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
@@ -385,8 +385,8 @@ colorama = [
     {file = "colorama-0.4.4.tar.gz", hash = "sha256:5941b2b48a20143d2267e95b1c2a7603ce057ee39fd88e7329b0c292aa16869b"},
 ]
 funkify = [
-    {file = "funkify-0.4.2-py3-none-any.whl", hash = "sha256:ed19aa823a8cde2d2c9ca15dea0e676b13bd5583356de2aae0ab28fbf5ce5da8"},
-    {file = "funkify-0.4.2.tar.gz", hash = "sha256:47d1028b8b384bf1cc4e0e13d54c8d0322c64b4de6511c0465cb7498e24340f3"},
+    {file = "funkify-0.4.4-py3-none-any.whl", hash = "sha256:a88bd2fa83ef1587b9ae7903ae322a8bd954dbf82eaaf7d840e253be403b743c"},
+    {file = "funkify-0.4.4.tar.gz", hash = "sha256:2e6519ab06af0ee0262f921a5d71b2a6d16c6d866427ddde90259a9f840b3017"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
