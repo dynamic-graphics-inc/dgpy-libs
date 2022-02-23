@@ -18,9 +18,9 @@ async def test_asyncify() -> None:
 async def test_asyncify_funkified() -> None:
     from asyncify._anyio import asyncify
 
-    @asyncify  # type: ignore
+    @asyncify
     def add(a: float, b: float) -> float:
         return a + b
 
-    res = await add(1, 5)  # type: ignore
+    res = await add(1, 5)
     assert res == 6

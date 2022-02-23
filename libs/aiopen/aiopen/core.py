@@ -158,6 +158,19 @@ class AsyncBase(Generic[AnyStr]):
     def closed(self) -> bool:
         return self._file.closed
 
+    def detach(self) -> None:
+        # check if self._file is FileIO
+        if not isinstance(self._file, FileIO):
+            self._file.detach()
+        else:
+            raise AttributeError("detach() method is not available")
+
+    @aio_hoist
+    def peek(self, *args: Any, **kwargs: Any) -> Any:
+        if isinstance(self._file, BufferedReader):
+            return self._file.peek(*args, **kwargs)
+        raise IOError("peek() method is not available")
+
 
 # TODO: Fix generics...
 class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
@@ -167,7 +180,7 @@ class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
         return self._file.detach()
 
 
-class TextIOWrapperAsync(AsyncBaseDetachable):
+class TextIOWrapperAsync(AsyncBase[str]):
     """Async version of io.TextIOWrapper"""
 
     _file: TextIOWrapper

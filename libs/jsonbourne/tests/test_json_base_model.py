@@ -1,50 +1,52 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
 
-from typing import List
+from typing import Any, List, Union
 
 import pytest
 
 from jsonbourne import JSON, JsonObj
+from jsonbourne.pydantic import JsonBaseModel
 
 pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 
+class JsonSubObj(JsonBaseModel):
+    herm: int
+
+    def to_dict(self) -> dict[str, int]:
+        return self.dict()
+
+    def to_json(self, *args: Any, **kwargs: Any) -> str:
+        return self.json()
+
+    @classmethod
+    def from_json(cls, json_string: Union[str, bytes]) -> JsonSubObj:
+        d = JSON.loads(json_string)
+        return cls(**d)
+
+
+class JsonObjModel(JsonBaseModel):
+    a: int
+    b: int
+    c: str
+    d: JsonObj
+    e: JsonSubObj
+
+    #
+    @property
+    def a_property(self) -> str:
+        return "prop_value"
+
+    def to_json(self, *args: Any, **kwargs: Any) -> str:
+        return self.json()
+
+    @classmethod
+    def from_json(cls, json_string: Union[str, bytes]) -> "JsonObjModel":
+        return cls(**JSON.loads(json_string))
+
+
 def test_json_base_model_w_prop() -> None:
-    from jsonbourne.pydantic import JsonBaseModel
-
-    class JsonSubObj(JsonBaseModel):
-        herm: int
-
-        def to_dict(self):
-            return self.dict()
-
-        def to_json(self, *args, **kwargs):
-            return self.json()
-
-        @classmethod
-        def from_json(cls, json_string: str):
-            d = JSON.loads(json_string)
-            return cls(**d)
-
-    class JsonObjModel(JsonBaseModel):
-        a: int
-        b: int
-        c: str
-        d: JsonObj
-        e: JsonSubObj
-
-        #
-        @property
-        def a_property(self) -> str:
-            return "prop_value"
-
-        def to_json(self, *args, **kwargs):
-            return self.json()
-
-        @classmethod
-        def from_json(cls, json_string: str):
-            return cls(**JSON.loads(json_string))
-
     thing_w_prop = JsonObjModel(
         **{
             "a": 1,
@@ -75,5 +77,5 @@ def test_json_base_model_root_type() -> None:
     assert JsonModelHasRootType.__custom_root_type__
     obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
-    obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore
+    obj2 = JsonModelHasRootType(["a", "b", "c"])
     assert obj == obj2

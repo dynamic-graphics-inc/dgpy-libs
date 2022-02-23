@@ -2,6 +2,6 @@
 import funkify
 
 
-@funkify
+@funkify  # type: ignore[operator]
 def main() -> int:
     return 123

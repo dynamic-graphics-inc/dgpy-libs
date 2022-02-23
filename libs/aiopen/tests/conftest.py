@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from typing import Any
+
 import pytest
 
 _trio_backend = pytest.param(
@@ -12,5 +14,5 @@ _trio_backend = pytest.param(
         pytest.param(("asyncio", {"use_uvloop": False}), id="asyncio"),
     ]
 )
-def anyio_backend(request):
+def anyio_backend(request: Any) -> Any:
     return request.param

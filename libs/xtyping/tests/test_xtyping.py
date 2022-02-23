@@ -84,7 +84,7 @@ def _test_module_all_tuple(
             raise e
 
 
-def test_root_has_everything():
+def test_root_has_everything() -> None:
     xtyping_all_set = set(xtyping.__all__)
     for el in xtyping.__all_typing__:
         assert el in xtyping_all_set
@@ -103,7 +103,7 @@ def test_xtypting_all_list() -> None:
     _test_module_all_tuple("xtyping.__all__", xtyping.__all__)
 
 
-def test_xtyping_shed_all_members():
+def test_xtyping_shed_all_members() -> None:
     from xtyping import __all_shed__, __all_typing__, __all_typing_extensions__, shed
 
     builtin_members = {
@@ -138,8 +138,8 @@ def test_xtyping_shed_all_members():
     )
 
 
-def test_all_typing_extensions_reexported():
-    __xtyping_all__ = xtyping.__all__  # type: ignore
+def test_all_typing_extensions_reexported() -> None:
+    __xtyping_all__ = xtyping.__all__
     xtyping_all_set = set(__xtyping_all__)
     __typing_extensions_all__ = xtyping.__all_typing_extensions__
     for el in [

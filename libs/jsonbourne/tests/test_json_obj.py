@@ -32,7 +32,7 @@ def test_dot_access_nested() -> None:
 
 class Thingy(JsonObj):
     @property
-    def herm(self):
+    def herm(self) -> str:
         return "hermproperty"
 
 
@@ -106,7 +106,7 @@ def test_json_obj_property() -> None:
 
 
 def test_protected_attrs_slash_members() -> None:
-    j = JsonObj()
+    j: JsonObj = JsonObj()
     j.key = "value"
     j["12"] = "twelve"
     with pytest.raises(ValueError):
@@ -392,7 +392,7 @@ def test_filter_none() -> None:
             "is_false": False,
         },
     }
-    result = JsonObj(t1).filter_none()
+    result: JsonObj = JsonObj(t1).filter_none()
     assert result == JsonObj(
         **{
             "falsey_dict": {},

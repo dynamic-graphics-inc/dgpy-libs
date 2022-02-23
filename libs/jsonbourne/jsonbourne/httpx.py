@@ -16,7 +16,7 @@ __all__ = (
 
 
 def _JSON(self: Response, **kwargs: Any) -> Any:
-    return JSON(self.json())  # type: ignore
+    return JSON(self.json())
 
 
 Response.JSON = _JSON

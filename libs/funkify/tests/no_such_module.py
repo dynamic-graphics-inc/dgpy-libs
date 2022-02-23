@@ -6,4 +6,4 @@ def main() -> int:
     return 123
 
 
-funkify(main, key="no_such_module")
+funkify(main, key="no_such_module")  # type: ignore[operator]
