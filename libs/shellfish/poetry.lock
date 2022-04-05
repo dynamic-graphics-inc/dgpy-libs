@@ -8,7 +8,7 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [[package]]
 name = "asyncify"
@@ -20,7 +20,7 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [[package]]
 name = "atomicwrites"
@@ -105,7 +105,7 @@ optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-xtyping = ">=0.5.0"
+xtyping = ">=0.5.0,<0.6.0"
 
 [package.extras]
 pydantic = ["pydantic (>=1.8.2)"]
@@ -277,7 +277,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "72d09987854f0979286155e6a2042a08000dee4ce31ad72b706760d375842e3a"
+content-hash = "cc35ec0a59c6cde1e034963afc52bc697d6c84942e28d200951bdd1a704ee830"
 
 [metadata.files]
 aiopen = [

@@ -11,7 +11,7 @@ from shellfish import fs
 
 _T = TypeVar("_T")
 _K = TypeVar("_K")
-
+IS_WIN = os.name == "nt"
 PWD = path.dirname(path.abspath(__file__))
 REPO_ROOT = Path(PWD)
 print(REPO_ROOT)
@@ -112,7 +112,7 @@ def main():
         print("poetry updating")
         run(
             args=["poetry", "update", "--lock"],
-            shell=True,
+            shell=IS_WIN,
         )
         # if el not in DONT_PUBLISH:
         #     run(
