@@ -127,6 +127,7 @@ def flake_strict(session):
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
+    session.run('mypy', '--version')
     # session.run(
     #     'mypy',
     #     '--show-error-codes',
