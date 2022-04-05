@@ -724,7 +724,7 @@ tests = ["codecov", "scikit-build", "cmake", "ninja", "pybind11", "pytest", "pyt
 
 [[package]]
 name = "xtyping"
-version = "0.5.2"
+version = "0.6.1"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false

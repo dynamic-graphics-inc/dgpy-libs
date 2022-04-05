@@ -169,14 +169,14 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "xtyping"
-version = "0.6.0"
+version = "0.6.1"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
 python-versions = ">=3.6.2,<4.0.0"
 
 [package.dependencies]
-typing-extensions = ">=4.1.1,<5.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [[package]]
 name = "zipp"
@@ -362,8 +362,8 @@ typing-extensions = [
     {file = "typing_extensions-4.1.1.tar.gz", hash = "sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42"},
 ]
 xtyping = [
-    {file = "xtyping-0.6.0-py3-none-any.whl", hash = "sha256:6a7713ec5d48200ffb19f9e3a53d576598e289714495fb0455a1bf4b10dc54cd"},
-    {file = "xtyping-0.6.0.tar.gz", hash = "sha256:31d9ea649800665f632498da819b368cd34d0aa92f9d74fb1aab89aba1b45ecb"},
+    {file = "xtyping-0.6.1-py3-none-any.whl", hash = "sha256:38ce4e68d536d3a6e627926280a9737e7ee427623f92a42ad009a8befbe6a852"},
+    {file = "xtyping-0.6.1.tar.gz", hash = "sha256:1b426de8becf94602058947716ad3f9951625a54eefbc3a4d6e41d6563dd172c"},
 ]
 zipp = [
     {file = "zipp-3.8.0-py3-none-any.whl", hash = "sha256:c4f6e5bbf48e74f7a38e7cc5b0480ff42b0ae5178957d564d18932525d5cf099"},
