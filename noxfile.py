@@ -197,7 +197,7 @@ def homepage(session):
         print("____________________________")
         print("Package: {} ~ Dirpath: {}".format(libname, dirpath))
         poetry_metadata = data["tool"]["poetry"]
-        lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/{}".format(
+        lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/{}".format(
             libname
         )
         data["tool"]["poetry"] = poetry_metadata

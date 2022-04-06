@@ -5,7 +5,7 @@ description = "xtyping = typing + typing_extensions"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/xtyping"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/xtyping"
 packages = [
     { include = "xtyping", from = "." },
 ]
