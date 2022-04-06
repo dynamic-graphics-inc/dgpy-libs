@@ -5,7 +5,7 @@ description = "Async file io"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/aiopen"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
 packages = [
     { include = "aiopen", from = "." },
 ]

@@ -5,7 +5,7 @@ description = "EZ-PZ logging based on loguru"
 authors = ["jesse rubin <jesse@dgi.com>"]
 license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/master/libs/lager"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/lager"
 packages = [
     { include = "lager", from = "." }
 ]

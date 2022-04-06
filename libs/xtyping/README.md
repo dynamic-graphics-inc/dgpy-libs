@@ -1,5 +1,5 @@
 <a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
-<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/master/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
+<img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
 
 # xtyping
@@ -147,8 +147,8 @@ print(
     xt.no_type_check_decorator  ~  typing.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fbb2a9d4c10>
     xt.overload  ~  typing.overload  ~  <function overload at 0x7fbb2a9d4d30>
     xt.__all_typing__  ~  typing.__all_typing__  ~  ['AbstractSet', 'Any', 'AnyStr', 'AsyncContextManager', 'AsyncGenerator', 'AsyncIterable', 'AsyncIterator', 'Awaitable', 'ByteString', 'Callable', 'ChainMap', 'ClassVar', 'Collection', 'Container', 'ContextManager', 'Coroutine', 'Counter', 'DefaultDict', 'Deque', 'Dict', 'FrozenSet', 'Generator', 'Generic', 'Hashable', 'IO', 'ItemsView', 'Iterable', 'Iterator', 'KeysView', 'List', 'Mapping', 'MappingView', 'MutableMapping', 'MutableSequence', 'MutableSet', 'NamedTuple', 'NewType', 'Optional', 'Reversible', 'Sequence', 'Set', 'Sized', 'SupportsAbs', 'SupportsBytes', 'SupportsComplex', 'SupportsFloat', 'SupportsInt', 'SupportsRound', 'TYPE_CHECKING', 'Text', 'Tuple', 'Type', 'TypeVar', 'Union', 'ValuesView', 'cast', 'get_type_hints', 'no_type_check', 'no_type_check_decorator', 'overload', '__all_typing__']
-    
-    
+
+
     ------------------------
     from `typing_extensions`
     ------------------------
@@ -213,8 +213,8 @@ print(
     xt.no_type_check_decorator  ~  typing_extensions.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fbb2a9d4c10>
     xt.overload  ~  typing_extensions.overload  ~  <function overload at 0x7fbb2a9d4d30>
     xt.__all_typing__  ~  typing_extensions.__all_typing__  ~  ['AbstractSet', 'Any', 'AnyStr', 'AsyncContextManager', 'AsyncGenerator', 'AsyncIterable', 'AsyncIterator', 'Awaitable', 'ByteString', 'Callable', 'ChainMap', 'ClassVar', 'Collection', 'Container', 'ContextManager', 'Coroutine', 'Counter', 'DefaultDict', 'Deque', 'Dict', 'FrozenSet', 'Generator', 'Generic', 'Hashable', 'IO', 'ItemsView', 'Iterable', 'Iterator', 'KeysView', 'List', 'Mapping', 'MappingView', 'MutableMapping', 'MutableSequence', 'MutableSet', 'NamedTuple', 'NewType', 'Optional', 'Reversible', 'Sequence', 'Set', 'Sized', 'SupportsAbs', 'SupportsBytes', 'SupportsComplex', 'SupportsFloat', 'SupportsInt', 'SupportsRound', 'TYPE_CHECKING', 'Text', 'Tuple', 'Type', 'TypeVar', 'Union', 'ValuesView', 'cast', 'get_type_hints', 'no_type_check', 'no_type_check_decorator', 'overload', '__all_typing__']
-    
-    
+
+
     -------------------
     from `xtyping.shed`
     -------------------
@@ -323,6 +323,6 @@ print(
     xt._T  ~  xtyping.shed._T  ~  ~_T
     xt.null  ~  xtyping.shed.null  ~  <class 'NoneType'>
     xt.__all_shed__  ~  xtyping.shed.__all_shed__  ~  ['AF', 'AnyCallable', 'AnyFunction', 'AnyIterable', 'AnyIterator', 'ArrShape', 'ArrayShape', 'Bytes', 'CmdArgsType', 'Decimal', 'DT', 'DictAny', 'DictAnyAny', 'DictFloat', 'DictFloatFloat', 'DictInt', 'DictIntInt', 'DictNumber', 'DictNumberNumber', 'DictStr', 'DictStrAny', 'DictStrInt', 'DictStrStr', 'El', 'Element', 'EnvMap', 'EnvType', 'F', 'FN', 'Flint', 'FsPath', 'FsPathLike', 'FuncType', 'HrTime', 'IO', 'IntStr', 'IterableAny', 'IterableFloat', 'IterableInt', 'IterableNumber', 'IterableStr', 'IterableT', 'JsonArrT', 'JsonDictT', 'JsonListT', 'JsonObjT', 'KT', 'KeyT', 'KeyType', 'ListAny', 'ListFloat', 'ListInt', 'ListListStr', 'ListNumber', 'ListStr', 'ListT', 'N', 'NoneBytes', 'NoneStr', 'NoneStrBytes', 'NoneType', 'Null', 'Number', 'OptFloat', 'OptInt', 'OptStr', 'OptionalFloat', 'OptionalInt', 'OptionalStr', 'Path', 'PathLike', 'R', 'RT', 'ReturnT', 'ReturnType', 'STDIN', 'STDIO', 'SetAny', 'SetFloat', 'SetInt', 'SetNumber', 'SetStr', 'SetT', 'ShapeType', 'StrBytes', 'StrEnum', 'StrIntFloat', 'StringEnum', 'T', 'T_co', 'T_contra', 'TupleStrStr', 'TupleStrs', 'Txt', 'VT', 'VT_co', 'V_co', 'ValT', 'ValType', '_DT', '_R', '_RT', '_T', 'null', '__all_shed__']
-    
-    
+
+
 
