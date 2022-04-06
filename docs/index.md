@@ -26,14 +26,17 @@ Dynamic Graphics python libraries, home of:
 ## Libs
 
 ```
-libs
+libs/
 ├── aiopen
 ├── asyncify
+├── fmts
 ├── funkify
 ├── h5
 ├── jsonbourne
 ├── lager
+├── listless
 ├── requires
+├── shellfish
 └── xtyping
 ```
 
