@@ -178,7 +178,7 @@ jobs:
       - name: install docs deps
         run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings
       - name: mkdocs build
-        run: poetry run gh-deploy --force
+        run: poetry run mkdocs gh-deploy --force
       # - run: pip install mkdocs-material mkdocs-jupyter mkdocstrings
       # - run: mkdocs build
       # - run: mkdocs gh-deploy --force
