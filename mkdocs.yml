@@ -4,14 +4,14 @@ site_dir: public
 site_url: ''
 repo_url: 'https://github.com/dynamic-graphics-inc/dgpy-libs/'
 repo_name: 'GitHub'
-site_author: 'Sheldon'
+site_author: 'Sheldon & jesse'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
-dev_addr: '0.0.0.0:8000'
 
 nav:
-  - Home: './index.md'
+  # - Home: './index.md'
   - Libs:
+      - Home: './index.md'
       - aiopen: './libs/aiopen/README.ipynb'
       - asyncify: './libs/asyncify/README.ipynb'
       - funkify: './libs/funkify/README.ipynb'
@@ -21,7 +21,7 @@ nav:
       - requires: './libs/requires/README.ipynb'
       - xtyping: './libs/xtyping/README.ipynb'
   - API:
-      - aiopen: './libs/aiopen/api/aiopen.md'
+      - aiopen: './libs/aiopen/aiopen.api.md'
   - Notebooks:
       - Cache Money: './notebooks/cache_money.ipynb'
       - Filter None: './notebooks/filter_none.ipynb'
@@ -39,15 +39,26 @@ theme:
     text: 'Roboto'
     code: 'Roboto Mono'
   palette:
-    primary: 'deep-purple'
-    accent: 'teal'
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: teal
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
   features:
-    - instant
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.expand
     - navigation.instant
     - navigation.top
-
 
 markdown_extensions:
   - pymdownx.escapeall
@@ -62,10 +73,10 @@ markdown_extensions:
       permalink: ⚓︎
 
 plugins:
-  - search
+  - search:
+      lang: en
   - mkdocs-jupyter:
       execute: False
-
   ### MKDOCSTRINGS ###
   - mkdocstrings:
       default_handler: python

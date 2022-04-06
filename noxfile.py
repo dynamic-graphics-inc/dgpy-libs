@@ -304,22 +304,20 @@ def update_metadata(session):
                 f.write(s)
 
 
+def _install_mkdocs_deps(session):
+    session.install("mkdocs")
+    session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings")
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs_serve(session):
-    session.install("mkdocs")
-    session.install("mkdocs-material")
-    session.install("mkdocs-jupyter")
-    session.install("mkdocstrings")
+    _install_mkdocs_deps(session)
     session.run("mkdocs", "serve")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs(session):
-    session.install("mkdocs")
-    session.install("mkdocs-material")
-    session.install("mkdocs-jupyter")
+    _install_mkdocs_deps(session)
     session.run("mkdocs", "build")
-
 
 @nox.session(reuse_venv=True)
 def freeze(session):

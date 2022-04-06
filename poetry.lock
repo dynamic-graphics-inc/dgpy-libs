@@ -443,7 +443,7 @@ zipp = {version = "*", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "pip-tools"
-version = "6.5.1"
+version = "6.6.0"
 description = "pip-tools keeps your pinned dependencies fresh."
 category = "dev"
 optional = false
@@ -1020,8 +1020,8 @@ pep517 = [
     {file = "pep517-0.12.0.tar.gz", hash = "sha256:931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"},
 ]
 pip-tools = [
-    {file = "pip-tools-6.5.1.tar.gz", hash = "sha256:80f562aa699fc76a424539697e0bef41e490a050e57a6a21468531981a9d419e"},
-    {file = "pip_tools-6.5.1-py3-none-any.whl", hash = "sha256:80f1cfc7156e4a4465b1a46a6bb3599587909537db1a149cf3a6b73eed979ee4"},
+    {file = "pip-tools-6.6.0.tar.gz", hash = "sha256:98aa24004440a1c0489d71a567a4e8afdf23c7782bff483d1219881e7302de83"},
+    {file = "pip_tools-6.6.0-py3-none-any.whl", hash = "sha256:66318bc2e884b61fafa1cb2cf01b35fdd779ab9ce82cc1bce277adb8cf3ab845"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.1-py3-none-any.whl", hash = "sha256:bcae7cab893c2d310a711b70b24efb93334febe65f8de776ee320b517471e227"},

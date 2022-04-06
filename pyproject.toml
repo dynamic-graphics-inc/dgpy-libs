@@ -53,6 +53,7 @@ pytest-asyncio = "^0.18.1"
 pytest-cov = "^2.12.1"
 python-rapidjson = "^1.6"
 xdoctest = "^0.15.10"
+
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
 fmts = { path = "./libs/fmts/", develop = true }
