@@ -160,6 +160,7 @@ jobs:
 #          name: pypi_files
 #          path: dist
   mkdocs:
+    needs: [lint, test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
