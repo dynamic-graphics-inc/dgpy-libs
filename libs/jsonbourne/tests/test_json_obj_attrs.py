@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-from typing import Dict
+# type: ignore
+from typing import Dict, Union
 
 import pytest
 
@@ -17,11 +18,11 @@ except ModuleNotFoundError:
 
 def test_jsonobj_property_attrs() -> None:
     @attrs(auto_attribs=True)
-    class ThingyWithPropertyAndAttrs(JsonObj):
+    class ThingyWithPropertyAndAttrs(JsonObj[Union[int, str, Dict[str, str]]]):
         a: int
         b: int
         c: str
-        d: Dict[str, str]
+        d: JsonObj[str]
 
         @property
         def a_property(self) -> str:
@@ -84,7 +85,7 @@ def test_jsonobj_property_attrs_str() -> None:
         stuff: dict
 
         @property
-        def a_property(self):
+        def a_property(self) -> str:
             return "prop_value"
 
     thing_w_prop = ThingyWithPropertyAndAttrsStrTests(
@@ -95,7 +96,7 @@ def test_jsonobj_property_attrs_str() -> None:
             "stuff": {"herm_" + str(i): i for i in range(10)},
             "d": {
                 "nested": "nestedval",
-                **{"ok_" + str(i): i for i in range(20)},
+                **{"ok_{}".format(str(i)): i for i in range(20)},
             },
         }
     )

@@ -20,6 +20,7 @@ from typing import (
     Iterator,
     KeysView,
     List,
+    Mapping,
     MutableMapping,
     Optional,
     Set,
@@ -27,6 +28,7 @@ from typing import (
     Type,
     TypeVar,
     Union,
+    cast,
     overload,
 )
 
@@ -197,7 +199,26 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     _data: Dict[_KT, _VT]
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+    @overload
+    def __init__(
+        self,
+        *args: Mapping[_KT, _VT],
+    ) -> None:
+        ...
+
+    @overload
+    def __init__(
+        self,
+        *args: Mapping[_KT, _VT],
+        **kwargs: _VT,
+    ) -> None:
+        ...
+
+    def __init__(
+        self,
+        *args: Any,
+        **kwargs: _VT,
+    ) -> None:
         """Use the object dict"""
         _data = dict(*args, **kwargs)
         super().__setattr__("_data", _data)
@@ -476,13 +497,16 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         if recursive:
             return JsonObj(
-                {
-                    k: v
-                    if not isinstance(v, (dict, JsonObj))
-                    else JsonObj(v).filter_none(recursive=True)
-                    for k, v in self.items()
-                    if v is not None
-                }
+                cast(
+                    Dict[str, _VT],
+                    {
+                        k: v
+                        if not isinstance(v, (dict, JsonObj))
+                        else JsonObj(v).filter_none(recursive=True)
+                        for k, v in self.items()
+                        if v is not None
+                    },
+                )
             )
         return JsonObj({k: v for k, v in self.items() if v is not None})
 
@@ -547,13 +571,16 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         if recursive:
             return JsonObj(
-                {
-                    k: v
-                    if not isinstance(v, (dict, JsonObj))
-                    else JsonObj(v).filter_false(recursive=True)
-                    for k, v in self.items()
-                    if v
-                }
+                cast(
+                    Dict[str, _VT],
+                    {
+                        k: v
+                        if not isinstance(v, (dict, JsonObj))
+                        else JsonObj(v).filter_false(recursive=True)
+                        for k, v in self.items()
+                        if v
+                    },
+                )
             )
         return JsonObj({k: v for k, v in self.items() if v})
 
@@ -1068,6 +1095,9 @@ class JSON(metaclass=JSONMeta):
     null = null
     Null = Null
     JSONDecodeError = JSONDecodeError
+
+    def __new__(cls, *args: Any, **kwargs: Any) -> Any:
+        return cls.__call__(*args, **kwargs)
 
     @staticmethod
     def stringify(

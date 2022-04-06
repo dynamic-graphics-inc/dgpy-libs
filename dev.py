@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 from graphlib import TopologicalSorter
 from os import chdir, listdir, path
 from pathlib import Path
@@ -9,9 +11,10 @@ from shellfish import fs
 
 _T = TypeVar("_T")
 _K = TypeVar("_K")
-
+IS_WIN = os.name == "nt"
 PWD = path.dirname(path.abspath(__file__))
 REPO_ROOT = Path(PWD)
+print(REPO_ROOT)
 LIBS_DIR = REPO_ROOT / "libs"
 
 LIBS = (
@@ -57,7 +60,7 @@ DONT_PUBLISH = {
 ts = TopologicalSorter(LIBS_GRAPH)
 static_order = ts.static_order()
 
-assert sorted(tuple(set(LIBS))) == listdir(LIBS_DIR)
+assert sorted(tuple(set(LIBS))) == sorted(listdir(LIBS_DIR))
 
 
 def check_encoding():
@@ -104,16 +107,18 @@ def main():
         chdir(LIBS_DIR / el)
         from shutil import rmtree
 
-        rmtree("dist")
+        if os.path.exists("dist"):
+            rmtree("dist")
+        print("poetry updating")
         run(
             args=["poetry", "update", "--lock"],
-            shell=True,
+            shell=IS_WIN,
         )
-        if el not in DONT_PUBLISH:
-            run(
-                args=["poetry", "version", "patch"],
-                shell=True,
-            )
+        # if el not in DONT_PUBLISH:
+        #     run(
+        #         args=["poetry", "version", "patch"],
+        #         shell=True,
+        #     )
         chdir(REPO_ROOT)
         run(args=["nox", "-s", "update_metadata"], shell=True, capture_output=True)
         run(args=["make", "fmt"], shell=True)

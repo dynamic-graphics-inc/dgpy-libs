@@ -6,7 +6,7 @@ from decimal import Decimal
 
 import pytest
 
-from xtyping import NamedTuple
+from xtyping import NamedTuple, Tuple
 
 try:
     from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
@@ -27,7 +27,7 @@ class Point3dDumpable(NamedTuple):
     y: int
     z: int
 
-    def __dumpable__(self):
+    def __dumpable__(self) -> Tuple[int, ...]:
         return tuple(self)
 
 
@@ -36,7 +36,7 @@ class Point3dJsonInterface(NamedTuple):
     y: int
     z: int
 
-    def __json_interface__(self):
+    def __json_interface__(self) -> Tuple[int, ...]:
         return tuple(self)
 
 
@@ -46,7 +46,7 @@ class Point3dJsonInterfaceProperty(NamedTuple):
     z: int
 
     @property
-    def __json_interface__(self):
+    def __json_interface__(self) -> Tuple[int, ...]:
         return tuple(self)
 
 

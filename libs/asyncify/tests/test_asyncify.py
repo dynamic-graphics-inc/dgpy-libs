@@ -22,5 +22,5 @@ async def test_asyncify_funkified() -> None:
     def add(a: float, b: float) -> float:
         return a + b
 
-    res = await add(1, 5)  # type: ignore
+    res = await add(1, 5)
     assert res == 6

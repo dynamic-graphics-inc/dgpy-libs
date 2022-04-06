@@ -132,3 +132,4 @@ package-lock.json
 .pdm.toml 
 __pypackages__ 
 pdm.lock 
+.vscode/

@@ -127,6 +127,7 @@ def flake_strict(session):
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
+    session.run('mypy', '--version')
     # session.run(
     #     'mypy',
     #     '--show-error-codes',
@@ -146,6 +147,7 @@ def _mypy(session):
     #         path.join('libs', lib, 'tests')
     #         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
     #         )
+
     session.run(
         "mypy",
         "--show-error-codes",
@@ -154,6 +156,20 @@ def _mypy(session):
         "./pyproject.toml",
         *[el for el in SOURCE_DIRS.values()],
     )
+
+    for lib in {
+        el for el in LIBS if el not in {"aiopen", "shellfish", "jsonbourne", "requires"}
+    }:
+
+        session.run(
+            "mypy",
+            "--show-error-codes",
+            "--config-file",
+            "./pyproject.toml",
+            *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el],
+            path.join("libs", lib, "tests")
+            # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
+        )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

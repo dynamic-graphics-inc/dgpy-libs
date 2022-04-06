@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.1.1"
+version = "0.1.2"
 description = "shellfish ~ shell & file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -33,11 +33,11 @@ asyncify = ">=0.7,<0.10"
 funkify = "^0.4.0"
 jsonbourne = ">=0.20.3"
 listless = ">=0.1.0"
-xtyping = ">=0.5.0,<0.6.0"
+xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
-pytest-asyncio = "^0.17.2"
+pytest-asyncio = "^0.18.1"
 pytest-cov = "^2.12.1"
 
 [build-system]

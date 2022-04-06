@@ -3,6 +3,8 @@ from os import path
 from pprint import pformat
 from typing import Tuple
 
+import typing_extensions
+
 import xtyping
 
 
@@ -84,7 +86,7 @@ def _test_module_all_tuple(
             raise e
 
 
-def test_root_has_everything():
+def test_root_has_everything() -> None:
     xtyping_all_set = set(xtyping.__all__)
     for el in xtyping.__all_typing__:
         assert el in xtyping_all_set
@@ -92,6 +94,30 @@ def test_root_has_everything():
         assert el in xtyping_all_set
     for el in xtyping.__all_shed__:
         assert el in xtyping_all_set
+
+
+def test_xtyping_has_all_typing_extensions_members():
+    all_typing = set(xtyping.__all_typing__)
+    typing_extensions_all_list = list(typing_extensions.__all__)  # type: ignore[attr-defined]
+    _typing_extensions_members = (
+        set(list(typing_extensions_all_list) + list(xtyping.__all_typing_extensions__))
+        - all_typing
+        - set(xtyping.__all_typing_extensions_future__)
+    )
+    _xtyping_all_set = set(xtyping.__all_typing_extensions__) - all_typing
+    assert (
+        _xtyping_all_set == _typing_extensions_members
+    ), "xtyping.__all_typing_extensions__ is missing: {} \n SHOULD BE: \n__all_typing_extensions__ = {}".format(
+        tuple(sorted(set(_typing_extensions_members - _xtyping_all_set))),
+        tuple(
+            sorted(
+                set(
+                    list(_xtyping_all_set)
+                    + list(_typing_extensions_members - _xtyping_all_set)
+                )
+            )
+        ),
+    )
 
 
 def test_xtypting_all_list() -> None:
@@ -103,7 +129,7 @@ def test_xtypting_all_list() -> None:
     _test_module_all_tuple("xtyping.__all__", xtyping.__all__)
 
 
-def test_xtyping_shed_all_members():
+def test_xtyping_shed_all_members() -> None:
     from xtyping import __all_shed__, __all_typing__, __all_typing_extensions__, shed
 
     builtin_members = {
@@ -138,8 +164,8 @@ def test_xtyping_shed_all_members():
     )
 
 
-def test_all_typing_extensions_reexported():
-    __xtyping_all__ = xtyping.__all__  # type: ignore
+def test_all_typing_extensions_reexported() -> None:
+    __xtyping_all__ = xtyping.__all__
     xtyping_all_set = set(__xtyping_all__)
     __typing_extensions_all__ = xtyping.__all_typing_extensions__
     for el in [

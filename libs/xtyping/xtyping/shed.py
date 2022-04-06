@@ -128,6 +128,20 @@ __all_typing_extensions__: Tuple[str, ...] = (
     "runtime_checkable",
 )
 
+__all_typing_extensions_future__: Tuple[str, ...] = (
+    "LiteralString",
+    "Never",
+    "NotRequired",
+    "Required",
+    "Self",
+    "TypeVarTuple",
+    "Unpack",
+    "assert_never",
+    "dataclass_transform",
+    "is_typeddict",
+    "reveal_type",
+)
+
 #############
 ## Aliases ##
 #############
@@ -588,6 +602,7 @@ __all__ = (
     "__all_shed__",
     "__all_typing__",
     "__all_typing_extensions__",
+    "__all_typing_extensions_future__",
     "null",
 )
 __all_shed__ = __all__

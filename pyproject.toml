@@ -43,15 +43,15 @@ black = "^22.1.0"
 flake8 = "^4.0.1"
 h5py = "^3.4.0"
 isort = "^5.7.0"
-mypy = "^0.931"
+mypy = "^0.942"
 nox = "^2022.1.7"
 orjson = "^3.6.3"
 pip-tools = "^6.4.0"
 pydantic = "^1.8.2"
 pytest = "^6.2.4"
-pytest-asyncio = "^0.17.2"
+pytest-asyncio = "^0.18.1"
 pytest-cov = "^2.12.1"
-python-rapidjson = "^1.4"
+python-rapidjson = "^1.6"
 xdoctest = "^0.15.10"
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
@@ -213,6 +213,14 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_missing_imports = true
+check_untyped_defs = true
+disallow_untyped_decorators = false
+disallow_any_generics = false
+disallow_untyped_defs = false
 
 
 

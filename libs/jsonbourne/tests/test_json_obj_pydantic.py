@@ -17,7 +17,6 @@ try:
         b: int
         c: str
 
-        #
         @property
         def a_property(self) -> str:
             return "prop_value"
@@ -36,7 +35,7 @@ try:
             return self.a
 
         @aprop.setter
-        def aprop(self, value):
+        def aprop(self, value: int) -> None:
             self.a = value
 
         class Config:
