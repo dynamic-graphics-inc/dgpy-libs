@@ -23,7 +23,10 @@ function main(){
         echo "$i"
         # thingy=$(pypi_versions_obj $i)
         # echo $thingy
-        pypi_versions_obj "$i" > "temp/$i.json"
+        vobj=$(pip index versions ${pkgname} 2>/dev/null | grep -i available | cut -d' ' -f 3- | jq -R "split(\", \") | {\"$i\": .}")
+        echo $vobj
+        echo $vobj > temp/$i.json
+        # pypi_versions_obj "$i" > "temp/$i.json"
     done;
     # wait;
     echo "Pkg versions downloaded!"

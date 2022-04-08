@@ -1,10 +1,10 @@
 {
-  "aiopen": "0.5.2",
+  "aiopen": "0.5.3",
   "asyncify": "0.9.0",
   "fmts": "0.1.1",
   "funkify": "0.4.4",
   "h5": "0.5.2",
-  "jsonbourne": "0.21.2",
+  "jsonbourne": "0.21.3",
   "lager": "0.16.2",
   "listless": "0.1.1",
   "requires": "0.10.2",
