@@ -1,6 +1,6 @@
 [[package]]
 name = "aiopen"
-version = "0.5.3"
+version = "0.5.4"
 description = "Async file io"
 category = "main"
 optional = false
@@ -273,7 +273,7 @@ plugins = ["setuptools"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.2"
+version = "0.21.3"
 description = "EZPZ JSON"
 category = "main"
 optional = false

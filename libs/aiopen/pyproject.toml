@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiopen"
-version = "0.5.3"
+version = "0.5.4"
 description = "Async file io"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
