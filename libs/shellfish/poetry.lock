@@ -1,6 +1,6 @@
 [[package]]
 name = "aiopen"
-version = "0.5.2"
+version = "0.5.3"
 description = "Async file io"
 category = "main"
 optional = false
@@ -8,7 +8,7 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 funkify = ">=0.4.0,<0.5.0"
-xtyping = ">=0.5.0,<0.6.0"
+xtyping = ">=0.5.0"
 
 [[package]]
 name = "asyncify"
@@ -98,14 +98,14 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.2"
+version = "0.21.3"
 description = "EZPZ JSON"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-xtyping = ">=0.5.0,<0.6.0"
+xtyping = ">=0.5.0"
 
 [package.extras]
 pydantic = ["pydantic (>=1.8.2)"]
@@ -281,8 +281,8 @@ content-hash = "cc35ec0a59c6cde1e034963afc52bc697d6c84942e28d200951bdd1a704ee830
 
 [metadata.files]
 aiopen = [
-    {file = "aiopen-0.5.2-py3-none-any.whl", hash = "sha256:167ef73468851c03a6deba1a519ce60d7297ff807f004b16f949e0dcd9552be8"},
-    {file = "aiopen-0.5.2.tar.gz", hash = "sha256:5727ff8f475445f4a67807f0d830def7a2c99bf250ecaa6e0d7451757f723e5f"},
+    {file = "aiopen-0.5.3-py3-none-any.whl", hash = "sha256:0f7a5a85ce84cb518b150f3186671499e2178cd6611366ba4612578865ca055c"},
+    {file = "aiopen-0.5.3.tar.gz", hash = "sha256:b45c060a9c1226480dcc1c703e0e00a2a547e090115f9cddf7d76f286ef99828"},
 ]
 asyncify = [
     {file = "asyncify-0.9.0-py3-none-any.whl", hash = "sha256:2f0b86a3229ab4afd3209d8b27dbcae2f19d154d366a1783ade47898336b9f9e"},
@@ -356,8 +356,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.21.2-py3-none-any.whl", hash = "sha256:796d2a30249bdc9b2049e4d35717b035ebc502aee9d73c9847c7519e8bab6072"},
-    {file = "jsonbourne-0.21.2.tar.gz", hash = "sha256:16795feb2cebaa75631c21970f0726c8c5d5472ef2fe657a49c341d43af30da5"},
+    {file = "jsonbourne-0.21.3-py3-none-any.whl", hash = "sha256:4958bce4cff1149382da2a9d65f0be198565da3db28a25591f02f64383e0d168"},
+    {file = "jsonbourne-0.21.3.tar.gz", hash = "sha256:d6c6d9d2211599a3d3fb8066da501b31966d65b419ae1b8b8906a2d3fc5ffd4c"},
 ]
 listless = [
     {file = "listless-0.1.1-py3-none-any.whl", hash = "sha256:a6b570bec4a6b37b9f2179bfc6caac72d46f42dc5b71604b43d4fea0a0e3aee8"},
