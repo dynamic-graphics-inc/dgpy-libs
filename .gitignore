@@ -133,3 +133,5 @@ package-lock.json
 __pypackages__ 
 pdm.lock 
 .vscode/
+dgpy-packages/
+temp/
