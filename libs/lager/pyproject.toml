@@ -6,6 +6,7 @@ authors = ["jesse rubin <jesse@dgi.com>"]
 license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/lager"
+readme = 'README.md'
 packages = [
     { include = "lager", from = "." }
 ]

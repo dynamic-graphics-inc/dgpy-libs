@@ -1,11 +1,13 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.21.3"
+version = "0.21.4"
 description = "EZPZ JSON"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/jsonbourne"
+readme = 'README.md'
+readme = 'README.md'
 packages = [
     { include = "jsonbourne", from = "." },
     { include = "JSON.py", from = "." },
