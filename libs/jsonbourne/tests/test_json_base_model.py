@@ -78,5 +78,6 @@ try:
         obj2 = JsonModelHasRootType(["a", "b", "c"])
         assert obj == obj2
 
+
 except ModuleNotFoundError:
     pass

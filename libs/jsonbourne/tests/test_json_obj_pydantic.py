@@ -41,6 +41,7 @@ try:
         class Config:
             extra = "allow" if "pytest" in sys.modules else "ignore"
 
+
 except Exception:
     pass
 

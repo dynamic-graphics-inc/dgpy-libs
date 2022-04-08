@@ -22,5 +22,6 @@ try:
         async def await_delete_channels(self) -> None:
             await self.client.aclose()
 
+
 except ImportError:
     pass
