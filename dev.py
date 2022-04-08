@@ -116,7 +116,7 @@ def main():
         if el not in DONT_PUBLISH:
             run(
                 args=["poetry", "version", "patch"],
-                shell=True,
+                shell=IS_WIN,
                 cwd=LIBS_DIR / el,
             )
         chdir(REPO_ROOT)
