@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-
+from shutil import rmtree
 from graphlib import TopologicalSorter
 from os import chdir, listdir, path
 from pathlib import Path
@@ -84,7 +84,6 @@ def check_encoding():
 
 
 def main():
-
     pypi_cache_parts = "cache", "repositories", "pypi"
     proc = run(
         args=["poetry", "config", "cache-dir"],
@@ -105,7 +104,6 @@ def main():
         print(el)
         print(LIBS_DIR / el)
         chdir(LIBS_DIR / el)
-        from shutil import rmtree
 
         if os.path.exists("dist"):
             rmtree("dist")
@@ -114,23 +112,23 @@ def main():
             args=["poetry", "update", "--lock"],
             shell=IS_WIN,
         )
-        # if el not in DONT_PUBLISH:
-        #     run(
-        #         args=["poetry", "version", "patch"],
-        #         shell=True,
-        #     )
+        if el not in DONT_PUBLISH:
+            run(
+                args=["poetry", "version", "patch"],
+                shell=True,
+            )
         chdir(REPO_ROOT)
         run(args=["nox", "-s", "update_metadata"], shell=True, capture_output=True)
         run(args=["make", "fmt"], shell=True)
         chdir(LIBS_DIR / el)
 
         run(args=["make", "test"], shell=True)
-        #
-        # if el not in DONT_PUBLISH:
-        #     run(
-        #         args=["poetry", "publish", "--build", "--no-interaction"],
-        #         shell=True,
-        #     )
+
+        if el not in DONT_PUBLISH:
+            run(
+                args=["poetry", "publish", "--build", "--no-interaction", "--repository", "dgpylibs", "--dry-run"],
+                shell=True,
+            )
 
 
 if __name__ == "__main__":
