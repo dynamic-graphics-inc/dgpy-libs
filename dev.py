@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 import os
-from shutil import rmtree
+
 from graphlib import TopologicalSorter
 from os import chdir, listdir, path
 from pathlib import Path
+from shutil import rmtree
 from subprocess import run
 from typing import TypeVar
 
@@ -116,18 +117,28 @@ def main():
             run(
                 args=["poetry", "version", "patch"],
                 shell=True,
+                cwd=LIBS_DIR / el,
             )
         chdir(REPO_ROOT)
         run(args=["nox", "-s", "update_metadata"], shell=True, capture_output=True)
-        run(args=["make", "fmt"], shell=True)
+        run(args=["make", "fmt"], shell=IS_WIN)
         chdir(LIBS_DIR / el)
 
-        run(args=["make", "test"], shell=True)
+        run(args=["python", "-m", "fmts"], shell=IS_WIN, check=True)
+        run(args=["make", "test"], shell=IS_WIN, check=True)
 
         if el not in DONT_PUBLISH:
             run(
-                args=["poetry", "publish", "--build", "--no-interaction", "--repository", "dgpylibs", "--dry-run"],
-                shell=True,
+                args=[
+                    "poetry",
+                    "publish",
+                    "--build",
+                    "--no-interaction",
+                    "--repository",
+                    "dgpylibs",
+                    "--dry-run",
+                ],
+                shell=IS_WIN,
             )
 
 

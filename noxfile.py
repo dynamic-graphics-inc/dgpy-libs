@@ -127,7 +127,7 @@ def flake_strict(session):
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
-    session.run('mypy', '--version')
+    session.run("mypy", "--version")
     # session.run(
     #     'mypy',
     #     '--show-error-codes',
@@ -308,6 +308,7 @@ def _install_mkdocs_deps(session):
     session.install("mkdocs")
     session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings")
 
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def mkdocs_serve(session):
     _install_mkdocs_deps(session)
@@ -318,6 +319,7 @@ def mkdocs_serve(session):
 def mkdocs(session):
     _install_mkdocs_deps(session)
     session.run("mkdocs", "build")
+
 
 @nox.session(reuse_venv=True)
 def freeze(session):

@@ -1478,7 +1478,7 @@ def copy_file(
         _dest.parent.mkdir(parents=mkdirp, exist_ok=True)
     elif not _dest.parent.exists() or not _dest.parent.is_dir():
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
-    wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+    wbytes_gen(dest, lbytes_gen(src, blocksize=2 ** 18))
 
 
 def cp(
