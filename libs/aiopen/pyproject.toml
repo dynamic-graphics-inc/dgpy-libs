@@ -6,6 +6,7 @@ license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
+readme = 'README.md'
 packages = [
     { include = "aiopen", from = "." },
 ]
@@ -31,8 +32,8 @@ funkify = "^0.4.0"
 xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.4"
-#pytest = "^6.2.4"
+pytest = "^7.1.1"
+#pytest = "^7.1.1"
 pytest-asyncio = "^0.18.1"
 anyio = {extras = ["trio"], version = "^3.5.0"}
 
