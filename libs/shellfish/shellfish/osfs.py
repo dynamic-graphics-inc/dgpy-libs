@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
-from subprocess import CompletedProcess
-from shellfish import batman, sp
-from xtyping import IterableStr, List, Tuple, Optional, Union, Iterable
+
+from shellfish import batman
+from xtyping import IterableStr, List, Tuple
 
 
 class OsFsAbc(ABC):

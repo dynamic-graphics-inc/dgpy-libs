@@ -19,8 +19,6 @@ from os import (
     makedirs,
     path,
     scandir,
-    symlink,
-    unlink,
 )
 from pathlib import Path
 from platform import system
@@ -51,9 +49,8 @@ from typing import (
 
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
-from listless import chunks, exhaust
+from listless import exhaust
 from shellfish import fs
-from shellfish.osfs import WIN as _WIN, LIN as _LIN
 from shellfish._meta import __version__
 from shellfish.fs import (
     Stdio as Stdio,
@@ -63,6 +60,7 @@ from shellfish.fs import (
     mkdirp as mkdirp,
     touch as touch,
 )
+from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
 from shellfish.sh._dirtree import _DirTree
 from shellfish.sp import PopenArgs
@@ -286,6 +284,16 @@ class Done(JsonBaseModel):
         if self.hrdt:
             return self.hrdt.hrdt_obj()
         return HrTime.from_seconds(seconds=self.dt).hrdt_obj()
+
+    def stdout_lines(self, keepends: bool = False) -> List[str]:
+        return self.stdout.splitlines(keepends=keepends)
+
+    def stderr_lines(self, keepends: bool = False) -> List[str]:
+        return self.stderr.splitlines(keepends=keepends)
+
+    @property
+    def lines(self) -> List[str]:
+        return self.stdout_lines(keepends=False)
 
     def done_obj(self) -> DoneObj:
         """Return Done object typed dict"""
