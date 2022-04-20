@@ -344,6 +344,15 @@ class Done(JsonBaseModel):
         """
         fs.wstring(Path(filepath), self.stdout, append=append)
 
+    def completed_process(self) -> CompletedProcess[str]:
+        """Return subprocess.CompletedProcess object"""
+        return CompletedProcess(
+            args=self.args,
+            returncode=self.returncode,
+            stdout=self.stdout,
+            stderr=self.stderr,
+        )
+
     def write_stderr(self, filepath: FsPath, *, append: bool = False) -> None:
         """Write stderr as a string to a fspath
 
@@ -613,7 +622,7 @@ def _do(
     args_str = " ".join(_args)
     ti = time()
     proc = run(
-        args=_args if is_win() or not shell else args_str,
+        args=_args if IS_WIN or not shell else args_str,
         stdout=PIPE,
         stderr=PIPE,
         env=_env,

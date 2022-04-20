@@ -7,12 +7,11 @@ import platform
 import sys
 
 from os import environ
-from typing import Dict, Iterator, Optional
+from typing import Dict, Iterator, List, Optional
 
 IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
 SYS_PATH_SEP: str = os.pathsep
-
 
 __all__ = (
     "ENV",
@@ -196,6 +195,13 @@ def hostname() -> str:
 def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)"""
     return os.pathsep
+
+
+def syspath_paths(syspath: Optional[str] = None) -> List[str]:
+    """Return the current sys.path as a list"""
+    if syspath is None:
+        return list(filter(None, sys.path))
+    return list(filter(None, syspath.split(os.pathsep)))
 
 
 ismac = is_mac
