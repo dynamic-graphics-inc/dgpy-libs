@@ -6,7 +6,7 @@ from os import path
 import pytest
 
 from shellfish import sh
-from shellfish.dev import batman
+from shellfish import batman
 
 PWD = path.split(path.realpath(__file__))[0]
 

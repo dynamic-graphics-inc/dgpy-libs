@@ -53,6 +53,7 @@ from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
 from listless import chunks, exhaust
 from shellfish import fs
+from shellfish.osfs import WIN as _WIN, LIN as _LIN
 from shellfish._meta import __version__
 from shellfish.fs import (
     Stdio as Stdio,
@@ -1185,7 +1186,7 @@ class OSABC(ABC):
 # =============================================================================
 
 
-class LIN(OSABC):
+class LIN(_LIN):
     """Linux (and Mac) shell commands/methods container"""
 
     @staticmethod
@@ -1329,114 +1330,25 @@ class LIN(OSABC):
         done = do(args=list(filter(None, rsync_args)))
         return done
 
-    sync = rsync
-
     @staticmethod
-    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        """Make a directory symlink
-
-        Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (str): Allow link to exist
-
-        """
-        try:
-            symlink(targetpath, linkpath)
-        except FileExistsError as fee:
-            if not exist_ok:
-                raise fee
-
-    @staticmethod
-    def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        """Make multiple directory symlinks
-
-        Args:
-            link_target_tuples: Iterable of tuples of the form: (link, target)
-                or a dictionary mapping with key => value pairs of the form
-                link => target.
-            exist_ok (bool): Allow link to exist
-
-        """
-        for link, target in link_target_tuples:
-            LIN.link_dir(link, target, exist_ok=exist_ok)
-
-    @staticmethod
-    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        """Make a file symlink
-
-        Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): Allow links to already exist
-
-        """
-        makedirs(path.split(linkpath)[0], exist_ok=True)
-        try:
-            symlink(targetpath, linkpath)
-        except FileExistsError as fee:
-            if not exist_ok:
-                raise fee
-
-    @staticmethod
-    def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        """Make multiple file symlinks
-
-        Args:
-            exist_ok (bool): Allow links to already exist
-            link_target_tuples: Iterable of tuples of the form: (link, target)
-                or a dictionary mapping with key => value pairs of the form
-                link => target.
-
-        """
-        for link, target in link_target_tuples:
-            LIN.link_file(link, target, exist_ok=exist_ok)
-
-    @staticmethod
-    def unlink_dir(link: str) -> None:
-        """Unlink a directory symlink given a path to the symlink
-
-        Args:
-            link: path to the symlink
-
-        """
-        unlink(str(link))
-
-    @staticmethod
-    def unlink_dirs(links: IterableStr) -> None:
-        """Unlink directory symlinks given the paths the links
-
-        Args:
-            links: Iterable of paths to links
-
-        """
-        for link in links:
-            LIN.unlink_dir(link)
-
-    @staticmethod
-    def unlink_file(link: str) -> None:
-        """Unlink a file symlink given a path to the symlink
-
-        Args:
-            link: path to the symlink
-
-        """
-        unlink(str(link))
-
-    @staticmethod
-    def unlink_files(links: IterableStr) -> None:
-        """Unlink directory symlinks given the paths the links
-
-        Args:
-            links: Iterable of paths to links
-
-        """
-        for link in links:
-            LIN.unlink_file(link)
+    def sync(
+        src: str,
+        dest: str,
+        delete: bool = False,
+        mkdirs: bool = False,
+        dry_run: bool = False,
+        exclude: Optional[IterableStr] = None,
+        include: Optional[IterableStr] = None,
+    ) -> Done:
+        return LIN.rsync(
+            src,
+            dest,
+            delete=delete,
+            mkdirs=mkdirs,
+            dry_run=dry_run,
+            exclude=exclude,
+            include=include,
+        )
 
 
 # =============================================================================
@@ -1449,7 +1361,7 @@ class LIN(OSABC):
 # =============================================================================
 
 
-class WIN(OSABC):
+class WIN(_WIN):
     """Windows shell commands/methods container"""
 
     _MAX_CMD_LENGTH: int = 8192
@@ -1602,186 +1514,6 @@ class WIN(OSABC):
             exclude_dirs=include,
             dry_run=dry_run,
         )
-
-    @staticmethod
-    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        """Make a directory symlink
-
-        Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): If True, do not raise an exception if the link exists
-
-        """
-        makedirs(path.split(linkpath)[0], exist_ok=True)
-        try:
-            symlink(targetpath, linkpath, target_is_directory=True)
-        except OSError:
-            do(args=["mklink", "/D", linkpath, targetpath], shell=True)
-
-    @staticmethod
-    def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        """Make multiple directory symlinks
-
-        Args:
-            link_target_tuples: Iterable of tuples of the form: (link, target)
-                or a dictionary mapping with key => value pairs of the form
-                link => target.
-            exist_ok (bool): If True, do not raise an exception if the link(s) exist
-
-        """
-        try:
-            for link, target in link_target_tuples:
-                WIN.link_dir(link, target, exist_ok=exist_ok)
-        except OSError:
-            _exists = [
-                f"mklink /D {link} {target}"
-                for link, target in link_target_tuples
-                if WIN._check_link_target_dirs(link, target)
-            ]
-            _proc = do(args=" && ".join(_exists).split(" "), shell=True)
-            stderr = _proc.stderr
-            if "too" in stderr and "long" in stderr:
-                tuple_chunks = list(
-                    chunks(link_target_tuples, len(link_target_tuples) // 2)
-                )
-                for tuple_chunk in tuple_chunks:
-                    WIN.link_dirs(list(tuple_chunk))
-
-    @staticmethod
-    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        """Make a file symlink
-
-        Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): If True, don't raise an exception if the link exists
-
-        """
-        try:
-            symlink(targetpath, linkpath)
-        except OSError:
-            makedirs(path.split(linkpath)[0], exist_ok=True)
-            do(args=["mklink", linkpath, targetpath], shell=True)
-
-    @staticmethod
-    def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        """Make multiple file symlinks
-
-        Args:
-            link_target_tuples: Iterable of tuples of the form: (link, target)
-                or a dictionary mapping with key => value pairs of the form
-                link => target.
-            exist_ok (bool): If True, don't raise an exception if the link exists
-
-        """
-        try:
-            for link, target in link_target_tuples:
-                WIN.link_file(link, target, exist_ok=exist_ok)
-        except OSError:
-            link_target_tuples = list(link_target_tuples)
-            _exists = [
-                f"mklink {link} {target}"
-                for link, target in link_target_tuples
-                if WIN._check_link_target_files(link, target)
-            ]
-            _proc = do(args=" && ".join(_exists).split(" "), shell=True)
-            stdout = _proc.stdout
-            stderr = _proc.stderr
-            if ("too" in stderr and "long" in stderr) or (
-                "too" in stderr and "long" in stdout
-            ):
-                tuple_chunks = list(
-                    chunks(link_target_tuples, len(link_target_tuples) // 2)
-                )
-                for tuple_chunk in tuple_chunks:
-                    WIN.link_files(list(tuple_chunk))
-
-    @staticmethod
-    def unlink_dir(link: str) -> None:
-        """Unlink a directory symlink given a path to the symlink
-
-        Args:
-            link: path to the symlink
-
-        """
-        try:
-            unlink(link)
-        except OSError:
-            do(args=["RD", link], shell=True)
-
-    @staticmethod
-    def unlink_dirs(links: IterableStr) -> None:
-        """Unlink directory symlinks given the paths the links
-
-        Args:
-            links: Iterable of paths to links
-
-        """
-        try:
-            for link in links:
-                WIN.unlink_dir(link)
-        except OSError:
-            cmd_args = " && ".join(f"RD {link}" for link in links).split(" ")
-            do(args=cmd_args, shell=True)
-
-    @staticmethod
-    def unlink_file(link: str) -> None:
-        """Unlink a file symlink given a path to the symlink
-
-        Args:
-            link (str): path to the symlink
-
-        """
-        try:
-            unlink(link)
-        except OSError:
-            do(args=["Del", link], shell=True)
-
-    @staticmethod
-    def unlink_files(links: IterableStr) -> None:
-        """Unlink directory symlinks given the paths the links
-
-        Args:
-            links: Iterable of paths to links
-
-        """
-        try:
-            for link in links:
-                WIN.unlink_file(link)
-        except OSError:
-            cmd_args = " && ".join(f"Del {link}" for link in links).split(" ")
-            do(args=cmd_args, shell=True)
-
-    @staticmethod
-    def _check_link_target_files(link: str, target: str) -> bool:
-        """Check for valid symbolic link to specified target file"""
-        link = str(link)
-        target = str(target)
-        try:
-            assert path.exists(target)
-            makedirs(path.split(link)[0], exist_ok=True)
-            return True
-        except Exception:
-            ...
-        return False
-
-    @staticmethod
-    def _check_link_target_dirs(link: str, target: str) -> bool:
-        """Check for valid symbolic link to specified target directory"""
-        link = str(link)
-        target = str(target)
-        try:
-            assert path.exists(target), "Target does not exist: {}".format(target)
-            assert path.isdir(target), "Target is not a directory: {}".format(target)
-            makedirs(path.split(link)[0], exist_ok=True)
-        except Exception:
-            ...
-        return True
 
 
 # =============================================================================
