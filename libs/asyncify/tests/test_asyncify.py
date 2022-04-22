@@ -18,7 +18,7 @@ async def test_asyncify() -> None:
 async def test_asyncify_funkified() -> None:
     import asyncify
 
-    @asyncify  # type: ignore
+    @asyncify  # type: ignore[operator]
     def add(a: float, b: float) -> float:
         return a + b
 

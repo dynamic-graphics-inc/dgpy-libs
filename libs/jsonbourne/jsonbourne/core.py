@@ -225,7 +225,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         try:
             assert all(isinstance(k, str) for k in self._data)
         except AssertionError:
-            d = {k: v for k, v in self._data.items() if not isinstance(k, str)}
+            d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
             raise ValueError(
                 "JsonObj keys MUST be strings! Bad key values: {}".format(str(d))
             )
@@ -504,11 +504,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                         if not isinstance(v, (dict, JsonObj))
                         else JsonObj(v).filter_none(recursive=True)
                         for k, v in self.items()
-                        if v is not None
+                        if v is not None  # type: ignore[redundant-expr]
                     },
                 )
             )
-        return JsonObj({k: v for k, v in self.items() if v is not None})
+        return JsonObj({k: v for k, v in self.items() if v is not None})  # type: ignore[redundant-expr]
 
     def filter_false(self, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is false-y
