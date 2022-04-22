@@ -344,13 +344,13 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         return self.__class__._cls_field_names()
 
 
-class JsonBaseSettings(BaseSettings, JsonBaseModel):  # type: ignore
+class JsonBaseSettings(BaseSettings, JsonBaseModel):  # type: ignore[misc]
     """pydantic BaseSettings + JsonBaseModel"""
 
     ...
 
 
-class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore
+class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore[misc]
     """Hybrid `pydantic.generics.GenericModel` and `jsonbourne.JsonObj`"""
 
     ...
