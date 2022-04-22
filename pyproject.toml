@@ -54,6 +54,7 @@ pytest-asyncio = "^0.18.1"
 pytest-cov = "^2.12.1"
 python-rapidjson = "^1.6"
 xdoctest = "^0.15.10"
+click = "^8.1.2"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
@@ -66,7 +67,6 @@ listless = { path = "./libs/listless/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
-click = "^8.1.2"
 
 [tool.poetry.scripts]
 dev = "dev.cli:main"
@@ -134,6 +134,7 @@ known_first_party = [
     "aiopen",
     "asyncify",
     "funkify",
+    "fmts",
     "h5",
     "jsonbourne",
     "lager",
@@ -219,6 +220,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"

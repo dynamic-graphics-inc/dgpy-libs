@@ -7,7 +7,7 @@ import platform
 import sys
 
 from os import environ
-from typing import Dict, Iterator, List, Optional
+from typing import Callable, Dict, Iterator, List, Optional, Union, cast
 
 IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
@@ -32,6 +32,8 @@ __all__ = (
     "opsys",
     "sys_path_sep",
 )
+
+_OS_ENVIRON_ATTRS = set(dir(os.environ))
 
 
 class _EnvObjMeta(type):
@@ -59,9 +61,12 @@ class _EnvObjMeta(type):
     def __repr__(self) -> str:
         return self.__str__()
 
-    def __getattr__(cls, item: str) -> Optional[str]:
+    def __getattr__(
+        cls, item: str
+    ) -> Optional[Union[Callable[[], str], Callable[[str], None], str]]:
         try:
-            return environ.__getattribute__(item)  # type: ignore
+            if item in _OS_ENVIRON_ATTRS:
+                return cast(Callable[..., str], environ.__getattribute__(item))
         except AttributeError:
             ...
         return cls.__getitem__(item)
@@ -155,7 +160,7 @@ def is_wsl() -> bool:
 def is_notebook() -> bool:
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
-        shell = get_ipython().__class__.__name__  # type: ignore
+        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
         if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
         elif shell == "TerminalInteractiveShell":
