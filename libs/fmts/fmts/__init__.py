@@ -674,13 +674,13 @@ def strip_comments(string: str) -> str:
 
     """
     filelines = string.splitlines(keepends=False)
-    r = re.compile(r'(?:"(?:[^"\\]|\\.)*"|[^"#])*(#|$)')
+    comment_re = re.compile(r'(?:"(?:[^"\\]|\\.)*"|[^"#])*(#|$)')
 
     def _strip_comments_line(line: str) -> str:
-        try:
-            return line[: r.match(line).start(1)]  # type: ignore
-        except AttributeError:
-            return line
+        comment_re_match = comment_re.match(line)
+        if comment_re_match:
+            return line[: comment_re_match.start(1)]
+        return line
 
     return "\n".join((_strip_comments_line(line) for line in filelines))
 

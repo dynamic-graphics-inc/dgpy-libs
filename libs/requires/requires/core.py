@@ -179,10 +179,9 @@ class Requirement:
     def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
-            # @wraps(f)
             async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> R:
                 try:
-                    return await f(*args, **kwargs)  # type: ignore
+                    return await f(*args, **kwargs)  # type: ignore[misc, no-any-return]
                 except NameError as ne:
                     if self.alias not in parse_name_error(ne):
                         raise ne
@@ -192,13 +191,13 @@ class Requirement:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()
-                    retval: R = await f(*args, **kwargs)  # type: ignore
+                    retval: R = await f(*args, **kwargs)  # type: ignore[misc]
                     return retval
                 except ModuleNotFoundError:
                     tb = sys.exc_info()[2]
                     raise self.err().with_traceback(tb)
 
-            return _requires_dec_async  # type: ignore
+            return _requires_dec_async  # type: ignore[return-value]
 
         @wraps(f)
         def _requires_dec(*args: P.args, **kwargs: P.kwargs) -> R:
@@ -230,7 +229,7 @@ class RequirementProxy:
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
         tb = sys.exc_info()[1]
-        raise self.req.err().with_traceback(tb)  # type: ignore
+        raise self.req.err().with_traceback(tb)  # type: ignore[arg-type]
 
     def __getattr__(self, item: str) -> Any:
         try:

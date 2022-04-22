@@ -359,8 +359,8 @@ OptFloat = Optional[float]
 ##########
 # Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
 JsonPrimitive = Union[None, bool, int, float, str]
-Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]  # type: ignore
-JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]  # type: ignore
+Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]  # type: ignore[misc]
+JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]  # type: ignore[misc]
 JsonDictT = Dict[str, Any]
 JsonListT = List[Any]
 JsonObjT = Dict[str, Any]

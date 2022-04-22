@@ -264,7 +264,10 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
         5
 
     """
-    return await obj if isawaitable(obj) else obj  # type: ignore
+    # if isawaitable(obj):
+    #     return await obj
+    # return obj
+    return cast(T, await obj if isawaitable(obj) else obj)
 
 
 def aiorun_anyio(

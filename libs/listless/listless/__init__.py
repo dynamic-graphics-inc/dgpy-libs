@@ -337,7 +337,7 @@ def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
 
 
     """
-    return filter(None.__ne__, it)  # type: ignore
+    return filter(None.__ne__, it)  # type: ignore[arg-type]
 
 
 def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
@@ -362,7 +362,15 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
     )
 
 
-def flatten_strings(*args: Union[str, List[str], Tuple[str, ...]]) -> List[str]:
+def flatten_strings(
+    *args: Union[
+        str,
+        int,
+        float,
+        List[Union[str, int, float]],
+        Tuple[Union[str, int, float], ...],
+    ]
+) -> List[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
