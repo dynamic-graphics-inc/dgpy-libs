@@ -231,7 +231,6 @@ disallow_any_generics = false
 disallow_untyped_defs = false
 
 
-
 [tool.pyright]
 pythonVersion = "3.8"
 include = [

@@ -50,7 +50,7 @@ class JsonBaseModelDefaultConfig(BaseConfig):
     use_enum_values = True
 
 
-class JsonBaseModel(BaseModel, JsonObj):  # type: ignore
+class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
     Config = JsonBaseModelDefaultConfig
