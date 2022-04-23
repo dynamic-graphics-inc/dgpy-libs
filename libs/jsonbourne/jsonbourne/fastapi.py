@@ -13,7 +13,7 @@ except ModuleNotFoundError:
             "starlette not found/installed; `pip install starlette`"
         )
     else:
-        Response = object  # type: ignore
+        Response = object  # type: ignore[assignment, misc]
 
 __all__ = ("JSONBOURNEResponse",)
 

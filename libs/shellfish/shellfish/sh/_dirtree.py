@@ -14,6 +14,11 @@ class _DirTree:
     _parent_prefix_middle: str = "    "
     _parent_refix_last: str = "│   "
 
+    path: Path
+    is_last: bool
+    depth: int
+    parent: Optional[_DirTree]
+
     def __init__(
         self,
         path: Union[str, Path],
@@ -114,7 +119,7 @@ class _DirTree:
         parts = [f"{_filename_prefix!s} {self.displayname!s}"]
 
         parent = self.parent
-        while parent and parent.parent is not None:
+        while parent and parent.parent is not None:  # type: ignore[truthy-bool]
             parts.append(
                 self._parent_prefix_middle
                 if parent.is_last

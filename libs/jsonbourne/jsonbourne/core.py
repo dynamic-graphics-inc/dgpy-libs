@@ -225,7 +225,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         try:
             assert all(isinstance(k, str) for k in self._data)
         except AssertionError:
-            d = {k: v for k, v in self._data.items() if not isinstance(k, str)}
+            d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
             raise ValueError(
                 "JsonObj keys MUST be strings! Bad key values: {}".format(str(d))
             )
@@ -243,7 +243,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Function place holder that is called after object initialization"""
         pass  # pylint: disable=unnecessary-pass
 
-    def __contains__(self, key: _KT) -> bool:  # type: ignore
+    def __contains__(self, key: _KT) -> bool:  # type: ignore[override]
         """Check if a key or dot-key is contained within the JsonObj object
 
         Args:
@@ -504,11 +504,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                         if not isinstance(v, (dict, JsonObj))
                         else JsonObj(v).filter_none(recursive=True)
                         for k, v in self.items()
-                        if v is not None
+                        if v is not None  # type: ignore[redundant-expr]
                     },
                 )
             )
-        return JsonObj({k: v for k, v in self.items() if v is not None})
+        return JsonObj({k: v for k, v in self.items() if v is not None})  # type: ignore[redundant-expr]
 
     def filter_false(self, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is false-y
@@ -748,7 +748,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_attr_names(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return {el.name for el in cls.__attrs_attrs__}  # type: ignore
+            return {el.name for el in cls.__attrs_attrs__}  # type: ignore[attr-defined]
         except AttributeError:
             raise AttributeError("Class is not decorated with attr.attrs")
 
@@ -756,7 +756,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_fields(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return cls.__fields__  # type: ignore
+            return cls.__fields__  # type: ignore[attr-defined, no-any-return]
         except AttributeError:
             raise AttributeError("Class does not inherit from pydantic.BaseModel")
 
@@ -764,7 +764,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_field_names(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return set(cls.__fields__)  # type: ignore
+            return set(cls.__fields__)  # type: ignore[attr-defined]
         except AttributeError:
             raise AttributeError("Class does not inherit from pydantic.BaseModel")
 
@@ -1081,7 +1081,7 @@ class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
     @staticmethod
-    def __call__(value: Optional[Any] = None) -> Any:  # type: ignore
+    def __call__(value: Optional[Any] = None) -> Any:  # type: ignore[override]
         if value is None:
             value = {}
         return jsonify(value)
@@ -1260,7 +1260,7 @@ class JSON(metaclass=JSONMeta):
 
 class JSONModuleCls(ModuleType, JSON):
     @staticmethod
-    def __call__(value: Any = None):  # type: ignore
+    def __call__(value: Any = None):  # type: ignore[no-untyped-def]
         """Jsonify a value"""
         if value is None:
             return JsonObj()

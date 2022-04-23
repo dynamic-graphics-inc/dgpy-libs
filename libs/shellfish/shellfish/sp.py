@@ -40,6 +40,7 @@ __all__ = (
     "PopenArgs",
     "PopenEnv",
     "runb",
+    "runs",
     # from subprocess
     "CompletedProcess",
     "run",
@@ -174,6 +175,44 @@ def runb(
         timeout=timeout,
         env=env,
         capture_output=capture_output,
+        **other_popen_kwargs,
+    )
+    if check:
+        pcheck(process=process, ok_code=ok_code)
+    return process
+
+
+def runs(
+    args: PopenArgs,
+    *,
+    executable: Optional[str] = None,
+    stdin: Optional[Union[IO[Any], int]] = None,
+    input: Optional[str] = None,
+    stdout: Optional[Union[IO[Any], int]] = None,
+    stderr: Optional[Union[IO[Any], int]] = None,
+    shell: bool = False,
+    cwd: Optional[FsPath] = None,
+    timeout: Optional[float] = None,
+    capture_output: bool = False,
+    check: bool = False,
+    env: Optional[Mapping[str, str]] = None,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    **other_popen_kwargs: Any,
+) -> CompletedProcess[str]:
+    """Run command with txt output"""
+    process = run(
+        args=args,
+        input=input,
+        executable=executable,
+        stdin=stdin,
+        stdout=stdout,
+        stderr=stderr,
+        shell=shell,
+        cwd=cwd,
+        timeout=timeout,
+        env=env,
+        capture_output=capture_output,
+        universal_newlines=True,
         **other_popen_kwargs,
     )
     if check:

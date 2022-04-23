@@ -87,7 +87,7 @@ except ModuleNotFoundError:
     pass
 
 logger = _Logger(_Core(), None, 0, False, False, False, False, True, None, {})
-if _defaults.LOGURU_AUTOINIT and _sys.stderr:
+if _defaults.LOGURU_AUTOINIT and _sys.stderr:  # type: ignore[truthy-bool]
     logger.add(_sys.stderr)
 
 _atexit.register(logger.remove)
@@ -175,7 +175,7 @@ def flog(
                     kwargs,
                 )
             ti = time()
-            result: T = await funk(*args, **kwargs)  # type: ignore
+            result: T = await funk(*args, **kwargs)  # type: ignore[misc]
             tf = time()
             if exit:
                 logger_.log(
@@ -188,15 +188,15 @@ def flog(
             return result
 
         if asyncio.iscoroutinefunction(funk) or asyncio.iscoroutine(funk):
-            return _flog_decorator_async  # type: ignore
+            return _flog_decorator_async  # type: ignore[return-value]
         return _flog_decorator
 
-    return _flog(funk) if funk else _flog  # type: ignore
+    return _flog(funk) if funk else _flog  # type: ignore[return-value]
 
 
 def handlers() -> Dict[int, Handler]:
     """Return all handlers"""
-    return logger._core.handlers  # type: ignore
+    return logger._core.handlers  # type: ignore[no-any-return]
 
 
 def reset() -> None:

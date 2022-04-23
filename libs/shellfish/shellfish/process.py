@@ -7,12 +7,11 @@ import platform
 import sys
 
 from os import environ
-from typing import Dict, Iterator, Optional
+from typing import Callable, Dict, Iterator, List, Optional, Union, cast
 
 IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
 SYS_PATH_SEP: str = os.pathsep
-
 
 __all__ = (
     "ENV",
@@ -33,6 +32,8 @@ __all__ = (
     "opsys",
     "sys_path_sep",
 )
+
+_OS_ENVIRON_ATTRS = set(dir(os.environ))
 
 
 class _EnvObjMeta(type):
@@ -60,9 +61,12 @@ class _EnvObjMeta(type):
     def __repr__(self) -> str:
         return self.__str__()
 
-    def __getattr__(cls, item: str) -> Optional[str]:
+    def __getattr__(
+        cls, item: str
+    ) -> Optional[Union[Callable[[], str], Callable[[str], None], str]]:
         try:
-            return environ.__getattribute__(item)  # type: ignore
+            if item in _OS_ENVIRON_ATTRS:
+                return cast(Callable[..., str], environ.__getattribute__(item))
         except AttributeError:
             ...
         return cls.__getitem__(item)
@@ -156,7 +160,7 @@ def is_wsl() -> bool:
 def is_notebook() -> bool:
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
-        shell = get_ipython().__class__.__name__  # type: ignore
+        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
         if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
         elif shell == "TerminalInteractiveShell":
@@ -196,6 +200,13 @@ def hostname() -> str:
 def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)"""
     return os.pathsep
+
+
+def syspath_paths(syspath: Optional[str] = None) -> List[str]:
+    """Return the current sys.path as a list"""
+    if syspath is None:
+        return list(filter(None, sys.path))
+    return list(filter(None, syspath.split(os.pathsep)))
 
 
 ismac = is_mac

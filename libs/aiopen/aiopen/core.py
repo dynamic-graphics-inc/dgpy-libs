@@ -84,7 +84,7 @@ class AsyncBase(Generic[AnyStr]):
         """Simulate normal file iteration."""
         line = await self.readline()
         if line:
-            return line  # type: ignore
+            return cast(T, line)
         else:
             raise StopAsyncIteration
 
@@ -319,15 +319,15 @@ class AiopenContextManager(
 
     @property
     def gi_frame(self) -> Any:
-        return self._coro.gi_frame  # type: ignore
+        return self._coro.gi_frame  # type: ignore[attr-defined]
 
     @property
     def gi_running(self) -> bool:
-        return self._coro.gi_running  # type: ignore
+        return self._coro.gi_running  # type: ignore[attr-defined, no-any-return]
 
     @property
     def gi_code(self) -> Any:
-        return self._coro.gi_code  # type: ignore
+        return self._coro.gi_code  # type: ignore[attr-defined]
 
     def __next__(self) -> Any:
         return self.send(None)

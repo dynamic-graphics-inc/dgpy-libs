@@ -7,7 +7,7 @@ from jsonbourne.dev.json_arr import JsonArr, n_args
 
 
 def test_get_fn_args_count() -> None:
-    assert n_args(lambda a, b: b % 4 == 0 and a % 2 == 0) == 2  # type: ignore
+    assert n_args(lambda a, b: b % 4 == 0 and a % 2 == 0) == 2  # type: ignore[no-any-return]
 
     def fn2() -> None:
         pass

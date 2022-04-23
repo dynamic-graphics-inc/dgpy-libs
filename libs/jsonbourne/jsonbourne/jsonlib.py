@@ -15,7 +15,7 @@ from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 try:
     import dataclasses
 except ImportError:
-    dataclasses = None  # type: ignore
+    dataclasses = None  # type: ignore[assignment]
 
 try:
     import rapidjson
@@ -34,7 +34,7 @@ try:
     import orjson
 
 except ImportError:
-    orjson = None  # type: ignore
+    orjson = None  # type: ignore[assignment]
 
 try:
     import numpy as np
@@ -70,7 +70,7 @@ def _json_encode_default(obj: Any) -> Any:
             return int(obj)
         if isinstance(obj, (np.ndarray, np.generic)):
             return obj.tolist()
-    if dataclasses:
+    if dataclasses is not None:
         if dataclasses.is_dataclass(obj):
             return dataclasses.asdict(obj)
     if isinstance(obj, bytes):
