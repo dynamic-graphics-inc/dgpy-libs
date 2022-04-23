@@ -137,7 +137,10 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "TypeVarTuple",
     "Unpack",
     "assert_never",
+    "assert_type",
+    "clear_overloads",
     "dataclass_transform",
+    "get_overloads",
     "is_typeddict",
     "reveal_type",
 )
