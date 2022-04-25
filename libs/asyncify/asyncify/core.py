@@ -275,8 +275,18 @@ def aiorun_anyio(
     backend: str = "asyncio",
     backend_options: Optional[Dict[str, Any]] = None,
 ) -> T_Retval:
-    # if asyncio.iscoroutine(awaitable_or_func):
-    # if asyncio.iscoroutine(awaitable_or_func):
+    """Run an async function or awaitable using anyio
+
+    Args:
+        awaitable_or_func: Function or awaitable to run
+        *args: args to pass to the function
+        backend: Backend to use for running the function
+        backend_options: Options to pass to the backend
+
+    Returns:
+        T_Retval: Return value of the function
+
+    """
     if is_coro(awaitable_or_func):
         if args:
             raise ValueError("args must be empty when calling a coroutine")
