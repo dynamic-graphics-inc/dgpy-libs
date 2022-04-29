@@ -158,6 +158,8 @@ def filesize(fspath: FsPath) -> int:
 
 def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     """Typed version of os.scandir"""
+    if not isdir(dirpath):
+        raise NotADirectoryError(f"{dirpath} is not a directory")
     return cast("Iterable[DirEntry[AnyStr]]", _scandir(fspath(dirpath)))
 
 
@@ -398,6 +400,8 @@ def files_gen(
 
     """
     dirpath = str(dirpath)
+    if not isdir(dirpath):
+        raise NotADirectoryError(dirpath)
     return (
         filepath if abspath else str(filepath).replace(dirpath, "").strip(sep)
         for filepath in (
@@ -516,6 +520,8 @@ def dirs_gen(
         >>> rmtree(tmpdir)
 
     """
+    if not isdir(dirpath):
+        raise NotADirectoryError(dirpath)
     return (
         dirpath if abspath else str(dirpath).replace(dirpath, "").strip(sep)
         for dirpath in (
@@ -749,6 +755,8 @@ def walk_gen(
 
     """
     dirpath = str(dirpath)
+    if not isdir(dirpath):
+        raise NotADirectoryError(dirpath)
     return (
         str(path_string)
         if abspath
