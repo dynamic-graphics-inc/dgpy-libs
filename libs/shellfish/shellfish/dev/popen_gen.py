@@ -36,8 +36,8 @@ def _popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
         with ThreadPoolExecutor(2) as pool:
             q_stdout: Queue[AnyStr] = Queue()
             q_stderr: Queue[AnyStr] = Queue()
-            pool.submit(_enqueue_output, proc.stdout, q_stdout)
-            pool.submit(_enqueue_output, proc.stderr, q_stderr)
+            pool.submit(_enqueue_output, proc.stdout, q_stdout)  # type: ignore[arg-type]
+            pool.submit(_enqueue_output, proc.stderr, q_stderr)  # type: ignore[arg-type]
             while True:
                 if proc.poll() is not None and q_stdout.empty() and q_stderr.empty():
                     break

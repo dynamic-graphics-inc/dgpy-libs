@@ -404,7 +404,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def setdefault(self, key: _KT, default: Optional[_VT] = None) -> _VT:
         if default:
             return self._data.setdefault(key, default)
-        return self._data.setdefault(key)
+        return self._data.setdefault(key)  # type: ignore[call-arg]
 
     def clear(self) -> None:
         self._data.clear()

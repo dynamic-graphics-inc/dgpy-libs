@@ -16,7 +16,7 @@ from asyncify.core import (
 )
 from funkify import funkify
 
-funkify(asyncify, key="asyncify")
+funkify(asyncify, key="asyncify")  # type: ignore[arg-type]
 
 __all__ = (
     "ANYIO",
