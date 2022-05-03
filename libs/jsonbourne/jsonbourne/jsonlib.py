@@ -328,6 +328,8 @@ class RAPIDJSON(JsonLibABC):
     JSONDecoder = RapidJSONDecoder
     JSONDecodeError = RapidJSONDecodeError
 
+    rapidjson_number_mode = rapidjson.NM_NATIVE | rapidjson.NM_NAN
+
     @staticmethod
     def dumps(
         data: Any,
@@ -345,6 +347,7 @@ class RAPIDJSON(JsonLibABC):
                 sort_keys=sort_keys,
                 default=default or _json_encode_default,
                 datetime_mode=rapidjson.DM_ISO8601,
+                number_mode=RAPIDJSON.rapidjson_number_mode,
                 **kwargs,
             )
         )
