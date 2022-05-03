@@ -9,6 +9,7 @@ from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
+from uuid import UUID
 
 from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
@@ -78,6 +79,8 @@ def _json_encode_default(obj: Any) -> Any:
     if isinstance(obj, tuple):
         return tuple(obj)
     if isinstance(obj, Path):
+        return str(obj)
+    if isinstance(obj, UUID):
         return str(obj)
     if isinstance(obj, (datetime, dttime, dtdate)):
         return obj.isoformat()
@@ -348,6 +351,7 @@ class RAPIDJSON(JsonLibABC):
                 default=default or _json_encode_default,
                 datetime_mode=rapidjson.DM_ISO8601,
                 number_mode=RAPIDJSON.rapidjson_number_mode,
+                uuid_mode=rapidjson.UM_CANONICAL,
                 **kwargs,
             )
         )
