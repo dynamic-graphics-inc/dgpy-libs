@@ -1634,7 +1634,7 @@ def echo(
         file: File like object to write to if not stdout
 
     """
-    print(*args, sep=sep, end=end, file=file)  # noqa: T001
+    print(*args, sep=sep, end=end, file=file)  # noqa: T201
 
 
 def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
