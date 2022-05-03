@@ -78,11 +78,11 @@ def _test_module_all_tuple(
         try:
             assert sorted_all_tuple == mod_all
         except AssertionError as e:
-            print("{} should be:".format(mod_name))  # noqa: T001
+            print("{} should be:".format(mod_name))  # noqa: T201
             if len(sorted_all_tuple) > 10:
-                print("__all__ = " + str(sorted_all_tuple))  # noqa: T001
+                print("__all__ = " + str(sorted_all_tuple))  # noqa: T201
             else:
-                print("__all__ = " + pformat(sorted_all_tuple))  # noqa: T001
+                print("__all__ = " + pformat(sorted_all_tuple))  # noqa: T201
             raise e
 
 
@@ -98,7 +98,7 @@ def test_root_has_everything() -> None:
 
 def test_xtyping_has_all_typing_extensions_members():
     all_typing = set(xtyping.__all_typing__)
-    typing_extensions_all_list = list(typing_extensions.__all__)  # type: ignore[attr-defined]
+    typing_extensions_all_list = list(typing_extensions.__all__)
     _typing_extensions_members = (
         set(list(typing_extensions_all_list) + list(xtyping.__all_typing_extensions__))
         - all_typing

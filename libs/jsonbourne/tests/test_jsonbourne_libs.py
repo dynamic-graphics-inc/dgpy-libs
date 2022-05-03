@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import pathlib
+import uuid
 
 from decimal import Decimal
 
@@ -66,6 +67,7 @@ D = {
     "point_dumpable": Point3dDumpable(1, 2, 3),
     "poin_json_interface": Point3dJsonInterface(1, 2, 3),
     "poin_json_interface_property": Point3dJsonInterfaceProperty(1, 2, 3),
+    "uuid": uuid.UUID("12345678-1234-1234-1234-123456789012"),
 }
 
 
