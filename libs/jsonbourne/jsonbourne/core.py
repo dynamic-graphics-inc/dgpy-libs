@@ -117,6 +117,8 @@ def is_int(value: Any) -> bool:
     """Return True if value is a int"""
     if isinstance(value, int):
         return True
+    if isinstance(value, float):
+        return value.is_integer()
     _value: str = str(value)
     if _value[0] in ("-", "+"):
         return str(_value[1:]).isdigit()
@@ -134,6 +136,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     JsonObj(foo='bar')['foo'] == JsonObj(foo='bar').foo
 
     Examples:
+        >>> print(JsonObj())
+        JsonObj(**{})
         >>> d = {"uno": 1, "dos": 2, "tres": 3}
         >>> d
         {'uno': 1, 'dos': 2, 'tres': 3}
@@ -718,10 +722,18 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Return list of tuples of the form (dot-key, value)"""
         return list(self.dot_items())
 
+    def __bool__(self) -> bool:
+        return bool(self._data)
+
+    def _is_empty(self) -> bool:
+        return not bool(self._data)
+
     def to_str(self, minify: bool = False, width: Optional[int] = None) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
+        if not bool(self._data):
+            return f"{type(self).__name__}(**{{}})"
         _width = get_terminal_size(fallback=(88, 24)).columns - 12
         return "".join(
             [
