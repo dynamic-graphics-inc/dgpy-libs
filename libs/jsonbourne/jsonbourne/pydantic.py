@@ -22,17 +22,21 @@ from jsonbourne.core import JSON, JsonObj
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
-    "__pydantic_version__",
     "JsonBaseModelDefaultConfig",
     "JsonBaseModel",
     "JsonBaseModelT",
     "JsonBaseSettings",
+    "JsonGenericModel",
+    # pydantic
+    "__pydantic_version__",
+    "BaseConfig",
     "BaseModel",
     "BaseSettings",
+    "BaseSettings",
+    "Extra",
     "Field",
-    "ValidationError",
-    "JsonGenericModel",
     "GenericModel",
+    "ValidationError",
 )
 
 
