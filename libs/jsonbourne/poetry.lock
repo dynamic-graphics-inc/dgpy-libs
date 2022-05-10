@@ -200,7 +200,7 @@ rapidjson = ["python-rapidjson"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "bde2674e5bb93ca9e4c9648e9fa4b1d207c90cd8aee5f47804c0059a16530d9d"
+content-hash = "5073deae992cd87f608eced3d1b1d6aa8ed0bc1fea35f9a751ef619eba4591fe"
 
 [metadata.files]
 atomicwrites = [
