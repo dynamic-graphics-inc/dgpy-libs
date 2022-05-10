@@ -98,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.4"
+version = "0.21.5"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -364,8 +364,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.21.4-py3-none-any.whl", hash = "sha256:e38fd03bc6444bfd6298305dee11e8c05e57255463db5abeda05840cfb4d7ebe"},
-    {file = "jsonbourne-0.21.4.tar.gz", hash = "sha256:2d83c4333bf94b24d2e9e843fbe03c69845fd23067567c174b9f7a80be6d9bdf"},
+    {file = "jsonbourne-0.21.5-py3-none-any.whl", hash = "sha256:1ca88d2acca3f1ba21b03b69fb737fe5362900f19a421a78a732ca1a3a00a4d0"},
+    {file = "jsonbourne-0.21.5.tar.gz", hash = "sha256:8ac140b209e460fbd4fdfd0faf733fb227294ab7c58942c1d94b4730fd139435"},
 ]
 listless = [
     {file = "listless-0.1.1-py3-none-any.whl", hash = "sha256:a6b570bec4a6b37b9f2179bfc6caac72d46f42dc5b71604b43d4fea0a0e3aee8"},
