@@ -98,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.4"
+version = "0.21.5"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -253,11 +253,11 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "typing-extensions"
-version = "4.1.1"
-description = "Backported and Experimental Type Hints for Python 3.6+"
+version = "4.2.0"
+description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.7"
 
 [[package]]
 name = "xtyping"
@@ -364,8 +364,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.21.4-py3-none-any.whl", hash = "sha256:e38fd03bc6444bfd6298305dee11e8c05e57255463db5abeda05840cfb4d7ebe"},
-    {file = "jsonbourne-0.21.4.tar.gz", hash = "sha256:2d83c4333bf94b24d2e9e843fbe03c69845fd23067567c174b9f7a80be6d9bdf"},
+    {file = "jsonbourne-0.21.5-py3-none-any.whl", hash = "sha256:1ca88d2acca3f1ba21b03b69fb737fe5362900f19a421a78a732ca1a3a00a4d0"},
+    {file = "jsonbourne-0.21.5.tar.gz", hash = "sha256:8ac140b209e460fbd4fdfd0faf733fb227294ab7c58942c1d94b4730fd139435"},
 ]
 listless = [
     {file = "listless-0.1.1-py3-none-any.whl", hash = "sha256:a6b570bec4a6b37b9f2179bfc6caac72d46f42dc5b71604b43d4fea0a0e3aee8"},
@@ -446,8 +446,8 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-4.1.1-py3-none-any.whl", hash = "sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2"},
-    {file = "typing_extensions-4.1.1.tar.gz", hash = "sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42"},
+    {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},
+    {file = "typing_extensions-4.2.0.tar.gz", hash = "sha256:f1c24655a0da0d1b67f07e17a5e6b2a105894e6824b92096378bb3668ef02376"},
 ]
 xtyping = [
     {file = "xtyping-0.5.2-py3-none-any.whl", hash = "sha256:9f6f886ef65aade1fe8a34b05349f5d8f1dcc0453f125ecb5ce7a668c4f2f25b"},
