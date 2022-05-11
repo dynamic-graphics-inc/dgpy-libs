@@ -22,6 +22,7 @@ from jsonbourne.core import JSON, JsonObj
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
+    "JsonBaseConfig",
     "JsonBaseModelDefaultConfig",
     "JsonBaseModel",
     "JsonBaseModelT",
@@ -40,7 +41,7 @@ __all__ = (
 )
 
 
-class JsonBaseModelDefaultConfig(BaseConfig):
+class JsonBaseConfig(BaseConfig):
     """Pydantic model config class for JsonBaseModel; can be overridden"""
 
     # Sometimes hypothesis breaks and will try to add an attribute to
@@ -54,10 +55,14 @@ class JsonBaseModelDefaultConfig(BaseConfig):
     use_enum_values = True
 
 
+class JsonBaseModelDefaultConfig(JsonBaseConfig):
+    ...
+
+
 class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
-    Config = JsonBaseModelDefaultConfig
+    Config = JsonBaseConfig
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Construct a JsonBaseModel and allow for `__post_init__` functions"""
