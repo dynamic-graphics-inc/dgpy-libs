@@ -98,7 +98,7 @@ python-versions = "*"
 
 [[package]]
 name = "jsonbourne"
-version = "0.21.5"
+version = "0.21.6"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -173,7 +173,7 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pyparsing"
-version = "3.0.8"
+version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
 category = "dev"
 optional = false
@@ -364,8 +364,8 @@ iniconfig = [
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.21.5-py3-none-any.whl", hash = "sha256:1ca88d2acca3f1ba21b03b69fb737fe5362900f19a421a78a732ca1a3a00a4d0"},
-    {file = "jsonbourne-0.21.5.tar.gz", hash = "sha256:8ac140b209e460fbd4fdfd0faf733fb227294ab7c58942c1d94b4730fd139435"},
+    {file = "jsonbourne-0.21.6-py3-none-any.whl", hash = "sha256:fdeeab72b46a1f75cead53c0fb7d8b53ec7de1e175a97a62fd63c77adb2321a7"},
+    {file = "jsonbourne-0.21.6.tar.gz", hash = "sha256:ea07ee163f31aa1bf5b41bac95d0b8cd74f273f786ceb11bcca3ad90cc5f75d9"},
 ]
 listless = [
     {file = "listless-0.1.1-py3-none-any.whl", hash = "sha256:a6b570bec4a6b37b9f2179bfc6caac72d46f42dc5b71604b43d4fea0a0e3aee8"},
@@ -421,8 +421,8 @@ pydantic = [
     {file = "pydantic-1.9.0.tar.gz", hash = "sha256:742645059757a56ecd886faf4ed2441b9c0cd406079c2b4bee51bcc3fbcd510a"},
 ]
 pyparsing = [
-    {file = "pyparsing-3.0.8-py3-none-any.whl", hash = "sha256:ef7b523f6356f763771559412c0d7134753f037822dad1b16945b7b846f7ad06"},
-    {file = "pyparsing-3.0.8.tar.gz", hash = "sha256:7bf433498c016c4314268d95df76c81b842a4cb2b276fa3312cfb1e1d85f6954"},
+    {file = "pyparsing-3.0.9-py3-none-any.whl", hash = "sha256:5026bae9a10eeaefb61dab2f09052b9f4307d44aee4eda64b309723d8d206bbc"},
+    {file = "pyparsing-3.0.9.tar.gz", hash = "sha256:2b020ecf7d21b687f219b71ecad3631f644a47f01403fa1d1036b0c6416d70fb"},
 ]
 pytest = [
     {file = "pytest-7.1.2-py3-none-any.whl", hash = "sha256:13d0e3ccfc2b6e26be000cb6568c832ba67ba32e719443bfe725814d3c42433c"},
