@@ -268,15 +268,15 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
         yield from chunkseq(it, chunk_size)
     else:
         while True:
-            chunk = tuple(islice(it, chunk_size))
-            if not chunk:
+            _chunk = tuple(islice(it, chunk_size))
+            if not _chunk:
                 break
-            yield chunk
+            yield _chunk
 
 
-def chunk(it: Sequence[_T], n: int) -> Sequence[_T]:
+def chunk(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
     """Yield chunks of size n from a Sequence"""
-    yield from chunks(it, n)
+    return chunks(it, n)
 
 
 def exhaust(it: Iterable[_T], *, maxlen: int = 0) -> Deque[_T]:
