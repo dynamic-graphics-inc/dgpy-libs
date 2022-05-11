@@ -279,11 +279,12 @@ def chunk(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
     return chunks(it, n)
 
 
-def exhaust(it: Iterable[_T], *, maxlen: int = 0) -> Deque[_T]:
+def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> Deque[_T]:
     """Exhaust an interable; useful for evaluating a map object.
 
     Args:
         it: Iterable to exhaust
+        maxlen: Maximum length of the deque; if 0, deque is unbounded
 
     Examples:
         >>> a = [1, 2, 3, 4, 5, 6]
@@ -308,7 +309,9 @@ def exhaust(it: Iterable[_T], *, maxlen: int = 0) -> Deque[_T]:
     return deque(it, maxlen=maxlen)
 
 
-def xmap(func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: int = 0) -> Deque[_R]:
+def xmap(
+    func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: Optional[int] = 0
+) -> Deque[_R]:
     """Apply a function to each element of an iterable immediately
 
     Args:
@@ -323,6 +326,8 @@ def xmap(func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: int = 0) -> Dequ
         deque([], maxlen=0)
         >>> xmap(lambda x: x*2, list(range(1, 7)), maxlen=2)
         deque([10, 12], maxlen=2)
+        >>> xmap(lambda x: x*2, list(range(1, 7)), maxlen=None)
+        deque([2, 4, 6, 8, 10, 12])
 
     """
     return exhaust(map(func, it), maxlen=maxlen)
