@@ -261,7 +261,7 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
         ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
 
         >>> list(chunks((el for el in range(10)), 4))
-        ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
+        [(0, 1, 2, 3), (4, 5, 6, 7), (8, 9)]
 
     """
     if isinstance(it, (str, list, tuple)) or is_sequence(it):
