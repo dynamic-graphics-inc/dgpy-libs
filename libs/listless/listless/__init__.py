@@ -5,7 +5,7 @@ import asyncio
 
 from collections import deque
 from functools import reduce
-from itertools import count, tee, zip_longest
+from itertools import count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
@@ -101,6 +101,23 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
 iter_async = aiterable
 
 
+def pairs(it: Iterable[_T]) -> Iterable[Tuple[_T, _T]]:
+    """Yield pairs of adjacent elements
+
+    Examples:
+        >>> list(pairs([1, 2, 3, 4]))
+        [(1, 2), (2, 3), (3, 4)]
+        >>> list(pairs(['a', 'b', 'c']))
+        [('a', 'b'), ('b', 'c')]
+        >>> list(pairs('abc'))
+        [('a', 'b'), ('b', 'c')]
+
+    """
+    a, b = tee(it)
+    next(b, None)
+    return zip(a, b)
+
+
 def partition(
     it: Sequence[_T], n: int, *, pad: bool = False, padval: Any = None
 ) -> Iterable[Sequence[_T]]:
@@ -167,6 +184,44 @@ def partition(
         return zip(*args)
 
 
+def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
+    """Yield the first n items of an iterable"""
+    return islice(it, n)
+
+
+def is_sequence(seq: Any) -> bool:
+    """Check if an object is a sequence
+
+    Examples:
+        >>> is_sequence([1, 2, 3])
+        True
+        >>> is_sequence('abc')
+        False
+        >>> is_sequence(1)
+        False
+        >>> is_sequence(None)
+        False
+        >>> is_sequence(True)
+        False
+        >>> is_sequence((1, 2, 3))
+        True
+
+    """
+
+    if isinstance(seq, str):
+        return False
+    try:
+        len(seq)
+    except TypeError:
+        return False
+    return True
+
+
+def chunkseq(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
+    """Yield chunks of size n from a Sequence"""
+    return (it[i : i + n] for i in range(0, len(it), n))
+
+
 @overload
 def chunks(it: str, chunk_size: int) -> List[str]:
     ...
@@ -205,8 +260,23 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
         >>> list(chunks('abcdefghijklmnopqrstuvwxyz', 4))
         ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
 
+        >>> list(chunks((el for el in range(10)), 4))
+        ['abcd', 'efgh', 'ijkl', 'mnop', 'qrst', 'uvwx', 'yz']
+
     """
-    return (it[i : i + chunk_size] for i in range(0, len(it), chunk_size))
+    if isinstance(it, (str, list, tuple)) or is_sequence(it):
+        yield from chunkseq(it, chunk_size)
+    else:
+        while True:
+            chunk = tuple(islice(it, chunk_size))
+            if not chunk:
+                break
+            yield chunk
+
+
+def chunk(it: Sequence[_T], n: int) -> Sequence[_T]:
+    """Yield chunks of size n from a Sequence"""
+    yield from chunks(it, n)
 
 
 def exhaust(it: Iterable[_T], *, maxlen: int = 0) -> Deque[_T]:
@@ -410,6 +480,8 @@ def itlen(iterable: Iterable[Any], unique: bool = False) -> int:
         Length of an iterable
 
     Examples:
+        >>> itlen(range(10))
+        10
         >>> itlen(x for x in range(1000000) if x % 3 == 0)
         333334
         >>> l = [x for x in range(1000000) if x % 3 == 0]
@@ -623,3 +695,9 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
             yield values
         except (StopIteration, StopAsyncIteration):
             break
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

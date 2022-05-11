@@ -4,4 +4,4 @@
 __title__ = "listless"
 __description__ = "generator utils; aka listless"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.1.1"
+__version__ = "0.1.2"
