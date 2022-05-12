@@ -116,11 +116,11 @@ orjson = ["orjson (>=3.0.0,<4.0.0)"]
 
 [[package]]
 name = "listless"
-version = "0.1.1"
+version = "0.1.2"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 
 [[package]]
 name = "packaging"
@@ -368,8 +368,8 @@ jsonbourne = [
     {file = "jsonbourne-0.21.6.tar.gz", hash = "sha256:ea07ee163f31aa1bf5b41bac95d0b8cd74f273f786ceb11bcca3ad90cc5f75d9"},
 ]
 listless = [
-    {file = "listless-0.1.1-py3-none-any.whl", hash = "sha256:a6b570bec4a6b37b9f2179bfc6caac72d46f42dc5b71604b43d4fea0a0e3aee8"},
-    {file = "listless-0.1.1.tar.gz", hash = "sha256:93193853b089d04793e2e69e0b101d046906ada0c903bce5b814a487db478c4e"},
+    {file = "listless-0.1.2-py3-none-any.whl", hash = "sha256:61af18f0d9d8519b92933f10e75bad5829c071e5707620580d400187afbe2dfa"},
+    {file = "listless-0.1.2.tar.gz", hash = "sha256:3f8d56c4f392f1e491cfce829d11a57c0e57799753a2bb7e998e6fe76977be0f"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
