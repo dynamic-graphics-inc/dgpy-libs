@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SCRIPTS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPTS_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 DGPY_LIBS_REPO_ROOT=$(dirname "$SCRIPTS_DIR")
 
 jq -c -r '.[]' ${DGPY_LIBS_REPO_ROOT}/_meta/topo.json | while read i; do
@@ -13,5 +13,3 @@ done
 
 cd ${DGPY_LIBS_REPO_ROOT}
 poetry update
-
-
