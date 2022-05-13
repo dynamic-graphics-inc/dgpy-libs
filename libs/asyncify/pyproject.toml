@@ -35,7 +35,7 @@ xtyping = ">=0.5.0"
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
 pytest-asyncio = "^0.18.1"
-anyio = {extras = ["trio"], version = "^3.5.0"}
+anyio = {extras = ["trio"], version = "^3.6.1"}
 xdoctest = ">=0.15.10"
 
 [build-system]
