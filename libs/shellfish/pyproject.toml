@@ -30,11 +30,11 @@ keywords = [
 python = "^3.7"
 pydantic = "^1.9.0"
 aiopen = "^0.5.0"
-asyncify = ">=0.7,<0.10"
-funkify = "^0.4.0"
+asyncify = ">=0.9.1"
+funkify = ">=0.4.0"
 jsonbourne = ">=0.20.3"
 listless = ">=0.1.0"
-xtyping = ">=0.5.0"
+xtyping = ">=0.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
