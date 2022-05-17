@@ -323,6 +323,7 @@ def files_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Iterator[str]:
     r"""Yield file-paths beneath a given dirpath (defaults to os.getcwd())
 
@@ -332,6 +333,7 @@ def files_gen(
         onerror: Function called on OSError
         topdown: Not applicable
         followlinks: Follow links
+        check: Check that dir exists
 
     Returns:
         Generator object that yields file-paths (absolute or relative)
@@ -400,7 +402,7 @@ def files_gen(
 
     """
     dirpath = str(dirpath)
-    if not isdir(dirpath):
+    if check and not isdir(dirpath):
         raise NotADirectoryError(dirpath)
     return (
         filepath if abspath else str(filepath).replace(dirpath, "").strip(sep)
@@ -424,6 +426,7 @@ def dirs_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Iterator[str]:
     r"""Yield directory-paths beneath a dirpath (defaults to os.getcwd())
 
@@ -520,7 +523,7 @@ def dirs_gen(
         >>> rmtree(tmpdir)
 
     """
-    if not isdir(dirpath):
+    if check and not isdir(dirpath):
         raise NotADirectoryError(dirpath)
     return (
         dirpath if abspath else str(dirpath).replace(dirpath, "").strip(sep)
@@ -543,6 +546,7 @@ def files_dirs_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Tuple[Iterator[str], Iterator[str]]:
     r"""Return a files_gen() and a dirs_gen() in one swell-foop
 
@@ -647,12 +651,14 @@ def files_dirs_gen(
         followlinks=followlinks,
         onerror=onerror,
         topdown=topdown,
+        check=check
     ), dirs_gen(
         dirpath,
         abspath=abspath,
         followlinks=followlinks,
         onerror=onerror,
         topdown=topdown,
+        check=check
     )
 
 
@@ -663,6 +669,7 @@ def walk_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True
 ) -> Iterator[str]:
     r"""Yield all paths beneath a given dirpath (defaults to os.getcwd())
 
@@ -755,7 +762,7 @@ def walk_gen(
 
     """
     dirpath = str(dirpath)
-    if not isdir(dirpath):
+    if check and not isdir(dirpath):
         raise NotADirectoryError(dirpath)
     return (
         str(path_string)
@@ -784,6 +791,7 @@ def filepath_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Iterator[Path]:
     r"""Yield all filepaths as pathlib.Path objects beneath a dirpath"""
     return (
@@ -794,6 +802,7 @@ def filepath_gen(
             topdown=topdown,
             onerror=onerror,
             followlinks=followlinks,
+            check=check,
         )
     )
 
@@ -805,6 +814,7 @@ def dirpath_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Iterator[Path]:
     r"""Yield all dirpaths as pathlib.Path objects beneath a dirpath"""
     return (
@@ -815,6 +825,7 @@ def dirpath_gen(
             topdown=topdown,
             onerror=onerror,
             followlinks=followlinks,
+            check=check,
         )
     )
 
@@ -826,6 +837,7 @@ def path_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
+    check: bool = True,
 ) -> Iterator[Path]:
     r"""Yield all filepaths as pathlib.Path objects beneath a dirpath"""
     return (
@@ -836,6 +848,7 @@ def path_gen(
             topdown=topdown,
             onerror=onerror,
             followlinks=followlinks,
+            check=check,
         )
     )
 
