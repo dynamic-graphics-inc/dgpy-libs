@@ -4,6 +4,7 @@ max-line-length = 120
 color = auto
 extend-ignore =
     BLK100
+    C417
     D400
     E203
     E266
