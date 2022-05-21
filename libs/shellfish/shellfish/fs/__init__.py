@@ -651,14 +651,14 @@ def files_dirs_gen(
         followlinks=followlinks,
         onerror=onerror,
         topdown=topdown,
-        check=check
+        check=check,
     ), dirs_gen(
         dirpath,
         abspath=abspath,
         followlinks=followlinks,
         onerror=onerror,
         topdown=topdown,
-        check=check
+        check=check,
     )
 
 
@@ -669,7 +669,7 @@ def walk_gen(
     topdown: bool = True,
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
-    check: bool = True
+    check: bool = True,
 ) -> Iterator[str]:
     r"""Yield all paths beneath a given dirpath (defaults to os.getcwd())
 
