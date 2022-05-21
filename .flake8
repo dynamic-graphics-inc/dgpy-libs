@@ -1,5 +1,4 @@
 [flake8]
-# Black formatting length
 max-line-length = 120
 color = auto
 extend-ignore =
