@@ -300,6 +300,7 @@ def _snake2camel(string: str) -> str:
     return f"{string[0].lower()}{snake2pascal(string)[1:]}"
 
 
+@anystr2anystr
 def snake2camel(string: AnyStr) -> AnyStr:
     """Convert a given snake_case string to camelCase
 
@@ -314,6 +315,87 @@ def snake2camel(string: AnyStr) -> AnyStr:
 
     """
     return _snake2camel(string)
+
+
+@anystr2anystr
+def pascal2snake(string: AnyStr) -> AnyStr:
+    """Convert a given PascalCase string to snake_case
+
+    Examples:
+        >>> pascal2snake('PascalCase')
+        'pascal_case'
+        >>> pascal2snake(b'PascalCase')
+        b'pascal_case'
+
+    """
+    return camel2snake(pascal2camel(string))
+
+
+@anystr2anystr
+def camel2pascal(string: AnyStr) -> AnyStr:
+    """Convert a given camelCase string to PascalCase
+
+    Examples:
+        >>> camel2pascal('camelCase')
+        'CamelCase'
+        >>> camel2pascal(b'camelCase')
+        b'CamelCase'
+
+    """
+    return f"{string[0].upper()}{string[1:]}"
+
+
+@anystr2anystr
+def kebab2pascal(string: AnyStr) -> AnyStr:
+    """Convert a given kebab-case string to PascalCase
+
+    Examples:
+        >>> kebab2pascal('kebab-case')
+        'KebabCase'
+        >>> kebab2pascal(b'kebab-case')
+        b'KebabCase'
+
+    """
+    return snake2pascal(kebab2snake(string))
+
+
+def pascal2kebab(string: AnyStr) -> AnyStr:
+    """Convert a given PascalCase string to kebab-case
+
+    Examples:
+        >>> pascal2kebab('PascalCase')
+        'pascal-case'
+        >>> pascal2kebab(b'PascalCase')
+        b'pascal-case'
+
+    """
+    return snake2kebab(pascal2snake(string))
+
+
+def kebab2camel(string: AnyStr) -> AnyStr:
+    """Convert a given kebab-case string to camelCase
+
+    Examples:
+        >>> kebab2camel('kebab-case')
+        'kebabCase'
+        >>> kebab2camel(b'kebab-case')
+        b'kebabCase'
+
+    """
+    return snake2camel(kebab2snake(string))
+
+
+def camel2kebab(string: AnyStr) -> AnyStr:
+    """Convert a given camelCase string to kebab-case
+
+    Examples:
+        >>> camel2kebab('camelCase')
+        'camel-case'
+        >>> camel2kebab(b'camelCase')
+        b'camel-case'
+
+    """
+    return snake2kebab(camel2snake(string))
 
 
 def ensure_trailing_newline(string: AnyStr) -> AnyStr:
@@ -867,23 +949,25 @@ def truncate_string(
         line_lengths = [len(line) for line in string_lines]
         total_characters = sum(line_lengths)
         if total_characters < max_characters:
+            trunc_msg = f"... Truncated @ {maxlines} lines... "
             string_lines.extend(
                 [
-                    "_____________________________",
-                    f"... Truncated @ {maxlines} lines... ",
-                    "-----------------------------",
+                    "-" * len(trunc_msg),
+                    trunc_msg,
+                    "-" * len(trunc_msg),
                 ]
-            )
-            string_lines.append(
-                overscore_carrots(f"... Truncated @ {maxlines} lines... ")
             )
             truncated_string = "\n".join(string_lines)
         else:
             truncated_string = "\n".join(string_lines)[:4096]
-            trunc_str = overscore_carrots(
-                f"... Truncated @ {max_characters} characters ..."
+            trunc_msg = f"... Truncated @ {max_characters} characters ..."
+            truncated_string += "\n".join(
+                [
+                    "-" * len(trunc_msg),
+                    truncated_string,
+                    "-" * len(trunc_msg),
+                ]
             )
-            truncated_string += trunc_str
     else:
         truncated_string = "\n".join(string_lines)
 
@@ -982,10 +1066,18 @@ def striterable(string: str) -> Iterable[str]:
 # =====================================
 # Aliases (for backwards compatibility)
 # =====================================
+camel_to_kebab = camel2kebab
+camel_to_pascal = camel2pascal
 camel_to_snake = camel2snake
-snake_to_pascal = snake2pascal
+kebab_to_camel = kebab2camel
+kebab_to_pascal = kebab2pascal
+kebab_to_snake = kebab2snake
+pascal_to_camel = pascal2camel
+pascal_to_kebab = pascal2kebab
+pascal_to_snake = pascal2snake
 snake_to_camel = snake2camel
 snake_to_kebab = snake2kebab
+snake_to_pascal = snake2pascal
 
 randstr = random_string
 rhex_str = randhexstr
@@ -1471,13 +1563,13 @@ def space_pad_strings(strings: List[str]) -> List[str]:
 
 
 __all__ = (
-    "__version__",
     "ALL_CAP_RE",
     "CAMEL_CHARACTERS",
     "FIRST_CAP_RE",
     "HTML",
     "KEBAB_CHARACTERS",
     "SNAKE_CHARACTERS",
+    "__version__",
     "anystr",
     "anystr2anystr",
     "b64_html_gif",
@@ -1488,8 +1580,12 @@ __all__ = (
     "binstr",
     "body_contents",
     "bytes2str",
+    "camel2kebab",
+    "camel2pascal",
     "camel2snake",
     "camel_characters_set",
+    "camel_to_kebab",
+    "camel_to_pascal",
     "camel_to_snake",
     "carrots",
     "dedent",
@@ -1501,8 +1597,13 @@ __all__ = (
     "filesize_str",
     "indent",
     "is_snake",
+    "kebab2camel",
+    "kebab2pascal",
     "kebab2snake",
     "kebab_characters_set",
+    "kebab_to_camel",
+    "kebab_to_pascal",
+    "kebab_to_snake",
     "long_timestamp_string",
     "longest_line",
     "multi_replace",
@@ -1511,6 +1612,11 @@ __all__ = (
     "overscore",
     "overscore_carrots",
     "pascal2camel",
+    "pascal2kebab",
+    "pascal2snake",
+    "pascal_to_camel",
+    "pascal_to_kebab",
+    "pascal_to_snake",
     "printable_characters_set",
     "pstr",
     "randhexstr",
