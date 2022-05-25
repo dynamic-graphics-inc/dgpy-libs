@@ -42,7 +42,7 @@ xtyping = "*"
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
 flake8 = "^4.0.1"
-h5py = "^3.4.0"
+h5py = "^3.7.0"
 isort = "^5.7.0"
 mypy = "^0.942"
 nox = "^2022.1.7"
