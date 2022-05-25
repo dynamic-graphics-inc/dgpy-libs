@@ -342,6 +342,8 @@ def camel2pascal(string: AnyStr) -> AnyStr:
         b'CamelCase'
 
     """
+    if isinstance(string, bytes):
+        return b"".join(x.capitalize() for x in string.split(b"_"))
     return f"{string[0].upper()}{string[1:]}"
 
 
