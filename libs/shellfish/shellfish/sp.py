@@ -37,7 +37,9 @@ __subprocess_all__ = (
 __all__ = (
     "CompletedProcessObj",
     "completed_process_obj",
+    "PopenArg",
     "PopenArgs",
+    "PopenArgv",
     "PopenEnv",
     "runb",
     "runs",
@@ -59,7 +61,9 @@ else:
     PathLikeStrBytes = os.PathLike
 
 
-PopenArgs = Union[bytes, str, Sequence[Union[str, bytes, PathLikeStrBytes]]]
+PopenArg = Union[str, bytes, PathLikeStrBytes]
+PopenArgv = Sequence[PopenArg]
+PopenArgs = Union[bytes, str, PopenArgv]
 PopenEnv = Mapping[str, str]
 
 

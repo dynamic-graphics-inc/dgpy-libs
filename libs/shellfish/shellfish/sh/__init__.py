@@ -274,6 +274,7 @@ class Done(JsonBaseModel):
     stdin: Optional[str] = None
     async_proc: bool = False
     verbose: bool = False
+    dryrun: bool = False
 
     def __post_init__(self) -> None:
         """Write the stdout/stdout to sys.stdout/sys.stderr post object init"""
@@ -581,6 +582,7 @@ def _do(
     timeout: Optional[int] = None,
     text: bool = False,
     ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
 
@@ -620,6 +622,24 @@ def _do(
         )
     _env = None if env is None else mkenv(env, extenv=extenv)
     args_str = " ".join(_args)
+    if dryrun:
+        return Done(
+            args=_args if IS_WIN or not shell else args_str,
+            returncode=0,
+            stdout="",
+            stderr="",
+            ti=0,
+            tf=0,
+            dt=0,
+            hrdt=HrTime(
+                hr=0,
+                min=0,
+            ),
+            verbose=verbose,
+            stdin=_input,
+            dryrun=True,
+        )
+
     ti = time()
     proc = run(
         args=_args if IS_WIN or not shell else args_str,
@@ -664,6 +684,7 @@ def do(
     input: STDIN = None,
     timeout: Optional[int] = None,
     ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
 
@@ -680,6 +701,7 @@ def do(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         ok_code: Return code(s) to check against
+        dryrun: Don't run the subprocess
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -705,6 +727,7 @@ def do(
         input=_input,
         timeout=timeout,
         ok_code=ok_code,
+        dryrun=dryrun,
     )
 
 
@@ -712,6 +735,7 @@ def shx(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
     env: Optional[Dict[str, str]] = None,
+    shell: bool = True,
     extenv: bool = True,
     cwd: Optional[FsPath] = None,
     check: bool = False,
@@ -719,6 +743,7 @@ def shx(
     input: STDIN = None,
     timeout: Optional[int] = None,
     ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously in current shell
 
@@ -726,6 +751,7 @@ def shx(
         *popenargs: Args given as `*args`; Cannot use both *popenargs and args
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
+        shell: Run in shell or sub-shell; default is True for `shx`
         extenv: Extend the environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         check: Check the outputs (generally useless)
@@ -741,7 +767,7 @@ def shx(
     return do(
         *popenargs,
         args=args,
-        shell=True,
+        shell=shell,
         env=env,
         extenv=extenv,
         cwd=cwd,
@@ -750,6 +776,7 @@ def shx(
         input=input,
         timeout=timeout,
         ok_code=ok_code,
+        dryrun=dryrun,
     )
 
 
@@ -820,6 +847,7 @@ async def do_asyncify(
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
     ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
     done = await _do_asyncify(  # type: ignore[call-arg]
@@ -834,6 +862,7 @@ async def do_asyncify(
         loop=loop,
         timeout=timeout,
         ok_code=ok_code,
+        dryrun=dryrun,
     )
     done.async_proc = True
     return done
@@ -852,6 +881,7 @@ async def _do_async(
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
     ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await completion
 
@@ -888,6 +918,8 @@ async def _do_async(
             check=check,
             loop=loop,
             timeout=timeout,
+            ok_code=ok_code,
+            dryrun=dryrun,
         )
         done.async_proc = True
         return done
@@ -923,6 +955,25 @@ async def _do_async(
         exe_path = which_lru(_args[0], path=_syspath)
         if exe_path:
             _args[0] = exe_path
+
+    if dryrun:
+        return Done(
+            args=_args,
+            returncode=0,
+            stdout="",
+            stderr="",
+            ti=0,
+            tf=0,
+            dt=0,
+            hrdt=HrTime(
+                hr=0,
+                min=0,
+            ),
+            verbose=verbose,
+            stdin=_input,
+            dryrun=True,
+            async_proc=True,
+        )
 
     if shell:
         _cmd = args2cmd(_args)
@@ -1011,6 +1062,8 @@ async def do_async(
     check: bool = False,
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
+    ok_code: Union[Sequence[int], int] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
 
@@ -1050,6 +1103,8 @@ async def do_async(
             check=check,
             loop=loop,
             timeout=timeout,
+            ok_code=ok_code,
+            dryrun=dryrun,
         )
         done.async_proc = True
         return done
@@ -1066,6 +1121,8 @@ async def do_async(
         check=check,
         loop=loop,
         timeout=timeout,
+        ok_code=ok_code,
+        dryrun=dryrun,
     )
 
 
@@ -1084,6 +1141,8 @@ async def doa(
     check: bool = False,
     loop: Optional[Any] = None,
     timeout: Optional[int] = None,
+    ok_code: Union[int, Sequence[int]] = 0,
+    dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
 
@@ -1118,6 +1177,8 @@ async def doa(
         check=check,
         loop=loop,
         timeout=timeout,
+        ok_code=ok_code,
+        dryrun=dryrun,
     )
 
 
