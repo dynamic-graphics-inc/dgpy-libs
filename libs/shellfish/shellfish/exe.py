@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Exes/commands"""
 from __future__ import annotations
-from jsonbourne.pydantic import JsonBaseModel
+
 from shlex import split as _shplit
 
+from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
 from shellfish.sh import Done, flatten_args
 from shellfish.sp import PopenArgs, PopenArgv
@@ -16,9 +17,9 @@ from xtyping import (
     Optional,
     Sequence,
     Tuple,
-    Union,
     Type,
     TypeVar,
+    Union,
 )
 
 __all__ = (
