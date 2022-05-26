@@ -11,4 +11,4 @@
 
 **Install:** `pip install fmts` OR `poetry add fmts`
 
-**What:** typed & tested python itertools/generators-utils library
+**What:** typed & tested python string utils

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Dynamic Graphics Python libraries"""
 
+from dgpylibs._meta import __version__
+
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
-from dgpylibs._meta import __version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__

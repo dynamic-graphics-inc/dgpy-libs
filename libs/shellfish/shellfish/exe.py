@@ -87,7 +87,7 @@ class ExeABC:
         ...
 
     @classmethod
-    def from_execfg(cls: Type[TExe], config: ExeConfig) -> TExe:
+    def _from_exe_config(cls: Type[TExe], config: ExeConfig) -> TExe:
         """Return a new instance from the config"""
         return cls(
             cmd=config.cmd,
@@ -102,7 +102,7 @@ class ExeABC:
             verbose=config.verbose,
         )
 
-    def execfg(self) -> ExeConfig:
+    def _config(self) -> ExeConfig:
         """Return the config"""
         return ExeConfig(
             cmd=self.cmd,
@@ -117,7 +117,7 @@ class ExeABC:
             check=self.check,
         )
 
-    def which(self) -> str:
+    def _which(self) -> str:
         """Return the path to the exe"""
         if self.abspath is not None:
             return self.abspath
@@ -126,6 +126,10 @@ class ExeABC:
             raise FileNotFoundError(f"{self.cmd} not found")
         self.abspath = _abspath
         return self.abspath
+
+    def which(self) -> str:
+        """Return the path to the exe"""
+        return self._which()
 
     def _unredundify(
         self,
@@ -141,7 +145,7 @@ class ExeABC:
             _args_list = _args_list[1:]
         return tuple(_args_list)
 
-    def cmdargs(
+    def _cmdargs(
         self,
         popenargs: Tuple[PopenArgs, ...],
         args: Optional[PopenArgs] = None,
@@ -149,7 +153,7 @@ class ExeABC:
         argv = self._unredundify(popenargs, args)
         return (self.cmd,) + argv
 
-    def do(
+    def _do(
         self,
         *popenargs: PopenArgs,
         args: Optional[PopenArgs] = None,
@@ -164,7 +168,7 @@ class ExeABC:
         ok_code: Union[int, Sequence[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
-        _args = self.cmdargs(popenargs, args)
+        _args = self._cmdargs(popenargs, args)
         return sh.do(
             args=_args,
             env=env or self.env,
@@ -179,7 +183,7 @@ class ExeABC:
             dryrun=dryrun,
         )
 
-    async def do_async(
+    async def _do_async(
         self,
         *popenargs: PopenArgs,
         args: Optional[PopenArgs] = None,
@@ -195,7 +199,7 @@ class ExeABC:
         timeout: Optional[int] = None,
         verbose: bool = False,
     ) -> Done:
-        _args = self.cmdargs(popenargs, args)
+        _args = self._cmdargs(popenargs, args)
         return await sh.do_async(
             args=_args,
             check=check,
@@ -211,7 +215,10 @@ class ExeABC:
             verbose=verbose or self.verbose,
         )
 
-    doa = do_async
+    # aliases
+    do = _do
+    do_async = _do_async
+    doa = _do_async
 
 
 class Exe(ExeABC):
@@ -230,7 +237,7 @@ class Exe(ExeABC):
         ok_code: Union[int, Sequence[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
-        return self.do(
+        return self._do(
             *popenargs,
             args=args,
             check=check,
@@ -262,7 +269,7 @@ class ExeAsync(ExeABC):
         timeout: Optional[int] = None,
         verbose: bool = False,
     ) -> Done:
-        return await self.do_async(
+        return await self._do_async(
             *popenargs,
             args=args,
             check=check,
