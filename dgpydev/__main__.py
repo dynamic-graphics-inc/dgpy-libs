@@ -1,3 +1,3 @@
-from dev.cli import main
+from dgpydev.cli import main
 
 main()
