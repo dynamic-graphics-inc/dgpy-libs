@@ -8,7 +8,7 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 packages = [
     { include = "dgpylibs", from = "." },
-    { include = "dev", from = "." },
+    { include = "dgpydev", from = "." },
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
@@ -69,7 +69,7 @@ shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
 
 [tool.poetry.scripts]
-dev = "dev.cli:main"
+dgpydev = "dev.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
