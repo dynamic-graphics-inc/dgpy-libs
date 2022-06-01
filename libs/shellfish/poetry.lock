@@ -1,6 +1,6 @@
 [[package]]
 name = "aiopen"
-version = "0.5.3"
+version = "0.5.4"
 description = "Async file io"
 category = "main"
 optional = false
@@ -289,8 +289,8 @@ content-hash = "4a5a9c35d6463099ba58076fc335b14a09f20a9a93e82b3e75934ac0dc1b230e
 
 [metadata.files]
 aiopen = [
-    {file = "aiopen-0.5.3-py3-none-any.whl", hash = "sha256:0f7a5a85ce84cb518b150f3186671499e2178cd6611366ba4612578865ca055c"},
-    {file = "aiopen-0.5.3.tar.gz", hash = "sha256:b45c060a9c1226480dcc1c703e0e00a2a547e090115f9cddf7d76f286ef99828"},
+    {file = "aiopen-0.5.4-py3-none-any.whl", hash = "sha256:04966467fccfbd30c50e8524c619a47f69b4d9ba4c58976efe974a87558aeb0b"},
+    {file = "aiopen-0.5.4.tar.gz", hash = "sha256:9a391e49680916ef290ee1261396d7661df97e11b60f46fc5771725d147d54f8"},
 ]
 asyncify = [
     {file = "asyncify-0.9.1-py3-none-any.whl", hash = "sha256:0387ffcac52bb38978c420ef7e6ba8d6d4aaad5112eb1ebbe331e421ed080c2c"},
