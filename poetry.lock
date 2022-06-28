@@ -92,6 +92,27 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "build"
+version = "0.8.0"
+description = "A simple, correct PEP 517 build frontend"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+colorama = {version = "*", markers = "os_name == \"nt\""}
+importlib-metadata = {version = ">=0.22", markers = "python_version < \"3.8\""}
+packaging = ">=19.0"
+pep517 = ">=0.9.1"
+tomli = {version = ">=1.0.0", markers = "python_version < \"3.11\""}
+
+[package.extras]
+docs = ["furo (>=2021.08.31)", "sphinx (>=4.0,<5.0)", "sphinx-argparse-cli (>=1.5)", "sphinx-autodoc-typehints (>=1.10)"]
+test = ["filelock (>=3)", "pytest (>=6.2.4)", "pytest-cov (>=2.12)", "pytest-mock (>=2)", "pytest-rerunfailures (>=9.1)", "pytest-xdist (>=1.34)", "toml (>=0.10.0)", "wheel (>=0.36.0)", "setuptools (>=42.0.0)", "setuptools (>=56.0.0)"]
+typing = ["importlib-metadata (>=4.6.4)", "mypy (==0.950)", "typing-extensions (>=3.7.4.3)"]
+virtualenv = ["virtualenv (>=20.0.35)"]
+
+[[package]]
 name = "click"
 version = "8.1.3"
 description = "Composable command line interface toolkit"
@@ -434,15 +455,15 @@ zipp = {version = "*", markers = "python_version < \"3.8\""}
 
 [[package]]
 name = "pip-tools"
-version = "6.6.2"
+version = "6.7.0"
 description = "pip-tools keeps your pinned dependencies fresh."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 
 [package.dependencies]
+build = "*"
 click = ">=7"
-pep517 = "*"
 
 [package.extras]
 coverage = ["pytest-cov"]
@@ -744,7 +765,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "3be23ad12ac74030b907244e1ac6a5bd1cf9437e2e66d49b140455b630fa1882"
+content-hash = "94efdd95a2c981c41cd1d96e5022085b1aed234c4629a029f03744603bf301dc"
 
 [metadata.files]
 aiopen = []
@@ -785,6 +806,10 @@ black = [
     {file = "black-22.3.0-cp39-cp39-win_amd64.whl", hash = "sha256:9b542ced1ec0ceeff5b37d69838106a6348e60db7b8fdd245294dc1d26136265"},
     {file = "black-22.3.0-py3-none-any.whl", hash = "sha256:bc58025940a896d7e5356952228b68f793cf5fcb342be703c3a2669a1488cb72"},
     {file = "black-22.3.0.tar.gz", hash = "sha256:35020b8886c022ced9282b51b5a875b6d1ab0c387b31a065b84db7c33085ca79"},
+]
+build = [
+    {file = "build-0.8.0-py3-none-any.whl", hash = "sha256:19b0ed489f92ace6947698c3ca8436cb0556a66e2aa2d34cd70e2a5d27cd0437"},
+    {file = "build-0.8.0.tar.gz", hash = "sha256:887a6d471c901b1a6e6574ebaeeebb45e5269a79d095fe9a8f88d6614ed2e5f0"},
 ]
 click = [
     {file = "click-8.1.3-py3-none-any.whl", hash = "sha256:bb4d8133cb15a609f44e8213d9b391b0809795062913b383c62be0ee95b1db48"},
@@ -1011,8 +1036,8 @@ pep517 = [
     {file = "pep517-0.12.0.tar.gz", hash = "sha256:931378d93d11b298cf511dd634cf5ea4cb249a28ef84160b3247ee9afb4e8ab0"},
 ]
 pip-tools = [
-    {file = "pip-tools-6.6.2.tar.gz", hash = "sha256:f638503a9f77d98d9a7d72584b1508d3f82ed019b8fab24f4e5ad078c1b8c95e"},
-    {file = "pip_tools-6.6.2-py3-none-any.whl", hash = "sha256:6b486548e5a139e30e4c4a225b3b7c2d46942a9f6d1a91143c21b1de4d02fd9b"},
+    {file = "pip-tools-6.7.0.tar.gz", hash = "sha256:0aeedc28c0316a30c561893a1f41c3611b46ac536bc271082ffdbdbd1d26924c"},
+    {file = "pip_tools-6.7.0-py3-none-any.whl", hash = "sha256:bae093c36dab6460e9b400e6b8e0b544a89d8bee1904e5698a3e645eb4e9dc36"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.2-py3-none-any.whl", hash = "sha256:027d8e83a2d7de06bbac4e5ef7e023c02b863d7ea5d079477e722bb41ab25788"},
