@@ -1224,18 +1224,22 @@ class JSON(metaclass=JSONMeta):
         )
 
     @staticmethod
-    def loads(string: Union[bytes, str], obj: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+    ) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
-            return jsonify(jsonlib.loads(string, **kwargs))
-        return jsonlib.loads(string, **kwargs)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     @staticmethod
-    def parse(string: Union[bytes, str], obj: bool = True) -> Any:
-        """Parse JSON string/bytes and jsonify all dictionaries -> JsonObj"""
+    def parse(
+        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+    ) -> Any:
+        """Parse JSON string/bytes"""
         if obj:
-            return jsonify(jsonlib.loads(string))
-        return jsonlib.loads(string)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     @staticmethod
     def use_orjson() -> None:

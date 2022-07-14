@@ -129,7 +129,7 @@ class JsonLibABC(ABC):
 
     @staticmethod
     @abstractmethod
-    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
         ...
 
     @staticmethod
@@ -215,7 +215,11 @@ class JSON_STDLIB(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+        if jsonc:
+            raise NotImplementedError(
+                "Python stdlib-json does not support JSONC; use rapidjson"
+            )
         return pyjson.loads(string, **kwargs)
 
     @staticmethod
@@ -293,7 +297,9 @@ class ORJSON(JsonLibABC):
         )
 
     @staticmethod
-    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+        if jsonc:
+            raise NotImplementedError("orjson does not support JSONC; use rapidjson")
         return orjson.loads(string)
 
     @staticmethod
@@ -378,7 +384,9 @@ class RAPIDJSON(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
+    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+        if jsonc and "parse_mode" not in kwargs:
+            kwargs["parse_mode"] = rapidjson.PM_COMMENTS
         return rapidjson.loads(string, **kwargs)
 
     @staticmethod
@@ -454,12 +462,18 @@ def import_json(
 
 class JsonLib:
     _jsonlib: Type[JsonLibABC]
+    _rj: Optional[Type[RAPIDJSON]] = None
+    _oj: Optional[Type[ORJSON]] = None
 
     def __init__(self, jsonlib: Optional[Type[JsonLibABC]] = None):
         if jsonlib:
             self._jsonlib = jsonlib
         else:
             self._jsonlib = import_json()
+        if ORJSON.useable():
+            self._oj = ORJSON
+        if RAPIDJSON.useable():
+            self._rj = RAPIDJSON
 
     def dumps(
         self,
@@ -501,8 +515,13 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(self, string: Union[bytes, str], **kwargs: Any) -> Any:
-        return self._jsonlib.loads(string, **kwargs)
+    def loads(
+        self, string: Union[bytes, str], jsonc: bool = False, **kwargs: Any
+    ) -> Any:
+        if jsonc:
+            if self._rj:
+                return self._rj.loads(string, jsonc=jsonc, **kwargs)
+        return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     def use_orjson(self) -> None:
         self._jsonlib = _import_orjson()
@@ -540,7 +559,9 @@ class JsonLib:
         )
 
 
-JSONLIB: Type[JsonLibABC] = import_json()
+# JSONLIB: Type[JsonLibABC] = import_json()
+_JSONLIB: Type[JsonLibABC] = import_json()
+JSONLIB = JsonLib(_JSONLIB)
 
 
 def dumps(
@@ -583,8 +604,12 @@ def dumpb(
     )
 
 
-def loads(string: Union[bytes, str], **kwargs: Any) -> Any:
-    return JSONLIB.loads(string, **kwargs)
+def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
+
+
+def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
 def jsoncp(
@@ -608,18 +633,15 @@ def jsoncp(
 
 
 def use_orjson() -> None:
-    global JSONLIB
-    JSONLIB = _import_orjson()
+    JSONLIB.use_orjson()
 
 
 def use_rapidjson() -> None:
-    global JSONLIB
-    JSONLIB = _import_rapidjson()
+    JSONLIB.use_rapidjson()
 
 
 def use_json_stdlib() -> None:
-    global JSONLIB
-    JSONLIB = _import_json_stdlib()
+    JSONLIB.use_json_stdlib()
 
 
 def use_json() -> None:
@@ -627,4 +649,4 @@ def use_json() -> None:
 
 
 def which() -> str:
-    return JSONLIB.lib
+    return JSONLIB.which()

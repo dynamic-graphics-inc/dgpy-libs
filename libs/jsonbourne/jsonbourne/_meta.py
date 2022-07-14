@@ -4,4 +4,4 @@
 __title__ = "jsonbourne"
 __description__ = "EZPZ JSON"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.21.6"
+__version__ = "0.22.0"
