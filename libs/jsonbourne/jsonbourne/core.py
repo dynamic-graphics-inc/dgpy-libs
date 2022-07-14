@@ -1242,6 +1242,14 @@ class JSON(metaclass=JSONMeta):
         return jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     @staticmethod
+    def orjson_useable() -> bool:
+        return jsonlib.orjson_useable()
+
+    @staticmethod
+    def rapidjson_useable() -> bool:
+        return jsonlib.rapidjson_useable()
+
+    @staticmethod
     def use_orjson() -> None:
         jsonlib.use_orjson()
 

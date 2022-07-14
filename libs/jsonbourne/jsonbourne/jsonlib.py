@@ -525,6 +525,12 @@ class JsonLib:
                 return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
+    def orjson_useable(self) -> bool:
+        return ORJSON.useable()
+
+    def rapidjson_useable(self) -> bool:
+        return RAPIDJSON.useable()
+
     def use_orjson(self) -> None:
         self._jsonlib = _import_orjson()
 
@@ -631,6 +637,14 @@ def jsoncp(
         default=default,
         **kwargs,
     )
+
+
+def orjson_useable() -> bool:
+    return JSONLIB.orjson_useable()
+
+
+def rapidjson_useable() -> bool:
+    return JSONLIB.rapidjson_useable()
 
 
 def use_orjson() -> None:

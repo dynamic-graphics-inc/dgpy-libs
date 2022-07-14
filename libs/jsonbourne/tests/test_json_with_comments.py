@@ -3,6 +3,8 @@ import json
 
 from os import path
 
+import pytest
+
 from jsonbourne import JSON
 from jsonbourne.helpers import rm_js_comments
 
@@ -38,10 +40,16 @@ def test_loads_jsonc() -> None:
     with open(rush_no_comments_filepath) as f:
         rush_no_comments_string = f.read()
 
-    removed_comments_str = JSON.dumps(
-        JSON.loads(rush_with_comments_string, jsonc=True),
-        sort_keys=True,
-        fmt=True,
-    )
-    expected = JSON.dumps(JSON.loads(rush_no_comments_string), sort_keys=True, fmt=True)
-    assert removed_comments_str == expected
+    if JSON.rapidjson_useable():
+        removed_comments_str = JSON.dumps(
+            JSON.loads(rush_with_comments_string, jsonc=True),
+            sort_keys=True,
+            fmt=True,
+        )
+        expected = JSON.dumps(
+            JSON.loads(rush_no_comments_string), sort_keys=True, fmt=True
+        )
+        assert removed_comments_str == expected
+    else:
+        with pytest.raises(NotImplementedError):
+            JSON.loads(rush_with_comments_string, jsonc=True),
