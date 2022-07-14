@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from jsonbourne.dev.json_arr import JsonArr, n_args
+from jsonbourne.json_arr import JsonArr, n_args
 
 
 def test_get_fn_args_count() -> None:
