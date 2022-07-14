@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """jsonbourne jsonlib api"""
 # pyright: reportOptionalMemberAccess=false
+from __future__ import annotations
+
 import json as pyjson
 
 from abc import ABC, abstractmethod

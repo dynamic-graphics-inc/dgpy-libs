@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """JSON callable module ~ jsonbourne"""
+from __future__ import annotations
+
 import sys
 
 from jsonbourne import __version__, json

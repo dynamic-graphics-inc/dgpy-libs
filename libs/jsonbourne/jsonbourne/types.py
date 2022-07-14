@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
 
 from jsonbourne.protocols import (
     Dumpable,

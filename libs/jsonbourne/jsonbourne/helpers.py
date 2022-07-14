@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """JSONBourne helper funks and utils"""
+from __future__ import annotations
+
 import re
 
 from typing import Match
