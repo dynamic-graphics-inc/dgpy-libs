@@ -464,8 +464,8 @@ def import_json(
 
 class JsonLib:
     _jsonlib: Type[JsonLibABC]
-    _rj: Optional[Type[RAPIDJSON]] = None
     _oj: Optional[Type[ORJSON]] = None
+    _rj: Optional[Type[RAPIDJSON]] = None
 
     def __init__(self, jsonlib: Optional[Type[JsonLibABC]] = None):
         if jsonlib:
@@ -561,7 +561,6 @@ class JsonLib:
         )
 
 
-# JSONLIB: Type[JsonLibABC] = import_json()
 _JSONLIB: Type[JsonLibABC] = import_json()
 JSONLIB = JsonLib(_JSONLIB)
 
