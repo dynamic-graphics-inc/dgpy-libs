@@ -1564,6 +1564,116 @@ def space_pad_strings(strings: List[str]) -> List[str]:
     return [s.ljust(_max_len) for s in strings]
 
 
+def t9_mapping():
+    return {
+        " ": 0,
+        ",": 1,
+        ".": 1,
+        "?": 1,
+        "!": 1,
+        "-": 1,
+        "_": 1,
+        "@": 1,
+        "%": 1,
+        "$": 1,
+        "A": 2,
+        "a": 2,
+        "B": 2,
+        "b": 2,
+        "C": 2,
+        "c": 2,
+        "D": 3,
+        "d": 3,
+        "E": 3,
+        "e": 3,
+        "F": 3,
+        "f": 3,
+        "G": 4,
+        "g": 4,
+        "H": 4,
+        "h": 4,
+        "I": 4,
+        "i": 4,
+        "J": 5,
+        "j": 5,
+        "K": 5,
+        "k": 5,
+        "L": 5,
+        "l": 5,
+        "M": 6,
+        "m": 6,
+        "N": 6,
+        "n": 6,
+        "O": 6,
+        "o": 6,
+        "P": 7,
+        "p": 7,
+        "Q": 7,
+        "q": 7,
+        "R": 7,
+        "r": 7,
+        "S": 7,
+        "s": 7,
+        "T": 8,
+        "t": 8,
+        "U": 8,
+        "u": 8,
+        "V": 8,
+        "v": 8,
+        "W": 9,
+        "w": 9,
+        "X": 9,
+        "x": 9,
+        "Y": 9,
+        "y": 9,
+        "Z": 9,
+        "z": 9,
+    }
+
+
+@lru_cache(maxsize=None)
+def t9_translation():
+    return str.maketrans({k: str(v) for k, v in t9_mapping().items()})
+
+
+def t9_str(string: str) -> str:
+    """Convert a string to a number using ye olde T9
+
+    Args:
+        string (str): String to convert to T9 integer
+
+    Returns:
+        str: T9 integer as a string
+
+    Examples:
+        >>> t9_str("Hello World")
+        '43556096753'
+        >>> t9_str("dgpy")
+        '3479'
+
+    """
+    return string.translate(t9_translation())
+
+
+def t9(string: str) -> int:
+    """Convert a string to a number using ye olde T9
+
+    Args:
+        string (str): String to convert to T9 integer
+
+    Returns:
+        int: T9 integer
+
+    Examples:
+        >>> t9("Hello World")
+        43556096753
+        >>> t9("dgpy")
+        3479
+
+    """
+    return int(t9_str(string))
+
+
 __all__ = (
     "ALL_CAP_RE",
     "CAMEL_CHARACTERS",
