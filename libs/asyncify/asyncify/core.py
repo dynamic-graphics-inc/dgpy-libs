@@ -221,7 +221,7 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
 
     """
     if sys.version_info >= (3, 7):
-        return asyncio.run(aw, debug=debug)
+        return asyncio.run(aw, debug=debug)  # type: ignore[arg-type]
     return _run(aw=aw, debug=debug)  # pragma: no cover
 
 
@@ -319,12 +319,12 @@ def aiorun_asyncio(
     _debug = _backend_options.get("debug", False)
     if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):
         return asyncio_run(
-            cast(Awaitable[T_Retval], awaitable_or_func(*args)), debug=_debug
+            cast(Awaitable[T_Retval], awaitable_or_func(*args)), debug=_debug  # type: ignore[arg-type]
         )
 
     if args:
         raise ValueError("args must be empty when calling a coroutine")
-    return asyncio_run(cast(Awaitable[T_Retval], awaitable_or_func), debug=_debug)
+    return asyncio_run(cast(Awaitable[T_Retval], awaitable_or_func), debug=_debug)  # type: ignore[arg-type]
 
 
 def aiorun(

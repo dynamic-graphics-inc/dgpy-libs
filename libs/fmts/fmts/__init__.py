@@ -1564,7 +1564,7 @@ def space_pad_strings(strings: List[str]) -> List[str]:
     return [s.ljust(_max_len) for s in strings]
 
 
-def t9_mapping():
+def t9_mapping() -> Dict[str, int]:
     return {
         " ": 0,
         ",": 1,
@@ -1632,7 +1632,7 @@ def t9_mapping():
 
 
 @lru_cache(maxsize=None)
-def t9_translation():
+def t9_translation() -> Dict[int, str]:
     return str.maketrans({k: str(v) for k, v in t9_mapping().items()})
 
 
