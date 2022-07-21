@@ -220,9 +220,10 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
         5
 
     """
-    if sys.version_info >= (3, 7):
-        return asyncio.run(aw, debug=debug)  # type: ignore[arg-type]
-    return _run(aw=aw, debug=debug)  # pragma: no cover
+    # If python is 3.6
+    if not hasattr(asyncio, "run"):
+        return _run(aw, debug=debug)
+    return asyncio_run(aw, debug=debug)  # type: ignore[arg-type]
 
 
 def is_async(obj: Any) -> bool:
