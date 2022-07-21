@@ -197,7 +197,9 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
         asyncio.set_event_loop(None)
 
 
-def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
+def run(
+    aw: Coroutine[Any, Any, T], *, debug: Optional[bool] = None, **kwargs: Any
+) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -222,7 +224,7 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
     # If python is 3.6
     if not hasattr(asyncio, "run"):
         return _run(aw, debug=debug)
-    return asyncio_run(aw, debug=debug)  # type: ignore[arg-type]
+    return asyncio_run(aw, debug=debug)
 
 
 def is_async(obj: Any) -> bool:
@@ -319,12 +321,15 @@ def aiorun_asyncio(
     _debug = _backend_options.get("debug", False)
     if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):
         return asyncio_run(
-            cast(Awaitable[T_Retval], awaitable_or_func(*args)), debug=_debug  # type: ignore[arg-type]
+            awaitable_or_func(*args),
+            debug=_debug,
         )
 
     if args:
         raise ValueError("args must be empty when calling a coroutine")
-    return asyncio_run(cast(Awaitable[T_Retval], awaitable_or_func), debug=_debug)  # type: ignore[arg-type]
+    return asyncio_run(
+        cast(Coroutine[Any, Any, T_Retval], awaitable_or_func), debug=_debug
+    )
 
 
 def aiorun(
