@@ -127,37 +127,23 @@ def flake_strict(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def pipc(session):
     session.install("pip-tools")
-
-    session.run("pip-compile", path.join(PWD, "requirements", "dev.in"))
-    session.run("pip-compile", path.join(PWD, "requirements", "docs.in"))
-    session.run("pip-compile", path.join(PWD, "requirements", "lint.in"))
-    session.run("pip-compile", path.join(PWD, "requirements", "flake.in"))
+    reqs_ini = (
+        "dev.in",
+        "docs.in",
+        "lint.in",
+        "flake.in",
+        "fmt.in",
+    )
+    for reqs_file in reqs_ini:
+        session.run(
+            "pip-compile", path.join(PWD, "requirements", reqs_file), "--no-header"
+        )
 
 
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
     session.run("mypy", "--version")
-    # session.run(
-    #     'mypy',
-    #     '--show-error-codes',
-    #     '--config-file',
-    #     './pyproject.toml',
-    #     *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
-    #     # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
-    #     )
-
-    # for lib in libs:
-    #     session.run(
-    #         'mypy',
-    #         '--show-error-codes',
-    #         '--config-file',
-    #         './mypy.ini',
-    #         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
-    #         path.join('libs', lib, 'tests')
-    #         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
-    #         )
-
     session.run(
         "mypy",
         "--show-error-codes",
