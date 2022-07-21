@@ -306,7 +306,7 @@ def update_metadata(session):
 
 def _install_mkdocs_deps(session):
     session.install("mkdocs")
-    session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings")
+    session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings[python]")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
