@@ -123,6 +123,11 @@ def flake(session):
 def flake_strict(session):
     _flake_w_pytest(session)
 
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def pipc(session):
+    session.install('pip-tools')
+    session.run('pip-compile', path.join(PWD, 'requirements', 'dev.in'))
+    session.run('pip-compile', path.join(PWD, 'requirements', 'docs.in'))
 
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
