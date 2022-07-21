@@ -136,7 +136,7 @@ jobs:
   mkdocs:
     needs: [lint, test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -152,4 +152,5 @@ jobs:
       - name: install docs deps
         run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings
       - name: mkdocs build
+        if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force
