@@ -29,7 +29,8 @@ ___
 ```python
 # This will fail
 def uno():
-    return json.dumps({'a': 1, 'b': 2})
+    return json.dumps({"a": 1, "b": 2})
+
 
 try:
     uno()
@@ -45,9 +46,11 @@ except NameError as ne:
 # This will not fail
 import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
 
-@requires('json')
+
+@requires("json")
 def uno():
-    return json.dumps({'a': 1, 'b': 2})
+    return json.dumps({"a": 1, "b": 2})
+
 
 uno()
 ```
@@ -63,9 +66,11 @@ uno()
 ```python
 import requires
 
-@requires('from json import dumps')
+
+@requires("from json import dumps")
 def uno():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 uno()
 ```
@@ -80,7 +85,8 @@ uno()
 
 ```python
 def dos():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 dos()
 ```
@@ -96,9 +102,11 @@ dos()
 ```python
 import requires
 
-@requires(_from='json', _import='dumps')
+
+@requires(_from="json", _import="dumps")
 def dos():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 dos()
 ```
@@ -114,9 +122,11 @@ dos()
 ```python
 import requires
 
-@requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
+
+@requires(_import="rapidjson", pip="python-rapidjson", conda_forge="python-rapidjson")
 def tres():
-    return rapidjson.dumps({'a': 1, 'b': 2})
+    return rapidjson.dumps({"a": 1, "b": 2})
+
 
 tres()  # Will err if not install with where to install instructions
 ```
@@ -132,7 +142,8 @@ tres()  # Will err if not install with where to install instructions
 ```python
 # should error
 def quatro():
-    return path.join('a', 'b')
+    return path.join("a", "b")
+
 
 try:
     quatro()
@@ -147,11 +158,13 @@ except NameError as ne:
 ```python
 from requires import Requirement
 
-os_path_req = Requirement(_import='path', _from='os')
+os_path_req = Requirement(_import="path", _from="os")
+
 
 @os_path_req
 def quatro():
-    return path.join('a', 'b')
+    return path.join("a", "b")
+
 
 assert isinstance(quatro(), str)
 ```
@@ -166,10 +179,10 @@ try:
     import alibrary
 except ModuleNotFoundError:
     requirement = requires.Requirement(
-        _import='alibrary',
+        _import="alibrary",
         pip=True,
-        conda_forge='alibrary-conda-listing',
-        details="Install details"
+        conda_forge="alibrary-conda-listing",
+        details="Install details",
     )
 try:
     requirement.raise_error()

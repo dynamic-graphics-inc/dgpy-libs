@@ -33,6 +33,7 @@
 ```python
 # Importing JSON:
 from jsonbourne import JSON
+
 # or
 import JSON
 
@@ -46,8 +47,11 @@ import david_webb  # jsonbourne's `True` identity
 
 ```python
 import JSON  # Module included with jsonbourne
-string_stringify = JSON.stringify({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
-string_dumps = JSON.dumps({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
+
+string_stringify = JSON.stringify(
+    {"a": 1, "b": 2, "c": 3}
+)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.dumps({"a": 1, "b": 2, "c": 3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps
 ```
 
@@ -64,7 +68,9 @@ string_dumps
 
 
 ```python
-string_dumps = JSON.stringify({"b":2, "a":1, "c":3}, pretty=True)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.stringify(
+    {"b": 2, "a": 1, "c": 3}, pretty=True
+)  # '{"a": 1, "b": 2, "c": 3}'
 print(string_dumps)
 ```
 
@@ -79,7 +85,9 @@ print(string_dumps)
 
 
 ```python
-string_dumps = JSON.stringify({"b":2, "a":1, "c":3}, pretty=True, sort_keys=True)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.stringify(
+    {"b": 2, "a": 1, "c": 3}, pretty=True, sort_keys=True
+)  # '{"a": 1, "b": 2, "c": 3}'
 print(string_dumps)
 ```
 
@@ -125,7 +133,11 @@ data = {
     "key": "value",
     "list": [1, 2, 3, 4, 5],
     "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    "sub": {'b': 3, 'key': 'val', 'a': 1,},
+    "sub": {
+        "b": 3,
+        "key": "val",
+        "a": 1,
+    },
     "timedelta": datetime.timedelta(days=2),
 }
 
@@ -269,7 +281,7 @@ list(parsed_data.dot_items())
 
 
 ```python
-parsed_data[('sub', 'key')]
+parsed_data[("sub", "key")]
 ```
 
 
@@ -281,7 +293,7 @@ parsed_data[('sub', 'key')]
 
 
 ```python
-parsed_data.dot_lookup('sub.key')
+parsed_data.dot_lookup("sub.key")
 ```
 
 
@@ -331,22 +343,23 @@ parsed_data.eject()
 
 ```python
 from jsonbourne import JSON
+
 j = JSON()
-j.key = 'value'
+j.key = "value"
 try:  # CANNOT set 'items' using dot-access
-	j.items = [1, 2, 3, 4]
+    j.items = [1, 2, 3, 4]
 except ValueError:
-	pass
+    pass
 # CAN set 'items' through key/item access
-j['items'] = [1, 2, 3, 4]
+j["items"] = [1, 2, 3, 4]
 print(j.__dict__)
 print(j)
 j_items = j.items
-print('items', j_items)
+print("items", j_items)
 # Getting 'items' through dot-access returns the `items()` method
 assert j.items != [1, 2, 3, 4]
 # Getting 'items' with key-access returns the stored value
-assert j['items'] == [1, 2, 3, 4]
+assert j["items"] == [1, 2, 3, 4]
 ```
 
     {'_data': {'key': 'value', 'items': [1, 2, 3, 4]}}
@@ -369,6 +382,7 @@ assert j['items'] == [1, 2, 3, 4]
 from jsonbourne import JsonObj
 from jsonbourne.pydantic import JsonBaseModel
 
+
 class JsonSubObj(JsonBaseModel):
     herm: int
 
@@ -381,6 +395,7 @@ class JsonSubObj(JsonBaseModel):
     @classmethod
     def from_json(cls, json_string: str):
         return JsonSubObj(json.loads(json_string))
+
 
 class JsonObjModel(JsonBaseModel):
     a: int
@@ -401,6 +416,7 @@ class JsonObjModel(JsonBaseModel):
     def from_json(cls, json_string: str):
         return cls(**json.loads(json_string))
 
+
 obj = JsonObjModel(
     **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}, "e": {"herm": 2}}
 )
@@ -411,7 +427,11 @@ obj
 
 
 <pre>JsonObjModel(**{
-     'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': {'herm': 2}
+     'a': 1,
+     'b': 2,
+     'c': 'herm',
+     'd': JsonObj(**{'nested': 'nestedval'}),
+     'e': {'herm': 2}
 })</pre>
 
 
@@ -450,13 +470,14 @@ the python stdlib json.
 
 ```python
 from jsonbourne import import_json
+
 json = import_json(("rapidjson", "orjson"))  # prefer rapidjson over orjson
-string = json.dumps({"a":1, "b":2, "c":3})
+string = json.dumps({"a": 1, "b": 2, "c": 3})
 print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.json.RAPIDJSON'>
+    <class 'jsonbourne.jsonlib.RAPIDJSON'>
     {"a":1,"b":2,"c":3}
 
 
