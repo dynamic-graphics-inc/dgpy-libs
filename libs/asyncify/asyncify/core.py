@@ -2,7 +2,6 @@
 """Asyncify core"""
 
 import asyncio
-import sys
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
