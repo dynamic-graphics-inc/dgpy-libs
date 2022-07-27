@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lager"
-version = "0.16.3"
+version = "0.16.4"
 description = "EZ-PZ logging based on loguru"
 authors = ["jesse rubin <jesse@dgi.com>"]
 license = "MIT"
