@@ -283,7 +283,7 @@ def update_metadata(session):
         print("~~~")
         metadata_filepath = path.join(dirpath, libname, "_meta.py")
         pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
-        with open(metadata_filepath, "w") as f:
+        with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
             f.write(metadata_file_string)
 
         s = _pkg_entry_point(libname)

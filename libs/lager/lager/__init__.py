@@ -38,6 +38,7 @@ from lager.core import (
     parse,
     patch,
     remove,
+    reset,
     start,
     stop,
     success,
