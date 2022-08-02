@@ -41,7 +41,7 @@ xtyping = "*"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
-flake8 = "^4.0.1"
+flake8 = "^5.0.3"
 h5py = "^3.4.0"
 isort = "^5.7.0"
 mypy = "^0.971"
