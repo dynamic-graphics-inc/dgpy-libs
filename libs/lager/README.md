@@ -28,8 +28,9 @@ BTW: Loguru is an amazing lib. Check it out: https://github.com/Delgan/loguru
 
 ```python
 from lager import LOG, lager, LAGER, log, logger  # All the same object
-LOG.info('info')
+
+LOG.info("info")
 ```
 
-    2021-07-22 12:29:22.853 | INFO     | __main__:<module>:2 - info
+    2022-07-21 08:38:20.263 | INFO     | __main__:<cell line: 3>:3 - info
 
