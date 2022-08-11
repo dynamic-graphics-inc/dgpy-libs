@@ -17,6 +17,9 @@ jobs:
         with:
           options: "--check --verbose"
           src: "."
+      - uses: isort/isort-action@master
+        with:
+          configuration: "-sp pyproject.toml libs --check-only --diff"
       - name: Set up Python 3
         uses: actions/setup-python@v4
         with:
