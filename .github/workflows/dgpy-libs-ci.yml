@@ -48,7 +48,7 @@ jobs:
           python-version: 3.8
 
       - name: Run image
-        uses: abatilo/actions-poetry@v2.1.5
+        uses: abatilo/actions-poetry@v2.1.6
         with:
           poetry-version: 1.1.12
 
@@ -150,7 +150,7 @@ jobs:
         with:
           python-version: 3.8
       - name: Run image
-        uses: abatilo/actions-poetry@v2.1.5
+        uses: abatilo/actions-poetry@v2.1.6
         with:
           poetry-version: 1.1.12
       - name: poetry install
