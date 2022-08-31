@@ -52,6 +52,11 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "pip"
+    directory: "/libs/requires"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "pip"
     directory: "/libs/shellfish"
     schedule:
       interval: "daily"
