@@ -740,7 +740,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             [
                 type(self).__name__,
                 "(**{\n    ",
-                pformat(self.to_dict(), width=_width)[1:-1].replace("\n", "\n   "),
+                pformat(self.eject(), width=_width)[1:-1].replace("\n", "\n   "),
                 "\n})",
             ]
         ).replace("JsonObj(**{}),", "{},")
