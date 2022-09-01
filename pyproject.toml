@@ -40,7 +40,7 @@ shellfish = "*"
 xtyping = "*"
 
 [tool.poetry.dev-dependencies]
-black = "^22.1.0"
+black = "^22.8.0"
 flake8 = "^5.0.4"
 h5py = "^3.4.0"
 isort = "^5.7.0"
