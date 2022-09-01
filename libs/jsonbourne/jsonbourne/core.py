@@ -43,19 +43,20 @@ _VT = TypeVar("_VT")
 JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = (
-    "JsonObj",
-    "JsonDict",
-    "JsonObjMutableMapping",
-    "stringify",
-    "parse",
-    "jsonify",
     "JSON",
-    "UNDEFINED",
-    "undefined",
-    "Null",
-    "null",
     "JSONModuleCls",
+    "JsonDict",
+    "JsonObj",
+    "JsonObjMutableMapping",
     "JsonObjT",
+    "Null",
+    "UNDEFINED",
+    "jsonify",
+    "null",
+    "objectify",
+    "parse",
+    "stringify",
+    "undefined",
 )
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
@@ -1038,6 +1039,12 @@ def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
     return value
 
 
+def objectify(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
+    if isinstance(value, dict):
+        return JsonObj(value)
+    return value
+
+
 @overload
 def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT:
     ...
@@ -1280,6 +1287,8 @@ class JSON(metaclass=JSONMeta):
     def unjsonify(value: Any) -> Any:
         """Alias for jsonbourne.core.unjsonify"""
         return unjsonify(value)
+
+    objectify = staticmethod(objectify)
 
 
 class JSONModuleCls(ModuleType, JSON):
