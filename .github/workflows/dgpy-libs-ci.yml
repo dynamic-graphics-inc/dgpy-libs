@@ -2,12 +2,6 @@ name: dgpy-libs-ci
 
 on: [push, pull_request]
 
-#on:
-#  push:
-#    branches: [ master, main, dev ]
-#  pull_request:
-#    branches: [ master, main, dev ]
-
 jobs:
   lint:
     runs-on: ubuntu-latest
