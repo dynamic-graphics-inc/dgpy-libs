@@ -15,8 +15,6 @@
 
 **Usage:**
 
-
-
 ```python
 import asyncify
 

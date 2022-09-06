@@ -11,15 +11,14 @@
 
 **Install:** `pip install xtyping`
 
-___
+---
 
 ## What is xtyping?
 
 xtyping (short for extended typing) lets you import all your friends from `typing` as well as `typing_extensions`
 
- - `typing` | `typing_extensions`; xtyping 'exports' everything in `typing.__all__` and `typing_extensions.__all__`
- - Common type aliases
-
+- `typing` | `typing_extensions`; xtyping 'exports' everything in `typing.__all__` and `typing_extensions.__all__`
+- Common type aliases
 
 ## Why not use `typing_extensions`?
 
@@ -41,8 +40,6 @@ import xtyping as xt
 TypedDict = xt.TypedDict
 Optional = xt.Optional
 ```
-
-
 
 ```python
 import xtyping as xt
@@ -145,8 +142,8 @@ print(
     xt.no_type_check  ~  typing.no_type_check  ~  <function no_type_check at 0x7fd2e53438b0>
     xt.no_type_check_decorator  ~  typing.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fd2e5343940>
     xt.overload  ~  typing.overload  ~  <function overload at 0x7fd2dc721a60>
-    
-    
+
+
     ------------------------
     from `typing_extensions`
     ------------------------
@@ -210,8 +207,8 @@ print(
     xt.no_type_check  ~  typing_extensions.no_type_check  ~  <function no_type_check at 0x7fd2e53438b0>
     xt.no_type_check_decorator  ~  typing_extensions.no_type_check_decorator  ~  <function no_type_check_decorator at 0x7fd2e5343940>
     xt.overload  ~  typing_extensions.overload  ~  <function overload at 0x7fd2dc721a60>
-    
-    
+
+
     -------------------
     from `xtyping.shed`
     -------------------
@@ -370,6 +367,3 @@ print(
     xt.__all_typing_extensions__  ~  xtyping.shed.__all_typing_extensions__  ~  ('Annotated', 'AsyncContextManager', 'AsyncGenerator', 'AsyncIterable', 'AsyncIterator', 'Awaitable', 'ChainMap', 'ClassVar', 'Concatenate', 'ContextManager', 'Coroutine', 'Counter', 'DefaultDict', 'Deque', 'Final', 'IntVar', 'Literal', 'NewType', 'NoReturn', 'OrderedDict', 'ParamSpec', 'ParamSpecArgs', 'ParamSpecKwargs', 'Protocol', 'SupportsIndex', 'TYPE_CHECKING', 'Text', 'Type', 'TypeAlias', 'TypeGuard', 'TypedDict', 'final', 'get_args', 'get_origin', 'get_type_hints', 'overload', 'runtime', 'runtime_checkable')
     xt.__all_typing_extensions_future__  ~  xtyping.shed.__all_typing_extensions_future__  ~  ('LiteralString', 'Never', 'NotRequired', 'Required', 'Self', 'TypeVarTuple', 'Unpack', 'assert_never', 'assert_type', 'clear_overloads', 'dataclass_transform', 'get_overloads', 'is_typeddict', 'reveal_type')
     xt.null  ~  xtyping.shed.null  ~  <class 'NoneType'>
-    
-    
-

@@ -36,15 +36,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      # - name: Install poetry
+      #   run: pipx install poetry==1.1.15
+      # - uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'
+      #     cache: 'poetry'
+
       - name: Set up Python 3
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Run image
         uses: abatilo/actions-poetry@v2.1.6
         with:
-          poetry-version: 1.1.12
+          poetry-version: 1.1.15
 
       - name: Install dependencies
         run: |

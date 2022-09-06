@@ -8,28 +8,30 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/funkify"
 readme = 'README.md'
 packages = [
-    { include = "funkify", from = "." },
+  { include = "funkify", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "funk", "dgpy", "python", "modules", "funky"
+  "funk",
+  "dgpy",
+  "python",
+  "modules",
+  "funky",
 ]
-
 
 [tool.poetry.dependencies]
 python = "^3.7"
-
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
@@ -41,17 +43,17 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
-    "-ra",
-    "--strict-config",
-    "--strict-markers",
-    "--disable-warnings"
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+  "--disable-warnings",
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "timeout",
-    "skip: skip test",
-    "anyio: anyio tests",
-    "aio: asyncio tests",
-    "basic: basic tests",
-    "version"
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
+  "skip: skip test",
+  "anyio: anyio tests",
+  "aio: asyncio tests",
+  "basic: basic tests",
+  "version",
 ]
