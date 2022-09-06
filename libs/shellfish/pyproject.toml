@@ -8,23 +8,26 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/shellfish"
 readme = 'README.md'
 packages = [
-    { include = "shellfish", from = "." },
+  { include = "shellfish", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "dgpy", "shell", "fs", "filesystem", "typed"
+  "dgpy",
+  "shell",
+  "fs",
+  "filesystem",
+  "typed",
 ]
-
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -49,23 +52,23 @@ build-backend = "poetry.core.masonry.api"
 asyncio_mode = "auto"
 minversion = "6.0"
 addopts = [
-    "--strict-config",
-    "--strict-markers",
-    "--doctest-modules",
-    "--disable-warnings"
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
 ]
 xfail_strict = true
 filterwarnings = [
-    "error",
-    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-    "ignore::RuntimeWarning",
-    "ignore::pytest.PytestUnraisableExceptionWarning",
-    "ignore::DeprecationWarning",
-    "ignore:unclosed transport <_ProactorSocketTransport.*:ResourceWarning",
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
+  "ignore:unclosed transport <_ProactorSocketTransport.*:ResourceWarning",
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "timeout",
-    "aio",
-    "asyncio",
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
+  "aio",
+  "asyncio",
 ]

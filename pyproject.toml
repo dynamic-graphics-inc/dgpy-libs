@@ -7,22 +7,25 @@ license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 packages = [
-    { include = "dgpylibs", from = "." },
-    { include = "dgpydev", from = "." },
+  { include = "dgpylibs", from = "." },
+  { include = "dgpydev", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "dgpy", "dgi", "typed", "python3",
+  "dgpy",
+  "dgi",
+  "typed",
+  "python3",
 ]
 
 [tool.poetry.dependencies]
@@ -131,17 +134,17 @@ ensure_newline_before_comments = true
 combine_as_imports = true
 use_parentheses = true
 known_first_party = [
-    "aiopen",
-    "asyncify",
-    "funkify",
-    "fmts",
-    "h5",
-    "jsonbourne",
-    "lager",
-    "listless",
-    "requires",
-    "shellfish",
-    "xtyping",
+  "aiopen",
+  "asyncify",
+  "funkify",
+  "fmts",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
 ]
 
 # =============================================================================
@@ -156,40 +159,40 @@ known_first_party = [
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
-    "-ra",
-    "--strict-config",
-    "--strict-markers",
-    "--doctest-modules",
-    "--disable-warnings"
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
 ]
 testpaths = [
-    "libs/aiopen",
-    "libs/asyncify",
-    "libs/funkify",
-    "libs/h5",
-    "libs/jsonbourne",
-    "libs/lager",
-    "libs/requires",
-    "libs/shellfish",
-    "libs/xtyping",
+  "libs/aiopen",
+  "libs/asyncify",
+  "libs/funkify",
+  "libs/h5",
+  "libs/jsonbourne",
+  "libs/lager",
+  "libs/requires",
+  "libs/shellfish",
+  "libs/xtyping",
 ]
 
 xfail_strict = true
 filterwarnings = [
-    "error",
-    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-    "ignore::RuntimeWarning",
-    "ignore::pytest.PytestUnraisableExceptionWarning",
-    "ignore::DeprecationWarning"
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "timeout",
-    "skip: skip test",
-    "anyio: anyio tests",
-    "aio: asyncio tests",
-    "basic: basic tests",
-    "version"
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
+  "skip: skip test",
+  "anyio: anyio tests",
+  "aio: asyncio tests",
+  "basic: basic tests",
+  "version",
 ]
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -230,44 +233,43 @@ disallow_untyped_decorators = false
 disallow_any_generics = false
 disallow_untyped_defs = false
 
-
 [tool.pyright]
 pythonVersion = "3.8"
 include = [
-    #    "libs/aiopen",
-    "libs/asyncify",
-    "libs/funkify",
-    "libs/fmts",
-    "libs/h5",
-    "libs/jsonbourne",
-    "libs/lager",
-    "libs/listless",
-    "libs/requires",
-#    "libs/shellfish",
-    "libs/listless",
-    "libs/xtyping",
+  #    "libs/aiopen",
+  "libs/asyncify",
+  "libs/funkify",
+  "libs/fmts",
+  "libs/h5",
+  "libs/jsonbourne",
+  "libs/lager",
+  "libs/listless",
+  "libs/requires",
+  #    "libs/shellfish",
+  "libs/listless",
+  "libs/xtyping",
 ]
 extraPaths = [
-    "libs/aiopen",
-    "libs/asyncify",
-    "libs/funkify",
-    "libs/fmts",
-    "libs/h5",
-    "libs/jsonbourne",
-    "libs/lager",
-    "libs/listless",
-    "libs/requires",
-    "libs/shellfish",
-    "libs/listless",
-    "libs/xtyping",
+  "libs/aiopen",
+  "libs/asyncify",
+  "libs/funkify",
+  "libs/fmts",
+  "libs/h5",
+  "libs/jsonbourne",
+  "libs/lager",
+  "libs/listless",
+  "libs/requires",
+  "libs/shellfish",
+  "libs/listless",
+  "libs/xtyping",
 ]
 exclude = [
-    "**/.pytype",
-    "**/node_modules",
-    "**/__pycache__",
-    "docs",
-    "**/.nox",
-    "**/.nox_win"
+  "**/.pytype",
+  "**/node_modules",
+  "**/__pycache__",
+  "docs",
+  "**/.nox",
+  "**/.nox_win",
 ]
 reportGeneralTypeIssues = false
 reportInvalidTypeVarUse = false

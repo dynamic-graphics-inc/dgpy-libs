@@ -2,7 +2,6 @@
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
 
-
 # h5
 
 [![Wheel](https://img.shields.io/pypi/wheel/h5.svg)](https://img.shields.io/pypi/wheel/h5.svg)
@@ -12,8 +11,6 @@
 
 **Install:** `pip install h5`
 
-___
+---
 
 Util functions for h5py and home of recursive generators!
-
-

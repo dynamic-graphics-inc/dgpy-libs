@@ -23,7 +23,6 @@ import funkify
 @funkify
 def some_funk_name_doesnt_matter():
 	return 'howdy'
-
 ```
 
 ### 2) Import a_module and call it like you would a function!

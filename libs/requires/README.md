@@ -2,9 +2,7 @@
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
 
-
 # requires
-
 
 [![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg)
 [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg)
@@ -20,11 +18,9 @@ Python dependency management can be mind bottlingly complex. Optional dependenci
 
 This package has come in handy in lambda-land where you only get 250mb (on aws)!
 
-___
+---
 
 ## Usage:
-
-
 
 ```python
 # This will fail
@@ -40,8 +36,6 @@ except NameError as ne:
 
     Error: name 'json' is not defined
 
-
-
 ```python
 # This will not fail
 import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
@@ -55,13 +49,7 @@ def uno():
 uno()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
@@ -75,13 +63,7 @@ def uno():
 uno()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 def dos():
@@ -91,13 +73,7 @@ def dos():
 dos()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
@@ -111,13 +87,7 @@ def dos():
 dos()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
@@ -131,13 +101,7 @@ def tres():
 tres()  # Will err if not install with where to install instructions
 ```
 
-
-
-
     '{"a":1,"b":2}'
-
-
-
 
 ```python
 # should error
@@ -152,8 +116,6 @@ except NameError as ne:
 ```
 
     ERROR: name 'path' is not defined
-
-
 
 ```python
 from requires import Requirement
@@ -170,7 +132,6 @@ assert isinstance(quatro(), str)
 ```
 
 ## Enforcing requirements
-
 
 ```python
 import requires
@@ -197,7 +158,6 @@ except requires.RequirementError as err:
         conda install -c conda-forge alibrary-conda-listing
         Install details
 
-
 ## Less verbose version:
 
 ```python
@@ -214,11 +174,10 @@ except ModuleNotFoundError:
     ).raise_error()
 ```
 
-
-___
+---
 
 ## Future ideas?
 
- - Adding support for requiring particular package versions?
- - Auto install?
- - Allow non pip/conda/conda-forge locations?
+- Adding support for requiring particular package versions?
+- Auto install?
+- Allow non pip/conda/conda-forge locations?
