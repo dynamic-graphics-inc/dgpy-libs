@@ -121,3 +121,4 @@ Plz do! Send me that PR!
 - Have CI/CD auto build n publish
 - Make some sort of change log
 - Publish packages to conda-forge? (maybe)
+
