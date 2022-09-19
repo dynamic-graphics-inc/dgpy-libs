@@ -337,9 +337,9 @@ def _camel2pascal(string: str) -> str:
     """Convert a given camelCase string to PascalCase
 
     Examples:
-        >>> camel2pascal('camelCase')
+        >>> _camel2pascal('camelCase')
         'CamelCase'
-        >>> camel2pascal(b'camelCase')
+        >>> _camel2pascal(b'camelCase')
         b'CamelCase'
 
     """
