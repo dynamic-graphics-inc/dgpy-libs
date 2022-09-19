@@ -333,7 +333,7 @@ def pascal2snake(string: AnyStr) -> AnyStr:
 
 
 @anystr2anystr
-def camel2pascal(string: AnyStr) -> AnyStr:
+def _camel2pascal(string: str) -> str:
     """Convert a given camelCase string to PascalCase
 
     Examples:
@@ -344,6 +344,19 @@ def camel2pascal(string: AnyStr) -> AnyStr:
 
     """
     return f"{string[0].upper()}{string[1:]}"
+
+
+def camel2pascal(string: AnyStr) -> AnyStr:
+    """Convert a given camelCase string to PascalCase
+
+    Examples:
+        >>> camel2pascal('camelCase')
+        'CamelCase'
+        >>> camel2pascal(b'camelCase')
+        b'CamelCase'
+
+    """
+    return _camel2pascal(string)
 
 
 @anystr2anystr
