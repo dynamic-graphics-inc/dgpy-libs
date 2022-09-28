@@ -65,3 +65,9 @@ updates:
     directory: "/libs/xtyping"
     schedule:
       interval: "daily"
+
+  # Last in list b/c it depends on all the others...
+  - package-ecosystem: "pip"
+    directory: "/libs/dgpylibs"
+    schedule:
+      interval: "daily"
