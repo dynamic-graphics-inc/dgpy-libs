@@ -54,6 +54,10 @@ jobs:
           python-version: '3.9'
           cache: 'poetry'
 
+      - name: poetry-config-sane
+        run: |
+          poetry config virtualenvs.create false
+
 
       # - name: Run image
       #   uses: abatilo/actions-poetry@v2.1.6
