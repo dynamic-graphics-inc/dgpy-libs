@@ -47,7 +47,10 @@ jobs:
           python -m pip install --upgrade pip
 
       - name: Install poetry
-        run: pipx install poetry
+        # run: pipx install poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          which poetry
         # run: pipx install poetry==1.1.15
       # - uses: actions/setup-python@v4
       #   with:
