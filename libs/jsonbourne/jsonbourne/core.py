@@ -1100,7 +1100,7 @@ class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
     @staticmethod
-    def __call__(value: Optional[Any] = None) -> Any:  # type: ignore[override]
+    def __call__(value: Optional[Any] = None) -> Any:
         if value is None:
             value = {}
         return jsonify(value)
