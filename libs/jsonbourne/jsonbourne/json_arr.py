@@ -327,3 +327,12 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
             _fn1 = cast(Callable[[_T], _R], func)
             return self._map_el(_fn1)
         raise TypeError("Could not determine number of arguments for map function")
+
+    def slice(
+        self, start: Optional[int] = None, end: Optional[int] = None
+    ) -> JsonArr[_T]:
+        if start is None and end is None:
+            return self
+        _start = 0 if start is None else start
+        _end = len(self) if end is None else end
+        return JsonArr(self.__arr[_start:_end])

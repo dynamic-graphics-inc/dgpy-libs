@@ -1,0 +1,27 @@
+attrs==21.4.0
+    # via flake8-eradicate
+eradicate==2.1.0
+    # via flake8-eradicate
+flake8==4.0.1
+    # via
+    #   -r /home/jesse/dgpy-libs/requirements/flake.in
+    #   flake8-comprehensions
+    #   flake8-eradicate
+    #   flake8-print
+flake8-comprehensions==3.10.0
+    # via -r /home/jesse/dgpy-libs/requirements/flake.in
+flake8-eradicate==1.2.1
+    # via -r /home/jesse/dgpy-libs/requirements/flake.in
+flake8-print==5.0.0
+    # via -r /home/jesse/dgpy-libs/requirements/flake.in
+mccabe==0.6.1
+    # via flake8
+pycodestyle==2.8.0
+    # via
+    #   flake8
+    #   flake8-print
+pyflakes==2.4.0
+    # via flake8
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

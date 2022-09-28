@@ -43,19 +43,20 @@ _VT = TypeVar("_VT")
 JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = (
-    "JsonObj",
-    "JsonDict",
-    "JsonObjMutableMapping",
-    "stringify",
-    "parse",
-    "jsonify",
     "JSON",
-    "UNDEFINED",
-    "undefined",
-    "Null",
-    "null",
     "JSONModuleCls",
+    "JsonDict",
+    "JsonObj",
+    "JsonObjMutableMapping",
     "JsonObjT",
+    "Null",
+    "UNDEFINED",
+    "jsonify",
+    "null",
+    "objectify",
+    "parse",
+    "stringify",
+    "undefined",
 )
 
 _JsonObjMutableMapping_attrs = set(dir(JsonObjMutableMapping))
@@ -739,7 +740,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             [
                 type(self).__name__,
                 "(**{\n    ",
-                pformat(self.to_dict(), width=_width)[1:-1].replace("\n", "\n   "),
+                pformat(self.eject(), width=_width)[1:-1].replace("\n", "\n   "),
                 "\n})",
             ]
         ).replace("JsonObj(**{}),", "{},")
@@ -1038,6 +1039,12 @@ def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
     return value
 
 
+def objectify(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
+    if isinstance(value, dict):
+        return JsonObj(value)
+    return value
+
+
 @overload
 def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT:
     ...
@@ -1093,7 +1100,7 @@ class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
     @staticmethod
-    def __call__(value: Optional[Any] = None) -> Any:  # type: ignore[override]
+    def __call__(value: Optional[Any] = None) -> Any:
         if value is None:
             value = {}
         return jsonify(value)
@@ -1224,18 +1231,30 @@ class JSON(metaclass=JSONMeta):
         )
 
     @staticmethod
-    def loads(string: Union[bytes, str], obj: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+    ) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
-            return jsonify(jsonlib.loads(string, **kwargs))
-        return jsonlib.loads(string, **kwargs)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     @staticmethod
-    def parse(string: Union[bytes, str], obj: bool = True) -> Any:
-        """Parse JSON string/bytes and jsonify all dictionaries -> JsonObj"""
+    def parse(
+        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+    ) -> Any:
+        """Parse JSON string/bytes"""
         if obj:
-            return jsonify(jsonlib.loads(string))
-        return jsonlib.loads(string)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
+
+    @staticmethod
+    def orjson_useable() -> bool:
+        return jsonlib.orjson_useable()
+
+    @staticmethod
+    def rapidjson_useable() -> bool:
+        return jsonlib.rapidjson_useable()
 
     @staticmethod
     def use_orjson() -> None:
@@ -1268,6 +1287,8 @@ class JSON(metaclass=JSONMeta):
     def unjsonify(value: Any) -> Any:
         """Alias for jsonbourne.core.unjsonify"""
         return unjsonify(value)
+
+    objectify = staticmethod(objectify)
 
 
 class JSONModuleCls(ModuleType, JSON):

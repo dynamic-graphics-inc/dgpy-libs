@@ -11,17 +11,17 @@
 
 **Install:** `pip install jsonbourne`
 
- - Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
-     - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
-     - Automatically uses best json-lib-backend avalible (`orjson`/`python-rapidjson`) ~ can be configured
- - Hybrid dict/class object (`jsonbourne.JsonObj`):
-     - Dot-notation getting/setting (featuring protected attributes!)
-     - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!
-     - Works with `pydantic` and `attrs`
- - FastAPI:
-     - JSONBOURNEResponse ~ auto use the best
- - No hard dependencies ~ works with python-stdlib-json as well as `orjson` and `python-rapidjson`
- - `jsonbourne.JsonObj` uses list/dict comprehensions (some are recursive) everywhere because 'why not?' and it is a bit faster
+- Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
+  - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
+  - Automatically uses best json-lib-backend avalible (`orjson`/`python-rapidjson`) ~ can be configured
+- Hybrid dict/class object (`jsonbourne.JsonObj`):
+  - Dot-notation getting/setting (featuring protected attributes!)
+  - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!
+  - Works with `pydantic` and `attrs`
+- FastAPI:
+  - JSONBOURNEResponse ~ auto use the best
+- No hard dependencies ~ works with python-stdlib-json as well as `orjson` and `python-rapidjson`
+- `jsonbourne.JsonObj` uses list/dict comprehensions (some are recursive) everywhere because 'why not?' and it is a bit faster
 
 ## Usage:
 
@@ -29,10 +29,10 @@
 
 **Importing:**
 
-
 ```python
 # Importing JSON:
 from jsonbourne import JSON
+
 # or
 import JSON
 
@@ -43,28 +43,26 @@ import david_webb  # jsonbourne's `True` identity
 
 **JSON basics:**
 
-
 ```python
 import JSON  # Module included with jsonbourne
-string_stringify = JSON.stringify({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
-string_dumps = JSON.dumps({"a":1, "b":2, "c":3})  # '{"a": 1, "b": 2, "c": 3}'
+
+string_stringify = JSON.stringify(
+    {"a": 1, "b": 2, "c": 3}
+)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.dumps({"a": 1, "b": 2, "c": 3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps
 ```
 
-
-
-
     '{"a":1,"b":2,"c":3}'
-
-
 
 #### JSON option kwargs ~ `pretty` & `sort_keys`
 
 **pretty:**
 
-
 ```python
-string_dumps = JSON.stringify({"b":2, "a":1, "c":3}, pretty=True)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.stringify(
+    {"b": 2, "a": 1, "c": 3}, pretty=True
+)  # '{"a": 1, "b": 2, "c": 3}'
 print(string_dumps)
 ```
 
@@ -73,13 +71,13 @@ print(string_dumps)
       "a": 1,
       "c": 3
     }
-
 
 **sort_keys:**
 
-
 ```python
-string_dumps = JSON.stringify({"b":2, "a":1, "c":3}, pretty=True, sort_keys=True)  # '{"a": 1, "b": 2, "c": 3}'
+string_dumps = JSON.stringify(
+    {"b": 2, "a": 1, "c": 3}, pretty=True, sort_keys=True
+)  # '{"a": 1, "b": 2, "c": 3}'
 print(string_dumps)
 ```
 
@@ -88,7 +86,6 @@ print(string_dumps)
       "b": 2,
       "c": 3
     }
-
 
 ### JsonObj & JSON
 
@@ -117,7 +114,6 @@ j = JsonObj()  # j => JsonObj(**{})
 
 #### From a dictionary o data
 
-
 ```python
 import datetime
 
@@ -125,15 +121,16 @@ data = {
     "key": "value",
     "list": [1, 2, 3, 4, 5],
     "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
-    "sub": {'b': 3, 'key': 'val', 'a': 1,},
+    "sub": {
+        "b": 3,
+        "key": "val",
+        "a": 1,
+    },
     "timedelta": datetime.timedelta(days=2),
 }
 
 JSON(data)
 ```
-
-
-
 
 <pre>JsonObj(**{
     'dt': datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
@@ -143,22 +140,13 @@ JSON(data)
     'timedelta': datetime.timedelta(days=2)
 })</pre>
 
-
-
 ### Dot access
-
 
 ```python
 JSON(data).sub.b
 ```
 
-
-
-
     3
-
-
-
 
 ```python
 stringified_data = JSON(data).stringify(pretty=True)
@@ -183,15 +171,10 @@ print(stringified_data)
       "timedelta": 172800.0
     }
 
-
-
 ```python
 parsed_data = JSON(stringified_data)
 parsed_data
 ```
-
-
-
 
 <pre>JsonObj(**{
     'dt': '1970-01-01T00:00:00.000001',
@@ -201,27 +184,15 @@ parsed_data
     'timedelta': 172800.0
 })</pre>
 
-
-
-
 ```python
 list(parsed_data.keys())
 ```
 
-
-
-
     ['key', 'list', 'dt', 'sub', 'timedelta']
-
-
-
 
 ```python
 list(parsed_data.items())
 ```
-
-
-
 
     [('key', 'value'),
      ('list', [1, 2, 3, 4, 5]),
@@ -229,15 +200,9 @@ list(parsed_data.items())
      ('sub', JsonObj(**{'b': 3, 'key': 'val', 'a': 1})),
      ('timedelta', 172800.0)]
 
-
-
-
 ```python
 list(parsed_data.dot_keys())
 ```
-
-
-
 
     [('key',),
      ('list',),
@@ -247,15 +212,9 @@ list(parsed_data.dot_keys())
      ('sub', 'a'),
      ('timedelta',)]
 
-
-
-
 ```python
 list(parsed_data.dot_items())
 ```
-
-
-
 
     [(('key',), 'value'),
      (('list',), [1, 2, 3, 4, 5]),
@@ -265,39 +224,21 @@ list(parsed_data.dot_items())
      (('sub', 'a'), 1),
      (('timedelta',), 172800.0)]
 
-
-
-
 ```python
-parsed_data[('sub', 'key')]
+parsed_data[("sub", "key")]
 ```
-
-
-
 
     'val'
 
-
-
-
 ```python
-parsed_data.dot_lookup('sub.key')
+parsed_data.dot_lookup("sub.key")
 ```
 
-
-
-
     'val'
-
-
-
 
 ```python
 {**parsed_data}
 ```
-
-
-
 
     {'key': 'value',
      'list': [1, 2, 3, 4, 5],
@@ -305,16 +246,10 @@ parsed_data.dot_lookup('sub.key')
      'sub': JsonObj(**{'b': 3, 'key': 'val', 'a': 1}),
      'timedelta': 172800.0}
 
-
-
-
 ```python
 # fully eject
 parsed_data.eject()
 ```
-
-
-
 
     {'key': 'value',
      'list': [1, 2, 3, 4, 5],
@@ -322,31 +257,29 @@ parsed_data.eject()
      'sub': {'b': 3, 'key': 'val', 'a': 1},
      'timedelta': 172800.0}
 
-
-
 #### Protected keys
 
 `jsonbourne.JsonObj` protects against setting attributes like `'items'` through dot-notation.
 
-
 ```python
 from jsonbourne import JSON
+
 j = JSON()
-j.key = 'value'
+j.key = "value"
 try:  # CANNOT set 'items' using dot-access
-	j.items = [1, 2, 3, 4]
+    j.items = [1, 2, 3, 4]
 except ValueError:
-	pass
+    pass
 # CAN set 'items' through key/item access
-j['items'] = [1, 2, 3, 4]
+j["items"] = [1, 2, 3, 4]
 print(j.__dict__)
 print(j)
 j_items = j.items
-print('items', j_items)
+print("items", j_items)
 # Getting 'items' through dot-access returns the `items()` method
 assert j.items != [1, 2, 3, 4]
 # Getting 'items' with key-access returns the stored value
-assert j['items'] == [1, 2, 3, 4]
+assert j["items"] == [1, 2, 3, 4]
 ```
 
     {'_data': {'key': 'value', 'items': [1, 2, 3, 4]}}
@@ -355,19 +288,18 @@ assert j['items'] == [1, 2, 3, 4]
     })
     items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
 
-
 ### pydantic & jsonbourne
 
- - `from jsonbourne.pydantic import JsonBaseModel`
- - Allows for aliases when getting/setting attribute(s)
- - Supports `__post_init__` (like dataclasses)
+- `from jsonbourne.pydantic import JsonBaseModel`
+- Allows for aliases when getting/setting attribute(s)
+- Supports `__post_init__` (like dataclasses)
 
 #### Basic usage:
-
 
 ```python
 from jsonbourne import JsonObj
 from jsonbourne.pydantic import JsonBaseModel
+
 
 class JsonSubObj(JsonBaseModel):
     herm: int
@@ -381,6 +313,7 @@ class JsonSubObj(JsonBaseModel):
     @classmethod
     def from_json(cls, json_string: str):
         return JsonSubObj(json.loads(json_string))
+
 
 class JsonObjModel(JsonBaseModel):
     a: int
@@ -401,35 +334,29 @@ class JsonObjModel(JsonBaseModel):
     def from_json(cls, json_string: str):
         return cls(**json.loads(json_string))
 
+
 obj = JsonObjModel(
     **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}, "e": {"herm": 2}}
 )
 obj
 ```
 
-
-
-
 <pre>JsonObjModel(**{
-     'a': 1, 'b': 2, 'c': 'herm', 'd': JsonObj(**{'nested': 'nestedval'}), 'e': {'herm': 2}
+     'a': 1,
+     'b': 2,
+     'c': 'herm',
+     'd': JsonObj(**{'nested': 'nestedval'}),
+     'e': {'herm': 2}
 })</pre>
-
-
-
 
 ```python
 # respects properties (which I don't think pydantic does(currently))
 obj.a_property
 ```
 
-
-
-
     'prop_value'
 
-
-
-___
+---
 
 ## JSON backend/lib
 
@@ -442,23 +369,22 @@ the python stdlib json.
 
 `jsonbourne` will look for the following json-packages in the following order:
 
-  1) `rapidjson`
-  2) `orjson`
+1. `rapidjson`
+2. `orjson`
 
 ### Custom lib preferences
 
-
 ```python
 from jsonbourne import import_json
+
 json = import_json(("rapidjson", "orjson"))  # prefer rapidjson over orjson
-string = json.dumps({"a":1, "b":2, "c":3})
+string = json.dumps({"a": 1, "b": 2, "c": 3})
 print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.json.RAPIDJSON'>
+    <class 'jsonbourne.jsonlib.RAPIDJSON'>
     {"a":1,"b":2,"c":3}
-
 
 ### Installing better JSON lib:
 
@@ -471,4 +397,3 @@ print(string)
 - `pip install python-rapidjson` [pip]
 - `conda install -c anaconda python-rapidjson` [conda anaconda/defaults]
 - `conda install -c conda-forge python-rapidjson` [conda-forge]
-

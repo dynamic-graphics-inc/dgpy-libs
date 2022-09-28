@@ -6,6 +6,7 @@ from binascii import hexlify
 from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
 from functools import lru_cache, wraps
+from keyword import iskeyword
 from os import path, stat, urandom
 from random import choice
 from string import ascii_letters, ascii_lowercase, ascii_uppercase, digits, printable
@@ -332,6 +333,19 @@ def pascal2snake(string: AnyStr) -> AnyStr:
 
 
 @anystr2anystr
+def _camel2pascal(string: str) -> str:
+    """Convert a given camelCase string to PascalCase
+
+    Examples:
+        >>> _camel2pascal('camelCase')
+        'CamelCase'
+        >>> _camel2pascal(b'camelCase')
+        b'CamelCase'
+
+    """
+    return f"{string[0].upper()}{string[1:]}"
+
+
 def camel2pascal(string: AnyStr) -> AnyStr:
     """Convert a given camelCase string to PascalCase
 
@@ -342,9 +356,7 @@ def camel2pascal(string: AnyStr) -> AnyStr:
         b'CamelCase'
 
     """
-    if isinstance(string, bytes):
-        return b"".join(x.capitalize() for x in string.split(b"_"))
-    return f"{string[0].upper()}{string[1:]}"
+    return _camel2pascal(string)
 
 
 @anystr2anystr
@@ -693,7 +705,7 @@ def strip_non_ascii(s: str) -> str:
     return "".join(filter(lambda x: ord(x) <= 128, s))
 
 
-def randhexstr(length: int = 4) -> str:
+def randhexstr(length: int = 8) -> str:
     """Return a random hex string
 
     Args:
@@ -706,15 +718,45 @@ def randhexstr(length: int = 4) -> str:
         >>> a = randhexstr()
         >>> isinstance(a, str)
         True
-        >>> len(a) == 8
+        >>> len(a)
+        8
+        >>> b = randhexstr(10)
+        >>> isinstance(b, str)
         True
+        >>> len(b)
+        10
+        >>> randhexstr(0)
+        Traceback (most recent call last):
+            ...
+        ValueError: length must be a positive even number
 
     """
-    return bytes2str(hexlify(urandom(length)))
+    if length % 2 != 0 or length < 1:
+        raise ValueError("length must be a positive even number")
+    return bytes2str(hexlify(urandom(length // 2)))
 
 
-def random_string(length: int = 4, hex: bool = False) -> str:
-    """Return a random ascii string (length=str_len; default=4)"""
+def random_string(length: int = 8, hex: bool = False) -> str:
+    """Return a random ascii string (length=str_len; default=4)
+
+    Examples:
+        >>> a = random_string()
+        >>> isinstance(a, str)
+        True
+        >>> len(a)
+        8
+        >>> a = random_string(12)
+        >>> isinstance(a, str)
+        True
+        >>> len(a)
+        12
+        >>> a = random_string(8, hex=True)
+        >>> isinstance(a, str)
+        True
+        >>> len(a)
+        8
+
+    """
     if hex:
         return randhexstr(length)
     letters = ascii_lowercase + ascii_uppercase
@@ -1564,6 +1606,202 @@ def space_pad_strings(strings: List[str]) -> List[str]:
     return [s.ljust(_max_len) for s in strings]
 
 
+def t9_mapping() -> Dict[str, int]:
+    return {
+        " ": 0,
+        ",": 1,
+        ".": 1,
+        "?": 1,
+        "!": 1,
+        "-": 1,
+        "_": 1,
+        "@": 1,
+        "%": 1,
+        "$": 1,
+        "A": 2,
+        "a": 2,
+        "B": 2,
+        "b": 2,
+        "C": 2,
+        "c": 2,
+        "D": 3,
+        "d": 3,
+        "E": 3,
+        "e": 3,
+        "F": 3,
+        "f": 3,
+        "G": 4,
+        "g": 4,
+        "H": 4,
+        "h": 4,
+        "I": 4,
+        "i": 4,
+        "J": 5,
+        "j": 5,
+        "K": 5,
+        "k": 5,
+        "L": 5,
+        "l": 5,
+        "M": 6,
+        "m": 6,
+        "N": 6,
+        "n": 6,
+        "O": 6,
+        "o": 6,
+        "P": 7,
+        "p": 7,
+        "Q": 7,
+        "q": 7,
+        "R": 7,
+        "r": 7,
+        "S": 7,
+        "s": 7,
+        "T": 8,
+        "t": 8,
+        "U": 8,
+        "u": 8,
+        "V": 8,
+        "v": 8,
+        "W": 9,
+        "w": 9,
+        "X": 9,
+        "x": 9,
+        "Y": 9,
+        "y": 9,
+        "Z": 9,
+        "z": 9,
+    }
+
+
+@lru_cache(maxsize=None)
+def t9_translation() -> Dict[int, str]:
+    return str.maketrans({k: str(v) for k, v in t9_mapping().items()})
+
+
+@anystr
+def t9_str(string: str) -> str:
+    """Convert a string to a number using ye olde T9
+
+    Args:
+        string (str): String to convert to T9 integer
+
+    Returns:
+        str: T9 integer as a string
+
+    Examples:
+        >>> t9_str("Hello World")
+        '43556096753'
+        >>> t9_str("dgpy")
+        '3479'
+
+    """
+    return string.translate(t9_translation())
+
+
+@anystr
+def t9(string: str) -> int:
+    """Convert a string to a number using ye olde T9
+
+    Args:
+        string (str): String to convert to T9 integer
+
+    Returns:
+        int: T9 integer
+
+    Examples:
+        >>> t9("Hello World")
+        43556096753
+        >>> t9("dgpy")
+        3479
+
+    """
+    return int(t9_str(string))
+
+
+@anystr
+def str_is_identifier(string: str) -> bool:
+    """
+
+    Args:
+        string ():
+
+    Returns:
+
+    """
+    if not string.isidentifier():
+        return False
+    if iskeyword(string):
+        return False
+    return True
+
+
+@anystr
+def is_identifier(string: str) -> bool:
+    """Return True if a string is a valid python identifier; False otherwise
+
+    Args:
+        string (str): String (likely to be used as a key) to check
+
+    Returns:
+        bool: True if is an identifier
+
+    Examples:
+        >>> is_identifier("herm")
+        True
+        >>> is_identifier("something that contains spaces")
+        False
+        >>> is_identifier("import")
+        False
+        >>> is_identifier("something.with.periods")
+        False
+        >>> is_identifier("astring-with-dashes")
+        False
+        >>> is_identifier("astring_with_underscores")
+        True
+        >>> is_identifier(b"astring_with_underscores")
+        True
+        >>> is_identifier(123)
+        False
+
+    """
+    if not isinstance(string, str):
+        return False
+    if not string.isidentifier():
+        return False
+    if iskeyword(string):
+        return False
+    return True
+
+
+def isidentifier(string: AnyStr) -> bool:
+    """Return True if a string is a valid python identifier; False otherwise
+
+    Args:
+        string (str): String (likely to be used as a key) to check
+
+    Returns:
+        bool: True if is an identifier
+
+    Examples:
+        >>> isidentifier("herm")
+        True
+        >>> isidentifier("something that contains spaces")
+        False
+        >>> isidentifier("import")
+        False
+        >>> isidentifier("something.with.periods")
+        False
+        >>> isidentifier("astring-with-dashes")
+        False
+        >>> isidentifier("astring_with_underscores")
+        True
+        >>> isidentifier(123)
+        False
+
+    """
+    return is_identifier(string)
+
+
 __all__ = (
     "ALL_CAP_RE",
     "CAMEL_CHARACTERS",
@@ -1598,7 +1836,9 @@ __all__ = (
     "enum_strings",
     "filesize_str",
     "indent",
+    "is_identifier",
     "is_snake",
+    "isidentifier",
     "kebab2camel",
     "kebab2pascal",
     "kebab2snake",

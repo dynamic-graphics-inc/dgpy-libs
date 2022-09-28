@@ -1,0 +1,8 @@
+mypy
+typing-extensions
+pydantic
+anyio
+flake8
+flake8-print
+flake8-eradicate
+flake8-comprehensions

@@ -38,6 +38,7 @@ from lager.core import (
     parse,
     patch,
     remove,
+    reset,
     start,
     stop,
     success,
@@ -61,6 +62,7 @@ __all__ = (
     "log",
     "ln",
     "LN",
+    "reset",
     #############
     ## HOISTED ##
     #############

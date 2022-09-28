@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.21.6"
+version = "0.22.1"
 description = "EZPZ JSON"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -8,30 +8,29 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/jsonbourne"
 readme = 'README.md'
 packages = [
-    { include = "jsonbourne", from = "." },
-    { include = "JSON.py", from = "." },
-    { include = "david_webb.py", from = "." },
+  { include = "jsonbourne", from = "." },
+  { include = "JSON.py", from = "." },
+  { include = "david_webb.py", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "dgpy",
-    "pydantic",
-    "json",
-    "orjson",
-    "rapidjson",
+  "dgpy",
+  "pydantic",
+  "json",
+  "orjson",
+  "rapidjson",
 ]
-
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -57,37 +56,37 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
-    "-ra",
-    "--strict-config",
-    "--strict-markers",
-    "--doctest-modules",
-    "--disable-warnings",
-    "--doctest-ignore-import-errors"
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
+  "--doctest-ignore-import-errors",
 ]
 xfail_strict = true
 filterwarnings = [
-    "error",
-    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-    "ignore::RuntimeWarning",
-    "ignore::pytest.PytestUnraisableExceptionWarning",
-    "ignore::DeprecationWarning"
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "timeout",
-    "skip: skip test",
-    "anyio: anyio tests",
-    "aio: asyncio tests",
-    "basic: basic tests",
-    "version",
-    "orjson: orjson tests",
-    "rapidjson: rapidjson tests",
-    "pydantic: pydantic tests",
-    "attrs: attrs tests",
-    "optdeps: optional dependencies",
-    "jsonlibs: jsonlibs tests",
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
+  "skip: skip test",
+  "anyio: anyio tests",
+  "aio: asyncio tests",
+  "basic: basic tests",
+  "version",
+  "orjson: orjson tests",
+  "rapidjson: rapidjson tests",
+  "pydantic: pydantic tests",
+  "attrs: attrs tests",
+  "optdeps: optional dependencies",
+  "jsonlibs: jsonlibs tests",
 ]
 testpaths = [
-    "jsonbourne",
-    "tests"
+  "jsonbourne",
+  "tests",
 ]

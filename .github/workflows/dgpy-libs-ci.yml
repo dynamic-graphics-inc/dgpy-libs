@@ -2,19 +2,20 @@ name: dgpy-libs-ci
 
 on: [push, pull_request]
 
-#on:
-#  push:
-#    branches: [ master, main, dev ]
-#  pull_request:
-#    branches: [ master, main, dev ]
-
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "."
+      - uses: isort/isort-action@master
+        with:
+          configuration: "--settings-path pyproject.toml --check-only --diff"
       - name: Set up Python 3
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.8
       - name: Install dependencies
@@ -34,16 +35,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+
+      # - name: Install poetry
+      #   run: pipx install poetry==1.1.15
+      # - uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'
+      #     cache: 'poetry'
+
       - name: Set up Python 3
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
+        uses: abatilo/actions-poetry@v2.1.6
         with:
-          poetry-version: 1.1.12
+          poetry-version: 1.1.15
 
       - name: Install dependencies
         run: |
@@ -111,9 +120,9 @@ jobs:
         python-version: ['3.7', '3.8', '3.9']
 #        python-version: [3.7, 3.8, 3.9, 'pypy3']
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -136,20 +145,24 @@ jobs:
   mkdocs:
     needs: [lint, test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.8
       - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
+        uses: abatilo/actions-poetry@v2.1.6
         with:
           poetry-version: 1.1.12
       - name: poetry install
         run: |
           poetry install
       - name: install docs deps
-        run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings
+        run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python]
       - name: mkdocs build
+        if: github.ref != 'refs/heads/main'
+        run: poetry run mkdocs build
+      - name: mkdocs build
+        if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force

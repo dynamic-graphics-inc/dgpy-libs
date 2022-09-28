@@ -1,5 +1,5 @@
--c requirements-dev.txt
+-c dev.txt
 mkdocs
 mkdocs-material
 mkdocs-jupyter
-mkdocstrings
+mkdocstrings[python]

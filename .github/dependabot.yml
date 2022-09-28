@@ -1,5 +1,11 @@
 version: 2
 updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
@@ -42,6 +48,11 @@ updates:
 
   - package-ecosystem: "pip"
     directory: "/libs/listless"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "pip"
+    directory: "/libs/requires"
     schedule:
       interval: "daily"
 

@@ -15,16 +15,14 @@ Async-open
 
 **Why not use aiofiles?**
 
- - Wanted more type annotations
- - aiofiles uses ye ole `@coroutine` decorator -- aiopen uses python3.6+ `async/await`
- - aiopen is a callable module, so you can do:
- 	- `import aiopen`
- 	- `async with aiopen('afile.txt', 'w') as f: await f.write('some text!')`
- 	- `async with aiopen('afile.txt', 'r') as f: content = await f.read()`
-
+- Wanted more type annotations
+- aiofiles uses ye ole `@coroutine` decorator -- aiopen uses python3.6+ `async/await`
+- aiopen is a callable module, so you can do:
+  - `import aiopen`
+  - `async with aiopen('afile.txt', 'w') as f: await f.write('some text!')`
+  - `async with aiopen('afile.txt', 'r') as f: content = await f.read()`
 
 (Big shouts out to the aiofiles people, aiopen is entirely based off of aiofiles)
-
 
 ## Usage:
 
@@ -39,5 +37,4 @@ async with aiopen('afile.txt', 'w') as f:
 async with aiopen('afile.txt', 'r') as f:
     content = await f.read()
     print(content)
-
 ```

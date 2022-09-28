@@ -6,18 +6,7 @@ import sys
 from dataclasses import dataclass
 from functools import wraps
 from importlib import import_module
-from typing import (
-    Any,
-    Callable,
-    Coroutine,
-    Dict,
-    List,
-    Optional,
-    Tuple,
-    TypeVar,
-    Union,
-    overload,
-)
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
 
 from xtyping import ParamSpec
 
@@ -165,16 +154,6 @@ class Requirement:
     @property
     def alias(self) -> str:
         return self._as or self._import
-
-    @overload
-    def __call__(self, f: Callable[P, T]) -> Callable[P, T]:
-        ...
-
-    @overload
-    def __call__(
-        self, f: Callable[P, Coroutine[Any, Any, R]]
-    ) -> Callable[P, Coroutine[Any, Any, R]]:
-        ...
 
     def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):

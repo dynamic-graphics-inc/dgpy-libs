@@ -11,4 +11,4 @@
 
 **Install:** `pip install fmts` OR `poetry add fmts`
 
-**What:** typed & tested python string utils
+**What:** typed & tested simple python string utils

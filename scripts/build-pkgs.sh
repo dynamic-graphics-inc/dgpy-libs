@@ -74,16 +74,4 @@ build_pkg "libs/lager"
 build_pkg "libs/requires"
 build_pkg "libs/shellfish"
 
-# build_pkg "dgpy-libs/libs/xtyping"
-# build_pkg "dgpy-libs/libs/listless"
-# build_pkg "dgpy-libs/libs/fmts"
-# build_pkg "dgpy-libs/libs/funkify"
-# build_pkg "dgpy-libs/libs/aiopen"
-# build_pkg "dgpy-libs/libs/asyncify"
-# build_pkg "dgpy-libs/libs/h5"
-# build_pkg "dgpy-libs/libs/jsonbourne"
-# build_pkg "dgpy-libs/libs/lager"
-# build_pkg "dgpy-libs/libs/requires"
-# build_pkg "dgpy-libs/libs/shellfish"
-
 mkzip

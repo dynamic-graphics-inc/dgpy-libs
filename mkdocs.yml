@@ -79,12 +79,12 @@ plugins:
       execute: False
   ### MKDOCSTRINGS ###
   - mkdocstrings:
-      default_handler: python
       handlers:
         python:
           setup_commands:
             - import sys
             - sys.path.append("docs")
+            - sys.path.append("libs/aiopen")
           inherited_members: true
           docstring_style: google
           rendering:

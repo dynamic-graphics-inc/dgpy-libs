@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from xtyping import Any, Protocol, Union
 
 __all__ = (

@@ -199,9 +199,9 @@ def handlers() -> Dict[int, Handler]:
     return logger._core.handlers  # type: ignore[no-any-return]
 
 
-def reset() -> None:
+def reset(level: Optional[Union[str, int]] = None) -> None:
     logger.remove()
-    logger.add(_sys.stderr)
+    logger.add(_sys.stderr, level=loglevel(level or "debug"))
 
 
 __hoisted__ = (

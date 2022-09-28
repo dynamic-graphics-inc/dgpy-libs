@@ -124,30 +124,26 @@ def flake_strict(session):
     _flake_w_pytest(session)
 
 
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def pipc(session):
+    session.install("pip-tools")
+    reqs_ini = (
+        "dev.in",
+        "docs.in",
+        "lint.in",
+        "flake.in",
+        "fmt.in",
+    )
+    for reqs_file in reqs_ini:
+        session.run(
+            "pip-compile", path.join(PWD, "requirements", reqs_file), "--no-header"
+        )
+
+
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
     session.install("orjson", "types-orjson", "fastapi")
     session.run("mypy", "--version")
-    # session.run(
-    #     'mypy',
-    #     '--show-error-codes',
-    #     '--config-file',
-    #     './pyproject.toml',
-    #     *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
-    #     # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
-    #     )
-
-    # for lib in libs:
-    #     session.run(
-    #         'mypy',
-    #         '--show-error-codes',
-    #         '--config-file',
-    #         './mypy.ini',
-    #         *[el for el in SOURCE_DIRS.values() if '.DS_Store' not in el],
-    #         path.join('libs', lib, 'tests')
-    #         # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
-    #         )
-
     session.run(
         "mypy",
         "--show-error-codes",
@@ -287,7 +283,7 @@ def update_metadata(session):
         print("~~~")
         metadata_filepath = path.join(dirpath, libname, "_meta.py")
         pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
-        with open(metadata_filepath, "w") as f:
+        with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
             f.write(metadata_file_string)
 
         s = _pkg_entry_point(libname)
@@ -306,7 +302,7 @@ def update_metadata(session):
 
 def _install_mkdocs_deps(session):
     session.install("mkdocs")
-    session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings")
+    session.install("mkdocs-material", "mkdocs-jupyter", "mkdocstrings[python]")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

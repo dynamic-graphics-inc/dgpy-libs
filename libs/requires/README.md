@@ -2,9 +2,7 @@
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
 </a>
 
-
 # requires
-
 
 [![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg)
 [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg)
@@ -20,16 +18,15 @@ Python dependency management can be mind bottlingly complex. Optional dependenci
 
 This package has come in handy in lambda-land where you only get 250mb (on aws)!
 
-___
+---
 
 ## Usage:
-
-
 
 ```python
 # This will fail
 def uno():
-    return json.dumps({'a': 1, 'b': 2})
+    return json.dumps({"a": 1, "b": 2})
+
 
 try:
     uno()
@@ -39,100 +36,78 @@ except NameError as ne:
 
     Error: name 'json' is not defined
 
-
-
 ```python
 # This will not fail
 import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
 
-@requires('json')
+
+@requires("json")
 def uno():
-    return json.dumps({'a': 1, 'b': 2})
+    return json.dumps({"a": 1, "b": 2})
+
 
 uno()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
 
-@requires('from json import dumps')
+
+@requires("from json import dumps")
 def uno():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 uno()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 def dos():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 dos()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
 
-@requires(_from='json', _import='dumps')
+
+@requires(_from="json", _import="dumps")
 def dos():
-    return dumps({'a': 1, 'b': 2})
+    return dumps({"a": 1, "b": 2})
+
 
 dos()
 ```
 
-
-
-
     '{"a": 1, "b": 2}'
-
-
-
 
 ```python
 import requires
 
-@requires(_import='rapidjson', pip='python-rapidjson', conda_forge='python-rapidjson')
+
+@requires(_import="rapidjson", pip="python-rapidjson", conda_forge="python-rapidjson")
 def tres():
-    return rapidjson.dumps({'a': 1, 'b': 2})
+    return rapidjson.dumps({"a": 1, "b": 2})
+
 
 tres()  # Will err if not install with where to install instructions
 ```
 
-
-
-
     '{"a":1,"b":2}'
-
-
-
 
 ```python
 # should error
 def quatro():
-    return path.join('a', 'b')
+    return path.join("a", "b")
+
 
 try:
     quatro()
@@ -142,22 +117,21 @@ except NameError as ne:
 
     ERROR: name 'path' is not defined
 
-
-
 ```python
 from requires import Requirement
 
-os_path_req = Requirement(_import='path', _from='os')
+os_path_req = Requirement(_import="path", _from="os")
+
 
 @os_path_req
 def quatro():
-    return path.join('a', 'b')
+    return path.join("a", "b")
+
 
 assert isinstance(quatro(), str)
 ```
 
 ## Enforcing requirements
-
 
 ```python
 import requires
@@ -166,10 +140,10 @@ try:
     import alibrary
 except ModuleNotFoundError:
     requirement = requires.Requirement(
-        _import='alibrary',
+        _import="alibrary",
         pip=True,
-        conda_forge='alibrary-conda-listing',
-        details="Install details"
+        conda_forge="alibrary-conda-listing",
+        details="Install details",
     )
 try:
     requirement.raise_error()
@@ -183,7 +157,6 @@ except requires.RequirementError as err:
         pip install alibrary
         conda install -c conda-forge alibrary-conda-listing
         Install details
-
 
 ## Less verbose version:
 
@@ -201,11 +174,10 @@ except ModuleNotFoundError:
     ).raise_error()
 ```
 
-
-___
+---
 
 ## Future ideas?
 
- - Adding support for requiring particular package versions?
- - Auto install?
- - Allow non pip/conda/conda-forge locations?
+- Adding support for requiring particular package versions?
+- Auto install?
+- Allow non pip/conda/conda-forge locations?

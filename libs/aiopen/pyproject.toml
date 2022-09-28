@@ -8,22 +8,26 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
 readme = 'README.md'
 packages = [
-    { include = "aiopen", from = "." },
+  { include = "aiopen", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "anyio", "fs", "aiopen", "async", "dgpy"
+  "anyio",
+  "fs",
+  "aiopen",
+  "async",
+  "dgpy",
 ]
 
 [tool.poetry.dependencies]
@@ -32,10 +36,10 @@ funkify = "^0.4.0"
 xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
-#pytest = "^7.1.2"
-pytest-asyncio = "^0.18.1"
-anyio = {extras = ["trio"], version = "^3.5.0"}
+pytest = "^7.1.3"
+# pytest = "^7.1.2"
+pytest-asyncio = "^0.19.0"
+anyio = { extras = ["trio"], version = "^3.5.0" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

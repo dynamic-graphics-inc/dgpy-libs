@@ -8,30 +8,32 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/listless"
 readme = 'README.md'
 packages = [
-    { include = "listless", from = "." },
+  { include = "listless", from = "." },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Typing :: Typed"
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Typing :: Typed",
 ]
 keywords = [
-    "generators", "itertools", "dgpy", "typed",
+  "generators",
+  "itertools",
+  "dgpy",
+  "typed",
 ]
-
 
 [tool.poetry.dependencies]
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
+pytest = "^7.1.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -40,30 +42,30 @@ build-backend = "poetry.core.masonry.api"
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
-    "-ra",
-    "--strict-config",
-    "--strict-markers",
-    "--doctest-modules",
-    "--disable-warnings"
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
 ]
 xfail_strict = true
 filterwarnings = [
-    "error",
-    'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-    "ignore::RuntimeWarning",
-    "ignore::pytest.PytestUnraisableExceptionWarning",
-    "ignore::DeprecationWarning"
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
 ]
 markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "timeout",
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
 ]
 
 [tool.coverage.run]
 branch = true
 source = ['listless']
 omit = [
-    '_meta.py'
+  '_meta.py',
 ]
 
 [tool.coverage.report]
@@ -71,16 +73,16 @@ precision = 2
 show_missing = true
 # Regexes for lines to exclude from consideration
 exclude_lines = [
-    '@overload',
-    # Re-enable the standard pragma (with extra strictness)
-    '# pragma: no cover\b',
-    # Code for static type checkers
-    'if TYPE_CHECKING:',
-    # Scripts
-    'if __name__ == .__main__.:',
-    'if 0:',
-    'if sys.version_info < (3, 7):',
-    'if sys.version_info >= (3, 8):',
-    'pragma: no cover',
-    'pragma: nocov',
+  '@overload',
+  # Re-enable the standard pragma (with extra strictness)
+  '# pragma: no cover\b',
+  # Code for static type checkers
+  'if TYPE_CHECKING:',
+  # Scripts
+  'if __name__ == .__main__.:',
+  'if 0:',
+  'if sys.version_info < (3, 7):',
+  'if sys.version_info >= (3, 8):',
+  'pragma: no cover',
+  'pragma: nocov',
 ]

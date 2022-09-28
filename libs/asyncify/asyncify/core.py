@@ -2,7 +2,6 @@
 """Asyncify core"""
 
 import asyncio
-import sys
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
@@ -198,7 +197,9 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
         asyncio.set_event_loop(None)
 
 
-def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
+def run(
+    aw: Coroutine[Any, Any, T], *, debug: Optional[bool] = None, **kwargs: Any
+) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -220,9 +221,10 @@ def run(aw: Awaitable[T], *, debug: Optional[bool] = None, **kwargs: Any) -> T:
         5
 
     """
-    if sys.version_info >= (3, 7):
-        return asyncio.run(aw, debug=debug)
-    return _run(aw=aw, debug=debug)  # pragma: no cover
+    # If python is 3.6
+    if not hasattr(asyncio, "run"):
+        return _run(aw, debug=debug)
+    return asyncio_run(aw, debug=debug)
 
 
 def is_async(obj: Any) -> bool:
@@ -319,12 +321,15 @@ def aiorun_asyncio(
     _debug = _backend_options.get("debug", False)
     if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):
         return asyncio_run(
-            cast(Awaitable[T_Retval], awaitable_or_func(*args)), debug=_debug
+            awaitable_or_func(*args),
+            debug=_debug,
         )
 
     if args:
         raise ValueError("args must be empty when calling a coroutine")
-    return asyncio_run(cast(Awaitable[T_Retval], awaitable_or_func), debug=_debug)
+    return asyncio_run(
+        cast(Coroutine[Any, Any, T_Retval], awaitable_or_func), debug=_debug
+    )
 
 
 def aiorun(

@@ -15,22 +15,25 @@
 
 **Usage:**
 
-
-
 ```python
 import asyncify
+
 # OR
 from asyncify import asyncify
 from asyncify import run  # asyncio.run polyfill for python36
 
+
 def add(a, b):
     return a + b
 
+
 assert add(1, 2) == 3
+
 
 @asyncify
 def add_async(a, b):
     return a + b
+
 
 res = await add_async(1, 2)
 assert res == 3
