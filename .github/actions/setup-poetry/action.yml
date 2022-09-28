@@ -1,4 +1,5 @@
-# Cache rush build outputs action
+# Setup poetry in a straight forward way...
+# Poetry really drives me insane sometimes...
 name: "setup-poetry"
 description: "setup-poetry"
 author: "jessekrubin"
