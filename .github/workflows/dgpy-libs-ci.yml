@@ -37,22 +37,45 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Install poetry
-      #   run: pipx install poetry==1.1.15
-      # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.9'
-      #     cache: 'poetry'
-
       - name: Set up Python 3
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
 
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.1.6
-        with:
-          poetry-version: 1.1.15
+
+      - name: python-sane-setup
+        run: |
+          python -m pip install --upgrade pip
+      - name: setup-poetry
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
+
+    #  - name: 'shlack-action'
+    #    id: shlack-action
+    #    uses: ./.github/actions/shlack
+    #    with:
+    #      channel-id: ${{ inputs.channel-id }}
+    #      payload: ${{ inputs.payload }}
+      #  env:
+      #    SLACK_BOT_TOKEN: ${{ secrets.SHELDON_SLACK_BOT_TOKEN }}
+      #    SHELDON_SLACK_BOT_TOKEN: ${{ secrets.SHELDON_SLACK_BOT_TOKEN }}
+
+      # - name: setup-poetry
+      #   run: |
+      #     curl -sSL https://install.python-poetry.org | python3 -
+      #     which poetry
+      #     poetry config virtualenvs.create false
+
+        # run: pipx install poetry==1.1.15
+      # # - uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.9'
+      #     cache: 'poetry'
+
+      # - name: Run image
+      #   uses: abatilo/actions-poetry@v2.1.6
+        # with:
+        #   poetry-version: 1.1.15
 
       - name: Install dependencies
         run: |
@@ -151,10 +174,14 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.8
-      - name: Run image
-        uses: abatilo/actions-poetry@v2.1.6
-        with:
-          poetry-version: 1.1.12
+      - name: setup-poetry
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
+      # - name: setup-poetry
+      #   run: |
+      #     curl -sSL https://install.python-poetry.org | python3 -
+      #     which poetry
+      #     poetry config virtualenvs.create false
       - name: poetry install
         run: |
           poetry install

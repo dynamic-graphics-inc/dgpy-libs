@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "dgpylibs"
+version = "0.0.3"
+description = "Dynamic Graphics Python libraries"
+authors = ["jessekrubin <jesse@dgi.com>"]
+license = "MIT"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+packages = [
+    { include = "dgpylibs", from = "." },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Typing :: Typed"
+]
+keywords = [
+    "dgpy", "dgi", "typed", "python3",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+aiopen = "*"
+asyncify = "*"
+fmts = "*"
+funkify = "*"
+h5 = "*"
+jsonbourne = "*"
+lager = "*"
+listless = "*"
+requires = "*"
+shellfish = "*"
+xtyping = "*"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+h5py = "^3.4.0"
+isort = "^5.7.0"
+mypy = "^0.942"
+nox = "^2022.1.7"
+orjson = "^3.6.3"
+pip-tools = "^6.4.0"
+pydantic = "^1.8.2"
+pytest = "^7.1.2"
+pytest-asyncio = "^0.18.1"
+pytest-cov = "^2.12.1"
+python-rapidjson = "^1.6"
+xdoctest = ">=0.15.10"
+click = "^8.1.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
