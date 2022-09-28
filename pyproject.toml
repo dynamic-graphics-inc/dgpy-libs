@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "dgpy-libs"
+name = "dgpydev"
 version = "0.0.3"
 description = "Dynamic Graphics Python libraries"
 authors = ["jessekrubin <jesse@dgi.com>"]
@@ -7,7 +7,6 @@ license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 packages = [
-  { include = "dgpylibs", from = "." },
   { include = "dgpydev", from = "." },
 ]
 classifiers = [
@@ -73,7 +72,7 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
 [tool.poetry.scripts]
-dgpydev = "dev.cli:main"
+dgpydev = "dgpydev.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
