@@ -1,0 +1,14 @@
+# Cache rush build outputs action
+name: "setup-poetry"
+description: "setup-poetry"
+author: "jessekrubin"
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup-poetry
+      shell: 'bash'
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        which poetry
+        poetry config virtualenvs.create false
