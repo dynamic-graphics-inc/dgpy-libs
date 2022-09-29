@@ -204,6 +204,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     _data: Dict[_KT, _VT]
 
+
+
     @overload
     def __init__(
         self,
@@ -316,10 +318,6 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         if is_int(key):
             self._data[str(key)] = value
             return None
-        if not is_identifier(key):
-            raise ValueError(
-                f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
-            )
         self._data[key] = value
 
     def __getattr__(self, item: _KT) -> Any:
