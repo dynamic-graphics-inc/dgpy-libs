@@ -46,7 +46,6 @@ black = "^22.8.0"
 flake8 = "^5.0.4"
 h5py = "^3.4.0"
 isort = "^5.7.0"
-mypy = "^0.971"
 nox = "^2022.8.7"
 orjson = "^3.7.12"
 pydantic = "^1.9.2"
@@ -56,6 +55,7 @@ pytest-cov = "^2.12.1"
 python-rapidjson = "^1.6"
 xdoctest = ">=1.0.1"
 click = "^8.1.2"
+mypy = "^0.981"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
