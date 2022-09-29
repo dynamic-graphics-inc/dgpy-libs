@@ -7,6 +7,8 @@
 #     from dataclasses import dataclass
 from dataclasses import dataclass
 
+from dgpylibs._meta import __version__
+
 import aiopen
 import asyncify
 import fmts
@@ -18,6 +20,7 @@ import listless
 import requires
 import shellfish
 import xtyping
+
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
 from fmts import __version__ as __fmts_version__
@@ -29,8 +32,6 @@ from listless import __version__ as __listless_version__
 from requires import __version__ as __requires_version__
 from shellfish import __version__ as __shellfish_version__
 from xtyping import __version__ as __xtyping_version__
-
-from dgpylibs._meta import __version__
 
 __all__ = (
     "__version__",
