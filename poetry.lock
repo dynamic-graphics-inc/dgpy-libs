@@ -282,7 +282,7 @@ requirements_deprecated_finder = ["pip-api", "pipreqs"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.22.1"
+version = "0.22.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
