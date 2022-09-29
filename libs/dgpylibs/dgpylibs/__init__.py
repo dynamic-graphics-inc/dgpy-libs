@@ -3,6 +3,18 @@
 
 from dgpylibs._meta import __version__
 
+import aiopen
+import asyncify
+import fmts
+import funkify
+import h5
+import jsonbourne
+import lager
+import listless
+import requires
+import shellfish
+import xtyping
+
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
 from fmts import __version__ as __fmts_version__
@@ -33,6 +45,17 @@ __all__ = (
     "__shellfish_version__",
     "__requires_version__",
     "__xtyping_version__",
+    "aiopen",
+    "asyncify",
+    "fmts",
+    "funkify",
+    "h5",
+    "jsonbourne",
+    "lager",
+    "listless",
+    "requires",
+    "shellfish",
+    "xtyping",
 )
 
 LIBS = (

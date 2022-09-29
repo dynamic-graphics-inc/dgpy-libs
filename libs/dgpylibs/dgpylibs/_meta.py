@@ -4,4 +4,4 @@
 __title__ = "dgpy-libs"
 __description__ = "Dynamic Graphics Python libraries"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.0.3"
+__version__ = "0.0.4"
