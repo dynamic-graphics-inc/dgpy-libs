@@ -71,7 +71,7 @@ numpy = ">=1.14.5"
 
 [[package]]
 name = "jsonbourne"
-version = "0.22.1"
+version = "0.22.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -286,8 +286,8 @@ h5py = [
     {file = "h5py-3.7.0.tar.gz", hash = "sha256:3fcf37884383c5da64846ab510190720027dca0768def34dd8dcb659dbe5cbf3"},
 ]
 jsonbourne = [
-    {file = "jsonbourne-0.22.1-py3-none-any.whl", hash = "sha256:564fa2c58b295b4fabc2c673e0136be903e2c6ca4cf3fb117cb345b60a45c3f4"},
-    {file = "jsonbourne-0.22.1.tar.gz", hash = "sha256:70b31fbf5acb822c0aec929c09069bfcb201506a2a998667b25c2149d8a8fea5"},
+    {file = "jsonbourne-0.22.2-py3-none-any.whl", hash = "sha256:e108b0d280fae92f0ad20fbc1650906b917f93ade8fa608a00f4fb489e7dc013"},
+    {file = "jsonbourne-0.22.2.tar.gz", hash = "sha256:33c0bb9df33b63f104e58aca9d42073eebb1691ea6d15280cde49cbf290df9cd"},
 ]
 lager = [
     {file = "lager-0.16.4-py3-none-any.whl", hash = "sha256:7d5a0d02e138baa5e4fb0a52d0f8360d409314074d00fdab5c42d7f30680ce0a"},
