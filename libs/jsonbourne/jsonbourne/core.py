@@ -286,6 +286,16 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         return self.__setitem__(attr, value)
 
+    def __setitem(self, key: _KT, value: _VT, identifier: bool = False) -> None:
+        if is_int(key):
+            self._data[str(key)] = value
+            return None
+        if identifier and not is_identifier(key):
+            raise ValueError(
+                f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
+            )
+        self._data[key] = value
+
     def __setitem__(self, key: _KT, value: _VT) -> None:
         """Set JsonObj item with 'key' to 'value'
 
@@ -313,10 +323,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             JsonObj(**{'a': 123, 'b': 321, '123': 'a', '456': 'a'})
 
         """
-        if is_int(key):
-            self._data[str(key)] = value
-            return None
-        self._data[key] = value
+        self.__setitem(key, value, identifier=False)
 
     def __getattr__(self, item: _KT) -> Any:
         """Return an attr
