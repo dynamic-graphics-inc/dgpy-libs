@@ -204,8 +204,6 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     _data: Dict[_KT, _VT]
 
-
-
     @overload
     def __init__(
         self,

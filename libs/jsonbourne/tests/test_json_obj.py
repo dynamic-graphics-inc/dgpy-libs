@@ -57,7 +57,7 @@ def test_jsonobj_basic_unpacking() -> None:
     merged_jsonobj = JsonObj({**thing, **thing2})
     assert {**merged_jsonobj} == merged
 
-
+@pytest.mark.skip(reason="no longer the impl")
 def test_jsonobj_breaks() -> None:
     thing2 = Thingy({"a": 1, "b": 2, "c": {"herm": 23}})
     assert thing2.c.herm == thing2["c"]["herm"]
