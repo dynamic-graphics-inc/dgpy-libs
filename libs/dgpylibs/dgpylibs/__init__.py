@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Dynamic Graphics Python libraries"""
 from dataclasses import dataclass
+
 from dgpylibs._meta import __version__
 
 import aiopen

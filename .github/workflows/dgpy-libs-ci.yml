@@ -133,6 +133,11 @@ jobs:
           cd libs/shellfish
           poetry run pytest --doctest-modules tests shellfish
 
+      - name: test dgpylibs
+        run: |
+          cd libs/dgpylibs
+          poetry run pytest --doctest-modules tests dgpylibs
+
   test-jsonbourne:
     needs: [lint]
     runs-on: ubuntu-latest
