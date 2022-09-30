@@ -9,6 +9,7 @@ import nox
 LIBS = (
     "aiopen",
     "asyncify",
+    "dgpylibs",
     "fmts",
     "funkify",
     "h5",
@@ -156,7 +157,6 @@ def _mypy(session):
     for lib in {
         el for el in LIBS if el not in {"aiopen", "shellfish", "jsonbourne", "requires"}
     }:
-
         session.run(
             "mypy",
             "--show-error-codes",

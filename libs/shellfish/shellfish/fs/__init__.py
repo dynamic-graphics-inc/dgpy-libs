@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from enum import IntEnum
-from glob import iglob
+from glob import has_magic, iglob
 from itertools import chain, count
 from os import (
     DirEntry,
@@ -72,6 +72,7 @@ from xtyping import (
     AnyStr,
     Callable,
     FsPath,
+    Generator,
     Iterable,
     Iterator,
     List,
@@ -176,22 +177,56 @@ def scandir_list(dirpath: FsPath = ".") -> List[DirEntry[AnyStr]]:
     return list(scandir(dirpath))
 
 
-def scandir_gen(
-    fspath: FsPath = ".",
+def scandir_gen_filter(
+    it: Union[Iterator[DirEntry[AnyStr]], Iterable[DirEntry[AnyStr]]],
     *,
     follow_symlinks: bool = True,
     files: bool = True,
     dirs: bool = True,
     symlinks: bool = True,
+    files_only: bool = False,
+    dirs_only: bool = False,
+    symlinks_only: bool = False,
+) -> Iterator[DirEntry[AnyStr]]:
+    if files and dirs and symlinks:  # all
+        return (x for x in it)
+    elif files_only or (files and not dirs and not symlinks):  # files (only)
+        return (el for el in it if el.is_file(follow_symlinks=follow_symlinks))
+    elif dirs_only or (not files and dirs and not symlinks):  # dirs only
+        return (el for el in it if el.is_dir(follow_symlinks=follow_symlinks))
+    elif symlinks_only or (not files and not dirs and symlinks):  # symlinks
+        return (el for el in it if el.is_symlink())
+    elif files and dirs and not symlinks:  # files and dirs
+        return (el for el in it if not el.is_symlink())
+    elif files and not dirs and symlinks:  # files and symlinks
+        return (el for el in it if not el.is_dir(follow_symlinks=follow_symlinks))
+    elif not files and dirs and symlinks:  # dirs and symlinks
+        return (el for el in it if not el.is_file(follow_symlinks=follow_symlinks))
+    raise ValueError(
+        f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
+    )
+
+
+def scandir_gen(
+    fspath: FsPath = ".",
+    *,
+    recursive: bool = False,
+    follow_symlinks: bool = True,
+    files: bool = True,
+    dirs: bool = True,
+    symlinks: bool = True,
+    files_only: bool = False,
+    dirs_only: bool = False,
+    symlinks_only: bool = False,
 ) -> Iterator[DirEntry[str]]:
-    """Return an iterator of os.DirEntry objects
+    r"""Return an iterator of os.DirEntry objects
 
     Args:
         fspath: (FsPath): dirpath to look through
-        follow_symlinks (bool): follow symlinks when checking for dirs and files
         files (bool): include files
         dirs (bool): include directories
         symlinks (bool): include symlinks
+        follow_symlinks (bool): follow symlinks when checking for dirs and files
 
     Returns:
         Iterator[DirEntry]: Iterator of os.DirEntry objects
@@ -200,34 +235,44 @@ def scandir_gen(
         ValueError: if any of the kwargs (`dirs`, `files` and `symlinks`) are not True
 
     """
-    if files and dirs and symlinks:  # all
-        return (el for el in scandir(fspath))
-    elif files and not dirs and not symlinks:  # files
-        return (
-            el for el in scandir(fspath) if el.is_file(follow_symlinks=follow_symlinks)
+    if not recursive:
+        return scandir_gen_filter(
+            scandir(fspath),
+            follow_symlinks=follow_symlinks,
+            files=files,
+            dirs=dirs,
+            symlinks=symlinks,
+            files_only=files_only,
+            dirs_only=dirs_only,
+            symlinks_only=symlinks_only,
         )
-    elif not files and dirs and not symlinks:  # dirs
-        return (
-            el for el in scandir(fspath) if el.is_dir(follow_symlinks=follow_symlinks)
-        )
-    elif not files and not dirs and symlinks:  # symlinks
-        return (el for el in scandir(fspath) if el.is_symlink())
-    elif files and dirs and not symlinks:  # files and dirs
-        return (el for el in scandir(fspath) if not el.is_symlink())
-    elif files and not dirs and symlinks:  # files and symlinks
-        return (
-            el
-            for el in scandir(fspath)
-            if not el.is_dir(follow_symlinks=follow_symlinks)
-        )
-    elif not files and dirs and symlinks:  # dirs and symlinks
-        return (
-            el
-            for el in scandir(fspath)
-            if not el.is_file(follow_symlinks=follow_symlinks)
-        )
-    raise ValueError(
-        f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
+
+    return scandir_gen_filter(
+        chain(
+            scandir(fspath),
+            *(
+                scandir_gen(
+                    el.path,
+                    recursive=True,
+                    follow_symlinks=follow_symlinks,
+                    files=files,
+                    dirs=True,
+                    symlinks=symlinks,
+                    files_only=files_only,
+                    dirs_only=dirs_only,
+                    symlinks_only=symlinks_only,
+                )
+                for el in scandir(fspath)
+                if el.is_dir(follow_symlinks=follow_symlinks)
+            ),
+        ),
+        follow_symlinks=follow_symlinks,
+        files=files,
+        dirs=dirs,
+        symlinks=symlinks,
+        files_only=files_only,
+        dirs_only=dirs_only,
+        symlinks_only=symlinks_only,
     )
 
 
@@ -239,6 +284,9 @@ def listdir_gen(
     files: bool = True,
     dirs: bool = True,
     symlinks: bool = False,
+    files_only: bool = False,
+    dirs_only: bool = False,
+    symlinks_only: bool = False,
 ) -> Iterator[Path]:
     r"""Return an iterator of strings from DirEntries
 
@@ -294,6 +342,9 @@ def listdir_gen(
             files=files,
             dirs=dirs,
             symlinks=symlinks,
+            files_only=files_only,
+            dirs_only=dirs_only,
+            symlinks_only=symlinks_only,
         )
     )
 
@@ -1439,7 +1490,7 @@ def rm(
     *,
     recursive: bool = False,
     dryrun: bool = False,
-) -> None:
+) -> Generator[str, None, None]:
     """Remove files & directories in the style of the shell
     Args:
         fspath (FsPath): Path to file or directory to remove
@@ -1450,16 +1501,32 @@ def rm(
         ValueError: If recursive and r are `False` and fspath is a directory
 
     """
-    if not dryrun:
-        for _path_str in iglob(str(fspath), recursive=recursive):
-            try:
-                remove(_path_str)
-
-            except Exception:
-                if recursive:
+    if has_magic(str(fspath)):
+        rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun)
+        if dryrun:
+            yield from iglob(_fspath(fspath), recursive=recursive)
+        else:
+            for _path_str in iglob(str(fspath), recursive=recursive):
+                if isfile(_path_str):
+                    remove(_path_str)
+                elif recursive:
                     rmtree(_path_str)
                 else:
-                    raise ValueError(_path_str + " is a directory -- use r=True")
+                    raise ValueError(
+                        f"{str(_path_str)} (under {str(fspath)}) is a directory -- use r=True or recursive=True"
+                    )
+    if isfile(fspath):
+        if not dryrun:
+            remove(_fspath(fspath))
+        yield _fspath(fspath)
+    elif recursive:
+        if not dryrun:
+            rmtree(_fspath(fspath))
+        yield _fspath(fspath)
+    else:
+        raise ValueError(
+            f"{str(fspath)} is a directory -- use r=True or recursive=True"
+        )
 
 
 def stat(fspath: FsPath) -> os_stat_result:

@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 """Dynamic Graphics Python libraries"""
-
-# try:
-#     from jsonbourne.trydantic import dataclass
-# except ImportError:
-#     from dataclasses import dataclass
 from dataclasses import dataclass
-
 from dgpylibs._meta import __version__
 
 import aiopen
@@ -119,17 +113,17 @@ class DgpyLibsMetadata:
 class DgpyLibsVersions:
     """dgpy-libs env info"""
 
-    aiopen: str = None
-    asyncify: str = None
-    fmts: str = None
-    funkify: str = None
-    h5: str = None
-    jsonbourne: str = None
-    lager: str = None
-    listless: str = None
-    requires: str = None
-    shellfish: str = None
-    xtyping: str = None
+    aiopen: str
+    asyncify: str
+    fmts: str
+    funkify: str
+    h5: str
+    jsonbourne: str
+    lager: str
+    listless: str
+    requires: str
+    shellfish: str
+    xtyping: str
 
 
 dgpylibs_metadata = DgpyLibsMetadata(
