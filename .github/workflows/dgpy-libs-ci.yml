@@ -50,33 +50,6 @@ jobs:
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
 
-    #  - name: 'shlack-action'
-    #    id: shlack-action
-    #    uses: ./.github/actions/shlack
-    #    with:
-    #      channel-id: ${{ inputs.channel-id }}
-    #      payload: ${{ inputs.payload }}
-      #  env:
-      #    SLACK_BOT_TOKEN: ${{ secrets.SHELDON_SLACK_BOT_TOKEN }}
-      #    SHELDON_SLACK_BOT_TOKEN: ${{ secrets.SHELDON_SLACK_BOT_TOKEN }}
-
-      # - name: setup-poetry
-      #   run: |
-      #     curl -sSL https://install.python-poetry.org | python3 -
-      #     which poetry
-      #     poetry config virtualenvs.create false
-
-        # run: pipx install poetry==1.1.15
-      # # - uses: actions/setup-python@v4
-      #   with:
-      #     python-version: '3.9'
-      #     cache: 'poetry'
-
-      # - name: Run image
-      #   uses: abatilo/actions-poetry@v2.1.6
-        # with:
-        #   poetry-version: 1.1.15
-
       - name: Install dependencies
         run: |
           poetry install
