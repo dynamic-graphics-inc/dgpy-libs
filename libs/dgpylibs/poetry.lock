@@ -158,7 +158,7 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.1.5"
+version = "0.1.6"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
@@ -374,8 +374,8 @@ requires = [
     {file = "requires-0.10.3.tar.gz", hash = "sha256:ebac72997045d281064c6619652ba77dd8aca5a8b8469de6b23a255855b1b9fd"},
 ]
 shellfish = [
-    {file = "shellfish-0.1.5-py3-none-any.whl", hash = "sha256:a795d36e93ae130612781b5e30bbacbb5c0f0a55581ec172a24fc3a303157b5a"},
-    {file = "shellfish-0.1.5.tar.gz", hash = "sha256:0d8a6701143d792478d1772abea18a1ac3d3212040881cdfabd4ec6ba2a759a7"},
+    {file = "shellfish-0.1.6-py3-none-any.whl", hash = "sha256:95bed14346ec49d9f34d41aeb74a0954f99071f75d2fb9bd30702fa216422c58"},
+    {file = "shellfish-0.1.6.tar.gz", hash = "sha256:b45d39eb07ba393f7d3b306cacc35e0e59142bbcb55d4de676f446bd05c0e9ca"},
 ]
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
