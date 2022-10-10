@@ -26,8 +26,8 @@ from pathlib import Path
 from shutil import copytree, move as _move, rmtree
 from time import time
 
-from listless import exhaust
 from jsonbourne import JSON
+from listless import exhaust
 from shellfish import const
 from shellfish._meta import __version__
 from shellfish.fs._async import (
