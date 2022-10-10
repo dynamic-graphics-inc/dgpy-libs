@@ -49,7 +49,6 @@ from typing import (
 
 from asyncify import asyncify
 from jsonbourne.pydantic import JsonBaseModel
-from listless import exhaust
 from shellfish import fs
 from shellfish._meta import __version__
 from shellfish.fs import (
@@ -1954,9 +1953,8 @@ def rm(
         ValueError: If recursive and r are `False` and fspath is a directory
 
     """
-    if verbose or v:
-        exhaust(map(echo, fs.rm_gen(fspath, recursive=recursive or r, dryrun=dryrun)))
-        return None
+    if verbose or v or True:
+        echo(f"Removing {fspath}")
     fs.rm(
         fspath,
         recursive=recursive or r,

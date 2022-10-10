@@ -26,6 +26,7 @@ from pathlib import Path
 from shutil import copytree, move as _move, rmtree
 from time import time
 
+from listless import exhaust
 from jsonbourne import JSON
 from shellfish import const
 from shellfish._meta import __version__
@@ -1459,38 +1460,7 @@ def rm_gen(
     *,
     recursive: bool = False,
     dryrun: bool = False,
-) -> Iterator[str]:
-    """Remove files & directories in the style of the shell
-    Args:
-        fspath (FsPath): Path to file or directory to remove
-        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
-
-    Raises:
-        ValueError: If recursive are `False` and fspath is a directory
-
-    """
-    if dryrun:
-        yield from iglob(_fspath(fspath), recursive=recursive)
-    else:
-        for _path_str in iglob(str(fspath), recursive=recursive):
-            try:
-                remove(_path_str)
-                yield _path_str
-
-            except Exception:
-                if recursive:
-                    rmtree(_path_str)
-                    yield _path_str
-                else:
-                    raise ValueError(_path_str + " is a directory -- use r=True")
-
-
-def rm(
-    fspath: FsPath,
-    *,
-    recursive: bool = False,
-    dryrun: bool = False,
-) -> Generator[str, None, None]:
+) -> Generator[str, Any, Any]:
     """Remove files & directories in the style of the shell
     Args:
         fspath (FsPath): Path to file or directory to remove
@@ -1502,7 +1472,6 @@ def rm(
 
     """
     if has_magic(str(fspath)):
-        rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun)
         if dryrun:
             yield from iglob(_fspath(fspath), recursive=recursive)
         else:
@@ -1515,18 +1484,43 @@ def rm(
                     raise ValueError(
                         f"{str(_path_str)} (under {str(fspath)}) is a directory -- use r=True or recursive=True"
                     )
-    if isfile(fspath):
-        if not dryrun:
-            remove(_fspath(fspath))
-        yield _fspath(fspath)
-    elif recursive:
-        if not dryrun:
-            rmtree(_fspath(fspath))
-        yield _fspath(fspath)
     else:
-        raise ValueError(
-            f"{str(fspath)} is a directory -- use r=True or recursive=True"
-        )
+        if isfile(fspath):
+            if not dryrun:
+                remove(_fspath(fspath))
+            yield _fspath(fspath)
+        elif recursive:
+            if not dryrun:
+                rmtree(_fspath(fspath))
+            yield _fspath(fspath)
+        else:
+            raise ValueError(
+                f"{str(fspath)} is a directory -- use r=True or recursive=True"
+            )
+
+
+def rm(
+    fspath: FsPath,
+    *,
+    recursive: bool = False,
+    dryrun: bool = False,
+    verbose: bool = False,
+) -> Union[List[str], None]:
+    """Remove files & directories in the style of the shell
+    Args:
+        fspath (FsPath): Path to file or directory to remove
+        recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
+        dryrun (bool): Do not remove file if True
+
+    Raises:
+        ValueError: If recursive and r are `False` and fspath is a directory
+
+    """
+    if verbose:
+        return list(rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun))
+    else:
+        exhaust(rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun))
+        return None
 
 
 def stat(fspath: FsPath) -> os_stat_result:
