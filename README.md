@@ -109,6 +109,7 @@ notebooks/
 ## Contributor(s):
 
 - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
+- Possibly you!?
 
 ## Contributing:
 
