@@ -53,8 +53,8 @@ def n_args(fn: Callable[..., _R]) -> int:
     except AttributeError:
         pass
     if hasattr(fn, "__call__") and callable(fn):
-        _nargs = n_args(fn.__call__)  # type: ignore[operator]
-        co_varnames = fn.__call__.__code__.co_varnames  # type: ignore[operator]
+        _nargs = n_args(fn.__call__)
+        co_varnames = fn.__call__.__code__.co_varnames
         if co_varnames[0] == "self":
             return len(co_varnames) - 1
         return _nargs
