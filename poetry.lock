@@ -399,7 +399,7 @@ python-versions = "*"
 
 [[package]]
 name = "nox"
-version = "2022.8.7"
+version = "2022.11.21"
 description = "Flexible test automation."
 category = "dev"
 optional = false
@@ -410,7 +410,6 @@ argcomplete = ">=1.9.4,<3.0"
 colorlog = ">=2.6.1,<7.0.0"
 importlib-metadata = {version = "*", markers = "python_version < \"3.8\""}
 packaging = ">=20.9"
-py = ">=1.4,<2.0.0"
 typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 virtualenv = ">=14"
 
@@ -478,14 +477,6 @@ importlib-metadata = {version = ">=0.12", markers = "python_version < \"3.8\""}
 [package.extras]
 dev = ["pre-commit", "tox"]
 testing = ["pytest", "pytest-benchmark"]
-
-[[package]]
-name = "py"
-version = "1.11.0"
-description = "library with cross-python path, ini-parsing, io, code, log facilities"
-category = "dev"
-optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pycodestyle"
@@ -741,7 +732,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b24b368fbb9dfc283a036539c43587c264a0210c6cbb772abf046c254d43a76c"
+content-hash = "31607d2e781d86a01f45608f19c611e0b350ff697b1826b4d2a7c10a99cc397f"
 
 [metadata.files]
 aiopen = []
@@ -943,8 +934,8 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
 nox = [
-    {file = "nox-2022.8.7-py3-none-any.whl", hash = "sha256:96cca88779e08282a699d672258ec01eb7c792d35bbbf538c723172bce23212c"},
-    {file = "nox-2022.8.7.tar.gz", hash = "sha256:1b894940551dc5c389f9271d197ca5d655d40bdc6ccf93ed6880e4042760a34b"},
+    {file = "nox-2022.11.21-py3-none-any.whl", hash = "sha256:0e41a990e290e274cb205a976c4c97ee3c5234441a8132c8c3fd9ea3c22149eb"},
+    {file = "nox-2022.11.21.tar.gz", hash = "sha256:e21c31de0711d1274ca585a2c5fde36b1aa962005ba8e9322bf5eeed16dcd684"},
 ]
 numpy = [
     {file = "numpy-1.21.1-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:38e8648f9449a549a7dfe8d8755a5979b45b3538520d1e735637ef28e8c2dc50"},
@@ -1042,10 +1033,6 @@ platformdirs = [
 pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
     {file = "pluggy-1.0.0.tar.gz", hash = "sha256:4224373bacce55f955a878bf9cfa763c1e360858e330072059e10bad68531159"},
-]
-py = [
-    {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
-    {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.9.1-py2.py3-none-any.whl", hash = "sha256:d1735fc58b418fd7c5f658d28d943854f8a849b01a5d0a1e6f3f3fdd0166804b"},
