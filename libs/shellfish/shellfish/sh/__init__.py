@@ -1953,7 +1953,7 @@ def rm(
         ValueError: If recursive and r are `False` and fspath is a directory
 
     """
-    if verbose or v or True:
+    if verbose or v:
         echo(f"Removing {fspath}")
     fs.rm(
         fspath,
