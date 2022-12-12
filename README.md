@@ -120,5 +120,6 @@ Plz do! Send me that PR!
 ## TODO:
 
 - Have CI/CD auto build n publish
-- Make some sort of change log
--
+- Changelog in some form
+
+
