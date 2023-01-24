@@ -12,4 +12,5 @@ runs:
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
         which poetry
+        poetry --version
         poetry config virtualenvs.create false
