@@ -142,6 +142,7 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "dataclass_transform",
     "get_overloads",
     "is_typeddict",
+    "override",
     "reveal_type",
 )
 
