@@ -281,7 +281,8 @@ line-length = 88
 ignore = [
     "E501",  # line too long ignore,
     "B004",
-    "B904"
+    "B904",
+    "B905",
     ]
 
 [tool.ruff.per-file-ignores]

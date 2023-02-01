@@ -250,7 +250,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]:
         ...
         if flip:
-            return zip(self.__arr, range(start, len(self.__arr) + start), strict=True)
+            return zip(self.__arr, range(start, len(self.__arr) + start))
         return enumerate(self.__arr, start=start)
 
     def _iter_el(self) -> Iterator[_T]:
