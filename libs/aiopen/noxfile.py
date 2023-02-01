@@ -42,7 +42,7 @@ def _get_session_python_site_packages_dir(session: nox.Session) -> str:
         return path.join(session.virtualenv.location, "Lib", "site-packages")
     try:
         site_packages_dir = session._runner._site_packages_dir  # type: ignore
-        session.log.info( f"Session site-packages: {site_packages_dir}")
+        session.log.info(f"Session site-packages: {site_packages_dir}")
     except AttributeError:
         old_install_only_value = session._runner.global_config.install_only
         try:

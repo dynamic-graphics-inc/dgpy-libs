@@ -162,7 +162,7 @@ def _mypy(session):
             "--show-error-codes",
             "--config-file",
             "./pyproject.toml",
-            path.join("libs", lib, "tests")
+            path.join("libs", lib, "tests"),
         )
 
 
@@ -215,8 +215,10 @@ def _pkg_entry_point(pkg_name):
         ]
     )
 
+
 def echo(*args, **kwargs):
     print(*args, **kwargs)  # noqa: T201
+
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def update_metadata(session):
