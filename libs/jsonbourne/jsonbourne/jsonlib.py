@@ -61,7 +61,7 @@ def _dumpable(obj: Dumpable) -> Any:
     return obj.__dumpable__()
 
 
-def _json_encode_default(obj: Any) -> Any:
+def _json_encode_default(obj: Any) -> Any:  # noqa: C901
     if hasattr(obj, "__dumpable__"):
         return _dumpable(obj)
     if hasattr(obj, "__json_interface__"):
