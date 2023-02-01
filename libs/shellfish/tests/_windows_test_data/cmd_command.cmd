@@ -1,5 +1,3 @@
 @ECHO OFF
 ECHO Hello
 ECHO CMD file
-
-
