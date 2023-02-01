@@ -225,8 +225,9 @@ def echo(*args, **kwargs):
 def update_metadata(session):
     import toml
 
+    libs2update = {k:v for k, v in LIB_DIRS.items() if k not in {'dgpylibs'}}
     # "# -*- coding: utf-8 -*-"
-    for libname, dirpath in LIB_DIRS.items():
+    for libname, dirpath in libs2update.items():
         echo(libname, dirpath)
         with open(path.join(dirpath, "pyproject.toml")) as f:
             pyproject_toml_str = f.read()
