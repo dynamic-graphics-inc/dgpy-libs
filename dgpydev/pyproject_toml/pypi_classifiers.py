@@ -816,7 +816,6 @@ CLASSIFIERS: Tuple[str, ...] = (
 
 
 class PyPiClassifiersEnum(Enum):
-
     Development_Status____1___Planning = "Development Status :: 1 - Planning"
     Development_Status____2___Pre_Alpha = "Development Status :: 2 - Pre-Alpha"
     Development_Status____3___Alpha = "Development Status :: 3 - Alpha"

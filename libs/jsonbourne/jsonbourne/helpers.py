@@ -33,5 +33,4 @@ def rm_js_comments(string: str) -> str:
 
 
 def strip_comments(string: str) -> str:
-
     return rm_js_comments(string)

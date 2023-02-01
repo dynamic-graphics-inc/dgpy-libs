@@ -9,7 +9,6 @@ pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 
 try:
-
     from pydantic import BaseModel
 
     class PydanticJsonDict(BaseModel, JsonObj):
