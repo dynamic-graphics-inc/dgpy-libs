@@ -24,7 +24,6 @@ PKG_DIRPATH = path.join(PWD, "aiopen")
 TESTS_DIRPATH = path.join(PWD, "tests")
 
 VENV_BACKEND = None if is_win() else "conda"
-# VENV_BACKEND = None
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 

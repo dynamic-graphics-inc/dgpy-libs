@@ -33,6 +33,10 @@ mypy:
 nukepoetry:
 	poetry cache clear pypi --all -v
 
+.PHONY: ruff
+ruff:
+	ruff .
+
 ###########
 ## CLEAN ##
 ###########

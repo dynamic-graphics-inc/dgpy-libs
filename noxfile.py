@@ -178,6 +178,10 @@ def lint(session):
     _mypy(session)
     _flake(session)
 
+ruffext = """
+[tool.ruff]
+extend = "../../pyproject.toml"
+"""
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def homepage(session):
@@ -188,23 +192,27 @@ def homepage(session):
         print(libname, dirpath)
         pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
         with open(pyproject_toml_fspath) as f:
-            pyproject_toml_str = f.read()
-        data = toml.loads(pyproject_toml_str)
-        print("____________________________")
-        print("Package: {} ~ Dirpath: {}".format(libname, dirpath))
-        poetry_metadata = data["tool"]["poetry"]
-        lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/{}".format(
-            libname
-        )
-        data["tool"]["poetry"] = poetry_metadata
-        print(data)
-        repository_line = (
-            'repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"'
-        )
-        edited = pyproject_toml_str.replace(
-            repository_line, repository_line + '\nhomepage = "{}"'.format(lib_homepage)
-        )
-        print(edited)
+            pyproject_toml_str = f.read().rstrip('\n')
+
+        pyproject_toml_str = pyproject_toml_str + ruffext
+        with open(pyproject_toml_fspath, "w") as f:
+            f.write(pyproject_toml_str)
+        # data = toml.loads(pyproject_toml_str)
+        # print("____________________________")
+        # print("Package: {} ~ Dirpath: {}".format(libname, dirpath))
+        # poetry_metadata = data["tool"]["poetry"]
+        # lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/{}".format(
+        #     libname
+        # )
+        # data["tool"]["poetry"] = poetry_metadata
+        # print(data)
+        # repository_line = (
+        #     'repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"'
+        # )
+        # edited = pyproject_toml_str.replace(
+        #     repository_line, repository_line + '\nhomepage = "{}"'.format(lib_homepage)
+        # )
+        # print(edited)
         # with open(pyproject_toml_fspath, 'w') as f:
         #     f.write(edited)
 
