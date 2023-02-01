@@ -86,3 +86,6 @@ build-backend = "pdm.pep517.api"
 # [build-system]
 # requires = ["pdm-pep517"]
 # build-backend = "pdm.pep517.api"
+
+[tool.ruff]
+extend = "../../pyproject.toml"

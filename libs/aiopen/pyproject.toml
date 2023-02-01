@@ -62,3 +62,6 @@ ignore_missing_imports = true
 implicit_reexport = false
 strict_equality = true
 # --strict end
+
+[tool.ruff]
+extend = "../../pyproject.toml"

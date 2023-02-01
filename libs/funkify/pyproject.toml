@@ -57,3 +57,6 @@ markers = [
   "basic: basic tests",
   "version",
 ]
+
+[tool.ruff]
+extend = "../../pyproject.toml"

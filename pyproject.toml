@@ -277,27 +277,26 @@ reportMissingTypeStubs = false
 
 [tool.ruff]
 select = [
-    # pyflakes
-    "E",
-    "F",
-    # bugbear
-    "B",
-    # erradicate
-    "ERA001",
-    ]
+  # pyflakes
+  "E",
+  "F",
+  # bugbear
+  "B",
+  # erradicate
+  "ERA001",
+]
 line-length = 88
 ignore = [
-    "E501",  # line too long ignore,
-    "B004",
-    "B904",
-    "B905",
-    ]
+  "E501", # line too long ignore,
+  "B004",
+  "B904",
+  "B905",
+]
 
 [tool.ruff.per-file-ignores]
 "libs/requires/tests/test_requires.py" = [
-    "F821", # undefined name; not valid for this test file
-    ]
+  "F821", # undefined name; not valid for this test file
+]
 "libs/requires/tests/test_requires_w_json_libs.py" = [
-    "F821", # undefined name; not valid for this test file
-    ]
-
+  "F821", # undefined name; not valid for this test file
+]

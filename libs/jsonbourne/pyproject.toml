@@ -90,3 +90,6 @@ testpaths = [
   "jsonbourne",
   "tests",
 ]
+
+[tool.ruff]
+extend = "../../pyproject.toml"

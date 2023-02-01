@@ -178,10 +178,13 @@ def lint(session):
     _mypy(session)
     _flake(session)
 
+
 ruffext = """
+
 [tool.ruff]
 extend = "../../pyproject.toml"
 """
+
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def homepage(session):
@@ -192,8 +195,10 @@ def homepage(session):
         print(libname, dirpath)
         pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
         with open(pyproject_toml_fspath) as f:
-            pyproject_toml_str = f.read().rstrip('\n')
+            pyproject_toml_str = f.read().rstrip("\n")
 
+        if (ruffext in pyproject_toml_str) or ("[tool.ruff]" in pyproject_toml_str):
+            continue
         pyproject_toml_str = pyproject_toml_str + ruffext
         with open(pyproject_toml_fspath, "w") as f:
             f.write(pyproject_toml_str)

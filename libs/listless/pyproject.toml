@@ -86,3 +86,6 @@ exclude_lines = [
   'pragma: no cover',
   'pragma: nocov',
 ]
+
+[tool.ruff]
+extend = "../../pyproject.toml"

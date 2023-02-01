@@ -67,3 +67,6 @@ markers = [
 testpaths = [
   "tests",
 ]
+
+[tool.ruff]
+extend = "../../pyproject.toml"
