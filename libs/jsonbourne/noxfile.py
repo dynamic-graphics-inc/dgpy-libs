@@ -31,6 +31,7 @@ VENV_BACKEND = None if (is_win() or IS_GITHUB_CI or not which("conda")) else "co
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
+
 #############
 ### UTILS ###
 #############
