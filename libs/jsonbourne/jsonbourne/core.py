@@ -7,6 +7,7 @@ import keyword
 from functools import lru_cache
 from itertools import chain
 from json import JSONDecodeError
+from pathlib import Path
 from pprint import pformat
 from shutil import get_terminal_size
 from types import ModuleType
@@ -1241,6 +1242,34 @@ class JSON(metaclass=JSONMeta):
         if obj:
             return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
         return jsonlib.loads(string, jsonc=jsonc, **kwargs)
+
+    @staticmethod
+    def rjson(fspath: Union[Path, str]) -> Any:
+        """Read JSON file and return raw representation"""
+        return jsonlib.rjson(fspath)
+
+    @staticmethod
+    def wjson(
+        fspath: Union[Path, str],
+        data: Any,
+        fmt: bool = False,
+        pretty: bool = False,
+        sort_keys: bool = False,
+        append_newline: bool = False,
+        default: Optional[Callable[[Any], Any]] = None,
+        **kwargs: Any,
+    ) -> int:
+        """Write JSON file"""
+        return jsonlib.wjson(
+            fspath,
+            data,
+            fmt=fmt,
+            pretty=pretty,
+            sort_keys=sort_keys,
+            append_newline=append_newline,
+            default=default,
+            **kwargs,
+        )
 
     @staticmethod
     def parse(

@@ -7,9 +7,7 @@ authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/xtyping"
 readme = 'README.md'
-packages = [
-  { include = "xtyping", from = "." },
-]
+packages = [{ include = "xtyping", from = "." }]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -22,12 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-keywords = [
-  "typing",
-  "dgpy",
-  "typed",
-  "types",
-]
+keywords = ["typing", "dgpy", "typed", "types"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -39,3 +32,6 @@ pytest = "^7.2.1"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+extend = "../../pyproject.toml"

@@ -119,7 +119,12 @@ def pairs(it: Iterable[_T]) -> Iterable[Tuple[_T, _T]]:
 
 
 def partition(
-    it: Sequence[_T], n: int, *, pad: bool = False, padval: Any = None
+    it: Sequence[_T],
+    n: int,
+    *,
+    pad: bool = False,
+    padval: Any = None,
+    zip_strict: bool = False,
 ) -> Iterable[Sequence[_T]]:
     """Partition an iterable into chunks of size n
 

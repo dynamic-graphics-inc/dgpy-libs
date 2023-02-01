@@ -15,7 +15,7 @@ def build_fs_promises():
         for el in fs_async_all
     ]
     all_elements = tuple(
-        sorted(set('"' + el.replace("_async", "") + '"' for el in fs_async_all))
+        sorted({'"' + el.replace("_async", "") + '"' for el in fs_async_all})
     )
     promises_all_lines = ["__all__ = (", "    " + ",\n    ".join(all_elements), ")"]
 

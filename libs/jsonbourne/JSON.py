@@ -24,6 +24,8 @@ binify = _JSON.binify
 dumpb = _JSON.dumpb
 loads = _JSON.loads
 parse = _JSON.parse
+rjson = _JSON.rjson
+wjson = _JSON.wjson
 jsoncp = _JSON.jsoncp
 json_lib = _JSON.json_lib
 which = _JSON.which
@@ -53,12 +55,14 @@ __all__ = (
     "loads",
     "null",
     "parse",
+    "rjson",
     "stringify",
     "undefined",
     "unjsonify",
     "use_json_stdlib",
     "use_orjson",
     "use_rapidjson",
+    "wjson",
 )
 
 # if __name__ is NOT __main__, funkify module

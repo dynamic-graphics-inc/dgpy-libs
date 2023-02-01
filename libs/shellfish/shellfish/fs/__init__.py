@@ -1066,7 +1066,7 @@ def wbytes_gen(
         >>> import os; os.remove(fspath)
 
     """
-    _mode: Literal["ab", "wb"] = const.ab if append else const.wb
+    _mode = const.ab if append else const.wb
     with open(filepath, mode=_mode) as fd:
         nbytes_written = sum(fd.write(chunk) for chunk in bytes_gen)
     if chmod is not None:

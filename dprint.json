@@ -27,6 +27,7 @@
     "**/.mypy_cache",
     "**/.nox",
     "**/.nox_*",
+    "**/.venv/**",
     "**/.pytest_cache",
     "**/__pycache__",
     "**/dist",
@@ -36,9 +37,9 @@
   ],
   "plugins": [
     "https://plugins.dprint.dev/dockerfile-0.3.0.wasm",
-    "https://plugins.dprint.dev/json-0.15.6.wasm",
-    "https://plugins.dprint.dev/markdown-0.14.1.wasm",
+    "https://plugins.dprint.dev/json-0.17.0.wasm",
+    "https://plugins.dprint.dev/markdown-0.15.2.wasm",
     "https://plugins.dprint.dev/toml-0.5.4.wasm",
-    "https://plugins.dprint.dev/typescript-0.74.0.wasm"
+    "https://plugins.dprint.dev/typescript-0.81.1.wasm"
   ]
 }

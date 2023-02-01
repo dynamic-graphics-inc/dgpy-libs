@@ -73,7 +73,7 @@ def _get_dgpy_site_packages_jsonbourne_location(session):
 def _get_jsonbourne_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        [l for l in open(_filepath).read().split("\n") if "version" in l][0]
+        [line for line in open(_filepath).read().split("\n") if "version" in line][0]
         .replace("version = ", "")
         .strip('"')
     )
@@ -88,10 +88,10 @@ def flake(session):
     session.run("flake8", JSONBOURNE_PKG_DIRPATH)
 
 
-# @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-# def flake_tests(session):
-#     session.install("flake8")
-#     session.run("flake8", TESTS_DIRPATH)
+@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
+def flake_tests(session):
+    session.install("flake8")
+    session.run("flake8", TESTS_DIRPATH)
 
 
 def install_common_test_deps(session):
@@ -159,24 +159,6 @@ def jsonlibs_test(session, numpy):
         "jsonlibs",
         TESTS_DIRPATH,
     )
-
-
-# @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-# def jsonlibs_test(session):
-#     session.install("pytest")
-#     session.install("pytest-cov")
-#     session.install("coverage")
-#     session.install("orjson")
-#     session.install("python-rapidjson")
-#     session.install("numpy")
-#     session.run(
-#         "pytest",
-#         "--cov",
-#         "--cov-append",
-#         "-m",
-#         "jsonlibs",
-#         TESTS_DIRPATH,
-#         )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

@@ -59,11 +59,11 @@ def test_pipe_in_command_shell_is_false(tmp_path: Path) -> None:
 def test_pipe_stdout(tmp_path: Path) -> None:
     sh.cd(tmp_path)
     proc = sh.do(["echo", "hello"])
-    proc > "stdout.txt"
+    proc > "stdout.txt"  # noqa: B015
     stdout = fs.lstring("stdout.txt")
     assert stdout == proc.stdout
 
-    proc >> "stdout.txt"
+    proc >> "stdout.txt"  # noqa: B015
     stdout = fs.lstring("stdout.txt")
     assert stdout == proc.stdout * 2
 
@@ -72,11 +72,11 @@ def test_pipe_stderr(tmp_path: Path) -> None:
     sh.cd(tmp_path)
     proc = sh.do(["echo", "hello"])
     proc.stderr = "STDERR IS THIS"
-    proc >= "stderr.txt"
+    proc >= "stderr.txt"  # noqa: B015
     stderr = fs.lstring("stderr.txt")
     assert stderr == proc.stderr
 
-    proc >>= "stderr.txt"
+    proc >>= "stderr.txt"  # noqa: B015
     stdout = fs.lstring("stderr.txt")
     assert stdout == proc.stderr * 2
 

@@ -30,7 +30,7 @@ def run(aw: Awaitable[T]) -> T:
 
     """
     if sys.version_info >= (3, 7):
-        return asyncio.run(aw)  # type: ignore[arg-type]
+        return asyncio.run(aw)
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)

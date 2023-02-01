@@ -61,7 +61,7 @@ def _dumpable(obj: Dumpable) -> Any:
     return obj.__dumpable__()
 
 
-def _json_encode_default(obj: Any) -> Any:
+def _json_encode_default(obj: Any) -> Any:  # noqa: C901
     if hasattr(obj, "__dumpable__"):
         return _dumpable(obj)
     if hasattr(obj, "__json_interface__"):
@@ -617,6 +617,31 @@ def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
 
 def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
+
+
+def wjson(
+    fspath: Union[str, Path],
+    data: Any,
+    fmt: bool = False,
+    pretty: bool = False,
+    sort_keys: bool = False,
+    append_newline: bool = False,
+    default: Optional[Callable[[Any], Any]] = None,
+    **kwargs: Any,
+) -> int:
+    with open(fspath, "wb") as f:
+        bytes_written = f.write(
+            JSONLIB.dumpb(
+                data, fmt, pretty, sort_keys, append_newline, default, **kwargs
+            )
+        )
+    return bytes_written
+
+
+def rjson(fspath: Union[str, Path], jsonc: bool = False, **kwargs: Any) -> Any:
+    with open(fspath, "rb") as f:
+        s = f.read()
+    return JSONLIB.loads(s, jsonc=jsonc, **kwargs)
 
 
 def jsoncp(

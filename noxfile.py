@@ -88,8 +88,8 @@ def _flake(session):
         "flake8-eradicate",
         "flake8-comprehensions",
     )
-    session.run("flake8", *[el for el in SOURCE_DIRS.values()])
-    session.run("flake8", *[el for el in TESTS_DIRS.values()])
+    session.run("flake8", *list(SOURCE_DIRS.values()))
+    session.run("flake8", *list(TESTS_DIRS.values()))
 
 
 def _flake_w_pytest(session):
@@ -105,13 +105,13 @@ def _flake_w_pytest(session):
         "flake8",
         "--config",
         ".flake8",
-        *[el for el in SOURCE_DIRS.values()],
+        *list(SOURCE_DIRS.values()),
     )
     session.run(
         "flake8",
         "--config",
         ".flake8",
-        *[el for el in TESTS_DIRS.values()],
+        *list(TESTS_DIRS.values()),
     )
 
 
@@ -151,7 +151,7 @@ def _mypy(session):
         "--config-file",
         # "./mypy.ini",
         "./pyproject.toml",
-        *[el for el in SOURCE_DIRS.values()],
+        *list(SOURCE_DIRS.values()),
     )
 
     for lib in {
@@ -162,9 +162,7 @@ def _mypy(session):
             "--show-error-codes",
             "--config-file",
             "./pyproject.toml",
-            *[el for el in SOURCE_DIRS.values() if ".DS_Store" not in el],
-            path.join("libs", lib, "tests")
-            # *[el for el in TESTS_DIRS.values() if '.DS_Store' not in el],
+            path.join("libs", lib, "tests"),
         )
 
 
@@ -179,58 +177,27 @@ def lint(session):
     _flake(session)
 
 
+ruffext = """
+
+[tool.ruff]
+extend = "../../pyproject.toml"
+"""
+
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def homepage(session):
+def dev(session):
+    from pprint import pprint
+
     import toml
 
-    # "# -*- coding: utf-8 -*-"
     for libname, dirpath in LIB_DIRS.items():
-        print(libname, dirpath)
+        echo(libname, dirpath)
         pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
         with open(pyproject_toml_fspath) as f:
-            pyproject_toml_str = f.read()
-        data = toml.loads(pyproject_toml_str)
-        print("____________________________")
-        print("Package: {} ~ Dirpath: {}".format(libname, dirpath))
-        poetry_metadata = data["tool"]["poetry"]
-        lib_homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/{}".format(
-            libname
-        )
-        data["tool"]["poetry"] = poetry_metadata
-        print(data)
-        repository_line = (
-            'repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"'
-        )
-        edited = pyproject_toml_str.replace(
-            repository_line, repository_line + '\nhomepage = "{}"'.format(lib_homepage)
-        )
-        print(edited)
-        # with open(pyproject_toml_fspath, 'w') as f:
-        #     f.write(edited)
+            pyproject_toml_str = f.read().rstrip("\n")
 
-        # with open(pyproject_toml_fspath, 'w') as f:
-        #     f.write(toml.dumps(data))
-        # # print(poetry_metadata)
-        # assert "name" in poetry_metadata and poetry_metadata["name"] == libname
-        # assert "version" in poetry_metadata
-        # assert "description" in poetry_metadata and poetry_metadata["description"] != ""
-        # metadata_file_lines = [
-        #     "# -*- coding: utf-8 -*-",
-        #     '"""Package metadata/info"""\n',
-        #     "__title__ = '{}'".format(poetry_metadata["name"]),
-        #     "__version__ = '{}'".format(poetry_metadata["version"]),
-        #     "__description__ = '{}'".format(poetry_metadata["description"]),
-        #     ]
-        # metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
-        #
-        # # check that is valid python...
-        # exec(metadata_file_string)
-        # print('~~~')
-        # print(metadata_file_string)
-        # print('~~~')
-        # metadata_filepath = path.join(dirpath, libname, '_meta.py')
-        # with open(metadata_filepath, 'w') as f:
-        #     f.write(metadata_file_string)
+        data = toml.loads(pyproject_toml_str)
+        pprint(data)
 
 
 def _pkg_entry_point(pkg_name):
@@ -250,19 +217,23 @@ def _pkg_entry_point(pkg_name):
     )
 
 
+def echo(*args, **kwargs):
+    print(*args, **kwargs)  # noqa: T201
+
+
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def update_metadata(session):
     import toml
 
+    libs2update = {k: v for k, v in LIB_DIRS.items() if k not in {"dgpylibs"}}
     # "# -*- coding: utf-8 -*-"
-    for libname, dirpath in LIB_DIRS.items():
-        print(libname, dirpath)
+    for libname, dirpath in libs2update.items():
+        echo(libname, dirpath)
         with open(path.join(dirpath, "pyproject.toml")) as f:
             pyproject_toml_str = f.read()
         data = toml.loads(pyproject_toml_str)
-        print("____________________________")
+        echo("____________________________")
         poetry_metadata = data["tool"]["poetry"]
-        # print(poetry_metadata)
         assert "name" in poetry_metadata and poetry_metadata["name"] == libname
         assert "version" in poetry_metadata
         assert "description" in poetry_metadata and poetry_metadata["description"] != ""
@@ -278,9 +249,9 @@ def update_metadata(session):
 
         # check that is valid python...
         exec(metadata_file_string)
-        print("~~~")
-        print(metadata_file_string)
-        print("~~~")
+        echo("~~~")
+        echo(metadata_file_string)
+        echo("~~~")
         metadata_filepath = path.join(dirpath, libname, "_meta.py")
         pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
         with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
@@ -291,11 +262,11 @@ def update_metadata(session):
             with open(pkg_main_filepath, "r") as f:
                 pkg_main_file_str = f.read()
             if pkg_main_file_str != s:
-                print("updating __main__.py")
+                echo("updating __main__.py")
                 with open(pkg_main_filepath, "w") as f:
                     f.write(s)
         else:
-            print("creating __main__.py")
+            echo("creating __main__.py")
             with open(pkg_main_filepath, "w") as f:
                 f.write(s)
 

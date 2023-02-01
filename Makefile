@@ -12,8 +12,8 @@ pys = $(wildcard *.py)
 
 .PHONY: fmt
 fmt:
-	isort --sp pyproject.toml libs dgpydev tests
-	black --config pyproject.toml libs dgpydev tests
+	isort --sp pyproject.toml libs dgpydev tests .
+	black --config pyproject.toml libs dgpydev tests .
 
 .PHONY: flake
 flake: fmt
@@ -32,6 +32,10 @@ mypy:
 .PHONY: nukepoetry
 nukepoetry:
 	poetry cache clear pypi --all -v
+
+.PHONY: ruff
+ruff:
+	ruff .
 
 ###########
 ## CLEAN ##

@@ -101,7 +101,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def pop(self, index: int = -1) -> _T:
         return self.__arr.pop(index)
 
-    # # Signature of `list.index` should be kept in line with `collections.UserList.index()`
+    # Signature of `list.index` should be kept in line with `collections.UserList.index()`
     def index(
         self, __value: _T, __start: SupportsIndex = 0, __stop: SupportsIndex = -1
     ) -> int:

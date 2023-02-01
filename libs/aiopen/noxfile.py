@@ -24,7 +24,6 @@ PKG_DIRPATH = path.join(PWD, "aiopen")
 TESTS_DIRPATH = path.join(PWD, "tests")
 
 VENV_BACKEND = None if is_win() else "conda"
-# VENV_BACKEND = None
 
 REUSE_TEST_ENVS = IS_GITLAB_CI or True
 
@@ -43,7 +42,7 @@ def _get_session_python_site_packages_dir(session: nox.Session) -> str:
         return path.join(session.virtualenv.location, "Lib", "site-packages")
     try:
         site_packages_dir = session._runner._site_packages_dir  # type: ignore
-        print(site_packages_dir)
+        session.log.info(f"Session site-packages: {site_packages_dir}")
     except AttributeError:
         old_install_only_value = session._runner.global_config.install_only
         try:
@@ -72,19 +71,10 @@ def _get_package_site_packages_location(session: nox.Session) -> str:
     return path.join(_get_session_python_site_packages_dir(session), "funkify")
 
 
-def _get_funkify_version() -> str:
-    _filepath = path.join(PWD, "pyproject.toml")
-    version = (
-        [l for l in open(_filepath).read().split("\n") if "version" in l][0]
-        .replace("version = ", "")
-        .strip('"')
-    )
-    return version
-
-
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def noxutils(session: nox.Session) -> None:
-    print(_get_session_python_site_packages_dir(session))
+    session_site_packages = _get_session_python_site_packages_dir(session)
+    session.log(f"Session site-packages: {session_site_packages}")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

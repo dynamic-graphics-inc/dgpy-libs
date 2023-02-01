@@ -58,3 +58,6 @@ markers = [
   "aio: asyncio tests",
   "version",
 ]
+
+[tool.ruff]
+extend = "../../pyproject.toml"

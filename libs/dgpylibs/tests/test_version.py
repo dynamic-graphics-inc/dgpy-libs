@@ -11,11 +11,15 @@ pytestmark = [pytest.mark.basic]
 def _get_version() -> str:
     _dirpath = path.split(path.realpath(__file__))[0]
     version = "UNKNOWN???"
-    for i in range(3):
+    for _i in range(3):
         _filepath = path.join(_dirpath, "pyproject.toml")
         if path.exists(_filepath):
             version = (
-                [l for l in open(_filepath).read().split("\n") if "version" in l][0]
+                [
+                    line
+                    for line in open(_filepath).read().split("\n")
+                    if "version" in line
+                ][0]
                 .replace("version = ", "")
                 .strip('"')
             )

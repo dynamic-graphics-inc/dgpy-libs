@@ -15,7 +15,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.6",
   "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
@@ -62,3 +61,6 @@ ignore_missing_imports = true
 implicit_reexport = false
 strict_equality = true
 # --strict end
+
+[tool.ruff]
+extend = "../../pyproject.toml"
