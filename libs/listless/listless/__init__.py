@@ -101,7 +101,7 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
 iter_async = aiterable
 
 
-def pairs(it: Iterable[_T]) -> Iterable[Tuple[_T, _T]]:
+def pairs(it: Iterable[_T], zip_strict: bool = False) -> Iterable[Tuple[_T, _T]]:
     """Yield pairs of adjacent elements
 
     Examples:
@@ -115,11 +115,16 @@ def pairs(it: Iterable[_T]) -> Iterable[Tuple[_T, _T]]:
     """
     a, b = tee(it)
     next(b, None)
-    return zip(a, b)
+    return zip(a, b, strict=zip_strict)
 
 
 def partition(
-    it: Sequence[_T], n: int, *, pad: bool = False, padval: Any = None
+    it: Sequence[_T],
+    n: int,
+    *,
+    pad: bool = False,
+    padval: Any = None,
+    zip_strict: bool = False,
 ) -> Iterable[Sequence[_T]]:
     """Partition an iterable into chunks of size n
 
@@ -181,7 +186,7 @@ def partition(
     if pad:
         return zip_longest(*args, fillvalue=padval)
     else:
-        return zip(*args)
+        return zip(*args, strict=zip_strict)
 
 
 def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
@@ -497,7 +502,7 @@ def itlen(iterable: Iterable[Any], unique: bool = False) -> int:
     if unique:
         return len(set(iterable))
     counter = count()
-    deque(zip(iterable, counter), maxlen=0)
+    deque(zip(iterable, counter, strict=True), maxlen=0)
     return next(counter)
 
 

@@ -15,7 +15,7 @@ modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
 
 def _test_module_all_tuple(mod: ModuleType, check_sorted: bool = True) -> None:
     assert hasattr(mod, "__all__"), f"{mod} has no __all__"
-    mod_all = getattr(mod, "__all__")
+    mod_all = getattr(mod, "__all__")  # noqa: B009
     mod_name = mod.__name__
     assert isinstance(mod_all, tuple), "__all__ should be tuple"
     assert len(set(mod_all)) == len(mod_all), "all should be " + str(

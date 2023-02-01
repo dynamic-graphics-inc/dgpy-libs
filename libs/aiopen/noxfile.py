@@ -72,16 +72,6 @@ def _get_package_site_packages_location(session: nox.Session) -> str:
     return path.join(_get_session_python_site_packages_dir(session), "funkify")
 
 
-def _get_funkify_version() -> str:
-    _filepath = path.join(PWD, "pyproject.toml")
-    version = (
-        [l for l in open(_filepath).read().split("\n") if "version" in l][0]
-        .replace("version = ", "")
-        .strip('"')
-    )
-    return version
-
-
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def noxutils(session: nox.Session) -> None:
     print(_get_session_python_site_packages_dir(session))

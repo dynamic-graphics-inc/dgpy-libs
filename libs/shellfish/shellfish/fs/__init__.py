@@ -1322,6 +1322,7 @@ def filecmp(
         for left_chunk, right_chunk in zip(
             rbytes_gen(left, blocksize=blocksize),
             rbytes_gen(right, blocksize=blocksize),
+            strict=False,
         )
     )
 

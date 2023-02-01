@@ -149,7 +149,7 @@ def test_xtyping_shed_all_members() -> None:
     typing_all_set = set(__all_typing__)
 
     missing_from_all = set()
-    for k, v in vars(shed).items():
+    for k, _v in vars(shed).items():
         member = k
         if (
             member not in shed_all_set

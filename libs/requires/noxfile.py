@@ -69,7 +69,7 @@ def _get_package_site_packages_location(session):
 def _get_pkg_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        [l for l in open(_filepath).read().split("\n") if "version" in l][0]
+        [line for line in open(_filepath).read().split("\n") if "version" in line][0]
         .replace("version = ", "")
         .strip('"')
     )
