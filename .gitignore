@@ -9,6 +9,7 @@ __pycache__/
 *.bak
 
 f.py
+file.py
 
 # C extensions
 *.so
@@ -129,9 +130,9 @@ monkeytype.sqlite3
 .parcel-cache/
 
 package-lock.json
-.pdm.toml 
-__pypackages__ 
-pdm.lock 
+.pdm.toml
+__pypackages__
+pdm.lock
 .vscode/
 dgpy-packages/
 temp/

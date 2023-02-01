@@ -287,6 +287,8 @@ select = [
   "ERA001",
   # comprehensions
   "C",
+  # print
+  "T201",
   # pyupgrade
   # "UP",
 ]
@@ -310,3 +312,6 @@ max-complexity = 20
 "libs/requires/tests/test_requires_w_json_libs.py" = [
   "F821", # undefined name; not valid for this test file
 ]
+
+[tool.ruff.pydocstyle]
+convention = "google"

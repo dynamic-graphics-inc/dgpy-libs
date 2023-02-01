@@ -42,7 +42,7 @@ def _get_session_python_site_packages_dir(session: nox.Session) -> str:
         return path.join(session.virtualenv.location, "Lib", "site-packages")
     try:
         site_packages_dir = session._runner._site_packages_dir  # type: ignore
-        print(site_packages_dir)
+        session.log.info( f"Session site-packages: {site_packages_dir}")
     except AttributeError:
         old_install_only_value = session._runner.global_config.install_only
         try:
@@ -73,7 +73,8 @@ def _get_package_site_packages_location(session: nox.Session) -> str:
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def noxutils(session: nox.Session) -> None:
-    print(_get_session_python_site_packages_dir(session))
+    session_site_packages = _get_session_python_site_packages_dir(session)
+    session.log(f"Session site-packages: {session_site_packages}")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

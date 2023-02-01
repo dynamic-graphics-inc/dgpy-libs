@@ -190,7 +190,7 @@ def dev(session):
     from pprint import pprint
 
     for libname, dirpath in LIB_DIRS.items():
-        print(libname, dirpath)
+        echo(libname, dirpath)
         pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
         with open(pyproject_toml_fspath) as f:
             pyproject_toml_str = f.read().rstrip("\n")
@@ -215,6 +215,8 @@ def _pkg_entry_point(pkg_name):
         ]
     )
 
+def echo(*args, **kwargs):
+    print(*args, **kwargs)  # noqa: T201
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def update_metadata(session):
@@ -222,11 +224,11 @@ def update_metadata(session):
 
     # "# -*- coding: utf-8 -*-"
     for libname, dirpath in LIB_DIRS.items():
-        print(libname, dirpath)
+        echo(libname, dirpath)
         with open(path.join(dirpath, "pyproject.toml")) as f:
             pyproject_toml_str = f.read()
         data = toml.loads(pyproject_toml_str)
-        print("____________________________")
+        echo("____________________________")
         poetry_metadata = data["tool"]["poetry"]
         assert "name" in poetry_metadata and poetry_metadata["name"] == libname
         assert "version" in poetry_metadata
@@ -243,9 +245,9 @@ def update_metadata(session):
 
         # check that is valid python...
         exec(metadata_file_string)
-        print("~~~")
-        print(metadata_file_string)
-        print("~~~")
+        echo("~~~")
+        echo(metadata_file_string)
+        echo("~~~")
         metadata_filepath = path.join(dirpath, libname, "_meta.py")
         pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
         with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
@@ -256,11 +258,11 @@ def update_metadata(session):
             with open(pkg_main_filepath, "r") as f:
                 pkg_main_file_str = f.read()
             if pkg_main_file_str != s:
-                print("updating __main__.py")
+                echo("updating __main__.py")
                 with open(pkg_main_filepath, "w") as f:
                     f.write(s)
         else:
-            print("creating __main__.py")
+            echo("creating __main__.py")
             with open(pkg_main_filepath, "w") as f:
                 f.write(s)
 
