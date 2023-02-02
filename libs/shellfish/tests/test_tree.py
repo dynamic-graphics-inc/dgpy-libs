@@ -1,5 +1,7 @@
 import os
+
 from pathlib import Path
+
 from shellfish import sh
 
 EXPECTED = """
