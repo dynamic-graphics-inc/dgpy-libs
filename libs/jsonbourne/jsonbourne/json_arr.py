@@ -331,8 +331,31 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def slice(
         self, start: Optional[int] = None, end: Optional[int] = None
     ) -> JsonArr[_T]:
+        """Return a slice as new jsonarray
+
+        Args:
+            start (Optional[int], optional): start index. Defaults to None.
+            end (Optional[int], optional): end index. Defaults to None.
+
+        Returns:
+            JsonArr[_T]: new JsonArr
+
+        Examples:
+            >>> arr = JsonArr([1, 2, 3, 4, 5])
+            >>> arr.slice()
+            JsonArr([1, 2, 3, 4, 5])
+            >>> arr.slice(1, 3)
+            JsonArr([2, 3])
+
+        """
         if start is None and end is None:
-            return self
+            return JsonArr([*self.__arr])
         _start = 0 if start is None else start
         _end = len(self) if end is None else end
         return JsonArr(self.__arr[_start:_end])
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

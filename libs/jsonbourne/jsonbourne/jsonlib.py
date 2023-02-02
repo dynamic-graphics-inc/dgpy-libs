@@ -131,7 +131,12 @@ class JsonLibABC(ABC):
 
     @staticmethod
     @abstractmethod
-    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str],
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
+    ) -> Any:
         ...
 
     @staticmethod
@@ -217,11 +222,21 @@ class JSON_STDLIB(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str],
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
+    ) -> Any:
         if jsonc:
             raise NotImplementedError(
                 "Python stdlib-json does not support JSONC; use rapidjson"
             )
+        if ndjson:
+            return [
+                pyjson.loads(line, **kwargs)
+                for line in string.splitlines(keepends=False)
+            ]
         return pyjson.loads(string, **kwargs)
 
     @staticmethod
@@ -299,9 +314,16 @@ class ORJSON(JsonLibABC):
         )
 
     @staticmethod
-    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str],
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
+    ) -> Any:
         if jsonc:
             raise NotImplementedError("orjson does not support JSONC; use rapidjson")
+        if ndjson:
+            return [orjson.loads(line) for line in string.splitlines(keepends=False)]
         return orjson.loads(string)
 
     @staticmethod
@@ -386,9 +408,19 @@ class RAPIDJSON(JsonLibABC):
         ).encode()
 
     @staticmethod
-    def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+    def loads(
+        string: Union[bytes, str],
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
+    ) -> Any:
         if jsonc and "parse_mode" not in kwargs:
             kwargs["parse_mode"] = rapidjson.PM_COMMENTS
+        if ndjson:
+            return [
+                rapidjson.loads(line, **kwargs)
+                for line in string.splitlines(keepends=False)
+            ]
         return rapidjson.loads(string, **kwargs)
 
     @staticmethod
@@ -611,12 +643,19 @@ def dumpb(
     )
 
 
-def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+def loads(
+    string: Union[bytes, str], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+) -> Any:
+    if ndjson:
+        return [
+            JSONLIB.loads(line, jsonc=jsonc, **kwargs)
+            for line in string.splitlines(keepends=False)
+        ]
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
 def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
-    return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
+    return loads(string, jsonc=jsonc, **kwargs)
 
 
 def wjson(
@@ -638,10 +677,12 @@ def wjson(
     return bytes_written
 
 
-def rjson(fspath: Union[str, Path], jsonc: bool = False, **kwargs: Any) -> Any:
+def rjson(
+    fspath: Union[str, Path], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+) -> Any:
     with open(fspath, "rb") as f:
         s = f.read()
-    return JSONLIB.loads(s, jsonc=jsonc, **kwargs)
+    return loads(s, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
 
 def jsoncp(
