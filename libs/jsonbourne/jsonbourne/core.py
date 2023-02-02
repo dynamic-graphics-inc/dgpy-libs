@@ -1236,17 +1236,26 @@ class JSON(metaclass=JSONMeta):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+        string: Union[bytes, str],
+        obj: bool = False,
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
     ) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
-            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
-        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
     @staticmethod
-    def rjson(fspath: Union[Path, str]) -> Any:
+    def rjson(
+        fspath: Union[Path, str],
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
+    ) -> Any:
         """Read JSON file and return raw representation"""
-        return jsonlib.rjson(fspath)
+        return jsonlib.rjson(fspath, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
     @staticmethod
     def wjson(
@@ -1273,12 +1282,16 @@ class JSON(metaclass=JSONMeta):
 
     @staticmethod
     def parse(
-        string: Union[bytes, str], obj: bool = False, jsonc: bool = False, **kwargs: Any
+        string: Union[bytes, str],
+        obj: bool = False,
+        jsonc: bool = False,
+        ndjson: bool = False,
+        **kwargs: Any,
     ) -> Any:
         """Parse JSON string/bytes"""
         if obj:
-            return jsonify(jsonlib.loads(string, jsonc=jsonc, **kwargs))
-        return jsonlib.loads(string, jsonc=jsonc, **kwargs)
+            return jsonify(jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs))
+        return jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
     @staticmethod
     def orjson_useable() -> bool:

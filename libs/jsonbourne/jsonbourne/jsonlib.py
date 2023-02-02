@@ -611,12 +611,19 @@ def dumpb(
     )
 
 
-def loads(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+def loads(
+    string: Union[bytes, str], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+) -> Any:
+    if ndjson:
+        return [
+            JSONLIB.loads(line, jsonc=jsonc, **kwargs)
+            for line in string.splitlines(keepends=False)
+        ]
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
 def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
-    return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
+    return loads(string, jsonc=jsonc, **kwargs)
 
 
 def wjson(
@@ -638,10 +645,12 @@ def wjson(
     return bytes_written
 
 
-def rjson(fspath: Union[str, Path], jsonc: bool = False, **kwargs: Any) -> Any:
+def rjson(
+    fspath: Union[str, Path], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+) -> Any:
     with open(fspath, "rb") as f:
         s = f.read()
-    return JSONLIB.loads(s, jsonc=jsonc, **kwargs)
+    return loads(s, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
 
 def jsoncp(

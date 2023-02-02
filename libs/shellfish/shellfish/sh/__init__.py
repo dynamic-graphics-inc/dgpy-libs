@@ -39,6 +39,7 @@ from typing import (
 )
 
 from asyncify import asyncify
+from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish._meta import __version__
@@ -600,6 +601,22 @@ class Done(JsonBaseModel):
         """
         self.write_stderr(filepath, append=True)
         return self
+
+    def json_parse_stdout(self, jsonc: bool = False) -> Any:
+        """Return json parsed stdout"""
+        return JSON.loads(self.stdout, jsonc=jsonc)
+
+    def json_parse_stderr(self, jsonc: bool = False) -> Any:
+        """Return json parsed stderr"""
+        return JSON.loads(self.stderr, jsonc=jsonc)
+
+    def json_parse(self, stderr: bool = False, jsonc: bool = False) -> Any:
+        """Return json parsed stdout"""
+        return (
+            self.json_parse_stdout(jsonc=jsonc)
+            if not stderr
+            else self.json_parse_stderr(jsonc=jsonc)
+        )
 
     def grep(self, string: str) -> List[str]:
         """Return lines in stdout that have
