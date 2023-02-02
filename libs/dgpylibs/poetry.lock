@@ -119,14 +119,14 @@ numpy = ">=1.14.5"
 
 [[package]]
 name = "jsonbourne"
-version = "0.22.2"
+version = "0.24.0"
 description = "EZPZ JSON"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "jsonbourne-0.22.2-py3-none-any.whl", hash = "sha256:e108b0d280fae92f0ad20fbc1650906b917f93ade8fa608a00f4fb489e7dc013"},
-    {file = "jsonbourne-0.22.2.tar.gz", hash = "sha256:33c0bb9df33b63f104e58aca9d42073eebb1691ea6d15280cde49cbf290df9cd"},
+    {file = "jsonbourne-0.24.0-py3-none-any.whl", hash = "sha256:12988827706fb888e8000d73534f4dc54dc2782c4913ca083cad0e1e21a61467"},
+    {file = "jsonbourne-0.24.0.tar.gz", hash = "sha256:730d4a4e5bf38380c15aa31b94e6a60c91bf82094e5f445b235d9a260d103402"},
 ]
 
 [package.dependencies]
