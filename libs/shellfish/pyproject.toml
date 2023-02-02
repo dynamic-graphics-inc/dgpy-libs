@@ -35,7 +35,7 @@ pydantic = "^1.9.0"
 aiopen = "^0.5.0"
 asyncify = ">=0.9.1"
 funkify = ">=0.4.0"
-jsonbourne = ">=0.20.3"
+jsonbourne = ">=0.24.0"
 listless = ">=0.1.0"
 xtyping = ">=0.6.0"
 
@@ -55,15 +55,15 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--disable-warnings",
+  # "--disable-warnings",
 ]
 xfail_strict = true
 filterwarnings = [
   "error",
-  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-  "ignore::RuntimeWarning",
+  # 'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  # "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
+  # "ignore::DeprecationWarning",
   "ignore:unclosed transport <_ProactorSocketTransport.*:ResourceWarning",
 ]
 markers = [

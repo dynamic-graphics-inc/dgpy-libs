@@ -152,9 +152,9 @@ from shellfish.fs import (
     wstring as wstring,
     wstring_async as wstring_async,
 )
+from shellfish.lib._dirtree import _DirTree
 from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
-from shellfish.sh._dirtree import _DirTree
 from shellfish.sp import PopenArgs
 from xtyping import STDIN, AnyStr, FsPath, IterableStr, TypedDict
 
@@ -602,21 +602,29 @@ class Done(JsonBaseModel):
         self.write_stderr(filepath, append=True)
         return self
 
-    def json_parse_stdout(self, jsonc: bool = False) -> Any:
+    def json_parse_stdout(self, jsonc: bool = False, ndjson: bool = False) -> Any:
         """Return json parsed stdout"""
-        return JSON.loads(self.stdout, jsonc=jsonc)
+        return JSON.loads(self.stdout, jsonc=jsonc, ndjson=ndjson)
 
-    def json_parse_stderr(self, jsonc: bool = False) -> Any:
+    def json_parse_stderr(self, jsonc: bool = False, ndjson: bool = False) -> Any:
         """Return json parsed stderr"""
-        return JSON.loads(self.stderr, jsonc=jsonc)
+        return JSON.loads(self.stderr, jsonc=jsonc, ndjson=ndjson)
 
-    def json_parse(self, stderr: bool = False, jsonc: bool = False) -> Any:
+    def json_parse(
+        self, stderr: bool = False, jsonc: bool = False, ndjson: bool = False
+    ) -> Any:
         """Return json parsed stdout"""
         return (
-            self.json_parse_stdout(jsonc=jsonc)
+            self.json_parse_stdout(jsonc=jsonc, ndjson=ndjson)
             if not stderr
-            else self.json_parse_stderr(jsonc=jsonc)
+            else self.json_parse_stderr(jsonc=jsonc, ndjson=ndjson)
         )
+
+    def parse_json(
+        self, stderr: bool = False, jsonc: bool = False, ndjson: bool = False
+    ) -> Any:
+        """Return json parsed stdout (alias bc I keep flip-flopping the fn name)"""
+        return self.json_parse(stderr=stderr, jsonc=jsonc, ndjson=ndjson)
 
     def grep(self, string: str) -> List[str]:
         """Return lines in stdout that have
