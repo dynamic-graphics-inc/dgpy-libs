@@ -152,7 +152,7 @@ from shellfish.fs import (
     wstring as wstring,
     wstring_async as wstring_async,
 )
-from shellfish.lib._dirtree import _DirTree
+from shellfish.libsh._dirtree import _DirTree
 from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
 from shellfish.sp import PopenArgs
