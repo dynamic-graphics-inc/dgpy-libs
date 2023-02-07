@@ -55,7 +55,7 @@ pytest-cov = "^4.0.0"
 python-rapidjson = "^1.9"
 xdoctest = ">=1.0.1"
 click = "^8.1.2"
-mypy = "^0.991"
+mypy = "^1.0"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
