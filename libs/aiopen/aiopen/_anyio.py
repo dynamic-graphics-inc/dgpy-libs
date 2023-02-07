@@ -82,7 +82,7 @@ def aiopen(
 
 
 def aiopen(
-    file: Union[str, PathLike, int],
+    file: Union[str, PathLike, int],  # type: ignore[type-arg]
     mode: str = "r",
     buffering: int = -1,
     encoding: Optional[str] = None,
