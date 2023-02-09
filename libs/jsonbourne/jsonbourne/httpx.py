@@ -17,7 +17,8 @@ __all__ = (
 
 
 def _JSON(self: Response, **kwargs: Any) -> Any:
-    return JSON(self.json())
+    json_data = self.json()
+    return JSON.jsonify(json_data)
 
 
 Response.JSON = _JSON

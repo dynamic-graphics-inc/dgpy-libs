@@ -19,7 +19,13 @@ def dummy_data_dir_from_filepaths(root: str, filepaths: Set[str]) -> DummyDataDi
     for filepath in filepaths:
         dirs.add(path.dirname(filepath))
         files.add(filepath)
-    return DummyDataDir(root, files, dirs)
+    return DummyDataDir(
+        **{
+            "root": root,
+            "files": files,
+            "dirs": dirs,
+        }
+    )
 
 
 def test_scandir_gen() -> None:

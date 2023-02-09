@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 # pyright: reportUndefinedVariable=false
+from typing import TYPE_CHECKING
+
 import pytest
+
+if TYPE_CHECKING:
+    import json
+
+    import rapidjson
 
 
 def test_requires_json_n_rapid_json() -> None:
@@ -28,17 +35,17 @@ def test_requires_json_n_rapid_json() -> None:
 def test_requires_json_n_rapid_json_pkg_callable() -> None:
     import requires
 
-    @requires("json")  # type: ignore
+    @requires("json")  # type: ignore[operator]
     def uno() -> str:
         return json.dumps({"a": 1, "b": 2})
 
-    @requires(  # type: ignore
+    @requires(  # type: ignore[operator]
         _import="rapidjson",
         pip="python-rapidjson",
         conda_forge="python-rapidjson",
     )
     def tres() -> str:
-        return rapidjson.dumps({"a": 1, "b": 2})
+        return rapidjson.dumps({"a": 1, "b": 2})  # type: ignore[no-any-return]
 
     try:
         tres()

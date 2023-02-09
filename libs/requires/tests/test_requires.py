@@ -2,7 +2,7 @@
 # noqa: F821
 # pyright: reportUndefinedVariable=false
 
-from typing import Any
+from typing import Any, Dict, Tuple
 
 import pytest
 
@@ -122,8 +122,8 @@ def test_json_not_imported() -> None:
     @requires("json")
     def fn() -> str:
         d = {"herm": 1}
-        s = json.dumps(d)
-        return s
+        s = json.dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -135,8 +135,8 @@ def test_requirement_as_decorator() -> None:
     @json_dumps_req
     def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)
-        return s
+        s = dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -146,8 +146,8 @@ def test_requirement_as_decorator_multiple_xfail() -> None:
 
         def fn() -> Tuple[str, Any]:
             d = {"herm": 1}
-            s = dumps(d)
-            f = loads(s)
+            s = dumps(d)  # type: ignore[name-defined]
+            f = loads(s)  # type: ignore[name-defined]
             return s, f
 
         s, f = fn()
@@ -164,10 +164,10 @@ def test_requirement_as_decorator_multiple() -> None:
 
     @json_dumps_req
     @json_loads_req
-    def fn():
+    def fn() -> Tuple[str, Any]:
         d = {"herm": 1}
-        s = dumps(d)
-        f = loads(s)
+        s = dumps(d)  # type: ignore[name-defined]
+        f = loads(s)  # type: ignore[name-defined]
         return s, f
 
     s, f = fn()
@@ -178,6 +178,7 @@ def test_requirement_as_decorator_multiple() -> None:
 
 def test_requirement_as_decorator_multiple_aliases() -> None:
     import_string = "from json import dumps as dumps2"
+
     json_dumps_req = string2requirement(import_string)
     import_loads_string = "from json import loads as loads2"
     json_loads_req = string2requirement(import_loads_string)
@@ -186,8 +187,8 @@ def test_requirement_as_decorator_multiple_aliases() -> None:
     @json_loads_req
     def fn():
         d = {"herm": 1}
-        s = dumps2(d)
-        f = loads2(s)
+        s = dumps2(d)  # type: ignore[name-defined]
+        f = loads2(s)  # type: ignore[name-defined]
         return s, f
 
     s, f = fn()
@@ -203,10 +204,10 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
         assert re
 
         async def fn2():
-            _f = somefunction(s)
+            _f = somefunction(s)  # type: ignore[name-defined]
             return s, _f
 
-        s, f = asyncio.run(fn2())
+        s, f = asyncio.run(fn2())  # type: ignore[no-untyped-call]
         assert s == '{"herm": 1}'
 
         assert f == {"herm": 1}
@@ -222,8 +223,8 @@ def test_requirement_as_decorator_multiple_async() -> None:
     @json_loads_req
     async def fn():
         d = {"herm": 1}
-        s = dumps(d)
-        f = loads(s)
+        s = dumps(d)  # type: ignore[name-defined]
+        f = loads(s)  # type: ignore[name-defined]
         return s, f
 
     import asyncio
@@ -236,30 +237,30 @@ def test_requirement_as_decorator_multiple_async() -> None:
 
 def test_from_json_import_dumps() -> None:
     @requires("from json import dumps")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)
-        return s
+        s = dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
 
 def test_from_json_import_dumps_alias() -> None:
     @requires("from json import dumps as dumpz")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = dumpz(d)
-        return s
+        s = dumpz(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
 
 def test_from_json_import_dumps_module_alias() -> None:
     @requires("import json as jason")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = jason.dumps(d)
-        return s
+        s = jason.dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -267,10 +268,10 @@ def test_from_json_import_dumps_module_alias() -> None:
 @pytest.mark.asyncio()
 async def test_from_json_import_dumps_async() -> None:
     @requires("from json import dumps")
-    async def fn():
+    async def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)
-        return s
+        s = dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     result = await fn()
     assert result == '{"herm": 1}'
@@ -278,20 +279,20 @@ async def test_from_json_import_dumps_async() -> None:
 
 def test_from_json_import_dumps_via_kwargs() -> None:
     @requires(_from="json", _import="dumps")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)
-        return s
+        s = dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
 
 def test_from_json_import_dumps_via_dict() -> None:
     @requires({"from": "json", "import": "dumps"})
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)
-        return s
+        s = dumps(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -300,7 +301,7 @@ def test_from_json_import_dumps_via_dict_simple() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn():
         d = {"herm": 1}
-        s = dumps_test_dict(d)
+        s = dumps_test_dict(d)  # type: ignore[name-defined]
         return s
 
     assert fn() == '{"herm": 1}'
@@ -313,8 +314,8 @@ def test_from_json_import_dumps_via_dicts() -> None:
     )
     def fn():
         d = {"herm": 1}
-        s = dumps_test_dicts(d)
-        f = loads_test_dicts(s)
+        s = dumps_test_dicts(d)  # type: ignore[name-defined]
+        f = loads_test_dicts(s)  # type: ignore[name-defined]
         return s, f
 
     s, f = fn()
@@ -324,9 +325,9 @@ def test_from_json_import_dumps_via_dicts() -> None:
 
 def test_from_json_import_dumps_as_via_dict() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
-    def fn():
+    def fn() -> Tuple[str, Dict[str, int]]:
         d = {"herm": 1}
-        s = dumps_test_dicts(d)
+        s = dumps_test_dicts(d)  # type: ignore[name-defined]
         from json import loads
 
         f = loads(s)
@@ -340,10 +341,10 @@ def test_from_json_import_dumps_as_via_dict() -> None:
 def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
-    def fn():
+    def fn() -> Tuple[str, Dict[str, int]]:
         d = {"herm": 1}
-        s = dumps_test_dicts(d)
-        f = loads_test_dicts(s)
+        s = dumps_test_dicts(d)  # type: ignore[name-defined]
+        f = loads_test_dicts(s)  # type: ignore[name-defined]
         return s, f
 
     s, f = fn()
@@ -354,10 +355,10 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
 def test_from_json_import_dumps_via_dicts_multi() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
-    def fn():
+    def fn() -> Tuple[str, Dict[str, int]]:
         d = {"herm": 1}
-        s = dumps_test_dicts(d)
-        f = loads_test_dicts(s)
+        s = dumps_test_dicts(d)  # type: ignore[name-defined]
+        f = loads_test_dicts(s)  # type: ignore[name-defined]
         return s, f
 
     s, f = fn()
@@ -367,10 +368,10 @@ def test_from_json_import_dumps_via_dicts_multi() -> None:
 
 def test_from_json_import_dumps_as_dumpit() -> None:
     @requires("from json import dumps as DUMPIT")
-    def fn():
+    def fn() -> str:
         d = {"herm": 1}
-        s = DUMPIT(d)
-        return s
+        s = DUMPIT(d)  # type: ignore[name-defined]
+        return s  # type: ignore[no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -381,7 +382,7 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
         @requires("from json import DUMPSNOTANATTR")
         def fn():
             d = {"herm": 1}
-            s = DUMPSNOTANATTR(d)
+            s = DUMPSNOTANATTR(d)  # type: ignore[name-defined]
             return s
 
         assert fn() == '{"herm": 1}'
@@ -404,7 +405,7 @@ def test_requires_name_error() -> None:
 
         @requires("a_fake_module")
         def fn():
-            _some_value = a_fake_module.a_fake_function()
+            _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
             return _some_value
 
         fn()
@@ -417,7 +418,7 @@ async def test_requires_name_error_async() -> None:
 
         @requires("a_fake_module")
         async def fn():
-            _some_value = a_fake_module.a_fake_function()
+            _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
             return _some_value
 
         await fn()
@@ -429,7 +430,7 @@ def test_requires_err_msg() -> None:
 
         @requires("a_fake_module")
         def fn():
-            return a_fake_module.a_fake_function()
+            return a_fake_module.a_fake_function()  # type: ignore[name-defined]
 
         fn()
 
@@ -446,7 +447,7 @@ def test_stacked_requirements() -> None:
     @requires("from os import path")
     @requires_ruamel_yaml
     def jsonify(d):
-        return json.dumps(d)
+        return json.dumps(d)  # type: ignore[name-defined]
 
     data = {"herm": 123}
     assert '{"herm": 123}' == jsonify(data)

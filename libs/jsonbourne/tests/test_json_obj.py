@@ -111,14 +111,14 @@ def test_protected_attrs_slash_members() -> None:
     j.key = "value"
     j["12"] = "twelve"
     with pytest.raises(ValueError):
-        j.items = [1, 2, 3, 4]
+        j.items = [1, 2, 3, 4]  # type: ignore[assignment]
     j["items"] = [1, 2, 3, 4]
-    assert j.items != [1, 2, 3, 4]
+    assert j.items != [1, 2, 3, 4]  # type: ignore[comparison-overlap]
     assert j["items"] == [1, 2, 3, 4]
 
 
 def test_number_keys() -> None:
-    j = JsonObj()
+    j = JsonObj[str]()
     j.key = "value"
     j["12"] = "twelve"
     assert j["12"] == "twelve"
@@ -245,8 +245,8 @@ def test_dot_items() -> None:
         from deepdiff import DeepDiff
 
         assert not DeepDiff(expected, dkl)
-    except ModuleNotFoundError as mnfe:
-        assert mnfe
+    except ModuleNotFoundError:
+        ...
 
 
 d1 = {
@@ -373,7 +373,7 @@ def test_dot_list_keys_sorted() -> None:
 def test_json_dict_reject_non_string_key() -> None:
     t1 = {1: None, 2: 2}
     with pytest.raises(ValueError):
-        JsonObj(t1)
+        JsonObj(t1)  # type: ignore[arg-type]
 
 
 def test_filter_none() -> None:
