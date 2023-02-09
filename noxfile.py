@@ -149,21 +149,24 @@ def _mypy(session):
         "mypy",
         "--show-error-codes",
         "--config-file",
-        # "./mypy.ini",
         "./pyproject.toml",
         *list(SOURCE_DIRS.values()),
     )
 
-    for lib in {
-        el for el in LIBS if el not in {"aiopen", "shellfish", "jsonbourne", "requires"}
-    }:
+    for lib in LIBS:
         session.run(
             "mypy",
             "--show-error-codes",
             "--config-file",
             "./pyproject.toml",
+            *list(SOURCE_DIRS.values()),
             path.join("libs", lib, "tests"),
         )
+
+
+def _ruff(session: nox.Session):
+    session.install("ruff")
+    session.run("ruff", ".")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -174,7 +177,8 @@ def mypy(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def lint(session):
     _mypy(session)
-    _flake(session)
+    _ruff(session)
+    # _flake(session)  # noqa
 
 
 ruffext = """

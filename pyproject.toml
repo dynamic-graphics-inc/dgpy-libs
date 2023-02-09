@@ -6,9 +6,7 @@ authors = ["jessekrubin <jesse@dgi.com>"]
 license = "MIT"
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-packages = [
-  { include = "dgpydev", from = "." },
-]
+packages = [{ include = "dgpydev", from = "." }]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -20,12 +18,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Typing :: Typed",
 ]
-keywords = [
-  "dgpy",
-  "dgi",
-  "typed",
-  "python3",
-]
+keywords = ["dgpy", "dgi", "typed", "python3"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -127,7 +120,13 @@ line_length = 88
 include_trailing_comma = true
 lines_between_types = 1
 multi_line_output = 3
-skip_glob = ["*/setup.py", ".nox*", "*/.nox_win/**", "*/.pytype/*", "*/loguru_tests/*"]
+skip_glob = [
+  "*/setup.py",
+  ".nox*",
+  "*/.nox_win/**",
+  "*/.pytype/*",
+  "*/loguru_tests/*",
+]
 force_grid_wrap = 0
 ensure_newline_before_comments = true
 combine_as_imports = true
@@ -278,28 +277,27 @@ reportMissingTypeStubs = false
 [tool.ruff]
 target-version = "py37"
 select = [
-  # pyflakes
-  "E",
-  "F",
-  # bugbear
-  "B",
-  # erradicate
-  "ERA001",
-  # comprehensions
-  "C",
-  # print
-  "T201",
+  "E", # pyflakes errors
+  "F", # pyflakes warnings
+  "B", # bugbear
+  "C", # comprehensions
+  "ERA001", # erradicate
+  "W",
+  # "D",
+  "T201", # print
   # pyupgrade
   # "UP",
 ]
 line-length = 88
 
 ignore = [
-  "E501", # line too long ignore,
   "B004",
+  "B008", # do not perform function calls in argument defaults
   "B904",
   "B905",
   "C417", # super annoying
+  "C901", # too complex
+  "E501", # line too long,
 ]
 
 [tool.ruff.mccabe]
@@ -311,6 +309,10 @@ max-complexity = 20
 ]
 "libs/requires/tests/test_requires_w_json_libs.py" = [
   "F821", # undefined name; not valid for this test file
+]
+
+"libs/shellfish/tests/*" = [
+  "D100", # missing docstring
 ]
 
 [tool.ruff.pydocstyle]

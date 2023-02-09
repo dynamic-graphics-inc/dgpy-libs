@@ -208,6 +208,21 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     @overload
     def __init__(
         self,
+        *args: Dict[_KT, _VT],
+    ) -> None:
+        ...
+
+    @overload
+    def __init__(
+        self,
+        *args: Dict[_KT, _VT],
+        **kwargs: _VT,
+    ) -> None:
+        ...
+
+    @overload
+    def __init__(
+        self,
         *args: Mapping[_KT, _VT],
     ) -> None:
         ...
@@ -1103,6 +1118,16 @@ def unjsonify(value: Any) -> Any:
 class JSONMeta(type):
     """Meta type for use by JSON class to allow for static `__call__` method"""
 
+    @overload
+    @staticmethod
+    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT:
+        ...
+
+    @overload
+    @staticmethod
+    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]:
+        ...
+
     @staticmethod
     def __call__(value: Optional[Any] = None) -> Any:
         if value is None:
@@ -1110,7 +1135,7 @@ class JSONMeta(type):
         return jsonify(value)
 
 
-class JSON(metaclass=JSONMeta):
+class JsonModule:
     """JSON class meant to mimic the js/ts-JSON"""
 
     undefined: str = UNDEFINED
@@ -1119,8 +1144,24 @@ class JSON(metaclass=JSONMeta):
     Null = Null
     JSONDecodeError = JSONDecodeError
 
-    def __new__(cls, *args: Any, **kwargs: Any) -> Any:
-        return cls.__call__(*args, **kwargs)
+    def __init__(self) -> None:
+        ...
+
+    @overload
+    @staticmethod
+    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT:
+        ...
+
+    @overload
+    @staticmethod
+    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]:
+        ...
+
+    @staticmethod
+    def __call__(value: Optional[Any] = None) -> Any:
+        if value is None:
+            value = {}
+        return jsonify(value)
 
     @staticmethod
     def stringify(
@@ -1336,7 +1377,10 @@ class JSON(metaclass=JSONMeta):
     objectify = staticmethod(objectify)
 
 
-class JSONModuleCls(ModuleType, JSON):
+JSON = JsonModule()
+
+
+class JSONModuleCls(ModuleType, JsonModule):
     @staticmethod
     def __call__(value: Any = None):  # type: ignore[no-untyped-def]
         """Jsonify a value"""

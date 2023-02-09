@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import asyncio
-import sys
 
 from os import path
 
@@ -29,16 +28,7 @@ def run(aw: Awaitable[T]) -> T:
         5
 
     """
-    if sys.version_info >= (3, 7):
-        return asyncio.run(aw)
-
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    try:
-        return loop.run_until_complete(aw)
-    finally:
-        loop.close()
-        asyncio.set_event_loop(None)
+    return asyncio.run(aw)  # type: ignore[arg-type]
 
 
 def test_funkify_module_sync() -> None:
