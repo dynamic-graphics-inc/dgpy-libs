@@ -16,8 +16,19 @@ from requires.core import (
 
 if TYPE_CHECKING:
     import json
+    import json as jason
 
-    from json import dumps, loads
+    from json import (
+        dumps,
+        dumps as DUMPIT,
+        dumps as dumps2,
+        dumps as dumps_test_dict,
+        dumps as dumps_test_dicts,
+        dumps as dumpz,
+        loads,
+        loads as loads2,
+        loads as loads_test_dicts,
+    )
 
 
 def test_parse_import_xxx() -> None:
@@ -124,8 +135,6 @@ def test_jsonthing() -> None:
 
 
 def test_json_not_imported() -> None:
-    if TYPE_CHECKING:
-        import json
 
     @requires("json")
     def fn() -> str:
@@ -139,8 +148,6 @@ def test_json_not_imported() -> None:
 def test_requirement_as_decorator() -> None:
     import_string = "from json import dumps"
     json_dumps_req = string2requirement(import_string)
-    if TYPE_CHECKING:
-        from json import dumps
 
     @json_dumps_req
     def fn() -> str:
@@ -192,8 +199,6 @@ def test_requirement_as_decorator_multiple_aliases() -> None:
     json_dumps_req = string2requirement(import_string)
     import_loads_string = "from json import loads as loads2"
     json_loads_req = string2requirement(import_loads_string)
-    if TYPE_CHECKING:
-        from json import dumps as dumps2, loads as loads2
 
     @json_dumps_req
     @json_loads_req
@@ -258,8 +263,6 @@ def test_from_json_import_dumps() -> None:
 
 
 def test_from_json_import_dumps_alias() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumpz
 
     @requires("from json import dumps as dumpz")
     def fn() -> str:
@@ -271,8 +274,6 @@ def test_from_json_import_dumps_alias() -> None:
 
 
 def test_from_json_import_dumps_module_alias() -> None:
-    if TYPE_CHECKING:
-        import json as jason
 
     @requires("import json as jason")
     def fn() -> str:
@@ -316,8 +317,6 @@ def test_from_json_import_dumps_via_dict() -> None:
 
 
 def test_from_json_import_dumps_via_dict_simple() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumps_test_dict
 
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn():
@@ -329,8 +328,6 @@ def test_from_json_import_dumps_via_dict_simple() -> None:
 
 
 def test_from_json_import_dumps_via_dicts() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumps_test_dicts, loads as loads_test_dicts
 
     @requires(
         {"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"},
@@ -348,8 +345,6 @@ def test_from_json_import_dumps_via_dicts() -> None:
 
 
 def test_from_json_import_dumps_as_via_dict() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumps_test_dicts
 
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
@@ -366,8 +361,6 @@ def test_from_json_import_dumps_as_via_dict() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumps_test_dicts, loads as loads_test_dicts
 
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
@@ -383,8 +376,6 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as dumps_test_dicts, loads as loads_test_dicts
 
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
@@ -400,8 +391,6 @@ def test_from_json_import_dumps_via_dicts_multi() -> None:
 
 
 def test_from_json_import_dumps_as_dumpit() -> None:
-    if TYPE_CHECKING:
-        from json import dumps as DUMPIT
 
     @requires("from json import dumps as DUMPIT")
     def fn() -> str:
