@@ -14,22 +14,6 @@ from requires.core import (
     string2requirement,
 )
 
-if TYPE_CHECKING:
-    import json
-    import json as jason
-
-    from json import (
-        dumps,
-        dumps as DUMPIT,
-        dumps as dumps2,
-        dumps as dumps_test_dict,
-        dumps as dumps_test_dicts,
-        dumps as dumpz,
-        loads,
-        loads as loads2,
-        loads as loads_test_dicts,
-    )
-
 
 def test_parse_import_xxx() -> None:
     s = "import json"
@@ -135,7 +119,6 @@ def test_jsonthing() -> None:
 
 
 def test_json_not_imported() -> None:
-
     @requires("json")
     def fn() -> str:
         d = {"herm": 1}
@@ -263,7 +246,6 @@ def test_from_json_import_dumps() -> None:
 
 
 def test_from_json_import_dumps_alias() -> None:
-
     @requires("from json import dumps as dumpz")
     def fn() -> str:
         d = {"herm": 1}
@@ -274,7 +256,6 @@ def test_from_json_import_dumps_alias() -> None:
 
 
 def test_from_json_import_dumps_module_alias() -> None:
-
     @requires("import json as jason")
     def fn() -> str:
         d = {"herm": 1}
@@ -317,7 +298,6 @@ def test_from_json_import_dumps_via_dict() -> None:
 
 
 def test_from_json_import_dumps_via_dict_simple() -> None:
-
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn():
         d = {"herm": 1}
@@ -328,7 +308,6 @@ def test_from_json_import_dumps_via_dict_simple() -> None:
 
 
 def test_from_json_import_dumps_via_dicts() -> None:
-
     @requires(
         {"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"},
         {"from": "json", "import": "loads", "as": "loads_test_dicts"},
@@ -345,7 +324,6 @@ def test_from_json_import_dumps_via_dicts() -> None:
 
 
 def test_from_json_import_dumps_as_via_dict() -> None:
-
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn():
         d = {"herm": 1}
@@ -361,7 +339,6 @@ def test_from_json_import_dumps_as_via_dict() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
-
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn() -> Tuple[str, Dict[str, int]]:
@@ -376,7 +353,6 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi() -> None:
-
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
     def fn() -> Tuple[str, Dict[str, int]]:
@@ -391,7 +367,6 @@ def test_from_json_import_dumps_via_dicts_multi() -> None:
 
 
 def test_from_json_import_dumps_as_dumpit() -> None:
-
     @requires("from json import dumps as DUMPIT")
     def fn() -> str:
         d = {"herm": 1}
