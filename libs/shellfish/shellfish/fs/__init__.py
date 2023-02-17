@@ -1439,7 +1439,7 @@ def rmfile(fspath: FsPath, *, dryrun: bool = False) -> str:
     return _fspath(fspath)
 
 
-def rmdir(fspath: FsPath, *, recursive: bool = False) -> None:
+def rmdir(fspath: FsPath, *, force: bool = False, recursive: bool = False) -> None:
     """Remove directory at given fspath
 
     Args:
@@ -1450,6 +1450,11 @@ def rmdir(fspath: FsPath, *, recursive: bool = False) -> None:
         None
 
     """
+    if force:
+        try:
+            return rmdir(fspath, recursive=recursive)
+        except FileNotFoundError:
+            return
     if recursive:
         return rmtree(_fspath(fspath))
     return _rmdir(_fspath(fspath))
@@ -1458,12 +1463,14 @@ def rmdir(fspath: FsPath, *, recursive: bool = False) -> None:
 def rm_gen(
     fspath: FsPath,
     *,
+    force: bool = False,
     recursive: bool = False,
     dryrun: bool = False,
 ) -> Generator[str, Any, Any]:
     """Remove files & directories in the style of the shell
     Args:
         fspath (FsPath): Path to file or directory to remove
+        force (bool): Force removal of files and directories
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
         dryrun (bool): Do not remove file if True
 
@@ -1479,7 +1486,7 @@ def rm_gen(
                 if isfile(_path_str):
                     remove(_path_str)
                 elif recursive:
-                    rmtree(_path_str)
+                    rmdir(_path_str, recursive=True, force=force)
                 else:
                     raise ValueError(
                         f"{str(_path_str)} (under {str(fspath)}) is a directory -- use r=True or recursive=True"
@@ -1491,7 +1498,7 @@ def rm_gen(
             yield _fspath(fspath)
         elif recursive:
             if not dryrun:
-                rmtree(_fspath(fspath))
+                rmdir(fspath, force=force, recursive=True)
             yield _fspath(fspath)
         else:
             raise ValueError(
@@ -1502,6 +1509,7 @@ def rm_gen(
 def rm(
     fspath: FsPath,
     *,
+    force: bool = False,
     recursive: bool = False,
     dryrun: bool = False,
     verbose: bool = False,
@@ -1509,6 +1517,7 @@ def rm(
     """Remove files & directories in the style of the shell
     Args:
         fspath (FsPath): Path to file or directory to remove
+        force (bool): ignore errors and missing files/dirs; default is False
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
         dryrun (bool): Do not remove file if True
 
@@ -1517,9 +1526,11 @@ def rm(
 
     """
     if verbose:
-        return list(rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun))
+        return list(
+            rm_gen(fspath=fspath, force=force, recursive=recursive, dryrun=dryrun)
+        )
     else:
-        exhaust(rm_gen(fspath=fspath, recursive=recursive, dryrun=dryrun))
+        exhaust(rm_gen(fspath=fspath, force=force, recursive=recursive, dryrun=dryrun))
         return None
 
 
