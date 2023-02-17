@@ -21,7 +21,7 @@ classifiers = [
 keywords = ["dgpy", "dgi", "typed", "python3"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 aiopen = "*"
 asyncify = "*"
 fmts = "*"
