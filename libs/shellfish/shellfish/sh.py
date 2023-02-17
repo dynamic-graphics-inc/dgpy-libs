@@ -2153,8 +2153,10 @@ def ls_files_dirs(
 def rm(
     fspath: FsPath,
     *,
+    force: bool = False,
     recursive: bool = False,
     verbose: bool = False,
+    f: bool = False,
     r: bool = False,
     v: bool = False,
     dryrun: bool = False,
@@ -2163,8 +2165,10 @@ def rm(
 
     Args:
         fspath (FsPath): Path to file or directory to remove
+        force (bool): Flag to force removal; ignore missing
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
         verbose (bool): Flag to be verbose
+        f (bool): alias for force kwarg
         v (bool): alias for verbose
         r (bool): alias for recursive kwarg
         dryrun (bool): Flag to not actually remove anything
@@ -2177,6 +2181,7 @@ def rm(
         echo(f"Removing {fspath}")
     fs.rm(
         fspath,
+        force=force or f,
         recursive=recursive or r,
         dryrun=dryrun,
     )
