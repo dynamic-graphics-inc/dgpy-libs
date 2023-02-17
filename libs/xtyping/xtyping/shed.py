@@ -140,6 +140,7 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "assert_type",
     "clear_overloads",
     "dataclass_transform",
+    "deprecated",
     "get_overloads",
     "is_typeddict",
     "override",
