@@ -70,19 +70,19 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.5.2"
+version = "0.6.0"
 description = "H5py utils"
 category = "main"
 optional = false
-python-versions = ">=3.7.0"
+python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.5.2-py3-none-any.whl", hash = "sha256:3104126f032b435284a703bdb0dbf356e5787e634bac03a1c99ef4e6a7eac557"},
-    {file = "h5-0.5.2.tar.gz", hash = "sha256:92528a117a3531f2ec61d6075b72a0b4f7ac2618164ce4479c368c3f7ef9ff13"},
+    {file = "h5-0.6.0-py3-none-any.whl", hash = "sha256:82e3541881abce59658db71afbccbe98c9ac26c428e564a95e3d283d0440e8f6"},
+    {file = "h5-0.6.0.tar.gz", hash = "sha256:e5c4adf0c81f66650dfc8170aac6a68374853088cec5f6fff30b6a5f89f12c8a"},
 ]
 
 [package.dependencies]
-h5py = ">=3.2.0,<4.0.0"
-numpy = ">=1.7,<1.19.4 || >1.19.4"
+h5py = ">=3.7.0"
+numpy = ">=1.24.2,<2.0.0"
 
 [[package]]
 name = "h5py"
