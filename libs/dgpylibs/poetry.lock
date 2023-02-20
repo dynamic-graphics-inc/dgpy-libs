@@ -299,21 +299,21 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.1.8"
+version = "0.2.0"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.1.8-py3-none-any.whl", hash = "sha256:d7a75b0ff77628805fcbe3c020378e0c66eb635d6b39f69f9aa90e5cf44fcf3f"},
-    {file = "shellfish-0.1.8.tar.gz", hash = "sha256:75b5d434b5ade1a7cf4de62728e4c5a880f4c65e00cfe1ef367b4835cc4b2165"},
+    {file = "shellfish-0.2.0-py3-none-any.whl", hash = "sha256:cd92a96e0819a0ee91edf77b0efbbd8643fd6e8bfc776bafce08ad0dfba7a4e7"},
+    {file = "shellfish-0.2.0.tar.gz", hash = "sha256:b1536da5942756fd3b5508fdc13d8ea0388754deb9974f6baa90ca8689d7987b"},
 ]
 
 [package.dependencies]
 aiopen = ">=0.5.0,<0.6.0"
 asyncify = ">=0.9.1"
 funkify = ">=0.4.0"
-jsonbourne = ">=0.20.3"
+jsonbourne = ">=0.24.0"
 listless = ">=0.1.0"
 pydantic = ">=1.9.0,<2.0.0"
 xtyping = ">=0.6.0"
