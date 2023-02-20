@@ -446,14 +446,14 @@ tests-strict = ["codecov (==2.0.15)", "pytest (==4.6.0)", "pytest (==4.6.0)", "p
 
 [[package]]
 name = "xtyping"
-version = "0.6.1"
+version = "0.6.2"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "xtyping-0.6.1-py3-none-any.whl", hash = "sha256:38ce4e68d536d3a6e627926280a9737e7ee427623f92a42ad009a8befbe6a852"},
-    {file = "xtyping-0.6.1.tar.gz", hash = "sha256:1b426de8becf94602058947716ad3f9951625a54eefbc3a4d6e41d6563dd172c"},
+    {file = "xtyping-0.6.2-py3-none-any.whl", hash = "sha256:27d71c802802503c43b25c03c91e41ddb0541e43eb9ffb4eb55412123418b7b1"},
+    {file = "xtyping-0.6.2.tar.gz", hash = "sha256:d6548a587302c4dd1613c876517c3a7806f898ebe32c70e33102677440c7a27c"},
 ]
 
 [package.dependencies]
