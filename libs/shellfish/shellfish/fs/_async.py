@@ -85,6 +85,16 @@ async def filesize_async(fspath: FsPath) -> int:
     return _stat_res.st_size
 
 
+async def file_exists_async(fspath: FsPath) -> bool:
+    """Return True if the file exists; False otherwise"""
+    return await aios.path.isfile(_fspath(fspath))
+
+
+async def dir_exists_async(fspath: FsPath) -> bool:
+    """Return True if the directory exists; False otherwise"""
+    return await aios.path.isdir(_fspath(fspath))
+
+
 is_dir_async = isdir_async
 is_file_async = isfile_async
 is_link_async = islink_async

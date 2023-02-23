@@ -31,7 +31,9 @@ from listless import exhaust
 from shellfish import const
 from shellfish._meta import __version__
 from shellfish.fs._async import (
+    dir_exists_async as dir_exists_async,
     exists_async as exists_async,
+    file_exists_async as file_exists_async,
     filesize_async as filesize_async,
     is_dir_async as is_dir_async,
     is_file_async as is_file_async,
@@ -118,6 +120,16 @@ def islink(fspath: FsPath) -> bool:
 def exists(fspath: FsPath) -> bool:
     """Return True if the given path exists; False otherwise"""
     return path.exists(_fspath(fspath))
+
+
+def file_exists(fspath: FsPath) -> bool:
+    """Return True if the given path exists; False otherwise"""
+    return isfile(fspath)
+
+
+def dir_exists(fspath: FsPath) -> bool:
+    """Return True if the given path exists; False otherwise"""
+    return isdir(fspath)
 
 
 is_dir = isdir
@@ -1636,11 +1648,14 @@ __all__ = (
     "chmod",
     "copy_file",
     "cp",
+    "dir_exists",
     "dirpath_gen",
     "dirs_gen",
     "exists",
     "exists_async",
     "extension",
+    "file_exists",
+    "file_exists_async",
     "file_lines_gen",
     "filecmp",
     "filepath_gen",

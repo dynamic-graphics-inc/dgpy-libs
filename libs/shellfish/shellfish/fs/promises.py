@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from shellfish.fs._async import (
+    dir_exists_async as dir_exists,
     exists_async as exists,
+    file_exists_async as file_exists,
     is_dir_async as is_dir,
     is_file_async as is_file,
     is_link_async as is_link,
@@ -36,7 +38,9 @@ from shellfish.fs._async import (
 )
 
 __all__ = (
+    "dir_exists",
     "exists",
+    "file_exists",
     "is_dir",
     "is_file",
     "is_link",
