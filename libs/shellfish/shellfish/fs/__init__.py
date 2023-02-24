@@ -1650,6 +1650,7 @@ __all__ = (
     "copy_file",
     "cp",
     "dir_exists",
+    "dir_exists_async",
     "dirpath_gen",
     "dirs_gen",
     "exists",
