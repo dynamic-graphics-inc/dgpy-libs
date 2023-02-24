@@ -1277,7 +1277,7 @@ def extension(fspath: str) -> str:
 
 def sep_split(fspath: FsPath) -> Tuple[str, ...]:
     """Split a string on the current platform os.path.sep value"""
-    return tuple((el for el in str(fspath).split(sep) if el != sep and el != ""))
+    return tuple(el for el in str(fspath).split(sep) if el != sep and el != "")
 
 
 def sep_join(path_strings: Iterator[str]) -> str:

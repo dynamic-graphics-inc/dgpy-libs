@@ -240,7 +240,7 @@ def _aiopen_dispatch(
     loop: AbstractEventLoop,
     executor: Any = None,
 ) -> Union[TextIOWrapperAsync, BufferedIOAsyncBase, BufferedReaderAsync, FileIOAsync]:
-    raise TypeError("Unsupported io type: {}.".format(file))
+    raise TypeError(f"Unsupported io type: {file}.")
 
 
 @_aiopen_dispatch.register(TextIOBase)

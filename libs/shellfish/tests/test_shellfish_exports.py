@@ -31,7 +31,7 @@ def _test_module_all_tuple(mod: ModuleType, check_sorted: bool = True) -> None:
         try:
             assert sorted_all_tuple == mod_all
         except AssertionError as e:
-            print("{} should be:".format(mod_name))  # noqa: T201
+            print(f"{mod_name} should be:")  # noqa: T201
             if len(sorted_all_tuple) > 10:
                 print("__all__ = " + str(sorted_all_tuple))  # noqa: T201
             else:

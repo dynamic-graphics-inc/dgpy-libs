@@ -75,7 +75,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         return "JsonArr(" + repr(self.__arr) + ")"
 
     def __str__(self) -> str:
-        return "JsonArr({})".format(self.__arr.__str__())
+        return f"JsonArr({self.__arr.__str__()})"
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, JsonArr):

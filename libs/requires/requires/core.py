@@ -234,7 +234,7 @@ def parse_name_error(ne: NameError) -> List[str]:
         ['path']
 
     """
-    return [el.split(" ")[1].strip(("'")) for el in ne.args]
+    return [el.split(" ")[1].strip("'") for el in ne.args]
 
 
 def parse_import_string(string: str) -> Requirement:

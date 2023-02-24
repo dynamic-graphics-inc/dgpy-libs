@@ -56,7 +56,7 @@ def test_xtyping_imports_shed() -> None:
             if not hasattr(xtyping, el):
                 missing.add(el)
     if missing:
-        raise ValueError("MISSING from __all__: {}".format(str(tuple(missing))))
+        raise ValueError(f"MISSING from __all__: {str(tuple(missing))}")
 
 
 def test_xtyping_imports_typing() -> None:
@@ -78,7 +78,7 @@ def _test_module_all_tuple(
         try:
             assert sorted_all_tuple == mod_all
         except AssertionError as e:
-            print("{} should be:".format(mod_name))  # noqa: T201
+            print(f"{mod_name} should be:")  # noqa: T201
             if len(sorted_all_tuple) > 10:
                 print("__all__ = " + str(sorted_all_tuple))  # noqa: T201
             else:

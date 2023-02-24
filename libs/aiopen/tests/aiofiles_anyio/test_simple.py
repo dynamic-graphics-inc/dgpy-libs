@@ -74,7 +74,7 @@ async def test_serve_small_bin_file(
     async def serve_file(reader: Any, writer: Any) -> None:
         full_filename = str(file)
         f = await aio.aiopen(full_filename, mode="rb")
-        writer.write((await f.read()))
+        writer.write(await f.read())
         await f.close()
         writer.close()
 

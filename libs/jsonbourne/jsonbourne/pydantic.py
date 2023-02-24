@@ -113,7 +113,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
 
     def _repr_html_(self) -> str:
         """Return the HTML representation of the object"""
-        return "<pre>{}</pre>".format(self.__str__())
+        return f"<pre>{self.__str__()}</pre>"
 
     def to_dict_filter_none(self) -> Dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default

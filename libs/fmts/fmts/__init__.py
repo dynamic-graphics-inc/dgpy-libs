@@ -808,7 +808,7 @@ def strip_comments(string: str) -> str:
             return line[: comment_re_match.start(1)]
         return line
 
-    return "\n".join((_strip_comments_line(line) for line in filelines))
+    return "\n".join(_strip_comments_line(line) for line in filelines)
 
 
 def multi_replace(
@@ -1172,7 +1172,7 @@ def rm_multilines(string: str) -> str:
 
     """
     return "\n".join(
-        (ll.rstrip() for ll in string.replace("\r\n", "\n").split("\n") if ll.strip())
+        ll.rstrip() for ll in string.replace("\r\n", "\n").split("\n") if ll.strip()
     )
 
 

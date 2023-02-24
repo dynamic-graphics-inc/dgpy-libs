@@ -12,16 +12,14 @@ sys.stdout.write(
 
 sys.stdout.write(
     "\n\n".join(
-        (
-            "\n".join(
-                f"    {el}"
-                for el in (
-                    f"package: {v.__title__}",
-                    f"version: {v.__version__}",
-                    f"pkgroot: {v.__pkgroot__}",
-                )
+        "\n".join(
+            f"    {el}"
+            for el in (
+                f"package: {v.__title__}",
+                f"version: {v.__version__}",
+                f"pkgroot: {v.__pkgroot__}",
             )
-            for v in dgpylibs_metadata.__dict__.values()
         )
+        for v in dgpylibs_metadata.__dict__.values()
     )
 )

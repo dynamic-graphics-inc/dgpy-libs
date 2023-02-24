@@ -208,10 +208,10 @@ def _pkg_entry_point(pkg_name):
     return "\n".join(
         [
             "# -*- coding: utf-8 -*-",
-            '"""pkg entry ~ `python -m {}`"""'.format(pkg_name),
+            f'"""pkg entry ~ `python -m {pkg_name}`"""',
             "import sys",
             "",
-            "from {}._meta import __pkgroot__, __title__, __version__".format(pkg_name),
+            f"from {pkg_name}._meta import __pkgroot__, __title__, __version__",
             "",
             "sys.stdout.write(",
             '    f"package: {__title__}\\nversion: {__version__}\\npkgroot: {__pkgroot__}\\n"',

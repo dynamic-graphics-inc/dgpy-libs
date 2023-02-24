@@ -252,19 +252,27 @@ select = [
   # "D",
   "T201", # print
   # pyupgrade
-  # "UP",
+  "UP",
 ]
 line-length = 88
 
 ignore = [
   "B004",
-  "B008", # do not perform function calls in argument defaults
   "B904",
-  "B905",
   "C417", # super annoying
   "C901", # too complex
   "E501", # line too long,
-  "UP009" # utf-8 encoding declaration (I am supersticious)
+
+  # PYUPGRADE
+  "UP004",
+  "UP009", # utf-8 encoding declaration (I am supersticious)
+  "UP015",
+  "UP021",
+  "UP022",
+  "UP024",
+  # "UP032",
+  "UP035",
+  "UP037",
 ]
 
 [tool.ruff.mccabe]

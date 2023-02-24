@@ -247,9 +247,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             assert all(isinstance(k, str) for k in self._data)
         except AssertionError:
             d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
-            raise ValueError(
-                "JsonObj keys MUST be strings! Bad key values: {}".format(str(d))
-            )
+            raise ValueError(f"JsonObj keys MUST be strings! Bad key values: {str(d)}")
         self.recurse()
         self.__post_init__()
 
@@ -774,7 +772,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def _repr_html_(self) -> str:
         """Return the HTML representation of the JsonObj object"""
-        return "<pre>{}</pre>".format(self.__str__())
+        return f"<pre>{self.__str__()}</pre>"
 
     @classmethod
     def _cls_attr_names(cls) -> Set[str]:

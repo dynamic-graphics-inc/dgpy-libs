@@ -96,7 +96,7 @@ def test_jsonobj_property_attrs_str() -> None:
             "stuff": {"herm_" + str(i): i for i in range(10)},
             "d": {
                 "nested": "nestedval",
-                **{"ok_{}".format(str(i)): i for i in range(20)},
+                **{f"ok_{str(i)}": i for i in range(20)},
             },
         }
     )

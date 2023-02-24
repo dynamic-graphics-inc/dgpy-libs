@@ -6,7 +6,7 @@ from shellfish import sh
 def test_done_parse_json():
     print_some_json = "import json; print(json.dumps({'a': 1, 'b': 2, 'c': 3}))"
     done = sh.do(
-        'python -c "{}"'.format(print_some_json),
+        f'python -c "{print_some_json}"',
     )
     expected_stdout = '{"a": 1, "b": 2, "c": 3}\n'
     assert done.stdout == expected_stdout
