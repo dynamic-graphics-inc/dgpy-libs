@@ -42,7 +42,7 @@ class SupportsDunderGT(Protocol):
 SupportsRichComparison = Union[SupportsDunderLT, SupportsDunderGT]
 SupportsRichComparisonT = TypeVar(
     "SupportsRichComparisonT", bound=SupportsRichComparison
-)  # noqa: Y001
+)
 
 
 def n_args(fn: Callable[..., _R]) -> int:

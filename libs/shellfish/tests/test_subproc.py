@@ -63,7 +63,7 @@ def test_pipe_stdout(tmp_path: Path) -> None:
     stdout = fs.lstring("stdout.txt")
     assert stdout == proc.stdout
 
-    proc >> "stdout.txt"  # noqa: B015
+    proc >> "stdout.txt"
     stdout = fs.lstring("stdout.txt")
     assert stdout == proc.stdout * 2
 
@@ -76,7 +76,7 @@ def test_pipe_stderr(tmp_path: Path) -> None:
     stderr = fs.lstring("stderr.txt")
     assert stderr == proc.stderr
 
-    proc >>= "stderr.txt"  # noqa: B015
+    proc >>= "stderr.txt"
     stdout = fs.lstring("stderr.txt")
     assert stdout == proc.stderr * 2
 
