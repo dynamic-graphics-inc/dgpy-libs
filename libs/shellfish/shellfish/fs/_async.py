@@ -22,6 +22,8 @@ __all__ = (
     "islink_async",
     "lbytes_async",
     "lbytes_gen_async",
+    "listdir_async",
+    "ljson_async",
     "lstat_async",
     "lstr_async",
     "lstring_async",
@@ -29,11 +31,13 @@ __all__ = (
     "rbin_gen_async",
     "rbytes_async",
     "rbytes_gen_async",
+    "rjson_async",
     "rstr_async",
     "rstring_async",
     "sbin_async",
     "sbytes_async",
     "sbytes_gen_async",
+    "sjson_async",
     "sstr_async",
     "sstring_async",
     "stat_async",
@@ -41,12 +45,9 @@ __all__ = (
     "wbin_gen_async",
     "wbytes_async",
     "wbytes_gen_async",
+    "wjson_async",
     "wstr_async",
     "wstring_async",
-    "ljson_async",
-    "rjson_async",
-    "sjson_async",
-    "wjson_async",
 )
 
 
@@ -98,6 +99,11 @@ async def dir_exists_async(fspath: FsPath) -> bool:
 is_dir_async = isdir_async
 is_file_async = isfile_async
 is_link_async = islink_async
+
+
+async def listdir_async(fspath: FsPath) -> List[str]:
+    """Async version of `os.listdir`"""
+    return await aios.listdir(_fspath(fspath))
 
 
 # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO #

@@ -84,6 +84,7 @@ from shellfish.fs import (
     lbytes_async as lbytes_async,
     lbytes_gen as lbytes_gen,
     lbytes_gen_async as lbytes_gen_async,
+    listdir_async as listdir_async,
     listdir_gen as listdir_gen,
     ljson as ljson,
     ljson_async as ljson_async,
@@ -253,6 +254,7 @@ __all__ = (
     "lbytes_async",
     "lbytes_gen",
     "lbytes_gen_async",
+    "listdir_async",
     "listdir_gen",
     "ljson",
     "ljson_async",
@@ -2156,6 +2158,20 @@ def ls_files_dirs(
     if not abspath:
         return [el.name for el in file_dir_entries], [el.name for el in dir_dir_entries]
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
+
+
+async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+    """List files and dirs given a dirpath (defaults to pwd)
+
+    Args:
+        dirpath (FsPath): path-string to directory to list
+        abspath (bool): Give absolute paths
+
+    Returns:
+        List of the directory items
+
+    """
+    return await listdir_async(dirpath, abspath=abspath)
 
 
 def rm(
