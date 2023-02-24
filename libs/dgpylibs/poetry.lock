@@ -299,14 +299,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.2.0"
+version = "0.2.1"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.2.0-py3-none-any.whl", hash = "sha256:cd92a96e0819a0ee91edf77b0efbbd8643fd6e8bfc776bafce08ad0dfba7a4e7"},
-    {file = "shellfish-0.2.0.tar.gz", hash = "sha256:b1536da5942756fd3b5508fdc13d8ea0388754deb9974f6baa90ca8689d7987b"},
+    {file = "shellfish-0.2.1-py3-none-any.whl", hash = "sha256:3270f4f0505aae18971cca0f3a0397bbf804bf246d8244cb5d66826563ec468b"},
+    {file = "shellfish-0.2.1.tar.gz", hash = "sha256:75da6f52cd8fe4002ba1ed19429ef4044465b0cb09d0305864d6345a3dece075"},
 ]
 
 [package.dependencies]
