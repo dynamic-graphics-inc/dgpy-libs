@@ -148,7 +148,7 @@ def is_wsl() -> bool:
         return True
 
     try:
-        with open("/proc/version", "r") as f:
+        with open("/proc/version") as f:
             if "microsoft" in f.read().lower():
                 return True
     except FileNotFoundError:

@@ -1359,7 +1359,7 @@ def shebang(fspath: FsPath) -> Union[None, str]:
         >>> remove(script)
 
     """
-    with open(fspath, "r") as f:
+    with open(fspath) as f:
         first = f.readline().replace("\r\n", "\n").strip("\n")
         return first if "#!" in first[:2] else None
 

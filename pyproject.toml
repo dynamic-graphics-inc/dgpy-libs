@@ -266,12 +266,8 @@ ignore = [
   # PYUPGRADE
   "UP004",
   "UP009", # utf-8 encoding declaration (I am supersticious)
-  "UP015",
-  "UP021",
-  "UP022",
-  "UP024",
-  # "UP032",
-  "UP035",
+  "UP022", # must test shellfish first...
+  "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
 ]
 

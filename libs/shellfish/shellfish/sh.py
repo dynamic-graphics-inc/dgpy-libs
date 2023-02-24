@@ -876,7 +876,7 @@ def _do(
         shell=shell,
         input=validate_stdin(input),
         timeout=timeout,
-        universal_newlines=text,
+        text=text,
     )
     tf = time()
     stdout_str = pstdout(proc)

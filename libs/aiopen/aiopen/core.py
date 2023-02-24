@@ -169,7 +169,7 @@ class AsyncBase(Generic[AnyStr]):
     def peek(self, *args: Any, **kwargs: Any) -> Any:
         if isinstance(self._file, BufferedReader):
             return self._file.peek(*args, **kwargs)
-        raise IOError("peek() method is not available")
+        raise OSError("peek() method is not available")
 
 
 # TODO: Fix generics...

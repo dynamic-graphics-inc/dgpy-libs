@@ -263,7 +263,7 @@ def update_metadata(session):
 
         s = _pkg_entry_point(libname)
         if path.exists(pkg_main_filepath):
-            with open(pkg_main_filepath, "r") as f:
+            with open(pkg_main_filepath) as f:
                 pkg_main_file_str = f.read()
             if pkg_main_file_str != s:
                 echo("updating __main__.py")
