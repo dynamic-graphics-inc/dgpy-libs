@@ -318,13 +318,13 @@ line_length = 88
 lines_between_types = 1
 multi_line_output = 3
 profile = "black"
-# skip_glob = [
-#   "*/setup.py",
-#   ".nox*",
-#   "*/.nox_win/**",
-#   "*/.pytype/*",
-#   "*/loguru_tests/*",
-# ]
+skip_glob = [
+  "*/setup.py",
+  ".nox*",
+  "*/.nox_win/**",
+  "*/.pytype/*",
+  "*/loguru_tests/*",
+]
 known_first_party = [
   "aiopen",
   "asyncify",
