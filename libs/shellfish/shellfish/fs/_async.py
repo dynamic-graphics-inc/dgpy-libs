@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 
 from os import fspath as _fspath
-from typing import Any, AsyncIterable, Callable, Optional
+from typing import Any, AsyncIterable, Callable, List, Optional
 
 from aiopen import aiopen
 from jsonbourne import JSON
