@@ -106,44 +106,6 @@ extend-exclude = '''
 )
 '''
 
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================
-[tool.isort]
-profile = "black"
-line_length = 88
-include_trailing_comma = true
-lines_between_types = 1
-multi_line_output = 3
-skip_glob = [
-  "*/setup.py",
-  ".nox*",
-  "*/.nox_win/**",
-  "*/.pytype/*",
-  "*/loguru_tests/*",
-]
-force_grid_wrap = 0
-ensure_newline_before_comments = true
-combine_as_imports = true
-use_parentheses = true
-known_first_party = [
-  "aiopen",
-  "asyncify",
-  "funkify",
-  "fmts",
-  "h5",
-  "jsonbourne",
-  "lager",
-  "listless",
-  "requires",
-  "shellfish",
-  "xtyping",
-]
 
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -282,7 +244,10 @@ select = [
   "B", # bugbear
   "C", # comprehensions
   "ERA001", # erradicate
+  "I", # isort
   "W",
+  # "SIM",
+  # "PT", # pytest
   # "D",
   "T201", # print
   # pyupgrade
@@ -317,3 +282,60 @@ max-complexity = 20
 
 [tool.ruff.pydocstyle]
 convention = "google"
+
+[tool.ruff.isort]
+combine-as-imports = true
+lines-between-types = 1
+known-first-party = [
+  "aiopen",
+  "asyncify",
+  "dgpylibs",
+  "funkify",
+  "fmts",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
+]
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+
+[tool.isort]
+combine_as_imports = true
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+lines_between_types = 1
+multi_line_output = 3
+profile = "black"
+# skip_glob = [
+#   "*/setup.py",
+#   ".nox*",
+#   "*/.nox_win/**",
+#   "*/.pytype/*",
+#   "*/loguru_tests/*",
+# ]
+known_first_party = [
+  "aiopen",
+  "asyncify",
+  "dgpylibs",
+  "funkify",
+  "fmts",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
+]

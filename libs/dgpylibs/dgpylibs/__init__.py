@@ -2,8 +2,6 @@
 """Dynamic Graphics Python libraries"""
 from dataclasses import dataclass
 
-from dgpylibs._meta import __version__
-
 import aiopen
 import asyncify
 import fmts
@@ -18,6 +16,7 @@ import xtyping
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
+from dgpylibs._meta import __version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__
