@@ -43,6 +43,7 @@ from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish._meta import __version__
+from shellfish.echo import echo as echo
 from shellfish.fs import (
     Stdio as Stdio,
     SymlinkType as SymlinkType,
@@ -84,6 +85,7 @@ from shellfish.fs import (
     lbytes_async as lbytes_async,
     lbytes_gen as lbytes_gen,
     lbytes_gen_async as lbytes_gen_async,
+    listdir_async as listdir_async,
     listdir_gen as listdir_gen,
     ljson as ljson,
     ljson_async as ljson_async,
@@ -253,6 +255,7 @@ __all__ = (
     "lbytes_async",
     "lbytes_gen",
     "lbytes_gen_async",
+    "listdir_async",
     "listdir_gen",
     "ljson",
     "ljson_async",
@@ -857,10 +860,7 @@ def _do(
             ti=0,
             tf=0,
             dt=0,
-            hrdt=HrTime(
-                hr=0,
-                min=0,
-            ),
+            hrdt=HrTime(sec=0, ns=0),
             verbose=verbose,
             stdin=_input,
             dryrun=True,
@@ -1192,8 +1192,8 @@ async def _do_async(
             tf=0,
             dt=0,
             hrdt=HrTime(
-                hr=0,
-                min=0,
+                sec=0,
+                ns=0,
             ),
             verbose=verbose,
             stdin=_input,
@@ -1910,21 +1910,6 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def echo(
-    *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
-) -> None:
-    """Print/echo function
-
-    Args:
-        *args: Item(s) to print/echo
-        sep: Separator to print with
-        end: End of print suffix; defaults to `\n`
-        file: File like object to write to if not stdout
-
-    """
-    print(*args, sep=sep, end=end, file=file)
-
-
 def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
@@ -2156,6 +2141,23 @@ def ls_files_dirs(
     if not abspath:
         return [el.name for el in file_dir_entries], [el.name for el in dir_dir_entries]
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
+
+
+async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+    """List files and dirs given a dirpath (defaults to pwd)
+
+    Args:
+        dirpath (FsPath): path-string to directory to list
+        abspath (bool): Give absolute paths
+
+    Returns:
+        List of the directory items
+
+    """
+    if abspath:
+        items = await listdir_async(dirpath)
+        return [path.join(dirpath, el) for el in items]
+    return await listdir_async(dirpath)
 
 
 def rm(
