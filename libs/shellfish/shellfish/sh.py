@@ -860,10 +860,7 @@ def _do(
             ti=0,
             tf=0,
             dt=0,
-            hrdt=HrTime(
-                hr=0,
-                min=0,
-            ),
+            hrdt=HrTime(sec=0, ns=0),
             verbose=verbose,
             stdin=_input,
             dryrun=True,
@@ -1195,8 +1192,8 @@ async def _do_async(
             tf=0,
             dt=0,
             hrdt=HrTime(
-                hr=0,
-                min=0,
+                sec=0,
+                ns=0,
             ),
             verbose=verbose,
             stdin=_input,

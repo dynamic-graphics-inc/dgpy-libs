@@ -75,7 +75,7 @@ try:
         assert JsonModelHasRootType.__custom_root_type__
         obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
-        obj2 = JsonModelHasRootType(["a", "b", "c"])
+        obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[misc,call-arg]
         assert obj == obj2
 
 except ModuleNotFoundError:
