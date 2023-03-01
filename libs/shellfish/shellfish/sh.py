@@ -43,6 +43,7 @@ from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish._meta import __version__
+from shellfish.echo import echo as echo
 from shellfish.fs import (
     Stdio as Stdio,
     SymlinkType as SymlinkType,
@@ -1910,21 +1911,6 @@ def cd(dirpath: FsPath) -> None:
 
     """
     chdir(str(dirpath))
-
-
-def echo(
-    *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
-) -> None:
-    """Print/echo function
-
-    Args:
-        *args: Item(s) to print/echo
-        sep: Separator to print with
-        end: End of print suffix; defaults to `\n`
-        file: File like object to write to if not stdout
-
-    """
-    print(*args, sep=sep, end=end, file=file)
 
 
 def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
