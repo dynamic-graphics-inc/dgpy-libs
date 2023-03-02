@@ -653,7 +653,7 @@ class Done(JsonBaseModel):
         ]
 
 
-def decode_stdio_bytes(stdio_bytes: AnyStr, lf: bool = True) -> str:
+def decode_stdio_bytes(stdio_bytes: Union[str, bytes], lf: bool = True) -> str:
     """Return Stdio bytes from stdout/stderr as a string
 
     Args:
