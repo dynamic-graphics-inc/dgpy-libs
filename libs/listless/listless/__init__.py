@@ -444,11 +444,10 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
 
 def flatten_strings(
     *args: Union[
+        Sequence[Union[str, int, float]],
         str,
         int,
         float,
-        List[Union[str, int, float]],
-        Tuple[Union[str, int, float], ...],
     ]
 ) -> List[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
