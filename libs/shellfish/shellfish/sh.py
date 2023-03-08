@@ -853,7 +853,7 @@ def _do(
     args_str = " ".join(_args)
     if dryrun:
         return Done(
-            args=_args if IS_WIN or not shell else args_str,
+            args=_args if IS_WIN or not shell else [args_str],
             returncode=0,
             stdout="",
             stderr="",
@@ -1261,8 +1261,11 @@ async def _do_async(
                 stderr=stderr,
                 cmd=str(args),
             )
+    _args_array = (
+        list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
+    )
     return Done(
-        args=args,
+        args=_args_array,
         returncode=_proc.returncode or -1,
         stdout=decode_stdio_bytes(stdout),
         stderr=decode_stdio_bytes(stderr),
