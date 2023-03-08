@@ -862,7 +862,7 @@ def _do(
             dt=0,
             hrdt=HrTime(sec=0, ns=0),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
         )
 
@@ -891,7 +891,7 @@ def _do(
         dt=tf - ti,
         hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
-        stdin=_input,
+        stdin=_input if not isinstance(_input, bytes) else _input.decode(),
     )
     if check or ok_code != 0:
         done.check(ok_code=ok_code)
@@ -1196,7 +1196,7 @@ async def _do_async(
                 ns=0,
             ),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
             async_proc=True,
         )
@@ -1263,7 +1263,7 @@ async def _do_async(
             )
     return Done(
         args=args,
-        returncode=_proc.returncode,
+        returncode=_proc.returncode or -1,
         stdout=decode_stdio_bytes(stdout),
         stderr=decode_stdio_bytes(stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,

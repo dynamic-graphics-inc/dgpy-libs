@@ -27,7 +27,8 @@ except ImportError:
     from dataclasses import dataclass as _dataclass
     from functools import wraps
 
-    dataclass = wraps(_dataclass)(
+    # TODO: remove type-ignore if possible
+    dataclass = wraps(_dataclass)(  # type: ignore[assignment]
         lambda *args, **kwargs: _dataclass(
             *args, **{k: v for k, v in kwargs.items() if k != "config"}
         )
