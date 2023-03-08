@@ -853,7 +853,7 @@ def _do(
     args_str = " ".join(_args)
     if dryrun:
         return Done(
-            args=_args if IS_WIN or not shell else args_str,
+            args=_args if IS_WIN or not shell else [args_str],
             returncode=0,
             stdout="",
             stderr="",
@@ -862,7 +862,7 @@ def _do(
             dt=0,
             hrdt=HrTime(sec=0, ns=0),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
         )
 
@@ -891,7 +891,7 @@ def _do(
         dt=tf - ti,
         hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
-        stdin=_input,
+        stdin=_input if not isinstance(_input, bytes) else _input.decode(),
     )
     if check or ok_code != 0:
         done.check(ok_code=ok_code)
@@ -1196,7 +1196,7 @@ async def _do_async(
                 ns=0,
             ),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
             async_proc=True,
         )
@@ -1261,9 +1261,12 @@ async def _do_async(
                 stderr=stderr,
                 cmd=str(args),
             )
+    _args_array = (
+        list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
+    )
     return Done(
-        args=args,
-        returncode=_proc.returncode,
+        args=_args_array,
+        returncode=_proc.returncode or -1,
         stdout=decode_stdio_bytes(stdout),
         stderr=decode_stdio_bytes(stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,

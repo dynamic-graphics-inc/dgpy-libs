@@ -47,7 +47,7 @@ try:
 
     def test_json_base_model_w_prop() -> None:
         thing_w_prop = JsonObjModel(
-            **{
+            **{  # type: ignore[arg-type]
                 "a": 1,
                 "b": 2,
                 "c": "herm",
@@ -75,7 +75,7 @@ try:
         assert JsonModelHasRootType.__custom_root_type__
         obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
-        obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[misc,call-arg]
+        obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[misc]
         assert obj == obj2
 
 except ModuleNotFoundError:

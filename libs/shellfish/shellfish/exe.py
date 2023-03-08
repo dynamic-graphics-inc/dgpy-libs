@@ -109,7 +109,7 @@ class ExeABC:
             subcmd=self.subcmd,
             abspath=self.abspath,
             env=self.env,
-            cwd=self.cwd,
+            cwd=str(self.cwd) if self.cwd is not None else None,
             shell=self.shell,
             verbose=self.verbose,
             timeout=self.timeout,
