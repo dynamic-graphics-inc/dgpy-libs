@@ -84,7 +84,7 @@ class _EnvObjMeta(type):
     keys = environ.keys
 
     def asdict(cls) -> Dict[str, str]:
-        return {k: v for k, v in environ.items()}
+        return dict(environ.items())
 
 
 class Env(metaclass=_EnvObjMeta):

@@ -234,10 +234,7 @@ def attrs_dict(
         Dictionary with key => value paris of HDF5-path => HDF5-dataset
 
     """
-    return {
-        h5_path: h5_attr
-        for h5_path, h5_attr in h5py_obj_attrs_gen(File(fspath, mode="r"))
-    }
+    return dict(h5py_obj_attrs_gen(File(fspath, mode="r")))
 
 
 def h5_attrs_dict(
