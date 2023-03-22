@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 from os import path
 
-import pytest
-
 from h5 import __version__
-
-pytestmark = [pytest.mark.version]
 
 
 def _get_version() -> str:
