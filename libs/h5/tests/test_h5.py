@@ -110,7 +110,6 @@ def test_h5_attrs_gen_from_file_obj(tmpdir):
     expected = {**EXPECTED_ATTRS}
 
     with h5py.File(filepath, mode="r") as f:
-
         attrs_gen_dictionary = dict(h5.attrs_gen(f))
         assert attrs_gen_dictionary is not None
         attrs_dictionary = h5.attrs_dict(f)
