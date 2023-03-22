@@ -78,16 +78,22 @@ def is_dataset(obj: Any) -> TypeGuard[Dataset]:
     """h5py.Dataset type guard"""
     return is_h5py_dataset(obj)
 
+@lru_cache(maxsize=128)
+def _ensure_single_leading_slash(path: str) -> str:
+    if path.startswith("/"):
+        return _ensure_single_leading_slash(path.lstrip("/"))
+    return f"/{path}"
 
+@lru_cache(maxsize=128)
 def fmt_h5_path(head: str, tail: str) -> str:
     """Format function for HDF5-path-strings
 
     Example:
         >>> fmt_h5_path("foo", "bar")
-        /foo/bar
+        '/foo/bar'
 
     """
-    return f"{head}/{tail}"
+    return _ensure_single_leading_slash(f"{head}/{tail}")
 
 
 def h5py_obj_gen(
