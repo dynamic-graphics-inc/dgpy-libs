@@ -66,7 +66,7 @@ def is_h5py_dataset(obj: Any) -> TypeGuard[Dataset]:
 
 def is_group(obj: Any) -> TypeGuard[Group]:
     """h5py.Group type guard"""
-    return is_h5py_group(obj, Group)
+    return is_h5py_group(obj)
 
 
 def is_file(obj: Any) -> TypeGuard[File]:
