@@ -41,7 +41,7 @@ EXPECTED_GROUPS_KEYS = [
 ]
 
 
-def dummy_hdf5_file(filepath: str):
+def dummy_hdf5_file(filepath: str) -> str:
     with h5py.File(filepath, mode="w") as f:
         root_dataset = f.create_dataset(
             "root_dataset", data=np.arange(10).reshape(2, 5)
@@ -81,16 +81,13 @@ def dummy_hdf5_file(filepath: str):
 
 def test_h5_attrs_gen(tmpdir):
     filepath = tmpdir.join("test.h5").strpath
-    print(filepath)
     dummy_hdf5_file(filepath)
     expected = {**EXPECTED_ATTRS}
 
     attrs_gen_dictionary = dict(h5.attrs_gen(filepath))
     assert attrs_gen_dictionary is not None
     attrs_dictionary = h5.attrs_dict(filepath)
-    print(attrs_dictionary)
     attrs_dictionary_dictionary = {k: {**v} for k, v in attrs_dictionary.items()}
-    print(attrs_dictionary_dictionary)
 
     root_dataset_attrs = attrs_dictionary_dictionary.pop("/root_dataset")
     expected_root_dataset_attrs = expected.pop("/root_dataset")
@@ -113,9 +110,7 @@ def test_h5_attrs_gen_from_file_obj(tmpdir):
         attrs_gen_dictionary = dict(h5.attrs_gen(f))
         assert attrs_gen_dictionary is not None
         attrs_dictionary = h5.attrs_dict(f)
-        print(attrs_dictionary)
         attrs_dictionary_dictionary = {k: {**v} for k, v in attrs_dictionary.items()}
-        print(attrs_dictionary_dictionary)
 
         root_dataset_attrs = attrs_dictionary_dictionary.pop("/root_dataset")
         expected_root_dataset_attrs = expected.pop("/root_dataset")
@@ -133,8 +128,7 @@ def test_h5_dataset_gen(tmpdir):
     filepath = tmpdir.join("test.h5").strpath
     filepath = dummy_hdf5_file(filepath)
     with h5py.File(filepath, mode="r") as f:
-        datasets_dict_from_file = dict(h5.datasets_gen(f))
-        print(datasets_dict_from_file)
+        dict(h5.datasets_gen(f))
 
     datasets_dict_from_filepath = {k: v[()] for k, v in h5.datasets_gen(filepath)}
     assert datasets_dict_from_filepath is not None
@@ -142,7 +136,6 @@ def test_h5_dataset_gen(tmpdir):
         datasets_dict_from_filepath.keys()
     )
     for k, v in datasets_dict_from_filepath.items():
-        print(v, EXPECTED_DATASETS[k])
         assert np.array_equal(v, EXPECTED_DATASETS[k])
 
     with h5py.File(filepath, mode="r") as f:
@@ -165,12 +158,10 @@ def test_h5_groups_gen(tmpdir):
     filepath = dummy_hdf5_file(filepath)
     with h5py.File(filepath, mode="r") as f:
         groups_dict_from_file = dict(h5.groups_gen(f))
-        print(groups_dict_from_file)
 
         groups_dict_from_filepath = dict(h5.groups_gen(filepath))
         assert groups_dict_from_filepath is not None
         assert EXPECTED_GROUPS_KEYS == sorted(groups_dict_from_filepath.keys())
-        print(groups_dict_from_filepath.keys())
         assert sorted(groups_dict_from_filepath.keys()) == sorted(
             groups_dict_from_file.keys()
         )

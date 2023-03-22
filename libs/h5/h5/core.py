@@ -354,7 +354,7 @@ def h5_datasets_dict(
     fspath: str, h5_path: str = ""
 ) -> Dict[str, Union[np.ndarray, np.int8, np.float64]]:
     """Alias for h5.datasets_dict"""
-    return datasets_dict(fspath=fspath, h5_path=h5_path)
+    return datasets_dict(h5_obj=fspath, h5_path=h5_path)
 
 
 def attrs_dict(
