@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
+from functools import lru_cache
 from itertools import chain
 from os import PathLike
 from pathlib import Path
-from typing import Dict, Iterable, Tuple, Union
+from typing import Any, Dict, Iterable, Tuple, Union
 
 import numpy as np
 
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
+from typing_extensions import TypeGuard
 
 FsPath = Union[str, Path, PathLike]
 
 __all__ = (
     "__h5py_version__",
+    "AttributeManager",
+    "Group",
+    "File",
     "attrs_dict",
     "attrs_gen",
     "attrs_gen_from_fspath",
@@ -35,11 +40,53 @@ __all__ = (
     "h5py_obj_dataset_gen",
     "h5py_obj_gen",
     "h5py_obj_groups_gen",
+    "is_dataset",
+    "is_file",
+    "is_group",
+    "is_h5py_dataset",
+    "is_h5py_file",
+    "is_h5py_group",
 )
 
 
-def _fmt_h5_path(head: str, tail: str) -> str:
-    """Format function for HDF5-path-strings"""
+def is_h5py_group(obj: Any) -> TypeGuard[Group]:
+    """h5py.Group type guard"""
+    return isinstance(obj, Group)
+
+
+def is_h5py_file(obj: Any) -> TypeGuard[File]:
+    """h5py.File type guard"""
+    return isinstance(obj, File)
+
+
+def is_h5py_dataset(obj: Any) -> TypeGuard[Dataset]:
+    """h5py.Dataset type guard"""
+    return isinstance(obj, Dataset)
+
+
+def is_group(obj: Any) -> TypeGuard[Group]:
+    """h5py.Group type guard"""
+    return is_h5py_group(obj, Group)
+
+
+def is_file(obj: Any) -> TypeGuard[File]:
+    """h5py.File type guard"""
+    return is_h5py_file(obj)
+
+
+def is_dataset(obj: Any) -> TypeGuard[Dataset]:
+    """h5py.Dataset type guard"""
+    return is_h5py_dataset(obj)
+
+
+def fmt_h5_path(head: str, tail: str) -> str:
+    """Format function for HDF5-path-strings
+
+    Example:
+        >>> fmt_h5_path("foo", "bar")
+        /foo/bar
+
+    """
     return f"{head}/{tail}"
 
 
@@ -64,10 +111,10 @@ def h5py_obj_gen(
     """
     return chain(  # Chain of generators into one generator
         (  # Generator object if the current h5py object is a Dataset or Group
-            (_fmt_h5_path(h5_path, key), item) for key, item in h5py_obj.items()
+            (fmt_h5_path(h5_path, key), item) for key, item in h5py_obj.items()
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_attrs_gen(item, _fmt_h5_path(h5_path, key))
+            h5py_obj_attrs_gen(item, fmt_h5_path(h5_path, key))
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),
@@ -105,12 +152,12 @@ def h5py_obj_groups_gen(
     """
     return chain(  # Chain of generators into one generator
         (  # Generator object if the current h5py object is a Dataset or Group
-            (_fmt_h5_path(h5_path, key), item)
+            (fmt_h5_path(h5_path, key), item)
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_attrs_gen(item, _fmt_h5_path(h5_path, key))
+            h5py_obj_attrs_gen(item, fmt_h5_path(h5_path, key))
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),
@@ -154,12 +201,12 @@ def h5py_obj_attrs_gen(
     """
     return chain(  # Chain of generators into one generator
         (  # Generator object if the current h5py object is a Dataset or Group
-            (_fmt_h5_path(h5_path, key), item.attrs)
+            (fmt_h5_path(h5_path, key), item.attrs)
             for key, item in h5py_obj.items()
             if isinstance(item, (Dataset, Group))
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_attrs_gen(item, _fmt_h5_path(h5_path, key))
+            h5py_obj_attrs_gen(item, fmt_h5_path(h5_path, key))
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),
@@ -218,12 +265,12 @@ def h5py_obj_dataset_gen(
     """
     return chain(  # Chain of generators into one generator
         (  # Generator object if the current h5py object is a Dataset
-            (_fmt_h5_path(h5_path, key), item)
+            (fmt_h5_path(h5_path, key), item)
             for key, item in h5py_obj.items()
             if isinstance(item, Dataset)
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_dataset_gen(item, _fmt_h5_path(h5_path, key))
+            h5py_obj_dataset_gen(item, fmt_h5_path(h5_path, key))
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
-from h5py import __version__ as __h5py_version__
+from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
 from h5._meta import __version__
 from h5.core import (
@@ -25,9 +25,19 @@ from h5.core import (
     h5py_obj_dataset_gen as h5py_obj_dataset_gen,
     h5py_obj_gen as h5py_obj_gen,
     h5py_obj_groups_gen as h5py_obj_groups_gen,
+    is_dataset as is_dataset,
+    is_file as is_file,
+    is_group as is_group,
+    is_h5py_dataset as is_h5py_dataset,
+    is_h5py_file as is_h5py_file,
+    is_h5py_group as is_h5py_group,
 )
 
 __all__ = (
+    "AttributeManager",
+    "Dataset",
+    "File",
+    "Group",
     "__h5py_version__",
     "__version__",
     "attrs_dict",
@@ -52,4 +62,10 @@ __all__ = (
     "h5py_obj_dataset_gen",
     "h5py_obj_gen",
     "h5py_obj_groups_gen",
+    "is_dataset",
+    "is_file",
+    "is_group",
+    "is_h5py_dataset",
+    "is_h5py_file",
+    "is_h5py_group",
 )
