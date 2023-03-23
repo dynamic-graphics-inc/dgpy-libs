@@ -19,21 +19,23 @@ T_FsPathOrGroupLike = Union[FsPath, T_GroupLike]
 
 
 __all__ = (
-    "__h5py_version__",
     "AttributeManager",
-    "Group",
     "File",
+    "Group",
+    "__h5py_version__",
     "attrs_dict",
     "attrs_gen",
     "attrs_gen_from_fspath",
-    "chain",
     "datasets",
     "datasets_dict",
     "datasets_gen",
     "datasets_gen_from_fspath",
+    "datasets_keys_list",
+    "fmt_h5_path",
     "groups",
     "groups_gen",
     "groups_gen_from_fspath",
+    "groups_keys_list",
     "h5_attrs_dict",
     "h5_attrs_gen",
     "h5_attrs_gen_from_fspath",
@@ -45,12 +47,15 @@ __all__ = (
     "h5py_obj_dataset_gen",
     "h5py_obj_gen",
     "h5py_obj_groups_gen",
+    "h5py_obj_keys_gen",
     "is_dataset",
     "is_file",
+    "is_fspath",
     "is_group",
     "is_h5py_dataset",
     "is_h5py_file",
     "is_h5py_group",
+    "keys_list",
 )
 
 
@@ -88,7 +93,7 @@ def is_dataset(obj: Any) -> TypeGuard[Dataset]:
     return is_h5py_dataset(obj)
 
 
-def leading_slash(string: str) -> str:
+def _leading_slash(string: str) -> str:
     return f"/{string}"
 
 
@@ -316,7 +321,7 @@ def keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
     """
     if is_group(h5py_obj):
         keys = []
-        h5py_obj.visit(lambda key: keys.append(leading_slash(key)))
+        h5py_obj.visit(lambda key: keys.append(_leading_slash(key)))
         return keys
     with File(str(h5py_obj), mode="r") as f:
         return keys_list(f)
@@ -328,7 +333,7 @@ def groups_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
 
         def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
             if is_h5py_group(value):
-                keys.append(leading_slash(key))
+                keys.append(_leading_slash(key))
 
         h5py_obj.visititems(_fn)
         return keys
@@ -353,7 +358,7 @@ def datasets_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
 
         def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
             if is_h5py_dataset(value):
-                keys.append(leading_slash(key))
+                keys.append(_leading_slash(key))
 
         h5py_obj.visititems(_fn)
         return keys
