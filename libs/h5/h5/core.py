@@ -13,6 +13,9 @@ from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_v
 from typing_extensions import TypeGuard
 
 FsPath = Union[str, Path, PathLike]
+T_GroupLike = Union[Group, File]
+T_DatasetOrGroup = Union[Dataset, Group]
+T_FsPathOrGroupLike = Union[FsPath, T_GroupLike]
 
 
 __all__ = (
@@ -111,13 +114,8 @@ def fmt_h5_path(head: str, tail: str) -> str:
 def h5py_obj_gen(
     h5py_obj: Union[File, Group], h5_path: str = ""
 ) -> Iterable[Tuple[str, Union[Dataset, Group]]]:
-    """Recursive h5 datset generator.
+    """Recursive h5 datset/group generator.
 
-    Given an h5 group, which is what one gets after loading an h5 file
-    via h5py, this function yields tuples containing (1.) a path (h5_path) to
-    a dataset in the group, and (2.) the dataset itself as a numpy array.
-
-    This is a pretty cool method and is the only recursive generator I know of!
 
     Args:
         h5py_obj: h5-h5py group object
@@ -139,16 +137,8 @@ def h5py_obj_gen(
     )
 
 
-def h5py_obj_keys_gen(
-    h5py_obj: Union[File, Group], h5_path: str = ""
-) -> Iterable[Tuple[str, Union[Dataset, Group]]]:
+def h5py_obj_keys_gen(h5py_obj: Union[File, Group], h5_path: str = "") -> Iterable[str]:
     """Recursive h5 datset generator.
-
-    Given an h5 group, which is what one gets after loading an h5 file
-    via h5py, this function yields tuples containing (1.) a path (h5_path) to
-    a dataset in the group, and (2.) the dataset itself as a numpy array.
-
-    This is a pretty cool method and is the only recursive generator I know of!
 
     Args:
         h5py_obj: h5-h5py group object
@@ -229,13 +219,7 @@ def groups_gen_from_fspath(
 def h5py_obj_attrs_gen(
     h5py_obj: Union[File, Group], h5_path: str = ""
 ) -> Iterable[Tuple[str, AttributeManager]]:
-    """Recursive h5 datset generator.
-
-    Given an h5 group, which is what one gets after loading an h5 file
-    via h5py, this function yields tuples containing (1.) a path (h5_path) to
-    a dataset in the group, and (2.) the dataset itself as a numpy array.
-
-    This is a pretty cool method and is the only recursive generator I know of!
+    """Recursive h5py.AttributeManager generator.
 
     Args:
         h5py_obj: h5-h5py group object
@@ -299,8 +283,6 @@ def h5py_obj_dataset_gen(
     via h5py, this function yields tuples containing (1.) a path (h5_path) to
     a dataset in the group, and (2.) the dataset itself as a numpy array.
 
-    This is a pretty cool method and is the only recursive generator I know of!
-
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")
@@ -322,13 +304,7 @@ def h5py_obj_dataset_gen(
 
 
 def keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
-    """Recursive h5 datset generator.
-
-    Given an h5 group, which is what one gets after loading an h5 file
-    via h5py, this function yields tuples containing (1.) a path (h5_path) to
-    a dataset in the group, and (2.) the dataset itself as a numpy array.
-
-    This is a pretty cool method and is the only recursive generator I know of!
+    """Return a list of all keys/paths for an h5py object.
 
     Args:
         h5py_obj: h5-h5py group object
@@ -362,13 +338,7 @@ def groups_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
 
 
 def datasets_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
-    """Recursive h5 datset generator.
-
-    Given an h5 group, which is what one gets after loading an h5 file
-    via h5py, this function yields tuples containing (1.) a path (h5_path) to
-    a dataset in the group, and (2.) the dataset itself as a numpy array.
-
-    This is a pretty cool method and is the only recursive generator I know of!
+    """Return a list of all keys/paths for an h5py object.
 
     Args:
         h5py_obj: h5-h5py group object
