@@ -164,8 +164,9 @@ def _mypy(session):
         )
 
 
-def _ruff(session: nox.Session):
+def _ruff(session: nox.Session) -> None:
     session.install("ruff")
+    session.run("ruff", "--version")
     session.run("ruff", ".")
 
 
