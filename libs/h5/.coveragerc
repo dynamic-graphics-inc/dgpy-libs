@@ -1,11 +1,11 @@
 [paths]
 source =
-   jsonbourne.py
+   h5
 
 [run]
 branch = true
 source =
-    jsonbourne
+    h5
 parallel = true
 
 [report]
