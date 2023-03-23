@@ -7,11 +7,13 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Tuple, Union
 
 import numpy as np
+import numpy.typing as npt
 
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 from typing_extensions import TypeGuard
 
 FsPath = Union[str, Path, PathLike]
+
 
 __all__ = (
     "__h5py_version__",
@@ -47,6 +49,10 @@ __all__ = (
     "is_h5py_file",
     "is_h5py_group",
 )
+
+
+def is_fspath(path: Any) -> TypeGuard[FsPath]:
+    return isinstance(path, (str, Path, PathLike))
 
 
 def is_h5py_group(obj: Any) -> TypeGuard[Group]:
@@ -332,27 +338,27 @@ def keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
         Generator that yields tuples; (h5-path, h5py.Dataset)
 
     """
-    if isinstance(h5py_obj, (str, Path)):
-        with File(str(h5py_obj), mode="r") as f:
-            return keys_list(f)
-
-    keys = []
-    h5py_obj.visit(lambda key: keys.append(leading_slash(key)))
-    return keys
+    if is_group(h5py_obj):
+        keys = []
+        h5py_obj.visit(lambda key: keys.append(leading_slash(key)))
+        return keys
+    with File(str(h5py_obj), mode="r") as f:
+        return keys_list(f)
 
 
 def groups_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
-    if isinstance(h5py_obj, (str, Path)):
-        with File(str(h5py_obj), mode="r") as f:
-            return groups_keys_list(f)
-    keys: List[str] = []
+    if is_group(h5py_obj):
+        keys: List[str] = []
 
-    def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
-        if is_h5py_group(value):
-            keys.append(leading_slash(key))
+        def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
+            if is_h5py_group(value):
+                keys.append(leading_slash(key))
 
-    h5py_obj.visititems(_fn)
-    return keys
+        h5py_obj.visititems(_fn)
+        return keys
+
+    with File(str(h5py_obj), mode="r") as f:
+        return groups_keys_list(f)
 
 
 def datasets_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
@@ -372,17 +378,17 @@ def datasets_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
         Generator that yields tuples; (h5-path, h5py.Dataset)
 
     """
-    if isinstance(h5py_obj, (str, Path)):
-        with File(str(h5py_obj), mode="r") as f:
-            return datasets_keys_list(f)
-    keys = []
+    if is_group(h5py_obj):
+        keys = []
 
-    def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
-        if is_h5py_dataset(value):
-            keys.append(leading_slash(key))
+        def _fn(key: str, value: Union[File, Group, Dataset]) -> None:
+            if is_h5py_dataset(value):
+                keys.append(leading_slash(key))
 
-    h5py_obj.visititems(_fn)
-    return keys
+        h5py_obj.visititems(_fn)
+        return keys
+    with File(str(h5py_obj), mode="r") as f:
+        return datasets_keys_list(f)
 
 
 def datasets_gen_from_fspath(
@@ -420,7 +426,7 @@ def datasets(
     h5_obj: Union[FsPath, File, Group], h5_path: str = ""
 ) -> Iterable[Tuple[str, Dataset]]:
     """Return a generator that yields tuples with: (HDF5-path, Dataset)"""
-    if isinstance(h5_obj, (str, Path)):
+    if isinstance(h5_obj, (str, Path, PathLike)):
         yield from h5_datasets_gen_from_fspath(str(h5_obj), h5_path=h5_path)
     else:
         yield from h5py_obj_dataset_gen(h5_obj, h5_path=h5_path)
@@ -476,7 +482,7 @@ def h5_attrs_gen(
 
 def datasets_dict(
     h5_obj: Union[FsPath, File, Group], h5_path: str = ""
-) -> Dict[str, Union[np.ndarray, np.int8, np.float64]]:
+) -> Dict[str, Union[npt.NDArray[Any], np.int8, np.float64]]:
     """Load an HDF5 file from a fspath into a dictionary
 
     Given a fspath this method loads an HDF5 file into a dictionary where the
@@ -507,7 +513,7 @@ def datasets_dict(
 
 def h5_datasets_dict(
     fspath: str, h5_path: str = ""
-) -> Dict[str, Union[np.ndarray, np.int8, np.float64]]:
+) -> Dict[str, Union[npt.NDArray[Any], np.int8, np.float64]]:
     """Alias for h5.datasets_dict"""
     return datasets_dict(h5_obj=fspath, h5_path=h5_path)
 
