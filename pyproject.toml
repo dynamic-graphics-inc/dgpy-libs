@@ -12,7 +12,6 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
@@ -24,6 +23,7 @@ keywords = ["dgpy", "dgi", "typed", "python3"]
 python = "^3.8"
 aiopen = "*"
 asyncify = "*"
+dgpylibs = "*"
 fmts = "*"
 funkify = "*"
 h5 = "*"
@@ -33,6 +33,8 @@ listless = "*"
 requires = "*"
 shellfish = "*"
 xtyping = "*"
+click = "^8.1.3"
+rich = "^13.3.2"
 
 [tool.poetry.dev-dependencies]
 black = "^23.1.0"
