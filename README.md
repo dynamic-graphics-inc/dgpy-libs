@@ -109,6 +109,7 @@ notebooks/
 ## Contributor(s):
 
 - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
+- [Dan Costello](https://github.com/dan-costello) ~ `dan@dgi.com` / `dan.costello2@gmail.com`
 - Possibly you!?
 
 ## Contributing:

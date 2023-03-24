@@ -1305,6 +1305,7 @@ def timestamp(
 
     Args:
         ts: datetime or float
+        utc_offset: float
 
     Returns:
         timestamp string
