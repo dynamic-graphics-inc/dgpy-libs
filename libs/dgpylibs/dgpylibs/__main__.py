@@ -13,7 +13,6 @@ try:
         print_json(data=data, indent=2)
 
 except ImportError:
-
     import json
 
     def print_dgpy_metadata(
