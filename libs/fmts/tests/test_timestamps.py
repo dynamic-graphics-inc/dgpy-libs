@@ -1,9 +1,6 @@
 import time
 
 from datetime import datetime, timedelta, timezone
-from typing import Optional, Union
-
-import pytest
 
 from fmts import long_timestamp_string, timestamp
 
