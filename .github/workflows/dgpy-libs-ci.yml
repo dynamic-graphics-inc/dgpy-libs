@@ -56,7 +56,7 @@ jobs:
 
       - name: test-dgpydev
         run: |
-          poetry run pytest --doctest-modules tests dgpydev
+          poetry run pytest --doctest-modules tests
 
       - name: test listless
         run: |
