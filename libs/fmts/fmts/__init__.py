@@ -1320,8 +1320,8 @@ def timestamp(
         True
 
     """
-    if utc_offset == None:
-        utc_offset = -int(time.timezone / 3600)
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     if isinstance(ts, float):
         return datetime.fromtimestamp(
             ts, tz=timezone(timedelta(hours=float(utc_offset)))
