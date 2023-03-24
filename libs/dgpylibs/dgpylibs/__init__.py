@@ -70,8 +70,9 @@ LIBS = (
 )
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class DgpyLibMetadata:
+    __slots__ = ("title", "description", "pkgroot", "version")
     title: str
     description: str
     pkgroot: str
@@ -94,9 +95,24 @@ class DgpyLibMetadata:
         return self.version
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class DgpyLibsMetadata:
     """dgpy-libs env info"""
+
+    __slots__ = (
+        "dgpylibs",
+        "aiopen",
+        "asyncify",
+        "fmts",
+        "funkify",
+        "h5",
+        "jsonbourne",
+        "lager",
+        "listless",
+        "requires",
+        "shellfish",
+        "xtyping",
+    )
 
     dgpylibs: DgpyLibMetadata
     aiopen: DgpyLibMetadata
@@ -112,9 +128,24 @@ class DgpyLibsMetadata:
     xtyping: DgpyLibMetadata
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True)
 class DgpyLibsVersions:
     """dgpy-libs env info"""
+
+    __slots__ = (
+        "dgpylibs",
+        "aiopen",
+        "asyncify",
+        "fmts",
+        "funkify",
+        "h5",
+        "jsonbourne",
+        "lager",
+        "listless",
+        "requires",
+        "shellfish",
+        "xtyping",
+    )
 
     dgpylibs: str
     aiopen: str
