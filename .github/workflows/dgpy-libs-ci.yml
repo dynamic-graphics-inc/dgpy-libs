@@ -54,6 +54,10 @@ jobs:
         run: |
           poetry install
 
+      - name: test-dgpydev
+        run: |
+          poetry run pytest --doctest-modules tests dgpydev
+
       - name: test listless
         run: |
           cd libs/listless

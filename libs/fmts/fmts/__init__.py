@@ -1802,6 +1802,25 @@ def isidentifier(string: AnyStr) -> bool:
     return is_identifier(string)
 
 
+def is_dunder(string: str) -> bool:
+    """Return True if a string is 'dunder' (starts and ends with '__')
+
+    Args:
+        string (str): String to check
+
+    Returns:
+        bool: True if is a dunder
+
+    Examples:
+        >>> is_dunder("__dunder__")
+        True
+        >>> is_dunder("not_dunder")
+        False
+
+    """
+    return string.startswith("__") and string.endswith("__")
+
+
 __all__ = (
     "ALL_CAP_RE",
     "CAMEL_CHARACTERS",

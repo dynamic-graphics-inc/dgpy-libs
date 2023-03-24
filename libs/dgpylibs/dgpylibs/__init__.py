@@ -16,7 +16,8 @@ import xtyping
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
-from dgpylibs._meta import __version__
+from dgpylibs import _meta
+from dgpylibs._meta import __version__, __version__ as __dgpylibs_version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__
@@ -31,6 +32,7 @@ __all__ = (
     "__version__",
     "__aiopen_version__",
     "__asyncify_version__",
+    "__dgpylibs_version__",
     "__fmts_version__",
     "__funkify_version__",
     "__h5_version__",
@@ -68,7 +70,7 @@ LIBS = (
 )
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class DgpyLibMetadata:
     title: str
     description: str
@@ -92,10 +94,11 @@ class DgpyLibMetadata:
         return self.version
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class DgpyLibsMetadata:
     """dgpy-libs env info"""
 
+    dgpylibs: DgpyLibMetadata
     aiopen: DgpyLibMetadata
     asyncify: DgpyLibMetadata
     fmts: DgpyLibMetadata
@@ -109,10 +112,11 @@ class DgpyLibsMetadata:
     xtyping: DgpyLibMetadata
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, slots=True)
 class DgpyLibsVersions:
     """dgpy-libs env info"""
 
+    dgpylibs: str
     aiopen: str
     asyncify: str
     fmts: str
@@ -127,6 +131,12 @@ class DgpyLibsVersions:
 
 
 dgpylibs_metadata = DgpyLibsMetadata(
+    dgpylibs=DgpyLibMetadata(
+        title=_meta.__title__,
+        description=_meta.__description__,
+        pkgroot=_meta.__pkgroot__,
+        version=_meta.__version__,
+    ),
     aiopen=DgpyLibMetadata(
         title=aiopen._meta.__title__,
         description=aiopen._meta.__description__,
@@ -196,6 +206,7 @@ dgpylibs_metadata = DgpyLibsMetadata(
 )
 
 dgpylibs_info = DgpyLibsVersions(
+    dgpylibs=__version__,
     aiopen=__aiopen_version__,
     asyncify=__asyncify_version__,
     fmts=__fmts_version__,
