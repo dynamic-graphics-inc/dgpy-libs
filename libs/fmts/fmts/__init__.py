@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """String utils"""
 import re
+import time
 
 from binascii import hexlify
 from datetime import datetime, timedelta, timezone
-import time
 from difflib import unified_diff
 from functools import lru_cache, wraps
 from keyword import iskeyword

@@ -1,9 +1,11 @@
-from datetime import datetime, timedelta, timezone
 import time
+
+from datetime import datetime, timedelta, timezone
 from typing import Optional, Union
 
 import pytest
-from fmts import timestamp, long_timestamp_string
+
+from fmts import long_timestamp_string, timestamp
 
 
 def test_timestamp_float_input_local():
