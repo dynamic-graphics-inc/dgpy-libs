@@ -20,5 +20,9 @@ def echo(
         end: End of print suffix; defaults to `\n`
         file: File like object to write to if not stdout
 
+    Examples:
+        >>> echo("shellfish")
+        shellfish
+
     """
     print(*objects, sep=sep, end=end, file=file, flush=flush)  # ruff: noqa: T201

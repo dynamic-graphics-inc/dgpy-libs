@@ -2,6 +2,7 @@
 """Asyncify core"""
 
 import asyncio
+import warnings
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
@@ -222,7 +223,12 @@ def run(
 
     """
     # If python is 3.6
-    if not hasattr(asyncio, "run"):
+    if not hasattr(asyncio, "run"):  # pragma: no cover
+        warnings.warn(
+            "asyncify no longer supports python3.6...",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return _run(aw, debug=debug)
     return asyncio_run(aw, debug=debug)
 
@@ -351,7 +357,7 @@ def aiorun(
     )
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     import doctest
 
     doctest.testmod()

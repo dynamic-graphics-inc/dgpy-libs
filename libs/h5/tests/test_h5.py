@@ -33,11 +33,8 @@ EXPECTED_ATTRS = {
 
 EXPECTED_GROUPS_KEYS = [
     "/a_subgroup",
-    "/a_subgroup/a_dataset",
     "/a_subgroup/aa_subsubgroup",
-    "/a_subgroup/aa_subsubgroup/aa_subsubgroup_dataset",
     "/b_subgroup",
-    "/b_subgroup/b_dataset",
 ]
 
 
@@ -79,14 +76,81 @@ def dummy_hdf5_file(filepath: str) -> str:
     return filepath
 
 
+def test_type_guards(tmpdir):
+    filepath = tmpdir.join("test.h5").strpath
+    dummy_hdf5_file(filepath)
+
+    with h5py.File(filepath, mode="r") as f:
+        assert h5.is_file(f)
+
+        assert h5.is_group(f.get("a_subgroup"))
+        assert h5.is_group(f.get("a_subgroup/aa_subsubgroup"))
+
+        assert not h5.is_group(f.get("root_dataset"))
+        assert h5.is_dataset(f.get("root_dataset"))
+        assert not h5.is_dataset(f.get("a_subgroup"))
+        assert not h5.is_dataset(f.get("a_subgroup/aa_subsubgroup"))
+
+
+def test_h5_iter(tmpdir):
+    filepath = tmpdir.join("test.h5").strpath
+    dummy_hdf5_file(filepath)
+    with h5py.File(filepath, mode="r") as f:
+        iter_result = list(h5.h5iter(f))
+        iter_result_keys = [k for k, v in iter_result]
+        assert sorted(iter_result_keys) == sorted(
+            [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
+        )
+
+        list_o_keys = h5.keys_list(f)
+        assert sorted(list_o_keys) == sorted(
+            [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
+        )
+
+        list_o_group_keys = h5.groups_keys_list(f)
+        assert sorted(list_o_group_keys) == sorted(EXPECTED_GROUPS_KEYS)
+
+        list_o_dataset_keys = h5.datasets_keys_list(f)
+        assert sorted(list_o_dataset_keys) == sorted(EXPECTED_DATASETS.keys())
+
+        assert sorted(h5.h5py_obj_keys_gen(f)) == sorted(list_o_keys)
+
+
+def test_h5_iter_filepath(tmpdir):
+    filepath = tmpdir.join("test.h5").strpath
+    dummy_hdf5_file(filepath)
+    iter_result = list(h5.h5iter(filepath))
+    iter_result_keys = [k for k, v in iter_result]
+    assert sorted(iter_result_keys) == sorted(
+        [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
+    )
+
+    list_o_keys = h5.keys_list(filepath)
+    assert sorted(list_o_keys) == sorted(
+        [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
+    )
+
+    list_o_group_keys = h5.groups_keys_list(filepath)
+    assert sorted(list_o_group_keys) == sorted(EXPECTED_GROUPS_KEYS)
+
+    list_o_dataset_keys = h5.datasets_keys_list(filepath)
+    assert sorted(list_o_dataset_keys) == sorted(EXPECTED_DATASETS.keys())
+
+
+def test_main():
+    from h5.__main__ import main
+
+    main()
+
+
 def test_h5_attrs_gen(tmpdir):
     filepath = tmpdir.join("test.h5").strpath
     dummy_hdf5_file(filepath)
     expected = {**EXPECTED_ATTRS}
 
-    attrs_gen_dictionary = dict(h5.attrs_gen(filepath))
+    attrs_gen_dictionary = dict(h5.h5_attrs_gen(filepath))
     assert attrs_gen_dictionary is not None
-    attrs_dictionary = h5.attrs_dict(filepath)
+    attrs_dictionary = h5.h5_attrs_dict(filepath)
     attrs_dictionary_dictionary = {k: {**v} for k, v in attrs_dictionary.items()}
 
     root_dataset_attrs = attrs_dictionary_dictionary.pop("/root_dataset")
@@ -144,7 +208,7 @@ def test_h5_dataset_gen(tmpdir):
         for k, v in datasets_dict_from_file_obj.items():
             assert np.array_equal(v, EXPECTED_DATASETS[k])
 
-    datasets_dict_from_filepath = h5.datasets_dict(filepath)
+    datasets_dict_from_filepath = h5.h5_datasets_dict(filepath)
     for k, v in datasets_dict_from_filepath.items():
         assert np.array_equal(v, EXPECTED_DATASETS[k])
 

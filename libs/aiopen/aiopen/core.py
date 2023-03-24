@@ -55,7 +55,7 @@ def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
     return cast(Callable[P, Awaitable[T]], _async_funk)
 
 
-class AsyncBase(Generic[AnyStr]):
+class AsyncBase(Generic[AnyStr]):  # pragma: no cover
     _file: Union[BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader]
     _loop: AbstractEventLoop
     _executor: Optional[BaseEventLoop] = None

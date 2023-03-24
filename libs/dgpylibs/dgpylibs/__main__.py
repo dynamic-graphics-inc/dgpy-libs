@@ -2,24 +2,28 @@
 """pkg entry ~ `python -m dgpylibs`"""
 import sys
 
-from dgpylibs import dgpylibs_metadata
-from dgpylibs._meta import __pkgroot__, __title__, __version__
+from dgpylibs import DgpyLibsMetadataDict, dgpylibs_metadata
 
-sys.stdout.write(
-    f"package: {__title__}\nversion: {__version__}\npkgroot: {__pkgroot__}\n\n"
-)
+try:
+    from rich import print_json
+
+    def print_dgpy_metadata(
+        data: DgpyLibsMetadataDict,
+    ) -> None:
+        print_json(data=data, indent=2)
+
+except ImportError:
+    import json
+
+    def print_dgpy_metadata(
+        data: DgpyLibsMetadataDict,
+    ) -> None:
+        sys.stdout.write(json.dumps(data, indent=2))
 
 
-sys.stdout.write(
-    "\n\n".join(
-        "\n".join(
-            f"    {el}"
-            for el in (
-                f"package: {v.__title__}",
-                f"version: {v.__version__}",
-                f"pkgroot: {v.__pkgroot__}",
-            )
-        )
-        for v in dgpylibs_metadata.__dict__.values()
-    )
-)
+def main() -> None:
+    print_dgpy_metadata(dgpylibs_metadata.asdict())
+
+
+if __name__ == "__main__":
+    main()
