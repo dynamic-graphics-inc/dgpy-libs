@@ -3,6 +3,36 @@ name: dgpy-libs-ci
 on: [push, pull_request]
 
 jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: psf/black@stable
+        with:
+          options: "--check"
+          src: "."
+
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup-python-3
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: install-upgrade-pip
+        run: |
+          python -m pip install --upgrade pip
+      - name: install-ruff
+        run: |
+          pip install ruff
+      - name: ruff-version
+        run: |
+          ruff --version
+      - name: ruff-check
+        run: |
+          ruff .
+
   lint:
     runs-on: ubuntu-latest
     steps:

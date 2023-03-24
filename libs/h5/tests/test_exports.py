@@ -1,4 +1,7 @@
-from typing import Any
+from __future__ import annotations
+
+from types import ModuleType
+from typing import Any, List, Optional
 
 import h5
 
@@ -12,11 +15,13 @@ def is_dunder(string: str) -> bool:
     return string.startswith("__") and string.endswith("__")
 
 
-def obj_module_name(obj: Any) -> str:
+def obj_module_name(obj: Any) -> Optional[str]:
     return getattr(obj, "__module__", None)
 
 
-def module_members(module, include_dunders=False, include_private=False):
+def module_members(
+    module: ModuleType, include_dunders: bool = False, include_private: bool = False
+) -> List[str]:
     module_name = module.__name__
     members = dict(vars(module).items())
     if not include_dunders:

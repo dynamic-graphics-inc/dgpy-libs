@@ -7,5 +7,9 @@ REPO_ROOT = path.split(PWD)[0]
 
 
 def test_libs_listing():
-    libs_dirs = tuple(sorted(listdir(path.join(REPO_ROOT, "libs"))))
-    assert libs_dirs == dgpydev.DGPY_LIBS
+    libs_dir = path.join(REPO_ROOT, "libs")
+    if not path.isdir(libs_dir):
+        raise AssertionError("libs dir not found")
+    libs_dirs = tuple(sorted(listdir(libs_dir)))
+    if libs_dirs != dgpydev.DGPY_LIBS:
+        raise AssertionError("libs dir listing doesn't match")
