@@ -227,6 +227,7 @@ def run(
         warnings.warn(
             "asyncify no longer supports python3.6...",
             DeprecationWarning,
+            stacklevel=2,
         )
         return _run(aw, debug=debug)
     return asyncio_run(aw, debug=debug)
