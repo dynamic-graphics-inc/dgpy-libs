@@ -1297,9 +1297,11 @@ def dedent(string: str) -> str:
     )
 
 
-def timestamp(ts: Optional[Union[float, datetime]] = None,utc_offset:int=None) -> str:
+def timestamp(
+    ts: Optional[Union[float, datetime]] = None, utc_offset: int = None
+) -> str:
     """Time stamp string w/ format yyyymmdd-HHMMSS
-    Defaults 
+    Defaults
 
     Args:
         ts: datetime or float
@@ -1319,18 +1321,20 @@ def timestamp(ts: Optional[Union[float, datetime]] = None,utc_offset:int=None) -
 
     """
     if utc_offset == None:
-        utc_offset = -int(time.timezone/3600)
+        utc_offset = -int(time.timezone / 3600)
     if isinstance(ts, float):
-        return datetime.fromtimestamp(ts, tz=timezone(timedelta(hours=utc_offset))).strftime("%Y%m%d-%H%M%S")
+        return datetime.fromtimestamp(
+            ts, tz=timezone(timedelta(hours=utc_offset))
+        ).strftime("%Y%m%d-%H%M%S")
     if isinstance(ts, datetime):
         return ts.strftime("%Y%m%d-%H%M%S")
     return datetime.now().strftime("%Y%m%d-%H%M%S")
 
 
-def long_timestamp_string(timestamp_sec: float,utc_offset:int=None) -> str:
+def long_timestamp_string(timestamp_sec: float, utc_offset: int = None) -> str:
     """Return a 'long-form' timestamp string given epoch-seconds float and utc offset hours as int"""
     if utc_offset == None:
-        utc_offset = -int(time.timezone/3600)
+        utc_offset = -int(time.timezone / 3600)
     return datetime.fromtimestamp(
         timestamp_sec, tz=timezone(timedelta(hours=utc_offset))
     ).strftime("%A, %d. %B %Y %I:%M%p")
