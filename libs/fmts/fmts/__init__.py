@@ -1324,7 +1324,7 @@ def timestamp(
         utc_offset = -float(time.timezone / 3600)
     if isinstance(ts, float):
         return datetime.fromtimestamp(
-            ts, tz=timezone(timedelta(hours=float(utc_offset)))
+            ts, tz=timezone(timedelta(hours=utc_offset))
         ).strftime("%Y%m%d-%H%M%S")
     if isinstance(ts, datetime):
         return ts.strftime("%Y%m%d-%H%M%S")
@@ -1335,10 +1335,10 @@ def long_timestamp_string(
     timestamp_sec: float, utc_offset: Optional[float] = None
 ) -> str:
     """Return a 'long-form' timestamp string given epoch-seconds float and utc offset hours as int"""
-    if utc_offset == None:
-        utc_offset = -int(time.timezone / 3600)
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     return datetime.fromtimestamp(
-        timestamp_sec, tz=timezone(timedelta(hours=float(utc_offset)))
+        timestamp_sec, tz=timezone(timedelta(hours=utc_offset))
     ).strftime("%A, %d. %B %Y %I:%M%p")
 
 
