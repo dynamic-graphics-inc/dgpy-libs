@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Dynamic Graphics Python libraries"""
 from dataclasses import dataclass
+from typing import TypedDict, TypeVar
 
 import aiopen
 import asyncify
@@ -69,6 +70,30 @@ LIBS = (
     "xtyping",
 )
 
+T = TypeVar("T")
+
+
+class DgpyLibMetadataDict(TypedDict):
+    title: str
+    description: str
+    pkgroot: str
+    version: str
+
+
+class DgpyLibsMetadataDict(TypedDict):
+    dgpylibs: DgpyLibMetadataDict
+    aiopen: DgpyLibMetadataDict
+    asyncify: DgpyLibMetadataDict
+    fmts: DgpyLibMetadataDict
+    funkify: DgpyLibMetadataDict
+    h5: DgpyLibMetadataDict
+    jsonbourne: DgpyLibMetadataDict
+    lager: DgpyLibMetadataDict
+    listless: DgpyLibMetadataDict
+    requires: DgpyLibMetadataDict
+    shellfish: DgpyLibMetadataDict
+    xtyping: DgpyLibMetadataDict
+
 
 @dataclass(frozen=True)
 class DgpyLibMetadata:
@@ -93,6 +118,14 @@ class DgpyLibMetadata:
     @property
     def __version__(self) -> str:
         return self.version
+
+    def asdict(self) -> DgpyLibMetadataDict:
+        return {
+            "title": self.title,
+            "description": self.description,
+            "pkgroot": self.pkgroot,
+            "version": self.version,
+        }
 
 
 @dataclass(frozen=True)
@@ -127,6 +160,37 @@ class DgpyLibsMetadata:
     shellfish: DgpyLibMetadata
     xtyping: DgpyLibMetadata
 
+    def asdict(self) -> DgpyLibsMetadataDict:
+        return {
+            "dgpylibs": self.dgpylibs.asdict(),
+            "aiopen": self.aiopen.asdict(),
+            "asyncify": self.asyncify.asdict(),
+            "fmts": self.fmts.asdict(),
+            "funkify": self.funkify.asdict(),
+            "h5": self.h5.asdict(),
+            "jsonbourne": self.jsonbourne.asdict(),
+            "lager": self.lager.asdict(),
+            "listless": self.listless.asdict(),
+            "requires": self.requires.asdict(),
+            "shellfish": self.shellfish.asdict(),
+            "xtyping": self.xtyping.asdict(),
+        }
+
+
+class DgpyLibsVersionsDict(TypedDict):
+    dgpylibs: str
+    aiopen: str
+    asyncify: str
+    fmts: str
+    funkify: str
+    h5: str
+    jsonbourne: str
+    lager: str
+    listless: str
+    requires: str
+    shellfish: str
+    xtyping: str
+
 
 @dataclass(frozen=True)
 class DgpyLibsVersions:
@@ -159,6 +223,22 @@ class DgpyLibsVersions:
     requires: str
     shellfish: str
     xtyping: str
+
+    def asdict(self) -> DgpyLibsVersionsDict:
+        return {
+            "dgpylibs": self.dgpylibs,
+            "aiopen": self.aiopen,
+            "asyncify": self.asyncify,
+            "fmts": self.fmts,
+            "funkify": self.funkify,
+            "h5": self.h5,
+            "jsonbourne": self.jsonbourne,
+            "lager": self.lager,
+            "listless": self.listless,
+            "requires": self.requires,
+            "shellfish": self.shellfish,
+            "xtyping": self.xtyping,
+        }
 
 
 dgpylibs_metadata = DgpyLibsMetadata(

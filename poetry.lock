@@ -1414,4 +1414,4 @@ url = "libs/xtyping"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "7b63d57bae9d3226806076140d669e666a5138446c5bc967a804376cfced135c"
+content-hash = "f6858ae3f55f05dd17c78940d134179e8f8b8dff57d98d5cd4d67a44996b4700"
