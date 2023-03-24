@@ -70,19 +70,20 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.6.0"
+version = "0.8.0"
 description = "H5py utils"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.6.0-py3-none-any.whl", hash = "sha256:82e3541881abce59658db71afbccbe98c9ac26c428e564a95e3d283d0440e8f6"},
-    {file = "h5-0.6.0.tar.gz", hash = "sha256:e5c4adf0c81f66650dfc8170aac6a68374853088cec5f6fff30b6a5f89f12c8a"},
+    {file = "h5-0.8.0-py3-none-any.whl", hash = "sha256:2b365f3a8e78985dc44ac57801d5384c654ea05e099a585174cbb5390e2f4aa3"},
+    {file = "h5-0.8.0.tar.gz", hash = "sha256:20e7de856198d34fd0395076be0f1b0d555facebfb86faf32da0fd9ae0fafa85"},
 ]
 
 [package.dependencies]
 h5py = ">=3.7.0"
 numpy = ">=1.24.2,<2.0.0"
+typing-extensions = ">=4.5.0,<5.0.0"
 
 [[package]]
 name = "h5py"
@@ -299,14 +300,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.2.1"
+version = "0.2.2"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.2.1-py3-none-any.whl", hash = "sha256:3270f4f0505aae18971cca0f3a0397bbf804bf246d8244cb5d66826563ec468b"},
-    {file = "shellfish-0.2.1.tar.gz", hash = "sha256:75da6f52cd8fe4002ba1ed19429ef4044465b0cb09d0305864d6345a3dece075"},
+    {file = "shellfish-0.2.2-py3-none-any.whl", hash = "sha256:69b68475e6322272c323fc12a432d3d7695066ad87d7b3b7fbc17c2818c4a73d"},
+    {file = "shellfish-0.2.2.tar.gz", hash = "sha256:19d239caa66e1f3c912af0663f80e5ca7a02b0d7e74b9b99858b40a109ebf1ad"},
 ]
 
 [package.dependencies]
