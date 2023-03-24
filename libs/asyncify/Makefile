@@ -12,7 +12,7 @@ mds = $(nbs:%.ipynb=%.md)
 pys = $(wildcard *.py)
 
 #
-all: install
+all: fmt test
 .PHONY: fmt flake mypy test testcov testlf doctest clean
 
 .PHONY: install
@@ -43,7 +43,7 @@ flake: fmt
 ## TYPE CHECKING
 .PHONY: mypy
 mypy:
-	mypy --config-file ../../mypy.ini $(PKG_NAME)
+	mypy --config-file ../../pyproject.toml $(PKG_NAME)
 
 ###############
 ### TESTING ###

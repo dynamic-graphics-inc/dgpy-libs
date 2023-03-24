@@ -68,6 +68,7 @@ dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.259"
+anyio = { extras = ["trio"], version = "^3.6.2" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -108,7 +109,6 @@ extend-exclude = '''
   )/
 )
 '''
-
 
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -168,7 +168,7 @@ markers = [
 
 [tool.mypy]
 plugins = [
-  "pydantic.mypy"
+  "pydantic.mypy",
 ]
 python_version = "3.9"
 show_error_codes = true

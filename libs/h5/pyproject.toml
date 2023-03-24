@@ -37,8 +37,32 @@ typing-extensions = "^4.5.0"
 pytest = "^7.2.2"
 
 # coverage config
+# [tool.coverage.run]
+# omit = ["*/tests/*", "*/__init__.py", "h5/__main__.py",]
+
 [tool.coverage.run]
-omit = ["*/tests/*", "*/__init__.py", "h5/__main__.py",]
+source = ['h5']
+branch = true
+context = '${CONTEXT}'
+show_missing = true
+
+[tool.coverage.report]
+precision = 2
+exclude_lines = [
+  'pragma: no cover',
+  'raise NotImplementedError',
+  'if TYPE_CHECKING:',
+  '@overload',
+  '\(Protocol\):$',
+  'class BaseAsync:',
+  'if 0:',
+  'if False:',
+]
+
+[tool.coverage.paths]
+source = [
+  'h5/',
+]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

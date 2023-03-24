@@ -44,6 +44,26 @@ anyio = { extras = ["trio"], version = "^3.6.2" }
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
+  "--cov-config=pyproject.toml",
+]
+xfail_strict = true
+filterwarnings = [
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
+]
+markers = ["asyncio", "anyio", "version"]
+testpaths = ["aiopen", "tests"]
+
 [tool.mypy]
 # --strict
 disallow_any_generics = false
@@ -64,3 +84,27 @@ strict_equality = true
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+# COVERAGE
+[tool.coverage.run]
+source = ['aiopen']
+branch = true
+context = '${CONTEXT}'
+omit = ["**/__main__.py"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+exclude_lines = [
+  'pragma: no cover',
+  'raise NotImplementedError',
+  'if TYPE_CHECKING:',
+  '@overload',
+  '\(Protocol\):$',
+  'if 0:',
+  'if False:',
+  'class AsyncBase:',
+]
+
+[tool.coverage.paths]
+source = ['aiopen/']
