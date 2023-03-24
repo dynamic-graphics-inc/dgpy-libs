@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """String utils"""
 import re
+import time
 
 from binascii import hexlify
 from datetime import datetime, timedelta, timezone
@@ -1321,11 +1322,15 @@ def dedent(string: str) -> str:
     )
 
 
-def timestamp(ts: Optional[Union[float, datetime]] = None) -> str:
+def timestamp(
+    ts: Optional[Union[float, datetime]] = None, utc_offset: Optional[float] = None
+) -> str:
     """Time stamp string w/ format yyyymmdd-HHMMSS
+    Defaults
 
     Args:
         ts: datetime or float
+        utc_offset: float
 
     Returns:
         timestamp string
@@ -1341,23 +1346,25 @@ def timestamp(ts: Optional[Union[float, datetime]] = None) -> str:
         True
 
     """
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     if isinstance(ts, float):
-        return datetime.fromtimestamp(ts).strftime("%Y%m%d-%H%M%S")
+        return datetime.fromtimestamp(
+            ts, tz=timezone(timedelta(hours=utc_offset))
+        ).strftime("%Y%m%d-%H%M%S")
     if isinstance(ts, datetime):
         return ts.strftime("%Y%m%d-%H%M%S")
     return datetime.now().strftime("%Y%m%d-%H%M%S")
 
 
-def long_timestamp_string(timestamp_sec: float) -> str:
-    """Return a 'long-form' timestamp string given epoch-seconds float
-
-    Examples:
-        >>> long_timestamp_string(1551111111.111111)
-        'Monday, 25. February 2019 08:11AM'
-
-    """
+def long_timestamp_string(
+    timestamp_sec: float, utc_offset: Optional[float] = None
+) -> str:
+    """Return a 'long-form' timestamp string given epoch-seconds float and utc offset hours as int"""
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     return datetime.fromtimestamp(
-        timestamp_sec, tz=timezone(timedelta(hours=-8))
+        timestamp_sec, tz=timezone(timedelta(hours=utc_offset))
     ).strftime("%A, %d. %B %Y %I:%M%p")
 
 
