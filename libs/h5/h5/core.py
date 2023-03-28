@@ -142,7 +142,7 @@ def h5py_obj_gen(
             (fmt_h5_path(h5_path, key), item) for key, item in h5py_obj.items()
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_gen(item, fmt_h5_path(h5_path, key), root=False)
+            h5py_obj_gen(item, item.name, root=False)
             for key, item in h5py_obj.items()
             if isinstance(item, Group)
         ),
