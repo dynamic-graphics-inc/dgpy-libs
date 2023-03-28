@@ -9,7 +9,14 @@ from typing import Any, Dict, Iterable, List, Tuple, Union
 import numpy as np
 import numpy.typing as npt
 
-from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
+from h5py import (
+    AttributeManager,
+    Dataset,
+    File,
+    Group,
+    __version__ as __h5py_version__,
+    is_hdf5 as _is_hdf5,
+)
 from typing_extensions import TypeGuard
 
 FsPath = Union[str, Path, PathLike]
@@ -51,6 +58,7 @@ __all__ = (
     "is_dataset",
     "is_file",
     "is_fspath",
+    "is_hdf5",
     "is_group",
     "is_group_like",
     "is_h5py_dataset",
@@ -62,6 +70,11 @@ __all__ = (
 
 def is_fspath(path: Any) -> TypeGuard[FsPath]:
     return isinstance(path, (str, Path, PathLike))
+
+
+def is_hdf5(path: FsPath) -> bool:
+    """Check if a file is an HDF5 file"""
+    return _is_hdf5(str(path))
 
 
 def is_h5py_group(obj: Any) -> TypeGuard[Group]:

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "h5"
-version = "0.8.2"
+version = "0.8.3"
 description = "H5py utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
