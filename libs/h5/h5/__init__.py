@@ -37,6 +37,7 @@ from h5.core import (
     is_h5py_dataset as is_h5py_dataset,
     is_h5py_file as is_h5py_file,
     is_h5py_group as is_h5py_group,
+    is_hdf5 as is_hdf5,
     keys_list as keys_list,
 )
 
@@ -80,5 +81,6 @@ __all__ = (
     "is_h5py_dataset",
     "is_h5py_file",
     "is_h5py_group",
+    "is_hdf5",
     "keys_list",
 )
