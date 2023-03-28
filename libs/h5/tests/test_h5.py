@@ -88,11 +88,16 @@ def test_type_guards(tmpdir):
     dummy_hdf5_file(filepath)
 
     with h5py.File(filepath, mode="r") as f:
+        assert h5.is_fspath(filepath)
+        assert not h5.is_fspath(f)
+
         assert h5.is_file(f)
 
         # test that file is group
         assert h5.is_group(f)
 
+        assert h5.is_group_like(f)
+        assert not h5.is_group_like(f.get("root_dataset"))
         assert h5.is_group(f.get("a_subgroup"))
         assert h5.is_group(f.get("a_subgroup/aa_subsubgroup"))
 
