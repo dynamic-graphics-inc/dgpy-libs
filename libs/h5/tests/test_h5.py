@@ -1,3 +1,5 @@
+import os
+
 import h5py
 import numpy as np
 
@@ -83,9 +85,21 @@ def dummy_hdf5_file(filepath: str) -> str:
     return filepath
 
 
+def test_is_hdf5_file(tmpdir):
+    os.chdir(tmpdir.strpath)
+    filepath = tmpdir.join("test.h5").strpath
+    dummy_hdf5_file(filepath)
+
+    with open("not-a-file.h5", "w") as f:
+        f.write("not a hdf5 file")
+    assert not h5.is_hdf5("not-a-file.h5")
+
+
 def test_type_guards(tmpdir):
     filepath = tmpdir.join("test.h5").strpath
     dummy_hdf5_file(filepath)
+
+    assert h5.is_hdf5(filepath)
 
     with h5py.File(filepath, mode="r") as f:
         assert h5.is_fspath(filepath)

@@ -74,7 +74,7 @@ def is_fspath(path: Any) -> TypeGuard[FsPath]:
 
 def is_hdf5(path: FsPath) -> bool:
     """Check if a file is an HDF5 file"""
-    return _is_hdf5(str(path))
+    return bool(_is_hdf5(str(path)))
 
 
 def is_h5py_group(obj: Any) -> TypeGuard[Group]:
