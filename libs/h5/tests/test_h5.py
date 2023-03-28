@@ -14,6 +14,9 @@ EXPECTED_DATASETS = {
     "/b_subgroup/b_dataset": array([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
 }
 EXPECTED_ATTRS = {
+    "/": {
+        "root_attr_str": "root_attr_value",
+    },
     "/a_subgroup": {"a_attr": "a_attr_value"},
     "/b_subgroup": {"b_attr": "b_attr_value"},
     "/root_dataset": {
@@ -32,6 +35,7 @@ EXPECTED_ATTRS = {
 }
 
 EXPECTED_GROUPS_KEYS = [
+    "/",
     "/a_subgroup",
     "/a_subgroup/aa_subsubgroup",
     "/b_subgroup",
@@ -40,6 +44,9 @@ EXPECTED_GROUPS_KEYS = [
 
 def dummy_hdf5_file(filepath: str) -> str:
     with h5py.File(filepath, mode="w") as f:
+        # set root group attributes
+        f.attrs["root_attr_str"] = "root_attr_value"
+
         root_dataset = f.create_dataset(
             "root_dataset", data=np.arange(10).reshape(2, 5)
         )
@@ -82,6 +89,9 @@ def test_type_guards(tmpdir):
 
     with h5py.File(filepath, mode="r") as f:
         assert h5.is_file(f)
+
+        # test that file is group
+        assert h5.is_group(f)
 
         assert h5.is_group(f.get("a_subgroup"))
         assert h5.is_group(f.get("a_subgroup/aa_subsubgroup"))
@@ -229,3 +239,15 @@ def test_h5_groups_gen(tmpdir):
         assert sorted(groups_dict_from_filepath.keys()) == sorted(
             groups_dict_from_file.keys()
         )
+
+
+def test_no_repeated_keys(tmpdir):
+    filepath = tmpdir.join("test.h5").strpath
+    dummy_hdf5_file(filepath)
+    with h5py.File(filepath, mode="r") as f:
+        keys = set()
+        for k in h5.h5py_obj_keys_gen(f):
+            if k in keys:
+                raise ValueError(f"Repeated key {k}")
+            else:
+                keys.add(k)
