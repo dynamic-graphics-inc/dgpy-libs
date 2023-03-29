@@ -15,6 +15,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = ["dgpy", "dgi", "typed", "python3"]
@@ -258,10 +259,15 @@ select = [
   "W",
   # "SIM",
   # "PT", # pytest
-  # "D",
   "T201", # print
   # pyupgrade
   "UP",
+  # pydocstyle
+  # "D",
+  "D207", # docstring is under-indented
+  "D208", # docstring is over-indented
+  "D414",
+  "D417",
 ]
 line-length = 88
 
@@ -278,6 +284,9 @@ ignore = [
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
+
+  # PYDOCSTYLE
+  "D415", # first line should end with a period/exclamation point
 ]
 
 [tool.ruff.mccabe]
@@ -293,6 +302,17 @@ max-complexity = 20
 
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
+]
+"**/noxfile.py" = [
+  "D"
+]
+"**/conftest.py" = [
+  "D"
+]
+"**/test_*.py" = [
+  "D1",
+  "D102",
+  "D103", # missing docstring
 ]
 
 [tool.ruff.pydocstyle]

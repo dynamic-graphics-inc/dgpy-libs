@@ -143,6 +143,7 @@ def h5py_obj_gen(
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")
+        root: if True, yield the root path (Default value = True)
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.AttributeManager)
@@ -170,6 +171,7 @@ def h5py_obj_keys_gen(
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")
+        root: if True, yield the root path (Default value = True)
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.AttributeManager)
@@ -184,7 +186,7 @@ def h5py_obj_keys_gen(
             for item in h5py_obj.values()
         ),
         *(  # Unpack a generator that generates generators recursively
-            h5py_obj_keys_gen(item, item.name, root=False)
+            h5py_obj_keys_gen(item, h5_path or item.name, root=False)
             # fmt_h5_path(h5_path, key))
             for item in h5py_obj.values()
             if isinstance(item, Group)
@@ -210,6 +212,7 @@ def h5py_obj_groups_gen(
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")
+        root: if True, yield the root path (Default value = True)
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.AttributeManager)
@@ -238,6 +241,7 @@ def groups_gen_from_fspath(
 
     Args:
         fspath (FsPath): fspath to h5 format file
+        h5_path (str, optional): h5 path to start from. Defaults to "".
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples
@@ -255,6 +259,7 @@ def h5py_obj_attrs_gen(
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")
+        root: if True, yield the root path (Default value = True)
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.AttributeManager)
@@ -284,6 +289,7 @@ def attrs_gen_from_fspath(
 
     Args:
         fspath (FsPath): fspath to h5 format file
+        h5_path (str, optional): h5 path to start from. Defaults to "".
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples
@@ -300,6 +306,7 @@ def h5_attrs_gen_from_fspath(
 
     Args:
         fspath (FsPath): fspath to h5 format file
+        h5_path (str, optional): h5 path to start from. Defaults to "".
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples
@@ -402,6 +409,7 @@ def datasets_gen_from_fspath(
 
     Args:
         fspath (str): fspath to h5 format file
+        h5_path (str, optional): h5 path to start from. Defaults to "".
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
@@ -418,6 +426,7 @@ def h5_datasets_gen_from_fspath(
 
     Args:
         fspath (str): fspath to h5 format file
+        h5_path (str, optional): h5 path to start from. Defaults to "".
 
     Returns:
         Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples
@@ -495,7 +504,8 @@ def datasets_dict(
     generate tuples of the form (HDF5-path, HDF5-dataset).
 
     Args:
-        fspath (str): Filepath to an HDF5 format file
+        h5_obj (str): Filepath to an HDF5 format file
+        h5_path (str, optional): Path to start from. Defaults to "".
 
     Returns:
         Dictionary with key => value paris of HDF5-path => HDF5-dataset
@@ -523,7 +533,7 @@ def h5_datasets_dict(
 
 
 def attrs_dict(
-    h5obj: Union[FsPath, File, Group], h5_path: str = ""
+    h5_obj: Union[FsPath, File, Group], h5_path: str = ""
 ) -> Dict[str, AttributeManager]:
     """Load an HDF5 file from a fspath into a dictionary
 
@@ -533,18 +543,19 @@ def attrs_dict(
     generate tuples of the form (HDF5-path, HDF5-dataset).
 
     Args:
-        fspath (str): Filepath to an HDF5 format file
+        h5_obj (str): Filepath to an HDF5 format file
+        h5_path (str): HDF5 path to recurse down from
 
     Returns:
         Dictionary with key => value paris of HDF5-path => HDF5-dataset
 
     """
-    if isinstance(h5obj, (Path, str)):
-        with File(str(h5obj), mode="r") as h5file:
-            return attrs_dict(h5obj=h5file, h5_path=h5_path)
-    return {k: {**v} for k, v in h5py_obj_attrs_gen(h5obj, h5_path=h5_path)}
+    if isinstance(h5_obj, (Path, str)):
+        with File(str(h5_obj), mode="r") as h5file:
+            return attrs_dict(h5_obj=h5file, h5_path=h5_path)
+    return {k: {**v} for k, v in h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)}
 
 
 def h5_attrs_dict(fspath: str, h5_path: str = "") -> Dict[str, AttributeManager]:
     """Alias for h5.attrs_dict"""
-    return attrs_dict(h5obj=fspath, h5_path=h5_path)
+    return attrs_dict(h5_obj=fspath, h5_path=h5_path)
