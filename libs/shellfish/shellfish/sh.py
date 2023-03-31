@@ -827,6 +827,8 @@ def _do(
             sys.stdout and sys.stderr
         text: Flag to decode the output as text
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        ok_code (Union[int, Sequence[int]]): Code(s) to consider as OK
+        dryrun (bool): Flag to not run the subprocess and return faux Done
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -985,6 +987,9 @@ def shx(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        ok_code: Return code(s) to check if ok
+        dryrun: Don't run the subprocess
+
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1123,6 +1128,8 @@ async def _do_async(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Event loop to use if have you use asyncified version (`do_asyncify`)
+        ok_code: Return code(s) to check if ok
+        dryrun: Don't run the subprocess
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1309,6 +1316,8 @@ async def do_async(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Optional event loop to run subprocess in
+        ok_code: Return code(s) that are considered OK (Default value = 0)
+        dryrun (bool): Flag to not run the subprocess but return a Done object
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1389,6 +1398,9 @@ async def doa(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Optional event loop to run subprocess in
+        ok_code: Return code(s) that are considered OK (Default value = 0)
+        dryrun (bool): Flag to not run the subprocess but return a Done object
+        extenv: Extend environment with the current environment (Default value = True)
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary

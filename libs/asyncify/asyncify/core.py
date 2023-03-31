@@ -120,6 +120,8 @@ def asyncify(
 
     Args:
         funk: Function to make into an async coroutine
+        loop: Event loop in which to run/execute
+        executor: Executor to with which to execute
 
     Returns:
         An asynchronous function
@@ -209,6 +211,7 @@ def run(
     Args:
         aw (Awaitable[T]): Async/awaitable function to run
         debug (Optional[bool]): If True run event loop in debug mode
+        **kwargs: keyword arguments to be passed to the wrapped function
 
     Returns:
         T: Return the result of running the async function

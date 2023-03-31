@@ -17,12 +17,6 @@ from h5.core import (
     groups_gen as groups_gen,
     groups_gen_from_fspath as groups_gen_from_fspath,
     groups_keys_list as groups_keys_list,
-    h5_attrs_dict as h5_attrs_dict,
-    h5_attrs_gen as h5_attrs_gen,
-    h5_attrs_gen_from_fspath as h5_attrs_gen_from_fspath,
-    h5_datasets_dict as h5_datasets_dict,
-    h5_datasets_gen as h5_datasets_gen,
-    h5_datasets_gen_from_fspath as h5_datasets_gen_from_fspath,
     h5iter as h5iter,
     h5py_obj_attrs_gen as h5py_obj_attrs_gen,
     h5py_obj_dataset_gen as h5py_obj_dataset_gen,
@@ -39,6 +33,14 @@ from h5.core import (
     is_h5py_group as is_h5py_group,
     is_hdf5 as is_hdf5,
     keys_list as keys_list,
+)
+from h5.legacy import (
+    h5_attrs_dict as h5_attrs_dict,
+    h5_attrs_gen as h5_attrs_gen,
+    h5_attrs_gen_from_fspath as h5_attrs_gen_from_fspath,
+    h5_datasets_dict as h5_datasets_dict,
+    h5_datasets_gen as h5_datasets_gen,
+    h5_datasets_gen_from_fspath as h5_datasets_gen_from_fspath,
 )
 
 __all__ = (
