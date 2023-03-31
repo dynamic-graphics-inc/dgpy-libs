@@ -70,14 +70,14 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.8.3"
+version = "0.8.4"
 description = "H5py utils"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.8.3-py3-none-any.whl", hash = "sha256:323ca6622ec39bf4e6c3c4b77875980987e42c8ccc06bb7c2e377f2015383ead"},
-    {file = "h5-0.8.3.tar.gz", hash = "sha256:3bad865d75cbe39852e02e08343de62bc91e8a8895eafc193e139c1d70cf64dc"},
+    {file = "h5-0.8.4-py3-none-any.whl", hash = "sha256:ebda9e21debbc05e6ce21d4b12a51ed8c0d20bec26db84b2eb66bce3f7295a9c"},
+    {file = "h5-0.8.4.tar.gz", hash = "sha256:a4ffc703d5a2767cee6a36b0b5200d3fe88a4c804ea15d0144e6013bfdfefe37"},
 ]
 
 [package.dependencies]
