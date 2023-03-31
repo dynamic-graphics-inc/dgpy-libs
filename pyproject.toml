@@ -70,7 +70,7 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.259"
+ruff = "^0.0.260"
 anyio = { extras = ["trio"], version = "^3.6.2" }
 nox = "^2022.11.21"
 
