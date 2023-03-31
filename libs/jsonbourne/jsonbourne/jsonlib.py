@@ -76,13 +76,13 @@ def _json_encode_default(obj: Any) -> Any:
     if dataclasses is not None:
         if dataclasses.is_dataclass(obj):
             return dataclasses.asdict(obj)
+    if isinstance(obj, set):
+        return list(obj)
     if isinstance(obj, bytes):
         return str(obj, encoding="utf-8")
     if isinstance(obj, tuple):
         return tuple(obj)
-    if isinstance(obj, Path):
-        return str(obj)
-    if isinstance(obj, UUID):
+    if isinstance(obj, (Path, UUID)):
         return str(obj)
     if isinstance(obj, (datetime, dttime, dtdate)):
         return obj.isoformat()
@@ -378,7 +378,7 @@ class RAPIDJSON(JsonLibABC):
                 sort_keys=sort_keys,
                 default=default or _json_encode_default,
                 datetime_mode=rapidjson.DM_ISO8601,
-                number_mode=rapidjson.NM_NAN,
+                number_mode=rapidjson.NM_NATIVE,
                 uuid_mode=rapidjson.UM_CANONICAL,
                 **kwargs,
             )

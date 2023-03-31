@@ -124,7 +124,6 @@ def partition(
     *,
     pad: bool = False,
     padval: Any = None,
-    zip_strict: bool = False,
 ) -> Iterable[Sequence[_T]]:
     """Partition an iterable into chunks of size n
 
@@ -322,6 +321,7 @@ def xmap(
     Args:
         func: Function to apply to each element
         it: iterable to apply func to
+        maxlen: Maximum length of the deque; if 0, deque is unbounded
 
     Returns:
         Deque of the possible results if maxlen is greater than 0

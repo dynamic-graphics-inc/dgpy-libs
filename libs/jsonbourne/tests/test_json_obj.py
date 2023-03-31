@@ -15,7 +15,9 @@ def test_dot_access_attr_vs_item() -> None:
     jd = JSON({"socket.io": "data"})
     assert jd["socket.io"] == "data"
     with pytest.raises(AttributeError):
-        jd.socket.io
+        _data = jd.socket.io
+        if _data:
+            raise AssertionError("should not get here")
 
 
 def test_dot_access_nested() -> None:
@@ -27,7 +29,9 @@ def test_dot_access_nested() -> None:
         (("socket.io", "two"), 2),
     ]
     with pytest.raises(AttributeError):
-        jd.socket.io
+        _data = jd.socket.io
+        if _data:
+            raise AssertionError("should not get here")
 
 
 class Thingy(JsonObj):

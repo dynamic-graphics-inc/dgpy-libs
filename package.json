@@ -16,7 +16,7 @@
     "nukenox": "npx rimraf ./**/.nox*"
   },
   "devDependencies": {
-    "dprint": "^0.34.4",
+    "dprint": "^0.35.3",
     "pyright": "^1.1.212"
   }
 }

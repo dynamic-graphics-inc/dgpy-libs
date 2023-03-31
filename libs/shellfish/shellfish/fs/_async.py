@@ -123,6 +123,7 @@ async def wbytes_async(
         append (bool): Append to the fspath if True; otherwise overwrite
         filepath: fspath to write to
         bites: Bytes to be written
+        chmod: chmod the fspath to this mode after writing
 
     Returns:
         None
@@ -353,6 +354,7 @@ async def rstring_async(filepath: FsPath, encoding: str = "utf-8") -> str:
 
     Args:
         filepath: Filepath for file to read
+        encoding (str): File encoding (Default='utf-8')
 
     Returns:
         str: String read from given fspath
