@@ -11,3 +11,5 @@ fmt: isort black
 ruff:
     ruff .
 
+lint: fmt
+    nox -s lint

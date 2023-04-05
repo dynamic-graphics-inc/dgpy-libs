@@ -3,9 +3,6 @@ import pytest
 
 import h5
 
-################
-# h5.dev tests #
-################
 from h5.dev import H5Dataset, H5File, H5Group
 from h5.testing import make_test_hdf5_file
 
