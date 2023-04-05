@@ -3,7 +3,6 @@ import pytest
 
 import h5
 
-
 ################
 # h5.dev tests #
 ################
