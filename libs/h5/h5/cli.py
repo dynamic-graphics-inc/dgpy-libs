@@ -274,7 +274,7 @@ def keys(
     console.print_json(data=file_keys, default=_json_default)
 
 
-@cli.command(help="dump attrs")
+@cli.command(help="Dump attrs")
 @click.argument(
     "fspath",
     type=click.Path(exists=True),
