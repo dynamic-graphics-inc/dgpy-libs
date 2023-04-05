@@ -57,7 +57,7 @@ def test_keys(tmp_path: Path, runner: CliRunner) -> None:
     assert result.exit_code == 0
     data = json.loads(result.output)
     assert isinstance(data, list)
-    assert sorted(data) == sorted(
+    expected_keys = sorted(
         [
             "/",
             "/a_subgroup",
@@ -73,3 +73,11 @@ def test_keys(tmp_path: Path, runner: CliRunner) -> None:
             "/b_subgroup/b_dataset",
         ]
     )
+    assert sorted(data) == expected_keys
+
+    ls_result = runner.invoke(cli, ["ls", filepath])
+    print(ls_result.output)
+    assert ls_result.exit_code == 0
+    list_of_keys = ls_result.output.splitlines()
+
+    assert sorted(list_of_keys) == expected_keys

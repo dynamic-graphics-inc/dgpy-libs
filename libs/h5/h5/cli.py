@@ -233,7 +233,19 @@ def tree(
         console.print(file_info)
 
 
-@cli.command(help="dump keys")
+def _keys(fspath: str, dump_cfg: H5CliConfig) -> List[str]:
+    file_keys: List[str] = []
+    with h5.File(fspath) as f:
+        if dump_cfg.datasets and dump_cfg.groups:
+            file_keys.extend(h5.h5py_obj_keys_gen(f))
+        elif dump_cfg.datasets and not dump_cfg.groups:
+            file_keys.extend((k for k, v in h5.datasets(f)))
+        elif not dump_cfg.datasets and dump_cfg.groups:
+            file_keys.extend((k for k, v in h5.groups(f)))
+    return file_keys
+
+
+@cli.command(help="dump keys as JSON array", name="keys")
 @click.argument(
     "fspath",
     type=click.Path(exists=True),
@@ -260,15 +272,51 @@ def keys(
     groups: bool = False,
 ) -> None:
     dump_cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
-    file_keys: List[str] = []
-    with h5.File(fspath) as f:
-        if dump_cfg.datasets and dump_cfg.groups:
-            file_keys.extend(h5.h5py_obj_keys_gen(f))
-        elif dump_cfg.datasets and not dump_cfg.groups:
-            file_keys.extend((k for k, v in h5.datasets(f)))
-        elif not dump_cfg.datasets and dump_cfg.groups:
-            file_keys.extend((k for k, v in h5.groups(f)))
+    file_keys = _keys(fspath, dump_cfg)
     console.print_json(data=file_keys, default=_json_default)
+
+
+@cli.command(help="List keys as JSON array", name="ls")
+@click.argument(
+    "fspath",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-d",
+    "--datasets",
+    "datasets",
+    is_flag=True,
+    default=False,
+    help="dump datasets",
+)
+@click.option(
+    "-g",
+    "--groups",
+    "groups",
+    is_flag=True,
+    default=False,
+    help="dump groups",
+)
+@click.option(
+    "-j",
+    "--json",
+    "json_",
+    is_flag=True,
+    default=False,
+    help="Output JSON",
+)
+def list(
+    fspath: str,
+    datasets: bool = False,
+    groups: bool = False,
+    json_: bool = False,
+) -> None:
+    dump_cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
+    file_keys = _keys(fspath, dump_cfg)
+    if json_:
+        console.print_json(data=file_keys, default=_json_default)
+    else:
+        console.print("\n".join(file_keys))
 
 
 @cli.command(help="Dump attrs")
@@ -311,11 +359,6 @@ def attrs(
 def _command_not_implemented(cmd: str) -> None:
     console.print(f"Command not implemented: {cmd}")
     click.get_current_context().exit(1)
-
-
-@cli.command(help="list datasets/groups", name="ls", hidden=True)
-def ls() -> None:
-    _command_not_implemented("ls")
 
 
 @cli.command(help="copy datasets/groups", name="cp", hidden=True)
