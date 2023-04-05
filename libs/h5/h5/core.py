@@ -19,8 +19,8 @@ from h5py import (
 )
 from typing_extensions import ParamSpec, TypeGuard
 
-P = ParamSpec("P")
-R = TypeVar("R")
+_P = ParamSpec("_P")
+_R = TypeVar("_R")
 
 FsPath = Union[str, Path, PathLike]
 T_GroupLike = Union[Group, File]
@@ -37,6 +37,8 @@ __all__ = (
     "File",
     "Group",
     "__h5py_version__",
+    "as_h5py_obj",
+    "attrs",
     "attrs_dict",
     "attrs_gen",
     "attrs_gen_from_fspath",
@@ -428,15 +430,21 @@ def datasets_gen(
     yield from datasets(h5_obj, h5_path)
 
 
-def attrs_gen(
+def attrs(
     h5_obj: Union[FsPath, File, Group], h5_path: str = ""
 ) -> Iterable[Tuple[str, AttributeManager]]:
     """Return a generator that yields tuples with: (HDF5-path, HDF5-attr)"""
     if isinstance(h5_obj, (Path, str)):
-        with File(h5_obj, mode="r") as h5_obj:
-            yield from h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)
+        yield from attrs_gen_from_fspath(h5_obj, h5_path=h5_path)
     else:
         yield from h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)
+
+
+def attrs_gen(
+    h5_obj: Union[FsPath, File, Group], h5_path: str = ""
+) -> Iterable[Tuple[str, AttributeManager]]:
+    """Return a generator that yields tuples with: (HDF5-path, HDF5-attr)"""
+    return attrs(h5_obj, h5_path)
 
 
 def groups(

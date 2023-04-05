@@ -4,6 +4,8 @@ from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_v
 
 from h5._meta import __version__
 from h5.core import (
+    as_h5py_obj as as_h5py_obj,
+    attrs as attrs,
     attrs_dict as attrs_dict,
     attrs_gen as attrs_gen,
     attrs_gen_from_fspath as attrs_gen_from_fspath,
@@ -34,6 +36,17 @@ from h5.core import (
     is_hdf5 as is_hdf5,
     keys_list as keys_list,
 )
+from h5.dev import (
+    H5Dataset as H5Dataset,
+    H5DatasetDict as H5DatasetDict,
+    H5File as H5File,
+    H5FileDict as H5FileDict,
+    H5FileDumpDict as H5FileDumpDict,
+    H5Group as H5Group,
+    H5GroupDict as H5GroupDict,
+    H5GroupDumpDict as H5GroupDumpDict,
+    info as info,
+)
 from h5.legacy import (
     h5_attrs_dict as h5_attrs_dict,
     h5_attrs_gen as h5_attrs_gen,
@@ -48,8 +61,18 @@ __all__ = (
     "Dataset",
     "File",
     "Group",
+    "H5Dataset",
+    "H5DatasetDict",
+    "H5File",
+    "H5FileDict",
+    "H5FileDumpDict",
+    "H5Group",
+    "H5GroupDict",
+    "H5GroupDumpDict",
     "__h5py_version__",
     "__version__",
+    "as_h5py_obj",
+    "attrs",
     "attrs_dict",
     "attrs_gen",
     "attrs_gen_from_fspath",
@@ -75,6 +98,7 @@ __all__ = (
     "h5py_obj_gen",
     "h5py_obj_groups_gen",
     "h5py_obj_keys_gen",
+    "info",
     "is_dataset",
     "is_file",
     "is_fspath",
