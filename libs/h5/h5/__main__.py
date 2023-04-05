@@ -3,12 +3,15 @@
 import json
 import sys
 
+from typing import Optional
+
 from h5._meta import __pkgroot__, __title__, __version__
 
+__click_version__: Optional[str] = None
 try:
     from click import __version__ as __click_version__
 except ImportError:
-    __click_version__ = None
+    ...
 
 
 def _pkg_info() -> None:
@@ -30,8 +33,17 @@ def _pkg_info() -> None:
     )
 
 
-def main() -> None:
-    _pkg_info()
+def _h5_cli() -> None:
+    from h5.cli import main as h5_cli
+
+    h5_cli()
+
+
+def main(h5cli: bool = True) -> None:
+    if not h5cli or __click_version__ is None or sys.argv[-1].endswith("__main__.py"):
+        _pkg_info()
+    else:
+        _h5_cli()
 
 
 if __name__ == "__main__":

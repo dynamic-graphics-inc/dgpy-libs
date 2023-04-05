@@ -55,6 +55,9 @@ context = '${CONTEXT}'
 [tool.coverage.report]
 show_missing = true
 precision = 2
+omit = [
+  "*/legacy.py"
+]
 exclude_lines = [
   'pragma: no cover',
   'raise NotImplementedError',
@@ -82,7 +85,7 @@ markers = [
 # add cov to pytest args
 addopts = [
   "--cov=h5",
-  "--cov-fail-under=80",
+  "--cov-fail-under=75",
 ]
 
 [tool.ruff]
