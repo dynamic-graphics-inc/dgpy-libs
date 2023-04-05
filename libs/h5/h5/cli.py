@@ -172,8 +172,6 @@ def dump(
 ) -> None:
     H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
     matcher = make_globster(include=include, exclude=exclude)
-
-    console.print(f"Dumping HDF5 file: {fspath}")
     h5dev.H5File.from_fspath(fspath)
     with h5.File(fspath, "r") as f:
         data = {
@@ -227,7 +225,6 @@ def tree(
     groups: bool = False,
 ) -> None:
     H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
-    console.print(f"Dumping HDF5 file: {fspath}")
     file_info = h5dev.H5File.from_fspath(fspath)
 
     if json_:
