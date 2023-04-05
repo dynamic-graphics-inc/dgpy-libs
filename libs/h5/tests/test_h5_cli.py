@@ -76,8 +76,13 @@ def test_keys(tmp_path: Path, runner: CliRunner) -> None:
     assert sorted(data) == expected_keys
 
     ls_result = runner.invoke(cli, ["ls", filepath])
-    print(ls_result.output)
     assert ls_result.exit_code == 0
     list_of_keys = ls_result.output.splitlines()
 
     assert sorted(list_of_keys) == expected_keys
+
+    ls_json_result = runner.invoke(cli, ["ls", "-j", filepath])
+    assert ls_json_result.exit_code == 0
+    list_of_keys_json_array = json.loads(ls_json_result.output)
+
+    assert sorted(list_of_keys_json_array) == expected_keys
