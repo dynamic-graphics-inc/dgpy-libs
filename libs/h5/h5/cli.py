@@ -8,12 +8,13 @@ from typing import Any, List, Optional, Tuple
 import click
 import numpy as np
 
-from dgpy import h5dev
 from globsters import globster
 from rich.console import Console
 from typing_extensions import TypeGuard
 
 import h5
+
+from h5 import dev as h5dev
 
 console = Console()
 
@@ -203,6 +204,7 @@ def dump(
 )
 @click.option(
     "-a",
+    "--attrs",
     "--attributes",
     "attributes",
     is_flag=True,
