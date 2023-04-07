@@ -70,14 +70,14 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.8.5"
+version = "0.8.7"
 description = "H5py utils"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.8.5-py3-none-any.whl", hash = "sha256:b64f16b7113130061d8f65de67e8f623ea13f076bea8f612076eb7adbcfc29c2"},
-    {file = "h5-0.8.5.tar.gz", hash = "sha256:4dbefd2063b369198c6d050a54fabd6163f5627bcbad7bdecf6b6a778e94f504"},
+    {file = "h5-0.8.7-py3-none-any.whl", hash = "sha256:41dbc5b4f9c79db0998606d79ca243a55bab74fb39f0343732b739182b70b129"},
+    {file = "h5-0.8.7.tar.gz", hash = "sha256:3a33da8eac16688b6fa8b66acdcb4b6b4fc4360e0c38a1395c71b7a94096c003"},
 ]
 
 [package.dependencies]
@@ -86,7 +86,7 @@ numpy = ">=1.24.2,<2.0.0"
 typing-extensions = ">=4.5.0,<5.0.0"
 
 [package.extras]
-cli = ["click (>=8.1.3,<9.0.0)", "rich (>=13.3.3,<14.0.0)"]
+cli = ["click (>=8.1.3,<9.0.0)", "globsters (>=0.0.2,<0.0.3)", "rich (>=13.3.3,<14.0.0)"]
 
 [[package]]
 name = "h5py"
