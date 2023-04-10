@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, List, Optional, Tuple
+from functools import lru_cache
+from typing import Any, Callable, List, Optional, Tuple, Union
 
 import click
 import numpy as np
 
-from globsters import globster
+from globsters import Globsters, globster
 from rich.console import Console
 from typing_extensions import TypeGuard
 
@@ -22,6 +23,8 @@ __all__ = (
     "cli",
     "H5CliConfig",
 )
+
+Matcher = Union[Callable[[str], bool], Globsters]
 
 
 def is_np_integer(obj: Any) -> TypeGuard[np.integer]:
@@ -43,9 +46,15 @@ def _json_default(obj: Any) -> Any:
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
 
 
+def true(string: str) -> bool:
+    return True
+
+
+@lru_cache(maxsize=16)
 def make_globster(
-    include: Optional[Tuple[str, ...]] = None, exclude: Optional[Tuple[str, ...]] = None
-) -> globster:
+    include: Optional[Tuple[str, ...]] = ("**/*",),
+    exclude: Optional[Tuple[str, ...]] = None,
+) -> Union[Callable[[str], bool], Globsters]:
     patterns: List[str] = []
     if include:
         patterns.extend(include)
@@ -59,13 +68,44 @@ class H5CliConfig:
     datasets: bool
     attributes: bool
     groups: bool
+    include: Optional[Tuple[str, ...]] = None
+    exclude: Optional[Tuple[str, ...]] = None
+
+    def filter_is_none(self) -> bool:
+        """Check if filter is None"""
+        return (self.include is None or self.include == ("**/*",)) and (
+            self.exclude is None
+        )
+
+    def globster(self) -> Matcher:
+        if self.include is None and self.exclude is None:
+            return true
+        return make_globster(self.include or ("**/*",), self.exclude)
+
+    def matcher(self) -> Optional[Matcher]:
+        if self.filter_is_none():
+            return None
+        return self.globster()
 
     @classmethod
-    def from_cli(cls, datasets: bool, attributes: bool, groups: bool) -> H5CliConfig:
+    def from_cli(
+        cls,
+        datasets: bool,
+        attributes: bool,
+        groups: bool,
+        include: Optional[Tuple[str, ...]] = ("**/*",),
+        exclude: Optional[Tuple[str, ...]] = None,
+    ) -> H5CliConfig:
         return (
-            cls(datasets=True, attributes=True, groups=True)
+            cls(
+                datasets=True,
+                attributes=True,
+                groups=True,
+                include=include,
+                exclude=exclude,
+            )
             if not any((datasets, attributes, groups))
-            else cls(datasets, attributes, groups)
+            else cls(datasets, attributes, groups, include=include, exclude=exclude)
         )
 
 
@@ -158,7 +198,7 @@ def is_hdf5(
     "-e",
     "--exclude",
     "exclude",
-    default=("**/.*",),
+    default=(),
     help="exclude pattern(s)",
     multiple=True,
 )
@@ -169,11 +209,16 @@ def dump(
     attributes: bool = False,
     groups: bool = False,
     include: Tuple[str, ...] = ("**/*",),
-    exclude: Tuple[str, ...] = ("**/.*",),
+    exclude: Optional[Tuple[str, ...]] = None,
 ) -> None:
-    H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
-    matcher = make_globster(include=include, exclude=exclude)
-    h5dev.H5File.from_fspath(fspath)
+    config = H5CliConfig.from_cli(
+        datasets=datasets,
+        attributes=attributes,
+        groups=groups,
+        include=include,
+        exclude=exclude,
+    )
+    matcher = config.globster()
     with h5.File(fspath, "r") as f:
         data = {
             key: h5dev.h5py_obj_info(value)
@@ -235,16 +280,19 @@ def tree(
         console.print(file_info)
 
 
-def _keys(fspath: str, dump_cfg: H5CliConfig) -> List[str]:
+def _keys(fspath: str, clicfg: H5CliConfig) -> List[str]:
     file_keys: List[str] = []
+    matcher = clicfg.matcher()
     with h5.File(fspath) as f:
-        if dump_cfg.datasets and dump_cfg.groups:
+        if clicfg.datasets and clicfg.groups:
             file_keys.extend(h5.h5py_obj_keys_gen(f))
-        elif dump_cfg.datasets and not dump_cfg.groups:
+        elif clicfg.datasets and not clicfg.groups:
             file_keys.extend((k for k, v in h5.datasets(f)))
-        elif not dump_cfg.datasets and dump_cfg.groups:
+        elif not clicfg.datasets and clicfg.groups:
             file_keys.extend((k for k, v in h5.groups(f)))
-    return file_keys
+    if matcher is None:
+        return file_keys
+    return list(filter(matcher, file_keys))
 
 
 @cli.command(help="dump keys as JSON array", name="keys")
@@ -273,12 +321,12 @@ def keys(
     datasets: bool = False,
     groups: bool = False,
 ) -> None:
-    dump_cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
-    file_keys = _keys(fspath, dump_cfg)
+    cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
+    file_keys = _keys(fspath, cfg)
     console.print_json(data=file_keys, default=_json_default)
 
 
-@cli.command(help="List keys as JSON array", name="ls")
+@cli.command(help="List keys", name="ls")
 @click.argument(
     "fspath",
     type=click.Path(exists=True),
@@ -307,14 +355,130 @@ def keys(
     default=False,
     help="Output JSON",
 )
-def list(
+@click.option(
+    "-i",
+    "--include",
+    "include",
+    default=("**/*",),
+    help="include pattern(s)",
+    multiple=True,
+)
+@click.option(
+    "-e",
+    "--exclude",
+    "exclude",
+    default=(),
+    help="exclude pattern(s)",
+    multiple=True,
+)
+def ls(
     fspath: str,
     datasets: bool = False,
     groups: bool = False,
     json_: bool = False,
+    include: Tuple[str, ...] = ("**/*",),
+    exclude: Optional[Tuple[str, ...]] = None,
 ) -> None:
-    dump_cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
-    file_keys = _keys(fspath, dump_cfg)
+    cfg = H5CliConfig.from_cli(
+        datasets=datasets,
+        attributes=False,
+        groups=groups,
+        include=include,
+        exclude=exclude,
+    )
+    file_keys = _keys(fspath, cfg)
+    if json_:
+        console.print_json(data=file_keys, default=_json_default)
+    else:
+        console.print("\n".join(file_keys))
+
+
+@cli.command(help="List datasets", name="lsd")
+@click.argument(
+    "fspath",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-j",
+    "--json",
+    "json_",
+    is_flag=True,
+    default=False,
+    help="Output JSON",
+)
+@click.option(
+    "-i",
+    "--include",
+    "include",
+    default=("**/*",),
+    help="include pattern(s)",
+    multiple=True,
+)
+@click.option(
+    "-e",
+    "--exclude",
+    "exclude",
+    default=(),
+    help="exclude pattern(s)",
+    multiple=True,
+)
+def lsd(
+    fspath: str,
+    json_: bool = False,
+    include: Tuple[str, ...] = ("**/*",),
+    exclude: Optional[Tuple[str, ...]] = None,
+) -> None:
+    """List datasets"""
+    cfg = H5CliConfig.from_cli(
+        datasets=True, attributes=False, groups=False, include=include, exclude=exclude
+    )
+    file_keys = _keys(fspath, cfg)
+    if json_:
+        console.print_json(data=file_keys, default=_json_default)
+    else:
+        console.print("\n".join(file_keys))
+
+
+@cli.command(help="List groups", name="lsg")
+@click.argument(
+    "fspath",
+    type=click.Path(exists=True),
+)
+@click.option(
+    "-j",
+    "--json",
+    "json_",
+    is_flag=True,
+    default=False,
+    help="Output JSON",
+)
+@click.option(
+    "-i",
+    "--include",
+    "include",
+    default=("**/*",),
+    help="include pattern(s)",
+    multiple=True,
+)
+@click.option(
+    "-e",
+    "--exclude",
+    "exclude",
+    default=(),
+    help="exclude pattern(s)",
+    multiple=True,
+)
+def lsg(
+    fspath: str,
+    json_: bool = False,
+    include: Tuple[str, ...] = ("**/*",),
+    exclude: Optional[Tuple[str, ...]] = None,
+) -> None:
+    """List groups"""
+    cfg = H5CliConfig.from_cli(
+        datasets=False, attributes=False, groups=True, include=include, exclude=exclude
+    )
+    file_keys = _keys(fspath, cfg)
     if json_:
         console.print_json(data=file_keys, default=_json_default)
     else:
@@ -347,13 +511,13 @@ def attrs(
     datasets: bool = False,
     groups: bool = False,
 ) -> None:
-    dump_cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
+    cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
     attrs = {}
     with h5.File(fspath) as f:
         for _h5path, h5obj in h5.h5py_obj_gen(f):
-            if dump_cfg.groups and isinstance(h5obj, h5.Group):
+            if cfg.groups and isinstance(h5obj, h5.Group):
                 attrs[h5obj.name] = {**h5obj.attrs}
-            elif dump_cfg.datasets and isinstance(h5obj, h5.Dataset):
+            elif cfg.datasets and isinstance(h5obj, h5.Dataset):
                 attrs[h5obj.name] = {**h5obj.attrs}
     console.print_json(data=attrs, default=_json_default)
 
