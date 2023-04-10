@@ -150,14 +150,14 @@ rapidjson = ["python-rapidjson (>=0.9.1)"]
 
 [[package]]
 name = "lager"
-version = "0.17.0"
+version = "0.17.1"
 description = "EZ-PZ logging based on loguru"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "lager-0.17.0-py3-none-any.whl", hash = "sha256:dcde72d9a622884738923f966ca9665648253644cfb9ecea3e7bae593bf2da52"},
-    {file = "lager-0.17.0.tar.gz", hash = "sha256:39882a6e232868b25b21b7fff2b6c1d957111024a8c81d5763218c84b171bdb6"},
+    {file = "lager-0.17.1-py3-none-any.whl", hash = "sha256:587b637961323f11ae0b8b0b3f12dac428326911dae2b3bfdc96f920847500f3"},
+    {file = "lager-0.17.1.tar.gz", hash = "sha256:394e6f1ba1e3241f7a490d2ddcab69ae15bf7b30cf2aa17b985e420a6292cfd0"},
 ]
 
 [package.dependencies]
@@ -407,4 +407,4 @@ typing-extensions = ">=4.0.0,<5.0.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "6dfba018b3b05935635c0293cd6cef753773af36e131d29927a6022819b69a0c"
+content-hash = "817b0bd540ba70219aa982a7ad6fc52dc519cef81b9e285c992eaedddd50cc21"

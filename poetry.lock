@@ -361,7 +361,7 @@ fmts = "*"
 funkify = "*"
 h5 = ">=0.8.8"
 jsonbourne = "*"
-lager = ">=0.17.0"
+lager = ">=0.17.1"
 listless = "*"
 requires = "*"
 shellfish = "*"
@@ -587,7 +587,7 @@ url = "libs/jsonbourne"
 
 [[package]]
 name = "lager"
-version = "0.17.0"
+version = "0.17.1"
 description = "EZ-PZ logging based on loguru"
 category = "main"
 optional = false
