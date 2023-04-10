@@ -9,7 +9,6 @@ from lager.core import (
     LOG,
     _change_activation,
     _core,
-    _dynamic_level,
     _find_iter,
     _log,
     _options,
@@ -68,7 +67,6 @@ __all__ = (
     #############
     "_change_activation",
     "_core",
-    "_dynamic_level",
     "_find_iter",
     "_log",
     "_options",

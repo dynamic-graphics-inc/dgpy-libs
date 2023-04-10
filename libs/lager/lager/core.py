@@ -237,7 +237,6 @@ __hoisted__ = (
 )
 _change_activation = LAGER._change_activation
 _core = LAGER._core
-_dynamic_level = LAGER._dynamic_level
 _find_iter = LAGER._find_iter
 _log = LAGER._log
 _options = LAGER._options
@@ -266,18 +265,10 @@ trace = LAGER.trace
 warning = LAGER.warning
 
 __all__ = (
-    "loglevel",
-    "flog",
-    "handlers",
-    "logger",
-    "log",
-    "LOG",
-    "ln",
-    "lager",
     "LAGER",
+    "LOG",
     "_change_activation",
     "_core",
-    "_dynamic_level",
     "_find_iter",
     "_log",
     "_options",
@@ -293,8 +284,15 @@ __all__ = (
     "enable",
     "error",
     "exception",
+    "flog",
+    "handlers",
     "info",
+    "lager",
     "level",
+    "ln",
+    "log",
+    "logger",
+    "loglevel",
     "opt",
     "parse",
     "patch",
