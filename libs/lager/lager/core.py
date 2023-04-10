@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 """Python lager brewed by a loguru"""
 import asyncio
-import atexit as _atexit
 import sys as _sys
 
 from functools import wraps
 from time import time
 from typing import Any, Callable, Dict, Optional, TypeVar, Union
 
-from loguru import _defaults
+from loguru import logger as logger
 from loguru._handler import Handler
-from loguru._logger import Core as _Core, Logger as _Logger
 
 from lager.const import LOG_LEVELS
 
@@ -85,12 +83,6 @@ try:
     Handler._serialize_record = staticmethod(_serialize_record)
 except ModuleNotFoundError:
     pass
-
-logger = _Logger(_Core(), None, 0, False, False, False, False, True, None, {})
-if _defaults.LOGURU_AUTOINIT and _sys.stderr:  # type: ignore[truthy-bool]
-    logger.add(_sys.stderr)
-
-_atexit.register(logger.remove)
 
 # lager/logger aliases
 log = LOG = logger
@@ -237,7 +229,6 @@ __hoisted__ = (
 )
 _change_activation = LAGER._change_activation
 _core = LAGER._core
-_dynamic_level = LAGER._dynamic_level
 _find_iter = LAGER._find_iter
 _log = LAGER._log
 _options = LAGER._options
@@ -266,18 +257,10 @@ trace = LAGER.trace
 warning = LAGER.warning
 
 __all__ = (
-    "loglevel",
-    "flog",
-    "handlers",
-    "logger",
-    "log",
-    "LOG",
-    "ln",
-    "lager",
     "LAGER",
+    "LOG",
     "_change_activation",
     "_core",
-    "_dynamic_level",
     "_find_iter",
     "_log",
     "_options",
@@ -293,8 +276,15 @@ __all__ = (
     "enable",
     "error",
     "exception",
+    "flog",
+    "handlers",
     "info",
+    "lager",
     "level",
+    "ln",
+    "log",
+    "logger",
+    "loglevel",
     "opt",
     "parse",
     "patch",
