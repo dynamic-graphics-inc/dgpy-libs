@@ -136,3 +136,5 @@ pdm.lock
 .vscode/
 dgpy-packages/
 temp/
+thingy.py 
+herm.py 

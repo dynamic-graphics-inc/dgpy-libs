@@ -11,7 +11,9 @@ pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 
 try:
-    from pydantic import BaseModel
+    from pydantic import BaseModel, Extra
+
+    _extra = Extra.allow if "pytest" in sys.modules else Extra.ignore
 
     class PydanticJsonObj(BaseModel, JsonObj[Union[str, int]]):  # type: ignore[misc]
         a: int
@@ -23,7 +25,7 @@ try:
             return "prop_value"
 
         class Config:
-            extra = "allow" if "pytest" in sys.modules else "ignore"
+            extra = _extra  # type: ignore[pydantic-config]
 
     class PydanticJsonObjPropertySetter(BaseModel, JsonObj):  # type: ignore[misc]
         a: int
@@ -40,7 +42,7 @@ try:
             self.a = value
 
         class Config:
-            extra = "allow" if "pytest" in sys.modules else "ignore"
+            extra = _extra  # type: ignore[pydantic-config]
 
 except Exception:
     pass

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Dynamic Graphics Python libraries"""
 from dataclasses import dataclass
+from typing import TypedDict, TypeVar
 
 import aiopen
 import asyncify
@@ -16,7 +17,8 @@ import xtyping
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
-from dgpylibs._meta import __version__
+from dgpylibs import _meta
+from dgpylibs._meta import __version__, __version__ as __dgpylibs_version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__
@@ -31,6 +33,7 @@ __all__ = (
     "__version__",
     "__aiopen_version__",
     "__asyncify_version__",
+    "__dgpylibs_version__",
     "__fmts_version__",
     "__funkify_version__",
     "__h5_version__",
@@ -67,9 +70,34 @@ LIBS = (
     "xtyping",
 )
 
+T = TypeVar("T")
+
+
+class DgpyLibMetadataDict(TypedDict):
+    title: str
+    description: str
+    pkgroot: str
+    version: str
+
+
+class DgpyLibsMetadataDict(TypedDict):
+    dgpylibs: DgpyLibMetadataDict
+    aiopen: DgpyLibMetadataDict
+    asyncify: DgpyLibMetadataDict
+    fmts: DgpyLibMetadataDict
+    funkify: DgpyLibMetadataDict
+    h5: DgpyLibMetadataDict
+    jsonbourne: DgpyLibMetadataDict
+    lager: DgpyLibMetadataDict
+    listless: DgpyLibMetadataDict
+    requires: DgpyLibMetadataDict
+    shellfish: DgpyLibMetadataDict
+    xtyping: DgpyLibMetadataDict
+
 
 @dataclass(frozen=True)
 class DgpyLibMetadata:
+    __slots__ = ("title", "description", "pkgroot", "version")
     title: str
     description: str
     pkgroot: str
@@ -91,11 +119,35 @@ class DgpyLibMetadata:
     def __version__(self) -> str:
         return self.version
 
+    def asdict(self) -> DgpyLibMetadataDict:
+        return {
+            "title": self.title,
+            "description": self.description,
+            "pkgroot": self.pkgroot,
+            "version": self.version,
+        }
+
 
 @dataclass(frozen=True)
 class DgpyLibsMetadata:
     """dgpy-libs env info"""
 
+    __slots__ = (
+        "dgpylibs",
+        "aiopen",
+        "asyncify",
+        "fmts",
+        "funkify",
+        "h5",
+        "jsonbourne",
+        "lager",
+        "listless",
+        "requires",
+        "shellfish",
+        "xtyping",
+    )
+
+    dgpylibs: DgpyLibMetadata
     aiopen: DgpyLibMetadata
     asyncify: DgpyLibMetadata
     fmts: DgpyLibMetadata
@@ -108,11 +160,25 @@ class DgpyLibsMetadata:
     shellfish: DgpyLibMetadata
     xtyping: DgpyLibMetadata
 
+    def asdict(self) -> DgpyLibsMetadataDict:
+        return {
+            "dgpylibs": self.dgpylibs.asdict(),
+            "aiopen": self.aiopen.asdict(),
+            "asyncify": self.asyncify.asdict(),
+            "fmts": self.fmts.asdict(),
+            "funkify": self.funkify.asdict(),
+            "h5": self.h5.asdict(),
+            "jsonbourne": self.jsonbourne.asdict(),
+            "lager": self.lager.asdict(),
+            "listless": self.listless.asdict(),
+            "requires": self.requires.asdict(),
+            "shellfish": self.shellfish.asdict(),
+            "xtyping": self.xtyping.asdict(),
+        }
 
-@dataclass(frozen=True)
-class DgpyLibsVersions:
-    """dgpy-libs env info"""
 
+class DgpyLibsVersionsDict(TypedDict):
+    dgpylibs: str
     aiopen: str
     asyncify: str
     fmts: str
@@ -126,7 +192,62 @@ class DgpyLibsVersions:
     xtyping: str
 
 
+@dataclass(frozen=True)
+class DgpyLibsVersions:
+    """dgpy-libs env info"""
+
+    __slots__ = (
+        "dgpylibs",
+        "aiopen",
+        "asyncify",
+        "fmts",
+        "funkify",
+        "h5",
+        "jsonbourne",
+        "lager",
+        "listless",
+        "requires",
+        "shellfish",
+        "xtyping",
+    )
+
+    dgpylibs: str
+    aiopen: str
+    asyncify: str
+    fmts: str
+    funkify: str
+    h5: str
+    jsonbourne: str
+    lager: str
+    listless: str
+    requires: str
+    shellfish: str
+    xtyping: str
+
+    def asdict(self) -> DgpyLibsVersionsDict:
+        return {
+            "dgpylibs": self.dgpylibs,
+            "aiopen": self.aiopen,
+            "asyncify": self.asyncify,
+            "fmts": self.fmts,
+            "funkify": self.funkify,
+            "h5": self.h5,
+            "jsonbourne": self.jsonbourne,
+            "lager": self.lager,
+            "listless": self.listless,
+            "requires": self.requires,
+            "shellfish": self.shellfish,
+            "xtyping": self.xtyping,
+        }
+
+
 dgpylibs_metadata = DgpyLibsMetadata(
+    dgpylibs=DgpyLibMetadata(
+        title=_meta.__title__,
+        description=_meta.__description__,
+        pkgroot=_meta.__pkgroot__,
+        version=_meta.__version__,
+    ),
     aiopen=DgpyLibMetadata(
         title=aiopen._meta.__title__,
         description=aiopen._meta.__description__,
@@ -196,6 +317,7 @@ dgpylibs_metadata = DgpyLibsMetadata(
 )
 
 dgpylibs_info = DgpyLibsVersions(
+    dgpylibs=__version__,
     aiopen=__aiopen_version__,
     asyncify=__asyncify_version__,
     fmts=__fmts_version__,

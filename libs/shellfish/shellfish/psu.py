@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """psutils-utils"""
 
-try:
+try:  # pragma: no cover
     import psutil
 
     PSUTIL_AVAILABLE = True

@@ -43,6 +43,7 @@ from shellfish.fs._async import (
     islink_async as islink_async,
     lbytes_async as lbytes_async,
     lbytes_gen_async as lbytes_gen_async,
+    listdir_async as listdir_async,
     ljson_async as ljson_async,
     lstat_async as lstat_async,
     lstr_async as lstr_async,
@@ -236,10 +237,14 @@ def scandir_gen(
 
     Args:
         fspath: (FsPath): dirpath to look through
+        recursive (bool): recursively scan the directory
+        follow_symlinks (bool): follow symlinks when checking for dirs and files
         files (bool): include files
         dirs (bool): include directories
         symlinks (bool): include symlinks
-        follow_symlinks (bool): follow symlinks when checking for dirs and files
+        dirs_only (bool): only include directories
+        files_only (bool): only include files
+        symlinks_only (bool): only include symlinks
 
     Returns:
         Iterator[DirEntry]: Iterator of os.DirEntry objects
@@ -500,6 +505,7 @@ def dirs_gen(
         onerror: Function called on OSError
         topdown: Not applicable
         followlinks: Follow links
+        check: Check that dir exists
 
     Returns:
         Generator object that yields directory paths (absolute or relative)
@@ -620,6 +626,7 @@ def files_dirs_gen(
         onerror: Function called on OSError
         topdown: Not applicable
         followlinks: Follow links
+        check: Check if dirpath is a directory
 
     Returns:
         A tuple of two generators (files_gen(), dirs_gen())
@@ -743,6 +750,7 @@ def walk_gen(
         onerror: Function called on OSError
         topdown: Not applicable
         followlinks: Follow links
+        check: Check if dirpath exists
 
     Returns:
         Generator object that yields directory paths (absolute or relative)
@@ -1176,8 +1184,10 @@ def wjson(
         fmt (bool): Indented (2 spaces) or minify data (default=False)
         pretty (bool): Indented (2 spaces) or minify data (default=False)
         sort_keys (bool): Sort the data keys if the data is a dictionary.
-        append_newline (bool): Sort the data keys if the data is a dictionary.
+        append_newline (bool): Append a newline to the end of the file
         default: default function hook
+        chmod (Optional[int]): Optional chmod to set on file
+        append (bool): Append to the file if True, overwrite otherwise; default
         **kwargs: Additional keyword arguments to pass to jsonbourne.JSON.dumpb
 
     Returns:
@@ -1359,7 +1369,7 @@ def shebang(fspath: FsPath) -> Union[None, str]:
         >>> remove(script)
 
     """
-    with open(fspath, "r") as f:
+    with open(fspath) as f:
         first = f.readline().replace("\r\n", "\n").strip("\n")
         return first if "#!" in first[:2] else None
 
@@ -1405,7 +1415,7 @@ def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[
     """Return an iterator of fspaths matching the given glob pattern
 
     Args:
-        fspath: Glob pattern
+        pattern: Glob pattern
         recursive: Recursively search directories if True
         r: Recursively search directories if True (Alias for recursive)
 
@@ -1456,6 +1466,7 @@ def rmdir(fspath: FsPath, *, force: bool = False, recursive: bool = False) -> No
 
     Args:
         fspath (FsPath): Directory path to remove
+        force (bool): Force removal of files and directories
         recursive (bool): Recursively remove all contents if True
 
     Returns:
@@ -1570,20 +1581,24 @@ def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> Non
 
 def copy_file(
     src: FsPath, dest: FsPath, *, dryrun: bool = False, mkdirp: bool = False
-) -> None:
+) -> Tuple[str, str]:
     """Copy a file given a source-path and a destination-path
 
     Args:
         src (str): Source fspath
         dest (str): Destination fspath
+        dryrun (bool): Do not copy file if True just return the src and dest
+        mkdirp (bool): Create parent directories if they do not exist
 
     """
     _dest = Path(dest)
-    if mkdirp:
+    if not dryrun and mkdirp:
         _dest.parent.mkdir(parents=mkdirp, exist_ok=True)
     elif not _dest.parent.exists() or not _dest.parent.is_dir():
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
-    wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+    if not dryrun:
+        wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+    return (str(src), str(dest))
 
 
 def cp(
@@ -1649,6 +1664,7 @@ __all__ = (
     "copy_file",
     "cp",
     "dir_exists",
+    "dir_exists_async",
     "dirpath_gen",
     "dirs_gen",
     "exists",
@@ -1682,6 +1698,7 @@ __all__ = (
     "lbytes_async",
     "lbytes_gen",
     "lbytes_gen_async",
+    "listdir_async",
     "listdir_gen",
     "ljson",
     "ljson_async",

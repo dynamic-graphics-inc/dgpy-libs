@@ -9,6 +9,8 @@ from shellfish.aios import _path
 
 __all__ = (
     "chmod",
+    "listdir",
+    "lstat",
     "makedirs",
     "mkdir",
     "path",
@@ -32,3 +34,4 @@ mkdir = asyncify(os.mkdir)
 rmdir = asyncify(os.rmdir)
 stat = asyncify(os.stat)
 lstat = asyncify(os.lstat)
+listdir = asyncify(os.listdir)

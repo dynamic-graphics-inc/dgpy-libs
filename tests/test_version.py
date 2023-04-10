@@ -1,32 +1,40 @@
 # -*- coding: utf-8 -*-
-from os import path
+from typing import Callable
 
 import pytest
+import tomli
 
-from dgpylibs import __version__
+import dgpylibs
+
+from dgpydev import DGPY_LIBS
+from lager import lager
 
 pytestmark = [pytest.mark.basic]
 
 
-def _get_version() -> str:
-    _dirpath = path.split(path.realpath(__file__))[0]
-    version = "UNKNOWN???"
-    for _i in range(3):
-        _filepath = path.join(_dirpath, "pyproject.toml")
-        if path.exists(_filepath):
-            version = (
-                [
-                    line
-                    for line in open(_filepath).read().split("\n")
-                    if "version" in line
-                ][0]
-                .replace("version = ", "")
-                .strip('"')
-            )
-            return version
-        _dirpath = path.split(_dirpath)[0]
-    return version
+@pytest.mark.parametrize("dgpy_lib_name", DGPY_LIBS)
+class TestDgpyLib:
+    def test_version(
+        self,
+        dgpy_lib_name: str,
+        dgpy_lib_dirpath: Callable[[str], str],
+        dgpy_lib_pyproject_toml_string: Callable[[str], str],
+    ) -> None:
+        lager.info(f"Testing version for {dgpy_lib_name}")
+        dgpylibs_metadata = dgpylibs.dgpylibs_metadata
+        lib_metadata: dgpylibs.DgpyLibMetadata = getattr(
+            dgpylibs_metadata, dgpy_lib_name
+        )
 
+        pyproject_toml_string = dgpy_lib_pyproject_toml_string(dgpy_lib_name)
+        lager.debug("pyproject.toml string", pyproject_toml_string)
+        pyproject_toml = tomli.loads(pyproject_toml_string)
+        lager.debug("pyproject.toml", pyproject_toml)
 
-def test_version() -> None:
-    assert __version__ == _get_version()
+        assert "tool" in pyproject_toml
+        assert "poetry" in pyproject_toml["tool"]
+        assert "version" in pyproject_toml["tool"]["poetry"]
+
+        assert pyproject_toml["tool"]["poetry"]["version"] == lib_metadata.version
+
+        lager.info("lib metadata", lib_metadata)

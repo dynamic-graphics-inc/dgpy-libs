@@ -2,6 +2,7 @@
 """Asyncify core"""
 
 import asyncio
+import warnings
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
@@ -119,6 +120,8 @@ def asyncify(
 
     Args:
         funk: Function to make into an async coroutine
+        loop: Event loop in which to run/execute
+        executor: Executor to with which to execute
 
     Returns:
         An asynchronous function
@@ -208,6 +211,7 @@ def run(
     Args:
         aw (Awaitable[T]): Async/awaitable function to run
         debug (Optional[bool]): If True run event loop in debug mode
+        **kwargs: keyword arguments to be passed to the wrapped function
 
     Returns:
         T: Return the result of running the async function
@@ -222,7 +226,12 @@ def run(
 
     """
     # If python is 3.6
-    if not hasattr(asyncio, "run"):
+    if not hasattr(asyncio, "run"):  # pragma: no cover
+        warnings.warn(
+            "asyncify no longer supports python3.6...",
+            DeprecationWarning,
+            stacklevel=2,
+        )
         return _run(aw, debug=debug)
     return asyncio_run(aw, debug=debug)
 
@@ -351,7 +360,7 @@ def aiorun(
     )
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     import doctest
 
     doctest.testmod()

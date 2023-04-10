@@ -5,7 +5,7 @@ from __future__ import annotations
 import os
 
 from os import fspath as _fspath
-from typing import Any, AsyncIterable, Callable, Optional
+from typing import Any, AsyncIterable, Callable, List, Optional
 
 from aiopen import aiopen
 from jsonbourne import JSON
@@ -22,6 +22,8 @@ __all__ = (
     "islink_async",
     "lbytes_async",
     "lbytes_gen_async",
+    "listdir_async",
+    "ljson_async",
     "lstat_async",
     "lstr_async",
     "lstring_async",
@@ -29,11 +31,13 @@ __all__ = (
     "rbin_gen_async",
     "rbytes_async",
     "rbytes_gen_async",
+    "rjson_async",
     "rstr_async",
     "rstring_async",
     "sbin_async",
     "sbytes_async",
     "sbytes_gen_async",
+    "sjson_async",
     "sstr_async",
     "sstring_async",
     "stat_async",
@@ -41,12 +45,9 @@ __all__ = (
     "wbin_gen_async",
     "wbytes_async",
     "wbytes_gen_async",
+    "wjson_async",
     "wstr_async",
     "wstring_async",
-    "ljson_async",
-    "rjson_async",
-    "sjson_async",
-    "wjson_async",
 )
 
 
@@ -100,6 +101,11 @@ is_file_async = isfile_async
 is_link_async = islink_async
 
 
+async def listdir_async(fspath: FsPath) -> List[str]:
+    """Async version of `os.listdir`"""
+    return await aios.listdir(_fspath(fspath))
+
+
 # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO #
 async def wbytes_async(
     filepath: FsPath,
@@ -117,6 +123,7 @@ async def wbytes_async(
         append (bool): Append to the fspath if True; otherwise overwrite
         filepath: fspath to write to
         bites: Bytes to be written
+        chmod: chmod the fspath to this mode after writing
 
     Returns:
         None
@@ -347,6 +354,7 @@ async def rstring_async(filepath: FsPath, encoding: str = "utf-8") -> str:
 
     Args:
         filepath: Filepath for file to read
+        encoding (str): File encoding (Default='utf-8')
 
     Returns:
         str: String read from given fspath

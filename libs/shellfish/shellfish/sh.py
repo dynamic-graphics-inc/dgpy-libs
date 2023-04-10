@@ -43,6 +43,7 @@ from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
 from shellfish._meta import __version__
+from shellfish.echo import echo as echo
 from shellfish.fs import (
     Stdio as Stdio,
     SymlinkType as SymlinkType,
@@ -84,6 +85,7 @@ from shellfish.fs import (
     lbytes_async as lbytes_async,
     lbytes_gen as lbytes_gen,
     lbytes_gen_async as lbytes_gen_async,
+    listdir_async as listdir_async,
     listdir_gen as listdir_gen,
     ljson as ljson,
     ljson_async as ljson_async,
@@ -253,6 +255,7 @@ __all__ = (
     "lbytes_async",
     "lbytes_gen",
     "lbytes_gen_async",
+    "listdir_async",
     "listdir_gen",
     "ljson",
     "ljson_async",
@@ -360,7 +363,7 @@ class Flag(metaclass=FlagMeta):
 
 def mkenv(env: Dict[str, str], extenv: bool = True) -> Dict[str, str]:
     if extenv:
-        return {**{k: v for k, v in environ.items()}, **env}
+        return {**dict(environ), **env}
     return env
 
 
@@ -650,7 +653,7 @@ class Done(JsonBaseModel):
         ]
 
 
-def decode_stdio_bytes(stdio_bytes: AnyStr, lf: bool = True) -> str:
+def decode_stdio_bytes(stdio_bytes: Union[str, bytes], lf: bool = True) -> str:
     """Return Stdio bytes from stdout/stderr as a string
 
     Args:
@@ -824,6 +827,8 @@ def _do(
             sys.stdout and sys.stderr
         text: Flag to decode the output as text
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        ok_code (Union[int, Sequence[int]]): Code(s) to consider as OK
+        dryrun (bool): Flag to not run the subprocess and return faux Done
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -850,19 +855,16 @@ def _do(
     args_str = " ".join(_args)
     if dryrun:
         return Done(
-            args=_args if IS_WIN or not shell else args_str,
+            args=_args if IS_WIN or not shell else [args_str],
             returncode=0,
             stdout="",
             stderr="",
             ti=0,
             tf=0,
             dt=0,
-            hrdt=HrTime(
-                hr=0,
-                min=0,
-            ),
+            hrdt=HrTime(sec=0, ns=0),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
         )
 
@@ -876,7 +878,7 @@ def _do(
         shell=shell,
         input=validate_stdin(input),
         timeout=timeout,
-        universal_newlines=text,
+        text=text,
     )
     tf = time()
     stdout_str = pstdout(proc)
@@ -891,7 +893,7 @@ def _do(
         dt=tf - ti,
         hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
-        stdin=_input,
+        stdin=_input if not isinstance(_input, bytes) else _input.decode(),
     )
     if check or ok_code != 0:
         done.check(ok_code=ok_code)
@@ -985,6 +987,9 @@ def shx(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
+        ok_code: Return code(s) to check if ok
+        dryrun: Don't run the subprocess
+
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1123,6 +1128,8 @@ async def _do_async(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Event loop to use if have you use asyncified version (`do_asyncify`)
+        ok_code: Return code(s) to check if ok
+        dryrun: Don't run the subprocess
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1192,11 +1199,11 @@ async def _do_async(
             tf=0,
             dt=0,
             hrdt=HrTime(
-                hr=0,
-                min=0,
+                sec=0,
+                ns=0,
             ),
             verbose=verbose,
-            stdin=_input,
+            stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
             async_proc=True,
         )
@@ -1261,9 +1268,12 @@ async def _do_async(
                 stderr=stderr,
                 cmd=str(args),
             )
+    _args_array = (
+        list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
+    )
     return Done(
-        args=args,
-        returncode=_proc.returncode,
+        args=_args_array,
+        returncode=_proc.returncode or -1,
         stdout=decode_stdio_bytes(stdout),
         stderr=decode_stdio_bytes(stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,
@@ -1306,6 +1316,8 @@ async def do_async(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Optional event loop to run subprocess in
+        ok_code: Return code(s) that are considered OK (Default value = 0)
+        dryrun (bool): Flag to not run the subprocess but return a Done object
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1386,6 +1398,9 @@ async def doa(
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
         loop: Optional event loop to run subprocess in
+        ok_code: Return code(s) that are considered OK (Default value = 0)
+        dryrun (bool): Flag to not run the subprocess but return a Done object
+        extenv: Extend environment with the current environment (Default value = True)
 
     Returns:
         Finished PRun object which is a dictionary, so a dictionary
@@ -1910,21 +1925,6 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def echo(
-    *args: Any, sep: str = " ", end: str = "\n", file: Optional[IO[Any]] = None
-) -> None:
-    """Print/echo function
-
-    Args:
-        *args: Item(s) to print/echo
-        sep: Separator to print with
-        end: End of print suffix; defaults to `\n`
-        file: File like object to write to if not stdout
-
-    """
-    print(*args, sep=sep, end=end, file=file)
-
-
 def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     """Export/Set an environment variable
 
@@ -2156,6 +2156,23 @@ def ls_files_dirs(
     if not abspath:
         return [el.name for el in file_dir_entries], [el.name for el in dir_dir_entries]
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
+
+
+async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+    """List files and dirs given a dirpath (defaults to pwd)
+
+    Args:
+        dirpath (FsPath): path-string to directory to list
+        abspath (bool): Give absolute paths
+
+    Returns:
+        List of the directory items
+
+    """
+    if abspath:
+        items = await listdir_async(dirpath)
+        return [path.join(dirpath, el) for el in items]
+    return await listdir_async(dirpath)
 
 
 def rm(

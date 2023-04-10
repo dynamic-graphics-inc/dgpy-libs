@@ -109,6 +109,7 @@ notebooks/
 ## Contributor(s):
 
 - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
+- [Dan Costello](https://github.com/dan-costello) ~ `dan@dgi.com` / `dan.costello2@gmail.com`
 - Possibly you!?
 
 ## Contributing:
@@ -121,3 +122,4 @@ Plz do! Send me that PR!
 
 - Have CI/CD auto build n publish
 - Changelog (for real)
+- Figure out why the combine-prs workflow doesn't trigger github actions...

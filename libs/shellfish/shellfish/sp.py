@@ -216,7 +216,7 @@ def runs(
         timeout=timeout,
         env=env,
         capture_output=capture_output,
-        universal_newlines=True,
+        text=True,
         **other_popen_kwargs,
     )
     if check:

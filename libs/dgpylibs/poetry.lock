@@ -70,19 +70,23 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.6.0"
+version = "0.8.7"
 description = "H5py utils"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.6.0-py3-none-any.whl", hash = "sha256:82e3541881abce59658db71afbccbe98c9ac26c428e564a95e3d283d0440e8f6"},
-    {file = "h5-0.6.0.tar.gz", hash = "sha256:e5c4adf0c81f66650dfc8170aac6a68374853088cec5f6fff30b6a5f89f12c8a"},
+    {file = "h5-0.8.7-py3-none-any.whl", hash = "sha256:41dbc5b4f9c79db0998606d79ca243a55bab74fb39f0343732b739182b70b129"},
+    {file = "h5-0.8.7.tar.gz", hash = "sha256:3a33da8eac16688b6fa8b66acdcb4b6b4fc4360e0c38a1395c71b7a94096c003"},
 ]
 
 [package.dependencies]
 h5py = ">=3.7.0"
 numpy = ">=1.24.2,<2.0.0"
+typing-extensions = ">=4.5.0,<5.0.0"
+
+[package.extras]
+cli = ["click (>=8.1.3,<9.0.0)", "globsters (>=0.0.2,<0.0.3)", "rich (>=13.3.3,<14.0.0)"]
 
 [[package]]
 name = "h5py"
@@ -161,14 +165,14 @@ loguru = ">=0.6.0,<0.7.0"
 
 [[package]]
 name = "listless"
-version = "0.1.2"
+version = "0.1.3"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "listless-0.1.2-py3-none-any.whl", hash = "sha256:61af18f0d9d8519b92933f10e75bad5829c071e5707620580d400187afbe2dfa"},
-    {file = "listless-0.1.2.tar.gz", hash = "sha256:3f8d56c4f392f1e491cfce829d11a57c0e57799753a2bb7e998e6fe76977be0f"},
+    {file = "listless-0.1.3-py3-none-any.whl", hash = "sha256:c77ef9e8db8170e325ede3e75de2e1db9c1cc31fb03ea45a67f22a0f89dd2adf"},
+    {file = "listless-0.1.3.tar.gz", hash = "sha256:386416a8f8cf47877d43aac9c2c7a8411bacd6b821a45e9536f7eebac07654e8"},
 ]
 
 [[package]]
@@ -299,14 +303,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.2.0"
+version = "0.2.2"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.2.0-py3-none-any.whl", hash = "sha256:cd92a96e0819a0ee91edf77b0efbbd8643fd6e8bfc776bafce08ad0dfba7a4e7"},
-    {file = "shellfish-0.2.0.tar.gz", hash = "sha256:b1536da5942756fd3b5508fdc13d8ea0388754deb9974f6baa90ca8689d7987b"},
+    {file = "shellfish-0.2.2-py3-none-any.whl", hash = "sha256:69b68475e6322272c323fc12a432d3d7695066ad87d7b3b7fbc17c2818c4a73d"},
+    {file = "shellfish-0.2.2.tar.gz", hash = "sha256:19d239caa66e1f3c912af0663f80e5ca7a02b0d7e74b9b99858b40a109ebf1ad"},
 ]
 
 [package.dependencies]

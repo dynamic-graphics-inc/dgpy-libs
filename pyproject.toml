@@ -12,10 +12,10 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = ["dgpy", "dgi", "typed", "python3"]
@@ -24,6 +24,7 @@ keywords = ["dgpy", "dgi", "typed", "python3"]
 python = "^3.8"
 aiopen = "*"
 asyncify = "*"
+dgpylibs = "*"
 fmts = "*"
 funkify = "*"
 h5 = "*"
@@ -33,22 +34,24 @@ listless = "*"
 requires = "*"
 shellfish = "*"
 xtyping = "*"
+click = "^8.1.3"
+rich = "^13.3.3"
 
 [tool.poetry.dev-dependencies]
-black = "^23.1.0"
+black = "^23.3.0"
 flake8 = "^5.0.4"
 h5py = "^3.8.0"
 isort = "^5.11.5"
 nox = "^2022.11.21"
-orjson = "^3.8.6"
-pydantic = "^1.10.5"
-pytest = "^7.2.1"
-pytest-asyncio = "^0.20.3"
+orjson = "^3.8.10"
+pydantic = "^1.10.7"
+pytest = "^7.3.0"
+pytest-asyncio = "^0.21.0"
 pytest-cov = "^4.0.0"
-python-rapidjson = "^1.9"
+python-rapidjson = "^1.10"
 xdoctest = ">=1.0.1"
 click = "^8.1.2"
-mypy = "^1.0"
+mypy = "^1.2"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
@@ -65,6 +68,11 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
 [tool.poetry.scripts]
 dgpydev = "dgpydev.cli:main"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.261"
+anyio = { extras = ["trio"], version = "^3.6.2" }
+nox = "^2022.11.21"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -84,6 +92,7 @@ line-length = 88
 target-version = ['py37', 'py38']
 skip-string-normalization = false
 include = '\.pyi?$'
+exclude = '\.ipynb$'
 extend-exclude = '''
 (
   /(
@@ -105,7 +114,6 @@ extend-exclude = '''
   )/
 )
 '''
-
 
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -164,6 +172,9 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
+plugins = [
+  "pydantic.mypy",
+]
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
@@ -249,10 +260,15 @@ select = [
   "W",
   # "SIM",
   # "PT", # pytest
-  # "D",
   "T201", # print
   # pyupgrade
   "UP",
+  # pydocstyle
+  # "D",
+  "D207", # docstring is under-indented
+  "D208", # docstring is over-indented
+  "D414",
+  "D417",
 ]
 line-length = 88
 
@@ -266,13 +282,12 @@ ignore = [
   # PYUPGRADE
   "UP004",
   "UP009", # utf-8 encoding declaration (I am supersticious)
-  "UP015",
-  "UP021",
-  "UP022",
-  "UP024",
-  # "UP032",
-  "UP035",
+  "UP022", # must test shellfish first...
+  "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
+
+  # PYDOCSTYLE
+  "D415", # first line should end with a period/exclamation point
 ]
 
 [tool.ruff.mccabe]
@@ -288,6 +303,17 @@ max-complexity = 20
 
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
+]
+"**/noxfile.py" = [
+  "D"
+]
+"**/conftest.py" = [
+  "D"
+]
+"**/test_*.py" = [
+  "D1",
+  "D102",
+  "D103", # missing docstring
 ]
 
 [tool.ruff.pydocstyle]

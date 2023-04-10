@@ -143,7 +143,7 @@ def pipc(session):
 
 def _mypy(session):
     session.install("mypy", "typing-extensions", "pydantic", "anyio")
-    session.install("orjson", "types-orjson", "fastapi")
+    session.install("orjson", "types-orjson", "fastapi", "click")
     session.run("mypy", "--version")
     session.run(
         "mypy",
@@ -164,8 +164,9 @@ def _mypy(session):
         )
 
 
-def _ruff(session: nox.Session):
+def _ruff(session: nox.Session) -> None:
     session.install("ruff")
+    session.run("ruff", "--version")
     session.run("ruff", ".")
 
 
@@ -178,7 +179,7 @@ def mypy(session):
 def lint(session):
     _mypy(session)
     _ruff(session)
-    # _flake(session)  # noqa
+    _flake(session)
 
 
 ruffext = """
@@ -263,7 +264,7 @@ def update_metadata(session):
 
         s = _pkg_entry_point(libname)
         if path.exists(pkg_main_filepath):
-            with open(pkg_main_filepath, "r") as f:
+            with open(pkg_main_filepath) as f:
                 pkg_main_file_str = f.read()
             if pkg_main_file_str != s:
                 echo("updating __main__.py")

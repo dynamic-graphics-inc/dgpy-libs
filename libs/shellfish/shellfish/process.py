@@ -84,7 +84,7 @@ class _EnvObjMeta(type):
     keys = environ.keys
 
     def asdict(cls) -> Dict[str, str]:
-        return {k: v for k, v in environ.items()}
+        return dict(environ.items())
 
 
 class Env(metaclass=_EnvObjMeta):
@@ -148,7 +148,7 @@ def is_wsl() -> bool:
         return True
 
     try:
-        with open("/proc/version", "r") as f:
+        with open("/proc/version") as f:
             if "microsoft" in f.read().lower():
                 return True
     except FileNotFoundError:

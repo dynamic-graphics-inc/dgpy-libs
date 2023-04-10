@@ -12,7 +12,7 @@ mds = $(nbs:%.ipynb=%.md)
 pys = $(wildcard *.py)
 
 #
-all: install
+all: fmt testcov
 .PHONY: fmt flake mypy test testcov testlf doctest clean
 
 .PHONY: install
@@ -54,7 +54,7 @@ test:
 
 .PHONY:testcov
 testcov:
-	pytest --cov=dgpy_pkg --doctest-modules tests $(PKG_NAME)
+	pytest --cov --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:

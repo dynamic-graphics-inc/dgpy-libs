@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """String utils"""
 import re
+import time
 
 from binascii import hexlify
 from datetime import datetime, timedelta, timezone
@@ -806,7 +807,7 @@ def strip_comments(string: str) -> str:
         comment_re_match = comment_re.match(line)
         if comment_re_match:
             return line[: comment_re_match.start(1)]
-        return line
+        return line  # pragma: no cover
 
     return "\n".join(_strip_comments_line(line) for line in filelines)
 
@@ -844,6 +845,13 @@ def multi_replace(
         >>> replacements = {'hello': 'goodbye', 'world': 'earth'}
         >>> multi_replace('hello, world', replacements)
         'goodbye, earth'
+
+        >>> replacements = [['hello', 'goodbye'], ['world', 'this', 'will', 'fail']]
+        >>> try:
+        ...     multi_replace('hello, world', replacements)
+        ... except ValueError:
+        ...     print('ValueError raised')
+        ValueError raised
 
     """
     if isinstance(replacements, dict):
@@ -1176,7 +1184,7 @@ def rm_multilines(string: str) -> str:
     )
 
 
-def ensure_utf8(string: AnyStr) -> str:
+def ensure_utf8(string: Union[str, bytes]) -> str:
     """Return a string that ensured to be utf-8.
 
     This is often needed for those rare cases where some weird non-unicode
@@ -1189,12 +1197,30 @@ def ensure_utf8(string: AnyStr) -> str:
     Returns:
         The unicode-encoded version of a string
 
+    Examples:
+        >>> ensure_utf8('hello')
+        'hello'
+        >>> ensure_utf8(b'hello')
+        'hello'
+        >>> latin_bytes_with_weird_characters = b'hello\\xc3\\xa9'
+        >>> latin_string = ensure_utf8(latin_bytes_with_weird_characters)
+        >>> latin_string
+        'helloé'
+        >>> problem_bytes = b'hello\\x00'
+        >>> problem_bytes_utf8 = ensure_utf8(problem_bytes)
+        >>> problem_bytes_utf8
+        'hello\\x00'
+        >>> ensure_utf8('hello\\x00')
+        'hello\\x00'
+        >>> ensure_utf8(b'hello\\x00')
+        'hello\\x00'
+
     """
     if isinstance(string, bytes):
         try:
             return str(string, encoding="utf-8")
         except UnicodeDecodeError:
-            return str(string, encoding="latin2")
+            return str(string, encoding="utf-8", errors="ignore")
         except TypeError:
             pass
     return str(string)
@@ -1296,11 +1322,15 @@ def dedent(string: str) -> str:
     )
 
 
-def timestamp(ts: Optional[Union[float, datetime]] = None) -> str:
+def timestamp(
+    ts: Optional[Union[float, datetime]] = None, utc_offset: Optional[float] = None
+) -> str:
     """Time stamp string w/ format yyyymmdd-HHMMSS
+    Defaults
 
     Args:
         ts: datetime or float
+        utc_offset: float
 
     Returns:
         timestamp string
@@ -1316,17 +1346,25 @@ def timestamp(ts: Optional[Union[float, datetime]] = None) -> str:
         True
 
     """
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     if isinstance(ts, float):
-        return datetime.fromtimestamp(ts).strftime("%Y%m%d-%H%M%S")
+        return datetime.fromtimestamp(
+            ts, tz=timezone(timedelta(hours=utc_offset))
+        ).strftime("%Y%m%d-%H%M%S")
     if isinstance(ts, datetime):
         return ts.strftime("%Y%m%d-%H%M%S")
     return datetime.now().strftime("%Y%m%d-%H%M%S")
 
 
-def long_timestamp_string(timestamp_sec: float) -> str:
-    """Return a 'long-form' timestamp string given epoch-seconds float"""
+def long_timestamp_string(
+    timestamp_sec: float, utc_offset: Optional[float] = None
+) -> str:
+    """Return a 'long-form' timestamp string given epoch-seconds float and utc offset hours as int"""
+    if utc_offset is None:
+        utc_offset = -float(time.timezone / 3600)
     return datetime.fromtimestamp(
-        timestamp_sec, tz=timezone(timedelta(hours=-8))
+        timestamp_sec, tz=timezone(timedelta(hours=utc_offset))
     ).strftime("%A, %d. %B %Y %I:%M%p")
 
 
@@ -1720,14 +1758,22 @@ def t9(string: str) -> int:
 
 @anystr
 def str_is_identifier(string: str) -> bool:
-    """
+    """Return True if a string is a valid python identifier; False otherwise
 
     Args:
-        string ():
+        string (str): String (likely to be used as a key) to check
 
     Returns:
+        bool: True if is an identifier
+
+    Examples:
+        >>> str_is_identifier("howdy")
+        True
+        >>> str_is_identifier("class")
+        False
 
     """
+    return string.isidentifier() and not iskeyword(string)
     if not string.isidentifier():
         return False
     if iskeyword(string):
@@ -1800,6 +1846,25 @@ def isidentifier(string: AnyStr) -> bool:
 
     """
     return is_identifier(string)
+
+
+def is_dunder(string: str) -> bool:
+    """Return True if a string is 'dunder' (starts and ends with '__')
+
+    Args:
+        string (str): String to check
+
+    Returns:
+        bool: True if is a dunder
+
+    Examples:
+        >>> is_dunder("__dunder__")
+        True
+        >>> is_dunder("not_dunder")
+        False
+
+    """
+    return string.startswith("__") and string.endswith("__")
 
 
 __all__ = (
