@@ -54,7 +54,7 @@ test:
 
 .PHONY:testcov
 testcov:
-	pytest --cov=dgpy_pkg --doctest-modules tests $(PKG_NAME)
+	pytest --cov=listless --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:
@@ -63,10 +63,6 @@ testlf:
 .PHONY:doctest
 doctest:
 	pytest --doctest-modules $(PKG_NAME)
-
-.PHONY:doctestcov
-doctestcov:
-	pytest --cov=src/dgpy --doctest-modules $(PKG_NAME)
 
 ###########
 ## CLEAN ##
