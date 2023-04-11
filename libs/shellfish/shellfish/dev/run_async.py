@@ -16,19 +16,8 @@ from subprocess import (
 from time import time
 from typing import Callable, Optional
 
-from shellfish.sp import (
-    PopenArgs,
-)
-from xtyping import (
-    IO,
-    Any,
-    FsPath,
-    List,
-    Mapping,
-    Set,
-    Tuple,
-    Union,
-)
+from shellfish.sp import PopenArgs
+from xtyping import IO, Any, FsPath, List, Mapping, Set, Tuple, Union
 
 __all__ = ("run_async",)
 
@@ -43,9 +32,9 @@ def _flatten_args(*args: Union[Any, List[Any]]) -> List[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
-        >>> list(flatten_args("cmd", ["uno", "dos", "tres"]))
+        >>> list(_flatten_args("cmd", ["uno", "dos", "tres"]))
         ['cmd', 'uno', 'dos', 'tres']
-        >>> list(flatten_args("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
+        >>> list(_flatten_args("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
 
     """
