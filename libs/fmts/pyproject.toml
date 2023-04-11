@@ -30,9 +30,7 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 includes = ["./fmts"]
 
 [tool.pdm.dev-dependencies]
-dev = [
-  "pytest<7.0.0,>=6.2.2",
-]
+dev = ["pytest<7.0.0,>=6.2.2"]
 
 [tool.poetry]
 name = "fmts"
@@ -43,9 +41,7 @@ authors = ["jesse <jesse@dgi.com>"]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
 readme = 'README.md'
-packages = [
-  { include = "fmts", from = "." },
-]
+packages = [{ include = "fmts", from = "." }]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -57,13 +53,7 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Typing :: Typed",
 ]
-keywords = [
-  "str",
-  "utils",
-  "dgpy",
-  "vanilla",
-  "typed",
-]
+keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
@@ -84,6 +74,28 @@ build-backend = "pdm.pep517.api"
 # [build-system]
 # requires = ["pdm-pep517"]
 # build-backend = "pdm.pep517.api"
+
+[tool.coverage.run]
+source = ['fmts']
+branch = true
+context = '${CONTEXT}'
+
+[tool.coverage.report]
+show_missing = true
+precision = 2
+omit = []
+exclude_lines = [
+  'pragma: no cover',
+  'raise NotImplementedError',
+  'if TYPE_CHECKING:',
+  '@overload',
+  '\(Protocol\):$',
+  'if 0:',
+  'if False:',
+]
+
+[tool.coverage.paths]
+source = ['fmts/']
 
 [tool.ruff]
 extend = "../../pyproject.toml"

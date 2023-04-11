@@ -13,20 +13,26 @@ __all__ = (
     "requires_imageio",
     "requires_ipython",
     "requires_msgpack",
+    "requires_nox",
     "requires_numpy",
     "requires_orjson",
     "requires_pandas",
     "requires_pydantic",
     "requires_pytest",
+    "requires_pytest_asyncio",
+    "requires_pytest_cov",
+    "requires_pytest_xdist",
     "requires_python_rapidjson",
     "requires_rapidjson",
     "requires_ruamel_yaml",
     "requires_scipy",
     "requires_toml",
     "requires_tomli",
+    "requires_tox",
     "requires_typing_extensions",
-    "requires_ujson" "requires_xarray",
     "requires_ujson",
+    "requires_ujson",
+    "requires_xarray",
     "requires_xarray",
     "requires_xdoctest",
     "requires_yaml",
@@ -175,6 +181,25 @@ requires_pytest = Requirement(
     conda=True,
     conda_forge=True,
 )
+requires_pytest_asyncio = Requirement(
+    _import="pytest_asyncio",
+    pip="pytest-asyncio",
+    conda="pytest-asyncio",
+    conda_forge="pytest-asyncio",
+)
+requires_pytest_cov = Requirement(
+    _import="pytest_cov",
+    pip="pytest-cov",
+    conda="pytest-cov",
+    conda_forge="pytest-cov",
+)
+requires_pytest_xdist = Requirement(
+    _import="xdist",
+    pip="pytest-xdist",
+    conda="pytest-xdist",
+    conda_forge="pytest-xdist",
+)
+
 requires_xdoctest = Requirement(
     _import="xdoctest",
     pip=True,
@@ -186,3 +211,8 @@ requires_xdoctest = Requirement(
 requires_typing_extensions = Requirement(
     _import="typing_extensions", pip=True, conda=True, conda_forge=True
 )
+
+# NOX
+requires_nox = Requirement(_import="nox", pip=True, conda=True, conda_forge=True)
+# TOX
+requires_tox = Requirement(_import="tox", pip=True, conda=True, conda_forge=True)

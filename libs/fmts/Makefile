@@ -51,7 +51,7 @@ mypy:
 .PHONY:test
 test:
 	echo ${PKG_NAME}
-	pytest --doctest-modules tests $(PKG_NAME)
+	pytest --cov=fmts --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testcov
 testcov:
