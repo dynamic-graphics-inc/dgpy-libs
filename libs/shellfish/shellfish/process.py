@@ -103,8 +103,13 @@ class Env(metaclass=_EnvObjMeta):
         'value'
         >>> environ['SOMEENVVARIABLE']
         'value'
+        >>> 'SOMEENVVARIABLE' in Env
+        True
         >>> {k: v for k, v in Env.items() if k == 'SOMEENVVARIABLE'}
         {'SOMEENVVARIABLE': 'value'}
+        >>> del Env['SOMEENVVARIABLE']
+        >>> 'SOMEENVVARIABLE' in Env
+        False
 
     """
 

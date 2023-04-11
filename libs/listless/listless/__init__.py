@@ -5,7 +5,7 @@ import asyncio
 
 from collections import deque
 from functools import reduce
-from itertools import count, islice, tee, zip_longest
+from itertools import chain, count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
@@ -189,7 +189,13 @@ def partition(
 
 
 def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
-    """Yield the first n items of an iterable"""
+    """Yield the first n items of an iterable
+
+    Examples:
+        >>> list(nyield([1, 2, 3, 4, 5, 6], 3))
+        [1, 2, 3]
+
+    """
     return islice(it, n)
 
 
@@ -279,7 +285,13 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
 
 
 def chunk(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
-    """Yield chunks of size n from a Sequence"""
+    """Yield chunks of size n from a Sequence
+
+    Examples:
+        >>> list(chunk([1, 2, 3, 4, 5, 6], 3))
+        [[1, 2, 3], [4, 5, 6]]
+
+    """
     return chunks(it, n)
 
 
@@ -420,7 +432,7 @@ def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     return filter(None.__ne__, it)  # type: ignore[arg-type]
 
 
-def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
+def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T]:
     """Flatten possibly nested iterables of sequences to a flat list
 
     Examples:
@@ -430,11 +442,26 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
 
     """
+    return chain(
+        *(flatten(*arg) if isinstance(arg, (list, tuple)) else (arg,) for arg in args)
+    )
+
+
+def flatten_seq(*args: Union[_T, Sequence[_T]], anystr: bool = False) -> Iterable[_T]:
+    """Flatten possibly nested iterables of sequences to a flat list
+
+    Examples:
+        >>> list(flatten_seq("cmd", ["uno", "dos", "tres"]))
+        ['cmd', 'uno', 'dos', 'tres']
+        >>> list(flatten_seq("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+
+    """
     return list(
         reduce(
             iconcat,
             [
-                flatten(*arg) if isinstance(arg, (list, tuple)) else (arg,)
+                flatten_seq(*arg) if isinstance(arg, (list, tuple)) else (arg,)
                 for arg in args
             ],
             [],
@@ -444,36 +471,21 @@ def flatten(*args: Union[_T, List[_T], Tuple[_T, ...]]) -> List[_T]:
 
 def flatten_strings(
     *args: Union[
-        Sequence[Union[str, int, float]],
-        str,
-        int,
-        float,
+        _T,
+        Iterable[_T],
     ]
-) -> List[str]:
+) -> Iterable[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
         >>> from listless import flatten_strings
         >>> list(flatten_strings("cmd", ["uno", "dos", "tres"]))
         ['cmd', 'uno', 'dos', 'tres']
-        >>> list(flatten_strings("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
-        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+        >>> list(flatten_strings("cmd", ["uno", "dos", "tres", ["4444", "five", 123]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five', '123']
 
     """
-    return list(
-        reduce(
-            iconcat,
-            [
-                flatten_strings(*arg)
-                if isinstance(arg, (list, tuple))
-                else (str(arg),)
-                if isinstance(arg, (int, float))
-                else (arg,)
-                for arg in args
-            ],
-            [],
-        )
-    )
+    return (str(arg) for arg in flatten(*args))
 
 
 def itlen(iterable: Iterable[Any], unique: bool = False) -> int:

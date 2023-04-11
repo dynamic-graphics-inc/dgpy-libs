@@ -95,7 +95,7 @@ def flake_tests(session):
 
 
 def install_common_test_deps(session):
-    session.install("pytest", "pytest-cov", "coverage", "xtyping")
+    session.install("pytest", "pytest-cov", "coverage", "xtyping", "jsonc2json")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)

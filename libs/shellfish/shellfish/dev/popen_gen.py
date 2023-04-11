@@ -8,7 +8,7 @@ from subprocess import PIPE, Popen
 from shellfish.fs import Stdio
 from xtyping import IO, Any, AnyStr, Iterable, Tuple
 
-__all__ = ("popen_gen",)
+__all__ = ("popen_gen", "popen_pipes_gen")
 
 
 def _enqueue_output(fileio: IO[AnyStr], queue: Queue[AnyStr]) -> None:
@@ -17,7 +17,7 @@ def _enqueue_output(fileio: IO[AnyStr], queue: Queue[AnyStr]) -> None:
     fileio.close()
 
 
-def _popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
+def popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
     """Yield stdout and stderr lines from a subprocess
 
     Args:
@@ -71,4 +71,4 @@ def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str]
     with Popen(
         *popenargs, **popenkwargs, stdout=PIPE, stderr=PIPE, text=True
     ) as proc:  # type: ignore[call-overload]
-        yield from _popen_pipes_gen(proc)
+        yield from popen_pipes_gen(proc)

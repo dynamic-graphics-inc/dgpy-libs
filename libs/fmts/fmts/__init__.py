@@ -983,7 +983,7 @@ def overscore_carrots(string: str) -> str:
 def truncate_string(
     string: str, maxlines: int = 120, max_characters: int = 4096
 ) -> str:
-    """Truncate a string at either a max number of lines or characters
+    r"""Truncate a string at either a max number of lines or characters
 
     Args:
         string: String to truncate
@@ -992,6 +992,20 @@ def truncate_string(
 
     Returns:
         Truncated string
+
+    Examples:
+        >>> truncate_string('a')
+        'a'
+        >>> print(truncate_string('a\n' * 10, maxlines=5))
+        a
+        a
+        a
+        a
+        a
+        ---------------------------
+        ... Truncated @ 5 lines...
+        ---------------------------
+
 
     """
     string_lines = string.replace("\r\n", "\n").split("\n")
@@ -1153,8 +1167,8 @@ def string_sanitize(string: str) -> str:
     return strip_non_ascii(re.sub(r"[()\"/;:<>{}`=~|!?,]", "", string).strip("."))
 
 
-def longest_line(string: str) -> int:
-    """Return the length of the longest line in a string
+def longest_line(string: Union[str, bytes]) -> int:
+    r"""Return the length of the longest line in a string
 
     Args:
         string (str): String that has either one or more lines
@@ -1162,20 +1176,39 @@ def longest_line(string: str) -> int:
     Returns:
         int: The length of the longest line in the string
 
+    Examples:
+        >>> longest_line('hello\nworld')
+        5
+        >>> longest_line(b'hello\nworld')
+        5
+        >>> longest_line('hello world')
+        11
+        >>> longest_line(b'hello world')
+        11
+
     """
+    if isinstance(string, bytes):
+        if b"\n" in string:
+            return max(len(line) for line in string.splitlines(keepends=False))
+        return len(string)
+
     if "\n" in string:
         return max(len(line) for line in string.splitlines(keepends=False))
     return len(string)
 
 
 def rm_multilines(string: str) -> str:
-    """Remove blank lines from a string
+    r"""Remove blank lines from a string
 
     Args:
         string: string possibly containing blank lines
 
     Returns:
         string without blank lines
+
+    Examples:
+        >>> rm_multilines('hello\n\nworld')
+        'hello\nworld'
 
     """
     return "\n".join(
@@ -1226,13 +1259,18 @@ def ensure_utf8(string: Union[str, bytes]) -> str:
 
 
 def body_contents(html_string: str) -> List[str]:
-    """Parse the innertext for body tags in an html string
+    r"""Parse the innertext for body tags in an html string
 
     Args:
         html_string (str): html to parse
 
     Returns:
         str: the inner text for the body tags
+
+    Examples:
+        >>> html_string = '<html><body>hello</body></html>'
+        >>> body_contents(html_string)
+        ['hello']
 
     """
     return re.findall("<body>(.*?)</body>", html_string, re.DOTALL)
@@ -1286,6 +1324,8 @@ def indent(
         >>> print(indent(s, '  '))
           this is a
           multiline string
+        >>> indent(b'this is a string')
+        b'    this is a string'
 
     """
     if isinstance(string, bytes):
@@ -1619,15 +1659,48 @@ def base64_jpg_html(b64_string: Union[str, bytes]) -> str:
     return f'<img src="data:image/jpeg;base64,{str(b64_string)}">'
 
 
-def enum_strings(strings: List[str]) -> Iterable[str]:
-    """Return a generator with enumerated strings"""
+def enum_strings(strings: List[str], numsep: str = ")") -> Iterable[str]:
+    """Return a generator with enumerated strings
+
+    Returns:
+        Generator[str]: Generator with enumerated strings
+
+    Examples:
+        >>> list(enum_strings(list(map(str, range(5)))))
+        ['1) 0', '2) 1', '3) 2', '4) 3', '5) 4']
+
+    """
     _count = len(str(len(strings)))
-    return (f"{str(ix).zfill(_count)}) {s}" for ix, s in enumerate(strings, start=1))
+    return (
+        f"{str(ix).zfill(_count)}{numsep} {s}" for ix, s in enumerate(strings, start=1)
+    )
 
 
-def space_pad_strings(strings: List[str]) -> List[str]:
-    """Space pads strings to match the string with the max length"""
+def space_pad_strings(strings: List[str], justify: str = "left") -> List[str]:
+    """Space pads strings to match the string with the max length
+
+    Returns:
+        List[str]: List of space-padded strings
+
+    Examples:
+        >>> space_pad_strings(["a", "bb", "ccc"])
+        ['a  ', 'bb ', 'ccc']
+        >>> space_pad_strings(["a", "bb", "ccc"], justify='right')
+        ['  a', ' bb', 'ccc']
+        >>> space_pad_strings(["a", "bb", "ccc"], justify='center')
+        Traceback (most recent call last):
+        ...
+        ValueError: justify must be 'left' or 'right', not center; case-insensitive
+
+    """
+    _justify = justify.lower()
+    if _justify not in ["left", "right"]:
+        raise ValueError(
+            f"justify must be 'left' or 'right', not {justify}; case-insensitive"
+        )
     _max_len = max(len(s) for s in strings)
+    if _justify == "right":
+        return [s.rjust(_max_len) for s in strings]
     return [s.ljust(_max_len) for s in strings]
 
 

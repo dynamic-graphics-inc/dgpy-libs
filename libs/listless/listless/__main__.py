@@ -4,6 +4,17 @@ import sys
 
 from listless._meta import __pkgroot__, __title__, __version__
 
-sys.stdout.write(
-    f"package: {__title__}\nversion: {__version__}\npkgroot: {__pkgroot__}\n"
-)
+
+def main() -> None:
+    import json
+
+    sys.stdout.write(
+        json.dumps(
+            {"package": __title__, "version": __version__, "pkgroot": __pkgroot__},
+            indent=2,
+        )
+    )
+
+
+if __name__ == "__main__":
+    main()
