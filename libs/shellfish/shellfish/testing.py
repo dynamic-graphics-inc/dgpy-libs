@@ -34,14 +34,29 @@ def assert_symlink_exists(fspath: FsPath, *, target: Optional[FsPath] = None) ->
 
 
 def random_string(length: int = 10) -> str:
-    """Return a random string of a given length (defaults to 10)"""
+    """Return a random string of a given length (defaults to 10)
+
+    Examples:
+        >>> string = random_string(10)
+        >>> len(string) == 10
+        True
+
+    """
     return "".join(
         rand_choice(string.ascii_letters + string.digits) for _ in range(length)
     )
 
 
 def random_directory_path(depth: int = 4) -> str:
-    """Return a random directory path with a given depth (defaults to 4)"""
+    """Return a random directory path with a given depth (defaults to 4)
+
+    Examples:
+        >>> from os import sep
+        >>> dirpath = random_directory_path(4)
+        >>> len(dirpath.split(sep)) == 4
+        True
+
+    """
     return str(path.join(*(random_string(randint(1, 5)) for s in range(depth))))
 
 

@@ -61,7 +61,15 @@ def strip_comments(string: str) -> str:
 
 
 def parse_dotenv(string: str) -> Dict[str, str]:
-    """Parse env string to dictionary"""
+    r"""Parse env string to dictionary
+
+    Examples:
+        >>> dot_env_list = ['a=1', 'ANOTHER=2']
+        >>> dotenv_string = '\n'.join(dot_env_list)
+        >>> parse_dotenv(dotenv_string)
+        {'a': '1', 'ANOTHER': '2'}
+
+    """
     return {
         key: " ".join(shplit(val))
         for key, _, val in (
@@ -77,31 +85,50 @@ def parse_dotenv(string: str) -> Dict[str, str]:
 
 
 def parse_env(string: str) -> Dict[str, str]:
-    """Parse env string to dictionary"""
+    r"""Parse env string to dictionary
+
+    Examples:
+        >>> dot_env_list = ['a=1', 'ANOTHER=2']
+        >>> dotenv_string = '\n'.join(dot_env_list)
+        >>> parse_dotenv(dotenv_string)
+        {'a': '1', 'ANOTHER': '2'}
+
+    """
     return parse_dotenv(string)
 
 
 def ldotenv(fspath: Optional[FsPath] = None) -> Dict[str, str]:
-    """Load a dotenv file from a fspath and return the keyvalues as a dict"""
+    r"""Load a dotenv file from a fspath and return the keyvalues as a dict
+
+    Examples:
+        >>> import os
+        >>> import shutil
+        >>> dot_env_list = ['a=1', 'ANOTHER=2']
+        >>> with open('.env.test', 'w') as f: f.write('\n'.join(dot_env_list))
+        13
+        >>> ldotenv('.env.test')
+        {'a': '1', 'ANOTHER': '2'}
+        >>> if os.path.exists('.env.test'): os.remove('.env.test')
+        >>> os.makedirs('env-test', exist_ok=True)
+        >>> with open(os.path.join('env-test', '.env'), 'w') as f: f.write('\n'.join(dot_env_list))
+        13
+        >>> ldotenv('env-test')
+        {'a': '1', 'ANOTHER': '2'}
+        >>> if os.path.exists('env-test'): shutil.rmtree('env-test')
+        >>> ldotenv('path/does/not/exist')
+        Traceback (most recent call last):
+        ...
+        ValueError: Given fspath/dirpath does not exist: path/does/not/exist
+
+    """
     if fspath:
-        if path.exists(str(fspath)):
-            if path.isfile(str(fspath)):
-                return {
-                    key: " ".join(shplit(val))
-                    for key, _, val in (
-                        el.partition("=")
-                        for el in filter(
-                            None,
-                            strip_comments(
-                                rstring(fspath).replace("\r\n", "\n").strip("\n")
-                            ).split("\n"),
-                        )
-                    )
-                }
-            if path.isdir(str(fspath)):
-                dotenv_filepath = path.join(str(fspath), ".env")
-                if path.exists(dotenv_filepath):
-                    return ldotenv(dotenv_filepath)
+        if path.isfile(str(fspath)):
+            dotenv_string = rstring(fspath)
+            return parse_dotenv(dotenv_string)
+        if path.isdir(str(fspath)):
+            dotenv_filepath = path.join(str(fspath), ".env")
+            if path.exists(dotenv_filepath):
+                return ldotenv(dotenv_filepath)
         raise ValueError(f"Given fspath/dirpath does not exist: {str(fspath)}")
     return ldotenv(getcwd())
 

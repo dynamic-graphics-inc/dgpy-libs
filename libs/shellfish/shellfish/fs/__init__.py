@@ -314,6 +314,7 @@ def listdir_gen(
         >>> from os import makedirs, path, chdir
         >>> from shutil import rmtree
         >>> _makedirs(tmpdir, exist_ok=True)
+        >>> pwd = sh.pwd()
         >>> sh.cd(tmpdir)
         >>> filepath_parts = [
         ...     ("dir", "file1.txt"),
@@ -348,7 +349,12 @@ def listdir_gen(
         listdir_gen.doctest/dir/file1.txt
         listdir_gen.doctest/dir/file2.txt
         listdir_gen.doctest/dir/file3.txt
-        >>> rmtree(tmpdir)
+        >>> sh.cd(pwd)
+        >>> import os
+        >>> if path.exists(tmpdir):
+        ...     rmtree(tmpdir)
+        >>> path.isdir(tmpdir)
+        False
 
     """
     _attr = "path" if abspath else "name"
