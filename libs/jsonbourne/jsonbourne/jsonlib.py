@@ -13,6 +13,8 @@ from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
 from uuid import UUID
 
+from jsonc2json import jsonc2json
+
 from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:
@@ -229,9 +231,7 @@ class JSON_STDLIB(JsonLibABC):
         **kwargs: Any,
     ) -> Any:
         if jsonc:
-            raise NotImplementedError(
-                "Python stdlib-json does not support JSONC; use rapidjson"
-            )
+            string = jsonc2json(string)
         if ndjson:
             return [
                 pyjson.loads(line, **kwargs)
@@ -321,7 +321,7 @@ class ORJSON(JsonLibABC):
         **kwargs: Any,
     ) -> Any:
         if jsonc:
-            raise NotImplementedError("orjson does not support JSONC; use rapidjson")
+            string = jsonc2json(string)
         if ndjson:
             return [orjson.loads(line) for line in string.splitlines(keepends=False)]
         return orjson.loads(string)
