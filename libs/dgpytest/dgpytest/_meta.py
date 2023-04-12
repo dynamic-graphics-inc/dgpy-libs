@@ -10,4 +10,4 @@ __all__ = (
 __title__ = "dgpytest"
 __description__ = "dgpy = dgpy + pytest"
 __pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.0.1"
+__version__ = "0.0.2"

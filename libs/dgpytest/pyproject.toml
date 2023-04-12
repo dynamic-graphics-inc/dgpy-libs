@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgpytest"
-version = "0.0.1"
+version = "0.0.2"
 description = "dgpytest = dgpy + pytest"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -34,7 +34,7 @@ pytest = ">=7.2.2"
 pytest-asyncio = "^0.21.0"
 
 [tool.poetry.plugins.pytest11]
-cool_plugin = "dgpytest.plugin"
+dgpytest = "dgpytest.plugin"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
