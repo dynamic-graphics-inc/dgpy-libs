@@ -29,19 +29,31 @@ Dynamic Graphics python libraries, home of:
 libs
 ├── aiopen
 ├── asyncify
+├── dgpylibs
+├── dgpytest
+├── fmts
 ├── funkify
 ├── h5
 ├── jsonbourne
 ├── lager
+├── listless
 ├── requires
+├── shellfish
 └── xtyping
 ```
 
-**Install:** `pip install aiopen asyncify funkify h5 jsonbourne lager requires xtyping`
+**Install:** `pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping`
+
 
 ### [aiopen](./libs/aiopen) ~ `pip install aiopen` ~ [![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg) [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg) [![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg)
 
 ### [asyncify](./libs/asyncify) ~ `pip install asyncify` ~ [![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg) [![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)
+
+### [dgpylibs](./libs/dgpylibs) ~ `pip install dgpylibs` ~ [![Wheel](https://img.shields.io/pypi/wheel/dgpylibs.svg)](https://img.shields.io/pypi/wheel/dgpylibs.svg) [![Version](https://img.shields.io/pypi/v/dgpylibs.svg)](https://img.shields.io/pypi/v/dgpylibs.svg) [![py_versions](https://img.shields.io/pypi/pyversions/dgpylibs.svg)](https://img.shields.io/pypi/pyversions/dgpylibs.svg)
+
+### [dgpytest](./libs/dgpytest) ~ `pip install dgpytest` ~ [![Wheel](https://img.shields.io/pypi/wheel/dgpytest.svg)](https://img.shields.io/pypi/wheel/dgpytest.svg) [![Version](https://img.shields.io/pypi/v/dgpytest.svg)](https://img.shields.io/pypi/v/dgpytest.svg) [![py_versions](https://img.shields.io/pypi/pyversions/dgpytest.svg)](https://img.shields.io/pypi/pyversions/dgpytest.svg)
+
+### [fmts](./libs/fmts) ~ `pip install fmts` ~ [![Wheel](https://img.shields.io/pypi/wheel/fmts.svg)](https://img.shields.io/pypi/wheel/fmts.svg) [![Version](https://img.shields.io/pypi/v/fmts.svg)](https://img.shields.io/pypi/v/fmts.svg) [![py_versions](https://img.shields.io/pypi/pyversions/fmts.svg)](https://img.shields.io/pypi/pyversions/fmts.svg)
 
 ### [funkify](./libs/funkify) ~ `pip install funkify` ~ [![Wheel](https://img.shields.io/pypi/wheel/funkify.svg)](https://img.shields.io/pypi/wheel/funkify.svg) [![Version](https://img.shields.io/pypi/v/funkify.svg)](https://img.shields.io/pypi/v/funkify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/funkify.svg)](https://img.shields.io/pypi/pyversions/funkify.svg)
 
@@ -51,7 +63,11 @@ libs
 
 ### [lager](./libs/lager) ~ `pip install lager` ~ [![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg) [![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg) [![py_versions](https://img.shields.io/pypi/pyversions/lager.svg)](https://img.shields.io/pypi/pyversions/lager.svg)
 
+### [listless](./libs/listless) ~ `pip install listless` ~ [![Wheel](https://img.shields.io/pypi/wheel/listless.svg)](https://img.shields.io/pypi/wheel/listless.svg) [![Version](https://img.shields.io/pypi/v/listless.svg)](https://img.shields.io/pypi/v/listless.svg) [![py_versions](https://img.shields.io/pypi/pyversions/listless.svg)](https://img.shields.io/pypi/pyversions/listless.svg)
+
 ### [requires](./libs/requires) ~ `pip install requires` ~ [![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg) [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg) [![py_versions](https://img.shields.io/pypi/pyversions/requires.svg)](https://img.shields.io/pypi/pyversions/requires.svg)
+
+### [shellfish](./libs/shellfish) ~ `pip install shellfish` ~ [![Wheel](https://img.shields.io/pypi/wheel/shellfish.svg)](https://img.shields.io/pypi/wheel/shellfish.svg) [![Version](https://img.shields.io/pypi/v/shellfish.svg)](https://img.shields.io/pypi/v/shellfish.svg) [![py_versions](https://img.shields.io/pypi/pyversions/shellfish.svg)](https://img.shields.io/pypi/pyversions/shellfish.svg)
 
 ### [xtyping](./libs/xtyping) ~ `pip install xtyping` ~ [![Wheel](https://img.shields.io/pypi/wheel/xtyping.svg)](https://img.shields.io/pypi/wheel/xtyping.svg) [![Version](https://img.shields.io/pypi/v/xtyping.svg)](https://img.shields.io/pypi/v/xtyping.svg) [![py_versions](https://img.shields.io/pypi/pyversions/xtyping.svg)](https://img.shields.io/pypi/pyversions/xtyping.svg)
 
@@ -77,9 +93,7 @@ This repo (dgpy-libs) are the polished gems formed under intense pressure below 
 - [pydantic](https://pydantic-docs.helpmanual.io/); best python lib you will ever use
 - [loguru](https://github.com/Delgan/loguru); base of lager
 - [httpx](https://www.python-httpx.org/) ; don't use requests
-- [fastapi](https://github.com/tiangolo/fastapi); best python web server framework
 - [attrs](https://github.com/python-attrs/attrs); pydantic alternative
-- [typer](https://github.com/tiangolo/typer); awesome cli framework
 - [poetry](https://github.com/python-poetry/poetry); best dep management python has to offer
 - [orjson](https://github.com/ijl/orjson); fastest python json lib (opt dep of jsonbourne)
 - [rapidjson/python-rapidjson](https://github.com/python-rapidjson/python-rapidjson); best mostly drop-in replacement for python's json module
