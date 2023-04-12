@@ -10,9 +10,8 @@ import pytest
 from _pytest.config import Config, PytestPluginManager
 from _pytest.config.argparsing import Parser
 from _pytest.python import Function
-from typing_extensions import TypedDict
-
 from dgpytest import hooks
+from typing_extensions import TypedDict
 
 _CI = environ.get("CI", "false").lower() == "true"
 
