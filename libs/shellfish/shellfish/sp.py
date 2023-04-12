@@ -35,7 +35,7 @@ __subprocess_all__ = (
     "DEVNULL",
 )
 __all__ = (
-    "CompletedProcessObj",
+    "CompletedProcessDict",
     "completed_process_obj",
     "PopenArg",
     "PopenArgs",
@@ -60,15 +60,14 @@ else:
     PathLikeBytes = os.PathLike
     PathLikeStrBytes = os.PathLike
 
-
 PopenArg = Union[str, bytes, PathLikeStrBytes]
 PopenArgv = Sequence[PopenArg]
 PopenArgs = Union[bytes, str, PopenArgv]
 PopenEnv = Mapping[str, str]
 
 
-class CompletedProcessObj(TypedDict):
-    args: list[str]
+class CompletedProcessDict(TypedDict):
+    args: List[str]
     stdout: str
     stderr: str
     returncode: int
@@ -76,7 +75,7 @@ class CompletedProcessObj(TypedDict):
 
 def completed_process_obj(
     completed_process: CompletedProcess[str],
-) -> CompletedProcessObj:
+) -> CompletedProcessDict:
     """Convert CompletedProcess to CompletedProcessObj (typed dict)
 
     Args:
@@ -107,7 +106,7 @@ def completed_process_obj(
         raise TypeError(
             f"completed_process must be CompletedProcess object, not {type(completed_process)}"
         )
-    return CompletedProcessObj(
+    return CompletedProcessDict(
         args=completed_process.args,
         stdout=completed_process.stdout,
         stderr=completed_process.stderr,

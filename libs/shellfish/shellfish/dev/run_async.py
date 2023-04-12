@@ -4,9 +4,7 @@ from __future__ import annotations
 import asyncio
 import sys
 
-from functools import reduce
 from io import BytesIO
-from operator import iconcat
 from os import getcwd, path
 from subprocess import (
     DEVNULL as DEVNULL,
@@ -16,6 +14,7 @@ from subprocess import (
 from time import time
 from typing import Callable, Optional
 
+from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
 from shellfish.sp import PopenArgs
 from xtyping import IO, Any, FsPath, List, Mapping, Set, Tuple, Union
 
@@ -26,38 +25,6 @@ def utf8_string(val: Union[str, bytes, bytearray]) -> str:
     if not isinstance(val, str):
         return val.decode("utf-8")
     return val
-
-
-def _flatten_args(*args: Union[Any, List[Any]]) -> List[str]:
-    """Flatten possibly nested iterables of sequences to a list of strings
-
-    Examples:
-        >>> list(_flatten_args("cmd", ["uno", "dos", "tres"]))
-        ['cmd', 'uno', 'dos', 'tres']
-        >>> list(_flatten_args("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
-        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
-
-    """
-    return list(
-        map(
-            utf8_string,
-            reduce(
-                iconcat,
-                [
-                    _flatten_args(*arg) if isinstance(arg, (list, tuple)) else (arg,)
-                    for arg in args
-                ],
-                [],
-            ),
-        )
-    )
-
-
-def _args2cmd(args: PopenArgs) -> Union[str, bytes]:
-    """Return single command string from given popenargs"""
-    if isinstance(args, (str, bytes)):
-        return args
-    return " ".join(map(str, args))
 
 
 async def _read_stream(
@@ -76,7 +43,7 @@ async def run_async_dt(
     executable: Optional[str] = None,
     stdin: Optional[Union[IO[Any], int]] = None,
     text: bool = False,
-    input: Optional[str] = None,
+    input: Optional[Union[str, bytes]] = None,
     stdout: Optional[Union[IO[Any], int]] = None,
     stderr: Optional[Union[IO[Any], int]] = None,
     shell: bool = False,
@@ -87,12 +54,13 @@ async def run_async_dt(
     env: Optional[Mapping[str, str]] = None,
     tee: bool = False,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    universal_newlines: bool = False,
     **other_popen_kwargs: Any,
 ) -> Tuple[CompletedProcess[bytes], float, float]:
-    _args = list(_flatten_args(popenargs))
+    _args = list(_flatten_args(*popenargs))
 
     _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
-    _input = input if not isinstance(input, str) else input.encode()
+    _input_bytes = input if not isinstance(input, str) else input.encode()
 
     _cwd = getcwd()
     if cwd and path.exists(cwd) and path.isdir(cwd):
@@ -134,8 +102,8 @@ async def run_async_dt(
         pipe.write(line.decode())
 
     if tee:
-        if _input is not None and _proc.stdin is not None:
-            _proc.stdin.write(_input)
+        if _input_bytes is not None and _proc.stdin is not None:
+            _proc.stdin.write(_input_bytes)
             _proc.stdin.close()
         _bg = []
         if _proc.stdout is not None:
@@ -156,9 +124,11 @@ async def run_async_dt(
             )
     if timeout:
         try:
-            if _input:
+            if _input_bytes is not None and _proc.stdin is not None:
                 (_stdout, _stderr) = await asyncio.wait_for(
-                    _proc.communicate(input=_input),  # wait for subprocess to finish
+                    _proc.communicate(
+                        input=_input_bytes
+                    ),  # wait for subprocess to finish
                     timeout=timeout,
                 )
             else:
@@ -183,12 +153,15 @@ async def run_async_dt(
                 )
             )
     else:
-        (_stdout, _stderr) = await _proc.communicate(input=_input)  # wait fo
+        (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)  # wait fo
         tf = time()
 
     if tee:
         _stdout = _out_buf.getvalue()
         _stderr = _err_buf.getvalue()
+    if universal_newlines:
+        _stdout = _stdout.replace(b"\r\n", b"\n")
+        _stderr = _stderr.replace(b"\r\n", b"\n")
     if check or ok_code != 0:
         _ok_codes = {ok_code} if isinstance(ok_code, int) else set(ok_code)
         if _proc.returncode and _proc.returncode not in _ok_codes:
@@ -226,6 +199,7 @@ async def run_async(
     env: Optional[Mapping[str, str]] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     tee: bool = False,
+    universal_newlines: bool = True,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
     completed_process, _ti, _tf = await run_async_dt(

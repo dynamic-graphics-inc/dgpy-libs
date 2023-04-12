@@ -33,10 +33,8 @@ def bat(
             raise FileNotFoundError(fspath)
     else:
         fspath_obj = Path(bat_filepath)
-
-    _args = [str(fspath)] if shell else ["cmd", "/c", _fspath(fspath_obj)]
     return run(
-        args=_args,
+        args=[str(fspath)] if shell else ["cmd", "/c", _fspath(fspath_obj)],
         capture_output=True,
         shell=shell,
         text=text,

@@ -2,27 +2,16 @@
 """shell utils"""
 from __future__ import annotations
 
-import asyncio
 import signal
 import sys
 
-from abc import ABC, abstractmethod
-from asyncio import TimeoutError
-from functools import lru_cache, reduce
-from operator import iconcat
+from functools import lru_cache
 from os import chdir, environ, fspath as _fspath, getcwd, listdir, makedirs, path
 from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
 from shutil import which as _which
-from subprocess import (
-    DEVNULL,
-    PIPE,
-    CalledProcessError,
-    CompletedProcess,
-    SubprocessError,
-    run,
-)
+from subprocess import PIPE, CompletedProcess, SubprocessError, run
 from time import time
 from typing import (
     IO,
@@ -32,7 +21,7 @@ from typing import (
     Iterable,
     List,
     Optional,
-    Sequence,
+    Set,
     Tuple,
     Type,
     Union,
@@ -41,8 +30,10 @@ from typing import (
 from asyncify import asyncify
 from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
+from listless import flatten_strings as _flatten_strings
 from shellfish import fs
 from shellfish._meta import __version__
+from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo
 from shellfish.fs import (
     Stdio as Stdio,
@@ -381,8 +372,15 @@ def seconds2hrtime(seconds: Union[float, int]) -> Tuple[int, int]:
     return _sec, _ns
 
 
-class HrTimeObj(TypedDict):
+class HrTimeDict(TypedDict):
     """High resolution time"""
+
+    sec: int
+    ns: int
+
+
+class HrTimeObj(TypedDict):
+    """TODO: deprecate this in favor of HrTimeDict"""
 
     sec: int
     ns: int
@@ -407,6 +405,12 @@ class HrTime(JsonBaseModel):
         """
         _sec, _ns = seconds2hrtime(seconds)
         return cls(sec=_sec, ns=_ns)
+
+    def hrdt_dict(self) -> HrTimeDict:
+        return {
+            "sec": self.sec,
+            "ns": self.ns,
+        }
 
     def hrdt_obj(self) -> HrTimeObj:
         return {
@@ -451,7 +455,23 @@ class DoneError(SubprocessError):
         return f"{self.error_msg()}\n{self.done}"
 
 
+class DoneDict(TypedDict):
+    args: List[str]
+    returncode: int
+    stdout: str
+    stderr: str
+    ti: float
+    tf: float
+    dt: float
+    hrdt: Optional[HrTimeDict]
+    stdin: Optional[str]
+    async_proc: bool
+    verbose: bool
+
+
 class DoneObj(TypedDict):
+    """TODO: deprecate this in favor of DoneDict"""
+
     args: List[str]
     returncode: int
     stdout: str
@@ -486,6 +506,11 @@ class Done(JsonBaseModel):
         if self.verbose:
             self.sys_print()
 
+    def hrdt_dict(self) -> HrTimeDict:
+        if self.hrdt:
+            return self.hrdt.hrdt_dict()
+        return HrTime.from_seconds(seconds=self.dt).hrdt_dict()
+
     def hrdt_obj(self) -> HrTimeObj:
         if self.hrdt:
             return self.hrdt.hrdt_obj()
@@ -500,6 +525,22 @@ class Done(JsonBaseModel):
     @property
     def lines(self) -> List[str]:
         return self.stdout_lines(keepends=False)
+
+    def done_dict(self) -> DoneDict:
+        """Return Done object as typed-dict"""
+        return DoneDict(
+            args=self.args,
+            returncode=self.returncode,
+            stdout=self.stdout,
+            stderr=self.stderr,
+            ti=self.ti,
+            tf=self.tf,
+            dt=self.dt,
+            hrdt=self.hrdt_dict(),
+            stdin=self.stdin,
+            async_proc=self.async_proc,
+            verbose=self.verbose,
+        )
 
     def done_obj(self) -> DoneObj:
         """Return Done object typed dict"""
@@ -521,7 +562,10 @@ class Done(JsonBaseModel):
         """Returns a CalledProcessError object"""
         return DoneError(done=self)
 
-    def check(self, ok_code: Union[int, Sequence[int]] = 0) -> None:
+    def check(
+        self,
+        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ) -> None:
         """Check returncode and stderr
 
         Raises:
@@ -751,19 +795,7 @@ def flatten_args(*args: Union[Any, List[Any]]) -> List[str]:
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
 
     """
-    return list(
-        map(
-            utf8_string,
-            reduce(
-                iconcat,
-                [
-                    flatten_args(*arg) if isinstance(arg, (list, tuple)) else (arg,)
-                    for arg in args
-                ],
-                [],
-            ),
-        )
-    )
+    return list(_flatten_strings(*args))
 
 
 def validate_popen_args(args: Union[PopenArgs, Tuple[PopenArgs, ...]]) -> List[str]:
@@ -810,7 +842,7 @@ def _do(
     input: STDIN = None,
     timeout: Optional[int] = None,
     text: bool = False,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -911,7 +943,7 @@ def do(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[int] = None,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -970,7 +1002,7 @@ def shx(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[int] = None,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously in current shell
@@ -1075,13 +1107,12 @@ async def do_asyncify(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    loop: Optional[Any] = None,
     timeout: Optional[int] = None,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
-    done = await _do_asyncify(  # type: ignore[call-arg]
+    done = await _do_asyncify(
         args=args,
         env=env,
         extenv=extenv,
@@ -1090,7 +1121,6 @@ async def do_asyncify(
         verbose=verbose,
         input=input,
         check=check,
-        loop=loop,
         timeout=timeout,
         ok_code=ok_code,
         dryrun=dryrun,
@@ -1109,9 +1139,8 @@ async def _do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    loop: Optional[Any] = None,
     timeout: Optional[int] = None,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await completion
@@ -1127,7 +1156,6 @@ async def _do_async(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
-        loop: Event loop to use if have you use asyncified version (`do_asyncify`)
         ok_code: Return code(s) to check if ok
         dryrun: Don't run the subprocess
 
@@ -1149,7 +1177,6 @@ async def _do_async(
             verbose=verbose,
             input=input,
             check=check,
-            loop=loop,
             timeout=timeout,
             ok_code=ok_code,
             dryrun=dryrun,
@@ -1157,21 +1184,17 @@ async def _do_async(
         done.async_proc = True
         return done
 
-    _default_asyncio_stream_limit = 2**16
-
     if input:
         input = validate_stdin(input)
     if isinstance(args, str):
         _args = [args]
-    if isinstance(args, bytes):
+    elif isinstance(args, bytes):
         _args = [utf8_string(args)]
     elif isinstance(args, (list, tuple)):
         _args = flatten_args(args)
     else:
         _args = list(map(str, args))
 
-    # stdin kwarg is DEVNULL if input is None else aio.PIPE
-    _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
     # input is None or bytes
     _input = input if not isinstance(input, str) else input.encode()
 
@@ -1179,7 +1202,6 @@ async def _do_async(
     _cwd = pwd()
     if cwd and path.exists(cwd) and path.isdir(cwd):
         _cwd = cwd
-
     if is_win():
         _syspath = None
         if env:
@@ -1207,75 +1229,27 @@ async def _do_async(
             dryrun=True,
             async_proc=True,
         )
+    _proc, ti, tf = await __run_async.run_async_dt(
+        *_args,
+        env=_env,
+        cwd=_cwd,
+        shell=shell,
+        ok_code=ok_code if isinstance(ok_code, (list, tuple, set)) else {ok_code},
+        check=check,
+        capture_output=True,
+        timeout=timeout,
+        input=_input,
+        universal_newlines=True,
+    )
 
-    if shell:
-        _cmd = args2cmd(_args)
-        ti = time()
-        _proc = await asyncio.create_subprocess_shell(
-            cmd=_cmd,
-            stdin=_stdin,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-            env=_env,
-            shell=True,
-            limit=_default_asyncio_stream_limit,
-            cwd=_cwd,
-        )
-    else:
-        ti = time()
-        _proc = await asyncio.create_subprocess_exec(
-            *_args,
-            stdin=_stdin,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-            env=_env,
-            limit=_default_asyncio_stream_limit,
-            cwd=_cwd,
-        )
-
-    if timeout:
-        try:
-            (stdout, stderr) = await asyncio.wait_for(
-                _proc.communicate(input=_input),  # wait for subprocess to finish
-                timeout=timeout,
-            )
-            tf = time()
-        except TimeoutError as te:
-            _proc.terminate()
-            raise TimeoutError(
-                str(
-                    {
-                        "args": args,
-                        "input": input,
-                        "env": env,
-                        "cwd": cwd,
-                        "shell": shell,
-                        "asyncio.TimeoutError": str(te),
-                    }
-                )
-            )
-
-    else:
-        (stdout, stderr) = await _proc.communicate(input=_input)  # wait fo
-        tf = time()
-
-    if check or ok_code != 0:
-        _ok_codes = {ok_code} if isinstance(ok_code, int) else set(ok_code)
-        if _proc.returncode and _proc.returncode not in _ok_codes:
-            raise CalledProcessError(
-                returncode=_proc.returncode,
-                output=stdout,
-                stderr=stderr,
-                cmd=str(args),
-            )
     _args_array = (
         list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
     )
     return Done(
         args=_args_array,
         returncode=_proc.returncode or -1,
-        stdout=decode_stdio_bytes(stdout),
-        stderr=decode_stdio_bytes(stderr),
+        stdout=decode_stdio_bytes(_proc.stdout),
+        stderr=decode_stdio_bytes(_proc.stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,
         ti=ti,
         tf=tf,
@@ -1296,9 +1270,8 @@ async def do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    loop: Optional[Any] = None,
     timeout: Optional[int] = None,
-    ok_code: Union[Sequence[int], int] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1315,7 +1288,6 @@ async def do_async(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
-        loop: Optional event loop to run subprocess in
         ok_code: Return code(s) that are considered OK (Default value = 0)
         dryrun (bool): Flag to not run the subprocess but return a Done object
 
@@ -1339,7 +1311,6 @@ async def do_async(
             verbose=verbose,
             input=input,
             check=check,
-            loop=loop,
             timeout=timeout,
             ok_code=ok_code,
             dryrun=dryrun,
@@ -1357,7 +1328,6 @@ async def do_async(
         verbose=verbose,
         input=input,
         check=check,
-        loop=loop,
         timeout=timeout,
         ok_code=ok_code,
         dryrun=dryrun,
@@ -1377,9 +1347,8 @@ async def doa(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    loop: Optional[Any] = None,
     timeout: Optional[int] = None,
-    ok_code: Union[int, Sequence[int]] = 0,
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1397,7 +1366,6 @@ async def doa(
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
-        loop: Optional event loop to run subprocess in
         ok_code: Return code(s) that are considered OK (Default value = 0)
         dryrun (bool): Flag to not run the subprocess but return a Done object
         extenv: Extend environment with the current environment (Default value = True)
@@ -1416,83 +1384,10 @@ async def doa(
         verbose=verbose,
         input=input,
         check=check,
-        loop=loop,
         timeout=timeout,
         ok_code=ok_code,
         dryrun=dryrun,
     )
-
-
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================
-
-
-class OSABC(ABC):
-    """Abstract base class for OS-specific fns"""
-
-    @staticmethod
-    @abstractmethod
-    def sync(
-        src: str,
-        dest: str,
-        *,
-        delete: bool = False,
-        mkdirs: bool = False,
-        dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
-    ) -> Done:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def unlink_dir(link: str) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def unlink_dirs(links: IterableStr) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def unlink_file(link: str) -> None:
-        ...
-
-    @staticmethod
-    @abstractmethod
-    def unlink_files(links: IterableStr) -> None:
-        ...
 
 
 # =============================================================================

@@ -3,24 +3,13 @@
 from __future__ import annotations
 
 from shlex import split as _shplit
+from typing import Any, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union
 
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
 from shellfish.sh import Done, flatten_args
 from shellfish.sp import PopenArgs, PopenArgv
-from xtyping import (
-    STDIN,
-    Any,
-    Dict,
-    FsPath,
-    List,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-    TypeVar,
-    Union,
-)
+from xtyping import STDIN, FsPath
 
 __all__ = (
     "Exe",
@@ -39,7 +28,7 @@ class ExeConfig(JsonBaseModel):
     shell: bool = False
     verbose: bool = False
     timeout: Optional[int] = None
-    ok_code: Sequence[int] = (0,)
+    ok_code: Union[int, Set[int]] = {0}
     check: bool = False
 
 
@@ -53,7 +42,7 @@ class ExeABC:
     shell: bool = False
     verbose: bool = False
     timeout: Optional[int] = None
-    ok_code: Sequence[int] = (0,)
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = (0,)
     check: bool = False
 
     def __init__(
@@ -64,7 +53,7 @@ class ExeABC:
         check: bool = False,
         cwd: Optional[FsPath] = None,
         env: Optional[Dict[str, str]] = None,
-        ok_code: Union[int, Sequence[int]] = 0,
+        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         shell: bool = False,
         timeout: Optional[int] = None,
         verbose: bool = False,
@@ -165,7 +154,7 @@ class ExeABC:
         verbose: bool = False,
         input: STDIN = None,
         timeout: Optional[int] = None,
-        ok_code: Union[int, Sequence[int]] = 0,
+        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
         _args = self._cmdargs(popenargs, args)
@@ -194,7 +183,7 @@ class ExeABC:
         extenv: bool = True,
         input: STDIN = None,
         loop: Optional[Any] = None,
-        ok_code: Union[int, Sequence[int]] = 0,
+        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         shell: bool = False,
         timeout: Optional[int] = None,
         verbose: bool = False,
@@ -208,7 +197,6 @@ class ExeABC:
             env=env or self.env,
             extenv=extenv,
             input=input,
-            loop=loop,
             ok_code=ok_code or self.ok_code,
             shell=shell or self.shell,
             timeout=timeout or self.timeout,
@@ -234,7 +222,7 @@ class Exe(ExeABC):
         verbose: bool = False,
         input: STDIN = None,
         timeout: Optional[int] = None,
-        ok_code: Union[int, Sequence[int]] = 0,
+        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
         return self._do(
