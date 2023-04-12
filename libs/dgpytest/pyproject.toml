@@ -1,0 +1,92 @@
+[tool.poetry]
+name = "dgpytest"
+version = "0.0.1"
+description = "dgpytest = dgpy + pytest"
+license = "MIT"
+authors = ["jesse <jesse@dgi.com>"]
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/dgpytest"
+readme = 'README.md'
+packages = [
+  { include = "dgpytest", from = "." },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "pytest",
+  "dgpy",
+  "typed",
+  "plugin"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pytest = ">=7.2.2"
+pytest-asyncio = "^0.21.0"
+
+[tool.poetry.plugins.pytest11]
+cool_plugin = "dgpytest.plugin"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = [
+  "-ra",
+  "--strict-config",
+  "--strict-markers",
+  "--doctest-modules",
+  "--disable-warnings",
+]
+xfail_strict = true
+filterwarnings = [
+  "error",
+  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
+  "ignore::RuntimeWarning",
+  "ignore::pytest.PytestUnraisableExceptionWarning",
+  "ignore::DeprecationWarning",
+]
+markers = [
+  "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+  "timeout",
+]
+
+[tool.coverage.run]
+branch = true
+source = ['dgpytest']
+omit = [
+  '_meta.py',
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+# Regexes for lines to exclude from consideration
+exclude_lines = [
+  '@overload',
+  # Re-enable the standard pragma (with extra strictness)
+  '# pragma: no cover\b',
+  # Code for static type checkers
+  'if TYPE_CHECKING:',
+  # Scripts
+  'if __name__ == .__main__.:',
+  'if 0:',
+  'if sys.version_info < (3, 7):',
+  'if sys.version_info >= (3, 8):',
+  'pragma: no cover',
+  'pragma: nocov',
+]
+
+[tool.ruff]
+extend = "../../pyproject.toml"
