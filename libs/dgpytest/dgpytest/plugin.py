@@ -4,13 +4,13 @@ import sys
 
 from dataclasses import dataclass
 from os import environ
+from typing import TypedDict
 
 import pytest
 
 from _pytest.config import Config, PytestPluginManager
 from _pytest.config.argparsing import Parser
 from _pytest.python import Function
-from typing_extensions import TypedDict
 
 from dgpytest import hooks
 
