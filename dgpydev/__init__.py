@@ -2,6 +2,7 @@ DGPY_LIBS = (
     "aiopen",
     "asyncify",
     "dgpylibs",
+    "dgpytest",
     "fmts",
     "funkify",
     "h5",

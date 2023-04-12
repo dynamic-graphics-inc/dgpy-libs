@@ -64,6 +64,7 @@ listless = { path = "./libs/listless/", develop = true }
 requires = { path = "./libs/requires/", develop = true }
 shellfish = { path = "./libs/shellfish/", develop = true }
 xtyping = { path = "./libs/xtyping/", develop = true }
+dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
 [tool.poetry.scripts]
@@ -330,8 +331,9 @@ known-first-party = [
   "aiopen",
   "asyncify",
   "dgpylibs",
-  "funkify",
+  "dgpytest",
   "fmts",
+  "funkify",
   "h5",
   "jsonbourne",
   "lager",
@@ -369,6 +371,7 @@ known_first_party = [
   "aiopen",
   "asyncify",
   "dgpylibs",
+  "dgpytest",
   "funkify",
   "fmts",
   "h5",

@@ -414,7 +414,17 @@ def aiopen(
     loop: Optional[AbstractEventLoop] = None,
     executor: Any = None,
 ) -> AiopenContextManager:
-    """Async version of the `open` builtin"""
+    """Async version of the `open` builtin
+
+    Examples:
+        >>> async def main():
+        ...     async with aiopen("test.txt", "w") as f:
+        ...         await f.write("test")
+        ...     async with aiopen("test.txt", "r") as f:
+        ...         assert await f.read() == "test"
+        >>> asyncio.run(main())
+
+    """
     return AiopenContextManager(
         _aiopen(
             str(file),

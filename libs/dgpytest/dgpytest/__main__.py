@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-"""pkg entry ~ `python -m xtyping`"""
+"""pkg entry ~ `python -m dgpytest`"""
 import sys
 
-from xtyping._meta import __pkgroot__, __title__, __version__
+from dgpytest._meta import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

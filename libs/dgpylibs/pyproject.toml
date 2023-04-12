@@ -33,9 +33,14 @@ listless = "*"
 requires = "*"
 shellfish = "*"
 xtyping = "*"
+dgpytest = { version = "^0.0.1", optional = true }
 
 [tool.poetry.dev-dependencies]
 xdoctest = ">=0.15.10"
+
+[tool.poetry.extras]
+test = ["dgpytest"]
+
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
