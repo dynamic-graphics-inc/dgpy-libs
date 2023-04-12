@@ -6,7 +6,7 @@ def pytest_dgpy_set_mark(mark: Mark, config: Config) -> None:  # pragma: no cove
     """Called before set mark
 
     Args:
-        mark_bug: MarkBug
+        mark: pytest mark
         config: Base pytest config
 
     """
