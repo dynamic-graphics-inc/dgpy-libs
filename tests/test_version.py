@@ -20,6 +20,8 @@ class TestDgpyLib:
         dgpy_lib_dirpath: Callable[[str], str],
         dgpy_lib_pyproject_toml_string: Callable[[str], str],
     ) -> None:
+        if dgpy_lib_name == "dgpytest" and not hasattr(dgpylibs, "dgpytest"):
+            pytest.skip("not yet part of dgpylibs")
         lager.info(f"Testing version for {dgpy_lib_name}")
         dgpylibs_metadata = dgpylibs.dgpylibs_metadata
         lib_metadata: dgpylibs.DgpyLibMetadata = getattr(

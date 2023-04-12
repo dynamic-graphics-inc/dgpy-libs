@@ -12,21 +12,22 @@ nav:
   # - Home: './index.md'
   - Libs:
       - Home: './index.md'
-      - aiopen: './libs/aiopen/README.ipynb'
-      - asyncify: './libs/asyncify/README.ipynb'
-      - funkify: './libs/funkify/README.ipynb'
-      - h5: './libs/h5/README.ipynb'
-      - jsonbourne: './libs/jsonbourne/README.ipynb'
-      - lager: './libs/lager/README.ipynb'
-      - requires: './libs/requires/README.ipynb'
-      - xtyping: './libs/xtyping/README.ipynb'
+      # - aiopen: './libs/aiopen/README.ipynb'
+      # - asyncify: './libs/asyncify/README.ipynb'
+      # - funkify: './libs/funkify/README.ipynb'
+      # - h5: './libs/h5/README.ipynb'
+      # - jsonbourne: './libs/jsonbourne/README.ipynb'
+      # - lager: './libs/lager/README.ipynb'
+      # - requires: './libs/requires/README.ipynb'
+      # - xtyping: './libs/xtyping/README.ipynb'
   - API:
       - aiopen: './libs/aiopen/aiopen.api.md'
-  - Notebooks:
-      - Cache Money: './notebooks/cache_money.ipynb'
-      - Filter None: './notebooks/filter_none.ipynb'
-      - JSON "parsing": './notebooks/json_parsing.ipynb'
-      - String Formatting: './notebooks/string_fmt.ipynb'
+      - h5: './libs/h5/h5.api.md'
+  # - Notebooks:
+  #     - Cache Money: './notebooks/cache_money.ipynb'
+  #     - Filter None: './notebooks/filter_none.ipynb'
+  #     - JSON "parsing": './notebooks/json_parsing.ipynb'
+  #     - String Formatting: './notebooks/string_fmt.ipynb'
 
 theme:
   name: 'material'
@@ -75,8 +76,8 @@ markdown_extensions:
 plugins:
   - search:
       lang: en
-  - mkdocs-jupyter:
-      execute: False
+  # - mkdocs-jupyter:
+      # execute: False
   ### MKDOCSTRINGS ###
   - mkdocstrings:
       handlers:
@@ -85,9 +86,10 @@ plugins:
             - import sys
             - sys.path.append("docs")
             - sys.path.append("libs/aiopen")
+            - sys.path.append("libs/h5")
           inherited_members: true
           docstring_style: google
-          rendering:
+          options:
             show_source: true
             show_root_heading: true
             show_root_full_path: true
@@ -98,8 +100,7 @@ plugins:
             show_if_no_docstring: true
             show_root_toc_entry: true
             heading_level: 2
-          selection:
-            members: true
+            # members: true
             filters:
               - "!^_"  # exlude all members starting with _
               - "^__init__$"  # but always include __init__ modules and methods
