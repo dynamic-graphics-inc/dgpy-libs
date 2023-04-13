@@ -22,7 +22,15 @@ nav:
       # - xtyping: './libs/xtyping/README.ipynb'
   - API:
       - aiopen: './libs/aiopen/aiopen.api.md'
+      - asyncify: './libs/asyncify/asyncify.api.md'
+      - fmts: './libs/fmts/fmts.api.md'
+      - funkify: './libs/funkify/funkify.api.md'
       - h5: './libs/h5/h5.api.md'
+      - requires: './libs/requires/requires.api.md'
+      - listless: './libs/listless/listless.api.md'
+      - jsonbourne: './libs/jsonbourne/jsonbourne.api.md'
+      - shellfish: './libs/shellfish/shellfish.api.md'
+      - xtyping: './libs/xtyping/xtyping.api.md'
   # - Notebooks:
   #     - Cache Money: './notebooks/cache_money.ipynb'
   #     - Filter None: './notebooks/filter_none.ipynb'
@@ -76,7 +84,7 @@ markdown_extensions:
 plugins:
   - search:
       lang: en
-  # - mkdocs-jupyter:
+      # - mkdocs-jupyter:
       # execute: False
   ### MKDOCSTRINGS ###
   - mkdocstrings:

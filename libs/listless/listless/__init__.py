@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
-"""Listless generator utils"""
+"""Listless = generators, iterators, and async iterators, Oh My!"""
 import asyncio
 
 from collections import deque
@@ -50,7 +50,6 @@ __all__ = (
     "unique_gen",
     "xmap",
     "zip_async",
-    "zip_longest",
 )
 
 _K = TypeVar("_K")
@@ -550,9 +549,7 @@ def spliterable(
         fn: Function to evaluate iterable elements and returns True or False
 
     Returns:
-        tuple of generators. The first generator will yield elements of the
-        original iterable where the conditional-function evaluates True, and
-        the second generator where the conditional-function evaluates to False.
+        tuple of generators: (gen_predicate_true, gen_predicate_false)
 
     Examples:
         >>> is_even = lambda n: n % 2 == 0
@@ -718,7 +715,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
             break
 
 
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+# if __name__ == "__main__":
+#     import doctest
+#
+#     doctest.testmod()
