@@ -31,12 +31,11 @@ from asyncify import asyncify
 from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from listless import flatten_strings as _flatten_strings
-from shellfish import fs
+from shellfish import fs, sp
 from shellfish._meta import __version__
 from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo
 from shellfish.fs import (
-    Stdio as Stdio,
     SymlinkType as SymlinkType,
     chmod as chmod,
     copy_file as copy_file,
@@ -152,7 +151,8 @@ from shellfish.fs import (
 from shellfish.libsh._dirtree import _DirTree
 from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
-from shellfish.sp import PopenArgs
+from shellfish.stdio import Stdio as Stdio
+from shellfish.types import PopenArgs as PopenArgs
 from xtyping import STDIN, AnyStr, FsPath, IterableStr, TypedDict
 
 __all__ = (
@@ -830,6 +830,28 @@ def validate_popen_args_windows(
     return args
 
 
+def _do_tee(
+    args: PopenArgs,
+    input: Optional[STDIN],
+    cwd: Optional[FsPath],
+    env: Optional[Dict[str, str]],
+    timeout: Optional[float],
+    shell: bool = False,
+) -> Done:
+    completed, pdt = sp.run_dtee(
+        args, input=input, cwd=cwd, env=env, timeout=timeout, shell=shell
+    )
+    return Done(
+        args=completed.args,
+        stdout=completed.stdout,
+        stderr=completed.stderr,
+        returncode=completed.returncode,
+        ti=pdt.ti,
+        tf=pdt.tf,
+        dt=pdt.dt,
+    )
+
+
 def _do(
     args: PopenArgs,
     *,
@@ -842,6 +864,7 @@ def _do(
     input: STDIN = None,
     timeout: Optional[int] = None,
     text: bool = False,
+    tee: bool = False,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -857,6 +880,7 @@ def _do(
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
+        tee (bool): Flag to tee the subprocess stdout and stderr to sys.stdout/stderr
         text: Flag to decode the output as text
         timeout (Optional[int]): Timeout in seconds for the process if not None
         ok_code (Union[int, Sequence[int]]): Code(s) to consider as OK
@@ -898,6 +922,18 @@ def _do(
             verbose=verbose,
             stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
+        )
+
+    if tee:
+        # if not shell:
+        #     raise ValueError("tee=True only works with shell=True")
+        return _do_tee(
+            args=args,
+            input=_input,
+            cwd=cwd,
+            env=_env,
+            timeout=timeout,
+            shell=shell,
         )
 
     ti = time()
@@ -957,6 +993,7 @@ def do(
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
         input: Stdin to give to the subprocess
+        tee (bool): Flag to tee the subprocess stdout and stderr to sys.stdout/stderr
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
         timeout (Optional[int]): Timeout in seconds for the process if not None
@@ -1229,7 +1266,7 @@ async def _do_async(
             dryrun=True,
             async_proc=True,
         )
-    _proc, ti, tf = await __run_async.run_async_dt(
+    _proc, _pdt = await __run_async.run_dtee_async(
         *_args,
         env=_env,
         cwd=_cwd,
@@ -1251,10 +1288,12 @@ async def _do_async(
         stdout=decode_stdio_bytes(_proc.stdout),
         stderr=decode_stdio_bytes(_proc.stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,
-        ti=ti,
-        tf=tf,
-        dt=tf - ti,
-        hrdt=HrTime.from_seconds(tf - ti),
+        ti=_pdt.ti,
+        tf=_pdt.tf,
+        dt=_pdt.dt,
+        hrdt=HrTime.from_seconds(
+            _pdt.dt,
+        ),
         verbose=verbose,
         async_proc=True,
     )

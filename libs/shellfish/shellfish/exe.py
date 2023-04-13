@@ -8,7 +8,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
 from shellfish.sh import Done, flatten_args
-from shellfish.sp import PopenArgs, PopenArgv
+from shellfish.types import PopenArgs, PopenArgv
 from xtyping import STDIN, FsPath
 
 __all__ = (

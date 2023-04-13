@@ -9,7 +9,7 @@ from shellfish import batman
 from xtyping import IterableStr, List, Tuple
 
 
-class OsFsAbc(ABC):
+class OsFsAbc(ABC):  # pragma: nocov
     """Abstract base class for OS-specific fns"""
 
     @staticmethod

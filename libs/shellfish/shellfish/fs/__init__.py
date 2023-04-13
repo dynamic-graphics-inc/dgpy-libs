@@ -2,7 +2,6 @@
 """file-system utils"""
 from __future__ import annotations
 
-from enum import IntEnum
 from glob import has_magic, iglob
 from itertools import chain, count
 from os import (
@@ -71,6 +70,7 @@ from shellfish.fs._async import (
     wstring_async as wstring_async,
 )
 from shellfish.process import is_win
+from shellfish.stdio import Stdio as Stdio
 from xtyping import (
     Any,
     AnyStr,
@@ -88,14 +88,6 @@ from xtyping import (
 )
 
 # END-IMPORTS
-
-
-class Stdio(IntEnum):
-    """Standard-io enum object"""
-
-    stdin = 0
-    stdout = 1
-    stderr = 2
 
 
 def fspath(fspath: FsPath) -> str:

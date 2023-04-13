@@ -5,14 +5,52 @@ from shlex import quote as _quote
 from typing import AnyStr, List, Union
 
 from listless import flatten_strings as _flatten_strings
-from shellfish.sp import PopenArgs
+from shellfish.types import PopenArgs
 
 
-def argstr(string: AnyStr) -> AnyStr:
-    """Return given string with quotes if needed"""
+def arganystr(string: AnyStr) -> AnyStr:
+    """Return given string with quotes if needed
+
+    Examples:
+        >>> arganystr("a b")
+        "'a b'"
+        >>> arganystr("a b c")
+        "'a b c'"
+        >>> arganystr(b"a b")
+        b"'a b'"
+
+    """
     if isinstance(string, bytes):
-        return argstr(string.decode()).encode()
+        return arganystr(string.decode()).encode()
     return _quote(string) if " " in string else string
+
+
+def argstr(string: Union[str, bytes]) -> str:
+    """Return given string with quotes if needed
+
+    Examples:
+        >>> argstr("a b")
+        "'a b'"
+        >>> argstr("a b c")
+        "'a b c'"
+        >>> argstr(b"a b")
+        "'a b'"
+
+    """
+    return arganystr(string if isinstance(string, str) else string.decode())
+
+
+def flatten_args(*args: PopenArgs) -> List[str]:
+    """Flatten possibly nested iterables of sequences to a list of strings
+
+    Examples:
+        >>> list(flatten_args("cmd", ["uno", "dos", "tres"]))
+        ['cmd', 'uno', 'dos', 'tres']
+        >>> list(flatten_args("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+
+    """
+    return list(_flatten_strings(args))  # type: ignore[arg-type]
 
 
 def args2cmd(args: PopenArgs) -> Union[str, bytes]:
@@ -30,18 +68,5 @@ def args2cmd(args: PopenArgs) -> Union[str, bytes]:
     return (
         args
         if isinstance(args, (bytes, str))
-        else " ".join(map(argstr, map(str, args)))
+        else " ".join(map(argstr, map(str, flatten_args(args))))
     )
-
-
-def flatten_args(*args: PopenArgs) -> List[str]:
-    """Flatten possibly nested iterables of sequences to a list of strings
-
-    Examples:
-        >>> list(flatten_args("cmd", ["uno", "dos", "tres"]))
-        ['cmd', 'uno', 'dos', 'tres']
-        >>> list(flatten_args("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
-        ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
-
-    """
-    return list(_flatten_strings(args))  # type: ignore[arg-type]

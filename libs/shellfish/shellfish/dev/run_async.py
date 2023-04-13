@@ -10,12 +10,13 @@ from subprocess import (
     DEVNULL as DEVNULL,
     CalledProcessError as CalledProcessError,
     CompletedProcess as CompletedProcess,
+    TimeoutExpired,
 )
 from time import time
 from typing import Callable, Optional
 
 from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
-from shellfish.sp import PopenArgs
+from shellfish.sp import PopenArgs, ProcessDt
 from xtyping import IO, Any, FsPath, List, Mapping, Set, Tuple, Union
 
 __all__ = ("run_async",)
@@ -38,7 +39,7 @@ async def _read_stream(
             break
 
 
-async def run_async_dt(
+async def run_dtee_async(
     *popenargs: PopenArgs,
     executable: Optional[str] = None,
     stdin: Optional[Union[IO[Any], int]] = None,
@@ -56,7 +57,7 @@ async def run_async_dt(
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
-) -> Tuple[CompletedProcess[bytes], float, float]:
+) -> Tuple[CompletedProcess[bytes], ProcessDt]:
     _args = list(_flatten_args(*popenargs))
 
     _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
@@ -101,61 +102,92 @@ async def run_async_dt(
         sink.write(line)
         pipe.write(line.decode())
 
+    _bg = []
     if tee:
         if _input_bytes is not None and _proc.stdin is not None:
             _proc.stdin.write(_input_bytes)
             _proc.stdin.close()
-        _bg = []
         if _proc.stdout is not None:
             _bg.append(
-                _read_stream(
-                    _proc.stdout, lambda line: _tee_string(line, _out_buf, sys.stdout)
+                asyncio.create_task(
+                    _read_stream(
+                        _proc.stdout,
+                        lambda line: _tee_string(line, _out_buf, sys.stdout),
+                    )
                 )
             )
         if _proc.stderr is not None:
             _bg.append(
-                _read_stream(
-                    _proc.stderr, lambda line: _tee_string(line, _err_buf, sys.stderr)
+                asyncio.create_task(
+                    _read_stream(
+                        _proc.stderr,
+                        lambda line: _tee_string(line, _err_buf, sys.stderr),
+                    )
                 )
             )
-        if _bg:
+
+        if timeout:
+            try:
+                await asyncio.wait_for(
+                    asyncio.gather(
+                        *_bg,
+                    ),
+                    timeout=timeout,
+                )
+                tf = time()
+            except ValueError:
+                tf = time()
+                _proc.terminate()
+                raise TimeoutExpired(
+                    cmd=_args,
+                    timeout=timeout,
+                    output=_out_buf.getvalue(),
+                    stderr=_err_buf.getvalue(),
+                )
+            except TimeoutError:
+                tf = time()
+                for task in _bg:
+                    task.cancel()
+                _proc.terminate()
+                raise TimeoutExpired(
+                    cmd=_args,
+                    timeout=timeout,
+                    output=_out_buf.getvalue(),
+                    stderr=_err_buf.getvalue(),
+                )
+        else:
             await asyncio.gather(
                 *_bg,
             )
-    if timeout:
-        try:
-            if _input_bytes is not None and _proc.stdin is not None:
-                (_stdout, _stderr) = await asyncio.wait_for(
-                    _proc.communicate(
-                        input=_input_bytes
-                    ),  # wait for subprocess to finish
-                    timeout=timeout,
-                )
-            else:
-                (_stdout, _stderr) = await asyncio.wait_for(
-                    _proc.communicate(),  # wait for subprocess to finish
-                    timeout=timeout,
-                )
-
             tf = time()
-        except TimeoutError as te:
-            _proc.terminate()
-            raise TimeoutError(
-                str(
-                    {
-                        "args": _args,
-                        "input": input,
-                        "env": env,
-                        "cwd": cwd,
-                        "shell": shell,
-                        "asyncio.TimeoutError": str(te),
-                    }
-                )
-            )
     else:
-        (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)  # wait fo
-        tf = time()
+        if timeout:
+            try:
+                if _input_bytes is not None and _proc.stdin is not None:
+                    (_stdout, _stderr) = await asyncio.wait_for(
+                        _proc.communicate(
+                            input=_input_bytes
+                        ),  # wait for subprocess to finish
+                        timeout=timeout,
+                    )
+                else:
+                    (_stdout, _stderr) = await asyncio.wait_for(
+                        _proc.communicate(),  # wait for subprocess to finish
+                        timeout=timeout,
+                    )
 
+                tf = time()
+            except TimeoutError:
+                _proc.terminate()
+                raise TimeoutExpired(
+                    cmd=_args,
+                    timeout=timeout,
+                    output=_out_buf.getvalue(),
+                    stderr=_err_buf.getvalue(),
+                )
+        else:
+            (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)  # wait fo
+            tf = time()
     if tee:
         _stdout = _out_buf.getvalue()
         _stderr = _err_buf.getvalue()
@@ -178,8 +210,11 @@ async def run_async_dt(
             stdout=_stdout or b"",
             stderr=_stderr or b"",
         ),
-        ti,
-        tf,
+        ProcessDt(
+            ti=ti,
+            tf=tf,
+            dt=tf - ti,
+        ),
     )
 
 
@@ -202,7 +237,7 @@ async def run_async(
     universal_newlines: bool = True,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
-    completed_process, _ti, _tf = await run_async_dt(
+    completed_process, _pdt = await run_dtee_async(
         *popenargs,
         executable=executable,
         stdin=stdin,

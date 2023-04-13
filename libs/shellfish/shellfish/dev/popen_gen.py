@@ -3,25 +3,44 @@ from __future__ import annotations
 
 from concurrent.futures.thread import ThreadPoolExecutor
 from queue import Empty, Queue
-from subprocess import PIPE, Popen
+from subprocess import PIPE, Popen, TimeoutExpired
+from time import time
 
 from shellfish.fs import Stdio
-from xtyping import IO, Any, AnyStr, Iterable, Tuple
+from xtyping import IO, Any, AnyStr, Iterable, Optional, Tuple
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 
 
-def _enqueue_output(fileio: IO[AnyStr], queue: Queue[AnyStr]) -> None:
+def _enqueue_output(
+    fileio: IO[AnyStr],
+    queue: Queue[AnyStr],
+    block: bool = True,
+) -> None:
+    while True:
+        line = fileio.readline()
+        if line:
+            queue.put(line, block=block)
+        else:
+            break
+
+
+def _enqueue_output_iter_readline(
+    fileio: IO[AnyStr], queue: Queue[AnyStr], block: bool = True
+) -> None:
     for line in iter(fileio.readline, ""):
-        queue.put(line)
+        queue.put(line, block=block)
     fileio.close()
 
 
-def popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
+def popen_pipes_gen(
+    proc: Popen[AnyStr], timeout: Optional[float] = None
+) -> Iterable[Tuple[Stdio, str]]:
     """Yield stdout and stderr lines from a subprocess
 
     Args:
         proc (Popen): Popen process
+        timeout (Optional[float], optional): Timeout in seconds. Defaults to None.
 
     Yields:
         Tuple[Stdio, str]: Tuples with stdio enum marker followed by a string
@@ -32,25 +51,34 @@ def popen_pipes_gen(proc: Popen[AnyStr]) -> Iterable[Tuple[Stdio, str]]:
     """
     if not isinstance(proc, Popen):
         raise ValueError("proc must be a Popen object")
+    _raise_err = False
     if proc.stdout is not None and proc.stderr is not None:
+        ti = time()
         with ThreadPoolExecutor(2) as pool:
             q_stdout: Queue[AnyStr] = Queue()
             q_stderr: Queue[AnyStr] = Queue()
-            pool.submit(_enqueue_output, proc.stdout, q_stdout)  # type: ignore[arg-type]
-            pool.submit(_enqueue_output, proc.stderr, q_stderr)  # type: ignore[arg-type]
-            while True:
-                if proc.poll() is not None and q_stdout.empty() and q_stderr.empty():
-                    break
-
+            _block = True
+            stdout_future = pool.submit(_enqueue_output, proc.stdout, q_stdout, _block)  # type: ignore[arg-type]
+            stderr_future = pool.submit(_enqueue_output, proc.stderr, q_stderr, _block)  # type: ignore[arg-type]
+            while proc.poll() is None:
                 try:
                     yield Stdio.stdout, q_stdout.get_nowait()
                 except Empty:
                     pass
-
                 try:
                     yield Stdio.stderr, q_stderr.get_nowait()
                 except Empty:
                     pass
+                if timeout is not None and time() - ti > timeout:
+                    _raise_err = True
+                    stdout_future.cancel()
+                    stderr_future.cancel()
+                    pool.shutdown(wait=False)
+                    break
+        if _raise_err and timeout is not None:
+            proc.terminate()
+            raise TimeoutExpired(proc.args, timeout, output=None, stderr=None)
+
     else:
         raise ValueError("proc.stdout and proc.stderr must be not None")
 
