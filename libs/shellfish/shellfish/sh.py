@@ -925,8 +925,6 @@ def _do(
         )
 
     if tee:
-        # if not shell:
-        #     raise ValueError("tee=True only works with shell=True")
         return _do_tee(
             args=args,
             input=_input,
