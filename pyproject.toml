@@ -21,7 +21,7 @@ classifiers = [
 keywords = ["dgpy", "dgi", "typed", "python3"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4"
 aiopen = "*"
 asyncify = "*"
 dgpylibs = "*"
@@ -39,7 +39,7 @@ rich = "^13.3.3"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
-flake8 = "^5.0.4"
+flake8 = "^6.0.0"
 h5py = "^3.8.0"
 isort = "^5.11.5"
 nox = "^2022.11.21"
@@ -74,6 +74,7 @@ dgpydev = "dgpydev.cli:main"
 ruff = "^0.0.261"
 anyio = { extras = ["trio"], version = "^3.6.2" }
 nox = "^2022.11.21"
+packaging = "^23.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
