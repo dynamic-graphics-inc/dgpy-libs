@@ -33,7 +33,7 @@ listless = "*"
 requires = "*"
 shellfish = "*"
 xtyping = "*"
-dgpytest = { version = "^0.0.1", optional = true }
+dgpytest = { version = ">=0.0.1,<0.0.3", optional = true }
 
 [tool.poetry.dev-dependencies]
 xdoctest = ">=0.15.10"
