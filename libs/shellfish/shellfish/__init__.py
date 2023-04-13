@@ -2,13 +2,13 @@
 """shellfish ~ shell and file-system utils"""
 from __future__ import annotations
 
-from funkify import funkify
-from shellfish import dotenv, fs, process, sh
-from shellfish._meta import __version__
-from shellfish.process import env
+from funkify import funkify as _funkify
+from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
+from shellfish._meta import __version__ as __version__
+from shellfish.process import env as env
 
-funkify(sh.do, key="shellfish.sh")
-funkify(sh.do, key="shellfish")
+_funkify(sh.do, key="shellfish.sh")
+_funkify(sh.do, key="shellfish")
 
 ps = process
 
