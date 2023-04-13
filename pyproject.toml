@@ -306,10 +306,10 @@ max-complexity = 20
   "D100", # missing docstring
 ]
 "**/noxfile.py" = [
-  "D"
+  "D",
 ]
 "**/conftest.py" = [
-  "D"
+  "D",
 ]
 "**/test_*.py" = [
   "D1",

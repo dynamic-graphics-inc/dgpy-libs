@@ -715,7 +715,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
             break
 
 
-# if __name__ == "__main__":
-#     import doctest
-#
-#     doctest.testmod()
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

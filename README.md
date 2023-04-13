@@ -44,7 +44,6 @@ libs
 
 **Install:** `pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping`
 
-
 ### [aiopen](./libs/aiopen) ~ `pip install aiopen` ~ [![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg) [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg) [![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg)
 
 ### [asyncify](./libs/asyncify) ~ `pip install asyncify` ~ [![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg) [![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)

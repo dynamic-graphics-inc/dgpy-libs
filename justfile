@@ -3,8 +3,11 @@ default: fmt ruff
 black:
     black .
 
-isort:
+rsort:
     ruff --select "I" --show-fixes --fix .
+
+isort:
+    isort --sp pyproject.toml libs
 
 fmt: isort black
 

@@ -89,7 +89,6 @@ exclude_lines = [
   'if TYPE_CHECKING:',
   '@overload',
   '\(Protocol\):$',
-  'class BaseAsync:',
   'if 0:',
   'if False:',
 ]
