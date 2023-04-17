@@ -137,3 +137,4 @@ Plz do! Send me that PR!
 - Have CI/CD auto build n publish
 - Changelog (for real)
 - Figure out why the combine-prs workflow doesn't trigger github actions...
+- Update mkdocs to include all dgpy-libs
