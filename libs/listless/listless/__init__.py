@@ -439,6 +439,8 @@ def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T
         ['cmd', 'uno', 'dos', 'tres']
         >>> list(flatten("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+        >>> list(flatten("cmd", ["uno", "dos", "tres", ["4444", "five", 123]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five', 123]
 
     """
     return chain(

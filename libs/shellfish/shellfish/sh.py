@@ -2101,10 +2101,10 @@ async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
         List of the directory items
 
     """
+    items = await listdir_async(dirpath)
     if abspath:
-        items = await listdir_async(dirpath)
         return [path.join(dirpath, el) for el in items]
-    return await listdir_async(dirpath)
+    return items
 
 
 def rm(

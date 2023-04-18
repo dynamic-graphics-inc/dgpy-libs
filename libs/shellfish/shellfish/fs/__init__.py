@@ -22,7 +22,13 @@ from os import (
     walk,
 )
 from pathlib import Path
-from shutil import copytree, move as _move, rmtree
+from shutil import (
+    copy2 as _copy2,
+    copystat as _copystat,
+    copytree,
+    move as _move,
+    rmtree,
+)
 from time import time
 
 from jsonbourne import JSON
@@ -1596,6 +1602,7 @@ def copy_file(
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
     if not dryrun:
         wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+        _copystat(src, dest, follow_symlinks=True)
     return (str(src), str(dest))
 
 
