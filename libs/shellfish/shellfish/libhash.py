@@ -1,5 +1,6 @@
+from dataclasses import dataclass
 from hashlib import blake2b, blake2s, md5, sha1, sha224, sha256, sha384, sha512
-from typing import TYPE_CHECKING, Callable, Dict, Iterator
+from typing import TYPE_CHECKING, Callable, Dict, Iterator, Union
 
 if TYPE_CHECKING:
     from hashlib import _Hash
@@ -16,6 +17,18 @@ _HASHERS: Dict[str, Callable[[], "_Hash"]] = {
     "sha384": sha384,
     "sha512": sha512,
 }
+
+HashLike = Union[str, "_Hash"]
+
+
+@dataclass
+class Hashed:
+    """Hashed Result"""
+
+    b: bytes
+    s: str
+
+    __slots__ = ("b", "s")
 
 
 def string2hasher(string: str) -> "_Hash":
@@ -36,17 +49,37 @@ def string2hasher(string: str) -> "_Hash":
         )
 
 
-def hash_bytes_gen(it: Iterator[bytes], hasher: "_Hash") -> str:
+def hasher(obj: HashLike) -> "_Hash":
+    """Return a hash object from a string or a hash object
+
+    Args:
+        obj (Union[str, hash]): String or hash object
+
+    Returns:
+        hash: Hash object
+
+    Examples:
+        >>> hasher("sha256")
+
+
+    """
+    if isinstance(obj, str):
+        return string2hasher(obj)
+    return obj
+
+
+def hash_bytes_gen(it: Iterator[bytes], hashlike: HashLike) -> str:
     """Return the hash of an iterator of bytes
 
     Args:
         it (Iterator[bytes]): Iterator of bytes
-        hasher (hash): Hash object
+        hashlike (hash): Hash like object; can be a string or a '_Hash' object
 
     Returns:
         str: Hash of the iterator
 
     """
+    _hasher = hasher(hashlike)
     for chunk in it:
-        hasher.update(chunk)
-    return hasher.hexdigest()
+        _hasher.update(chunk)
+    return _hasher.hexdigest()
