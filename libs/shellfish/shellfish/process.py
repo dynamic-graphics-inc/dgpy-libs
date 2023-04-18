@@ -7,7 +7,18 @@ import platform
 import sys
 
 from os import environ
-from typing import Callable, Dict, Iterator, List, Optional, Union, cast
+from typing import (
+    Callable,
+    Dict,
+    ItemsView,
+    Iterator,
+    KeysView,
+    List,
+    Optional,
+    Union,
+    ValuesView,
+    cast,
+)
 
 IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
@@ -32,8 +43,21 @@ __all__ = (
     "opsys",
     "sys_path_sep",
 )
-
 _OS_ENVIRON_ATTRS = set(dir(os.environ))
+from contextlib import contextmanager
+
+
+@contextmanager
+def tmpenv(**kwargs: str) -> Env:
+    """Context manager for Env"""
+    old_env = dict(environ)
+    if kwargs:
+        env.update({k: v for k, v in kwargs.items() if v is not None})
+    try:
+        yield env
+    finally:
+        environ.clear()
+        environ.update(old_env)
 
 
 class _EnvObjMeta(type):
@@ -76,12 +100,29 @@ class _EnvObjMeta(type):
             raise ValueError(f"Key ({key}) is protected; set with __setitem__")
         return cls.__setitem__(key, value)
 
-    update = environ.update
-    get = environ.get
-    setdefault = environ.setdefault
-    clear = environ.clear
-    items = environ.items
-    keys = environ.keys
+    def update(self, d: Dict[str, str]) -> None:
+        return environ.update(d)
+
+    def update_from_dict(self, d: Dict[str, str]) -> None:
+        return self.update(d)
+
+    def get(self, key: str, default: str = None) -> str:
+        return environ.get(key, default)
+
+    def setdefault(self, key: str, default: str = None) -> str:
+        return environ.setdefault(key, default)
+
+    def clear(self) -> None:
+        return environ.clear()
+
+    def keys(self) -> KeysView[str]:
+        return environ.keys()
+
+    def values(self) -> ValuesView[str]:
+        return environ.values()
+
+    def items(self) -> ItemsView[str, str]:
+        return environ.items()
 
     def asdict(cls) -> Dict[str, str]:
         return dict(environ.items())
@@ -112,8 +153,6 @@ class Env(metaclass=_EnvObjMeta):
         False
 
     """
-
-    ...
 
 
 env = ENV = Env
