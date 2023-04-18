@@ -59,8 +59,10 @@ def hasher(obj: HashLike) -> "_Hash":
         hash: Hash object
 
     Examples:
-        >>> hasher("sha256")
-
+        >>> hashobj = hasher("sha256")
+        >>> hashobj.update(b"Hello World")
+        >>> hashobj.hexdigest()
+        'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e'
 
     """
     if isinstance(obj, str):
