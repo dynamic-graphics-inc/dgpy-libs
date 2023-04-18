@@ -52,9 +52,3 @@ def test_module_exports(mod: ModuleType) -> None:
 def test_sh_exports_fs_member(member: str) -> None:
     member_val = getattr(sh, member)
     assert member_val is not None, f"{member} is not exported by sh"
-
-
-def test_everything_in_fs_exported_by_sh() -> None:
-    for member_name in fs.__all__:
-        member_val = getattr(sh, member_name)
-        assert member_val is not None, f"{member_name} is not exported by sh"

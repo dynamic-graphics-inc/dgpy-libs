@@ -71,6 +71,7 @@ from shellfish.fs._async import (
 )
 from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
+from shellfish.types import SymlinkType
 from xtyping import (
     Any,
     AnyStr,
@@ -80,7 +81,6 @@ from xtyping import (
     Iterable,
     Iterator,
     List,
-    Literal,
     Optional,
     Tuple,
     Union,
@@ -1593,9 +1593,6 @@ def stat(fspath: FsPath) -> os_stat_result:
 
     """
     return _stat(_fspath(fspath))
-
-
-SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
 
 
 def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:

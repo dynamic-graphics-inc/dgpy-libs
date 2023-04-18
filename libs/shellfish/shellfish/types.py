@@ -5,6 +5,8 @@ import os
 
 from typing import TYPE_CHECKING, Mapping, Sequence, Union
 
+from typing_extensions import Literal
+
 __all__ = (
     "PathLikeBytes",
     "PathLikeStr",
@@ -28,3 +30,4 @@ PopenArg = Union[str, bytes, PathLikeStrBytes]
 PopenArgv = Sequence[PopenArg]
 PopenArgs = Union[bytes, str, PopenArgv]
 PopenEnv = Mapping[str, str]
+SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
