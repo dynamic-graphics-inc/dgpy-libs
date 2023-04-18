@@ -89,8 +89,5 @@ async def test_listdir_async(tmp_path: Path) -> None:
         sh.touch(
             path.join("a-dir", f"file{i}.txt"),
         )
-    assert await sh.listdir_async("a-dir") == [
-        "file0.txt",
-        "file1.txt",
-        "file2.txt",
-    ]
+    items = await sh.listdir_async("a-dir")
+    assert sorted(items) == ["file0.txt", "file1.txt", "file2.txt"]
