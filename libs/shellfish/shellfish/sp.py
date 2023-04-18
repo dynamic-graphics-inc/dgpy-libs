@@ -16,10 +16,10 @@ from subprocess import (
 )
 from time import time
 
+from shellfish._types import PopenArgs as PopenArgs
 from shellfish.dev.popen_gen import popen_pipes_gen
 from shellfish.libsh.args import args2cmd
 from shellfish.process import is_win
-from shellfish.types import PopenArgs as PopenArgs
 from xtyping import (
     IO,
     STDIN,

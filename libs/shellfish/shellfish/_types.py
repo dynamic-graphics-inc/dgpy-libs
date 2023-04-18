@@ -7,15 +7,7 @@ from typing import TYPE_CHECKING, Mapping, Sequence, Union
 
 from typing_extensions import Literal
 
-__all__ = (
-    "PathLikeBytes",
-    "PathLikeStr",
-    "PathLikeStrBytes",
-    "PopenArg",
-    "PopenArgs",
-    "PopenArgv",
-    "PopenEnv",
-)
+from xtyping import FsPath as FsPath
 
 if TYPE_CHECKING:
     PathLikeStr = os.PathLike[str]
@@ -31,3 +23,15 @@ PopenArgv = Sequence[PopenArg]
 PopenArgs = Union[bytes, str, PopenArgv]
 PopenEnv = Mapping[str, str]
 SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
+
+__all__ = (
+    "PathLikeBytes",
+    "PathLikeStr",
+    "PathLikeStrBytes",
+    "PopenArg",
+    "PopenArgs",
+    "PopenArgv",
+    "PopenEnv",
+    "FsPath",
+    "SymlinkType",
+)

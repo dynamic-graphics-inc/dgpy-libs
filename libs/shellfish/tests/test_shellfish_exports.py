@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from collections import Counter
 from pprint import pformat
 from types import ModuleType
@@ -7,7 +9,7 @@ import pytest
 
 import shellfish
 
-from shellfish import aios, dotenv, fs, process, sh
+from shellfish import _types as shellfish_types, aios, dotenv, fs, process, sh
 from shellfish.aios import _path as aiospath
 from shellfish.fs import promises as fsp
 
@@ -52,3 +54,9 @@ def test_module_exports(mod: ModuleType) -> None:
 def test_sh_exports_fs_member(member: str) -> None:
     member_val = getattr(sh, member)
     assert member_val is not None, f"{member} is not exported by sh"
+
+
+@pytest.mark.parametrize("member", shellfish_types.__all__)
+def test_shellfish_exports_types_member(member: str) -> None:
+    member_val = getattr(shellfish, member)
+    assert member_val is not None, f"{member} is not exported by shellfish"

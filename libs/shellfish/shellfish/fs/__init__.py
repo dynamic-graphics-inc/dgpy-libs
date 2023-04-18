@@ -29,6 +29,7 @@ from jsonbourne import JSON
 from listless import exhaust
 from shellfish import const
 from shellfish._meta import __version__
+from shellfish._types import FsPath, SymlinkType
 from shellfish.fs._async import (
     dir_exists_async as dir_exists_async,
     exists_async as exists_async,
@@ -69,14 +70,12 @@ from shellfish.fs._async import (
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
-from shellfish.process import is_win
+from shellfish.process import is_win as is_win
 from shellfish.stdio import Stdio as Stdio
-from shellfish.types import SymlinkType
 from xtyping import (
     Any,
     AnyStr,
     Callable,
-    FsPath,
     Generator,
     Iterable,
     Iterator,

@@ -5,7 +5,7 @@ from shlex import quote as _quote
 from typing import AnyStr, List, Union
 
 from listless import flatten_strings as _flatten_strings
-from shellfish.types import PopenArgs
+from shellfish._types import PopenArgs
 
 
 def arganystr(string: AnyStr) -> AnyStr:

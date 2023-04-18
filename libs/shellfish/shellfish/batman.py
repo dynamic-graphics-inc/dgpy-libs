@@ -74,6 +74,30 @@ def run_cmds_as_bat_file(
 
 
 def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, None]:
+    """Return the appropriate /D, /H, or /J option for windows mklink
+
+    Args:
+        D (bool): `mklink /D` creates a directory symbolic link.
+        H (bool): `mklink /H` creates a hard link instead of a symbolic link.
+        J (bool): `mklink /J` creates a directory junction.
+
+    Returns:
+        Union[str, None]: The appropriate /D, /H, or /J option for windows mklink
+
+    Examples:
+        >>> MKLINK_OPT(D=True)
+        '/D'
+        >>> MKLINK_OPT(H=True)
+        '/H'
+        >>> MKLINK_OPT(J=True)
+        '/J'
+        >>> MKLINK_OPT()
+        >>> MKLINK_OPT(D=True, H=True)
+        Traceback (most recent call last):
+        ...
+        ValueError: Only one of D, H, J can be True.  Got True, True, False
+
+    """
     # Check that only one of D, H, J is True
     if sum((D, H, J)) > 1:
         raise ValueError(f"Only one of D, H, J can be True.  Got {D}, {H}, {J}")
@@ -233,3 +257,9 @@ def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess[str]:
         text=True,
         shell=True,
     )
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()

@@ -33,6 +33,7 @@ from jsonbourne.pydantic import JsonBaseModel
 from listless import flatten_strings as _flatten_strings
 from shellfish import fs, sp
 from shellfish._meta import __version__
+from shellfish._types import FsPath as FsPath, PopenArgs as PopenArgs
 from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo
 from shellfish.fs import (
@@ -152,8 +153,7 @@ from shellfish.libsh._dirtree import _DirTree
 from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
-from shellfish.types import PopenArgs as PopenArgs
-from xtyping import STDIN, AnyStr, FsPath, IterableStr, TypedDict
+from xtyping import STDIN, AnyStr, IterableStr, TypedDict
 
 __all__ = (
     "Done",
