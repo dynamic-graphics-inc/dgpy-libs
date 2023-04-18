@@ -58,6 +58,18 @@ __all__ = (
 
 @dataclass(frozen=True)
 class ProcessDt:
+    """Process time delta dataclass
+
+    Examples:
+        >>> from shellfish.sp import ProcessDt
+        >>> ti = 0
+        >>> tf = 1
+        >>> dt = ProcessDt.from_titf(ti=ti, tf=tf)
+        >>> dt
+        ProcessDt(ti=0, tf=1, dt=1)
+
+    """
+
     ti: float
     tf: float
     dt: float

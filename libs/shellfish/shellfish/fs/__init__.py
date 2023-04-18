@@ -116,18 +116,28 @@ def exists(fspath: FsPath) -> bool:
 
 
 def file_exists(fspath: FsPath) -> bool:
-    """Return True if the given path exists; False otherwise"""
+    """Return True if the given path exists; False otherwise; alias for isfile"""
     return isfile(fspath)
 
 
 def dir_exists(fspath: FsPath) -> bool:
-    """Return True if the given path exists; False otherwise"""
+    """Return True if the given path exists; False otherwise; alias for isdir"""
     return isdir(fspath)
 
 
-is_dir = isdir
-is_file = isfile
-is_link = islink
+def is_dir(fspath: FsPath) -> bool:
+    """Return True if the given path is a directory; alias for isdir"""
+    return isdir(fspath)
+
+
+def is_file(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; alias for isfile"""
+    return isfile(fspath)
+
+
+def is_link(fspath: FsPath) -> bool:
+    """Return True if the given path is a link; alias for islink"""
+    return islink(fspath)
 
 
 def safepath(fspath: FsPath) -> str:
@@ -370,7 +380,7 @@ def filepath_mtimedelta_sec(filepath: FsPath) -> float:
     return time() - path.getmtime(_fspath(filepath))
 
 
-def touch(fspath: FsPath) -> None:
+def touch(fspath: FsPath, *, mkdirp: bool = True) -> None:
     """Create an empty file given a fspath
 
     Args:
@@ -378,7 +388,10 @@ def touch(fspath: FsPath) -> None:
 
     """
     if not path.exists(str(fspath)):
-        _makedirs(path.dirname(str(fspath)), exist_ok=True)
+        if mkdirp:
+            parent_dir = path.dirname(str(fspath))
+            if parent_dir:
+                _makedirs(parent_dir, exist_ok=True)
         with open(fspath, "a"):
             utime(fspath, None)
 
@@ -1278,8 +1291,21 @@ def rjson(filepath: FsPath) -> Any:
     return JSON.loads(lstring(filepath=filepath))
 
 
-def extension(fspath: str) -> str:
-    """Return the extension for a fspath"""
+def extension(fspath: str, *, period: bool = False) -> str:
+    """Return the extension for a fspath
+
+    Examples:
+        >>> from shellfish.fs import extension
+        >>> extension("foo.bar")
+        'bar'
+        >>> extension("foo.tar.gz")
+        'tar.gz'
+        >>> extension("foo.tar.gz", period=True)
+        '.tar.gz'
+
+    """
+    if period:
+        return "".join(Path(fspath).suffixes)
     return "".join(Path(fspath).suffixes).lstrip(".")
 
 

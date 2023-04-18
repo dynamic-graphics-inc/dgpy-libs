@@ -134,6 +134,11 @@ def is_mac() -> bool:
     return "darwin" in platform.system().lower()
 
 
+def ismac() -> bool:
+    """Alias for is_mac()"""
+    return is_mac()
+
+
 def is_win() -> bool:
     """Determine if current operating system is windows
 
@@ -142,6 +147,11 @@ def is_win() -> bool:
 
     """
     return IS_WIN
+
+
+def iswin() -> bool:
+    """Alias for is_win()"""
+    return is_win()
 
 
 def is_wsl() -> bool:
@@ -160,6 +170,11 @@ def is_wsl() -> bool:
         pass
 
     return False
+
+
+def iswsl() -> bool:
+    """Alias for is_wsl()"""
+    return is_wsl()
 
 
 def is_notebook() -> bool:
@@ -198,22 +213,49 @@ def opsys() -> str:
 
 
 def hostname() -> str:
-    """Return the current computer's hostname"""
+    """Return the current computer's hostname
+
+    Returns:
+        str: hostname
+
+    Examples:
+        >>> hn = hostname()
+        >>> isinstance(hn, str)
+        True
+
+    """
     return platform.node()
 
 
 def sys_path_sep() -> str:
-    """Return the system path separator string (; on windows -- : otherwise)"""
+    """Return the system path separator string (; on windows -- : otherwise)
+
+    Examples:
+        >>> sep = sys_path_sep()
+        >>> isinstance(sep, str)
+        True
+        >>> os.pathsep == sep
+        True
+
+    """
     return os.pathsep
 
 
 def syspath_paths(syspath: Optional[str] = None) -> List[str]:
-    """Return the current sys.path as a list"""
+    """Return the current sys.path as a list
+
+    Examples:
+        >>> sys_paths = syspath_paths()
+        >>> isinstance(sys_paths, list)
+        True
+        >>> sys_path_arg = 'path1;path2;path3' if is_win() else 'path1:path2:path3'
+        >>> sys_paths_w_args = syspath_paths(syspath=sys_path_arg)
+        >>> isinstance(sys_paths_w_args, list)
+        True
+        >>> sys_paths_w_args == ['path1', 'path2', 'path3']
+        True
+
+    """
     if syspath is None:
         return list(filter(None, sys.path))
     return list(filter(None, syspath.split(os.pathsep)))
-
-
-ismac = is_mac
-iswin = is_win
-iswsl = is_wsl

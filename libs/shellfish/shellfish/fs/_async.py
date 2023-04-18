@@ -56,14 +56,29 @@ async def isfile_async(fspath: FsPath) -> bool:
     return await aios.path.isfile(_fspath(fspath))
 
 
+async def is_file_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; False otherwise"""
+    return await isfile_async(fspath)
+
+
 async def isdir_async(fspath: FsPath) -> bool:
     """Return True if the given path is a file; False otherwise"""
-    return await aios.path.isfile(_fspath(fspath))
+    return await aios.path.isdir(_fspath(fspath))
+
+
+async def is_dir_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; False otherwise"""
+    return await isdir_async(fspath)
 
 
 async def islink_async(fspath: FsPath) -> bool:
     """Return True if the given path is a link; False otherwise"""
     return await aios.path.islink(_fspath(fspath))
+
+
+async def is_link_async(fspath: FsPath) -> bool:
+    """Return True if the given path is a link; False otherwise"""
+    return await islink_async(fspath)
 
 
 async def exists_async(fspath: FsPath) -> bool:
@@ -81,7 +96,20 @@ async def lstat_async(fspath: FsPath) -> os.stat_result:
 
 
 async def filesize_async(fspath: FsPath) -> int:
-    """Return the size of the file at the given fspath"""
+    """Return the size of the file at the given fspath
+
+    Examples:
+        >>> from asyncio import run as aiorun
+        >>> from pathlib import Path
+        >>> from tempfile import TemporaryDirectory
+        >>> with TemporaryDirectory() as tmpdir:
+        ...     tmpdir = Path(tmpdir)
+        ...     fpath = tmpdir / "test.txt"
+        ...     written = fpath.write_text("hello world")
+        ...     aiorun(filesize_async(fpath))
+        11
+
+    """
     _stat_res = await aios.stat(str(fspath))
     return _stat_res.st_size
 
@@ -94,11 +122,6 @@ async def file_exists_async(fspath: FsPath) -> bool:
 async def dir_exists_async(fspath: FsPath) -> bool:
     """Return True if the directory exists; False otherwise"""
     return await aios.path.isdir(_fspath(fspath))
-
-
-is_dir_async = isdir_async
-is_file_async = isfile_async
-is_link_async = islink_async
 
 
 async def listdir_async(fspath: FsPath) -> List[str]:
