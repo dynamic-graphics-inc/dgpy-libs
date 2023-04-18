@@ -5,17 +5,19 @@ from __future__ import annotations
 import os
 import platform
 import sys
-
 from contextlib import contextmanager
 from os import environ
 from typing import (
+    Any,
     Callable,
     Dict,
+    Generator,
     ItemsView,
     Iterator,
     KeysView,
     List,
     Optional,
+    Type,
     Union,
     ValuesView,
     cast,
@@ -48,11 +50,11 @@ _OS_ENVIRON_ATTRS = set(dir(os.environ))
 
 
 @contextmanager
-def tmpenv(**kwargs: str) -> Env:
+def tmpenv(**kwargs: str) -> Generator[Type[Env], Any, None]:
     """Context manager for Env"""
     old_env = dict(environ)
     if kwargs:
-        env.update({k: v for k, v in kwargs.items() if v is not None})
+        env.update(kwargs)
     try:
         yield env
     finally:
@@ -106,10 +108,12 @@ class _EnvObjMeta(type):
     def update_from_dict(self, d: Dict[str, str]) -> None:
         return self.update(d)
 
-    def get(self, key: str, default: str = None) -> str:
+    def get(self, key: str, default: Optional[str] = None) -> str:
+        if default is None:
+            return environ[key]
         return environ.get(key, default)
 
-    def setdefault(self, key: str, default: str = None) -> str:
+    def setdefault(self, key: str, default: str) -> str:
         return environ.setdefault(key, default)
 
     def clear(self) -> None:
