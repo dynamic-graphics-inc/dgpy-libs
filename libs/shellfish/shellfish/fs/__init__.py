@@ -385,6 +385,7 @@ def touch(fspath: FsPath, *, mkdirp: bool = True) -> None:
 
     Args:
         fspath (FsPath): File-system path for where to make an empty file
+        mkdirp (bool): Make parent directories if they don't exist
 
     """
     if not path.exists(str(fspath)):

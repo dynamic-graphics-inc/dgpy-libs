@@ -68,7 +68,7 @@ def test_jsonobj_breaks() -> None:
     assert thing2.c.herm == thing2["c"]["herm"]
     with pytest.raises(ValueError) as err:
         thing2["herm herm herm import"] = "should break"
-        assert err
+        assert err  # type: ignore[truthy-bool]
 
 
 class ThingyWithMethod(JsonObj):
