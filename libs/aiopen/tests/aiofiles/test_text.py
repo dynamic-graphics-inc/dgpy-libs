@@ -116,7 +116,7 @@ async def test_simple_read_fail(mode: str, tmp_path: Path) -> None:
 
             await file.read()
 
-    assert file.closed
+    assert file.closed  # pyright: ignore[reportUnboundVariable]
 
 
 @pytest.mark.asyncio()

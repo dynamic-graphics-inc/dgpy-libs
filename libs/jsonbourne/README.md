@@ -13,7 +13,7 @@
 
 - Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
   - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
-  - Automatically uses best json-lib-backend avalible (`orjson`/`python-rapidjson`) ~ can be configured
+  - Automatically uses best json-lib-backend available (`orjson`/`python-rapidjson`) ~ can be configured
 - Hybrid dict/class object (`jsonbourne.JsonObj`):
   - Dot-notation getting/setting (featuring protected attributes!)
   - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!

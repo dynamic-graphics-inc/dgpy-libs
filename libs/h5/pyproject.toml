@@ -39,9 +39,8 @@ globsters = { version = ">=0.0.2,<0.0.4", optional = true }
 [tool.poetry.extras]
 cli = ["click", "rich", "globsters"]
 
-
 [tool.poetry.dev-dependencies]
-pytest = "^7.3.0"
+pytest = "^7.3.1"
 
 # coverage config
 # [tool.coverage.run]
@@ -58,7 +57,7 @@ context = '${CONTEXT}'
 show_missing = true
 precision = 2
 omit = [
-  "*/legacy.py"
+  "*/legacy.py",
 ]
 exclude_lines = [
   'pragma: no cover',

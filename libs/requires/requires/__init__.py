@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""`requires` ~ make modules callable"""
+"""`requires` ~ dependency utils"""
 from funkify import funkify
 from requires._meta import __version__
 from requires.core import (

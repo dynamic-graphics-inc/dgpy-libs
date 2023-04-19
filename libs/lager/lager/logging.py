@@ -3,48 +3,60 @@
 import logging
 
 from logging import (
-    BASIC_FORMAT,
-    CRITICAL,
-    DEBUG,
-    ERROR,
-    FATAL,
-    INFO,
-    NOTSET,
-    WARN,
-    WARNING,
-    BufferingFormatter,
-    FileHandler,
-    Filter,
-    Formatter,
-    Handler,
-    Logger,
-    LoggerAdapter,
-    LogRecord,
-    NullHandler,
-    StreamHandler,
-    addLevelName,
-    basicConfig,
-    captureWarnings,
-    critical,
-    debug,
-    disable,
-    error,
-    exception,
-    fatal,
-    getLevelName,
-    getLogger,
-    getLoggerClass,
-    getLogRecordFactory,
-    info,
-    lastResort,
-    log,
-    makeLogRecord,
-    raiseExceptions,
-    setLoggerClass,
-    setLogRecordFactory,
-    shutdown,
-    warn,
-    warning,
+    BASIC_FORMAT as BASIC_FORMAT,
+    CRITICAL as CRITICAL,
+    DEBUG as DEBUG,
+    ERROR as ERROR,
+    FATAL as FATAL,
+    INFO as INFO,
+    NOTSET as NOTSET,
+    WARN as WARN,
+    WARNING as WARNING,
+    BufferingFormatter as BufferingFormatter,
+    FileHandler as FileHandler,
+    Filter as Filter,
+    Formatter as Formatter,
+    Handler as Handler,
+    Logger as Logger,
+    LoggerAdapter as LoggerAdapter,
+    LogRecord as LogRecord,
+    NullHandler as NullHandler,
+    StreamHandler as StreamHandler,
+    addLevelName as addLevelName,
+    addLevelName as add_level_name,
+    basicConfig as basicConfig,
+    basicConfig as basic_config,
+    captureWarnings as captureWarnings,
+    captureWarnings as capture_warnings,
+    critical as critical,
+    debug as debug,
+    disable as disable,
+    error as error,
+    exception as exception,
+    fatal as fatal,
+    getLevelName as getLevelName,
+    getLevelName as get_level_name,
+    getLogger as getLogger,
+    getLogger as get_logger,
+    getLoggerClass as getLoggerClass,
+    getLoggerClass as get_logger_class,
+    getLogRecordFactory as getLogRecordFactory,
+    getLogRecordFactory as get_log_record_factory,
+    info as info,
+    lastResort as lastResort,
+    lastResort as last_resort,
+    log as log,
+    makeLogRecord as makeLogRecord,
+    makeLogRecord as make_log_record,
+    raiseExceptions as raiseExceptions,
+    raiseExceptions as raise_exceptions,
+    setLoggerClass as setLoggerClass,
+    setLoggerClass as set_logger_class,
+    setLogRecordFactory as setLogRecordFactory,
+    setLogRecordFactory as set_log_record_factory,
+    shutdown as shutdown,
+    warn as warn,
+    warning as warning,
 )
 from typing import Any, Dict, List
 
@@ -114,6 +126,7 @@ __all__ = (
     "patch_logging",
 )
 
+# logging snake_case aliases bc I cannot stand camelCase
 __aliases__ = {
     "add_level_name": "addLevelName",
     "basic_config": "basicConfig",
@@ -128,20 +141,6 @@ __aliases__ = {
     "set_log_record_factory": "setLogRecordFactory",
     "set_logger_class": "setLoggerClass",
 }
-
-# logging snake_case aliases bc I cannot stand camelCase
-add_level_name = addLevelName
-basic_config = basicConfig
-capture_warnings = captureWarnings
-get_level_name = getLevelName
-get_log_record_factory = getLogRecordFactory
-get_logger = getLogger
-get_logger_class = getLoggerClass
-last_resort = lastResort
-make_log_record = makeLogRecord
-raise_exceptions = raiseExceptions
-set_log_record_factory = setLogRecordFactory
-set_logger_class = setLoggerClass
 
 
 def patch_logging() -> None:
@@ -162,7 +161,10 @@ class StdLoggingHandler(logging.Handler):
         # Find caller from where originated the logging call
         frame = logging.currentframe()
         depth = 2
-        while frame.f_code.co_filename == logging.__file__:
+        while (
+            frame.f_code.co_filename
+            == logging.__file__  # pyright: ignore[reportOptionalMemberAccess]
+        ):
             frame = frame.f_back  # type: ignore[assignment]
             depth += 1
 

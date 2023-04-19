@@ -21,7 +21,7 @@ classifiers = [
 keywords = ["dgpy", "dgi", "typed", "python3"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.8.1,<4"
 aiopen = "*"
 asyncify = "*"
 dgpylibs = "*"
@@ -39,13 +39,13 @@ rich = "^13.3.3"
 
 [tool.poetry.dev-dependencies]
 black = "^23.3.0"
-flake8 = "^5.0.4"
+flake8 = "^6.0.0"
 h5py = "^3.8.0"
 isort = "^5.11.5"
 nox = "^2022.11.21"
 orjson = "^3.8.10"
 pydantic = "^1.10.7"
-pytest = "^7.3.0"
+pytest = "^7.3.1"
 pytest-asyncio = "^0.21.0"
 pytest-cov = "^4.0.0"
 python-rapidjson = "^1.10"
@@ -74,6 +74,8 @@ dgpydev = "dgpydev.cli:main"
 ruff = "^0.0.261"
 anyio = { extras = ["trio"], version = "^3.6.2" }
 nox = "^2022.11.21"
+packaging = "^23.1"
+codespell = "^2.2.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -208,10 +210,12 @@ disallow_untyped_defs = false
 [tool.pyright]
 pythonVersion = "3.8"
 include = [
-  #    "libs/aiopen",
+  "libs/aiopen",
   "libs/asyncify",
-  "libs/funkify",
+  "libs/dgpylibs",
+  "libs/dgpytest",
   "libs/fmts",
+  "libs/funkify",
   "libs/h5",
   "libs/jsonbourne",
   "libs/lager",
@@ -240,6 +244,7 @@ exclude = [
   "**/node_modules",
   "**/__pycache__",
   "docs",
+  "**/.venv",
   "**/.nox",
   "**/.nox_win",
 ]
@@ -270,6 +275,9 @@ select = [
   "D208", # docstring is over-indented
   "D414",
   "D417",
+
+  # flake8-simplify (SIM)
+#  "SIM"
 ]
 line-length = 88
 
@@ -286,9 +294,11 @@ ignore = [
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
-
   # PYDOCSTYLE
   "D415", # first line should end with a period/exclamation point
+
+  # flake8-simplify (SIM)
+  "SIM115"
 ]
 
 [tool.ruff.mccabe]
@@ -306,10 +316,10 @@ max-complexity = 20
   "D100", # missing docstring
 ]
 "**/noxfile.py" = [
-  "D"
+  "D",
 ]
 "**/conftest.py" = [
-  "D"
+  "D",
 ]
 "**/test_*.py" = [
   "D1",
@@ -382,3 +392,6 @@ known_first_party = [
   "shellfish",
   "xtyping",
 ]
+
+[tool.codespell]
+skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*"

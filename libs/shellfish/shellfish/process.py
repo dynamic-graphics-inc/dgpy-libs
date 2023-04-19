@@ -6,8 +6,23 @@ import os
 import platform
 import sys
 
+from contextlib import contextmanager
 from os import environ
-from typing import Callable, Dict, Iterator, List, Optional, Union, cast
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    ItemsView,
+    Iterator,
+    KeysView,
+    List,
+    Optional,
+    Type,
+    Union,
+    ValuesView,
+    cast,
+)
 
 IS_WIN = os.name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
@@ -32,8 +47,20 @@ __all__ = (
     "opsys",
     "sys_path_sep",
 )
-
 _OS_ENVIRON_ATTRS = set(dir(os.environ))
+
+
+@contextmanager
+def tmpenv(**kwargs: str) -> Generator[Type[Env], Any, None]:
+    """Context manager for Env"""
+    old_env = dict(environ)
+    if kwargs:
+        env.update(kwargs)
+    try:
+        yield env
+    finally:
+        environ.clear()
+        environ.update(old_env)
 
 
 class _EnvObjMeta(type):
@@ -76,12 +103,31 @@ class _EnvObjMeta(type):
             raise ValueError(f"Key ({key}) is protected; set with __setitem__")
         return cls.__setitem__(key, value)
 
-    update = environ.update
-    get = environ.get
-    setdefault = environ.setdefault
-    clear = environ.clear
-    items = environ.items
-    keys = environ.keys
+    def update(self, d: Dict[str, str]) -> None:
+        return environ.update(d)
+
+    def update_from_dict(self, d: Dict[str, str]) -> None:
+        return self.update(d)
+
+    def get(self, key: str, default: Optional[str] = None) -> str:
+        if default is None:
+            return environ[key]
+        return environ.get(key, default)
+
+    def setdefault(self, key: str, default: str) -> str:
+        return environ.setdefault(key, default)
+
+    def clear(self) -> None:
+        return environ.clear()
+
+    def keys(self) -> KeysView[str]:
+        return environ.keys()
+
+    def values(self) -> ValuesView[str]:
+        return environ.values()
+
+    def items(self) -> ItemsView[str, str]:
+        return environ.items()
 
     def asdict(cls) -> Dict[str, str]:
         return dict(environ.items())
@@ -113,14 +159,12 @@ class Env(metaclass=_EnvObjMeta):
 
     """
 
-    ...
-
 
 env = ENV = Env
 
 
 def env_dict() -> Dict[str, str]:
-    """Return the current enviroment as a dictionary"""
+    """Return the current environment-variables as a dictionary"""
     return env.asdict()
 
 
@@ -134,6 +178,11 @@ def is_mac() -> bool:
     return "darwin" in platform.system().lower()
 
 
+def ismac() -> bool:
+    """Alias for is_mac()"""
+    return is_mac()
+
+
 def is_win() -> bool:
     """Determine if current operating system is windows
 
@@ -144,7 +193,12 @@ def is_win() -> bool:
     return IS_WIN
 
 
-def is_wsl() -> bool:
+def iswin() -> bool:
+    """Alias for is_win()"""
+    return is_win()
+
+
+def is_wsl() -> bool:  # pragma: nocov
     """Return True if python is running under (WSL); Return False otherwise"""
     if sys.platform in {"win32", "cygwin", "darwin"}:
         return False
@@ -162,7 +216,12 @@ def is_wsl() -> bool:
     return False
 
 
-def is_notebook() -> bool:
+def iswsl() -> bool:
+    """Alias for is_wsl()"""
+    return is_wsl()
+
+
+def is_notebook() -> bool:  # pragma: nocov
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
         shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
@@ -198,22 +257,49 @@ def opsys() -> str:
 
 
 def hostname() -> str:
-    """Return the current computer's hostname"""
+    """Return the current computer's hostname
+
+    Returns:
+        str: hostname
+
+    Examples:
+        >>> hn = hostname()
+        >>> isinstance(hn, str)
+        True
+
+    """
     return platform.node()
 
 
 def sys_path_sep() -> str:
-    """Return the system path separator string (; on windows -- : otherwise)"""
+    """Return the system path separator string (; on windows -- : otherwise)
+
+    Examples:
+        >>> sep = sys_path_sep()
+        >>> isinstance(sep, str)
+        True
+        >>> os.pathsep == sep
+        True
+
+    """
     return os.pathsep
 
 
 def syspath_paths(syspath: Optional[str] = None) -> List[str]:
-    """Return the current sys.path as a list"""
+    """Return the current sys.path as a list
+
+    Examples:
+        >>> sys_paths = syspath_paths()
+        >>> isinstance(sys_paths, list)
+        True
+        >>> sys_path_arg = 'path1;path2;path3' if is_win() else 'path1:path2:path3'
+        >>> sys_paths_w_args = syspath_paths(syspath=sys_path_arg)
+        >>> isinstance(sys_paths_w_args, list)
+        True
+        >>> sys_paths_w_args == ['path1', 'path2', 'path3']
+        True
+
+    """
     if syspath is None:
         return list(filter(None, sys.path))
     return list(filter(None, syspath.split(os.pathsep)))
-
-
-ismac = is_mac
-iswin = is_win
-iswsl = is_wsl

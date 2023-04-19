@@ -30,7 +30,7 @@ function main() {
     done
     # wait;
     echo "Pkg versions downloaded!"
-    cat temp/* | jq -s add | jq -S >"_meta/pypi-pkg-versions.json"
+    cat temp/* | jq -s add | jq -S >"_data/pypi-pkg-versions.json"
 
     echo "__versions__"
     cat _meta/pypi-pkg-versions.json | jq -c

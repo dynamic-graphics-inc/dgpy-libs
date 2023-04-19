@@ -201,7 +201,7 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
     import asyncio
 
     with pytest.raises(NameError) as re:
-        assert re
+        assert re  # type: ignore[truthy-bool]
 
         async def fn2():
             _f = somefunction(s)  # type: ignore[name-defined]
@@ -401,7 +401,7 @@ def test_requires() -> None:
 
 def test_requires_name_error() -> None:
     with pytest.raises(RequirementError) as re:
-        assert re
+        assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
         def fn():
@@ -414,7 +414,7 @@ def test_requires_name_error() -> None:
 @pytest.mark.asyncio()
 async def test_requires_name_error_async() -> None:
     with pytest.raises(RequirementError) as re:
-        assert re
+        assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
         async def fn():
@@ -426,7 +426,7 @@ async def test_requires_name_error_async() -> None:
 
 def test_requires_err_msg() -> None:
     with pytest.raises(RequirementError) as re:
-        assert re
+        assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
         def fn():

@@ -3,13 +3,21 @@ default: fmt ruff
 black:
     black .
 
-isort:
+rsort:
     ruff --select "I" --show-fixes --fix .
+
+isort:
+    isort --sp pyproject.toml libs
+
+codespell:
+    codespell .
 
 fmt: isort black
 
 ruff:
     ruff .
 
-lint: fmt
+noxlint:
     nox -s lint
+
+lint: fmt noxlint codespell

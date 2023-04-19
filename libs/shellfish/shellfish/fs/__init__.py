@@ -2,7 +2,6 @@
 """file-system utils"""
 from __future__ import annotations
 
-from enum import IntEnum
 from glob import has_magic, iglob
 from itertools import chain, count
 from os import (
@@ -23,13 +22,14 @@ from os import (
     walk,
 )
 from pathlib import Path
-from shutil import copytree, move as _move, rmtree
+from shutil import copystat as _copystat, copytree, move as _move, rmtree
 from time import time
 
 from jsonbourne import JSON
 from listless import exhaust
 from shellfish import const
 from shellfish._meta import __version__
+from shellfish._types import FsPath, SymlinkType
 from shellfish.fs._async import (
     dir_exists_async as dir_exists_async,
     exists_async as exists_async,
@@ -70,17 +70,16 @@ from shellfish.fs._async import (
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
-from shellfish.process import is_win
+from shellfish.process import is_win as is_win
+from shellfish.stdio import Stdio as Stdio
 from xtyping import (
     Any,
     AnyStr,
     Callable,
-    FsPath,
     Generator,
     Iterable,
     Iterator,
     List,
-    Literal,
     Optional,
     Tuple,
     Union,
@@ -88,14 +87,6 @@ from xtyping import (
 )
 
 # END-IMPORTS
-
-
-class Stdio(IntEnum):
-    """Standard-io enum object"""
-
-    stdin = 0
-    stdout = 1
-    stderr = 2
 
 
 def fspath(fspath: FsPath) -> str:
@@ -124,18 +115,28 @@ def exists(fspath: FsPath) -> bool:
 
 
 def file_exists(fspath: FsPath) -> bool:
-    """Return True if the given path exists; False otherwise"""
+    """Return True if the given path exists; False otherwise; alias for isfile"""
     return isfile(fspath)
 
 
 def dir_exists(fspath: FsPath) -> bool:
-    """Return True if the given path exists; False otherwise"""
+    """Return True if the given path exists; False otherwise; alias for isdir"""
     return isdir(fspath)
 
 
-is_dir = isdir
-is_file = isfile
-is_link = islink
+def is_dir(fspath: FsPath) -> bool:
+    """Return True if the given path is a directory; alias for isdir"""
+    return isdir(fspath)
+
+
+def is_file(fspath: FsPath) -> bool:
+    """Return True if the given path is a file; alias for isfile"""
+    return isfile(fspath)
+
+
+def is_link(fspath: FsPath) -> bool:
+    """Return True if the given path is a link; alias for islink"""
+    return islink(fspath)
 
 
 def safepath(fspath: FsPath) -> str:
@@ -378,15 +379,19 @@ def filepath_mtimedelta_sec(filepath: FsPath) -> float:
     return time() - path.getmtime(_fspath(filepath))
 
 
-def touch(fspath: FsPath) -> None:
+def touch(fspath: FsPath, *, mkdirp: bool = True) -> None:
     """Create an empty file given a fspath
 
     Args:
         fspath (FsPath): File-system path for where to make an empty file
+        mkdirp (bool): Make parent directories if they don't exist
 
     """
     if not path.exists(str(fspath)):
-        _makedirs(path.dirname(str(fspath)), exist_ok=True)
+        if mkdirp:
+            parent_dir = path.dirname(str(fspath))
+            if parent_dir:
+                _makedirs(parent_dir, exist_ok=True)
         with open(fspath, "a"):
             utime(fspath, None)
 
@@ -1286,8 +1291,21 @@ def rjson(filepath: FsPath) -> Any:
     return JSON.loads(lstring(filepath=filepath))
 
 
-def extension(fspath: str) -> str:
-    """Return the extension for a fspath"""
+def extension(fspath: str, *, period: bool = False) -> str:
+    """Return the extension for a fspath
+
+    Examples:
+        >>> from shellfish.fs import extension
+        >>> extension("foo.bar")
+        'bar'
+        >>> extension("foo.tar.gz")
+        'tar.gz'
+        >>> extension("foo.tar.gz", period=True)
+        '.tar.gz'
+
+    """
+    if period:
+        return "".join(Path(fspath).suffixes)
     return "".join(Path(fspath).suffixes).lstrip(".")
 
 
@@ -1576,9 +1594,6 @@ def stat(fspath: FsPath) -> os_stat_result:
     return _stat(_fspath(fspath))
 
 
-SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
-
-
 def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:
     if is_win():
         raise NotImplementedError("TODO")
@@ -1604,6 +1619,7 @@ def copy_file(
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
     if not dryrun:
         wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+        _copystat(src, dest, follow_symlinks=True)
     return (str(src), str(dest))
 
 

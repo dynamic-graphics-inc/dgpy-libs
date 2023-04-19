@@ -35,12 +35,32 @@ python = "^3.7"
 loguru = ">=0.7.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.3.0"
+pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.coverage.run]
+source = ['lager']
+branch = true
+context = '${CONTEXT}'
+omit = ["**/__main__.py"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+exclude_lines = [
+  'pragma: nocov',
+  'pragma: no cover',
+  'raise NotImplementedError',
+  'if TYPE_CHECKING:',
+  '@overload',
+  '\(Protocol\):$',
+  'if 0:',
+  'if False:',
+]
 
 [tool.ruff]
 extend = "../../pyproject.toml"

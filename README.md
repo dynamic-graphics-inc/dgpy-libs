@@ -44,7 +44,6 @@ libs
 
 **Install:** `pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping`
 
-
 ### [aiopen](./libs/aiopen) ~ `pip install aiopen` ~ [![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg) [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg) [![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg)
 
 ### [asyncify](./libs/asyncify) ~ `pip install asyncify` ~ [![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg) [![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)
@@ -73,7 +72,7 @@ libs
 
 ## About
 
-This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Grahpics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
+This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
 
 ### Design PhilosoPY
 
@@ -137,3 +136,4 @@ Plz do! Send me that PR!
 - Have CI/CD auto build n publish
 - Changelog (for real)
 - Figure out why the combine-prs workflow doesn't trigger github actions...
+- Update mkdocs to include all dgpy-libs

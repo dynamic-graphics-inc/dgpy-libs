@@ -22,7 +22,7 @@ def _fn_globals(f: Any) -> Any:
 
 
 class RequirementError(ModuleNotFoundError):
-    """Exception for requries"""
+    """Exception for requires"""
 
     pass
 

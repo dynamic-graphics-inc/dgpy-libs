@@ -1088,9 +1088,9 @@ def striterable(string: str) -> Iterable[str]:
     r"""Yield 'clean' sub-strings from an input string
 
     This method takes a string (like the string that would be a dat file) and
-    yields strings from that string separated by some delimeter.
+    yields strings from that string separated by some delimiter.
 
-    Delimeters:
+    Delimiters:
         - <space>
         - <tab>
         - <new-line> (unix AND dos!)
@@ -1341,7 +1341,7 @@ def dedent(string: str) -> str:
         string: Input string to dedent
 
     Returns:
-        Dedented string
+        Unindented string
 
     Examples:
         >>> s = '    this is a string'

@@ -143,7 +143,7 @@ def pipc(session):
 
 
 def _mypy(session):
-    session.install("mypy", "typing-extensions", "pydantic", "anyio")
+    session.install("mypy", "typing-extensions", "pydantic", "anyio", "pytest")
     session.install("orjson", "types-orjson", "fastapi", "click")
     session.run("mypy", "--version")
     session.run(
@@ -232,7 +232,6 @@ def update_metadata(session):
     import toml
 
     libs2update = {k: v for k, v in LIB_DIRS.items() if k not in {"dgpylibs"}}
-    # "# -*- coding: utf-8 -*-"
     for libname, dirpath in libs2update.items():
         echo(libname, dirpath)
         with open(path.join(dirpath, "pyproject.toml")) as f:
@@ -264,14 +263,7 @@ def update_metadata(session):
             f.write(metadata_file_string)
 
         s = _pkg_entry_point(libname)
-        if path.exists(pkg_main_filepath):
-            with open(pkg_main_filepath) as f:
-                pkg_main_file_str = f.read()
-            if pkg_main_file_str != s:
-                echo("updating __main__.py")
-                with open(pkg_main_filepath, "w") as f:
-                    f.write(s)
-        else:
+        if not path.exists(pkg_main_filepath):
             echo("creating __main__.py")
             with open(pkg_main_filepath, "w") as f:
                 f.write(s)
