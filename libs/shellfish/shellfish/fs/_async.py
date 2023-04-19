@@ -367,7 +367,7 @@ async def wbytes_gen_async(
         else:
             for b in bytes_gen:
                 _bytes_written += await f.write(b)
-    if chmod is not None:
+    if chmod is not None:  # pragma: nocov
         await aios.chmod(filepath, chmod)
     return _bytes_written
 

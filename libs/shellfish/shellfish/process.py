@@ -198,7 +198,7 @@ def iswin() -> bool:
     return is_win()
 
 
-def is_wsl() -> bool:
+def is_wsl() -> bool:  # pragma: nocov
     """Return True if python is running under (WSL); Return False otherwise"""
     if sys.platform in {"win32", "cygwin", "darwin"}:
         return False
@@ -221,7 +221,7 @@ def iswsl() -> bool:
     return is_wsl()
 
 
-def is_notebook() -> bool:
+def is_notebook() -> bool:  # pragma: nocov
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
         shell = get_ipython().__class__.__name__  # type: ignore[name-defined]

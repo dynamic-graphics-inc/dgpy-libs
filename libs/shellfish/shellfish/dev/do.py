@@ -2,8 +2,26 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Set, Tuple, Union
 
+from typing_extensions import TypedDict
+
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish._types import FsPath
+
+
+class DoDict(TypedDict):
+    """Do dictionary"""
+
+    args: Union[List[str], Tuple[str, ...]]
+    check: bool
+    cwd: Optional[FsPath]
+    dryrun: bool
+    env: Optional[Dict[str, str]]
+    extenv: bool
+    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]]
+    shell: bool
+    tee: bool
+    timeout: Optional[int]
+    verbose: bool
 
 
 class Do(JsonBaseModel):
@@ -20,3 +38,18 @@ class Do(JsonBaseModel):
     tee: bool = False
     timeout: Optional[int] = None
     verbose: bool = False
+
+    def typed_dict(self) -> DoDict:
+        return {
+            "args": self.args,
+            "check": self.check,
+            "cwd": self.cwd,
+            "dryrun": self.dryrun,
+            "env": self.env,
+            "extenv": self.extenv,
+            "ok_code": self.ok_code,
+            "shell": self.shell,
+            "tee": self.tee,
+            "timeout": self.timeout,
+            "verbose": self.verbose,
+        }

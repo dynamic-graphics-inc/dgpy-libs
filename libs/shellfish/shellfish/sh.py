@@ -1693,7 +1693,7 @@ class WIN(_WIN):
         exclude_files: Optional[Iterable[str]] = None,
         exclude_dirs: Optional[Iterable[str]] = None,
         dry_run: bool = False,
-    ) -> Done:
+    ) -> Done:  # pragma: nocov
         """Robocopy wrapper function (crude in that it opens a subprocess)
 
         Args:
@@ -1755,7 +1755,7 @@ class WIN(_WIN):
         dry_run: bool = False,
         exclude: Optional[IterableStr] = None,
         include: Optional[IterableStr] = None,
-    ) -> Done:
+    ) -> Done:  # pragma: nocov
         return WIN.robocopy(
             src=src,
             dest=dest,
