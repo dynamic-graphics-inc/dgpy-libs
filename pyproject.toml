@@ -275,6 +275,9 @@ select = [
   "D208", # docstring is over-indented
   "D414",
   "D417",
+
+  # flake8-simplify (SIM)
+#  "SIM"
 ]
 line-length = 88
 
@@ -293,6 +296,9 @@ ignore = [
   "UP037",
   # PYDOCSTYLE
   "D415", # first line should end with a period/exclamation point
+
+  # flake8-simplify (SIM)
+  "SIM115"
 ]
 
 [tool.ruff.mccabe]

@@ -1333,12 +1333,12 @@ class JsonModule:
         return jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs)
 
     @staticmethod
-    def orjson_useable() -> bool:
-        return jsonlib.orjson_useable()
+    def orjson_usable() -> bool:
+        return jsonlib.orjson_usable()
 
     @staticmethod
-    def rapidjson_useable() -> bool:
-        return jsonlib.rapidjson_useable()
+    def rapidjson_usable() -> bool:
+        return jsonlib.rapidjson_usable()
 
     @staticmethod
     def use_orjson() -> None:
