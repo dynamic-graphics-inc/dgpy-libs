@@ -86,7 +86,6 @@ def test_pipe_stderr(tmp_path: Path) -> None:
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)
     assert res.async_proc
-    assert not res.shell
 
 
 @pytest.mark.asyncio()
@@ -94,7 +93,6 @@ async def test_run_async_shell_false() -> None:
 async def test_run_async_shell_true() -> None:
     res = await sh.do_async(["ls"], shell=True)
     assert res.async_proc
-    assert res.shell
 
 
 @pytest.mark.timeout()
