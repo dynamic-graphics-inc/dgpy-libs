@@ -1126,7 +1126,8 @@ async def run_async(
 
 
 async def do_asyncify(
-    *args: PopenArgs,
+    *popenargs: PopenArgs,
+    args: Optional[PopenArgs] = None,
     env: Optional[Dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
@@ -1140,6 +1141,7 @@ async def do_asyncify(
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
     done = await _do_asyncify(
+        *popenargs,
         args=args,
         env=env,
         extenv=extenv,
