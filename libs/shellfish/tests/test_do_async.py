@@ -21,6 +21,13 @@ async def test_subproc_async() -> None:
 
 
 @pytest.mark.asyncio()
+async def test_subproc_asyncify() -> None:
+    prun = await sh.do_asyncify("pyton", "--version", shell=True)
+    assert isinstance(prun, sh.Done)
+    assert prun.async_proc
+
+
+@pytest.mark.asyncio()
 @pytest.mark.aio()
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)

@@ -17,6 +17,12 @@ from shellfish._types import (
     SymlinkType as SymlinkType,
 )
 from shellfish.process import env as env
+from shellfish.sh import (
+    Done as Done,
+    DoneDict as DoneDict,
+    do as do,
+    do_async as do_async,
+)
 
 _funkify(sh.do, key="shellfish.sh")
 _funkify(sh.do, key="shellfish")
@@ -24,6 +30,8 @@ _funkify(sh.do, key="shellfish")
 ps = process
 
 __all__ = (
+    "Done",
+    "DoneDict",
     "FsPath",
     "PathLikeBytes",
     "PathLikeStr",
@@ -34,6 +42,8 @@ __all__ = (
     "PopenEnv",
     "SymlinkType",
     "__version__",
+    "do",
+    "do_async",
     "dotenv",
     "env",
     "fs",

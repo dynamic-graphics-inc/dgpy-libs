@@ -192,6 +192,7 @@ __all__ = (
     "quote",
     "run",
     "setenv",
+    "shell",
     "shplit",
     "shx",
     "source",
@@ -1026,7 +1027,7 @@ def do(
     )
 
 
-def shx(
+def shell(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
     env: Optional[Dict[str, str]] = None,
@@ -1078,15 +1079,8 @@ def shx(
     )
 
 
-x = shx
-
-
-def args2cmd(args: PopenArgs) -> Union[str, bytes]:
-    """Return single command string from given popenargs"""
-    if isinstance(args, (str, bytes)):
-        return args
-    return " ".join(map(str, args))
-
+shx = shell
+x = shell
 
 _run_async = asyncify(run)
 _do_asyncify = asyncify(do)
@@ -1112,7 +1106,7 @@ async def run_async(
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[Any]:
     args = validate_popen_args(args)
-    complete_subprocess = await _run_async(
+    return await _run_async(
         args=args,
         input=input,
         stdin=stdin,
@@ -1129,12 +1123,10 @@ async def run_async(
         encoding=encoding,
         **other_popen_kwargs,
     )
-    return complete_subprocess
 
 
 async def do_asyncify(
-    args: PopenArgs,
-    *,
+    *args: PopenArgs,
     env: Optional[Dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
@@ -1899,12 +1891,40 @@ def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]
 
 
 def quote(string: str) -> str:
-    """Typed alias for shlex.quote"""
+    """Typed alias for shlex.quote
+
+    Args:
+        string (str): string to quote
+
+    Returns:
+        str: quoted string
+
+    Examples:
+        >>> quote("hello world")
+        "'hello world'"
+        >>> quote("hello 'world'")
+        '\\'hello \\'"\\'"\\'world\\'"\\'"\\'\\''
+
+    """
     return _quote(string)
 
 
 def q(string: str) -> str:
-    """Typed alias for shlex.quote"""
+    """Typed alias for shlex.quote
+
+    Args:
+        string (str): string to quote
+
+    Returns:
+        str: quoted string
+
+    Examples:
+        >>> q("hello world")
+        "'hello world'"
+        >>> q("hello 'world'")
+        '\\'hello \\'"\\'"\\'world\\'"\\'"\\'\\''
+
+    """
     return _quote(string)
 
 
@@ -2155,7 +2175,7 @@ def mv(src: FsPath, dest: FsPath) -> None:
     fs.move(src, dest)
 
 
-def source(filepath: FsPath, _globals: bool = True) -> None:
+def source(filepath: FsPath, _globals: bool = True) -> None:  # pragma: nocov
     """Execute/run a python file given a fspath and put globals in globasl
 
     Args:
