@@ -209,10 +209,12 @@ disallow_untyped_defs = false
 [tool.pyright]
 pythonVersion = "3.8"
 include = [
-  #    "libs/aiopen",
+  "libs/aiopen",
   "libs/asyncify",
-  "libs/funkify",
+  "libs/dgpylibs",
+  "libs/dgpytest",
   "libs/fmts",
+  "libs/funkify",
   "libs/h5",
   "libs/jsonbourne",
   "libs/lager",
@@ -241,6 +243,7 @@ exclude = [
   "**/node_modules",
   "**/__pycache__",
   "docs",
+  "**/.venv",
   "**/.nox",
   "**/.nox_win",
 ]
@@ -287,7 +290,6 @@ ignore = [
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
-
   # PYDOCSTYLE
   "D415", # first line should end with a period/exclamation point
 ]
