@@ -52,7 +52,7 @@ test:
 
 .PHONY:testcov
 testcov:
-	pytest --cov=dgpy_pkg --doctest-modules tests $(PKG_NAME)
+	pytest --cov --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:
