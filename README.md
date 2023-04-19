@@ -72,7 +72,7 @@ libs
 
 ## About
 
-This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Grahpics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
+This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
 
 ### Design PhilosoPY
 

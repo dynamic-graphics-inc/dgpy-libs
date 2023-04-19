@@ -164,7 +164,7 @@ env = ENV = Env
 
 
 def env_dict() -> Dict[str, str]:
-    """Return the current enviroment as a dictionary"""
+    """Return the current environment-variables as a dictionary"""
     return env.asdict()
 
 

@@ -385,3 +385,6 @@ known_first_party = [
   "shellfish",
   "xtyping",
 ]
+
+[tool.codespell]
+skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*"

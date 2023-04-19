@@ -30,7 +30,7 @@ class _DirTree:
         Args:
             path: Path-string to start the directory tree at
             parent_path: The parent path to start the directory tree at
-            is_last: Is the current tree the last diretory in the tree
+            is_last: Is the current tree the last directory in the tree
 
         """
         self.path = Path(str(path))
@@ -92,7 +92,7 @@ class _DirTree:
 
     @property
     def displayname(self) -> str:
-        """Diplay name for DirTree root path name
+        """Display name for DirTree root path name
 
         Returns:
             str: root path name as a string

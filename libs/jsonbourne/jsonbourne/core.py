@@ -252,7 +252,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         self.__post_init__()
 
     def recurse(self) -> None:
-        """Recusively convert all sub dictionaries to JsonObj objects"""
+        """Recursively convert all sub dictionaries to JsonObj objects"""
         self._data.update({k: jsonify(v) for k, v in self._data.items()})
 
     def __attrs_post_init__(self) -> None:

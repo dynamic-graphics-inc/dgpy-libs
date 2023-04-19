@@ -186,7 +186,7 @@ async def run_dtee_async(
                     stderr=_err_buf.getvalue(),
                 )
         else:
-            (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)  # wait fo
+            (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)
             tf = time()
     if tee:
         _stdout = _out_buf.getvalue()
