@@ -9,7 +9,7 @@ from shellfish import batman
 from xtyping import IterableStr, List, Tuple
 
 
-class OsFsAbc(ABC):
+class OsFsAbc(ABC):  # pragma: nocov
     """Abstract base class for OS-specific fns"""
 
     @staticmethod
@@ -67,7 +67,7 @@ class OsFsAbc(ABC):
 # =============================================================================
 
 
-class LIN(OsFsAbc):
+class LIN(OsFsAbc):  # pragma: nocov
     """Linux (and Mac) shell commands/methods container"""
 
     @staticmethod
@@ -178,7 +178,7 @@ class LIN(OsFsAbc):
             LIN.unlink_file(link)
 
 
-class WIN(OsFsAbc):
+class WIN(OsFsAbc):  # pragma: nocov
     """Windows shell commands/methods container"""
 
     _MAX_CMD_LENGTH: int = 8192

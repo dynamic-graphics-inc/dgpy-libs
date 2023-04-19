@@ -5,14 +5,11 @@ Inspired by aiofiles
 """
 from __future__ import annotations
 
+from os import PathLike
 from types import TracebackType
 from typing import AnyStr, Awaitable, Callable, Type, Union, overload
 
-from anyio._core._fileio import (  # type: ignore[attr-defined]
-    AsyncFile,
-    PathLike,
-    open_file,
-)
+from anyio import AsyncFile, open_file
 
 from xtyping import Generic, OpenBinaryMode, OpenTextMode, Optional
 

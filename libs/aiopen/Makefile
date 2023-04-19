@@ -54,7 +54,7 @@ test:
 
 .PHONY:testcov
 testcov:
-	pytest --cov --doctest-modules tests $(PKG_NAME)
+	pytest --cov --cov-config=pyproject.toml --doctest-modules tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:

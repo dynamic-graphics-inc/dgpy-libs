@@ -296,7 +296,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
             with pytest.raises(ValueError):
                 await file.read()
 
-    assert b"0123456789" == raw_file.read(10)
+    assert b"0123456789" == raw_file.read(10)  # type: ignore[union-attr]
 
 
 @pytest.mark.asyncio()

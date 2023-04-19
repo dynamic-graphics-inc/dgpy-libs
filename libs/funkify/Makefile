@@ -54,7 +54,7 @@ test:
 
 .PHONY:testcov
 testcov:
-	pytest --cov=dgpy_pkg tests $(PKG_NAME)
+	pytest --cov=funkify --cov-config=pyproject.toml tests $(PKG_NAME)
 
 .PHONY:testlf
 testlf:

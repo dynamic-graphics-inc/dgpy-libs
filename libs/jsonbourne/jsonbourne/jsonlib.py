@@ -143,7 +143,7 @@ class JsonLibABC(ABC):
 
     @staticmethod
     @abstractmethod
-    def useable() -> bool:
+    def usable() -> bool:
         ...
 
     @staticmethod
@@ -240,7 +240,7 @@ class JSON_STDLIB(JsonLibABC):
         return pyjson.loads(string, **kwargs)
 
     @staticmethod
-    def useable() -> bool:
+    def usable() -> bool:
         return True
 
     @staticmethod
@@ -327,7 +327,7 @@ class ORJSON(JsonLibABC):
         return orjson.loads(string)
 
     @staticmethod
-    def useable() -> bool:
+    def usable() -> bool:
         return JsonLibABC.has_orjson()
 
     @staticmethod
@@ -424,7 +424,7 @@ class RAPIDJSON(JsonLibABC):
         return rapidjson.loads(string, **kwargs)
 
     @staticmethod
-    def useable() -> bool:
+    def usable() -> bool:
         return JsonLibABC.has_rapidjson()
 
     @staticmethod
@@ -452,21 +452,21 @@ class RAPIDJSON(JsonLibABC):
 
 
 def pick_lib() -> "Type[JsonLibABC]":
-    if ORJSON.useable():
+    if ORJSON.usable():
         return ORJSON
-    if RAPIDJSON.useable():
+    if RAPIDJSON.usable():
         return RAPIDJSON
     return JSON_STDLIB
 
 
 def _import_rapidjson() -> "Type[RAPIDJSON]":
-    if RAPIDJSON.useable():
+    if RAPIDJSON.usable():
         return RAPIDJSON
     raise ImportError("rapidjson (python-rapidjson) not installed")
 
 
 def _import_orjson() -> "Type[ORJSON]":
-    if ORJSON.useable():
+    if ORJSON.usable():
         return ORJSON
     raise ImportError("orjson not installed")
 
@@ -504,9 +504,9 @@ class JsonLib:
             self._jsonlib = jsonlib
         else:
             self._jsonlib = import_json()
-        if ORJSON.useable():
+        if ORJSON.usable():
             self._oj = ORJSON
-        if RAPIDJSON.useable():
+        if RAPIDJSON.usable():
             self._rj = RAPIDJSON
 
     def dumps(
@@ -557,11 +557,11 @@ class JsonLib:
                 return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
-    def orjson_useable(self) -> bool:
-        return ORJSON.useable()
+    def orjson_usable(self) -> bool:
+        return ORJSON.usable()
 
-    def rapidjson_useable(self) -> bool:
-        return RAPIDJSON.useable()
+    def rapidjson_usable(self) -> bool:
+        return RAPIDJSON.usable()
 
     def use_orjson(self) -> None:
         self._jsonlib = _import_orjson()
@@ -705,12 +705,12 @@ def jsoncp(
     )
 
 
-def orjson_useable() -> bool:
-    return JSONLIB.orjson_useable()
+def orjson_usable() -> bool:
+    return JSONLIB.orjson_usable()
 
 
-def rapidjson_useable() -> bool:
-    return JSONLIB.rapidjson_useable()
+def rapidjson_usable() -> bool:
+    return JSONLIB.rapidjson_usable()
 
 
 def use_orjson() -> None:

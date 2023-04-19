@@ -57,5 +57,25 @@ markers = [
   "version",
 ]
 
+[tool.coverage.run]
+source = ['funkify']
+branch = true
+context = '${CONTEXT}'
+omit = ["**/__main__.py"]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+exclude_lines = [
+  'pragma: nocov',
+  'pragma: no cover',
+  'raise NotImplementedError',
+  'if TYPE_CHECKING:',
+  '@overload',
+  '\(Protocol\):$',
+  'if 0:',
+  'if False:',
+]
+
 [tool.ruff]
 extend = "../../pyproject.toml"

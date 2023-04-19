@@ -1,26 +1,34 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-import os
+import sys
 
+from dataclasses import dataclass
+from io import StringIO
 from subprocess import (
     DEVNULL as DEVNULL,
     PIPE as PIPE,
     CalledProcessError as CalledProcessError,
     CompletedProcess as CompletedProcess,
     Popen as Popen,
+    TimeoutExpired as TimeoutExpired,
     run as run,
 )
+from time import time
 
+from shellfish._types import PopenArgs as PopenArgs
+from shellfish.dev.popen_gen import popen_pipes_gen
+from shellfish.libsh.args import args2cmd
+from shellfish.process import is_win
 from xtyping import (
     IO,
-    TYPE_CHECKING,
+    STDIN,
     Any,
+    Dict,
     FsPath,
     List,
     Mapping,
     Optional,
-    Sequence,
     Set,
     Tuple,
     TypedDict,
@@ -35,12 +43,8 @@ __subprocess_all__ = (
     "DEVNULL",
 )
 __all__ = (
-    "CompletedProcessObj",
-    "completed_process_obj",
-    "PopenArg",
-    "PopenArgs",
-    "PopenArgv",
-    "PopenEnv",
+    "CompletedProcessDict",
+    "completed_process_dict",
     "runb",
     "runs",
     # from subprocess
@@ -51,32 +55,41 @@ __all__ = (
     "DEVNULL",
 )
 
-if TYPE_CHECKING:
-    PathLikeStr = os.PathLike[str]
-    PathLikeBytes = os.PathLike[bytes]
-    PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
-else:
-    PathLikeStr = os.PathLike
-    PathLikeBytes = os.PathLike
-    PathLikeStrBytes = os.PathLike
+
+@dataclass(frozen=True)
+class ProcessDt:
+    """Process time delta dataclass
+
+    Examples:
+        >>> from shellfish.sp import ProcessDt
+        >>> ti = 0
+        >>> tf = 1
+        >>> dt = ProcessDt.from_titf(ti=ti, tf=tf)
+        >>> dt
+        ProcessDt(ti=0, tf=1, dt=1)
+
+    """
+
+    ti: float
+    tf: float
+    dt: float
+    __slots__ = ("ti", "tf", "dt")
+
+    @classmethod
+    def from_titf(cls, ti: float, tf: float) -> ProcessDt:
+        return cls(ti=ti, tf=tf, dt=tf - ti)
 
 
-PopenArg = Union[str, bytes, PathLikeStrBytes]
-PopenArgv = Sequence[PopenArg]
-PopenArgs = Union[bytes, str, PopenArgv]
-PopenEnv = Mapping[str, str]
-
-
-class CompletedProcessObj(TypedDict):
-    args: list[str]
+class CompletedProcessDict(TypedDict):
+    args: List[str]
     stdout: str
     stderr: str
     returncode: int
 
 
-def completed_process_obj(
+def completed_process_dict(
     completed_process: CompletedProcess[str],
-) -> CompletedProcessObj:
+) -> CompletedProcessDict:
     """Convert CompletedProcess to CompletedProcessObj (typed dict)
 
     Args:
@@ -87,7 +100,7 @@ def completed_process_obj(
 
     Examples:
         >>> from subprocess import CompletedProcess
-        >>> from shellfish.sp import completed_process_obj
+        >>> from shellfish.sp import completed_process_dict
         >>> cp = CompletedProcess(
         ...     args=['some', 'args'],
         ...     stdout="stdout string",
@@ -95,7 +108,7 @@ def completed_process_obj(
         ...     returncode=0
         ... )
         >>> from pprint import pprint
-        >>> cp_typed_dict = completed_process_obj(completed_process=cp)
+        >>> cp_typed_dict = completed_process_dict(completed_process=cp)
         >>> pprint(cp_typed_dict)
         {'args': ['some', 'args'],
          'returncode': 0,
@@ -103,11 +116,11 @@ def completed_process_obj(
          'stdout': 'stdout string'}
 
     """
-    if not isinstance(completed_process, CompletedProcess):
+    if not isinstance(completed_process, CompletedProcess):  # pragma: nocov
         raise TypeError(
             f"completed_process must be CompletedProcess object, not {type(completed_process)}"
         )
-    return CompletedProcessObj(
+    return CompletedProcessDict(
         args=completed_process.args,
         stdout=completed_process.stdout,
         stderr=completed_process.stderr,
@@ -222,3 +235,90 @@ def runs(
     if check:
         pcheck(process=process, ok_code=ok_code)
     return process
+
+
+def run_dtee(
+    args: PopenArgs,
+    cwd: Optional[FsPath] = None,
+    env: Optional[Dict[str, str]] = None,
+    input: Optional[STDIN] = None,
+    shell: bool = False,
+    timeout: Optional[float] = None,
+) -> Tuple[CompletedProcess[str], ProcessDt]:
+    stdout_sio = StringIO()
+    stderr_sio = StringIO()
+    args_str = args2cmd(args)
+    with Popen(
+        args=args if is_win() or not shell else args_str,
+        stdout=PIPE,
+        stderr=PIPE,
+        stdin=PIPE if input else None,
+        env=env,
+        cwd=str(cwd) if cwd else None,
+        shell=shell,
+        text=True,
+        universal_newlines=True,
+    ) as proc:
+        try:
+            if input is not None and proc.stdin:
+                proc.stdin.write(input if isinstance(input, str) else input.decode())
+                proc.stdin.flush()
+                proc.stdin.close()
+            ti = time()
+            for io_type, line in popen_pipes_gen(proc, timeout=timeout):
+                if io_type == 1:  # stdout is 1
+                    sys.stdout.write(line)
+                    sys.stdout.flush()
+                    stdout_sio.write(line)
+                elif io_type == 2:  # stderr is 2
+                    sys.stderr.write(line)
+                    sys.stderr.flush()
+                    stderr_sio.write(line)
+            tf = time()
+            stdout_str = stdout_sio.getvalue()
+            stderr_str = stderr_sio.getvalue()
+        except TimeoutExpired as e:
+            tf = time()
+            proc.kill()
+            raise e
+        except KeyboardInterrupt as e:
+            tf = time()
+            proc.kill()
+            raise e
+        except Exception as e:
+            tf = time()
+            proc.kill()
+            raise e
+
+    return (
+        CompletedProcess(
+            args=args,
+            returncode=proc.returncode,
+            stdout=stdout_str,
+            stderr=stderr_str,
+        ),
+        ProcessDt(
+            ti=ti,
+            tf=tf,
+            dt=tf - ti,
+        ),
+    )
+
+
+def run_tee(
+    args: PopenArgs,
+    cwd: Optional[str] = None,
+    env: Optional[Dict[str, str]] = None,
+    input: Optional[STDIN] = None,
+    shell: bool = False,
+    timeout: Optional[float] = None,
+) -> CompletedProcess[str]:
+    completed_process, _pdt = run_dtee(
+        args=args,
+        input=input,
+        cwd=cwd,
+        env=env,
+        timeout=timeout,
+        shell=shell,
+    )
+    return completed_process

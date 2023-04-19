@@ -17,7 +17,7 @@ __all__ = (
     "samefile",
     "sameopenfile",
 )
-
+join = path.join
 exists = asyncify(path.exists)
 getatime = asyncify(path.getatime)
 getctime = asyncify(path.getctime)

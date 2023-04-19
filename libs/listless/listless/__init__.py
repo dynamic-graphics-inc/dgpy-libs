@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
-"""Listless generator utils"""
+"""Listless = generators, iterators, and async iterators, Oh My!"""
 import asyncio
 
 from collections import deque
@@ -50,7 +50,6 @@ __all__ = (
     "unique_gen",
     "xmap",
     "zip_async",
-    "zip_longest",
 )
 
 _K = TypeVar("_K")
@@ -440,6 +439,8 @@ def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T
         ['cmd', 'uno', 'dos', 'tres']
         >>> list(flatten("cmd", ["uno", "dos", "tres", ["4444", "five"]]))
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
+        >>> list(flatten("cmd", ["uno", "dos", "tres", ["4444", "five", 123]]))
+        ['cmd', 'uno', 'dos', 'tres', '4444', 'five', 123]
 
     """
     return chain(
@@ -550,9 +551,7 @@ def spliterable(
         fn: Function to evaluate iterable elements and returns True or False
 
     Returns:
-        tuple of generators. The first generator will yield elements of the
-        original iterable where the conditional-function evaluates True, and
-        the second generator where the conditional-function evaluates to False.
+        tuple of generators: (gen_predicate_true, gen_predicate_false)
 
     Examples:
         >>> is_even = lambda n: n % 2 == 0

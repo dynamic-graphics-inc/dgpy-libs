@@ -65,3 +65,24 @@ clean:
 	#rm -rf docs/_build
 	rm -rfv .nox
 	rm -rfv .nox_*
+
+#############
+### BUILD ###
+#############
+.PHONY:requirements
+reqs:
+	@poetry export --without-hashes -o requirements.txt -f requirements.txt
+	@poetry export --without-hashes --dev -o requirements-dev.txt -f requirements.txt
+
+.PHONY: build
+build:
+	rm -rf `find . -name __pycache__`
+	rm -f `find . -type f -name '*.py[co]' `
+	rm -f `find . -type f -name '*~' `
+	rm -f `find . -type f -name '.*~' `
+	rm -rf *.egg-info
+	rm -rfv dist.bak || true
+	mv dist dist.bak || true
+	python -m poetry build -f wheel
+	mv -f dist.bak/* dist
+	rm -rfv dist.bak || true
