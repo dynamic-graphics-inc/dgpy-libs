@@ -428,7 +428,7 @@ def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
 
 
     """
-    return filter(None.__ne__, it)  # type: ignore[arg-type]
+    return filter(lambda x: x is not None, it)  # type: ignore[arg-type]
 
 
 def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T]:

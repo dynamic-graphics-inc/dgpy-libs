@@ -62,6 +62,7 @@ addopts = [
   "--doctest-modules",
   "--disable-warnings",
   "--doctest-ignore-import-errors",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [

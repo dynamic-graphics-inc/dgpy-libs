@@ -52,6 +52,7 @@ addopts = [
   "--doctest-modules",
   "--disable-warnings",
   "--cov-config=pyproject.toml",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [
