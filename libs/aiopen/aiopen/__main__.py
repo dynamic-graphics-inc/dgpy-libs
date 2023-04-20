@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m aiopen`"""
 import sys
 
-from aiopen._meta import __pkgroot__, __title__, __version__
+from aiopen.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

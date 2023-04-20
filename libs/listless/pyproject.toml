@@ -54,7 +54,6 @@ filterwarnings = [
   'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
   "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",
