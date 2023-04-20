@@ -122,7 +122,6 @@ jobs:
       - name: test aiopen
         run: |
           cd libs/aiopen
-          poetry install
           poetry run pytest --doctest-modules tests aiopen
 
       - name: test lager
