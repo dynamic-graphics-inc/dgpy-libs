@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m fmts`"""
 import sys
 
-from fmts._meta import __pkgroot__, __title__, __version__
+from fmts.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

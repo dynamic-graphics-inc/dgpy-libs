@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m shellfish`"""
 import sys
 
-from shellfish._meta import __pkgroot__, __title__, __version__
+from shellfish.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

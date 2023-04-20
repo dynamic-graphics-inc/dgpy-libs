@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """`requires` ~ dependency utils"""
 from funkify import funkify
-from requires._meta import __version__
+from requires.__about__ import __version__
 from requires.core import (
     Requirement,
     RequirementAttributeError,

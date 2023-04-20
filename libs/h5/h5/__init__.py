@@ -2,7 +2,7 @@
 """HDF5 functions, and utils, and generators, OH MY!"""
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
-from h5._meta import __version__
+from h5.__about__ import __version__
 from h5.core import (
     as_h5py_obj as as_h5py_obj,
     attrs as attrs,

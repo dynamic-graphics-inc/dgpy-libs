@@ -18,7 +18,7 @@ import xtyping
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
 from dgpylibs import _meta
-from dgpylibs._meta import __version__, __version__ as __dgpylibs_version__
+from dgpylibs.__about__ import __version__, __version__ as __dgpylibs_version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__

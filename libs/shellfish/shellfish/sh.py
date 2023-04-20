@@ -32,7 +32,7 @@ from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
 from listless import flatten_strings as _flatten_strings
 from shellfish import fs, sp
-from shellfish._meta import __version__
+from shellfish.__about__ import __version__
 from shellfish._types import FsPath as FsPath, PopenArgs as PopenArgs
 from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo

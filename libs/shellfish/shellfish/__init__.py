@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from funkify import funkify as _funkify
 from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
-from shellfish._meta import __version__ as __version__
+from shellfish.__about__ import __version__ as __version__
 from shellfish._types import (
     FsPath as FsPath,
     PathLikeBytes as PathLikeBytes,

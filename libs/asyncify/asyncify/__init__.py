@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Asyncify"""
-from asyncify._meta import __version__
+from asyncify.__about__ import __version__
 from asyncify.core import (
     ANYIO,
     aiorun,

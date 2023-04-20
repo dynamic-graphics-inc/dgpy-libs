@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Python lager brewed by a loguru"""
 from lager import logging
-from lager._meta import __version__
+from lager.__about__ import __version__
 from lager.const import LAGER_PORT, LOGURU_DEFAULT_FMT, TORNADO_FMT
 from lager.core import (
     LAGER,

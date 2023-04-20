@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m lager`"""
 import sys
 
-from lager._meta import __pkgroot__, __title__, __version__
+from lager.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

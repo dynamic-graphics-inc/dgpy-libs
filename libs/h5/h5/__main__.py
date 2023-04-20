@@ -5,7 +5,7 @@ import sys
 
 from typing import Optional
 
-from h5._meta import __pkgroot__, __title__, __version__
+from h5.__about__ import __pkgroot__, __title__, __version__
 
 __click_version__: Optional[str] = None
 try:

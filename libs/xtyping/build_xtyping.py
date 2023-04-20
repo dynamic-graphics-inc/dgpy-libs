@@ -15,7 +15,7 @@ import typing
 
 import typing_extensions
 
-from xtyping._meta import __version__
+from xtyping.__about__ import __version__
 '''
 
 
