@@ -4,5 +4,5 @@
 __all__ = ("__title__", "__description__", "__pkgroot__", "__version__")
 __title__ = "fmts"
 __description__ = "str transformation utils"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
+__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\")
 __version__ = "0.1.4"

@@ -48,6 +48,10 @@ def lib_pyproject_toml_2_deps(libname: str, dgpylibs_only: bool = True):
     return {k: v for k, v in deps.items() if k in DGPY_LIBS} if dgpylibs_only else deps
 
 
+def pyproject_tomls():
+    return {libname: lib_pyproject_toml(libname) for libname in DGPY_LIBS}
+
+
 @click.group(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
@@ -59,7 +63,28 @@ def cli(debug):
 
 @cli.command()
 def update():
-    raise NotImplementedError("TODO")
+    """Update all dgpy-libs metadata files."""
+
+    for libname, pyproject_toml_dict in pyproject_tomls().items():
+        poetry_metadata = pyproject_toml_dict["tool"]["poetry"]
+        lib_about_filepath = lib_dirpath(libname) / libname / "__about__.py"
+        metadata_file_lines = [
+            "# -*- coding: utf-8 -*-",
+            '"""Package metadata/info"""\n',
+            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
+            '__title__ = "{}"'.format(poetry_metadata["name"]),
+            '__description__ = "{}"'.format(poetry_metadata["description"]),
+            '__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\\\")',
+            '__version__ = "{}"\n'.format(poetry_metadata["version"]),
+        ]
+        if lib_about_filepath.exists():
+            current = lib_about_filepath.read_text()
+            if current != "\n".join(metadata_file_lines):
+                console.log(f"Updating {libname}/__about__.py")
+                lib_about_filepath.unlink()
+                lib_about_filepath.write_text(
+                    "\n".join(metadata_file_lines), encoding="utf-8", newline="\n"
+                )
 
 
 @dataclass
