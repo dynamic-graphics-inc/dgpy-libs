@@ -87,7 +87,7 @@ def update_abouts():
 def _relock():
     """relock all dgpy-libs"""
 
-    for libname, pyproject_toml_dict in pyproject_tomls().items():
+    for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")
@@ -108,7 +108,7 @@ def update():
 def patchall():
     """relock all dgpy-libs"""
 
-    for libname, pyproject_toml_dict in pyproject_tomls().items():
+    for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")
