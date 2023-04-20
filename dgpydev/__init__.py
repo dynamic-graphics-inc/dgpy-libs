@@ -1,17 +1,3 @@
-DGPY_LIBS = (
-    "aiopen",
-    "asyncify",
-    "dgpylibs",
-    "dgpytest",
-    "fmts",
-    "funkify",
-    "h5",
-    "jsonbourne",
-    "lager",
-    "listless",
-    "requires",
-    "shellfish",
-    "xtyping",
-)
+from .const import DGPY_LIBS as DGPY_LIBS
 
 __all__ = ("DGPY_LIBS",)

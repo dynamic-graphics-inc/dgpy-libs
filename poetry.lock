@@ -396,7 +396,7 @@ url = "libs/dgpylibs"
 name = "dgpytest"
 version = "0.0.2"
 description = "dgpytest = dgpy + pytest"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.8.1"
 files = []
@@ -426,7 +426,7 @@ files = [
 name = "exceptiongroup"
 version = "1.1.1"
 description = "Backport of PEP 654 (exception groups)"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -574,7 +574,7 @@ files = [
 name = "iniconfig"
 version = "2.0.0"
 description = "brain-dead simple config-ini parsing"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1003,7 +1003,7 @@ attrs = ">=19.2.0"
 name = "packaging"
 version = "23.1"
 description = "Core utilities for Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1043,7 +1043,7 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.2.2)", "pytest-
 name = "pluggy"
 version = "1.0.0"
 description = "plugin and hook calling mechanisms for python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
@@ -1163,7 +1163,7 @@ plugins = ["importlib-metadata"]
 name = "pytest"
 version = "7.3.1"
 description = "pytest: simple powerful testing with Python"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1186,7 +1186,7 @@ testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "no
 name = "pytest-asyncio"
 version = "0.21.0"
 description = "Pytest support for asyncio"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1414,7 +1414,7 @@ files = [
 name = "tomli"
 version = "2.0.1"
 description = "A lil' TOML parser"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
@@ -1539,4 +1539,4 @@ url = "libs/xtyping"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4"
-content-hash = "83d0986628c65151a41c51e8f0aff18df074c2951fc71c15b80d54fb4f5f5342"
+content-hash = "8ce946db26497b818c79a9733135593d59745089889bad477735b152cc0783b7"

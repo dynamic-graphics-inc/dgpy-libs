@@ -25,6 +25,7 @@ python = ">=3.8.1,<4"
 aiopen = "*"
 asyncify = "*"
 dgpylibs = "*"
+dgpytest = "*"
 fmts = "*"
 funkify = "*"
 h5 = "*"
@@ -395,3 +396,4 @@ known_first_party = [
 
 [tool.codespell]
 skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*"
+ignore-words-list = "opps"
