@@ -3,7 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import click
 import tomli
@@ -38,21 +38,27 @@ def lib_pyproject_toml(libname: str):
         return tomli.loads(f.read())
 
 
+def lib_version(libname: str) -> str:
+    return lib_pyproject_toml(libname)["tool"]["poetry"]["version"]
+
+
 def lib_pyproject_toml_2_deps(libname: str, dgpylibs_only: bool = True):
     pyproject_toml_dict = lib_pyproject_toml(libname)
     deps = pyproject_toml_dict["tool"]["poetry"]["dependencies"]
     return {k: v for k, v in deps.items() if k in DGPY_LIBS} if dgpylibs_only else deps
 
 
-@click.group()
+@click.group(
+    context_settings={"help_option_names": ["-h", "--help"]},
+)
 @click.option("--debug/--no-debug", default=False)
 def cli(debug):
-    click.echo(f"Debug mode is {'on' if debug else 'off'}")
+    if debug:
+        click.echo("dgpydev-debug: ON")
 
 
 @cli.command()
 def update():
-    click.echo("updating")
     raise NotImplementedError("TODO")
 
 
@@ -82,10 +88,24 @@ def topo_sort(dgpylibs_deptree: dict[str, DgpyLibInfo]) -> list[str]:
 
 
 @cli.command()
+def ls():
+    from rich.table import Table
+
+    t = Table(
+        "lib",
+        "version",
+    )
+    for lib in DGPY_LIBS:
+        t.add_row(lib, lib_version(lib))
+    console.print(
+        t,
+    )
+
+
+@cli.command()
 def tree():
     dgpylibs_deptree: dict[str, DgpyLibInfo] = {}
     for lib in DGPY_LIBS:
-        click.echo(f"lib: {lib}")
         console.print(f"lib: {lib}")
         pyproject_toml_dict = lib_pyproject_toml(lib)
         dgpylibs_deps = lib_pyproject_toml_2_deps(lib)
@@ -110,6 +130,34 @@ def tree():
     console.print(
         {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
     )
+
+
+@cli.command()
+@click.argument(
+    "version",
+    type=click.Choice(
+        ["patch", "minor", "major", "prepatch", "preminor", "premajor", "prerelease"],
+        case_sensitive=False,
+    ),
+    default=None,
+    nargs=1,
+    required=False,
+)
+@click.option(
+    "--dry-run",
+    "-n",
+    default=False,
+    is_flag=True,
+    help="dry run - don't actually do anything",
+)
+def version(
+    version: Optional[str] = None,
+    dry_run: bool = False,
+):
+    console.print(f"version: {version}")
+    console.print(f"dry_run: {dry_run}")
+
+    raise NotImplementedError("TODO")
 
 
 def main():
