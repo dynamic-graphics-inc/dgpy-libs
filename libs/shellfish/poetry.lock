@@ -2,14 +2,14 @@
 
 [[package]]
 name = "aiopen"
-version = "0.5.4"
+version = "0.5.5"
 description = "Async file io"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "aiopen-0.5.4-py3-none-any.whl", hash = "sha256:04966467fccfbd30c50e8524c619a47f69b4d9ba4c58976efe974a87558aeb0b"},
-    {file = "aiopen-0.5.4.tar.gz", hash = "sha256:9a391e49680916ef290ee1261396d7661df97e11b60f46fc5771725d147d54f8"},
+    {file = "aiopen-0.5.5-py3-none-any.whl", hash = "sha256:34c5025de030a45a7c14485b1921cd3a56cfe0313aef67d41bfc9c9caf5f359f"},
+    {file = "aiopen-0.5.5.tar.gz", hash = "sha256:7dfc09a11b5220471f902fa049ffd2b6a1408d5ed867aa6d3861042ddf95335d"},
 ]
 
 [package.dependencies]
@@ -18,14 +18,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "asyncify"
-version = "0.9.1"
+version = "0.9.2"
 description = "sync 2 async"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "asyncify-0.9.1-py3-none-any.whl", hash = "sha256:0387ffcac52bb38978c420ef7e6ba8d6d4aaad5112eb1ebbe331e421ed080c2c"},
-    {file = "asyncify-0.9.1.tar.gz", hash = "sha256:fa23088f016a67a76eeb14e6bd0db291d513ef559f5e56aa7a8103d24ba3a947"},
+    {file = "asyncify-0.9.2-py3-none-any.whl", hash = "sha256:ee7efe8ecc11f348d4f25d4d1c5fb2f56a187aaa907aea3608106359728a2cdd"},
+    {file = "asyncify-0.9.2.tar.gz", hash = "sha256:5f06016a5d805354505e98e9c009595cba7905ceb767ed7cd61bf60f2341d896"},
 ]
 
 [package.dependencies]
@@ -173,14 +173,14 @@ files = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.25.1"
+version = "0.25.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "jsonbourne-0.25.1-py3-none-any.whl", hash = "sha256:93435efb92326c22988739674d8b88750b7bd2062e945734fe548fdd0a7fb727"},
-    {file = "jsonbourne-0.25.1.tar.gz", hash = "sha256:9eead289c34eec9f1c554d4895a233eba3ffd169b276998154f6efafa1bd9c78"},
+    {file = "jsonbourne-0.25.2-py3-none-any.whl", hash = "sha256:440404f41d105fef6b1fd6bc7867e0c2dc6591311085c8af9b874834c3662143"},
+    {file = "jsonbourne-0.25.2.tar.gz", hash = "sha256:2843e27b042ec95035ce9b1a4cc7694284f9684f221ceb57653fdf5a82e91516"},
 ]
 
 [package.dependencies]

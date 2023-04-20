@@ -2,14 +2,14 @@
 
 [[package]]
 name = "aiopen"
-version = "0.5.4"
+version = "0.5.5"
 description = "Async file io"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "aiopen-0.5.4-py3-none-any.whl", hash = "sha256:04966467fccfbd30c50e8524c619a47f69b4d9ba4c58976efe974a87558aeb0b"},
-    {file = "aiopen-0.5.4.tar.gz", hash = "sha256:9a391e49680916ef290ee1261396d7661df97e11b60f46fc5771725d147d54f8"},
+    {file = "aiopen-0.5.5-py3-none-any.whl", hash = "sha256:34c5025de030a45a7c14485b1921cd3a56cfe0313aef67d41bfc9c9caf5f359f"},
+    {file = "aiopen-0.5.5.tar.gz", hash = "sha256:7dfc09a11b5220471f902fa049ffd2b6a1408d5ed867aa6d3861042ddf95335d"},
 ]
 
 [package.dependencies]
@@ -18,14 +18,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "asyncify"
-version = "0.9.1"
+version = "0.9.2"
 description = "sync 2 async"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "asyncify-0.9.1-py3-none-any.whl", hash = "sha256:0387ffcac52bb38978c420ef7e6ba8d6d4aaad5112eb1ebbe331e421ed080c2c"},
-    {file = "asyncify-0.9.1.tar.gz", hash = "sha256:fa23088f016a67a76eeb14e6bd0db291d513ef559f5e56aa7a8103d24ba3a947"},
+    {file = "asyncify-0.9.2-py3-none-any.whl", hash = "sha256:ee7efe8ecc11f348d4f25d4d1c5fb2f56a187aaa907aea3608106359728a2cdd"},
+    {file = "asyncify-0.9.2.tar.gz", hash = "sha256:5f06016a5d805354505e98e9c009595cba7905ceb767ed7cd61bf60f2341d896"},
 ]
 
 [package.dependencies]
@@ -101,14 +101,14 @@ files = [
 
 [[package]]
 name = "h5"
-version = "0.8.8"
+version = "0.8.9"
 description = "H5py utils"
 category = "main"
 optional = false
 python-versions = ">=3.8.0"
 files = [
-    {file = "h5-0.8.8-py3-none-any.whl", hash = "sha256:c78dfc91d24ca912d5e11ea084f85577a3c2af9e98c92acea39b32618e3eba13"},
-    {file = "h5-0.8.8.tar.gz", hash = "sha256:89a41033db48454d8d5a85cf19952a1303e7e001fe33f0eff0c8e182bad9b350"},
+    {file = "h5-0.8.9-py3-none-any.whl", hash = "sha256:1a59dfe3dc1d8f3c67936c360cb1ca1e7d14200ca876855e3880d0bf5e1d9ff7"},
+    {file = "h5-0.8.9.tar.gz", hash = "sha256:db5061a53c29092d10887ab7a7fa53dc3ae9a028d08b4589d622376f4e038091"},
 ]
 
 [package.dependencies]
@@ -117,7 +117,7 @@ numpy = ">=1.23.2"
 typing-extensions = ">=4.5.0,<5.0.0"
 
 [package.extras]
-cli = ["click (>=8.1.3,<9.0.0)", "globsters (>=0.0.2,<0.0.3)", "rich (>=13.3.3,<14.0.0)"]
+cli = ["click (>=8.1.3,<9.0.0)", "globsters (>=0.0.2,<0.0.4)", "rich (>=13.3.3,<14.0.0)"]
 
 [[package]]
 name = "h5py"
@@ -171,14 +171,14 @@ files = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.25.1"
+version = "0.25.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "jsonbourne-0.25.1-py3-none-any.whl", hash = "sha256:93435efb92326c22988739674d8b88750b7bd2062e945734fe548fdd0a7fb727"},
-    {file = "jsonbourne-0.25.1.tar.gz", hash = "sha256:9eead289c34eec9f1c554d4895a233eba3ffd169b276998154f6efafa1bd9c78"},
+    {file = "jsonbourne-0.25.2-py3-none-any.whl", hash = "sha256:440404f41d105fef6b1fd6bc7867e0c2dc6591311085c8af9b874834c3662143"},
+    {file = "jsonbourne-0.25.2.tar.gz", hash = "sha256:2843e27b042ec95035ce9b1a4cc7694284f9684f221ceb57653fdf5a82e91516"},
 ]
 
 [package.dependencies]
@@ -270,14 +270,14 @@ files = [
 
 [[package]]
 name = "lager"
-version = "0.17.1"
+version = "0.17.2"
 description = "EZ-PZ logging based on loguru"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "lager-0.17.1-py3-none-any.whl", hash = "sha256:587b637961323f11ae0b8b0b3f12dac428326911dae2b3bfdc96f920847500f3"},
-    {file = "lager-0.17.1.tar.gz", hash = "sha256:394e6f1ba1e3241f7a490d2ddcab69ae15bf7b30cf2aa17b985e420a6292cfd0"},
+    {file = "lager-0.17.2-py3-none-any.whl", hash = "sha256:60247276817939199dcfa1392985842cd8396bbeeba9340ea5ee298e0ace4cd0"},
+    {file = "lager-0.17.2.tar.gz", hash = "sha256:8aa229974fd845ad99e88e7c0d682cb2aa03d20442e009d14fc81d9ba0ccdb97"},
 ]
 
 [package.dependencies]
@@ -477,14 +477,14 @@ testing = ["coverage (>=6.2)", "flaky (>=3.5.0)", "hypothesis (>=5.7.1)", "mypy 
 
 [[package]]
 name = "requires"
-version = "0.10.3"
+version = "0.10.4"
 description = "Runtime imports and dependency utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "requires-0.10.3-py3-none-any.whl", hash = "sha256:873cc3230af1733bc4649265069b336348bd5f2a2b4c92b0f791a5e4a216f57d"},
-    {file = "requires-0.10.3.tar.gz", hash = "sha256:ebac72997045d281064c6619652ba77dd8aca5a8b8469de6b23a255855b1b9fd"},
+    {file = "requires-0.10.4-py3-none-any.whl", hash = "sha256:e934b5c4b3d9d76e71723354c31e55130ea9247ef13e711720884e5498c1ff88"},
+    {file = "requires-0.10.4.tar.gz", hash = "sha256:5458bbd101795d108c9b1df619d67ed205fc93f9203a903d715f95eebe67824d"},
 ]
 
 [package.dependencies]
@@ -493,14 +493,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.3.0"
+version = "0.3.1"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.3.0-py3-none-any.whl", hash = "sha256:28d0ee17cebe87ca8214e8cd93894ecfa7aece79c795b7756e4f06acd6f334b8"},
-    {file = "shellfish-0.3.0.tar.gz", hash = "sha256:4139cdbc653d79f925ad327aaf79003108ff5bff381dfc72e32606b4912724b5"},
+    {file = "shellfish-0.3.1-py3-none-any.whl", hash = "sha256:6ba1d17e413a74bf4cae5c4bcd1673a88eb6ec60254edc7dc0eaef709488266f"},
+    {file = "shellfish-0.3.1.tar.gz", hash = "sha256:b8a80825149dfb9d848a177a598b5f0d2113976d1b9311a2dc4e49cf92c77c34"},
 ]
 
 [package.dependencies]
