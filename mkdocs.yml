@@ -104,9 +104,20 @@ plugins:
         python:
           setup_commands:
             - import sys
+            - from os import path
             - sys.path.append("docs")
-            - sys.path.append("libs/aiopen")
-            - sys.path.append("libs/h5")
+            - sys.path.append(path.join("libs", "aiopen"))
+            - sys.path.append(path.join("libs", "asyncify"))
+            - sys.path.append(path.join("libs", "dgpylibs"))
+            - sys.path.append(path.join("libs", "dgpytest"))
+            - sys.path.append(path.join("libs", "fmts"))
+            - sys.path.append(path.join("libs", "funkify"))
+            - sys.path.append(path.join("libs", "h5"))
+            - sys.path.append(path.join("libs", "jsonbourne"))
+            - sys.path.append(path.join("libs", "lager"))
+            - sys.path.append(path.join("libs", "listless"))
+            - sys.path.append(path.join("libs", "shellfish"))
+            - sys.path.append(path.join("libs", "xtyping"))
           inherited_members: true
           docstring_style: google
           options:

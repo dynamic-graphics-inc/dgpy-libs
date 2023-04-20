@@ -286,7 +286,7 @@ def update_metadata(session):
 def _install_mkdocs_deps(session):
     session.install("mkdocs")
     session.install(
-        "mkdocs-material", "mkdocs-jupyter", "mkdocstrings[python]", "mkdocs-callouts"
+        "mkdocs-material", "mkdocs-jupyter", "mkdocstrings[python]", "markdown-callouts"
     )
 
 
