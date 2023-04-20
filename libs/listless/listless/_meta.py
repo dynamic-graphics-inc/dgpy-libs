@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "listless"
-__description__ = "generator utils; aka listless"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.1.4"
+from listless.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "listless._meta is deprecated, use listless.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

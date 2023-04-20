@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "lager"
-__description__ = "EZ-PZ logging based on loguru"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.17.1"
+from lager.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "lager._meta is deprecated, use lager.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "aiopen"
-__description__ = "Async file io"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.5.4"
+from aiopen.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "aiopen._meta is deprecated, use aiopen.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

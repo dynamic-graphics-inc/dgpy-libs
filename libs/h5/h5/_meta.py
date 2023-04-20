@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "h5"
-__description__ = "H5py utils"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.8.8"
+from h5.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "h5._meta is deprecated, use h5.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

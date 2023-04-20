@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "asyncify"
-__description__ = "sync 2 async"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.9.1"
+from asyncify.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "asyncify._meta is deprecated, use asyncify.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

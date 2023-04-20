@@ -245,6 +245,7 @@ def update_metadata(session):
         metadata_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',
+            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
             '__title__ = "{}"'.format(poetry_metadata["name"]),
             '__description__ = "{}"'.format(poetry_metadata["description"]),
             '__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\\\")',
@@ -252,21 +253,47 @@ def update_metadata(session):
         ]
         metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
 
+        # deprecated_meta_file_lines = [
+        #     "# -*- coding: utf-8 -*-",
+        #     '"""Package metadata/info"""\n',
+        #     f'from {libname}.__about__ import __description__, __pkgroot__, __title__, __version__',
+        #     '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
+        # ]
+        deprecated_meta_file_lines = [
+            "# -*- coding: utf-8 -*-",
+            '"""Package metadata/info"""',
+            "import warnings",
+            "",
+            f"from {libname}.__about__ import __description__, __pkgroot__, __title__, __version__",
+            "",
+            "warnings.warn(",
+            f'    "{libname}._meta is deprecated, use {libname}.__about__ instead",',
+            "    DeprecationWarning,",
+            "    stacklevel=2,",
+            ")",
+            "",
+            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
+            "",
+        ]
         # check that is valid python...
         exec(metadata_file_string)
         echo("~~~")
         echo(metadata_file_string)
         echo("~~~")
-        metadata_filepath = path.join(dirpath, libname, "_meta.py")
+        meta_filepath = path.join(dirpath, libname, "_meta.py")
+        metadata_filepath = path.join(dirpath, libname, "__about__.py")
         pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
         with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
             f.write(metadata_file_string)
 
-        s = _pkg_entry_point(libname)
-        if not path.exists(pkg_main_filepath):
-            echo("creating __main__.py")
-            with open(pkg_main_filepath, "w") as f:
-                f.write(s)
+        with open(meta_filepath, "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(deprecated_meta_file_lines))
+
+        # s = _pkg_entry_point(libname)
+        # if not path.exists(pkg_main_filepath):
+        #     echo("creating __main__.py")
+        #     with open(pkg_main_filepath, "w") as f:
+        #         f.write(s)
 
 
 def _install_mkdocs_deps(session):
