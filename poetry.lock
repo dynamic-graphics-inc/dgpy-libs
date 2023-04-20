@@ -2,7 +2,7 @@
 
 [[package]]
 name = "aiopen"
-version = "0.5.4"
+version = "0.5.5"
 description = "Async file io"
 category = "main"
 optional = false
@@ -70,7 +70,7 @@ files = [
 
 [[package]]
 name = "asyncify"
-version = "0.9.1"
+version = "0.9.2"
 description = "sync 2 async"
 category = "main"
 optional = false
@@ -364,7 +364,7 @@ toml = ["tomli"]
 
 [[package]]
 name = "dgpylibs"
-version = "0.0.5"
+version = "0.0.6"
 description = "Dynamic Graphics Python libraries"
 category = "main"
 optional = false
@@ -394,7 +394,7 @@ url = "libs/dgpylibs"
 
 [[package]]
 name = "dgpytest"
-version = "0.0.2"
+version = "0.0.3"
 description = "dgpytest = dgpy + pytest"
 category = "main"
 optional = false
@@ -472,7 +472,7 @@ pyflakes = ">=3.0.0,<3.1.0"
 
 [[package]]
 name = "fmts"
-version = "0.1.4"
+version = "0.1.5"
 description = "str transformation utils"
 category = "main"
 optional = false
@@ -486,7 +486,7 @@ url = "libs/fmts"
 
 [[package]]
 name = "funkify"
-version = "0.4.4"
+version = "0.4.5"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
@@ -500,7 +500,7 @@ url = "libs/funkify"
 
 [[package]]
 name = "h5"
-version = "0.8.8"
+version = "0.8.9"
 description = "H5py utils"
 category = "main"
 optional = false
@@ -602,7 +602,7 @@ requirements-deprecated-finder = ["pip-api", "pipreqs"]
 
 [[package]]
 name = "jsonbourne"
-version = "0.25.1"
+version = "0.25.2"
 description = "EZPZ JSON"
 category = "main"
 optional = false
@@ -703,7 +703,7 @@ files = [
 
 [[package]]
 name = "lager"
-version = "0.17.1"
+version = "0.17.2"
 description = "EZ-PZ logging based on loguru"
 category = "main"
 optional = false
@@ -720,7 +720,7 @@ url = "libs/lager"
 
 [[package]]
 name = "listless"
-version = "0.1.4"
+version = "0.1.5"
 description = "generator utils; aka listless"
 category = "main"
 optional = false
@@ -1288,7 +1288,7 @@ files = [
 
 [[package]]
 name = "requires"
-version = "0.10.3"
+version = "0.10.4"
 description = "Runtime imports and dependency utils"
 category = "main"
 optional = false
@@ -1353,7 +1353,7 @@ files = [
 
 [[package]]
 name = "shellfish"
-version = "0.3.0"
+version = "0.3.1"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
@@ -1521,7 +1521,7 @@ tests-strict = ["codecov (==2.0.15)", "pytest (==4.6.0)", "pytest (==4.6.0)", "p
 
 [[package]]
 name = "xtyping"
-version = "0.6.2"
+version = "0.6.3"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false

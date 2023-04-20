@@ -29,14 +29,14 @@ test = ["pytest (>=6)"]
 
 [[package]]
 name = "funkify"
-version = "0.4.4"
+version = "0.4.5"
 description = "Funkify modules so that they are callable"
 category = "main"
 optional = false
-python-versions = ">=3.6.2,<4.0.0"
+python-versions = ">=3.7,<4.0"
 files = [
-    {file = "funkify-0.4.4-py3-none-any.whl", hash = "sha256:a88bd2fa83ef1587b9ae7903ae322a8bd954dbf82eaaf7d840e253be403b743c"},
-    {file = "funkify-0.4.4.tar.gz", hash = "sha256:2e6519ab06af0ee0262f921a5d71b2a6d16c6d866427ddde90259a9f840b3017"},
+    {file = "funkify-0.4.5-py3-none-any.whl", hash = "sha256:43f1e6c27263468a60ba560dfc13e6e4df57aa75376438a62f741ffc7c83cdfe"},
+    {file = "funkify-0.4.5.tar.gz", hash = "sha256:42df845f4afa63e0e66239a986d26b6572ab0b7ad600d7d6365d44d8a0cff3d5"},
 ]
 
 [[package]]
@@ -153,14 +153,14 @@ files = [
 
 [[package]]
 name = "xtyping"
-version = "0.6.2"
+version = "0.6.3"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "xtyping-0.6.2-py3-none-any.whl", hash = "sha256:27d71c802802503c43b25c03c91e41ddb0541e43eb9ffb4eb55412123418b7b1"},
-    {file = "xtyping-0.6.2.tar.gz", hash = "sha256:d6548a587302c4dd1613c876517c3a7806f898ebe32c70e33102677440c7a27c"},
+    {file = "xtyping-0.6.3-py3-none-any.whl", hash = "sha256:af0fa6446044afa6c10a570312b9a61c3af8d5a9d06dd5325958758ccb118516"},
+    {file = "xtyping-0.6.3.tar.gz", hash = "sha256:9411cc6df6f17902fe230feb84c7eda0e5d758b929983da90cb09508ff5e0d8b"},
 ]
 
 [package.dependencies]

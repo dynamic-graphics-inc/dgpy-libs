@@ -402,14 +402,14 @@ files = [
 
 [[package]]
 name = "xtyping"
-version = "0.6.2"
+version = "0.6.3"
 description = "xtyping = typing + typing_extensions"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "xtyping-0.6.2-py3-none-any.whl", hash = "sha256:27d71c802802503c43b25c03c91e41ddb0541e43eb9ffb4eb55412123418b7b1"},
-    {file = "xtyping-0.6.2.tar.gz", hash = "sha256:d6548a587302c4dd1613c876517c3a7806f898ebe32c70e33102677440c7a27c"},
+    {file = "xtyping-0.6.3-py3-none-any.whl", hash = "sha256:af0fa6446044afa6c10a570312b9a61c3af8d5a9d06dd5325958758ccb118516"},
+    {file = "xtyping-0.6.3.tar.gz", hash = "sha256:9411cc6df6f17902fe230feb84c7eda0e5d758b929983da90cb09508ff5e0d8b"},
 ]
 
 [package.dependencies]
