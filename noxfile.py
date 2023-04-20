@@ -253,12 +253,6 @@ def update_metadata(session):
         ]
         metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
 
-        # deprecated_meta_file_lines = [
-        #     "# -*- coding: utf-8 -*-",
-        #     '"""Package metadata/info"""\n',
-        #     f'from {libname}.__about__ import __description__, __pkgroot__, __title__, __version__',
-        #     '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
-        # ]
         deprecated_meta_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""',
@@ -282,18 +276,11 @@ def update_metadata(session):
         echo("~~~")
         meta_filepath = path.join(dirpath, libname, "_meta.py")
         metadata_filepath = path.join(dirpath, libname, "__about__.py")
-        pkg_main_filepath = path.join(dirpath, libname, "__main__.py")
         with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
             f.write(metadata_file_string)
 
         with open(meta_filepath, "w", encoding="utf-8", newline="\n") as f:
             f.write("\n".join(deprecated_meta_file_lines))
-
-        # s = _pkg_entry_point(libname)
-        # if not path.exists(pkg_main_filepath):
-        #     echo("creating __main__.py")
-        #     with open(pkg_main_filepath, "w") as f:
-        #         f.write(s)
 
 
 def _install_mkdocs_deps(session):
