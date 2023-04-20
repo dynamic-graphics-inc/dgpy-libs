@@ -196,8 +196,7 @@ jobs:
         run: |
           poetry install
       - name: install docs deps
-        run: |
-          poetry run pip install -r requirements/docs.txt
+        run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python] markdown-callouts
       - name: mkdocs build
         if: github.ref != 'refs/heads/main'
         run: poetry run mkdocs build
