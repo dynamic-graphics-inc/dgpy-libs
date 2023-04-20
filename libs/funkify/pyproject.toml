@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "funkify"
-version = "0.4.4"
+version = "0.4.5"
 description = "Funkify modules so that they are callable"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

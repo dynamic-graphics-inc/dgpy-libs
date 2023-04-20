@@ -12,6 +12,7 @@ from rich.console import Console
 from rich.rule import Rule
 
 from dgpydev.const import DGPY_LIBS
+from shellfish import sh
 
 console = Console()
 
@@ -31,7 +32,6 @@ def lib_dirpath(libname: str) -> Path:
     return libs_dirpath() / libname
 
 
-@lru_cache(maxsize=32)
 def lib_pyproject_toml(libname: str):
     pyproject_toml_filepath = lib_dirpath(libname) / "pyproject.toml"
     with open(pyproject_toml_filepath) as f:
@@ -61,10 +61,7 @@ def cli(debug):
         click.echo("dgpydev-debug: ON")
 
 
-@cli.command()
-def update():
-    """Update all dgpy-libs metadata files."""
-
+def update_abouts():
     for libname, pyproject_toml_dict in pyproject_tomls().items():
         poetry_metadata = pyproject_toml_dict["tool"]["poetry"]
         lib_about_filepath = lib_dirpath(libname) / libname / "__about__.py"
@@ -85,6 +82,46 @@ def update():
                 lib_about_filepath.write_text(
                     "\n".join(metadata_file_lines), encoding="utf-8", newline="\n"
                 )
+
+
+def _relock():
+    """relock all dgpy-libs"""
+
+    for libname, pyproject_toml_dict in pyproject_tomls().items():
+        dirpath = lib_dirpath(libname)
+        console.log(f"Relocking {libname}")
+        console.log(f"cd {dirpath}")
+        sh.cd(dirpath)
+        console.log("poetry lock")
+        sh.do("poetry", "lock", "--no-cache", verbose=True, check=True)
+    sh.cd(repo_root())
+    sh.do("poetry", "lock", "--no-cache", verbose=True, check=True)
+
+
+@cli.command()
+def update():
+    """Update all dgpy-libs metadata files."""
+    update_abouts()
+
+
+@cli.command()
+def patchall():
+    """relock all dgpy-libs"""
+
+    for libname, pyproject_toml_dict in pyproject_tomls().items():
+        dirpath = lib_dirpath(libname)
+        console.log(f"Relocking {libname}")
+        console.log(f"cd {dirpath}")
+        sh.cd(dirpath)
+        console.log("poetry version patch")
+        sh.do("poetry", "version", "patch", verbose=True, check=True)
+    update_abouts()
+
+
+@cli.command()
+def relock():
+    """relock all dgpy-libs"""
+    _relock()
 
 
 @dataclass
@@ -127,8 +164,7 @@ def ls():
     )
 
 
-@cli.command()
-def tree():
+def deps_tree() -> dict[str, DgpyLibInfo]:
     dgpylibs_deptree: dict[str, DgpyLibInfo] = {}
     for lib in DGPY_LIBS:
         console.print(f"lib: {lib}")
@@ -148,13 +184,36 @@ def tree():
     for lib, lib_info in dgpylibs_deptree.items():
         for dep in lib_info.dependencies:
             dgpylibs_deptree[dep].dependents.add(lib)
+    return dgpylibs_deptree
 
+
+def dgpylibs_topo_sorted() -> list[str]:
+    dgpylibs_deptree = deps_tree()
+    return topo_sort(dgpylibs_deptree)
+
+
+@cli.command()
+def tree():
+    dgpylibs_deptree = deps_tree()
     console.print(Rule("topo_sorted"))
     console.print(topo_sort(dgpylibs_deptree))
     console.print(Rule("deptree"))
     console.print(
         {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
     )
+
+@cli.command()
+def publish():
+    """Publish all dgpy-libs to PyPI."""
+    import subprocess
+
+    for libname in DGPY_LIBS:
+        console.print(f"Publishing {libname}...")
+        subprocess.run(
+            ["poetry", "publish", "--build", "-vvv"],
+            cwd=lib_dirpath(libname),
+            check=True,
+        )
 
 
 @cli.command()

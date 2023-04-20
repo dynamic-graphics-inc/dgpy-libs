@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgpytest"
-version = "0.0.2"
+version = "0.0.3"
 description = "dgpytest = dgpy + pytest"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
