@@ -202,6 +202,7 @@ def tree():
         {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
     )
 
+
 @cli.command()
 def publish():
     """Publish all dgpy-libs to PyPI."""
