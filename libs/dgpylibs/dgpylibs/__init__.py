@@ -17,7 +17,6 @@ import xtyping
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
-from dgpylibs import _meta
 from dgpylibs.__about__ import __version__, __version__ as __dgpylibs_version__
 from fmts import __version__ as __fmts_version__
 from funkify import __version__ as __funkify_version__
@@ -241,78 +240,78 @@ class DgpyLibsVersions:
         }
 
 
-dgpylibs_metadata = DgpyLibsMetadata(
+dgpylibs__about__data = DgpyLibsMetadata(
     dgpylibs=DgpyLibMetadata(
-        title=_meta.__title__,
-        description=_meta.__description__,
-        pkgroot=_meta.__pkgroot__,
-        version=_meta.__version__,
+        title=__about__.__title__,
+        description=__about__.__description__,
+        pkgroot=__about__.__pkgroot__,
+        version=__about__.__version__,
     ),
     aiopen=DgpyLibMetadata(
-        title=aiopen._meta.__title__,
-        description=aiopen._meta.__description__,
-        pkgroot=aiopen._meta.__pkgroot__,
-        version=aiopen._meta.__version__,
+        title=aiopen.__about__.__title__,
+        description=aiopen.__about__.__description__,
+        pkgroot=aiopen.__about__.__pkgroot__,
+        version=aiopen.__about__.__version__,
     ),
     asyncify=DgpyLibMetadata(
-        title=asyncify._meta.__title__,
-        description=asyncify._meta.__description__,
-        pkgroot=asyncify._meta.__pkgroot__,
-        version=asyncify._meta.__version__,
+        title=asyncify.__about__.__title__,
+        description=asyncify.__about__.__description__,
+        pkgroot=asyncify.__about__.__pkgroot__,
+        version=asyncify.__about__.__version__,
     ),
     fmts=DgpyLibMetadata(
-        title=fmts._meta.__title__,
-        description=fmts._meta.__description__,
-        pkgroot=fmts._meta.__pkgroot__,
-        version=fmts._meta.__version__,
+        title=fmts.__about__.__title__,
+        description=fmts.__about__.__description__,
+        pkgroot=fmts.__about__.__pkgroot__,
+        version=fmts.__about__.__version__,
     ),
     funkify=DgpyLibMetadata(
-        title=funkify._meta.__title__,
-        description=funkify._meta.__description__,
-        pkgroot=funkify._meta.__pkgroot__,
-        version=funkify._meta.__version__,
+        title=funkify.__about__.__title__,
+        description=funkify.__about__.__description__,
+        pkgroot=funkify.__about__.__pkgroot__,
+        version=funkify.__about__.__version__,
     ),
     h5=DgpyLibMetadata(
-        title=h5._meta.__title__,
-        description=h5._meta.__description__,
-        pkgroot=h5._meta.__pkgroot__,
-        version=h5._meta.__version__,
+        title=h5.__about__.__title__,
+        description=h5.__about__.__description__,
+        pkgroot=h5.__about__.__pkgroot__,
+        version=h5.__about__.__version__,
     ),
     jsonbourne=DgpyLibMetadata(
-        title=jsonbourne._meta.__title__,
-        description=jsonbourne._meta.__description__,
-        pkgroot=jsonbourne._meta.__pkgroot__,
-        version=jsonbourne._meta.__version__,
+        title=jsonbourne.__about__.__title__,
+        description=jsonbourne.__about__.__description__,
+        pkgroot=jsonbourne.__about__.__pkgroot__,
+        version=jsonbourne.__about__.__version__,
     ),
     lager=DgpyLibMetadata(
-        title=lager._meta.__title__,
-        description=lager._meta.__description__,
-        pkgroot=lager._meta.__pkgroot__,
-        version=lager._meta.__version__,
+        title=lager.__about__.__title__,
+        description=lager.__about__.__description__,
+        pkgroot=lager.__about__.__pkgroot__,
+        version=lager.__about__.__version__,
     ),
     listless=DgpyLibMetadata(
-        title=listless._meta.__title__,
-        description=listless._meta.__description__,
-        pkgroot=listless._meta.__pkgroot__,
-        version=listless._meta.__version__,
+        title=listless.__about__.__title__,
+        description=listless.__about__.__description__,
+        pkgroot=listless.__about__.__pkgroot__,
+        version=listless.__about__.__version__,
     ),
     requires=DgpyLibMetadata(
-        title=requires._meta.__title__,
-        description=requires._meta.__description__,
-        pkgroot=requires._meta.__pkgroot__,
-        version=requires._meta.__version__,
+        title=requires.__about__.__title__,
+        description=requires.__about__.__description__,
+        pkgroot=requires.__about__.__pkgroot__,
+        version=requires.__about__.__version__,
     ),
     shellfish=DgpyLibMetadata(
-        title=shellfish._meta.__title__,
-        description=shellfish._meta.__description__,
-        pkgroot=shellfish._meta.__pkgroot__,
-        version=shellfish._meta.__version__,
+        title=shellfish.__about__.__title__,
+        description=shellfish.__about__.__description__,
+        pkgroot=shellfish.__about__.__pkgroot__,
+        version=shellfish.__about__.__version__,
     ),
     xtyping=DgpyLibMetadata(
-        title=xtyping._meta.__title__,
-        description=xtyping._meta.__description__,
-        pkgroot=xtyping._meta.__pkgroot__,
-        version=xtyping._meta.__version__,
+        title=xtyping.__about__.__title__,
+        description=xtyping.__about__.__description__,
+        pkgroot=xtyping.__about__.__pkgroot__,
+        version=xtyping.__about__.__version__,
     ),
 )
 
