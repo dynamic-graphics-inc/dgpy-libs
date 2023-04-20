@@ -5,8 +5,8 @@ import sys
 from types import ModuleType
 from typing import Any, Callable, Optional, TypeVar, cast
 
-from funkify.__about__ import __version__
 from funkify import __about__
+from funkify.__about__ import __version__
 
 T = TypeVar("T")
 
