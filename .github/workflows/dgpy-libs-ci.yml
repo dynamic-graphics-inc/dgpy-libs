@@ -111,7 +111,6 @@ jobs:
       - name: test asyncify
         run: |
           cd libs/asyncify
-          poetry install
           poetry run pytest --cov=asyncify tests asyncify --doctest-modules
 
       - name: test requires
