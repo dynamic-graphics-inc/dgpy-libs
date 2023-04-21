@@ -7,7 +7,7 @@ from os import environ
 
 import pytest
 
-from dgpytest._meta import __version__
+from dgpytest.__about__ import __version__
 
 __all__ = ("__version__",)
 

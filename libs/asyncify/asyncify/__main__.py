@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m asyncify`"""
 import sys
 
-from asyncify._meta import __pkgroot__, __title__, __version__
+from asyncify.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

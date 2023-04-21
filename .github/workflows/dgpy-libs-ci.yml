@@ -111,7 +111,6 @@ jobs:
       - name: test asyncify
         run: |
           cd libs/asyncify
-          poetry install
           poetry run pytest --cov=asyncify tests asyncify --doctest-modules
 
       - name: test requires
@@ -122,7 +121,6 @@ jobs:
       - name: test aiopen
         run: |
           cd libs/aiopen
-          poetry install
           poetry run pytest --doctest-modules tests aiopen
 
       - name: test lager
@@ -198,7 +196,7 @@ jobs:
         run: |
           poetry install
       - name: install docs deps
-        run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python]
+        run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python] markdown-callouts
       - name: mkdocs build
         if: github.ref != 'refs/heads/main'
         run: poetry run mkdocs build

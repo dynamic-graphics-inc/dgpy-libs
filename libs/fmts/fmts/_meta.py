@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+import warnings
 
-__title__ = "fmts"
-__description__ = "str transformation utils"
-__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\")
-__version__ = "0.1.4"
+from fmts.__about__ import __description__, __pkgroot__, __title__, __version__
+
+warnings.warn(
+    "fmts._meta is deprecated, use fmts.__about__ instead",
+    DeprecationWarning,
+    stacklevel=2,
+)
+
+__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")

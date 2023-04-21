@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m requires`"""
 import sys
 
-from requires._meta import __pkgroot__, __title__, __version__
+from requires.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

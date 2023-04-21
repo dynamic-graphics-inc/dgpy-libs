@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncify"
-version = "0.9.1"
+version = "0.9.2"
 description = "sync 2 async"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -44,6 +44,7 @@ addopts = [
   "--doctest-modules",
   "--disable-warnings",
   "--cov-config=pyproject.toml",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [
@@ -51,7 +52,6 @@ filterwarnings = [
   'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
   "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
 ]
 markers = ["asyncio", "anyio"]
 testpaths = ["asyncify", "tests"]

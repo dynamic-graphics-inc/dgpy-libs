@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jsonbourne"
-version = "0.25.1"
+version = "0.25.2"
 description = "EZPZ JSON"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -62,6 +62,7 @@ addopts = [
   "--doctest-modules",
   "--disable-warnings",
   "--doctest-ignore-import-errors",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [
@@ -69,7 +70,6 @@ filterwarnings = [
   'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
   "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",

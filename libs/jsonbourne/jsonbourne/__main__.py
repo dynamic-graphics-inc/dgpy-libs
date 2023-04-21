@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m jsonbourne`"""
 import sys
 
-from jsonbourne._meta import __pkgroot__, __title__, __version__
+from jsonbourne.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

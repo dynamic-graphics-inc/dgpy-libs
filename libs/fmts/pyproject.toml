@@ -1,6 +1,6 @@
 [project]
 name = "fmts"
-version = "0.1.4"
+version = "0.1.5"
 description = "str transformation utils"
 authors = [
   { name = "jesse", email = "jessekrubin@gmail.com" },
@@ -34,7 +34,7 @@ dev = ["pytest<7.0.0,>=6.2.2"]
 
 [tool.poetry]
 name = "fmts"
-version = "0.1.4"
+version = "0.1.5"
 description = "str transformation utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]

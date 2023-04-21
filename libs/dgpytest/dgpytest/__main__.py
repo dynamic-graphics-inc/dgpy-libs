@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m dgpytest`"""
 import sys
 
-from dgpytest._meta import __pkgroot__, __title__, __version__
+from dgpytest.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

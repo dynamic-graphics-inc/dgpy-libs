@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m funkify`"""
 import sys
 
-from funkify._meta import __pkgroot__, __title__, __version__
+from funkify.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

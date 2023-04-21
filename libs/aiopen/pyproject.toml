@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aiopen"
-version = "0.5.4"
+version = "0.5.5"
 description = "Async file io"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -52,6 +52,7 @@ addopts = [
   "--doctest-modules",
   "--disable-warnings",
   "--cov-config=pyproject.toml",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [
@@ -59,7 +60,6 @@ filterwarnings = [
   'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
   "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
 ]
 markers = ["asyncio", "anyio", "version"]
 testpaths = ["aiopen", "tests"]

@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m xtyping`"""
 import sys
 
-from xtyping._meta import __pkgroot__, __title__, __version__
+from xtyping.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

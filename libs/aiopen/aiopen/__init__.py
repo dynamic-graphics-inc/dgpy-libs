@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """`aiopen` ~ Async version of python's built in open -- based on aiofiles"""
-from aiopen._meta import __version__
+from aiopen.__about__ import __version__
 from aiopen.core import aiopen
 from funkify import funkify
 

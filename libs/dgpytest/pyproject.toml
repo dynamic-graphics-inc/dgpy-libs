@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgpytest"
-version = "0.0.2"
+version = "0.0.3"
 description = "dgpytest = dgpy + pytest"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -48,6 +48,7 @@ addopts = [
   "--strict-markers",
   "--doctest-modules",
   "--disable-warnings",
+  "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
 filterwarnings = [
@@ -55,7 +56,6 @@ filterwarnings = [
   'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
   "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",

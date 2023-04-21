@@ -4,7 +4,7 @@
 Dynamic Graphics Python
 """
 from jsonbourne import jsonlib
-from jsonbourne._meta import __version__
+from jsonbourne.__about__ import __version__
 from jsonbourne.core import (
     JSON,
     UNDEFINED,

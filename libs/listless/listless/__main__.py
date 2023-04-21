@@ -2,7 +2,7 @@
 """pkg entry ~ `python -m listless`"""
 import sys
 
-from listless._meta import __pkgroot__, __title__, __version__
+from listless.__about__ import __pkgroot__, __title__, __version__
 
 
 def main() -> None:

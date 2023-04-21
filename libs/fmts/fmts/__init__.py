@@ -27,7 +27,7 @@ from typing import (
     Union,
 )
 
-from fmts._meta import __version__
+from fmts.__about__ import __version__
 
 # END IMPORTS
 
