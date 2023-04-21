@@ -566,7 +566,7 @@ def dirs_gen(
          'dirs_gen.doctest/dir/dir2a']
         >>> _files = list(files_gen(tmpdir))
         >>> _dirs = list(dirs_gen(tmpdir))
-        >>> files_n_dirs_list = list(sorted(set(_files + _dirs)))
+        >>> files_n_dirs_list = list(sorted(_files + _dirs))
         >>> files_n_dirs_list = [el.replace('\\', '/') for el in files_n_dirs_list]
         >>> pprint(files_n_dirs_list)
         ['dirs_gen.doctest',
@@ -807,7 +807,7 @@ def walk_gen(
         ['walk_gen.doctest/dir',
          'walk_gen.doctest/dir/dir2',
          'walk_gen.doctest/dir/dir2a']
-        >>> walk_gen_list = list(sorted(set(walk_gen(tmpdir))))
+        >>> walk_gen_list = list(sorted(walk_gen(tmpdir)))
         >>> walk_gen_list = [el.replace('\\', '/') for el in walk_gen_list]
         >>> pprint(walk_gen_list)
         ['walk_gen.doctest',
@@ -854,7 +854,6 @@ def walk_gen(
         for path_string in chain.from_iterable(
             (
                 pwd,
-                *(path.join(pwd, _dir) for _dir in dirs),
                 *(path.join(pwd, _file) for _file in files),
             )
             for pwd, dirs, files in walk(
