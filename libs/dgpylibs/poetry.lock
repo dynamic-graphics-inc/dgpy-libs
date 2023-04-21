@@ -477,14 +477,14 @@ testing = ["coverage (>=6.2)", "flaky (>=3.5.0)", "hypothesis (>=5.7.1)", "mypy 
 
 [[package]]
 name = "requires"
-version = "0.10.4"
+version = "0.10.5"
 description = "Runtime imports and dependency utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "requires-0.10.4-py3-none-any.whl", hash = "sha256:e934b5c4b3d9d76e71723354c31e55130ea9247ef13e711720884e5498c1ff88"},
-    {file = "requires-0.10.4.tar.gz", hash = "sha256:5458bbd101795d108c9b1df619d67ed205fc93f9203a903d715f95eebe67824d"},
+    {file = "requires-0.10.5-py3-none-any.whl", hash = "sha256:498cc3a5ad0c2d9f149362ab0cd3e7176a0036658872e50d40f765d09af81ef3"},
+    {file = "requires-0.10.5.tar.gz", hash = "sha256:de4ed110b9d199327ea2e91fa60c00e1878cb180d75620589b11e6d519e7b5a0"},
 ]
 
 [package.dependencies]
@@ -493,14 +493,14 @@ xtyping = ">=0.5.0"
 
 [[package]]
 name = "shellfish"
-version = "0.3.1"
+version = "0.3.2"
 description = "shellfish ~ shell & file-system utils"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "shellfish-0.3.1-py3-none-any.whl", hash = "sha256:6ba1d17e413a74bf4cae5c4bcd1673a88eb6ec60254edc7dc0eaef709488266f"},
-    {file = "shellfish-0.3.1.tar.gz", hash = "sha256:b8a80825149dfb9d848a177a598b5f0d2113976d1b9311a2dc4e49cf92c77c34"},
+    {file = "shellfish-0.3.2-py3-none-any.whl", hash = "sha256:41caa47bf68e60d2ab9070cb388bd2de0cc92f1fc7a9a58a2f2423c2811caf93"},
+    {file = "shellfish-0.3.2.tar.gz", hash = "sha256:68137ec60a2df13ce3570f4ada75c15c1463a39cc7ead4a94ee19524a95a4540"},
 ]
 
 [package.dependencies]
