@@ -423,6 +423,9 @@ def aiopen(
         ...     async with aiopen("test.txt", "r") as f:
         ...         assert await f.read() == "test"
         >>> asyncio.run(main())
+        >>> import os
+        >>> if os.path.exists("test.txt"):
+        ...     os.remove("test.txt")
 
     """
     return AiopenContextManager(

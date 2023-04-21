@@ -7,6 +7,7 @@ __all__ = (
     "requires_attrs",
     "requires_black",
     "requires_boto3",
+    "requires_botocore",
     "requires_h5py",
     "requires_httpx",
     "requires_hypothesis",
@@ -91,6 +92,10 @@ requires_imageio = Requirement(
 
 # AWS
 requires_boto3 = Requirement(_import="boto3", pip=True, conda=True, conda_forge=True)
+requires_botocore = Requirement(
+    _import="botocore", pip=True, conda=True, conda_forge=True
+)
+
 # PYDANTIC
 requires_pydantic = Requirement(
     _import="pydantic",

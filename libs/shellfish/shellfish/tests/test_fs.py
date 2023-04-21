@@ -1,6 +1,8 @@
 """Testing shelfish.fs"""
+from collections import Counter
 from os import path
 from pathlib import Path
+from typing import Callable, Iterable
 
 import pytest
 
@@ -91,3 +93,18 @@ async def test_listdir_async(tmp_path: Path) -> None:
         )
     items = await sh.listdir_async("a-dir")
     assert sorted(items) == ["file0.txt", "file1.txt", "file2.txt"]
+
+
+@pytest.mark.parametrize(
+    "gen",
+    [
+        pytest.param(sh.dirs_gen, id="dirs_gen"),
+        pytest.param(sh.files_gen, id="files_gen"),
+        pytest.param(sh.walk_gen, id="walk_gen"),
+    ],
+)
+def test_fs_generator_duplicates(gen: Callable[..., Iterable[str]]) -> None:
+    pkg_root = Path(__file__).parent.parent
+    gen_count = Counter(gen(pkg_root))
+    duplicates = {k: v for k, v in gen_count.items() if v > 1}
+    assert not duplicates, f"duplicates: {duplicates}"

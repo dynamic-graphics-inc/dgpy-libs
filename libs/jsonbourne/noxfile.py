@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import os
-import sys
 
 from os import path
 from shutil import which
@@ -25,7 +24,6 @@ IS_GITHUB_CI = "CI" in os.environ and os.environ.get("CI") == "true"
 PWD = path.abspath(path.dirname(__file__))
 JSONBOURNE_PKG_DIRPATH = path.join(PWD, "jsonbourne")
 TESTS_DIRPATH = path.join(PWD, "tests")
-
 
 VENV_BACKEND = None if (is_win() or IS_GITHUB_CI or not which("conda")) else "conda"
 
@@ -142,15 +140,11 @@ def attrs_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-@nox.parametrize("numpy", ["1.19", "1.20"])
-def jsonlibs_test(session, numpy):
-    if numpy == "1.19" and sys.version_info[:2] == (3, 9):
-        session.skip()
-
+def jsonlibs_test(session):
     install_common_test_deps(session)
     session.install("orjson")
     session.install("python-rapidjson")
-    session.install(f"numpy=={numpy}")
+    session.install("numpy")
     session.run(
         "pytest",
         "--cov",
