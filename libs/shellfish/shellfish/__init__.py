@@ -2,6 +2,7 @@
 """shellfish ~ shell and file-system utils"""
 from __future__ import annotations
 
+from asyncify import aiorun as aiorun
 from funkify import funkify as _funkify
 from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
 from shellfish.__about__ import __version__ as __version__
@@ -42,6 +43,7 @@ __all__ = (
     "PopenEnv",
     "SymlinkType",
     "__version__",
+    "aiorun",
     "do",
     "do_async",
     "dotenv",
