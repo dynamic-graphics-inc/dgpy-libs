@@ -260,7 +260,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
-        pass  # pylint: disable=unnecessary-pass
+        # pylint: disable=unnecessary-pass
 
     def __contains__(self, key: _KT) -> bool:  # type: ignore[override]
         """Check if a key or dot-key is contained within the JsonObj object
@@ -1046,8 +1046,6 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
 class JsonDict(JsonObj[_VT], Generic[_VT]):
     """Alias for JsonObj"""
-
-    pass
 
 
 def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:

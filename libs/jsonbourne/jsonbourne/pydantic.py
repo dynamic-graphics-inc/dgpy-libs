@@ -75,7 +75,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
-        pass  # pylint: disable=unnecessary-pass
+        # pylint: disable=unnecessary-pass
 
     def __dumpable__(self) -> Dict[str, Any]:
         return self.dict()

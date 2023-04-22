@@ -276,9 +276,11 @@ select = [
   "D208", # docstring is over-indented
   "D414",
   "D417",
-
   # flake8-simplify (SIM)
-#  "SIM"
+#  "SIM",
+
+  # pie (PIE)
+  "PIE",
 ]
 line-length = 88
 
@@ -299,7 +301,10 @@ ignore = [
   "D415", # first line should end with a period/exclamation point
 
   # flake8-simplify (SIM)
-  "SIM115"
+  "SIM115", # open-file-with-context-handler
+
+  # PIE
+  "PIE804" # unnecessary-dict-kwargs -- TODO: revisit?
 ]
 
 [tool.ruff.mccabe]

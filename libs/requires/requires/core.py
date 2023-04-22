@@ -24,13 +24,9 @@ def _fn_globals(f: Any) -> Any:
 class RequirementError(ModuleNotFoundError):
     """Exception for requires"""
 
-    pass
-
 
 class RequirementAttributeError(AttributeError):
     """Requirement attribute error"""
-
-    pass
 
 
 @dataclass

@@ -822,12 +822,8 @@ def validate_popen_args_windows(
     if env and "PATH" in env:
         _path = env["PATH"]
     fspath = which_lru(args[0], path=_path)
-    if fspath:
-        fspath_obj = Path(fspath)
-        if fspath.lower().endswith(".cmd"):
-            args[0] = str(fspath_obj.absolute())
-        elif fspath.lower().endswith(".bat"):
-            args[0] = str(fspath_obj.absolute())
+    if fspath and fspath.lower() in {".cmd", ".bat"}:
+        args[0] = str(Path(fspath).absolute())
     return args
 
 
