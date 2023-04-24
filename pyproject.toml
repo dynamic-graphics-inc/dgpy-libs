@@ -43,7 +43,7 @@ black = "^23.3.0"
 flake8 = "^6.0.0"
 h5py = "^3.8.0"
 isort = "^5.11.5"
-nox = "^2022.11.21"
+nox = "^2023.4.22"
 orjson = "^3.8.10"
 pydantic = "^1.10.7"
 pytest = "^7.3.1"
@@ -74,7 +74,7 @@ dgpydev = "dgpydev.cli:main"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.262"
 anyio = { extras = ["trio"], version = "^3.6.2" }
-nox = "^2022.11.21"
+nox = "^2023.4.22"
 packaging = "^23.1"
 codespell = "^2.2.4"
 
