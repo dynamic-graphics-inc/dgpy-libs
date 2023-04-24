@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 """Core for requires"""
+from __future__ import annotations
+
 import asyncio
 import sys
 
 from dataclasses import dataclass
 from functools import wraps
 from importlib import import_module
-from typing import Any, Callable, Dict, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, TypedDict, TypeVar, Union
 
 from xtyping import ParamSpec
 
 T = TypeVar("T")
 R = TypeVar("R")
 P = ParamSpec("P")
+
+__sys_version_info__ = sys.version_info
 
 
 def _fn_globals(f: Any) -> Any:
@@ -29,6 +33,18 @@ class RequirementAttributeError(AttributeError):
     """Requirement attribute error"""
 
 
+class RequirementDict(TypedDict):
+    """Requirement dict"""
+
+    _import: str
+    _from: Optional[str]
+    _as: Optional[str]
+    pip: Optional[Union[str, bool]]
+    conda: Optional[Union[str, bool]]
+    conda_forge: Optional[Union[str, bool]]
+    details: Optional[Union[str, List[str]]]
+
+
 @dataclass
 class Requirement:
     _import: str
@@ -41,6 +57,29 @@ class Requirement:
 
     def __post_init__(self) -> None:
         pass
+
+    def to_dict(self) -> RequirementDict:
+        return {
+            "_import": self._import,
+            "_from": self._from,
+            "_as": self._as,
+            "pip": self.pip,
+            "conda": self.conda,
+            "conda_forge": self.conda_forge,
+            "details": self.details,
+        }
+
+    @classmethod
+    def from_dict(cls, req_dict: RequirementDict) -> Requirement:
+        return cls(
+            _import=req_dict["_import"],
+            _from=req_dict["_from"],
+            _as=req_dict["_as"],
+            pip=req_dict["pip"],
+            conda=req_dict["conda"],
+            conda_forge=req_dict["conda_forge"],
+            details=req_dict["details"],
+        )
 
     @property
     def pkg_basename(self) -> str:
@@ -358,6 +397,11 @@ def requires(
         return _wrapped_fn
 
     return _requires_dec
+
+
+def requires_python(version: str) -> None:
+    """Decorator to specify the python version a function or class requires"""
+    raise NotImplementedError("Not yet implemented (TODO)")
 
 
 if __name__ == "__main__":
