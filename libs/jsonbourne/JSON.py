@@ -65,6 +65,9 @@ __all__ = (
     "wjson",
 )
 
-# if __name__ is NOT __main__, funkify module
-if __name__ != "__main__":
+if __name__ == "__main__":
+    from jsonbourne.__main__ import main
+
+    main()
+else:  # if __name__ is NOT __main__, funkify module
     sys.modules["JSON"].__class__ = JSONModuleCls
