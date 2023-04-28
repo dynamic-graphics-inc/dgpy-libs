@@ -69,7 +69,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
-        pass  # pylint: disable=unnecessary-pass
+        # pylint: disable=unnecessary-pass
 
     def __repr__(self) -> str:
         return "JsonArr(" + repr(self.__arr) + ")"

@@ -8,16 +8,20 @@ __all__ = (
     "requires_black",
     "requires_boto3",
     "requires_botocore",
+    "requires_click",
     "requires_h5py",
     "requires_httpx",
     "requires_hypothesis",
     "requires_imageio",
+    "requires_imageio_as_iio",
     "requires_ipython",
     "requires_msgpack",
     "requires_nox",
     "requires_numpy",
+    "requires_numpy_as_np",
     "requires_orjson",
     "requires_pandas",
+    "requires_pandas_as_pd",
     "requires_pydantic",
     "requires_pytest",
     "requires_pytest_asyncio",
@@ -25,16 +29,18 @@ __all__ = (
     "requires_pytest_xdist",
     "requires_python_rapidjson",
     "requires_rapidjson",
+    "requires_rich",
     "requires_ruamel_yaml",
     "requires_scipy",
     "requires_toml",
     "requires_tomli",
     "requires_tox",
     "requires_typing_extensions",
-    "requires_ujson",
+    "requires_typing_extensions_as_te",
+    "requires_typing_extensions_as_tx",
     "requires_ujson",
     "requires_xarray",
-    "requires_xarray",
+    "requires_xarray_as_xr",
     "requires_xdoctest",
     "requires_yaml",
     "requires_zmq",
@@ -43,6 +49,13 @@ __all__ = (
 # NUMPY & PANDAS & SCIPY, oh my!
 requires_numpy = Requirement(
     _import="numpy",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_numpy_as_np = Requirement(
+    _import="numpy",
+    _as="np",
     pip=True,
     conda=True,
     conda_forge=True,
@@ -59,6 +72,13 @@ requires_pandas = Requirement(
     conda=True,
     conda_forge=True,
 )
+requires_pandas_as_pd = Requirement(
+    _import="pandas",
+    _as="pd",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
 requires_scipy = Requirement(
     _import="scipy",
     pip=True,
@@ -67,6 +87,13 @@ requires_scipy = Requirement(
 )
 requires_xarray = Requirement(
     _import="xarray",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_xarray_as_xr = Requirement(
+    _import="xarray",
+    _as="xr",
     pip=True,
     conda=True,
     conda_forge=True,
@@ -88,6 +115,9 @@ requires_ipython = Requirement(
 # IMAGEIO
 requires_imageio = Requirement(
     _import="imageio", pip=True, conda=True, conda_forge=True
+)
+requires_imageio_as_iio = Requirement(
+    _import="imageio.v3", _as="iio", pip=True, conda=True, conda_forge=True
 )
 
 # AWS
@@ -176,6 +206,12 @@ requires_ruamel_yaml = Requirement(
     conda_forge="ruamel_yaml",
 )
 
+# RICH
+requires_rich = Requirement(_import="rich", pip=True, conda=True, conda_forge=True)
+
+# CLICK
+requires_click = Requirement(_import="click", pip=True, conda=True, conda_forge=True)
+
 # TESTING
 requires_hypothesis = Requirement(
     _import="hypothesis", pip=True, conda=True, conda_forge=True
@@ -215,6 +251,12 @@ requires_xdoctest = Requirement(
 # TYPING
 requires_typing_extensions = Requirement(
     _import="typing_extensions", pip=True, conda=True, conda_forge=True
+)
+requires_typing_extensions_as_te = Requirement(
+    _import="typing_extensions", _as="te", pip=True, conda=True, conda_forge=True
+)
+requires_typing_extensions_as_tx = Requirement(
+    _import="typing_extensions", _as="tx", pip=True, conda=True, conda_forge=True
 )
 
 # NOX

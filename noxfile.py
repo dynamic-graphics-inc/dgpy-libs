@@ -37,7 +37,7 @@ nox.options.envdir = ".nox_win" if is_win() else ".nox"
 
 IS_GITLAB_CI = "GITLAB_CI" in os.environ
 IS_GITHUB_CI = "CI" in os.environ and os.environ["CI"] == "true"
-REUSE_TEST_ENVS = IS_GITLAB_CI or True
+REUSE_TEST_ENVS = True
 PWD = path.abspath(path.dirname(__file__))
 LIBS_DIR = path.join(PWD, "libs")
 
