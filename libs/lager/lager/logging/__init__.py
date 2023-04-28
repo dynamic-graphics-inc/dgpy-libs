@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """Lager/Loguru + std logging"""
+from __future__ import annotations
+
 import logging
 
+from collections.abc import Mapping
 from logging import (
     BASIC_FORMAT as BASIC_FORMAT,
     CRITICAL as CRITICAL,
@@ -16,8 +19,8 @@ from logging import (
     FileHandler as FileHandler,
     Filter as Filter,
     Formatter as Formatter,
-    Handler as Handler,
-    Logger as Logger,
+    Handler as _Handler,
+    Logger as _Logger,
     LoggerAdapter as LoggerAdapter,
     LogRecord as LogRecord,
     NullHandler as NullHandler,
@@ -58,7 +61,10 @@ from logging import (
     warn as warn,
     warning as warning,
 )
-from typing import Any, Dict, List
+from types import TracebackType
+from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
+
+from typing_extensions import Literal, Self, TypeAlias
 
 from lager.core import LOG, loglevel
 
@@ -141,6 +147,100 @@ __aliases__ = {
     "set_log_record_factory": "setLogRecordFactory",
     "set_logger_class": "setLoggerClass",
 }
+
+_SysExcInfoType: TypeAlias = Union[
+    Tuple[Type[BaseException], BaseException, Union[TracebackType, None]],
+    Tuple[None, None, None],
+]
+_ExcInfoType: TypeAlias = Union[None, bool, _SysExcInfoType, BaseException]
+_ArgsType: TypeAlias = Union[Tuple[object, ...], Mapping[str, object]]
+_FilterType: TypeAlias = Union[Filter, Callable[[LogRecord], bool]]
+_Level: TypeAlias = Union[int, str]
+_FormatStyle: TypeAlias = Literal["%", "{", "$"]
+
+
+class Logger(_Logger):
+    def __init__(self, name: str, level: _Level = 0) -> None:
+        super().__init__(name, level)
+
+    def set_level(self, level: _Level) -> None:
+        """snake_case alias for setLevel"""
+        self.setLevel(level)
+
+    def is_enabled_for(self, level: int) -> bool:
+        """snake_case alias for isEnabledFor"""
+        return self.isEnabledFor(level)
+
+    def get_effective_level(self) -> int:
+        """snake_case alias for getEffectiveLevel"""
+        return self.getEffectiveLevel()
+
+    def get_child(self, suffix: str) -> Self:
+        """snake_case alias for getChild"""
+        return self.getChild(suffix)
+
+    def find_caller(
+        self, stack_info: bool = False, stacklevel: int = 1
+    ) -> Tuple[str, int, str, Union[str, None]]:
+        """snake_case alias for findCaller"""
+        return self.findCaller(stack_info, stacklevel)
+
+    def add_handler(self, hdlr: Handler) -> None:
+        """snake_case alias for addHandler"""
+        return self.addHandler(hdlr)
+
+    def remove_handler(self, hdlr: Handler) -> None:
+        """snake_case alias for removeHandler"""
+        return self.removeHandler(hdlr)
+
+    def make_record(
+        self,
+        name: str,
+        level: int,
+        fn: str,
+        lno: int,
+        msg: object,
+        args: _ArgsType,
+        exc_info: Union[_SysExcInfoType, None],
+        func: Optional[str] = None,
+        extra: Union[Mapping[str, object], None] = None,
+        sinfo: Optional[str] = None,
+    ) -> LogRecord:
+        return self.makeRecord(
+            name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
+        )
+
+    def has_handlers(self) -> bool:
+        """snake_case alias for hasHandlers"""
+        return self.hasHandlers()
+
+    def call_handlers(self, record: LogRecord) -> None:
+        """snake_case alias for callHandlers"""
+        return self.callHandlers(record)
+
+
+class Handler(_Handler):
+    def __init__(self, level: _Level = 0) -> None:
+        super().__init__(level)
+
+    def create_lock(self) -> None:
+        """snake_case alias for createLock"""
+        return self.createLock()
+
+    def set_level(self, level: _Level) -> None:
+        """snake_case alias for setLevel"""
+        return self.setLevel(level)
+
+    def set_formatter(self, fmt: Union[Formatter, None]) -> None:
+        """snake_case alias for setFormatter"""
+        return self.setFormatter(fmt)
+
+    def handle_error(self, record: LogRecord) -> None:
+        """snake_case alias for handleError"""
+        return self.handleError(record)
+
+
+# =====================================================================================
 
 
 def patch_logging() -> None:
