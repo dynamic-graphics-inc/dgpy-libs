@@ -99,6 +99,20 @@ def _relock():
 
 
 @cli.command()
+def depsup():
+    """Update dependencies with `poetry update`"""
+    for libname, _pyproject_toml_dict in pyproject_tomls().items():
+        dirpath = lib_dirpath(libname)
+        console.log(f"Relocking {libname}")
+        console.log(f"cd {dirpath}")
+        sh.cd(dirpath)
+        console.log("poetry update --no-cache")
+        sh.do("poetry", "update", "--no-cache", verbose=True, check=True)
+    sh.cd(repo_root())
+    sh.do("poetry", "update", "--no-cache", verbose=True, check=True)
+
+
+@cli.command()
 def update():
     """Update all dgpy-libs metadata files."""
     update_abouts()
@@ -149,7 +163,7 @@ def topo_sort(dgpylibs_deptree: dict[str, DgpyLibInfo]) -> list[str]:
     return list(ts.static_order())
 
 
-@cli.command()
+@cli.command(name="ls", help="List dgpy-libs")
 def ls():
     from rich.table import Table
 
