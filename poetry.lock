@@ -1361,7 +1361,7 @@ asyncify = ">=0.9.1"
 funkify = ">=0.4.0"
 jsonbourne = ">=0.24.0"
 listless = ">=0.1.0"
-pydantic = "^1.9.0"
+pydantic = ">=1.9.0"
 xtyping = ">=0.6.0"
 
 [package.source]
@@ -1524,7 +1524,7 @@ files = []
 develop = true
 
 [package.dependencies]
-typing-extensions = "^4.0.0"
+typing-extensions = ">=4.0.0"
 
 [package.source]
 type = "directory"

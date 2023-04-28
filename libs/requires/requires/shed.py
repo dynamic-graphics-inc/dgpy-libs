@@ -8,6 +8,9 @@ __all__ = (
     "requires_black",
     "requires_boto3",
     "requires_botocore",
+    "requires_bottleneck",
+    "requires_bottleneck_as_bn",
+    "requires_cattrs",
     "requires_click",
     "requires_h5py",
     "requires_httpx",
@@ -17,11 +20,16 @@ __all__ = (
     "requires_ipython",
     "requires_msgpack",
     "requires_nox",
+    "requires_numba",
+    "requires_numba_as_nb",
     "requires_numpy",
     "requires_numpy_as_np",
+    "requires_opencv",
     "requires_orjson",
     "requires_pandas",
     "requires_pandas_as_pd",
+    "requires_polars",
+    "requires_polars_as_pl",
     "requires_pydantic",
     "requires_pytest",
     "requires_pytest_asyncio",
@@ -98,6 +106,53 @@ requires_xarray_as_xr = Requirement(
     conda=True,
     conda_forge=True,
 )
+requires_polars = Requirement(
+    _import="polars",
+    pip=True,
+    conda=False,
+    conda_forge=True,
+)
+requires_polars_as_pl = Requirement(
+    _import="polars",
+    _as="pl",
+    pip=True,
+    conda=False,
+    conda_forge=True,
+)
+requires_numba = Requirement(
+    _import="numba",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_numba_as_nb = Requirement(
+    _import="numba",
+    _as="nb",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_bottleneck = Requirement(
+    _import="bottleneck",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_bottleneck_as_bn = Requirement(
+    _import="bottleneck",
+    _as="bn",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+
+# OPENCV
+requires_opencv = Requirement(
+    _import="cv2",
+    pip="opencv-python",
+    conda="opencv",
+    conda_forge="opencv",
+)
 
 # BLACK
 requires_black = Requirement(
@@ -137,6 +192,12 @@ requires_pydantic = Requirement(
 # ATTRS
 requires_attrs = Requirement(
     _import="attrs",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_cattrs = Requirement(
+    _import="cattrs",
     pip=True,
     conda=True,
     conda_forge=True,
@@ -240,7 +301,6 @@ requires_pytest_xdist = Requirement(
     conda="pytest-xdist",
     conda_forge="pytest-xdist",
 )
-
 requires_xdoctest = Requirement(
     _import="xdoctest",
     pip=True,
