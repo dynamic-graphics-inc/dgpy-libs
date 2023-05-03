@@ -243,9 +243,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Use the object dict"""
         _data = dict(*args, **kwargs)
         super().__setattr__("_data", _data)
-        try:
-            assert all(isinstance(k, str) for k in self._data)
-        except AssertionError:
+        if not all(isinstance(k, str) for k in self._data):
             d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
             raise ValueError(f"JsonObj keys MUST be strings! Bad key values: {str(d)}")
         self.recurse()
@@ -687,7 +685,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         for ix, part in enumerate(parts[1:], start=1):
             try:
                 cur_val = cur_val[part]
-            except TypeError:
+            except TypeError as e:
                 reached = ".".join(parts[:ix])
                 err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
                 if isinstance(key, str):
@@ -697,7 +695,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                             "PREFER lookup using List[str] or Tuple[str, ...]",
                         )
                     )
-                raise KeyError(err_msg)
+                raise KeyError(err_msg) from e
         return cur_val
 
     def dot_items(self) -> Iterator[Tuple[Tuple[str, ...], _VT]]:
@@ -779,24 +777,28 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return {el.name for el in cls.__attrs_attrs__}  # type: ignore[attr-defined]
-        except AttributeError:
-            raise AttributeError("Class is not decorated with attr.attrs")
+        except AttributeError as ae:
+            raise AttributeError("Class is not decorated with attr.attrs") from ae
 
     @classmethod
     def _cls_fields(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return cls.__fields__  # type: ignore[attr-defined, no-any-return]
-        except AttributeError:
-            raise AttributeError("Class does not inherit from pydantic.BaseModel")
+        except AttributeError as ae:
+            raise AttributeError(
+                "Class does not inherit from pydantic.BaseModel"
+            ) from ae
 
     @classmethod
     def _cls_field_names(cls) -> Set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return set(cls.__fields__)  # type: ignore[attr-defined]
-        except AttributeError:
-            raise AttributeError("Class does not inherit from pydantic.BaseModel")
+        except AttributeError as ae:
+            raise AttributeError(
+                "Class does not inherit from pydantic.BaseModel"
+            ) from ae
 
     @classmethod
     def _cls_protected_attrs(cls) -> Set[str]:
@@ -854,10 +856,10 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         try:
             return {k: unjsonify(v) for k, v in self._data.items()}
-        except RecursionError:
+        except RecursionError as re:
             raise ValueError(
                 "JSON.stringify recursion err; cycle/circular-refs detected"
-            )
+            ) from re
 
     def to_dict(self) -> Dict[_KT, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""

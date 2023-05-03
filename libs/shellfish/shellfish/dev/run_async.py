@@ -135,7 +135,7 @@ async def run_dtee_async(
                     timeout=timeout,
                 )
                 tf = time()
-            except ValueError:
+            except ValueError as ve:
                 tf = time()
                 _proc.terminate()
                 raise TimeoutExpired(
@@ -143,8 +143,8 @@ async def run_dtee_async(
                     timeout=timeout,
                     output=_out_buf.getvalue(),
                     stderr=_err_buf.getvalue(),
-                )
-            except TimeoutError:
+                ) from ve
+            except TimeoutError as te:
                 tf = time()
                 for task in _bg:
                     task.cancel()
@@ -154,7 +154,7 @@ async def run_dtee_async(
                     timeout=timeout,
                     output=_out_buf.getvalue(),
                     stderr=_err_buf.getvalue(),
-                )
+                ) from te
         else:
             await asyncio.gather(
                 *_bg,
@@ -177,14 +177,14 @@ async def run_dtee_async(
                     )
 
                 tf = time()
-            except TimeoutError:
+            except TimeoutError as te:
                 _proc.terminate()
                 raise TimeoutExpired(
                     cmd=_args,
                     timeout=timeout,
                     output=_out_buf.getvalue(),
                     stderr=_err_buf.getvalue(),
-                )
+                ) from te
         else:
             (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)
             tf = time()
