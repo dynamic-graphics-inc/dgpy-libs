@@ -277,7 +277,7 @@ select = [
   "D414",
   "D417",
   # flake8-simplify (SIM)
-  # "SIM",
+  "SIM",
 
   # pie (PIE)
   "PIE",
@@ -302,7 +302,7 @@ ignore = [
 
   # flake8-simplify (SIM)
   "SIM115", # open-file-with-context-handler
-
+  "SIM105", # suppressible-exception
   # PIE
   "PIE804" # unnecessary-dict-kwargs -- TODO: revisit?
 ]

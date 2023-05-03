@@ -450,7 +450,7 @@ def test_stacked_requirements() -> None:
         return json.dumps(d)  # type: ignore[name-defined]
 
     data = {"herm": 123}
-    assert '{"herm": 123}' == jsonify(data)
+    assert jsonify(data) == '{"herm": 123}'
 
 
 def test_module_wrap() -> None:

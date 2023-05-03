@@ -193,7 +193,7 @@ def test_h5_groups_gen(tmp_path: Path) -> None:
 
         groups_dict_from_filepath = dict(h5.groups_gen(filepath))
         assert groups_dict_from_filepath is not None
-        assert EXPECTED_GROUPS_KEYS == sorted(groups_dict_from_filepath.keys())
+        assert sorted(groups_dict_from_filepath.keys()) == EXPECTED_GROUPS_KEYS
         assert sorted(groups_dict_from_filepath.keys()) == sorted(
             groups_dict_from_file.keys()
         )

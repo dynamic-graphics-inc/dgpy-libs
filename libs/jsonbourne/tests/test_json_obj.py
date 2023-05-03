@@ -524,9 +524,9 @@ def test_lookup_ops() -> None:
 
     assert d.dot_lookup("sub.key") == "val"
     assert d.dot_lookup(("sub", "key")) == "val"
-    assert "val" == d["sub.key"]
-    assert "val" == d["sub", "key"]
-    assert "val" == d[("sub", "key")]
+    assert d["sub.key"] == "val"
+    assert d["sub", "key"] == "val"
+    assert d[("sub", "key")] == "val"
 
 
 def test_cycle_eject() -> None:

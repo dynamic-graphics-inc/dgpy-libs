@@ -90,7 +90,7 @@ def pytest_runtest_setup(item: Function) -> None:
     }
     if _CI and "skipci" in dgpytest_item_markers:
         pytest.skip("skipping test on CI")
-    for marker_name in dgpytest_item_markers.keys():
+    for marker_name in dgpytest_item_markers:
         if marker_name.startswith("skip_") and dgpytest_markers[marker_name].skip:
             pytest.skip(f"skipping test on {sys_platforms[sys.platform]}")
 
