@@ -277,7 +277,7 @@ select = [
   "D414",
   "D417",
   # flake8-simplify (SIM)
-#  "SIM",
+  # "SIM",
 
   # pie (PIE)
   "PIE",
