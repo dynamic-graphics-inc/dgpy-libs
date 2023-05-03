@@ -96,3 +96,4 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+target-version = "py37"
