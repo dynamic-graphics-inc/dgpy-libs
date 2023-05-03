@@ -285,8 +285,8 @@ select = [
 line-length = 88
 
 ignore = [
-  "B004",
-  "B904",
+  # "B004",
+  # "B904",
   "C417", # super annoying
   "C901", # too complex
   "E501", # line too long,

@@ -235,7 +235,7 @@ class H5GroupLike(H5Mixin):
             if not isinstance(default, (H5Group, H5Dataset)):
                 raise TypeError(
                     f"default must be a H5Group or H5Dataset, not {type(default)}"
-                )
+                ) from ke
             return default
 
     def _set_dataset(self, key: str, value: H5Dataset) -> None:
