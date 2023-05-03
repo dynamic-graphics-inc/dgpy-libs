@@ -75,7 +75,7 @@ def _json_encode_default(obj: Any) -> Any:
             return int(obj)
         if isinstance(obj, (np.ndarray, np.generic)):
             return obj.tolist()
-    if dataclasses is not None and dataclasses.is_dataclass(obj):
+    if dataclasses.is_dataclass(obj):
         return dataclasses.asdict(obj)
     if isinstance(obj, set):
         return list(obj)
