@@ -178,7 +178,7 @@ class Requirement:
                             f"    AttributeError: {str(ae)}",
                         ]
                     )
-                )
+                ) from ae
         except ModuleNotFoundError:
             return RequirementProxy(req=self)
 
@@ -207,9 +207,9 @@ class Requirement:
                         _f_globals[self.alias] = self.import_requirement()
                     retval: R = await f(*args, **kwargs)  # type: ignore[misc]
                     return retval
-                except ModuleNotFoundError:
+                except ModuleNotFoundError as mnfe:
                     tb = sys.exc_info()[2]
-                    raise self.err().with_traceback(tb)
+                    raise self.err().with_traceback(tb) from mnfe
 
             return _requires_dec_async  # type: ignore[return-value]
 
@@ -228,9 +228,9 @@ class Requirement:
                 if self.alias not in _f_globals:
                     _f_globals[self.alias] = self.import_requirement()
                 return f(*args, **kwargs)
-            except ModuleNotFoundError:
+            except ModuleNotFoundError as mnfe:
                 tb = sys.exc_info()[2]
-                raise self.err().with_traceback(tb)
+                raise self.err().with_traceback(tb) from mnfe
 
         return _requires_dec
 

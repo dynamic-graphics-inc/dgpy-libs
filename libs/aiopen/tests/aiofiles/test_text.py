@@ -76,11 +76,11 @@ async def test_simple_flush(mode: str, tmp_path: Path) -> None:
     async with aiopen(str(full_file), mode=mode) as file:
         await file.write("0")  # Shouldn't flush.
 
-        assert "" == full_file.read_text(encoding="utf8")
+        assert full_file.read_text(encoding="utf8") == ""
 
         await file.flush()
 
-        assert "0" == full_file.read_text(encoding="utf8")
+        assert full_file.read_text(encoding="utf8") == "0"
 
     assert file.closed
 
@@ -95,7 +95,7 @@ async def test_simple_read(mode: str) -> None:
 
         actual = await file.read()
 
-        assert "" == (await file.read())
+        assert (await file.read()) == ""
     assert actual == open(filename).read()
 
     assert file.closed
@@ -135,7 +135,7 @@ async def test_staggered_read(mode: str) -> None:
             else:
                 break
 
-        assert "" == (await file.read())
+        assert (await file.read()) == ""
 
     expected = []
     with open(filename) as f:
@@ -163,7 +163,7 @@ async def test_simple_seek(mode: str, tmp_path: Path) -> None:
 
     async with aiopen(str(full_file), mode=mode) as file:
         await file.seek(4)
-        assert "4" == (await file.read(1))
+        assert (await file.read(1)) == "4"
 
     assert file.closed
 
@@ -208,7 +208,7 @@ async def test_simple_truncate(mode: str, tmp_path: Path) -> None:
 
         await file.truncate()
 
-    assert "" == full_file.read_text()
+    assert full_file.read_text() == ""
 
 
 @pytest.mark.asyncio()
@@ -247,7 +247,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
             with pytest.raises(ValueError):
                 await file.read()
 
-            assert b"0123456789" == raw_file.read(10)
+            assert raw_file.read(10) == b"0123456789"
 
 
 @pytest.mark.asyncio()

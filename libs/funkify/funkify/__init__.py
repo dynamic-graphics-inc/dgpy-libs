@@ -39,10 +39,10 @@ def default_export(
     """
     try:
         _module: str = key or funk.__module__
-    except AttributeError:
+    except AttributeError as ae:
         raise AttributeError(
             f"funk ({funk}) has no __module__ attribute; plz provide module key"
-        )
+        ) from ae
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
@@ -56,8 +56,8 @@ def default_export(
 
     try:
         sys.modules[_module].__class__ = mod_cls
-    except KeyError:
-        raise ValueError(f"{_module} not found in sys.modules")
+    except KeyError as ke:
+        raise ValueError(f"{_module} not found in sys.modules") from ke
     return funk
 
 

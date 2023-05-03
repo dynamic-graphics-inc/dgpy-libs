@@ -9,11 +9,11 @@ from jsonbourne import JSON
 
 try:
     from starlette.responses import Response
-except ModuleNotFoundError:
+except ModuleNotFoundError as mnfe:
     if not ("CI" in os.environ and os.environ["CI"] == "true"):
         raise ModuleNotFoundError(
             "starlette not found/installed; `pip install starlette`"
-        )
+        ) from mnfe
     else:
         Response = object  # type: ignore[assignment, misc]
 

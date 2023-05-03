@@ -277,7 +277,7 @@ select = [
   "D414",
   "D417",
   # flake8-simplify (SIM)
-#  "SIM",
+  "SIM",
 
   # pie (PIE)
   "PIE",
@@ -285,8 +285,8 @@ select = [
 line-length = 88
 
 ignore = [
-  "B004",
-  "B904",
+  # "B004",
+  # "B904",
   "C417", # super annoying
   "C901", # too complex
   "E501", # line too long,
@@ -302,7 +302,7 @@ ignore = [
 
   # flake8-simplify (SIM)
   "SIM115", # open-file-with-context-handler
-
+  "SIM105", # suppressible-exception
   # PIE
   "PIE804" # unnecessary-dict-kwargs -- TODO: revisit?
 ]

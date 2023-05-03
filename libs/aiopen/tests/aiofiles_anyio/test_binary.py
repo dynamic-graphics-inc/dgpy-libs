@@ -77,13 +77,13 @@ async def test_simple_flush(mode: str, buffering: int, tmp_path: Path) -> None:
         await file.write(b"0")  # Shouldn't flush.
 
         if buffering == -1:
-            assert b"" == full_file.read_bytes()
+            assert full_file.read_bytes() == b""
         else:
-            assert b"0" == full_file.read_bytes()
+            assert full_file.read_bytes() == b"0"
 
         await file.flush()
 
-        assert b"0" == full_file.read_bytes()
+        assert full_file.read_bytes() == b"0"
 
 
 @pytest.mark.anyio()
@@ -121,7 +121,7 @@ async def test_simple_read(mode: str, buffering: int) -> None:
 
         actual = await file.read()
 
-        assert b"" == (await file.read())
+        assert (await file.read()) == b""
     assert actual == open(filename, mode="rb").read()
 
 
@@ -142,7 +142,7 @@ async def test_staggered_read(mode: str, buffering: int) -> None:
             else:
                 break
 
-        assert b"" == (await file.read())
+        assert (await file.read()) == b""
 
         expected = []
         with open(filename, mode="rb") as f:
@@ -170,7 +170,7 @@ async def test_simple_seek(mode: str, buffering: int, tmp_path: Path) -> None:
     async with aiopen(str(full_file), mode=mode, buffering=buffering) as file:
         await file.seek(4)
 
-        assert b"4" == (await file.read(1))
+        assert (await file.read(1)) == b"4"
 
 
 @pytest.mark.anyio()
@@ -254,7 +254,7 @@ async def test_simple_truncate(mode: str, buffering: int, tmp_path: Path) -> Non
 
         await file.truncate()
 
-    assert b"" == full_file.read_bytes()
+    assert full_file.read_bytes() == b""
 
 
 @pytest.mark.anyio()
@@ -294,7 +294,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
             with pytest.raises(ValueError):
                 await file.read()
 
-    assert b"0123456789" == raw_file.read(10)  # type: ignore[union-attr]
+    assert raw_file.read(10) == b"0123456789"  # type: ignore[union-attr]
 
 
 @pytest.mark.anyio()

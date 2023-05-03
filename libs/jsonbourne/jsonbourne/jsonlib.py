@@ -75,9 +75,8 @@ def _json_encode_default(obj: Any) -> Any:
             return int(obj)
         if isinstance(obj, (np.ndarray, np.generic)):
             return obj.tolist()
-    if dataclasses is not None:
-        if dataclasses.is_dataclass(obj):
-            return dataclasses.asdict(obj)
+    if dataclasses.is_dataclass(obj):
+        return dataclasses.asdict(obj)
     if isinstance(obj, set):
         return list(obj)
     if isinstance(obj, bytes):
@@ -552,9 +551,8 @@ class JsonLib:
     def loads(
         self, string: Union[bytes, str], jsonc: bool = False, **kwargs: Any
     ) -> Any:
-        if jsonc:
-            if self._rj:
-                return self._rj.loads(string, jsonc=jsonc, **kwargs)
+        if jsonc and self._rj:
+            return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
 
     def orjson_usable(self) -> bool:

@@ -46,7 +46,7 @@ def string2hasher(string: str) -> "_Hash":
     except KeyError:
         raise ValueError(
             f"Invalid hash algorithm: {string} (valid: {list(_HASHERS.keys())})"
-        )
+        ) from None
 
 
 def hasher(obj: HashLike) -> "_Hash":

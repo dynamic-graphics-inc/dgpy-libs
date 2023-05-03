@@ -645,7 +645,7 @@ async def next_async(it: AnyIterator[_T]) -> _T:
     try:
         return next(it)
     except StopIteration:  # pragma: no cover
-        raise StopAsyncIteration
+        raise StopAsyncIteration  # noqa: B904
 
 
 async def list_async(itr: AnyIterable[_T]) -> List[_T]:

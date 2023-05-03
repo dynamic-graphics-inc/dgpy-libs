@@ -515,9 +515,9 @@ def attrs(
     attrs = {}
     with h5.File(fspath) as f:
         for _h5path, h5obj in h5.h5py_obj_gen(f):
-            if cfg.groups and isinstance(h5obj, h5.Group):
-                attrs[h5obj.name] = {**h5obj.attrs}
-            elif cfg.datasets and isinstance(h5obj, h5.Dataset):
+            if (cfg.groups and isinstance(h5obj, h5.Group)) or (
+                cfg.datasets and isinstance(h5obj, h5.Dataset)
+            ):
                 attrs[h5obj.name] = {**h5obj.attrs}
     console.print_json(data=attrs, default=_json_default)
 

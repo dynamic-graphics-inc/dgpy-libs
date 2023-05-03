@@ -52,9 +52,10 @@ def test_xtyping_imports() -> None:
 def test_xtyping_imports_shed() -> None:
     missing = set()
     for el in xtyping.__all_shed__:
-        if el not in {"_typing", "_typing_extensions", "shed", "_meta"}:
-            if not hasattr(xtyping, el):
-                missing.add(el)
+        if el not in {"_typing", "_typing_extensions", "shed", "_meta"} and not hasattr(
+            xtyping, el
+        ):
+            missing.add(el)
     if missing:
         raise ValueError(f"MISSING from __all__: {str(tuple(missing))}")
 

@@ -91,3 +91,4 @@ addopts = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+target-version = "py38"
