@@ -72,7 +72,7 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.267"
+ruff = "^0.0.269"
 anyio = { extras = ["trio"], version = "^3.6.2" }
 nox = "^2023.4.22"
 packaging = "^23.1"
@@ -292,6 +292,10 @@ ignore = [
   "E501", # line too long,
 
   # PYUPGRADE
+  # keep runtime typing
+  "UP007",
+  "UP006",
+
   "UP004",
   "UP009", # utf-8 encoding declaration (I am supersticious)
   "UP022", # must test shellfish first...
@@ -335,10 +339,6 @@ max-complexity = 20
 
 [tool.ruff.pydocstyle]
 convention = "google"
-
-[tool.ruff.pyupgrade]
-# Preserve types, even if a file imports `from __future__ import annotations`.
-keep-runtime-typing = true
 
 [tool.ruff.isort]
 combine-as-imports = true
