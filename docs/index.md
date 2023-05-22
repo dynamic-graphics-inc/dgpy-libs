@@ -57,7 +57,7 @@ libs
 
 ## About
 
-This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
+This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Grahpics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
 
 ### Design PhilosoPY
 
@@ -109,7 +109,7 @@ notebooks/
 ## Contributor(s):
 
 - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
-
+- [Jesse Rubin](https://github.com/dan-costello) ~ `dan@dgi.com` / `dan.costello2@gmail.com`
 ## Contributing:
 
 Plz do! Send me that PR!
