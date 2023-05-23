@@ -274,6 +274,7 @@ def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)
 
     Examples:
+        >>> import os
         >>> sep = sys_path_sep()
         >>> isinstance(sep, str)
         True
