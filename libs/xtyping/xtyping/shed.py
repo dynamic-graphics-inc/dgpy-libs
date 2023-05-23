@@ -129,6 +129,7 @@ __all_typing_extensions__: Tuple[str, ...] = (
 )
 
 __all_typing_extensions_future__: Tuple[str, ...] = (
+    "Buffer",
     "LiteralString",
     "Never",
     "NotRequired",
@@ -142,6 +143,8 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "dataclass_transform",
     "deprecated",
     "get_overloads",
+    "TypeAliasType",
+    "get_original_bases",
     "is_typeddict",
     "override",
     "reveal_type",

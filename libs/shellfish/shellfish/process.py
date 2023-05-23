@@ -2,12 +2,11 @@
 """Current running process info"""
 from __future__ import annotations
 
-import os
 import platform
 import sys
 
 from contextlib import contextmanager
-from os import environ
+from os import environ, name as os_name, pathsep
 from typing import (
     Any,
     Callable,
@@ -24,9 +23,9 @@ from typing import (
     cast,
 )
 
-IS_WIN = os.name == "nt"
+IS_WIN = os_name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
-SYS_PATH_SEP: str = os.pathsep
+SYS_PATH_SEP: str = pathsep
 
 __all__ = (
     "ENV",
@@ -47,7 +46,7 @@ __all__ = (
     "opsys",
     "sys_path_sep",
 )
-_OS_ENVIRON_ATTRS = set(dir(os.environ))
+_OS_ENVIRON_ATTRS = set(dir(environ))
 
 
 @contextmanager
@@ -275,6 +274,7 @@ def sys_path_sep() -> str:
     """Return the system path separator string (; on windows -- : otherwise)
 
     Examples:
+        >>> import os
         >>> sep = sys_path_sep()
         >>> isinstance(sep, str)
         True
@@ -282,7 +282,7 @@ def sys_path_sep() -> str:
         True
 
     """
-    return os.pathsep
+    return pathsep
 
 
 def syspath_paths(syspath: Optional[str] = None) -> List[str]:
@@ -302,4 +302,4 @@ def syspath_paths(syspath: Optional[str] = None) -> List[str]:
     """
     if syspath is None:
         return list(filter(None, sys.path))
-    return list(filter(None, syspath.split(os.pathsep)))
+    return list(filter(None, syspath.split(pathsep)))
