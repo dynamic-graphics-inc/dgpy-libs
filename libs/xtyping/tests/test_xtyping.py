@@ -170,14 +170,7 @@ def test_all_typing_extensions_reexported() -> None:
     xtyping_all_set = set(__xtyping_all__)
     __typing_extensions_all__ = xtyping.__all_typing_extensions__
     # TODO: at some point we should set min typing_extensions version
-    ignored_typing_extensions_members = {
-        "Buffer",
-        "NotRequired",
-        "Required",
-        "Self",
-        "TypeAliasType",
-        "get_original_bases",
-    }
+    ignored_typing_extensions_members = set(xtyping.__all_typing_extensions_future__)
     for el in [
         t_el
         for t_el in __typing_extensions_all__
