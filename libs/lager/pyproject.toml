@@ -36,7 +36,7 @@ loguru = ">=0.7.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.3.1"
-pytest-cov = "^4.0.0"
+pytest-cov = "^4.1.0"
 
 [tool.poetry.group.dev.dependencies]
 typing-extensions = "^4.5.0"
