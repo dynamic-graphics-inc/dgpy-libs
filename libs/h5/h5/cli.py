@@ -15,7 +15,7 @@ from typing_extensions import TypeGuard
 
 import h5
 
-from h5 import dev as h5dev
+from h5 import info as h5dev
 
 console = Console()
 
@@ -114,6 +114,7 @@ class H5CliConfig:
 )
 @click.option("--debug", envvar="DGPYDEBUG", is_flag=True, default=False)
 def cli(debug: bool = False) -> None:
+    """h5 command line interface"""
     if debug:
         click.echo("h5-debug: on")
 
@@ -272,8 +273,7 @@ def tree(
     groups: bool = False,
 ) -> None:
     H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
-    file_info = h5dev.H5File.from_fspath(fspath)
-
+    file_info = h5dev.FileInfo.from_fspath(fspath)
     if json_:
         console.print_json(data=file_info.dict(), default=_json_default)
     else:
@@ -295,7 +295,7 @@ def _keys(fspath: str, clicfg: H5CliConfig) -> List[str]:
     return list(filter(matcher, file_keys))
 
 
-@cli.command(help="dump keys as JSON array", name="keys")
+@cli.command(help="Dump keys as JSON array", name="keys")
 @click.argument(
     "fspath",
     type=click.Path(exists=True),
