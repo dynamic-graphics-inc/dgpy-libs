@@ -16,10 +16,10 @@
 **Features:**
 
 - Pydantic models
-- Asyncio
+- Async(io) shell/file-system utils
 - Type annotated
 
 **TODO:**
 
-- [ ] Add support for acceptable return codes
+- [x] Add support for acceptable return codes
 - [ ] Look into breaking down shellfish.sh into smaller modules
