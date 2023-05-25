@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
+from __future__ import annotations
+
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
 from h5.__about__ import __version__
@@ -13,6 +15,14 @@ from h5._info import (
     GroupInfoDict as GroupInfoDict,
     GroupInfoDumpDict as GroupInfoDumpDict,
     info as info,
+)
+from h5._types import (
+    FileOrGroup as FileOrGroup,
+    FsPath as FsPath,
+    GroupLikeOrFsPath as GroupLikeOrFsPath,
+    H5pyCompression as H5pyCompression,
+    H5pyDriver as H5pyDriver,
+    H5pyMode as H5pyMode,
 )
 from h5.core import (
     as_h5py_obj as as_h5py_obj,
@@ -67,10 +77,16 @@ __all__ = (
     "FileInfo",
     "FileInfoDict",
     "FileInfoDumpDict",
+    "FileOrGroup",
+    "FsPath",
     "Group",
     "GroupInfo",
     "GroupInfoDict",
     "GroupInfoDumpDict",
+    "GroupLikeOrFsPath",
+    "H5pyCompression",
+    "H5pyDriver",
+    "H5pyMode",
     "__h5py_version__",
     "__version__",
     "as_h5py_obj",
