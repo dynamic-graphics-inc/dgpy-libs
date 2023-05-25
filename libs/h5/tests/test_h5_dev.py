@@ -3,7 +3,7 @@ import pytest
 
 import h5
 
-from h5.info import DatasetInfo, FileInfo, GroupInfo
+from h5._info import DatasetInfo, FileInfo, GroupInfo
 from h5.testing import make_test_hdf5_file
 
 h5_test_file_info = FileInfo(

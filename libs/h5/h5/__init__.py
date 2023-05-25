@@ -3,6 +3,17 @@
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
 from h5.__about__ import __version__
+from h5._info import (
+    DatasetInfo as DatasetInfo,
+    DatasetInfoDict as DatasetInfoDict,
+    FileInfo as FileInfo,
+    FileInfoDict as FileInfoDict,
+    FileInfoDumpDict as FileInfoDumpDict,
+    GroupInfo as GroupInfo,
+    GroupInfoDict as GroupInfoDict,
+    GroupInfoDumpDict as GroupInfoDumpDict,
+    info as info,
+)
 from h5.core import (
     as_h5py_obj as as_h5py_obj,
     attrs as attrs,
@@ -37,17 +48,6 @@ from h5.core import (
     items as items,
     keys as keys,
     keys_list as keys_list,
-)
-from h5.info import (
-    DatasetInfo as DatasetInfo,
-    DatasetInfoDict as DatasetInfoDict,
-    FileInfo as FileInfo,
-    FileInfoDict as FileInfoDict,
-    FileInfoDumpDict as FileInfoDumpDict,
-    GroupInfo as GroupInfo,
-    GroupInfoDict as GroupInfoDict,
-    GroupInfoDumpDict as GroupInfoDumpDict,
-    info as info,
 )
 from h5.legacy import (
     h5_attrs_dict as h5_attrs_dict,

@@ -15,8 +15,6 @@ from typing_extensions import TypeGuard
 
 import h5
 
-from h5 import info as h5dev
-
 console = Console()
 
 __all__ = (
@@ -221,11 +219,7 @@ def dump(
     )
     matcher = config.globster()
     with h5.File(fspath, "r") as f:
-        data = {
-            key: h5dev.h5py_obj_info(value)
-            for key, value in h5.h5iter(f)
-            if matcher(key)
-        }
+        data = {key: h5.info(value) for key, value in h5.h5iter(f) if matcher(key)}
         data_dump = {key: value.dump() for key, value in data.items()}
     console.print_json(data=data_dump, default=_json_default)
 
@@ -273,7 +267,7 @@ def tree(
     groups: bool = False,
 ) -> None:
     H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
-    file_info = h5dev.FileInfo.from_fspath(fspath)
+    file_info = h5.FileInfo.from_fspath(fspath)
     if json_:
         console.print_json(data=file_info.dict(), default=_json_default)
     else:

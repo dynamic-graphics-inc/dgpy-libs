@@ -26,6 +26,24 @@ import numpy as np
 
 from h5._types import H5pyCompression
 
+__all__ = (
+    "DatasetInfo",
+    "DatasetInfoDict",
+    "FileInfo",
+    "FileInfoDict",
+    "FileInfoDumpDict",
+    "GroupInfo",
+    "GroupInfoDict",
+    "GroupInfoDumpDict",
+    "GroupLikeInfo",
+    "H5ABC",
+    "H5Mixin",
+    "TTypedDict",
+    "T_GroupInfo",
+    "h5py_obj_info",
+    "info",
+)
+
 T_GroupInfo = TypeVar("T_GroupInfo", bound="GroupInfo")
 
 
