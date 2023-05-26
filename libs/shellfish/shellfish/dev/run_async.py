@@ -93,6 +93,8 @@ async def run_dtee_async(
 
     _out_buf = BytesIO()
     _err_buf = BytesIO()
+    _stdout = b""
+    _stderr = b""
 
     def _tee_bytes(line: bytes, sink: BytesIO, pipe: IO[bytes]) -> None:
         sink.write(line)

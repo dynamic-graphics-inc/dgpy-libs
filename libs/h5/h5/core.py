@@ -4,7 +4,7 @@ from functools import lru_cache
 from itertools import chain
 from os import PathLike
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple, TypeVar, Union
+from typing import Any, Dict, Iterable, List, Tuple, TypeVar, Union, cast
 
 import numpy as np
 import numpy.typing as npt
@@ -19,10 +19,11 @@ from h5py import (
 )
 from typing_extensions import ParamSpec, TypeGuard
 
+from h5._types import FsPath, H5pyAttributesDict
+
 _P = ParamSpec("_P")
 _R = TypeVar("_R")
 
-FsPath = Union[str, Path, PathLike]
 T_GroupLike = Union[Group, File]
 T_DatasetOrGroup = Union[Dataset, Group]
 T_FsPathOrGroupLike = Union[FsPath, T_GroupLike]
@@ -260,7 +261,7 @@ def h5py_obj_groups_gen(
 
 def groups_gen_from_fspath(
     fspath: FsPath, h5_path: str = ""
-) -> Iterable[Tuple[str, AttributeManager]]:
+) -> Iterable[Tuple[str, Group]]:
     """Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples
 
     Args:
@@ -512,7 +513,7 @@ def datasets_dict(
 
 def attrs_dict(
     h5_obj: Union[FsPath, File, Group], h5_path: str = ""
-) -> Dict[str, AttributeManager]:
+) -> Dict[str, Dict[str, Union[str, npt.NDArray[Any], int, float]]]:
     """Load an HDF5 file from a fspath into a dictionary
 
     Given a fspath this method loads an HDF5 file into a dictionary where the
@@ -531,4 +532,7 @@ def attrs_dict(
     if isinstance(h5_obj, (Path, str)):
         with File(str(h5_obj), mode="r") as h5file:
             return attrs_dict(h5_obj=h5file, h5_path=h5_path)
-    return {k: {**v} for k, v in h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)}
+    return {
+        k: cast(H5pyAttributesDict, {**v})
+        for k, v in h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)
+    }

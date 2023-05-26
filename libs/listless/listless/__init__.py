@@ -231,8 +231,13 @@ def chunkseq(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
     return (it[i : i + n] for i in range(0, len(it), n))
 
 
+def chunkstr(string: str) -> Iterable[str]:
+    """Yield chunks of size n from a string"""
+    return (string[i : i + 1] for i in range(0, len(string), 1))
+
+
 @overload
-def chunks(it: str, chunk_size: int) -> List[str]:
+def chunks(it: str, chunk_size: int) -> Iterable[str]:
     ...
 
 
@@ -246,7 +251,7 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
     ...
 
 
-def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
+def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], str]]:
     """Yield chunks of something slice-able with length <= chunk_size
 
     Args:
@@ -273,8 +278,10 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
         [(0, 1, 2, 3), (4, 5, 6, 7), (8, 9)]
 
     """
-    if isinstance(it, (str, list, tuple)) or is_sequence(it):
+    if isinstance(it, (list, tuple)) or is_sequence(it):
         yield from chunkseq(it, chunk_size)
+    elif isinstance(it, str):
+        yield from chunkstr(it)
     else:
         while True:
             _chunk = tuple(islice(it, chunk_size))
@@ -431,7 +438,7 @@ def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     return filter(lambda x: x is not None, it)  # type: ignore[arg-type]
 
 
-def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T]:
+def flatten(*args: Union[_T, Iterable[_T]]) -> Iterable[_T]:
     """Flatten possibly nested iterables of sequences to a flat list
 
     Examples:
@@ -443,8 +450,14 @@ def flatten(*args: Union[_T, Iterable[_T]], anystr: bool = False) -> Iterable[_T
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five', 123]
 
     """
-    return chain(
-        *(flatten(*arg) if isinstance(arg, (list, tuple)) else (arg,) for arg in args)
+    return cast(
+        Iterable[_T],
+        chain(
+            *(
+                flatten(*arg) if isinstance(arg, (list, tuple)) else (arg,)
+                for arg in args
+            )
+        ),
     )
 
 
@@ -712,7 +725,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
     while True:
         try:
             values = await asyncio.gather(*[it.__anext__() for it in its])
-            yield values
+            yield tuple(values)
         except (StopIteration, StopAsyncIteration):
             break
 

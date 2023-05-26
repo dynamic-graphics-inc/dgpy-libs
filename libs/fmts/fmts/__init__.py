@@ -5,7 +5,7 @@ import re
 from binascii import hexlify
 from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
-from functools import lru_cache, wraps
+from functools import lru_cache
 from keyword import iskeyword
 from os import path, stat, urandom
 from random import choice
@@ -54,12 +54,15 @@ def anystr2anystr(fn: Callable[[str], str]) -> Callable[[AnyStr], AnyStr]:
 
     """
 
-    @wraps(fn)
     def _anystr2anystr(string: AnyStr) -> AnyStr:
         if isinstance(string, bytes):
             return fn(string.decode()).encode()
         return fn(string)
 
+    _anystr2anystr.__name__ = fn.__name__
+    _anystr2anystr.__doc__ = fn.__doc__
+    if hasattr(fn, "__module__"):
+        _anystr2anystr.__module__ = fn.__module__
     return _anystr2anystr
 
 
@@ -87,11 +90,15 @@ def anystr(fn: Callable[[str], _R]) -> Callable[[AnyStr], _R]:
 
     """
 
-    @wraps(fn)
     def _anystr(string: AnyStr) -> _R:
         if isinstance(string, bytes):
             return fn(string.decode())
         return fn(string)
+
+    _anystr.__name__ = fn.__name__
+    _anystr.__doc__ = fn.__doc__
+    if hasattr(fn, "__module__"):
+        _anystr.__module__ = fn.__module__
 
     return _anystr
 

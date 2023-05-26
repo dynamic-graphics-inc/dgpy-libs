@@ -3,7 +3,9 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import Literal, Optional, Union
+from typing import Any, Dict, Literal, Optional, Union
+
+import numpy.typing as npt
 
 from h5py import File, Group
 
@@ -14,6 +16,7 @@ __all__ = (
     "H5pyDriver",
     "H5pyMode",
     "GroupLikeOrFsPath",
+    "H5pyAttributesDict",
 )
 
 FsPath = Union[str, Path, PathLike]
@@ -33,3 +36,4 @@ a        Read/write if exists, create otherwise
 """
 H5pyMode = Literal["r", "r+", "w", "w-", "x", "a"]
 H5pyDriver = Optional[Literal["core", "sec2", "direct", "stdio", "mpio", "ros3"]]
+H5pyAttributesDict = Dict[str, Union[str, int, float, bool, npt.NDArray[Any]]]

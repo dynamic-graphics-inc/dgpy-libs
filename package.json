@@ -7,16 +7,17 @@
   "author": "jesse <jessekrubin@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "pyright": "pyright",
-    "pyrightw": "pyright -w",
-    "pyrighth": "pyright -h",
     "dcheck": "dprint check",
     "dfmt": "dprint fmt",
+    "dprint-up": "dprint config update --yes --verbose",
     "nuke": "npx rimraf ./**/node_modules",
-    "nukenox": "npx rimraf ./**/.nox*"
+    "nukenox": "npx rimraf ./**/.nox*",
+    "pyright": "pyright",
+    "pyrighth": "pyright -h",
+    "pyrightw": "pyright -w"
   },
   "devDependencies": {
-    "dprint": "^0.35.3",
-    "pyright": "^1.1.212"
+    "dprint": "^0.36.1",
+    "pyright": "^1.1.310"
   }
 }

@@ -109,7 +109,7 @@ def aiopen(
             file=file,
             mode=cast(
                 Union[OpenBinaryMode, OpenTextMode], mode
-            ),  # pyright: reportGeneralTypeIssues=false
+            ),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,
