@@ -179,7 +179,7 @@ markers = [
 plugins = [
   "pydantic.mypy",
 ]
-python_version = "3.9"
+python_version = "3.8"
 show_error_codes = true
 follow_imports = 'silent'
 disallow_any_generics = true

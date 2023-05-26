@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""h5.dev ~ Under construction!"""
+"""h5._info ~ Info objs!"""
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -162,7 +162,7 @@ class DatasetInfo(H5Mixin):
     maxshape: Optional[Tuple[int, ...]] = None
     chunks: Optional[Tuple[int, ...]] = None
 
-    def dict(self, attributes: bool = True) -> DatasetInfoDict:
+    def dict(self, *, attributes: bool = True) -> DatasetInfoDict:
         return {
             "h5type": self.h5type,
             "attrs": self.attrs if attributes else {},
@@ -230,8 +230,6 @@ class GroupLikeInfo(H5Mixin):
         try:
             return self[item]
         except KeyError as ke:
-            if default is None:
-                raise ke
             if not isinstance(default, (GroupInfo, DatasetInfo)):
                 raise TypeError(
                     f"default must be a H5Group or H5Dataset, not {type(default)}"
@@ -291,7 +289,7 @@ class GroupInfo(GroupLikeInfo):
     h5type: Literal["group"]
 
     def dict(
-        self, attributes: bool = True, datasets: bool = True, groups: bool = True
+        self, *, attributes: bool = True, datasets: bool = True, groups: bool = True
     ) -> GroupInfoDict:
         return {
             "h5type": self.h5type,
@@ -381,7 +379,7 @@ class FileInfo(GroupLikeInfo):
         return path.dirname(self.fspath)
 
     def dict(
-        self, attributes: bool = True, datasets: bool = True, groups: bool = True
+        self, *, attributes: bool = True, datasets: bool = True, groups: bool = True
     ) -> FileInfoDict:
         return {
             "h5type": self.h5type,
