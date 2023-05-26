@@ -27,45 +27,16 @@ TESTS_DIRPATH = path.join(PWD, "tests")
 
 VENV_BACKEND = None if (is_win() or IS_GITHUB_CI or not which("conda")) else "conda"
 
-REUSE_TEST_ENVS = IS_GITLAB_CI or True
+REUSE_TEST_ENVS = True
 
 
 #############
 ### UTILS ###
 #############
-def latest_wheel():
+def latest_wheel() -> str:
     wheels = sorted([el for el in os.listdir("dist") if el.endswith(".whl")])
     latest = wheels[-1]
     return latest
-
-
-def _get_session_python_site_packages_dir(session):
-    try:
-        site_packages_dir = session._runner._site_packages_dir
-    except AttributeError:
-        old_install_only_value = session._runner.global_config.install_only
-        try:
-            # Force install only to be false for the following chunk of code
-            # For additional information as to why see:
-            #   https://github.com/theacodes/nox/pull/181
-            session._runner.global_config.install_only = False
-            site_packages_dir = session.run(
-                "python",
-                "-c"
-                "import sys; "
-                "from distutils.sysconfig import get_python_lib; "
-                "sys.stdout.write(get_python_lib())",
-                silent=True,
-                log=False,
-            )
-            session._runner._site_packages_dir = site_packages_dir
-        finally:
-            session._runner.global_config.install_only = old_install_only_value
-    return site_packages_dir
-
-
-def _get_dgpy_site_packages_jsonbourne_location(session):
-    return path.join(_get_session_python_site_packages_dir(session), "jsonbourne")
 
 
 def _get_jsonbourne_version() -> str:
@@ -79,7 +50,7 @@ def _get_jsonbourne_version() -> str:
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake(session):
+def flake(session: nox.Session) -> None:
     session.install("flake8")
     session.install("flake8-print")
     session.install("flake8-eradicate")
@@ -87,17 +58,17 @@ def flake(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake_tests(session):
+def flake_tests(session: nox.Session) -> None:
     session.install("flake8")
     session.run("flake8", TESTS_DIRPATH)
 
 
-def install_common_test_deps(session):
+def install_common_test_deps(session: nox.Session) -> None:
     session.install("pytest", "pytest-cov", "coverage", "xtyping", "jsonc2json")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def base_test(session):
+def pytest(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.run(
         "pytest",
@@ -110,7 +81,7 @@ def base_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def pydantic_test(session):
+def pydantic_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("pydantic", "fastapi", "httpx", "orjson")
     session.run(
@@ -126,7 +97,7 @@ def pydantic_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def attrs_test(session):
+def attrs_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("attrs")
     session.run(
@@ -140,7 +111,7 @@ def attrs_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def jsonlibs_test(session):
+def jsonlibs_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("orjson")
     session.install("python-rapidjson")
@@ -156,7 +127,7 @@ def jsonlibs_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def orjson_test(session):
+def orjson_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("orjson")
     session.run(
@@ -170,7 +141,7 @@ def orjson_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def rapidjson_test(session):
+def rapidjson_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("python-rapidjson")
     session.run(
@@ -184,6 +155,6 @@ def rapidjson_test(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def coverage_report(session):
+def coverage_report(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.run("coverage", "report")

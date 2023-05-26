@@ -1,8 +1,29 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
+from __future__ import annotations
+
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__
 
 from h5.__about__ import __version__
+from h5._info import (
+    DatasetInfo as DatasetInfo,
+    DatasetInfoDict as DatasetInfoDict,
+    FileInfo as FileInfo,
+    FileInfoDict as FileInfoDict,
+    FileInfoDumpDict as FileInfoDumpDict,
+    GroupInfo as GroupInfo,
+    GroupInfoDict as GroupInfoDict,
+    GroupInfoDumpDict as GroupInfoDumpDict,
+    info as info,
+)
+from h5._types import (
+    FileOrGroup as FileOrGroup,
+    FsPath as FsPath,
+    GroupLikeOrFsPath as GroupLikeOrFsPath,
+    H5pyCompression as H5pyCompression,
+    H5pyDriver as H5pyDriver,
+    H5pyMode as H5pyMode,
+)
 from h5.core import (
     as_h5py_obj as as_h5py_obj,
     attrs as attrs,
@@ -34,18 +55,9 @@ from h5.core import (
     is_h5py_file as is_h5py_file,
     is_h5py_group as is_h5py_group,
     is_hdf5 as is_hdf5,
+    items as items,
+    keys as keys,
     keys_list as keys_list,
-)
-from h5.dev import (
-    H5Dataset as H5Dataset,
-    H5DatasetDict as H5DatasetDict,
-    H5File as H5File,
-    H5FileDict as H5FileDict,
-    H5FileDumpDict as H5FileDumpDict,
-    H5Group as H5Group,
-    H5GroupDict as H5GroupDict,
-    H5GroupDumpDict as H5GroupDumpDict,
-    info as info,
 )
 from h5.legacy import (
     h5_attrs_dict as h5_attrs_dict,
@@ -59,16 +71,22 @@ from h5.legacy import (
 __all__ = (
     "AttributeManager",
     "Dataset",
+    "DatasetInfo",
+    "DatasetInfoDict",
     "File",
+    "FileInfo",
+    "FileInfoDict",
+    "FileInfoDumpDict",
+    "FileOrGroup",
+    "FsPath",
     "Group",
-    "H5Dataset",
-    "H5DatasetDict",
-    "H5File",
-    "H5FileDict",
-    "H5FileDumpDict",
-    "H5Group",
-    "H5GroupDict",
-    "H5GroupDumpDict",
+    "GroupInfo",
+    "GroupInfoDict",
+    "GroupInfoDumpDict",
+    "GroupLikeOrFsPath",
+    "H5pyCompression",
+    "H5pyDriver",
+    "H5pyMode",
     "__h5py_version__",
     "__version__",
     "as_h5py_obj",
@@ -108,5 +126,7 @@ __all__ = (
     "is_h5py_file",
     "is_h5py_group",
     "is_hdf5",
+    "items",
+    "keys",
     "keys_list",
 )

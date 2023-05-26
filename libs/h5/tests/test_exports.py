@@ -4,11 +4,13 @@ from types import ModuleType
 from typing import Any, List, Optional
 
 import h5
+import h5._info as h5info
 
 from h5 import core as h5core
 
 H5_ALL_SET = set(h5.__all__)
 H5_CORE_ALL_SET = set(h5core.__all__)
+H5_INFO_ALL_SET = set(h5info.__all__)
 
 
 def is_dunder(string: str) -> bool:
@@ -41,6 +43,23 @@ def test_h5_core_exports():
     incorrectly_exported = [
         el
         for el in H5_CORE_ALL_SET
+        if el not in members
+        and el
+        not in {"File", "Group", "__h5py_version__", "Dataset", "AttributeManager"}
+    ]
+    assert (
+        not incorrectly_exported
+    ), f"incorrectly exported members: {incorrectly_exported}"
+
+
+def test_h5_info_exports():
+    members = module_members(h5info)
+    missing_members = [el for el in members if el not in H5_INFO_ALL_SET]
+    assert not missing_members, f"missing members: {missing_members}"
+
+    incorrectly_exported = [
+        el
+        for el in H5_INFO_ALL_SET
         if el not in members
         and el
         not in {"File", "Group", "__h5py_version__", "Dataset", "AttributeManager"}

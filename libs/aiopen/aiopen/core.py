@@ -80,11 +80,11 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
         return self
 
     # async def __anext__(self) -> Union[bytes, str]:
-    async def __anext__(self) -> T:
+    async def __anext__(self) -> AnyStr:
         """Simulate normal file iteration."""
         line = await self.readline()
         if line:
-            return cast(T, line)
+            return cast(AnyStr, line)
         else:
             raise StopAsyncIteration
 

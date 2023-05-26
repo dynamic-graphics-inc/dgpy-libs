@@ -33,7 +33,11 @@ from jsonbourne.pydantic import JsonBaseModel
 from listless import flatten_strings as _flatten_strings
 from shellfish import fs, sp
 from shellfish.__about__ import __version__
-from shellfish._types import FsPath as FsPath, PopenArgs as PopenArgs
+from shellfish._types import (
+    FsPath as FsPath,
+    PopenArg as PopenArg,
+    PopenArgs as PopenArgs,
+)
 from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo
 from shellfish.fs import (
@@ -810,7 +814,7 @@ def validate_popen_args(args: Union[PopenArgs, Tuple[PopenArgs, ...]]) -> List[s
     return flatten_args(args)
 
 
-def popen_has_pipe_character(args: Union[List[str], Tuple[str, ...]]) -> bool:
+def popen_has_pipe_character(args: Union[List[PopenArg], Tuple[PopenArg, ...]]) -> bool:
     return any(arg == "|" for arg in args)
 
 

@@ -143,7 +143,7 @@ def pipc(session):
 
 
 def _mypy(session):
-    session.install("mypy", "typing-extensions", "pydantic", "anyio", "pytest")
+    session.install("mypy", "typing-extensions", "pydantic", "anyio", "pytest", "nox")
     session.install("orjson", "types-orjson", "fastapi", "click")
     session.run("mypy", "--version")
     session.run(
@@ -155,14 +155,18 @@ def _mypy(session):
     )
 
     for lib in LIBS:
-        session.run(
+        noxfile_path = path.join("libs", lib, "noxfile.py")
+        args = [
             "mypy",
             "--show-error-codes",
             "--config-file",
             "./pyproject.toml",
             *list(SOURCE_DIRS.values()),
             path.join("libs", lib, "tests"),
-        )
+        ]
+        if path.exists(noxfile_path):
+            args.append(noxfile_path)
+        session.run(*args)
 
 
 def _ruff(session: nox.Session) -> None:

@@ -1451,7 +1451,7 @@ def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[
 
 def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
     if not dryrun:
-        _move(src, dest)
+        _move(fspath(src), dest)
     return (src, dest)
 
 

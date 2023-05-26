@@ -1,12 +1,12 @@
 lockfileVersion: 5.4
 
 specifiers:
-  dprint: ^0.35.3
-  pyright: ^1.1.212
+  dprint: ^0.36.1
+  pyright: ^1.1.310
 
 devDependencies:
-  dprint: 0.35.3
-  pyright: 1.1.301
+  dprint: 0.36.1
+  pyright: 1.1.310
 
 packages:
 
@@ -35,8 +35,8 @@ packages:
       ms: 2.1.2
     dev: true
 
-  /dprint/0.35.3:
-    resolution: {integrity: sha512-BWFdr2Ury2dtqyjaTI9P5vCpb1yn5laLfO3Yo5egrrDlK2A2mv6CSpe/oK2cuOPESMY1JT2dubMv2dPDiJfMnA==}
+  /dprint/0.36.1:
+    resolution: {integrity: sha512-F8TaWlieYtJc4ktqr0tjNwg/HN4wNPTU6rTq29MdoIKXi9gQmh7Ibqr0oyW1hsLpqBuAXjjwEYIos9plYkwENQ==}
     hasBin: true
     requiresBuild: true
     dependencies:
@@ -70,8 +70,8 @@ packages:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
     dev: true
 
-  /pyright/1.1.301:
-    resolution: {integrity: sha512-Y4MMELxQ/5+/FlWjbQTg5wbP3z+V4IyFcATSsNLpZbJm0y4gz6ijf/b0zZV1sA8yJstf6xJ98vw5qxPM0yU8Zg==}
+  /pyright/1.1.310:
+    resolution: {integrity: sha512-hDWXUocMWfQoUJLXt89uqLZUbf5jPr0HjtGgXrbHGchhXp7QOTwuW1nZ8iKTJXPD/G8KY/05LhbQ4cRSnXoAog==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dev: true

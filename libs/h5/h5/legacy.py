@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Legacy; to be deprecated"""
+from __future__ import annotations
+
 from functools import wraps
 from typing import Any, Callable, Dict, Iterable, Tuple, TypeVar, Union
 from warnings import warn
@@ -10,8 +12,8 @@ import numpy.typing as npt
 from h5py import AttributeManager, Dataset, File, Group
 from typing_extensions import ParamSpec
 
+from h5._types import FsPath, H5pyAttributesDict
 from h5.core import (
-    FsPath,
     attrs_dict,
     attrs_gen,
     attrs_gen_from_fspath,
@@ -49,7 +51,7 @@ def _h5_deprecated(fn: Callable[_P, _R]) -> Callable[_P, _R]:
 
 
 @_h5_deprecated
-def h5_attrs_dict(fspath: str, h5_path: str = "") -> Dict[str, AttributeManager]:
+def h5_attrs_dict(fspath: str, h5_path: str = "") -> Dict[str, H5pyAttributesDict]:
     """Alias for h5.attrs_dict"""
     return attrs_dict(h5_obj=fspath, h5_path=h5_path)
 

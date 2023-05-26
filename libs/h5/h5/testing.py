@@ -126,3 +126,11 @@ def make_test_hdf5_file(filepath: Union[str, Path]) -> str:
         )
         dset_filter_lzf.attrs["desc"] = "filter-lzf-dataset"
     return str(filepath)
+
+
+def main() -> None:
+    make_test_hdf5_file("test.h5")
+
+
+if __name__ == "__main__":
+    main()

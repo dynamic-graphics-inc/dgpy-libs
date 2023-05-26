@@ -121,3 +121,5 @@ scratch/
 .pytype/
 monkeytype.sqlite3
 afile.txt
+
+test.h5

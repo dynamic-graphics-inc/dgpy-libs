@@ -262,7 +262,7 @@ async def test_simple_iteration_ctx_mgr(mode: str) -> None:
 
         counter = 1
 
-        async for line in file:  # type: ignore[var-annotated]
+        async for line in file:
             assert line.strip() == "line " + str(counter)
             counter += 1
 

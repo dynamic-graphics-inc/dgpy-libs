@@ -2,10 +2,10 @@
 """Exes/commands"""
 from __future__ import annotations
 
+from dataclasses import dataclass, field
 from shlex import split as _shplit
 from typing import Any, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union
 
-from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
 from shellfish._types import PopenArgs, PopenArgv
 from shellfish.sh import Done, flatten_args
@@ -19,7 +19,8 @@ __all__ = (
 TExe = TypeVar("TExe", bound="ExeABC")
 
 
-class ExeConfig(JsonBaseModel):
+@dataclass
+class ExeConfig:
     cmd: str
     subcmd: Optional[Tuple[str, ...]] = None
     abspath: Optional[str] = None
@@ -28,7 +29,7 @@ class ExeConfig(JsonBaseModel):
     shell: bool = False
     verbose: bool = False
     timeout: Optional[int] = None
-    ok_code: Union[int, Set[int]] = {0}
+    ok_code: Union[int, Set[int]] = field(default_factory=lambda: {0})
     check: bool = False
 
 
@@ -42,7 +43,7 @@ class ExeABC:
     shell: bool = False
     verbose: bool = False
     timeout: Optional[int] = None
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = (0,)
+    ok_code: Union[int, Set[int]] = 0  # List[int], Tuple[int, ...], Set[int]] = (0,)
     check: bool = False
 
     def __init__(
@@ -67,7 +68,13 @@ class ExeABC:
         self.shell = shell
         self.verbose = verbose
         self.timeout = timeout
-        self.ok_code = (ok_code,) if isinstance(ok_code, int) else tuple(ok_code)
+        self.ok_code = (
+            {
+                ok_code,
+            }
+            if isinstance(ok_code, int)
+            else set(ok_code)
+        )
         self.check = check
         self.__post_init__()
 

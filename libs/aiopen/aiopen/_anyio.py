@@ -7,11 +7,27 @@ from __future__ import annotations
 
 from os import PathLike
 from types import TracebackType
-from typing import AnyStr, Awaitable, Callable, Type, Union, overload
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    AnyStr,
+    Awaitable,
+    Callable,
+    Optional,
+    Type,
+    Union,
+    cast,
+    overload,
+)
 
 from anyio import AsyncFile, open_file
 
-from xtyping import Generic, OpenBinaryMode, OpenTextMode, Optional
+from xtyping import Generic  # , OpenBinaryMode, OpenTextMode, Optional
+
+if TYPE_CHECKING:
+    from _typeshed import OpenBinaryMode, OpenTextMode, ReadableBuffer, WriteableBuffer
+else:
+    ReadableBuffer = OpenBinaryMode = OpenTextMode = WriteableBuffer = object
 
 
 class AsyncFileContextManager(Generic[AnyStr]):
@@ -79,19 +95,21 @@ def aiopen(
 
 
 def aiopen(
-    file: Union[str, PathLike, int],  # type: ignore[type-arg]
-    mode: str = "r",
+    file: Union[str, PathLike[str], int],
+    mode: Union[str, OpenBinaryMode, OpenTextMode] = "r",
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: Optional[str] = None,
     newline: Optional[str] = None,
     closefd: bool = True,
     opener: Optional[Callable[[str, int], int]] = None,
-) -> AsyncFileContextManager[AnyStr]:
+) -> AsyncFileContextManager[Any]:
     return AsyncFileContextManager(
-        coro=open_file(  # type: ignore[call-overload, misc]
+        coro=open_file(
             file=file,
-            mode=mode,
+            mode=cast(
+                Union[OpenBinaryMode, OpenTextMode], mode
+            ),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,

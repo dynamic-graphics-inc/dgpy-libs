@@ -3,23 +3,23 @@ import pytest
 
 import h5
 
-from h5.dev import H5Dataset, H5File, H5Group
+from h5._info import DatasetInfo, FileInfo, GroupInfo
 from h5.testing import make_test_hdf5_file
 
-h5_test_file_info = H5File(
+h5_test_file_info = FileInfo(
     fspath="test.h5",
     fssize=19800,
     key="/",
     groups={
-        "a_subgroup": H5Group(
+        "a_subgroup": GroupInfo(
             key="/a_subgroup",
             groups={
-                "aa_subsubgroup": H5Group(
+                "aa_subsubgroup": GroupInfo(
                     key="/a_subgroup/aa_subsubgroup",
                     groups={},
                     attrs={"aa_subsubgroup_attr": "aa_subsubgroup_attr_value"},
                     datasets={
-                        "aa_subsubgroup_dataset": H5Dataset(
+                        "aa_subsubgroup_dataset": DatasetInfo(
                             key="/a_subgroup/aa_subsubgroup/aa_subsubgroup_dataset",
                             attrs={
                                 "aa_subsubgroup_dataset_attr": "aa_subsubgroup_dataset_attr_value"
@@ -42,7 +42,7 @@ h5_test_file_info = H5File(
             },
             attrs={"a_attr": "a_attr_value"},
             datasets={
-                "a_dataset": H5Dataset(
+                "a_dataset": DatasetInfo(
                     key="/a_subgroup/a_dataset",
                     attrs={"a_dataset_attr": "a_dataset_attr_value"},
                     shape=(2, 5),
@@ -60,12 +60,12 @@ h5_test_file_info = H5File(
             },
             h5type="group",
         ),
-        "b_subgroup": H5Group(
+        "b_subgroup": GroupInfo(
             key="/b_subgroup",
             groups={},
             attrs={"b_attr": "b_attr_value"},
             datasets={
-                "b_dataset": H5Dataset(
+                "b_dataset": DatasetInfo(
                     key="/b_subgroup/b_dataset",
                     attrs={"b_dataset_attr": "b_dataset_attr_value"},
                     shape=(2, 5),
@@ -86,7 +86,7 @@ h5_test_file_info = H5File(
     },
     attrs={"root_attr_str": "root_attr_value"},
     datasets={
-        "chunked": H5Dataset(
+        "chunked": DatasetInfo(
             key="/chunked",
             attrs={"desc": "chunked-dataset"},
             shape=(100,),
@@ -101,7 +101,7 @@ h5_test_file_info = H5File(
             maxshape=(100,),
             chunks=(10,),
         ),
-        "filter-gzip": H5Dataset(
+        "filter-gzip": DatasetInfo(
             key="/filter-gzip",
             attrs={"desc": "filter-gzip-dataset"},
             shape=(100,),
@@ -116,7 +116,7 @@ h5_test_file_info = H5File(
             maxshape=(100,),
             chunks=(10,),
         ),
-        "filter-lzf": H5Dataset(
+        "filter-lzf": DatasetInfo(
             key="/filter-lzf",
             attrs={"desc": "filter-lzf-dataset"},
             shape=(100,),
@@ -131,7 +131,7 @@ h5_test_file_info = H5File(
             maxshape=(100,),
             chunks=(10,),
         ),
-        "root_dataset": H5Dataset(
+        "root_dataset": DatasetInfo(
             key="/root_dataset",
             attrs={
                 "root_attr_float": 123.456,
@@ -152,7 +152,7 @@ h5_test_file_info = H5File(
             maxshape=(2, 5),
             chunks=None,
         ),
-        "vanilla": H5Dataset(
+        "vanilla": DatasetInfo(
             key="/vanilla",
             attrs={"desc": "vanilla-dataset"},
             shape=(100,),
@@ -178,7 +178,7 @@ def test_h5_info_objects(tmpdir):
 
     file_info = h5.info(filepath)
 
-    assert isinstance(file_info, H5File)
+    assert isinstance(file_info, FileInfo)
     file_info.fspath = "test.h5"
     assert file_info.dict(attributes=False) == h5_test_file_info.dict(attributes=False)
 

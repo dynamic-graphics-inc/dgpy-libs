@@ -161,7 +161,7 @@ def asyncify(
 
         """
         loop = _loop if _loop else get_event_loop()
-        pfunc: Callable[P, T] = partial(funk, *args, **kwargs)
+        pfunc: Callable[[], T] = partial(funk, *args, **kwargs)
         return await loop.run_in_executor(_executor, pfunc)
 
     return cast(Callable[P, Awaitable[T]], _async_funk)
@@ -258,7 +258,7 @@ def is_async(obj: Any) -> bool:
     return asyncio.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
 
 
-def is_coro(obj: Any) -> TypeGuard[Awaitable[T]]:
+def is_coro(obj: Any) -> TypeGuard[Awaitable[Any]]:
     return asyncio.iscoroutine(obj)
 
 
