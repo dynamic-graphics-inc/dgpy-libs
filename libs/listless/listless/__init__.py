@@ -31,18 +31,25 @@ from listless.__about__ import __version__
 __all__ = (
     "__version__",
     "aiterable",
+    "chunk",
     "chunks",
+    "chunkseq",
+    "chunkstr",
     "enumerate_async",
     "exhaust",
     "filter_is_none",
     "filter_none",
     "flatten",
+    "flatten_seq",
     "flatten_strings",
+    "is_sequence",
     "it_product",
     "iter_async",
     "itlen",
     "list_async",
     "next_async",
+    "nyield",
+    "pairs",
     "partition",
     "set_async",
     "spliterable",
@@ -51,7 +58,6 @@ __all__ = (
     "xmap",
     "zip_async",
 )
-
 _K = TypeVar("_K")
 _T = TypeVar("_T")
 _R = TypeVar("_R")
@@ -231,9 +237,9 @@ def chunkseq(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
     return (it[i : i + n] for i in range(0, len(it), n))
 
 
-def chunkstr(string: str) -> Iterable[str]:
+def chunkstr(string: str, n: int) -> Iterable[str]:
     """Yield chunks of size n from a string"""
-    return (string[i : i + 1] for i in range(0, len(string), 1))
+    return (string[i : i + n] for i in range(0, len(string), n))
 
 
 @overload
@@ -278,10 +284,10 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], st
         [(0, 1, 2, 3), (4, 5, 6, 7), (8, 9)]
 
     """
-    if isinstance(it, (list, tuple)) or is_sequence(it):
+    if isinstance(it, str):
+        yield from chunkstr(it, chunk_size)
+    elif isinstance(it, (list, tuple)) or is_sequence(it):
         yield from chunkseq(it, chunk_size)
-    elif isinstance(it, str):
-        yield from chunkstr(it)
     else:
         while True:
             _chunk = tuple(islice(it, chunk_size))
@@ -717,7 +723,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
         >>> from listless import list_async, iter_async  # for fake async iters
         >>> a, b, c = iter_async(range(4)), iter_async(range(6)), iter_async(range(5))
         >>> aiorun(list_async(zip_async(a, b, c)))
-        [[0, 0, 0], [1, 1, 1], [2, 2, 2], [3, 3, 3]]
+        [(0, 0, 0), (1, 1, 1), (2, 2, 2), (3, 3, 3)]
 
     """
     its: List[AsyncIterator[Any]] = [aiterable(it) for it in iterables]
