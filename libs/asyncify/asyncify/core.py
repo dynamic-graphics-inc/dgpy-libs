@@ -62,7 +62,7 @@ except ImportError:  # pragma: no cover
     ) -> Callable[P, Awaitable[T]]:
         raise ImportError("install anyio; `pip install anyio`")
 
-    def anyio_run(
+    def anyio_run(  # type: ignore[misc]
         func: Callable[..., Coroutine[Any, Any, T_Retval]],
         *args: object,
         backend: str = "asyncio",
