@@ -73,7 +73,7 @@ dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.270"
-anyio = { extras = ["trio"], version = "^3.6.2" }
+anyio = { extras = ["trio"], version = "^3.7.0" }
 nox = "^2023.4.22"
 packaging = "^23.1"
 codespell = "^2.2.4"
