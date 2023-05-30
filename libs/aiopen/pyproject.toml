@@ -38,7 +38,7 @@ xtyping = ">=0.5.0"
 pytest = "^7.3.1"
 # pytest = "^7.1.2"
 pytest-asyncio = "^0.21.0"
-anyio = { extras = ["trio"], version = "^3.6.2" }
+anyio = { extras = ["trio"], version = "^3.7.0" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
