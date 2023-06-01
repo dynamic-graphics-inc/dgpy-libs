@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = [
@@ -44,6 +45,16 @@ pytest = "^7.3.1"
 pytest-asyncio = "^0.21.0"
 pytest-cov = "^4.1.0"
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.3.1",
+  "pytest-asyncio<1.0.0,>=0.21.0",
+  "pytest-cov<5.0.0,>=4.1.0",
+]
+
+[tool.pdm.build]
+includes = ["./shellfish"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -55,7 +66,7 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--ignore-glob=*/_meta.py"
+  "--ignore-glob=*/_meta.py",
   # "--disable-warnings",
 ]
 xfail_strict = true
@@ -97,3 +108,46 @@ exclude_lines = [
 [tool.ruff]
 extend = "../../pyproject.toml"
 target-version = "py37"
+
+[project]
+authors = [
+  { name = "jesse", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.7,<4.0"
+dependencies = [
+  "pydantic>=1.9.0",
+  "aiopen<1.0.0,>=0.5.0",
+  "asyncify>=0.9.1",
+  "funkify>=0.4.0",
+  "jsonbourne>=0.24.0",
+  "listless>=0.1.0",
+  "xtyping>=0.6.0",
+]
+name = "shellfish"
+version = "0.3.2"
+description = "shellfish ~ shell & file-system utils"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "dgpy",
+  "shell",
+  "fs",
+  "filesystem",
+  "typed",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/shellfish"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"

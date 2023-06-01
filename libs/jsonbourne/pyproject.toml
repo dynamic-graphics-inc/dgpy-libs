@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = [
@@ -49,6 +50,14 @@ pydantic = ["pydantic"]
 full = ["orjson", "pydantic", "python-rapidjson"]
 all = ["orjson", "pydantic", "python-rapidjson"]
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.1.2",
+]
+
+[tool.pdm.build]
+includes = ["./jsonbourne", "./JSON.py", "./david_webb.py"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -113,3 +122,52 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[project]
+authors = [
+  { name = "jesse", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.7,<4.0"
+dependencies = [
+  "xtyping>=0.5.0",
+  "jsonc2json<1.0.0,>=0.0.2",
+]
+name = "jsonbourne"
+version = "0.25.2"
+description = "EZPZ JSON"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "dgpy",
+  "pydantic",
+  "json",
+  "orjson",
+  "rapidjson",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/jsonbourne"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+
+[project.optional-dependencies]
+pydantic = [
+  "pydantic>=1.8.2",
+]
+rapidjson = [
+  "python-rapidjson>=0.9.1",
+]
+orjson = [
+  "orjson==3.*,>=3.0.0",
+]

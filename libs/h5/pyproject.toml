@@ -18,6 +18,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = [
@@ -75,6 +76,15 @@ source = [
   'h5/',
 ]
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.3.1",
+]
+
+[tool.pdm.build]
+includes = ["./h5"]
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -92,3 +102,50 @@ addopts = [
 [tool.ruff]
 extend = "../../pyproject.toml"
 target-version = "py38"
+
+[project]
+authors = [
+  { name = "jesse", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.8"
+dependencies = [
+  "h5py>=3.7.0",
+  "numpy>=1.23.2",
+  "typing-extensions<5.0.0,>=4.5.0",
+]
+name = "h5"
+version = "0.8.10"
+description = "H5py utils"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "hdf5",
+  "h5py",
+  "h5",
+  "numpy",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+
+[project.optional-dependencies]
+cli = [
+  "click<9.0.0,>=8.1.3",
+  "rich<14.0.0,>=13.3.3",
+  "globsters<0.0.4,>=0.0.2",
+]
+
+[project.scripts]
+h5 = "h5.cli:main"

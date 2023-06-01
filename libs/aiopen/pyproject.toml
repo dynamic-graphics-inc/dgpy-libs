@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = [
@@ -40,6 +41,16 @@ pytest = "^7.3.1"
 pytest-asyncio = "^0.21.0"
 anyio = { extras = ["trio"], version = "^3.7.0" }
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.3.1",
+  "pytest-asyncio<1.0.0,>=0.21.0",
+  "anyio[trio]<4.0.0,>=3.7.0",
+]
+
+[tool.pdm.build]
+includes = ["./aiopen"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -108,3 +119,41 @@ exclude_lines = [
 
 [tool.coverage.paths]
 source = ['aiopen/']
+
+[project]
+authors = [
+  { name = "jesse", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.7,<4.0"
+dependencies = [
+  "funkify<1.0.0,>=0.4.0",
+  "xtyping>=0.5.0",
+]
+name = "aiopen"
+version = "0.5.5"
+description = "Async file io"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "anyio",
+  "fs",
+  "aiopen",
+  "async",
+  "dgpy",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"

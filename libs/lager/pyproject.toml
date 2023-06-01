@@ -41,6 +41,15 @@ pytest-cov = "^4.1.0"
 [tool.poetry.group.dev.dependencies]
 typing-extensions = "^4.5.0"
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.3.1",
+  "pytest-cov<5.0.0,>=4.1.0",
+]
+
+[tool.pdm.build]
+includes = ["./lager"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -67,3 +76,43 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[project]
+authors = [
+  { name = "jesse rubin", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.8,<4.0"
+dependencies = [
+  "loguru>=0.7.0",
+]
+name = "lager"
+version = "0.17.2"
+description = "EZ-PZ logging based on loguru"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "logging",
+  "dgpy",
+  "dgi",
+  "loguru",
+  "beer",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/lager"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+
+[project.group.dev.dependencies]
+typing-extensions = "^4.5.0"

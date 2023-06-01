@@ -7,7 +7,7 @@ authors = [
   { name = "jesse", email = "jesse@dgi.com" },
 ]
 dependencies = []
-requires-python = ">=3.6.2,<4.0"
+requires-python = ">=3.7,<4.0"
 license = { text = "MIT" }
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -18,9 +18,17 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
+keywords = [
+  "str",
+  "utils",
+  "dgpy",
+  "vanilla",
+  "typed",
+]
+readme = "README.md"
 
 [project.urls]
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
@@ -30,8 +38,13 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 includes = ["./fmts"]
 
 [tool.pdm.dev-dependencies]
-dev = ["pytest<7.0.0,>=6.2.2"]
+dev = [
+  "pytest<7.0.0,>=6.2.2",
+  "pytest<8.0.0,>=7.3.1",
+]
 
+[tool.pdm.build]
+includes = ["./fmts"]
 [tool.poetry]
 name = "fmts"
 version = "0.1.5"

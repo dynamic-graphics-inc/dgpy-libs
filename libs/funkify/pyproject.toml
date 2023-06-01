@@ -19,6 +19,7 @@ classifiers = [
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
 keywords = [
@@ -35,6 +36,14 @@ python = "^3.7"
 [tool.poetry.dev-dependencies]
 pytest = "^7.3.1"
 
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+  "pytest<8.0.0,>=7.3.1",
+]
+
+[tool.pdm.build]
+includes = ["./funkify"]
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
@@ -80,3 +89,38 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[project]
+authors = [
+  { name = "jesse", email = "jesse@dgi.com" },
+]
+requires-python = ">=3.7,<4.0"
+dependencies = []
+name = "funkify"
+version = "0.4.5"
+description = "Funkify modules so that they are callable"
+readme = "README.md"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
+keywords = [
+  "funk",
+  "dgpy",
+  "python",
+  "modules",
+  "funky",
+]
+license = { text = "MIT" }
+
+[project.urls]
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/funkify"
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"

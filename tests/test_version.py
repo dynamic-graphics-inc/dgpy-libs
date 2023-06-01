@@ -21,7 +21,7 @@ class TestDgpyLib:
         dgpy_lib_pyproject_toml_string: Callable[[str], str],
     ) -> None:
         if dgpy_lib_name == "dgpytest" and not hasattr(dgpylibs, "dgpytest"):
-            pytest.skip("not yet part of dgpylibs")
+            pytest.skip("skip dgpytest")
         lager.info(f"Testing version for {dgpy_lib_name}")
         dgpylibs_metadata = dgpylibs.dgpylibs_metadata
         lib_metadata: dgpylibs.DgpyLibMetadata = getattr(
@@ -40,3 +40,9 @@ class TestDgpyLib:
         assert pyproject_toml["tool"]["poetry"]["version"] == lib_metadata.version
 
         lager.info("lib metadata", lib_metadata)
+
+        assert "project" in pyproject_toml
+        assert "name" in pyproject_toml["project"]
+        assert pyproject_toml["project"]["name"] == lib_metadata.__title__
+        assert "version" in pyproject_toml["project"]
+        assert pyproject_toml["project"]["version"] == lib_metadata.version

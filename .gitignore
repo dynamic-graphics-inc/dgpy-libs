@@ -139,3 +139,5 @@ temp/
 thingy.py
 herm.py
 yarn.lock
+
+.pdm-python
