@@ -138,15 +138,15 @@ addopts = [
   "--disable-warnings",
 ]
 testpaths = [
-  "libs/aiopen",
-  "libs/asyncify",
-  "libs/funkify",
-  "libs/h5",
-  "libs/jsonbourne",
-  "libs/lager",
-  "libs/requires",
-  "libs/shellfish",
-  "libs/xtyping",
+  # "libs/aiopen",
+  # "libs/asyncify",
+  # "libs/funkify",
+  # "libs/h5",
+  # "libs/jsonbourne",
+  # "libs/lager",
+  # "libs/requires",
+  # "libs/shellfish",
+  # "libs/xtyping",
 ]
 
 xfail_strict = true
