@@ -97,7 +97,7 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
         return it.__aiter__()
 
     async def gen() -> AsyncIterator[_T]:
-        for item in cast(Iterable[_T], it):
+        for item in it:
             yield item
 
     return gen()
