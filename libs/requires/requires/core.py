@@ -195,7 +195,7 @@ class Requirement:
 
             async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> R:
                 try:
-                    return await f(*args, **kwargs)  # type: ignore[misc, no-any-return]
+                    return await f(*args, **kwargs)  # type: ignore[no-any-return, operator]
                 except NameError as ne:
                     if self.alias not in parse_name_error(ne):
                         raise ne
@@ -205,7 +205,7 @@ class Requirement:
                     _f_globals = _fn_globals(f)
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()
-                    retval: R = await f(*args, **kwargs)  # type: ignore[misc]
+                    retval: R = await f(*args, **kwargs)  # type: ignore[operator]
                     return retval
                 except ModuleNotFoundError as mnfe:
                     tb = sys.exc_info()[2]
