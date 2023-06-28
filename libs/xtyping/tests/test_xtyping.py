@@ -182,12 +182,6 @@ def test_all_typing_extensions_reexported() -> None:
 def test_all_annotated_types_reexported() -> None:
     __xtyping_all__ = xtyping.__all__
     xtyping_all_set = set(__xtyping_all__)
-    __typing_extensions_all__ = xtyping.__all_typing_extensions__
-    # TODO: at some point we should set min typing_extensions version
-    ignored_typing_extensions_members = set(xtyping.__all_annotated_types__)
-    for el in [
-        t_el
-        for t_el in __typing_extensions_all__
-        if t_el not in ignored_typing_extensions_members
-    ]:
+    __annotated_types_all__ = xtyping.__all_annotated_types__
+    for el in __annotated_types_all__:
         assert el in xtyping_all_set
