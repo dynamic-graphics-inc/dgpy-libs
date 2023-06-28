@@ -150,6 +150,25 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "reveal_type",
 )
 
+__all_annotated_types__: Tuple[str, ...] = (
+    "BaseMetadata",
+    "Ge",
+    "GroupedMetadata",
+    "Gt",
+    "Interval",
+    "IsDigits",
+    "Le",
+    "Len",
+    "LowerCase",
+    "Lt",
+    "MaxLen",
+    "MinLen",
+    "MultipleOf",
+    "Predicate",
+    "Timezone",
+    "UpperCase",
+)
+
 #############
 ## Aliases ##
 #############
@@ -607,6 +626,7 @@ __all__ = (
     "_VT_co",
     "_VT_contra",
     "_V_co",
+    "__all_annotated_types__",
     "__all_shed__",
     "__all_typing__",
     "__all_typing_extensions__",

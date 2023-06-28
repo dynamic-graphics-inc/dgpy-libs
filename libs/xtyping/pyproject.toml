@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xtyping"
-version = "0.6.3"
+version = "0.7.0"
 description = "xtyping = typing + typing_extensions"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -25,6 +25,7 @@ keywords = ["typing", "dgpy", "typed", "types"]
 [tool.poetry.dependencies]
 python = "^3.7"
 typing-extensions = ">=4.0.0"
+annotated-types = "^0.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.0"
