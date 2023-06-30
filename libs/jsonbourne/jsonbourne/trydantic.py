@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """trydantic = try + pydantic"""
 from __future__ import annotations
-
+from typing import Union
 from dataclasses import (
     MISSING,
     Field,
@@ -16,13 +16,17 @@ from dataclasses import (
     replace,
 )
 
-PYDANTIC_AVAILABLE: bool = False
+__pydantic__: bool = False
+__pydantic_version__: Union[str, bool] = False
 
 try:
+    import pydantic
+
     # use `pydantic.dataclasses.dataclass` if available
     from pydantic.dataclasses import dataclass as dataclass
 
-    PYDANTIC_AVAILABLE = True
+    __pydantic__ = True
+    __pydantic_version__ = pydantic.__version__
 except ImportError:
     from dataclasses import dataclass as _dataclass
     from functools import wraps
@@ -39,7 +43,8 @@ __all__ = (
     "FrozenInstanceError",
     "InitVar",
     "MISSING",
-    "PYDANTIC_AVAILABLE",
+    "__pydantic__",
+    "__pydantic_version__",
     "asdict",
     "astuple",
     "dataclass",

@@ -55,12 +55,15 @@ try:
                 "e": {"herm": 2},
             }
         )
-        assert thing_w_prop.c == thing_w_prop["c"]
+        c_getattr = thing_w_prop.c
+        c_getitem = thing_w_prop["c"]
+        assert c_getattr == c_getitem
         assert thing_w_prop.a_property == "prop_value"
         assert thing_w_prop["a_property"] == "prop_value"
 
         assert thing_w_prop.d.nested == "nestedval"
 
+    @pytest.mark.skip(reason="pydantic v2 does not support __root__")
     def test_json_base_model_root_type() -> None:
         from jsonbourne.pydantic import JsonBaseModel
 
