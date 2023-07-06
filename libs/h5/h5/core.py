@@ -358,7 +358,6 @@ def keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
 
     Args:
         h5py_obj: h5-h5py group object
-        h5_path: path so far (Default value = "")
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.Dataset)
@@ -392,7 +391,6 @@ def datasets_keys_list(h5py_obj: Union[File, Group, FsPath]) -> List[str]:
 
     Args:
         h5py_obj: h5-h5py group object
-        h5_path: path so far (Default value = "")
 
     Returns:
         Generator that yields tuples; (h5-path, h5py.Dataset)

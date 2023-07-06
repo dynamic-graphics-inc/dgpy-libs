@@ -7,6 +7,17 @@ repo_name: 'GitHub'
 site_author: 'Sheldon & jesse'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
+watch:
+  - libs/aiopen/aiopen
+  - libs/asyncify/asyncify
+  - libs/fmts/fmts
+  - libs/funkify/funkify
+  - libs/h5/h5
+  - libs/jsonbourne/jsonbourne
+  - libs/listless/listless
+  - libs/shellfish/shellfish
+  - libs/xtyping/xtyping
+
 
 nav:
   # - Home: './index.md'
@@ -140,6 +151,3 @@ plugins:
               - "!^_"  # exclude all members starting with _
               - "^__init__$"  # but always include __init__ modules and methods
             new_path_syntax: false
-      watch:
-        - libs/aiopen/aiopen
-        - libs/jsonbourne/jsonbourne
