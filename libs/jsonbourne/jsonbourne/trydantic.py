@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """trydantic = try + pydantic"""
 from __future__ import annotations
-from typing import Union
+
 from dataclasses import (
     MISSING,
     Field,
@@ -15,6 +15,7 @@ from dataclasses import (
     make_dataclass,
     replace,
 )
+from typing import Union
 
 __pydantic__: bool = False
 __pydantic_version__: Union[str, bool] = False

@@ -10,7 +10,7 @@ from jsonbourne import JSON, JsonObj
 pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 try:
-    from jsonbourne.pydantic import JsonBaseModel
+    from jsonbourne.pydantic import JsonBaseModel, JsonObjPydantic, TJsonObjPydantic
 
     class JsonSubObj(JsonBaseModel):
         herm: int
@@ -30,10 +30,12 @@ try:
         a: int
         b: int
         c: str
-        d: JsonObj
+        d: TJsonObjPydantic
         e: JsonSubObj
+        # d: TJsonObjPydantic
+        # d: JsonObj
+        # e: JsonSubObj
 
-        #
         @property
         def a_property(self) -> str:
             return "prop_value"
@@ -46,15 +48,21 @@ try:
             return cls(**JSON.loads(json_string))
 
     def test_json_base_model_w_prop() -> None:
-        thing_w_prop = JsonObjModel(
-            **{
-                "a": 1,
-                "b": 2,
-                "c": "herm",
-                "d": {"nested": "nestedval"},
-                "e": {"herm": 2},
-            }
-        )
+        try:
+            thing_w_prop = JsonObjModel(
+                **{
+                    "a": 1,
+                    "b": 2,
+                    "c": "herm",
+                    "d": {"nested": "nestedval"},
+                    "e": {"herm": 2},
+                }
+            )
+            print(dir(thing_w_prop))
+        except Exception as e:
+            print(e)
+            raise e
+
         c_getattr = thing_w_prop.c
         c_getitem = thing_w_prop["c"]
         assert c_getattr == c_getitem

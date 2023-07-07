@@ -5,22 +5,26 @@ from __future__ import annotations
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
-from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar
+from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar, Union
 
-from pydantic import (
+from pydantic import (  # BaseConfig,; BaseSettings,
     VERSION as __pydantic_version__,
-    # BaseConfig,
     BaseModel,
-    # BaseSettings,
     Extra,
     Field,
+    PrivateAttr,
     ValidationError,
 )
-
-# from pydantic.generics import GenericModel
+from pydantic.functional_validators import AfterValidator, BeforeValidator
+from pydantic_core import ValidationError, core_schema
+from typing_extensions import Annotated, TypeGuard, get_args
 
 from jsonbourne.core import JSON, JsonObj
 
+# from pydantic.generics import GenericModel
+
+
+T = TypeVar("T")
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
@@ -61,10 +65,71 @@ class JsonBaseModelDefaultConfig(JsonBaseConfig):
     ...
 
 
+def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], Dict[str, Any]]]:
+    return isinstance(v, (JsonObj, dict))
+
+
+# ) -> JsonObjPydantic[T]:
+def json_obj_before_validator(
+    v: Union[JsonObj[T], Dict[str, T], Any],
+) -> JsonObj[T]:
+    if not is_json_obj_like(v):
+        raise ValueError(f"Expected JsonObj, got {type(v)}")
+    if isinstance(v, JsonObj):
+        return v
+    return JsonObj(**v)
+
+    # if isinstance(v, dict):
+    #     return JsonObjPydantic(v)
+    # if not isinstance(v, JsonObj):
+    # return v
+
+
+TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(check_is_json_obj)]
+# TJsonObjPydandic = Annotated[int, AfterValidator(check_squares)]
+
+
+class JsonObjPydantic(JsonObj[T]):
+    # def __init__(self, v: Sequence[T]):
+    #     self.v = v
+
+    # def __getitem__(self, i):
+    #     return self.v[i]
+
+    # def __len__(self):
+    #     return len(self.v)
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source: Any, handler: Callable[[Any], core_schema.CoreSchema]
+    ) -> core_schema.CoreSchema:
+        print(
+            "source",
+            source,
+        )
+        print("handler", handler)
+        instance_schema = core_schema.is_instance_schema(cls)
+
+        args = get_args(source)
+        print(args)
+        if args:
+            # replace the type and rely on Pydantic to generate the right schema
+            # for `Sequence`
+            sequence_t_schema = handler.generate_schema(JsonObj[args[0]])
+        else:
+            sequence_t_schema = handler.generate_schema(JsonObj)
+
+        non_instance_schema = core_schema.general_after_validator_function(
+            lambda v, i: JsonObj(v), sequence_t_schema
+        )
+        return core_schema.union_schema([instance_schema, non_instance_schema])
+
+
+# class JsonBaseModel(BaseModel):  # type: ignore[misc, type-arg]
 class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
-    _data: Dict[str, Any]
+    _data: Dict[str, Any] = PrivateAttr(default_factory=dict)
 
     # Config = JsonBaseConfig
     model_config = {
@@ -74,21 +139,26 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         # "json_loads": JSON.loads,
         # "json_dumps": JSON.dumps,
         "use_enum_values": True,
+        "validate_default": True,
     }
 
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        self.__post_init__()
+    # def __init__(self, *args: Any, **kwargs: Any) -> None:
+    #     # super().__init__(*args, **kwargs)
+    #     super().__init__(**kwargs)
+    #     self._data = {}
+    #     self.__post_init__()
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
         # self._data = {}
+        # print(self)
 
     def __dumpable__(self) -> Dict[str, Any]:
-        return self.model_dump()
+        return self.model_dump()  # type: ignore[no-any-return]
 
     def __json_interface__(self) -> Dict[str, Any]:
-        return self.model_dump()
+        return self.model_dump()  # type: ignore[no-any-return]
 
     def to_str(
         self,
@@ -258,7 +328,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             bool: True if any fields for a (sub)class are required
 
         """
-        return any(val.required for val in cls.model_fields.values())
+        return any(val.required for val in cls.model_fields.values())  # type: ignore[attr-defined]
 
     def is_default(self) -> bool:
         """Check if the object is equal to the default value for its fields
@@ -285,9 +355,9 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             mfield.default == self[fname] for fname, mfield in self.model_fields.items()
         )
 
-    @property
-    def __private_attributes__(self) -> Dict[str, Any] | None:
-        return self.__pydantic_private__
+    # @property
+    # def __private_attributes__(self) -> Dict[str, Any] | None:
+    #     return self.__pydantic_private__
 
     def __delattr__(self, item: str) -> Any:
         if item in self.__pydantic_private__:
@@ -295,12 +365,10 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         return super().__delattr__(item)
 
     # def __getattr__(self, item: str) -> Any:
-    #     if item in self.__pydantic_private__:
-    #         return object.__getattribute__(self, item)
-    #     return super().__getattr__(item)
+    #     return object.__getattribute__(self, item)
 
-    def __getitem__(self, item: str) -> Any:
-        return self.__getattr__(item)
+    def __getitem__(self, item: str) -> Any:  # type: ignore[override]
+        return object.__getattribute__(self, item)
 
     @classmethod
     def defaults_dict(cls) -> Dict[str, Any]:
@@ -332,16 +400,18 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             {'a': 1, 'b': 'herm'}
 
         """
-        return {k: v.default for k, v in cls.model_fields.items() if not v.required}
+        return {k: v.default for k, v in cls.model_fields.items() if not v.required}  # type: ignore[attr-defined]
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name in self.__pydantic_private__:
-            return object.__setattr__(self, name, value)
-        elif name in self.__property_fields__:
-            property_field = getattr(self.__class__, name)
-            property_field.fset(self, value)
-        else:
-            super().__setattr__(name, value)
+        return object.__setattr__(self, name, value)
+
+    #     if name in self.__pydantic_private__:
+    #         return object.__setattr__(self, name, value)
+    #     elif name in self.__property_fields__:
+    #         property_field = getattr(self.__class__, name)
+    #         property_field.fset(self, value)
+    #     else:
+    #         super().__setattr__(name, value)
 
     @property
     def __property_fields__(self) -> Set[str]:
