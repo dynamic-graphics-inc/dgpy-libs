@@ -143,8 +143,8 @@ def pipc(session):
 
 
 def _mypy(session):
-    session.install("mypy", "typing-extensions", "pydantic", "anyio", "pytest", "nox")
-    session.install("orjson", "types-orjson", "fastapi", "click")
+    session.install("mypy", "typing-extensions", "pydantic<2", "anyio", "pytest", "nox")
+    session.install("orjson", "types-orjson", "fastapi", "click!=8.1.4")
     session.run("mypy", "--version")
     session.run(
         "mypy",
