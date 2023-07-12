@@ -160,9 +160,7 @@ def test_xtyping_shed_all_members() -> None:
         ):
             missing_from_all.add(member)
 
-    assert len(missing_from_all) == 0, "xtyping.shed is missing: {}".format(
-        missing_from_all
-    )
+    assert len(missing_from_all) == 0, f"xtyping.shed is missing: {missing_from_all}"
 
 
 def test_all_typing_extensions_reexported() -> None:
