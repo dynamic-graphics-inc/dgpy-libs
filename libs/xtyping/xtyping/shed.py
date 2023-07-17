@@ -148,6 +148,14 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "is_typeddict",
     "override",
     "reveal_type",
+    # These might not be future imports...?
+    "BinaryIO",
+    "ForwardRef",
+    "Match",
+    "Pattern",
+    "TextIO",
+    "get_protocol_members",
+    "is_protocol",
 )
 
 __all_annotated_types__: Tuple[str, ...] = (
