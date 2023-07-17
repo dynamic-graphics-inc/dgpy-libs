@@ -10,7 +10,6 @@ from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar, Union
 from pydantic import (  # BaseConfig,; BaseSettings,
     VERSION as __pydantic_version__,
     BaseModel,
-    Extra,
     Field,
     PrivateAttr,
     ValidationError,
@@ -36,7 +35,6 @@ __all__ = (
     "BaseModel",
     # "BaseSettings",
     # "BaseSettings",
-    "Extra",
     "Field",
     # "GenericModel",
     "ValidationError",
@@ -271,7 +269,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             bool: True if any fields for a (sub)class are required
 
         """
-        return any(val.required for val in cls.model_fields.values())  # type: ignore[attr-defined]
+        return any(val.is_required() for val in cls.model_fields.values())
 
     def is_default(self) -> bool:
         """Check if the object is equal to the default value for its fields
@@ -341,7 +339,9 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             {'a': 1, 'b': 'herm'}
 
         """
-        return {k: v.default for k, v in cls.model_fields.items() if not v.required}  # type: ignore[attr-defined]
+        return {
+            k: v.default for k, v in cls.model_fields.items() if not v.is_required()
+        }
 
     def __setattr__(self, name: str, value: Any) -> None:
         return object.__setattr__(self, name, value)
