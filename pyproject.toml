@@ -256,7 +256,7 @@ reportMissingImports = true
 reportMissingTypeStubs = false
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 select = [
   "RUF100", # no unused 'noqa' comments
   "E", # pyflakes errors
@@ -348,6 +348,7 @@ convention = "google"
 [tool.ruff.isort]
 combine-as-imports = true
 lines-between-types = 1
+lines-after-imports = -1
 known-first-party = [
   "aiopen",
   "asyncify",
