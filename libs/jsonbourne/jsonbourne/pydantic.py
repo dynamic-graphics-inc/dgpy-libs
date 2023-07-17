@@ -110,7 +110,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         fmt_kwargs: bool = False,
     ) -> str:
         if fmt_kwargs:
-            return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"
+            return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"  # type: ignore[misc]
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict_filter_none()) + ")"
         _width = width or get_terminal_size((88, 24)).columns - 12

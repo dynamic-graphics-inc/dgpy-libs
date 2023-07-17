@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 
-from typing import Union
+from typing import Union, cast
 
 import pytest
 
@@ -11,9 +11,10 @@ pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 
 try:
-    from pydantic import BaseModel
+    from pydantic import BaseModel, ConfigDict
 
     _extra = "allow" if "pytest" in sys.modules else "ignore"
+    _model_config = cast(ConfigDict, {"extra": _extra})
 
     class PydanticJsonObj(BaseModel, JsonObj[Union[str, int]]):  # type: ignore[misc]
         a: int
@@ -24,7 +25,7 @@ try:
         def a_property(self) -> str:
             return "prop_value"
 
-        model_config = {"extra": _extra}
+        model_config = _model_config
 
     class PydanticJsonObjPropertySetter(BaseModel, JsonObj):  # type: ignore[misc]
         a: int
@@ -40,8 +41,7 @@ try:
         def aprop(self, value: int) -> None:
             self.a = value
 
-        model_config = {"extra": _extra}
-        # class Config:
+        model_config = _model_config
 
 except Exception:
     pass

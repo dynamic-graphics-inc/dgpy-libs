@@ -77,11 +77,11 @@ try:
         class JsonModelHasRootType(JsonBaseModel):
             __root__: List[str]
 
-        assert not JsonModelNoRootType.__custom_root_type__
-        assert JsonModelHasRootType.__custom_root_type__
-        obj = JsonModelHasRootType(__root__=["a", "b", "c"])
+        assert not JsonModelNoRootType.__custom_root_type__  # type: ignore[attr-defined]
+        assert JsonModelHasRootType.__custom_root_type__  # type: ignore[attr-defined]
+        obj = JsonModelHasRootType(__root__=["a", "b", "c"])  # type: ignore[call-arg]
 
-        obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[misc,call-arg]
+        obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[call-arg]
         assert obj == obj2
 
 except ModuleNotFoundError:
