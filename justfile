@@ -12,7 +12,7 @@ isort:
 codespell:
     codespell .
 
-fmt: isort black
+fmt: black
 
 ruff:
     ruff .
