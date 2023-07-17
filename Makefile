@@ -19,9 +19,12 @@ fmt:
 flake: fmt
 	python -m flake8 --config=./.flake8 libs
 
+.PHONY: isort_check
+isort_check:
+	isort --sp pyproject.toml libs --check
+
 .PHONY: lint
 lint:
-	isort --sp pyproject.toml libs --check
 	black --config pyproject.toml libs --check
 
 .PHONY: mypy
