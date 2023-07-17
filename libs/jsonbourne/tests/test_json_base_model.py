@@ -5,12 +5,12 @@ from typing import Any, List, Union
 
 import pytest
 
-from jsonbourne import JSON, JsonObj
+from jsonbourne import JSON
 
 pytestmark = [pytest.mark.pydantic, pytest.mark.optdeps]
 
 try:
-    from jsonbourne.pydantic import JsonBaseModel, JsonObjPydantic, TJsonObjPydantic
+    from jsonbourne.pydantic import JsonBaseModel, TJsonObjPydantic
 
     class JsonSubObj(JsonBaseModel):
         herm: int
@@ -32,9 +32,6 @@ try:
         c: str
         d: TJsonObjPydantic
         e: JsonSubObj
-        # d: TJsonObjPydantic
-        # d: JsonObj
-        # e: JsonSubObj
 
         @property
         def a_property(self) -> str:
@@ -58,9 +55,7 @@ try:
                     "e": {"herm": 2},
                 }
             )
-            print(dir(thing_w_prop))
         except Exception as e:
-            print(e)
             raise e
 
         c_getattr = thing_w_prop.c

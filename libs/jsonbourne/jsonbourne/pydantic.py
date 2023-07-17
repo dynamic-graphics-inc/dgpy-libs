@@ -15,14 +15,10 @@ from pydantic import (  # BaseConfig,; BaseSettings,
     PrivateAttr,
     ValidationError,
 )
-from pydantic.functional_validators import AfterValidator, BeforeValidator
-from pydantic_core import ValidationError, core_schema
-from typing_extensions import Annotated, TypeGuard, get_args
+from pydantic.functional_validators import BeforeValidator
+from typing_extensions import Annotated, TypeGuard
 
 from jsonbourne.core import JSON, JsonObj
-
-# from pydantic.generics import GenericModel
-
 
 T = TypeVar("T")
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
@@ -69,7 +65,6 @@ def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], Dict[str, Any]]]:
     return isinstance(v, (JsonObj, dict))
 
 
-# ) -> JsonObjPydantic[T]:
 def json_obj_before_validator(
     v: Union[JsonObj[T], Dict[str, T], Any],
 ) -> JsonObj[T]:
@@ -79,86 +74,34 @@ def json_obj_before_validator(
         return v
     return JsonObj(**v)
 
-    # if isinstance(v, dict):
-    #     return JsonObjPydantic(v)
-    # if not isinstance(v, JsonObj):
-    # return v
+
+TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(json_obj_before_validator)]
 
 
-TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(check_is_json_obj)]
-# TJsonObjPydandic = Annotated[int, AfterValidator(check_squares)]
-
-
-class JsonObjPydantic(JsonObj[T]):
-    # def __init__(self, v: Sequence[T]):
-    #     self.v = v
-
-    # def __getitem__(self, i):
-    #     return self.v[i]
-
-    # def __len__(self):
-    #     return len(self.v)
-
-    @classmethod
-    def __get_pydantic_core_schema__(
-        cls, source: Any, handler: Callable[[Any], core_schema.CoreSchema]
-    ) -> core_schema.CoreSchema:
-        print(
-            "source",
-            source,
-        )
-        print("handler", handler)
-        instance_schema = core_schema.is_instance_schema(cls)
-
-        args = get_args(source)
-        print(args)
-        if args:
-            # replace the type and rely on Pydantic to generate the right schema
-            # for `Sequence`
-            sequence_t_schema = handler.generate_schema(JsonObj[args[0]])
-        else:
-            sequence_t_schema = handler.generate_schema(JsonObj)
-
-        non_instance_schema = core_schema.general_after_validator_function(
-            lambda v, i: JsonObj(v), sequence_t_schema
-        )
-        return core_schema.union_schema([instance_schema, non_instance_schema])
-
-
-# class JsonBaseModel(BaseModel):  # type: ignore[misc, type-arg]
 class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
     _data: Dict[str, Any] = PrivateAttr(default_factory=dict)
 
-    # Config = JsonBaseConfig
     model_config = {
         "extra": "forbid",
         "arbitrary_types_allowed": True,
         "populate_by_name": True,
-        # "json_loads": JSON.loads,
-        # "json_dumps": JSON.dumps,
         "use_enum_values": True,
         "validate_default": True,
     }
 
     # def __init__(self, *args: Any, **kwargs: Any) -> None:
-    #     # super().__init__(*args, **kwargs)
-    #     super().__init__(**kwargs)
-    #     self._data = {}
-    #     self.__post_init__()
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
-        # self._data = {}
-        # print(self)
 
     def __dumpable__(self) -> Dict[str, Any]:
-        return self.model_dump()  # type: ignore[no-any-return]
+        return self.model_dump()
 
     def __json_interface__(self) -> Dict[str, Any]:
-        return self.model_dump()  # type: ignore[no-any-return]
+        return self.model_dump()
 
     def to_str(
         self,
@@ -357,15 +300,13 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
 
     # @property
     # def __private_attributes__(self) -> Dict[str, Any] | None:
-    #     return self.__pydantic_private__
 
     def __delattr__(self, item: str) -> Any:
-        if item in self.__pydantic_private__:
+        if self.__pydantic_private__ is not None and item in self.__pydantic_private__:
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
     # def __getattr__(self, item: str) -> Any:
-    #     return object.__getattribute__(self, item)
 
     def __getitem__(self, item: str) -> Any:  # type: ignore[override]
         return object.__getattribute__(self, item)
@@ -406,12 +347,6 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         return object.__setattr__(self, name, value)
 
     #     if name in self.__pydantic_private__:
-    #         return object.__setattr__(self, name, value)
-    #     elif name in self.__property_fields__:
-    #         property_field = getattr(self.__class__, name)
-    #         property_field.fset(self, value)
-    #     else:
-    #         super().__setattr__(name, value)
 
     @property
     def __property_fields__(self) -> Set[str]:
