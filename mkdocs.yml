@@ -7,19 +7,30 @@ repo_name: 'GitHub'
 site_author: 'Sheldon & jesse'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
+watch:
+  - libs/aiopen/aiopen
+  - libs/asyncify/asyncify
+  - libs/fmts/fmts
+  - libs/funkify/funkify
+  - libs/h5/h5
+  - libs/jsonbourne/jsonbourne
+  - libs/listless/listless
+  - libs/shellfish/shellfish
+  - libs/xtyping/xtyping
+
 
 nav:
   # - Home: './index.md'
   - Libs:
       - Home: './index.md'
-      # - aiopen: './libs/aiopen/README.ipynb'
-      # - asyncify: './libs/asyncify/README.ipynb'
-      # - funkify: './libs/funkify/README.ipynb'
-      # - h5: './libs/h5/README.ipynb'
-      # - jsonbourne: './libs/jsonbourne/README.ipynb'
-      # - lager: './libs/lager/README.ipynb'
-      # - requires: './libs/requires/README.ipynb'
-      # - xtyping: './libs/xtyping/README.ipynb'
+      - aiopen: './libs/aiopen/README.ipynb'
+      - asyncify: './libs/asyncify/README.ipynb'
+      - funkify: './libs/funkify/README.ipynb'
+      - h5: './libs/h5/README.ipynb'
+      - jsonbourne: './libs/jsonbourne/README.ipynb'
+      - lager: './libs/lager/README.ipynb'
+      - requires: './libs/requires/README.ipynb'
+      - xtyping: './libs/xtyping/README.ipynb'
   - API:
       - aiopen: './libs/aiopen/aiopen.api.md'
       - asyncify: './libs/asyncify/asyncify.api.md'
@@ -140,6 +151,3 @@ plugins:
               - "!^_"  # exclude all members starting with _
               - "^__init__$"  # but always include __init__ modules and methods
             new_path_syntax: false
-      watch:
-        - libs/aiopen/aiopen
-        - libs/jsonbourne/jsonbourne

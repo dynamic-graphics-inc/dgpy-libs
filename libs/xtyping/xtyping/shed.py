@@ -107,18 +107,23 @@ __all_typing_extensions__: Tuple[str, ...] = (
     "Literal",
     "NewType",
     "NoReturn",
+    "NotRequired",
     "OrderedDict",
     "ParamSpec",
     "ParamSpecArgs",
     "ParamSpecKwargs",
     "Protocol",
+    "Required",
+    "Self",
     "SupportsIndex",
     "TYPE_CHECKING",
     "Text",
     "Type",
     "TypeAlias",
     "TypeGuard",
+    "TypeVarTuple",
     "TypedDict",
+    "Unpack",
     "final",
     "get_args",
     "get_origin",
@@ -132,11 +137,6 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "Buffer",
     "LiteralString",
     "Never",
-    "NotRequired",
-    "Required",
-    "Self",
-    "TypeVarTuple",
-    "Unpack",
     "assert_never",
     "assert_type",
     "clear_overloads",
@@ -148,6 +148,25 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "is_typeddict",
     "override",
     "reveal_type",
+)
+
+__all_annotated_types__: Tuple[str, ...] = (
+    "BaseMetadata",
+    "Ge",
+    "GroupedMetadata",
+    "Gt",
+    "Interval",
+    "IsDigits",
+    "Le",
+    "Len",
+    "LowerCase",
+    "Lt",
+    "MaxLen",
+    "MinLen",
+    "MultipleOf",
+    "Predicate",
+    "Timezone",
+    "UpperCase",
 )
 
 #############
@@ -377,7 +396,6 @@ JsonArrT = List[Any]
 ###################
 ## FROM TYPESHED ##
 ###################
-Self = TypeVar("Self")
 StrPath = Union[str, PathLike]  # stable
 BytesPath = Union[bytes, PathLike]  # stable
 StrOrBytesPath = Union[str, bytes, PathLike]
@@ -562,7 +580,6 @@ __all__ = (
     "ReturnType",
     "STDIN",
     "STDIO",
-    "Self",
     "Seq",
     "SetAny",
     "SetFloat",
@@ -607,6 +624,7 @@ __all__ = (
     "_VT_co",
     "_VT_contra",
     "_V_co",
+    "__all_annotated_types__",
     "__all_shed__",
     "__all_typing__",
     "__all_typing_extensions__",

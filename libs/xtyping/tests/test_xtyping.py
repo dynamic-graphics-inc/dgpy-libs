@@ -160,9 +160,7 @@ def test_xtyping_shed_all_members() -> None:
         ):
             missing_from_all.add(member)
 
-    assert len(missing_from_all) == 0, "xtyping.shed is missing: {}".format(
-        missing_from_all
-    )
+    assert len(missing_from_all) == 0, f"xtyping.shed is missing: {missing_from_all}"
 
 
 def test_all_typing_extensions_reexported() -> None:
@@ -176,4 +174,12 @@ def test_all_typing_extensions_reexported() -> None:
         for t_el in __typing_extensions_all__
         if t_el not in ignored_typing_extensions_members
     ]:
+        assert el in xtyping_all_set
+
+
+def test_all_annotated_types_reexported() -> None:
+    __xtyping_all__ = xtyping.__all__
+    xtyping_all_set = set(__xtyping_all__)
+    __annotated_types_all__ = xtyping.__all_annotated_types__
+    for el in __annotated_types_all__:
         assert el in xtyping_all_set

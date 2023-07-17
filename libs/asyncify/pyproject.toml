@@ -27,9 +27,9 @@ funkify = "^0.4.0"
 xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.3.1"
-pytest-asyncio = "^0.21.0"
-anyio = { extras = ["trio"], version = "^3.7.0" }
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.1"
+anyio = { extras = ["trio"], version = "^3.7.1" }
 xdoctest = ">=1.0.1"
 
 [build-system]

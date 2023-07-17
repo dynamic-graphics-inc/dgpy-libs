@@ -429,7 +429,11 @@ class DoneError(SubprocessError):
     returns a non-zero exit status.
 
     Attributes:
-      cmd, returncode, stdout, stderr, output
+        cmd (str): command that was run
+        returncode (int): exit status of the process
+        stdout (str): standard output (stdout) of the process
+        stderr (str): standard error (stderr) of the process
+
     """
 
     done: Done
@@ -458,6 +462,14 @@ class DoneError(SubprocessError):
 
     def __str__(self) -> str:
         return f"{self.error_msg()}\n{self.done}"
+
+    @property
+    def output(self) -> str:
+        return self.stdout
+
+    @output.setter
+    def output(self, value: str) -> None:
+        self.stdout = value
 
 
 class DoneDict(TypedDict):
@@ -975,6 +987,7 @@ def do(
     cwd: Optional[FsPath] = None,
     shell: bool = False,
     check: bool = False,
+    tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[int] = None,
@@ -1024,6 +1037,7 @@ def do(
         timeout=timeout,
         ok_code=ok_code,
         dryrun=dryrun,
+        tee=tee,
     )
 
 
