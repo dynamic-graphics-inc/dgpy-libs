@@ -116,7 +116,7 @@ packaging==21.3
     #   nbconvert
 pandocfilters==1.5.0
     # via nbconvert
-pygments==2.12.0
+pygments==2.15.0
     # via
     #   mkdocs-jupyter
     #   mkdocs-material
