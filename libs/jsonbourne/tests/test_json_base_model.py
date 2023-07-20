@@ -79,7 +79,7 @@ try:
 
         assert not JsonModelNoRootType.__custom_root_type__  # type: ignore[attr-defined]
         assert JsonModelHasRootType.__custom_root_type__  # type: ignore[attr-defined]
-        obj = JsonModelHasRootType(__root__=["a", "b", "c"])  # type: ignore[call-arg]
+        obj = JsonModelHasRootType(__root__=["a", "b", "c"])
 
         obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[call-arg]
         assert obj == obj2

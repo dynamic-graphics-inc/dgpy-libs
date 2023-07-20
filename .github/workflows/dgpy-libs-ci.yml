@@ -193,7 +193,7 @@ jobs:
       #     curl -sSL https://install.python-poetry.org | python3 -
       #     which poetry
       #     poetry config virtualenvs.create false
-      - name: poetry install
+      - name: poetry instal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 l
         run: |
           poetry install
       - name: install docs deps

@@ -10,6 +10,7 @@ from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar, Union
 from pydantic import (  # BaseConfig,; BaseSettings,
     VERSION as __pydantic_version__,
     BaseModel,
+    ConfigDict,
     Field,
     PrivateAttr,
     ValidationError,
@@ -27,22 +28,24 @@ __all__ = (
     "JsonBaseModelDefaultConfig",
     "JsonBaseModel",
     "JsonBaseModelT",
-    # "JsonBaseSettings",
-    # "JsonGenericModel",
     # pydantic
     "__pydantic_version__",
-    # "BaseConfig",
     "BaseModel",
-    # "BaseSettings",
-    # "BaseSettings",
     "Field",
-    # "GenericModel",
     "ValidationError",
 )
 
+json_model_base_config: ConfigDict = {
+    "extra": "forbid",
+    "arbitrary_types_allowed": True,
+    "populate_by_name": True,
+    "use_enum_values": True,
+    "validate_default": True,
+}
+
 
 class JsonBaseConfig:
-    """Pydantic model config class for JsonBaseModel; can be overridden"""
+    """Pydantic v1 model config class for JsonBaseModel; can be overridden"""
 
     # Sometimes hypothesis breaks and will try to add an attribute to
     # objects while testing. Ya can check for 'pytest' if hypothesis breaks
@@ -81,15 +84,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
 
     _data: Dict[str, Any] = PrivateAttr(default_factory=dict)
 
-    model_config = {
-        "extra": "forbid",
-        "arbitrary_types_allowed": True,
-        "populate_by_name": True,
-        "use_enum_values": True,
-        "validate_default": True,
-    }
-
-    # def __init__(self, *args: Any, **kwargs: Any) -> None:
+    model_config = json_model_base_config
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
@@ -296,15 +291,10 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             mfield.default == self[fname] for fname, mfield in self.model_fields.items()
         )
 
-    # @property
-    # def __private_attributes__(self) -> Dict[str, Any] | None:
-
     def __delattr__(self, item: str) -> Any:
         if self.__pydantic_private__ is not None and item in self.__pydantic_private__:
             return object.__delattr__(self, item)
         return super().__delattr__(item)
-
-    # def __getattr__(self, item: str) -> Any:
 
     def __getitem__(self, item: str) -> Any:  # type: ignore[override]
         return object.__getattribute__(self, item)
@@ -346,8 +336,6 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     def __setattr__(self, name: str, value: Any) -> None:
         return object.__setattr__(self, name, value)
 
-    #     if name in self.__pydantic_private__:
-
     @property
     def __property_fields__(self) -> Set[str]:
         """Returns a set of property names for the class that have a setter"""
@@ -371,15 +359,3 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""
         return self.__class__._cls_field_names()
-
-
-# class JsonBaseSettings(BaseSettings, JsonBaseModel):  # type: ignore[misc]
-#     """pydantic BaseSettings + JsonBaseModel"""
-
-#     ...
-
-
-# class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore[misc]
-#     """Hybrid `pydantic.generics.GenericModel` and `jsonbourne.JsonObj`"""
-
-#     ...
