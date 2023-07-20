@@ -13,7 +13,7 @@ try:
     from jsonbourne.pydantic import JsonBaseModel, TJsonObjPydantic
 
     class JsonSubObj(JsonBaseModel):
-        herm: int
+        integer: int
 
         def to_dict(self) -> dict[str, int]:
             return self.dict()
@@ -50,9 +50,9 @@ try:
                 **{
                     "a": 1,
                     "b": 2,
-                    "c": "herm",
+                    "c": "string",
                     "d": {"nested": "nestedval"},
-                    "e": {"herm": 2},
+                    "e": {"integer": 2},
                 }
             )
         except Exception as e:
@@ -83,6 +83,34 @@ try:
 
         obj2 = JsonModelHasRootType(["a", "b", "c"])  # type: ignore[call-arg]
         assert obj == obj2
+
+    def test_json_base_model_spread_operator() -> None:
+        class Thingy(JsonBaseModel):
+            x: int
+            y: int
+            string: str
+
+        thingy = Thingy(x=1, y=2, string="string")
+
+        thingy_dict = thingy.dict()
+        thingy_dict_spread = {
+            **thingy,
+        }
+        assert list(thingy) == [  # type: ignore[comparison-overlap]
+            ("x", 1),
+            ("y", 2),
+            ("string", "string"),
+        ]
+
+        assert thingy_dict == thingy_dict_spread
+
+        thingy.something = "something"
+        assert thingy.something == "something"
+        assert thingy.dict() == {
+            "x": 1,
+            "y": 2,
+            "string": "string",
+        }
 
 except ModuleNotFoundError:
     pass

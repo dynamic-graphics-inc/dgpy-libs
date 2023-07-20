@@ -5,14 +5,25 @@ from __future__ import annotations
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
-from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    MutableMapping,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from pydantic import (  # BaseConfig,; BaseSettings,
     VERSION as __pydantic_version__,
     BaseModel,
     ConfigDict,
     Field,
-    PrivateAttr,
     ValidationError,
 )
 from pydantic.functional_validators import BeforeValidator
@@ -79,10 +90,8 @@ def json_obj_before_validator(
 TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(json_obj_before_validator)]
 
 
-class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
+class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
-
-    _data: Dict[str, Any] = PrivateAttr(default_factory=dict)
 
     model_config = json_model_base_config
 
@@ -90,11 +99,26 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
 
+    @property
+    def _data(self) -> Dict[str, Any]:  # type: ignore[override]
+        return self.__dict__
+
     def __dumpable__(self) -> Dict[str, Any]:
         return self.model_dump()
 
     def __json_interface__(self) -> Dict[str, Any]:
         return self.model_dump()
+
+    # ===================================
+    # ALIASES (SANS DEPRECATION WARNINGS)
+    # ===================================
+    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
+        """Alias for `model_dump`"""
+        return self.model_dump(*args, **kwargs)
+
+    def json(self, *args: Any, **kwargs: Any) -> str:
+        """Alias for `model_dumps`"""
+        return self.model_dump_json(*args, **kwargs)
 
     def to_str(
         self,
@@ -296,8 +320,16 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
+    def __iter__(self) -> Generator[Tuple[str, Any], None, None]:  # type: ignore[override]
+        return super().__iter__()
+
     def __getitem__(self, item: str) -> Any:  # type: ignore[override]
-        return object.__getattribute__(self, item)
+        try:
+            return super().__getattr__(item)
+        except AttributeError as ae:
+            if item in self._data:
+                return self._data[item]
+            raise ae from None
 
     @classmethod
     def defaults_dict(cls) -> Dict[str, Any]:
