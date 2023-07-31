@@ -188,13 +188,13 @@ files = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.25.2"
+version = "0.27.0"
 description = "EZPZ JSON"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "jsonbourne-0.25.2-py3-none-any.whl", hash = "sha256:440404f41d105fef6b1fd6bc7867e0c2dc6591311085c8af9b874834c3662143"},
-    {file = "jsonbourne-0.25.2.tar.gz", hash = "sha256:2843e27b042ec95035ce9b1a4cc7694284f9684f221ceb57653fdf5a82e91516"},
+    {file = "jsonbourne-0.27.0-py3-none-any.whl", hash = "sha256:9c38f5ced7d2d4c34ddd0cb36023f50fea352356e3495bff771aba49a192b002"},
+    {file = "jsonbourne-0.27.0.tar.gz", hash = "sha256:dd6b3b830f2862cffd7e4005384eebf6c5556a38ae256251baf1326d722502e4"},
 ]
 
 [package.dependencies]
@@ -202,10 +202,9 @@ jsonc2json = ">=0.0.2,<0.0.3"
 xtyping = ">=0.5.0"
 
 [package.extras]
-all = ["orjson (>=3.0.0,<4.0.0)", "pydantic (>=1.8.2)", "python-rapidjson (>=0.9.1)"]
-full = ["orjson (>=3.0.0,<4.0.0)", "pydantic (>=1.8.2)", "python-rapidjson (>=0.9.1)"]
-orjson = ["orjson (>=3.0.0,<4.0.0)"]
-pydantic = ["pydantic (>=1.8.2)"]
+all = ["orjson (>=3.0.0,<4.dev0)", "pydantic (>=2.0.2)", "pydantic-core (>=2.1.2)", "python-rapidjson (>=0.9.1)"]
+orjson = ["orjson (>=3.0.0,<4.dev0)"]
+pydantic = ["pydantic (>=2.0.2)", "pydantic-core (>=2.1.2)"]
 rapidjson = ["python-rapidjson (>=0.9.1)"]
 
 [[package]]
