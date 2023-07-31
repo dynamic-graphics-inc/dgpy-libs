@@ -41,7 +41,7 @@ rich = "^13.5.1"
 
 [tool.poetry.dev-dependencies]
 black = "^23.7.0"
-flake8 = "^6.0.0"
+flake8 = "^6.1.0"
 h5py = "^3.9.0"
 isort = "^5.11.5"
 nox = "^2023.4.22"
