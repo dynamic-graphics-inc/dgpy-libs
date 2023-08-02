@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.3.2"
+version = "0.4.0"
 description = "shellfish ~ shell & file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -31,11 +31,11 @@ keywords = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-pydantic = ">=1.9.0"
+pydantic = ">=2.0.3"
 aiopen = "^0.5.0"
 asyncify = ">=0.9.1"
 funkify = ">=0.4.0"
-jsonbourne = ">=0.24.0"
+jsonbourne = ">=0.27.0"
 listless = ">=0.1.0"
 xtyping = ">=0.6.0"
 

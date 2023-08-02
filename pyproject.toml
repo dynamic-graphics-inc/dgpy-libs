@@ -43,10 +43,9 @@ rich = "^13.5.1"
 black = "^23.7.0"
 flake8 = "^6.0.0"
 h5py = "^3.9.0"
-isort = "^5.11.5"
+isort = "^5.12.0"
 nox = "^2023.4.22"
 orjson = "^3.9.2"
-pydantic = "^1.10.12"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.21.1"
 pytest-cov = "^4.1.0"
@@ -54,6 +53,8 @@ python-rapidjson = "^1.10"
 xdoctest = ">=1.0.1"
 click = "^8.1.2"
 mypy = "^1.4"
+pydantic = ">=2.0.2"
+pydantic-core = ">=2.1.2"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
@@ -256,7 +257,7 @@ reportMissingImports = true
 reportMissingTypeStubs = false
 
 [tool.ruff]
-target-version = "py37"
+target-version = "py38"
 select = [
   "RUF100", # no unused 'noqa' comments
   "E", # pyflakes errors
@@ -338,12 +339,17 @@ max-complexity = 20
   "D103", # missing docstring
 ]
 
+"libs/jsonbourne/jsonbourne/trydantic.py" = [
+  "I001" # isort something wrong with in try block import
+]
+
 [tool.ruff.pydocstyle]
 convention = "google"
 
 [tool.ruff.isort]
 combine-as-imports = true
 lines-between-types = 1
+lines-after-imports = -1
 known-first-party = [
   "aiopen",
   "asyncify",
@@ -375,6 +381,7 @@ force_grid_wrap = 0
 include_trailing_comma = true
 line_length = 88
 lines_between_types = 1
+lines_after_imports = 1
 multi_line_output = 3
 profile = "black"
 skip_glob = [

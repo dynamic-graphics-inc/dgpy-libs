@@ -5,21 +5,33 @@ from __future__ import annotations
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
-from typing import Any, Callable, Dict, Optional, Set, Type, TypeVar
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Generator,
+    MutableMapping,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
-from pydantic import (
+from pydantic import (  # BaseConfig,; BaseSettings,
     VERSION as __pydantic_version__,
-    BaseConfig,
     BaseModel,
-    BaseSettings,
-    Extra,
+    ConfigDict,
     Field,
     ValidationError,
 )
-from pydantic.generics import GenericModel
+from pydantic.functional_validators import BeforeValidator
+from typing_extensions import Annotated, TypeGuard
 
 from jsonbourne.core import JSON, JsonObj
 
+T = TypeVar("T")
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
@@ -27,28 +39,29 @@ __all__ = (
     "JsonBaseModelDefaultConfig",
     "JsonBaseModel",
     "JsonBaseModelT",
-    "JsonBaseSettings",
-    "JsonGenericModel",
     # pydantic
     "__pydantic_version__",
-    "BaseConfig",
     "BaseModel",
-    "BaseSettings",
-    "BaseSettings",
-    "Extra",
     "Field",
-    "GenericModel",
     "ValidationError",
 )
 
+json_model_base_config: ConfigDict = {
+    "extra": "forbid",
+    "arbitrary_types_allowed": True,
+    "populate_by_name": True,
+    "use_enum_values": True,
+    "validate_default": True,
+}
 
-class JsonBaseConfig(BaseConfig):
-    """Pydantic model config class for JsonBaseModel; can be overridden"""
+
+class JsonBaseConfig:
+    """Pydantic v1 model config class for JsonBaseModel; can be overridden"""
 
     # Sometimes hypothesis breaks and will try to add an attribute to
     # objects while testing. Ya can check for 'pytest' if hypothesis breaks
     # (which it sometimes does) with `'pytest' in sys.modules`
-    extra = Extra.forbid  # Forbid extras as strictness is good w/ python
+    extra = "forbid"  # Forbid extras as strictness is good w/ python
     arbitrary_types_allowed = True  # Allow
     allow_population_by_field_name = True
     json_loads = JSON.loads
@@ -60,28 +73,52 @@ class JsonBaseModelDefaultConfig(JsonBaseConfig):
     ...
 
 
-class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
+def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], Dict[str, Any]]]:
+    return isinstance(v, (JsonObj, dict))
+
+
+def json_obj_before_validator(
+    v: Union[JsonObj[T], Dict[str, T], Any],
+) -> JsonObj[T]:
+    if not is_json_obj_like(v):
+        raise ValueError(f"Expected JsonObj, got {type(v)}")
+    if isinstance(v, JsonObj):
+        return v
+    return JsonObj(**v)
+
+
+TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(json_obj_before_validator)]
+
+
+class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-arg]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
-    Config = JsonBaseConfig
-
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        """Construct a JsonBaseModel and allow for `__post_init__` functions"""
-        if self.__custom_root_type__ and len(args) == 1 and "__root__" not in kwargs:
-            super().__init__(**{**kwargs, "__root__": args[0]})
-        else:
-            super().__init__(*args, **kwargs)
-        self.__post_init__()
+    model_config = json_model_base_config
 
     def __post_init__(self) -> Any:
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
 
+    @property
+    def _data(self) -> Dict[str, Any]:  # type: ignore[override]
+        return self.__dict__
+
     def __dumpable__(self) -> Dict[str, Any]:
-        return self.dict()
+        return self.model_dump()
 
     def __json_interface__(self) -> Dict[str, Any]:
-        return self.dict()
+        return self.model_dump()
+
+    # ===================================
+    # ALIASES (SANS DEPRECATION WARNINGS)
+    # ===================================
+    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
+        """Alias for `model_dump`"""
+        return self.model_dump(*args, **kwargs)
+
+    def json(self, *args: Any, **kwargs: Any) -> str:
+        """Alias for `model_dumps`"""
+        return self.model_dump_json(*args, **kwargs)
 
     def to_str(
         self,
@@ -90,7 +127,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         fmt_kwargs: bool = False,
     ) -> str:
         if fmt_kwargs:
-            return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"
+            return type(self).__name__ + "(" + self.__repr_str__(", ") + ")"  # type: ignore[misc]
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict_filter_none()) + ")"
         _width = width or get_terminal_size((88, 24)).columns - 12
@@ -134,7 +171,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             JsonObj(**{'a': 1, 'b': 'herm'})
 
         """
-        return {k: v for k, v in self.dict().items() if v is not None}
+        return {k: v for k, v in self.model_dump().items() if v is not None}
 
     def to_dict_filter_defaults(self) -> Dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default
@@ -163,7 +200,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         defaults = self.defaults_dict()
         return {
             k: v
-            for k, v in self.dict().items()
+            for k, v in self.model_dump().items()
             if k not in defaults or v != defaults[k]
         }
 
@@ -226,7 +263,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         **kwargs: Any,
     ) -> str:
         return JSON.dumps(
-            self.dict(),
+            self.model_dump(),
             fmt=fmt,
             pretty=pretty,
             sort_keys=sort_keys,
@@ -251,7 +288,7 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             bool: True if any fields for a (sub)class are required
 
         """
-        return any(val.required for val in cls.__fields__.values())
+        return any(val.is_required() for val in cls.model_fields.values())
 
     def is_default(self) -> bool:
         """Check if the object is equal to the default value for its fields
@@ -275,18 +312,24 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
         if self.has_required_fields():
             return False
         return all(
-            mfield.default == self[fname] for fname, mfield in self.__fields__.items()
+            mfield.default == self[fname] for fname, mfield in self.model_fields.items()
         )
 
     def __delattr__(self, item: str) -> Any:
-        if item in self.__private_attributes__:
+        if self.__pydantic_private__ is not None and item in self.__pydantic_private__:
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
-    def __getattr__(self, item: str) -> Any:
-        if item in self.__private_attributes__:
-            return object.__getattribute__(self, item)
-        return super().__getattr__(item)
+    def __iter__(self) -> Generator[Tuple[str, Any], None, None]:  # type: ignore[override]
+        return super().__iter__()
+
+    def __getitem__(self, item: str) -> Any:  # type: ignore[override]
+        try:
+            return super().__getattr__(item)
+        except AttributeError as ae:
+            if item in self._data:
+                return self._data[item]
+            raise ae from None
 
     @classmethod
     def defaults_dict(cls) -> Dict[str, Any]:
@@ -318,16 +361,12 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
             {'a': 1, 'b': 'herm'}
 
         """
-        return {k: v.default for k, v in cls.__fields__.items() if not v.required}
+        return {
+            k: v.default for k, v in cls.model_fields.items() if not v.is_required()
+        }
 
     def __setattr__(self, name: str, value: Any) -> None:
-        if name in self.__private_attributes__:
-            return object.__setattr__(self, name, value)
-        elif name in self.__property_fields__:
-            property_field = getattr(self.__class__, name)
-            property_field.fset(self, value)
-        else:
-            super().__setattr__(name, value)
+        return object.__setattr__(self, name, value)
 
     @property
     def __property_fields__(self) -> Set[str]:
@@ -347,20 +386,8 @@ class JsonBaseModel(BaseModel, JsonObj):  # type: ignore[misc, type-arg]
     @classmethod
     def _cls_field_names(cls) -> Set[str]:
         """Return pydantic field names"""
-        return set(cls.__fields__)
+        return set(cls.model_fields)
 
     def _field_names(self) -> Set[str]:
         """Return pydantic field names"""
         return self.__class__._cls_field_names()
-
-
-class JsonBaseSettings(BaseSettings, JsonBaseModel):  # type: ignore[misc]
-    """pydantic BaseSettings + JsonBaseModel"""
-
-    ...
-
-
-class JsonGenericModel(GenericModel, JsonBaseModel):  # type: ignore[misc]
-    """Hybrid `pydantic.generics.GenericModel` and `jsonbourne.JsonObj`"""
-
-    ...

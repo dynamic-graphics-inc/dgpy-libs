@@ -132,6 +132,11 @@ def is_number(value: Any) -> bool:
     return is_int(value) or is_float(value)
 
 
+def is_pydantic_model(cls: Any) -> bool:
+    """Return True if cls is a pydantic model"""
+    return hasattr(cls, "model_fields") or hasattr(cls, "__fields__")
+
+
 class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     """JSON friendly python dictionary with dot notation and string only keys
 
@@ -381,7 +386,21 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def __object_getattribute__(self, item: str) -> Any:
         return object.__getattribute__(self, item)
 
+    @classmethod
+    def _is_pydantic_model(cls) -> bool:
+        return is_pydantic_model(cls)
+
     def __getitem__(self, key: Union[_KT, Tuple[_KT, ...]]) -> Any:
+        if self._is_pydantic_model():
+            if isinstance(key, tuple):
+                if len(key) == 1:
+                    return jsonify(self.__object_getattribute__(key[0]))
+                raise ValueError(
+                    "Cannot use tuple with more than one item as a key for a Pydantic model"
+                )
+
+            return jsonify(self.__object_getattribute__(key))
+
         if isinstance(key, str):
             try:
                 return jsonify(self._data[key])
