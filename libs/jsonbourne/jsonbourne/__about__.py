@@ -5,4 +5,4 @@ __all__ = ("__title__", "__description__", "__pkgroot__", "__version__")
 __title__ = "jsonbourne"
 __description__ = "EZPZ JSON"
 __pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\")
-__version__ = "0.27.0"
+__version__ = "0.27.1"
