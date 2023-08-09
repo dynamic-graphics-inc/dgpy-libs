@@ -1597,7 +1597,7 @@ def b64_html_img(b64_string: Union[str, bytes], img_format: str) -> str:
     except UnicodeDecodeError as ude:
         raise ValueError(
             "bytes given instead of string;\n"
-            "tried to decode but got UnicodeDecodeError:\n{}".format(str(ude))
+            f"tried to decode but got UnicodeDecodeError:\n{str(ude)}"
         ) from ude
     return f'<img src="data:image/{img_format};base64,{b64_string}">'
 
@@ -1661,7 +1661,7 @@ def base64_jpg_html(b64_string: Union[str, bytes]) -> str:
     except UnicodeDecodeError as ude:
         raise ValueError(
             "bytes given instead of string;\n"
-            "tried to decode but got UnicodeDecodeError:\n{}".format(str(ude))
+            f"tried to decode but got UnicodeDecodeError:\n{str(ude)}"
         ) from ude
     return f'<img src="data:image/jpeg;base64,{str(b64_string)}">'
 
