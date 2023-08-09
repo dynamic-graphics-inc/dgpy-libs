@@ -171,13 +171,13 @@ files = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.27.0"
+version = "0.27.1"
 description = "EZPZ JSON"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "jsonbourne-0.27.0-py3-none-any.whl", hash = "sha256:9c38f5ced7d2d4c34ddd0cb36023f50fea352356e3495bff771aba49a192b002"},
-    {file = "jsonbourne-0.27.0.tar.gz", hash = "sha256:dd6b3b830f2862cffd7e4005384eebf6c5556a38ae256251baf1326d722502e4"},
+    {file = "jsonbourne-0.27.1-py3-none-any.whl", hash = "sha256:fe8471ec574c734e1979d942f93ec984526836e7548da1ee33500dfdbb92cb4f"},
+    {file = "jsonbourne-0.27.1.tar.gz", hash = "sha256:72a87b2832b0e713ac3c5e936ea26e539ad082168d93ac7a769105381476c664"},
 ]
 
 [package.dependencies]
