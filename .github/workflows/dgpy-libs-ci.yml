@@ -181,7 +181,7 @@ jobs:
     runs-on: ubuntu-latest
     # if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
         with:
           python-version: 3.8
@@ -203,19 +203,4 @@ jobs:
         run: poetry run mkdocs build
       - name: mkdocs build
         if: github.ref == 'refs/heads/main'
-        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-      - name: Cache .cache directory
-        if: github.ref == 'refs/heads/main'
-        uses: actions/cache@v3
-        with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-      - name: Install mkdocs-material
-        if: github.ref == 'refs/heads/main'
-        run: pip install mkdocs-material
-
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
-        run: mkdocs gh-deploy --force
+        run: poetry run mkdocs gh-deploy --force
