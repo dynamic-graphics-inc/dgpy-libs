@@ -193,14 +193,14 @@ jobs:
       #     curl -sSL https://install.python-poetry.org | python3 -
       #     which poetry
       #     poetry config virtualenvs.create false
-      - name: poetry instal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 l
+      - name: poetry install
         run: |
           poetry install
       - name: install docs deps
         run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python] markdown-callouts
       - name: mkdocs build
         if: github.ref != 'refs/heads/main'
-        run: poetry run mkdocs build
+        run: poetry run mkdocs build --force
       - name: mkdocs build
         if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force
