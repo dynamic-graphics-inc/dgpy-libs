@@ -177,6 +177,9 @@ jobs:
 #          name: pypi_files
 #          path: dist
   mkdocs:
+    permissions:
+      contents: write
+      deployments: write
     needs: [lint, test]
     runs-on: ubuntu-latest
     # if: github.ref == 'refs/heads/main'
@@ -202,8 +205,6 @@ jobs:
         if: github.ref != 'refs/heads/main'
         run: poetry run mkdocs build
       - name: mkdocs build
-        permissions:
-          contents: write
-          deployments: write
+
         if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force
