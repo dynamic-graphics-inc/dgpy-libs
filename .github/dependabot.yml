@@ -10,69 +10,125 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      main-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/aiopen"
     schedule:
       interval: "daily"
+    groups:
+      aiopen-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/asyncify"
     schedule:
       interval: "daily"
+    groups:
+      asyncify-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/fmts"
     schedule:
       interval: "daily"
+    groups:
+      fmts-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/funkify"
     schedule:
       interval: "daily"
+    groups:
+      funkify-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/h5"
     schedule:
       interval: "daily"
+    groups:
+      h5-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/jsonbourne"
     schedule:
       interval: "daily"
+    groups:
+      jsonbourne-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/lager"
     schedule:
       interval: "daily"
+    groups:
+      lager-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/listless"
     schedule:
       interval: "daily"
+    groups:
+      listless-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/requires"
     schedule:
       interval: "daily"
+    groups:
+      requires-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/shellfish"
     schedule:
       interval: "daily"
+    groups:
+      shellfish-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/xtyping"
     schedule:
       interval: "daily"
+    groups:
+      xtyping-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "pip"
     directory: "/libs/dgpytest"
     schedule:
       interval: "daily"
+    groups:
+      dgpytest-dependencies:
+        patterns:
+          - "*"
 
   # Last in list b/c it depends on all the others...
   - package-ecosystem: "pip"
     directory: "/libs/dgpylibs"
     schedule:
       interval: "daily"
+    groups:
+      dgpylibs-dependencies:
+        patterns:
+          - "*"
