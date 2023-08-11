@@ -202,7 +202,8 @@ jobs:
         if: github.ref != 'refs/heads/main'
         run: poetry run mkdocs build
       - name: mkdocs build
+        permissions:
+          contents: write
+          deployments: write
         if: github.ref == 'refs/heads/main'
         run: poetry run mkdocs gh-deploy --force
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
