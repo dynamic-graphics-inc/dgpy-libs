@@ -200,7 +200,7 @@ jobs:
         run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python] markdown-callouts
       - name: mkdocs build
         if: github.ref != 'refs/heads/main'
-        run: poetry run mkdocs build --force
+        run: poetry run mkdocs build
       - name: mkdocs build
         if: github.ref == 'refs/heads/main'
-        run: poetry run mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --force
