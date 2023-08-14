@@ -204,6 +204,31 @@ def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
     return islice(it, n)
 
 
+def is_subscriptable(obj: Any) -> bool:
+    """Check if an object is subscriptable
+
+    Examples:
+        >>> is_subscriptable([1, 2, 3])
+        True
+        >>> is_subscriptable('abc')
+        True
+        >>> is_subscriptable(1)
+        False
+        >>> is_subscriptable(None)
+        False
+        >>> is_subscriptable(True)
+        False
+        >>> is_subscriptable((1, 2, 3))
+        True
+
+    """
+    try:
+        obj[0]
+    except TypeError:
+        return False
+    return True
+
+
 def is_sequence(seq: Any) -> bool:
     """Check if an object is a sequence
 
@@ -229,7 +254,9 @@ def is_sequence(seq: Any) -> bool:
         len(seq)
     except TypeError:
         return False
-    return True
+    if is_subscriptable(seq):
+        return True
+    return False
 
 
 def chunkseq(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:

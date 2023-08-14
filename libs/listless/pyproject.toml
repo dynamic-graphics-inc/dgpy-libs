@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "listless"
-version = "0.1.5"
+version = "0.1.6"
 description = "generator utils; aka listless"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
