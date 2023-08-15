@@ -11,7 +11,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      main-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -20,7 +20,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      aiopen-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -29,7 +29,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      asyncify-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -38,7 +38,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      fmts-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -47,7 +47,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      funkify-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -56,7 +56,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      h5-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -65,7 +65,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      jsonbourne-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -74,7 +74,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      lager-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -83,7 +83,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      listless-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -92,7 +92,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      requires-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -101,7 +101,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      shellfish-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -119,7 +119,7 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      dgpytest-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
 
@@ -129,6 +129,6 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      dgpylibs-dependencies:
+      dev-dependencies:
         patterns:
           - "*"
