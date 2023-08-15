@@ -281,13 +281,13 @@ loguru = ">=0.7.0"
 
 [[package]]
 name = "listless"
-version = "0.1.5"
+version = "0.1.6"
 description = "generator utils; aka listless"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "listless-0.1.5-py3-none-any.whl", hash = "sha256:ce8347342e987437127592074cf229b879e7e66d1866af68f8eaeed25f2914cc"},
-    {file = "listless-0.1.5.tar.gz", hash = "sha256:36eb60edbafd213112cbab34e3b18cc7f389a999afc47bb6c6f5870f6a390c0b"},
+    {file = "listless-0.1.6-py3-none-any.whl", hash = "sha256:91633ed2de934ca531f9234aa9fb6d6c5fc4aecfed9e913f983e28f77570da2c"},
+    {file = "listless-0.1.6.tar.gz", hash = "sha256:daff1628cc9fb9c5c3c9f8099fc44ed5ef8d88dc6c1ac1c6da94d447258455d1"},
 ]
 
 [[package]]
