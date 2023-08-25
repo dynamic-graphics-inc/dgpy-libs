@@ -1046,14 +1046,11 @@ min-versions = ["babel (==2.9.0)", "click (==7.0)", "colorama (==0.4)", "ghp-imp
 
 [[package]]
 name = "mkdocs-material"
-version = "8.5.4"
+version = "8.3.9"
 description = "Documentation that simply works"
 optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "mkdocs_material-8.5.4-py3-none-any.whl", hash = "sha256:aec2f0f2143109f8388aadf76e6fff749a2b74ebe730d0f674c65b53da89d19d"},
-    {file = "mkdocs_material-8.5.4.tar.gz", hash = "sha256:70dc47820d4765b77968b9119f2957d09b4d8d328d950bee4544ff224d5c7b36"},
-]
+python-versions = ">=3.9"
+
 
 [package.dependencies]
 jinja2 = ">=3.0.2"
