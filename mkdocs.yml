@@ -36,7 +36,7 @@ nav:
       - asyncify: './libs/asyncify/asyncify.api.md'
       - fmts: './libs/fmts/fmts.api.md'
       - funkify: './libs/funkify/funkify.api.md'
-      - h5: './libs/h5/h5.api.md'
+      # - h5: './libs/h5/h5.api.md' # mkdocs currently can't parse
       - requires: './libs/requires/requires.api.md'
       - listless: './libs/listless/listless.api.md'
       - jsonbourne: './libs/jsonbourne/jsonbourne.api.md'
