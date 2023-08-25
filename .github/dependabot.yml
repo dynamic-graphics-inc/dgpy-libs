@@ -90,7 +90,7 @@ updates:
   - package-ecosystem: "pip"
     directory: "/libs/requires"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     groups:
       dev-dependencies:
         patterns:
