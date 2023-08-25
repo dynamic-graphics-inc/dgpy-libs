@@ -58,7 +58,7 @@ class DatasetInfoDict(TypedDict):
     size: int
     nbytes: int
     compression: Optional[H5pyCompression]
-    compression_opts: Union[Tuple[int, int], int, None]
+    compression_opts: Optional[Union[Tuple[int, int], int]]
     maxshape: Optional[Tuple[int, ...]]
     chunks: Optional[Tuple[int, ...]]
 
@@ -158,7 +158,7 @@ class DatasetInfo(H5Mixin):
     nbytes: int
     h5type: Literal["dataset"] = "dataset"
     compression: Optional[H5pyCompression] = None
-    compression_opts: Union[Tuple[int, int], int, None] = None
+    compression_opts: Optional[Union[Tuple[int, int], int]] = None
     maxshape: Optional[Tuple[int, ...]] = None
     chunks: Optional[Tuple[int, ...]] = None
 

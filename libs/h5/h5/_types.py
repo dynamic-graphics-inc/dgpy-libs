@@ -35,6 +35,5 @@ a        Read/write if exists, create otherwise
 ```
 """
 H5pyMode = Literal["r", "r+", "w", "w-", "x", "a"]
-H5pyDriverTypes = Literal["core", "sec2", "direct", "stdio", "mpio", "ros3"]
-H5pyDriver = Optional[H5pyDriverTypes]
+H5pyDriver = Optional[Literal["core", "sec2", "direct", "stdio", "mpio", "ros3"]]
 H5pyAttributesDict = Dict[str, Union[str, int, float, bool, npt.NDArray[Any]]]
