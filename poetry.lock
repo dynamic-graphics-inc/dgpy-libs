@@ -33,25 +33,25 @@ typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "anyio"
-version = "3.7.1"
+version = "4.0.0"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "anyio-3.7.1-py3-none-any.whl", hash = "sha256:91dee416e570e92c64041bd18b900d1d6fa78dff7048769ce5ac5ddad004fbb5"},
-    {file = "anyio-3.7.1.tar.gz", hash = "sha256:44a3c9aba0f5defa43261a8b3efb97891f2bd7d804e0e1f56419befa1adfc780"},
+    {file = "anyio-4.0.0-py3-none-any.whl", hash = "sha256:cfdb2b588b9fc25ede96d8db56ed50848b0b649dca3dd1df0b11f683bb9e0b5f"},
+    {file = "anyio-4.0.0.tar.gz", hash = "sha256:f7ed51751b2c2add651e5747c891b47e26d2a21be5d32d9311dfe9692f3e5d7a"},
 ]
 
 [package.dependencies]
-exceptiongroup = {version = "*", markers = "python_version < \"3.11\""}
+exceptiongroup = {version = ">=1.0.2", markers = "python_version < \"3.11\""}
 idna = ">=2.8"
 sniffio = ">=1.1"
-trio = {version = "<0.22", optional = true, markers = "extra == \"trio\""}
+trio = {version = ">=0.22", optional = true, markers = "extra == \"trio\""}
 
 [package.extras]
-doc = ["Sphinx", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme (>=1.2.2)", "sphinxcontrib-jquery"]
-test = ["anyio[trio]", "coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "mock (>=4)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
-trio = ["trio (<0.22)"]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)"]
+test = ["anyio[trio]", "coverage[toml] (>=7)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (>=0.22)"]
 
 [[package]]
 name = "appnope"
@@ -94,17 +94,6 @@ six = "*"
 
 [package.extras]
 test = ["astroid", "pytest"]
-
-[[package]]
-name = "async-generator"
-version = "1.10"
-description = "Async generators and context managers for Python 3.5+"
-optional = false
-python-versions = ">=3.5"
-files = [
-    {file = "async_generator-1.10-py3-none-any.whl", hash = "sha256:01c7bf666359b4967d2cda0000cc2e4af16a0ae098cbffcb8472fb9e8ad6585b"},
-    {file = "async_generator-1.10.tar.gz", hash = "sha256:6ebb3d106c12920aaae42ccb6f787ef5eefdcdd166ea3d628fa8476abe712144"},
-]
 
 [[package]]
 name = "asyncify"
@@ -1776,13 +1765,13 @@ test = ["coverage[toml]", "pymdown-extensions", "pytest", "pytest-cov"]
 
 [[package]]
 name = "mkdocs-material"
-version = "9.2.5"
+version = "9.2.6"
 description = "Documentation that simply works"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mkdocs_material-9.2.5-py3-none-any.whl", hash = "sha256:315a59725f0565bccfec7f9d1313beae7658bf874a176264b98f804a0cbc1298"},
-    {file = "mkdocs_material-9.2.5.tar.gz", hash = "sha256:02b4d1f662bc022e9497411e679323c30185e031a08a7004c763aa8d47ae9a29"},
+    {file = "mkdocs_material-9.2.6-py3-none-any.whl", hash = "sha256:84bc7e79c1d0bae65a77123efd5ef74731b8c3671601c7962c5db8dba50a65ad"},
+    {file = "mkdocs_material-9.2.6.tar.gz", hash = "sha256:3806c58dd112e7b9677225e2021035ddbe3220fbd29d9dc812aa7e01f70b5e0a"},
 ]
 
 [package.dependencies]
@@ -3392,19 +3381,19 @@ test = ["argcomplete (>=2.0)", "pre-commit", "pytest", "pytest-mock"]
 
 [[package]]
 name = "trio"
-version = "0.21.0"
+version = "0.22.2"
 description = "A friendly Python library for async concurrency and I/O"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "trio-0.21.0-py3-none-any.whl", hash = "sha256:4dc0bf9d5cc78767fc4516325b6d80cc0968705a31d0eec2ecd7cdda466265b0"},
-    {file = "trio-0.21.0.tar.gz", hash = "sha256:523f39b7b69eef73501cebfe1aafd400a9aad5b03543a0eded52952488ff1c13"},
+    {file = "trio-0.22.2-py3-none-any.whl", hash = "sha256:f43da357620e5872b3d940a2e3589aa251fd3f881b65a608d742e00809b1ec38"},
+    {file = "trio-0.22.2.tar.gz", hash = "sha256:3887cf18c8bcc894433420305468388dac76932e9668afa1c49aa3806b6accb3"},
 ]
 
 [package.dependencies]
-async-generator = ">=1.9"
-attrs = ">=19.2.0"
+attrs = ">=20.1.0"
 cffi = {version = ">=1.14", markers = "os_name == \"nt\" and implementation_name != \"pypy\""}
+exceptiongroup = {version = ">=1.0.0rc9", markers = "python_version < \"3.11\""}
 idna = "*"
 outcome = "*"
 sniffio = "*"
@@ -3620,4 +3609,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4"
-content-hash = "406d6c8fc7de65986240359d5a6326a21b361d4aed35afd181f239210502632b"
+content-hash = "8b508e73dc5ff96116a6409a72e1d839f7e15fc71dd25c29e0abb4931bfff785"
