@@ -31,7 +31,7 @@ async def test_serve_small_bin_file_sync(
         full_filename = str(file)
         with open(full_filename, "rb") as f:
             writer.write(f.read())
-        await writer.close()
+        writer.close()
 
     if sys.version_info < (3, 8):
         server = await asyncio.start_server(
@@ -56,7 +56,6 @@ async def test_serve_small_bin_file_sync(
 
     assert payload == file_content
 
-    server.close()
     await server.wait_closed()
 
 
@@ -76,7 +75,7 @@ async def test_serve_small_bin_file(
         f = await aio.aiopen(full_filename, mode="rb")
         writer.write(await f.read())
         await f.close()
-        await writer.close()
+        writer.close()
 
     if sys.version_info < (3, 8):
         server = await asyncio.start_server(
@@ -99,8 +98,5 @@ async def test_serve_small_bin_file(
 
     payload = await reader.read()
 
-
-    server.close()
-    await server.wait_closed()
-
     assert payload == file_content
+    await server.wait_closed()
