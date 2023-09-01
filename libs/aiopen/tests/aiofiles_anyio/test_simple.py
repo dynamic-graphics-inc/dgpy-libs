@@ -56,7 +56,7 @@ async def test_serve_small_bin_file_sync(
 
     assert payload == file_content
 
-    await server.close()
+    server.close()
     await server.wait_closed()
 
 
@@ -100,7 +100,7 @@ async def test_serve_small_bin_file(
     payload = await reader.read()
 
 
-    await server.close()
+    server.close()
     await server.wait_closed()
 
     assert payload == file_content
