@@ -56,7 +56,7 @@ async def test_serve_small_bin_file_sync(
 
     assert payload == file_content
 
-    await server.wait_closed()
+    await server.close()
 
 
 @pytest.mark.anyio()
@@ -99,4 +99,4 @@ async def test_serve_small_bin_file(
     payload = await reader.read()
 
     assert payload == file_content
-    await server.wait_closed()
+    await server.close()
