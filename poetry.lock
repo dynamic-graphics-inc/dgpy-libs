@@ -684,7 +684,7 @@ develop = true
 
 [package.dependencies]
 pytest = ">=7.2.2"
-pytest-asyncio = "^0.21.0"
+pytest-asyncio = "^0.21.1"
 
 [package.source]
 type = "directory"
