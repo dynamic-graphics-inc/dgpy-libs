@@ -84,7 +84,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
-          pip install tomli
+          pip install tomli uvloop anyio
 
       - name: test-dgpydev
         run: |
