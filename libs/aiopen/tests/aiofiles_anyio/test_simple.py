@@ -52,7 +52,6 @@ async def test_serve_small_bin_file_sync(
             port=unused_tcp_port,
         )
 
-
     payload = await reader.read()
 
     assert payload == file_content
