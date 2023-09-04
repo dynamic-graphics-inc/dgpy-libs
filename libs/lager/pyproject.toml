@@ -35,7 +35,7 @@ python = "^3.8"
 loguru = ">=0.7.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.4.0"
+pytest = "^7.4.1"
 pytest-cov = "^4.1.0"
 
 [tool.poetry.group.dev.dependencies]
