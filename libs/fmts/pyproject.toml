@@ -60,7 +60,7 @@ keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
 python = "^3.7"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.4.1"
+pytest = "^7.4.2"
 
 [build-system]
 requires = ["pdm-pep517"]
