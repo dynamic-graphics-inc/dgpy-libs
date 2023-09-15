@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Simple tests verifying basic functionality."""
 import asyncio
-import sys
 
 from asyncio import AbstractEventLoop
 from pathlib import Path
@@ -33,24 +32,16 @@ async def test_serve_small_bin_file_sync(
             writer.write(f.read())
         writer.close()
 
-    if sys.version_info < (3, 8):
-        server = await asyncio.start_server(
-            serve_file, port=unused_tcp_port, loop=event_loop
-        )
 
-        reader, _ = await asyncio.open_connection(
-            host="localhost", port=unused_tcp_port, loop=event_loop
-        )
-    else:
-        server = await asyncio.start_server(
-            serve_file,
-            port=unused_tcp_port,
-        )
+    server = await asyncio.start_server(
+        serve_file,
+        port=unused_tcp_port,
+    )
 
-        reader, _ = await asyncio.open_connection(
-            host="localhost",
-            port=unused_tcp_port,
-        )
+    reader, _ = await asyncio.open_connection(
+        host="localhost",
+        port=unused_tcp_port,
+    )
 
     payload = await reader.read()
 
@@ -78,24 +69,15 @@ async def test_serve_small_bin_file(
         await f.close()
         writer.close()
 
-    if sys.version_info < (3, 8):
-        server = await asyncio.start_server(
-            serve_file, port=unused_tcp_port, loop=event_loop
-        )
+    server = await asyncio.start_server(
+        serve_file,
+        port=unused_tcp_port,
+    )
 
-        reader, _ = await asyncio.open_connection(
-            host="localhost", port=unused_tcp_port, loop=event_loop
-        )
-    else:
-        server = await asyncio.start_server(
-            serve_file,
-            port=unused_tcp_port,
-        )
-
-        reader, _ = await asyncio.open_connection(
-            host="localhost",
-            port=unused_tcp_port,
-        )
+    reader, _ = await asyncio.open_connection(
+        host="localhost",
+        port=unused_tcp_port,
+    )
 
     payload = await reader.read()
 
