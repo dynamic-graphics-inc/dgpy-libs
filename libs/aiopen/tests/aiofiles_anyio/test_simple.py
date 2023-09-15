@@ -32,7 +32,6 @@ async def test_serve_small_bin_file_sync(
             writer.write(f.read())
         writer.close()
 
-
     server = await asyncio.start_server(
         serve_file,
         port=unused_tcp_port,
