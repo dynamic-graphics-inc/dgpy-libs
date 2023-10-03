@@ -82,11 +82,11 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.291"
+ruff = "^0.0.292"
 anyio = { extras = ["trio"], version = "^3.7.1" }
 nox = "^2023.4.22"
 packaging = "^23.2"
-codespell = "^2.2.4"
+codespell = "^2.2.6"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
