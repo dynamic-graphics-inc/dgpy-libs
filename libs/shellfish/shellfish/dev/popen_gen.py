@@ -59,10 +59,10 @@ def popen_pipes_gen(
             q_stderr: Queue[AnyStr] = Queue()
             _block = True
             stdout_future = pool.submit(
-                _enqueue_output_iter_readline, proc.stdout, q_stdout, _block  # type: ignore[arg-type]
+                _enqueue_output_iter_readline, proc.stdout, q_stdout, _block
             )
             stderr_future = pool.submit(
-                _enqueue_output_iter_readline, proc.stderr, q_stderr, _block  # type: ignore[arg-type]
+                _enqueue_output_iter_readline, proc.stderr, q_stderr, _block
             )
             while proc.poll() is None:
                 try:
