@@ -1,6 +1,6 @@
 [project]
 name = "fmts"
-version = "0.1.5"
+version = "0.2.0"
 description = "str transformation utils"
 authors = [
   { name = "jesse", email = "jessekrubin@gmail.com" },

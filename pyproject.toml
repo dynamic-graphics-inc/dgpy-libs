@@ -228,7 +228,7 @@ include = [
   "libs/fmts",
   "libs/funkify",
   "libs/h5",
-  "libs/jsonbourne",
+  "libs/jsonbourne/jsonbourne",
   "libs/lager",
   "libs/listless",
   "libs/requires",
