@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dgpylibs"
-version = "0.0.6"
+version = "0.0.7"
 description = "Dynamic Graphics Python libraries"
 authors = ["jessekrubin <jesse@dgi.com>"]
 license = "MIT"

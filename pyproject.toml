@@ -416,5 +416,5 @@ known_first_party = [
 ]
 
 [tool.codespell]
-skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*"
+skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*,./poetry.lock"
 ignore-words-list = "opps,te"

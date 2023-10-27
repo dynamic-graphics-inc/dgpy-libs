@@ -15,10 +15,11 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
 keywords = [
@@ -30,8 +31,8 @@ keywords = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-funkify = "^0.4.0"
+python = "^3.8"
+funkify = ">=0.4.0"
 xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]

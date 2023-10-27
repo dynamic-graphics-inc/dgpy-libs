@@ -26,4 +26,4 @@ def echo(
         shellfish
 
     """
-    print(*objects, sep=sep, end=end, file=file, flush=flush)  # ruff: noqa: T201
+    print(*objects, sep=sep, end=end, file=file, flush=flush)
