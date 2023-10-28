@@ -34,6 +34,7 @@ from typing import (
 )
 
 from pydantic import GetCoreSchemaHandler
+
 from jsonbourne import jsonlib
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)

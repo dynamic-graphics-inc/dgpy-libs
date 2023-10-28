@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import cast, overload
 
+from pydantic import GetCoreSchemaHandler
+
 from xtyping import (
     Any,
     Callable,
@@ -20,7 +22,6 @@ from xtyping import (
     TypeVar,
     Union,
 )
-from pydantic import GetCoreSchemaHandler
 
 __all__ = (
     "JsonArr",
