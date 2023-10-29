@@ -64,7 +64,7 @@ def flake_tests(session: nox.Session) -> None:
 
 
 def install_common_test_deps(session: nox.Session) -> None:
-    session.install("pytest", "pytest-cov", "coverage", "xtyping", "jsonc2json", "pydantic")
+    session.install("pytest", "pytest-cov", "coverage", "xtyping", "jsonc2json")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -115,6 +115,7 @@ def jsonlibs_test(session: nox.Session) -> None:
     install_common_test_deps(session)
     session.install("orjson")
     session.install("python-rapidjson")
+    session.install("pydantic")
     session.install("numpy")
     session.run(
         "pytest",
