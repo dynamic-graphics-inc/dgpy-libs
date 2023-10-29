@@ -85,7 +85,7 @@ def pytest(session: nox.Session) -> None:
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def pydantic_test(session: nox.Session) -> None:
     install_common_test_deps(session)
-    session.install("pydantic<2", "fastapi", "httpx", "orjson")
+    session.install("pydantic", "fastapi", "httpx", "orjson")
     session.run(
         "pytest",
         "--cov",
