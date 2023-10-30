@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import cast, overload
 
+from pydantic import GetCoreSchemaHandler
+
 from xtyping import (
     Any,
     Callable,
@@ -220,7 +222,9 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         return cls(val)
 
     @classmethod
-    def __get_validators__(cls) -> Iterator[Callable[[Any], Any]]:
+    def __get_type_validator__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> Iterator[Callable[[Any], Any]]:
         """Return the JsonObj validator functions"""
         yield cls.validate_type
 

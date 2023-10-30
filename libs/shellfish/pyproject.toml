@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.4.0"
+version = "0.5.0"
 description = "shellfish ~ shell & file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -15,10 +15,11 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
 keywords = [
@@ -30,9 +31,9 @@ keywords = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 pydantic = ">=2.0.3"
-aiopen = "^0.5.0"
+aiopen = ">=0.5.0"
 asyncify = ">=0.9.1"
 funkify = ">=0.4.0"
 jsonbourne = ">=0.27.0"
@@ -96,4 +97,3 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
-target-version = "py37"

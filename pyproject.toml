@@ -228,7 +228,7 @@ include = [
   "libs/fmts",
   "libs/funkify",
   "libs/h5",
-  "libs/jsonbourne",
+  "libs/jsonbourne/jsonbourne",
   "libs/lager",
   "libs/listless",
   "libs/requires",
@@ -416,5 +416,5 @@ known_first_party = [
 ]
 
 [tool.codespell]
-skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*"
+skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*,./poetry.lock"
 ignore-words-list = "opps,te"

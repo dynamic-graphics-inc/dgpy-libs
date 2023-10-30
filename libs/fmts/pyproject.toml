@@ -1,23 +1,24 @@
 [project]
 name = "fmts"
-version = "0.1.5"
+version = "0.2.0"
 description = "str transformation utils"
 authors = [
   { name = "jesse", email = "jessekrubin@gmail.com" },
   { name = "jesse", email = "jesse@dgi.com" },
 ]
 dependencies = []
-requires-python = ">=3.6.2,<4.0"
+requires-python = ">=3.7.0,<4.0"
 license = { text = "MIT" }
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
 keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
@@ -34,7 +35,7 @@ dev = ["pytest<7.0.0,>=6.2.2"]
 
 [tool.poetry]
 name = "fmts"
-version = "0.1.5"
+version = "0.2.0"
 description = "str transformation utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -47,17 +48,17 @@ classifiers = [
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
 keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4.3"
