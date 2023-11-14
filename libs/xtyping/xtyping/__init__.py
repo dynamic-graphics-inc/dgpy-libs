@@ -523,6 +523,7 @@ __all__ = (
     "__all_typing_extensions_future__",
     "__version__",
     "annotated_types",
+    "annotations",
     "cast",
     "final",
     "get_args",

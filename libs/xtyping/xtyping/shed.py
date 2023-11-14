@@ -639,6 +639,7 @@ __all__ = (
     "__all_typing__",
     "__all_typing_extensions__",
     "__all_typing_extensions_future__",
+    "annotations",
     "null",
 )
 __all_shed__ = __all__
