@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """typing + typing_extensions + misc types/aliases"""
+from __future__ import annotations
+
 import typing
 
 from typing import (
@@ -521,6 +523,7 @@ __all__ = (
     "__all_typing_extensions_future__",
     "__version__",
     "annotated_types",
+    "annotations",
     "cast",
     "final",
     "get_args",

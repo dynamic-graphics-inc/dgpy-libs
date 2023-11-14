@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import annotations
+
 from typing import Any
 
 try:
@@ -7,7 +9,7 @@ try:
 
     _SINKS = []
 
-    class HttpxSink(object):
+    class HttpxSink:
         def __init__(self, url: str, *args: Any, **kwargs: Any) -> None:
             self.url = url
             self.client = httpx.AsyncClient(*args, **kwargs)

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Asyncify"""
+from __future__ import annotations
+
 from asyncify.__about__ import __version__
 from asyncify.core import (
     ANYIO,

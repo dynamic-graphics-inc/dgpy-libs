@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pytest
 
 from asyncify import aiorun, aiorun_anyio, aiorun_asyncio

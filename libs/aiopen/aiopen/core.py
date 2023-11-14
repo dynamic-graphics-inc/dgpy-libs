@@ -3,6 +3,8 @@
 
 Inspired by aiofiles
 """
+from __future__ import annotations
+
 import asyncio
 
 from asyncio import AbstractEventLoop, BaseEventLoop
@@ -37,7 +39,7 @@ from xtyping import ParamSpec
 P = ParamSpec("P")
 T = TypeVar("T")
 
-PathType = Union[str, PathLike]
+PathType = Union[str, PathLike[Any]]
 
 _open = open
 __all__ = ("aiopen",)

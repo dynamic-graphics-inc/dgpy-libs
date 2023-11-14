@@ -7,6 +7,9 @@ Tests for `lager` module.
 """
 
 
+from __future__ import annotations
+
+
 def test_lager_port() -> None:
     from lager import const
 

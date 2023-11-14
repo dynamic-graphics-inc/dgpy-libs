@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
 """Listless = generators, iterators, and async iterators, Oh My!"""
+from __future__ import annotations
+
 import asyncio
 
 from collections import deque

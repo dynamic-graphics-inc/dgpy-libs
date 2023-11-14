@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Asyncify core"""
 
+from __future__ import annotations
+
 import asyncio
 import warnings
 

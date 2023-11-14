@@ -19,7 +19,7 @@ __all__ = (
     "H5pyAttributesDict",
 )
 
-FsPath = Union[str, Path, PathLike]
+FsPath = Union[str, Path, PathLike[Any]]
 FileOrGroup = Union[File, Group]
 GroupLikeOrFsPath = Union[File, Group, FsPath]
 H5pyCompression = Literal["gzip", "lzf", "szip"]

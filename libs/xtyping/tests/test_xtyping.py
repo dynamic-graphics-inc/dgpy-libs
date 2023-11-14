@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
+
 from os import path
 from pprint import pformat
 from typing import Tuple

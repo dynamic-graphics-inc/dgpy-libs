@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """psutils-utils"""
 
+from __future__ import annotations
+
 try:  # pragma: no cover
     import psutil
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from _pytest.config import Config
 from _pytest.mark import Mark
 

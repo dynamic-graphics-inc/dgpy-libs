@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Python lager brewed by a loguru"""
+from __future__ import annotations
+
 from lager import logging
 from lager.__about__ import __version__
 from lager.const import LAGER_PORT, LOGURU_DEFAULT_FMT, TORNADO_FMT

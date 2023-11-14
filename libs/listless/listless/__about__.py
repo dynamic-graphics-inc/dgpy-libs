@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
 
+from __future__ import annotations
+
 __all__ = ("__title__", "__description__", "__pkgroot__", "__version__")
 __title__ = "listless"
 __description__ = "generator utils; aka listless"

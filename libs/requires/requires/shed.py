@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Pre-fab requirements"""
+from __future__ import annotations
+
 from requires import Requirement
 
 __all__ = (

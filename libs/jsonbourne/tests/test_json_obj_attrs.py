@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 # type: ignore
+from __future__ import annotations
+
 from typing import Dict, Union
 
 import pytest
