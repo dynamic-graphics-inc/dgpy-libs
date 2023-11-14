@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from os import stat_result as os_stat_result
 from pathlib import Path
 

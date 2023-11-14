@@ -3,6 +3,8 @@
 
 Dynamic Graphics Python
 """
+from __future__ import annotations
+
 from jsonbourne import jsonlib
 from jsonbourne.__about__ import __version__
 from jsonbourne.core import (

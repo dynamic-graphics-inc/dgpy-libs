@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Package metadata/info"""
+from __future__ import annotations
+
 import warnings
 
 from jsonbourne.__about__ import __description__, __pkgroot__, __title__, __version__

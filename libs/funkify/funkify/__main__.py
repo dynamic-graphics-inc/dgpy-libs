@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """pkg entry ~ `python -m funkify`"""
+from __future__ import annotations
+
 import sys
 
 from funkify.__about__ import __pkgroot__, __title__, __version__

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from __future__ import annotations
+
 from os import path
 from pathlib import Path
 from subprocess import TimeoutExpired

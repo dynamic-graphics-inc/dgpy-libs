@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """pkg entry ~ `python -m listless`"""
+from __future__ import annotations
+
 import sys
 
 from listless.__about__ import __pkgroot__, __title__, __version__

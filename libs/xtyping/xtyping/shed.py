@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """xtyping = typing | typing_extensions | misc"""
+from __future__ import annotations
+
 from enum import Enum
 from os import PathLike
 from pathlib import Path
@@ -365,8 +367,8 @@ HrTime = Tuple[int, int]  # node/js hrtime type annotation
 ###############################
 ## Function type annotations ##
 ###############################
-FsPath = Union[str, Path, PathLike]
-FsPathLike = PathLike
+FsPath = Union[str, Path, PathLike[Any]]
+FsPathLike = PathLike[Any]
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
 CmdArgs = CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
@@ -393,7 +395,6 @@ OptFloat = Optional[float]
 ##########
 ## JSON ##
 ##########
-# Json friendly: Union[None, bool, int, float, str, List[Any], Dict[str, Any]]
 JsonPrimitive = Union[None, bool, int, float, str]
 Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]
 JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]
@@ -405,9 +406,9 @@ JsonArrT = List[Any]
 ###################
 ## FROM TYPESHED ##
 ###################
-StrPath = Union[str, PathLike]  # stable
-BytesPath = Union[bytes, PathLike]  # stable
-StrOrBytesPath = Union[str, bytes, PathLike]
+StrPath = Union[str, PathLike[str]]  # stable
+BytesPath = Union[bytes, PathLike[bytes]]  # stable
+StrOrBytesPath = Union[str, bytes, PathLike[Any]]
 
 OpenTextModeUpdating = Literal[
     "r+",

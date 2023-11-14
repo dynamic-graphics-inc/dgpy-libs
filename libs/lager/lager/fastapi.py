@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """FastAPI logging"""
+from __future__ import annotations
+
 from typing import List, Optional, Set, Tuple, Union
 
 from lager.logging import intercept

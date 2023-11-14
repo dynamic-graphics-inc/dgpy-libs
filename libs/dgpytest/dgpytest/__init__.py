@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
 """dgpytest = dgpy + pytest"""
+from __future__ import annotations
+
 import sys
 
 from os import environ

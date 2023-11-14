@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """pkg entry ~ `python -m dgpylibs`"""
+from __future__ import annotations
+
 import sys
 
 from dgpylibs import DgpyLibsMetadataDict, dgpylibs_metadata

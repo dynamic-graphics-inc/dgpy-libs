@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Echo/Print"""
+from __future__ import annotations
+
 from typing import IO, Any, Optional
 
 __all__ = ("echo",)
