@@ -12,6 +12,7 @@ from pprint import pformat
 from shutil import get_terminal_size
 from types import ModuleType
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -33,9 +34,10 @@ from typing import (
     overload,
 )
 
-from pydantic import GetCoreSchemaHandler
-
 from jsonbourne import jsonlib
+
+if TYPE_CHECKING:
+    from pydantic import GetCoreSchemaHandler
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)
 JsonObjT = TypeVar("JsonObjT", bound="JsonObj[Any]")

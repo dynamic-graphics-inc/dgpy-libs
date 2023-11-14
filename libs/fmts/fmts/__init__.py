@@ -608,7 +608,7 @@ def nseconds(nsec: float) -> str:
         return f"{(10 ** 3) * nsec:.3f} ms"
     elif nsec < 60:
         return f"{nsec:.3f} sec"
-    elif 3600 > nsec >= 60:
+    elif nsec < 3600:
         minutes = nsec // 60
         nsec %= 60
         return f"{minutes:02d}:{nsec:02d} (mm:ss)"
@@ -1843,11 +1843,6 @@ def str_is_identifier(string: str) -> bool:
 
     """
     return string.isidentifier() and not iskeyword(string)
-    if not string.isidentifier():
-        return False
-    if iskeyword(string):
-        return False
-    return True
 
 
 @anystr
