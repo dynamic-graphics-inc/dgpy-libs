@@ -60,7 +60,7 @@ pytest-cov = "^4.1.0"
 python-rapidjson = "^1.13"
 xdoctest = ">=1.0.1"
 click = "^8.1.7"
-mypy = "^1.6"
+mypy = "^1.7"
 pydantic = ">=2.0.2"
 pydantic-core = ">=2.1.2"
 
