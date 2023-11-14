@@ -10,7 +10,8 @@ __all__ = ("FASTAPI_LOGGERS", "fastapi_intercept")
 
 FASTAPI_LOGGERS = [
     "gunicorn",
-    "gunicorn.errors" "uvicorn",
+    "gunicorn.errors",
+    "uvicorn",
     "uvicorn.error",
     "fastapi",
     "sqlalchemy",

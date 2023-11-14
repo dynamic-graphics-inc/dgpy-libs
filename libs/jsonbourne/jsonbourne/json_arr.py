@@ -3,9 +3,8 @@ from __future__ import annotations
 
 from typing import cast, overload
 
-from pydantic import GetCoreSchemaHandler
-
 from xtyping import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Generic,
@@ -22,6 +21,9 @@ from xtyping import (
     TypeVar,
     Union,
 )
+
+if TYPE_CHECKING:
+    from pydantic import GetCoreSchemaHandler
 
 __all__ = (
     "JsonArr",
