@@ -306,7 +306,6 @@ ignore = [
   "UP007",
   "UP006",
 
-  "UP004",
   "UP009", # utf-8 encoding declaration (I am supersticious)
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...

@@ -9,7 +9,7 @@ try:
 
     _SINKS = []
 
-    class HttpxSink(object):
+    class HttpxSink:
         def __init__(self, url: str, *args: Any, **kwargs: Any) -> None:
             self.url = url
             self.client = httpx.AsyncClient(*args, **kwargs)
