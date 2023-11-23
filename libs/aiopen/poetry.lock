@@ -16,25 +16,25 @@ typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "anyio"
-version = "4.0.0"
+version = "4.1.0"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "anyio-4.0.0-py3-none-any.whl", hash = "sha256:cfdb2b588b9fc25ede96d8db56ed50848b0b649dca3dd1df0b11f683bb9e0b5f"},
-    {file = "anyio-4.0.0.tar.gz", hash = "sha256:f7ed51751b2c2add651e5747c891b47e26d2a21be5d32d9311dfe9692f3e5d7a"},
+    {file = "anyio-4.1.0-py3-none-any.whl", hash = "sha256:56a415fbc462291813a94528a779597226619c8e78af7de0507333f700011e5f"},
+    {file = "anyio-4.1.0.tar.gz", hash = "sha256:5a0bec7085176715be77df87fc66d6c9d70626bd752fcc85f57cdbee5b3760da"},
 ]
 
 [package.dependencies]
 exceptiongroup = {version = ">=1.0.2", markers = "python_version < \"3.11\""}
 idna = ">=2.8"
 sniffio = ">=1.1"
-trio = {version = ">=0.22", optional = true, markers = "extra == \"trio\""}
+trio = {version = ">=0.23", optional = true, markers = "extra == \"trio\""}
 
 [package.extras]
-doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)"]
-test = ["anyio[trio]", "coverage[toml] (>=7)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
-trio = ["trio (>=0.22)"]
+doc = ["Sphinx (>=7)", "packaging", "sphinx-autodoc-typehints (>=1.2.0)", "sphinx-rtd-theme"]
+test = ["anyio[trio]", "coverage[toml] (>=7)", "exceptiongroup (>=1.2.0)", "hypothesis (>=4.0)", "psutil (>=5.9)", "pytest (>=7.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (>=0.17)"]
+trio = ["trio (>=0.23)"]
 
 [[package]]
 name = "attrs"
@@ -302,13 +302,13 @@ files = [
 
 [[package]]
 name = "trio"
-version = "0.22.2"
+version = "0.23.1"
 description = "A friendly Python library for async concurrency and I/O"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "trio-0.22.2-py3-none-any.whl", hash = "sha256:f43da357620e5872b3d940a2e3589aa251fd3f881b65a608d742e00809b1ec38"},
-    {file = "trio-0.22.2.tar.gz", hash = "sha256:3887cf18c8bcc894433420305468388dac76932e9668afa1c49aa3806b6accb3"},
+    {file = "trio-0.23.1-py3-none-any.whl", hash = "sha256:bb4abb3f4af23f96679e7c8cdabb8b234520f2498550d2cf63ebfd95f2ce27fe"},
+    {file = "trio-0.23.1.tar.gz", hash = "sha256:16f89f7dcc8f7b9dcdec1fcd863e0c039af6d0f9a22f8dfd56f75d75ec73fd48"},
 ]
 
 [package.dependencies]
@@ -317,7 +317,7 @@ cffi = {version = ">=1.14", markers = "os_name == \"nt\" and implementation_name
 exceptiongroup = {version = ">=1.0.0rc9", markers = "python_version < \"3.11\""}
 idna = "*"
 outcome = "*"
-sniffio = "*"
+sniffio = ">=1.3.0"
 sortedcontainers = "*"
 
 [[package]]
@@ -349,4 +349,4 @@ typing-extensions = ">=4.4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "29b869d781fdeab30dfba7ef23a38ef68978bb1d71a0e83b6334c85c0ca87520"
+content-hash = "4c188496062915cad4ce2089ba9bf73223adb6547968d564be6147af4c8631cf"
