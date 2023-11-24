@@ -41,10 +41,10 @@ rich = "^13.7.0"
 typing-extensions = "4.8.0"
 flake8-comprehensions = "3.14.0"
 flake8-eradicate = "1.5.0"
-httpx = "0.25.1"
+httpx = "0.25.2"
 pip-tools = "7.3.0"
 mkdocs = "1.5.3"
-mkdocs-material = "9.4.10"
+mkdocs-material = "9.4.12"
 mkdocs-jupyter = "0.24.3"
 
 [tool.poetry.dev-dependencies]
