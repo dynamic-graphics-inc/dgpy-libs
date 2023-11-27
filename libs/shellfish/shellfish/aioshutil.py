@@ -23,4 +23,4 @@ copymode = asyncify(shutil.copymode)
 copystat = asyncify(shutil.copystat)
 copytree = asyncify(shutil.copytree)
 rmtree = asyncify(shutil.rmtree)
-which = asyncify(shutil.which)  # type: ignore[arg-type,var-annotated]
+which = asyncify(shutil.which)
