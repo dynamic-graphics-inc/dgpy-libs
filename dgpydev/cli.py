@@ -14,6 +14,7 @@ from pydantic.dataclasses import dataclass
 from rich.console import Console
 from rich.prompt import Prompt
 from rich.rule import Rule
+from rich.tree import Tree
 
 from dgpydev.const import DGPY_LIBS
 from jsonbourne.pydantic import JsonBaseModel
@@ -61,10 +62,10 @@ def pyproject_tomls():
 @click.group(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
-@click.option("--debug/--no-debug", default=False)
-def cli(debug):
+@click.option("--debug/--no-debug", default=False, help="print/log more stuff")
+def cli(debug: bool = False) -> None:
     if debug:
-        click.echo("dgpydev-debug: ON")
+        console.log("dgpydev-debug: ON")
 
 
 def update_abouts():
@@ -204,7 +205,33 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
     for lib, lib_info in dgpylibs_deptree.items():
         for dep in lib_info.dependencies:
             dgpylibs_deptree[dep].dependents.add(lib)
+
     return dgpylibs_deptree
+
+
+def deps_tree_rich(deptree: dict[str, DgpyLibInfo]):
+    def add_dependencies(
+        node: Tree, lib_info: DgpyLibInfo, lib_dict: dict[str, DgpyLibInfo]
+    ):
+        for dep_name in lib_info.dependencies:
+            if dep_name in lib_dict:
+                dep_info = lib_dict[dep_name]
+                dep_node = node.add(
+                    f"{dep_name} (Version: {dep_info.version})", expanded=True
+                )
+                add_dependencies(dep_node, dep_info, lib_dict)
+
+    def build_tree(lib_dict: dict[str, DgpyLibInfo]) -> Tree:
+        tree = Tree("Libraries", expanded=True)
+        for lib_name, lib_info in lib_dict.items():
+            lib_node = tree.add(
+                f"{lib_name} (Version: {lib_info.version})", expanded=True
+            )
+            deps_node = lib_node.add("Dependencies", expanded=True)
+            add_dependencies(deps_node, lib_info, lib_dict)
+        return tree
+
+    return build_tree(deptree)
 
 
 def dgpylibs_topo_sorted() -> list[str]:
@@ -214,7 +241,15 @@ def dgpylibs_topo_sorted() -> list[str]:
 
 @cli.command()
 def tree():
-    """Print dependency tree"""
+    """Print dependency tree
+
+
+    possible grep???
+
+    ```
+    poetry show -t | rg "(aiopen|asyncify|dgpylibs|ETC)"
+    ```
+    """
     dgpylibs_deptree = deps_tree()
     console.print(Rule("topo_sorted"))
     console.print(topo_sort(dgpylibs_deptree))
@@ -222,6 +257,9 @@ def tree():
     console.print(
         {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
     )
+
+    rich_tree = deps_tree_rich(dgpylibs_deptree)
+    console.print(rich_tree)
 
 
 @cli.command()
@@ -245,9 +283,16 @@ def publish():
         ["patch", "minor", "major", "prepatch", "preminor", "premajor", "prerelease"],
         case_sensitive=False,
     ),
-    default=None,
+    default="patch",
     nargs=1,
     required=False,
+)
+@click.option(
+    "--lib",
+    "-l",
+    type=click.Choice(DGPY_LIBS),
+    required=True,
+    help="lib to bump version for",
 )
 @click.option(
     "--dry-run",
@@ -257,12 +302,14 @@ def publish():
     help="dry run - don't actually do anything",
 )
 def version(
+    lib: str,
     version: Optional[str] = None,
     dry_run: bool = False,
 ):
+    """Bump version of lib (TODO)"""
+    console.print(f"lib: {lib}")
     console.print(f"version: {version}")
     console.print(f"dry_run: {dry_run}")
-
     raise NotImplementedError("TODO")
 
 
