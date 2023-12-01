@@ -1,0 +1,11 @@
+{
+  "updated": "2023-12-01T12:55:53.945521",
+  "changes": [
+    {
+      "lib": "fmts",
+      "version": "0.2.0",
+      "msg": "added negative num handling to fmts.nbytes_str",
+      "timestamp": "2023-12-01T12:55:53.945521"
+    }
+  ]
+}

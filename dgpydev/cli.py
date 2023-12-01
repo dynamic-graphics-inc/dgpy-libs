@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+import datetime
+import itertools as it
+
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Optional
@@ -8,11 +10,15 @@ from typing import Any, Optional
 import click
 import tomli
 
+from pydantic.dataclasses import dataclass
 from rich.console import Console
+from rich.prompt import Prompt
 from rich.rule import Rule
 
 from dgpydev.const import DGPY_LIBS
+from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
+from xtyping import FsPath
 
 console = Console()
 
@@ -187,7 +193,7 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
         lib_info = DgpyLibInfo(
             name=lib,
             version=pyproject_toml_dict["tool"]["poetry"]["version"],
-            dependencies=dgpylibs_deps,
+            dependencies=set(dgpylibs_deps),
             dependents=set(),
         )
         dgpylibs_deptree[lib] = lib_info
@@ -208,6 +214,7 @@ def dgpylibs_topo_sorted() -> list[str]:
 
 @cli.command()
 def tree():
+    """Print dependency tree"""
     dgpylibs_deptree = deps_tree()
     console.print(Rule("topo_sorted"))
     console.print(topo_sort(dgpylibs_deptree))
@@ -257,6 +264,137 @@ def version(
     console.print(f"dry_run: {dry_run}")
 
     raise NotImplementedError("TODO")
+
+
+######################
+# CHANGELOG COMMANDS #
+######################
+@dataclass
+class Change:
+    lib: str
+    version: str
+    msg: str
+    timestamp: datetime.datetime = datetime.datetime.now()
+
+    def __json__(self) -> Any:
+        return {
+            "lib": self.lib,
+            "version": self.version,
+            "msg": self.msg,
+            "timestamp": self.timestamp.isoformat(),
+        }
+
+    def equiv_tuple(self) -> tuple[str, str, str]:
+        return (self.lib, self.version, self.msg)
+
+    def __hash__(self) -> int:
+        return hash((self.lib, self.version, self.msg))
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Change):
+            return False
+        return self.equiv(other)
+
+    def equiv(self, other: Change) -> bool:
+        return (
+            self.lib == other.lib
+            and self.version == other.version
+            and self.msg == other.msg
+        )
+
+    def dedupe(self, other: Change) -> list[Change]:
+        if self.equiv(other):
+            return [self] if self.timestamp > other.timestamp else [other]
+        return [self, other]
+
+
+class Changelog(JsonBaseModel):
+    updated: datetime.datetime = datetime.datetime.now()
+    changes: list[Change]
+
+    def most_recent_change(self) -> Change:
+        if len(self.changes) == 0:
+            raise ValueError("No changes in changelog")
+        return max(self.changes, key=lambda change: change.timestamp)
+
+    def new_updated_timestamp(self) -> datetime.datetime:
+        try:
+            most_recent_change = self.most_recent_change()
+            return most_recent_change.timestamp
+        except ValueError:
+            return datetime.datetime.now()
+
+    def check_similar_changes(self):
+        unique_changes_ignoring_timestamp = set(
+            it.chain.from_iterable(
+                (a.dedupe(b) for a, b in it.combinations(self.changes, 2))
+            )
+        )
+        self.changes = sorted(
+            unique_changes_ignoring_timestamp, key=lambda change: change.timestamp
+        )
+
+    def update(self):
+        self.check_similar_changes()
+        self.updated = self.new_updated_timestamp()
+
+    def write2fspath(self, filepath: FsPath) -> str:
+        self.update()
+        string = self.model_dump_json(indent=2)
+        filepath.write_text(
+            string,
+            encoding="utf-8",
+            newline="\n",
+        )
+        return string
+
+
+@cli.command()
+@click.option("--msg", "-m", type=str, required=True)
+@click.option("--lib", "-l", type=click.Choice(DGPY_LIBS), required=False)
+def change(
+    msg: str,
+    lib: Optional[str] = None,
+):
+    """Make changelog message"""
+    # ask which lib if not provided blah blah blah
+    if lib is None:
+        lib = Prompt.ask("Which lib?", choices=DGPY_LIBS)
+    # if not exists create changelog dir in root of repo
+    changelog_json_filepath = repo_root() / "changelog" / "changelog.json"
+    sh.mkdirp(
+        changelog_json_filepath.parent,
+    )
+    if not changelog_json_filepath.exists():
+        console.log(f"Creating {changelog_json_filepath}")
+        sh.wjson(
+            changelog_json_filepath,
+            {"changes": [], "updated": datetime.datetime.now().isoformat()},
+        )
+    # load changelog.json
+    changelog_json = changelog_json_filepath.read_text()
+    changelog = Changelog.from_json(changelog_json)
+
+    isots = datetime.datetime.now().isoformat()
+    change = Change(lib=lib, version=lib_version(lib), msg=msg, timestamp=isots)
+    changelog.changes.append(change)
+
+    # sort changes by timestamp
+    changelog.changes.sort(key=lambda change: change.timestamp)
+    changelog.write2fspath(changelog_json_filepath)
+
+    # print the diff
+    import difflib
+
+    console.print(Rule("changelog diff"))
+    console.print(
+        "\n".join(
+            difflib.unified_diff(
+                changelog_json.splitlines(),
+                changelog.model_dump_json(indent=2).splitlines(),
+            )
+        )
+    )
 
 
 def main():

@@ -483,8 +483,12 @@ def nbytes_str(nbytes: Union[int, float]) -> str:
         '9.1 TB'
         >>> nbytes_str(100000000000000)
         '90.9 TB'
+        >>> nbytes_str(-100000000000)
+        '-93.1 GB'
 
     """
+    if nbytes < 0:
+        return f"-{nbytes_str(abs(nbytes))}"
     for x in ["bytes", "KB", "MB", "GB", "TB"]:
         if nbytes < 1024.0 or x == "TB":
             _str = f"{nbytes:3.1f} {x}"
