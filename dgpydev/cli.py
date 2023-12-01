@@ -1,6 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+import datetime
+import itertools as it
+
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Optional
@@ -8,11 +10,16 @@ from typing import Any, Optional
 import click
 import tomli
 
+from pydantic.dataclasses import dataclass
 from rich.console import Console
+from rich.prompt import Prompt
 from rich.rule import Rule
+from rich.tree import Tree
 
 from dgpydev.const import DGPY_LIBS
+from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
+from xtyping import FsPath
 
 console = Console()
 
@@ -55,10 +62,10 @@ def pyproject_tomls():
 @click.group(
     context_settings={"help_option_names": ["-h", "--help"]},
 )
-@click.option("--debug/--no-debug", default=False)
-def cli(debug):
+@click.option("--debug/--no-debug", default=False, help="print/log more stuff")
+def cli(debug: bool = False) -> None:
     if debug:
-        click.echo("dgpydev-debug: ON")
+        console.log("dgpydev-debug: ON")
 
 
 def update_abouts():
@@ -187,7 +194,7 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
         lib_info = DgpyLibInfo(
             name=lib,
             version=pyproject_toml_dict["tool"]["poetry"]["version"],
-            dependencies=dgpylibs_deps,
+            dependencies=set(dgpylibs_deps),
             dependents=set(),
         )
         dgpylibs_deptree[lib] = lib_info
@@ -198,7 +205,33 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
     for lib, lib_info in dgpylibs_deptree.items():
         for dep in lib_info.dependencies:
             dgpylibs_deptree[dep].dependents.add(lib)
+
     return dgpylibs_deptree
+
+
+def deps_tree_rich(deptree: dict[str, DgpyLibInfo]):
+    def add_dependencies(
+        node: Tree, lib_info: DgpyLibInfo, lib_dict: dict[str, DgpyLibInfo]
+    ):
+        for dep_name in lib_info.dependencies:
+            if dep_name in lib_dict:
+                dep_info = lib_dict[dep_name]
+                dep_node = node.add(
+                    f"{dep_name} (Version: {dep_info.version})", expanded=True
+                )
+                add_dependencies(dep_node, dep_info, lib_dict)
+
+    def build_tree(lib_dict: dict[str, DgpyLibInfo]) -> Tree:
+        tree = Tree("Libraries", expanded=True)
+        for lib_name, lib_info in lib_dict.items():
+            lib_node = tree.add(
+                f"{lib_name} (Version: {lib_info.version})", expanded=True
+            )
+            deps_node = lib_node.add("Dependencies", expanded=True)
+            add_dependencies(deps_node, lib_info, lib_dict)
+        return tree
+
+    return build_tree(deptree)
 
 
 def dgpylibs_topo_sorted() -> list[str]:
@@ -208,6 +241,15 @@ def dgpylibs_topo_sorted() -> list[str]:
 
 @cli.command()
 def tree():
+    """Print dependency tree
+
+
+    possible grep???
+
+    ```
+    poetry show -t | rg "(aiopen|asyncify|dgpylibs|ETC)"
+    ```
+    """
     dgpylibs_deptree = deps_tree()
     console.print(Rule("topo_sorted"))
     console.print(topo_sort(dgpylibs_deptree))
@@ -215,6 +257,9 @@ def tree():
     console.print(
         {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
     )
+
+    rich_tree = deps_tree_rich(dgpylibs_deptree)
+    console.print(rich_tree)
 
 
 @cli.command()
@@ -238,9 +283,16 @@ def publish():
         ["patch", "minor", "major", "prepatch", "preminor", "premajor", "prerelease"],
         case_sensitive=False,
     ),
-    default=None,
+    default="patch",
     nargs=1,
     required=False,
+)
+@click.option(
+    "--lib",
+    "-l",
+    type=click.Choice(DGPY_LIBS),
+    required=True,
+    help="lib to bump version for",
 )
 @click.option(
     "--dry-run",
@@ -250,13 +302,146 @@ def publish():
     help="dry run - don't actually do anything",
 )
 def version(
+    lib: str,
     version: Optional[str] = None,
     dry_run: bool = False,
 ):
+    """Bump version of lib (TODO)"""
+    console.print(f"lib: {lib}")
     console.print(f"version: {version}")
     console.print(f"dry_run: {dry_run}")
-
     raise NotImplementedError("TODO")
+
+
+######################
+# CHANGELOG COMMANDS #
+######################
+@dataclass
+class Change:
+    lib: str
+    version: str
+    msg: str
+    timestamp: datetime.datetime = datetime.datetime.now()
+
+    def __json__(self) -> Any:
+        return {
+            "lib": self.lib,
+            "version": self.version,
+            "msg": self.msg,
+            "timestamp": self.timestamp.isoformat(),
+        }
+
+    def equiv_tuple(self) -> tuple[str, str, str]:
+        return (self.lib, self.version, self.msg)
+
+    def __hash__(self) -> int:
+        return hash((self.lib, self.version, self.msg))
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Change):
+            return False
+        return self.equiv(other)
+
+    def equiv(self, other: Change) -> bool:
+        return (
+            self.lib == other.lib
+            and self.version == other.version
+            and self.msg == other.msg
+        )
+
+    def dedupe(self, other: Change) -> list[Change]:
+        if self.equiv(other):
+            return [self] if self.timestamp > other.timestamp else [other]
+        return [self, other]
+
+
+class Changelog(JsonBaseModel):
+    updated: datetime.datetime = datetime.datetime.now()
+    changes: list[Change]
+
+    def most_recent_change(self) -> Change:
+        if len(self.changes) == 0:
+            raise ValueError("No changes in changelog")
+        return max(self.changes, key=lambda change: change.timestamp)
+
+    def new_updated_timestamp(self) -> datetime.datetime:
+        try:
+            most_recent_change = self.most_recent_change()
+            return most_recent_change.timestamp
+        except ValueError:
+            return datetime.datetime.now()
+
+    def check_similar_changes(self):
+        unique_changes_ignoring_timestamp = set(
+            it.chain.from_iterable(
+                (a.dedupe(b) for a, b in it.combinations(self.changes, 2))
+            )
+        )
+        self.changes = sorted(
+            unique_changes_ignoring_timestamp, key=lambda change: change.timestamp
+        )
+
+    def update(self):
+        self.check_similar_changes()
+        self.updated = self.new_updated_timestamp()
+
+    def write2fspath(self, filepath: FsPath) -> str:
+        self.update()
+        string = self.model_dump_json(indent=2)
+        filepath.write_text(
+            string,
+            encoding="utf-8",
+            newline="\n",
+        )
+        return string
+
+
+@cli.command()
+@click.option("--msg", "-m", type=str, required=True)
+@click.option("--lib", "-l", type=click.Choice(DGPY_LIBS), required=False)
+def change(
+    msg: str,
+    lib: Optional[str] = None,
+):
+    """Make changelog message"""
+    # ask which lib if not provided blah blah blah
+    if lib is None:
+        lib = Prompt.ask("Which lib?", choices=DGPY_LIBS)
+    # if not exists create changelog dir in root of repo
+    changelog_json_filepath = repo_root() / "changelog" / "changelog.json"
+    sh.mkdirp(
+        changelog_json_filepath.parent,
+    )
+    if not changelog_json_filepath.exists():
+        console.log(f"Creating {changelog_json_filepath}")
+        sh.wjson(
+            changelog_json_filepath,
+            {"changes": [], "updated": datetime.datetime.now().isoformat()},
+        )
+    # load changelog.json
+    changelog_json = changelog_json_filepath.read_text()
+    changelog = Changelog.from_json(changelog_json)
+
+    isots = datetime.datetime.now().isoformat()
+    change = Change(lib=lib, version=lib_version(lib), msg=msg, timestamp=isots)
+    changelog.changes.append(change)
+
+    # sort changes by timestamp
+    changelog.changes.sort(key=lambda change: change.timestamp)
+    changelog.write2fspath(changelog_json_filepath)
+
+    # print the diff
+    import difflib
+
+    console.print(Rule("changelog diff"))
+    console.print(
+        "\n".join(
+            difflib.unified_diff(
+                changelog_json.splitlines(),
+                changelog.model_dump_json(indent=2).splitlines(),
+            )
+        )
+    )
 
 
 def main():
