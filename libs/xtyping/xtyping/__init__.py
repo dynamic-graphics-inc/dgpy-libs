@@ -441,6 +441,7 @@ __all__ = (
     "Protocol",
     "R",
     "RT",
+    "ReadOnly",
     "Required",
     "ReturnT",
     "ReturnType",
