@@ -117,7 +117,7 @@ from typing_extensions import (
     runtime_checkable,
 )
 
-from xtyping.__about__ import __version__R
+from xtyping.__about__ import __version__
 from xtyping.shed import (
     _DT,
     _KT,
