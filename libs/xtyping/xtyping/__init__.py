@@ -97,7 +97,6 @@ from typing_extensions import (
     ParamSpecArgs,
     ParamSpecKwargs,
     Protocol,
-    ReadOnly,
     Required,
     Self,
     SupportsIndex,
