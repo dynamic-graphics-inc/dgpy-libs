@@ -115,6 +115,7 @@ __all_typing_extensions__: Tuple[str, ...] = (
     "ParamSpecArgs",
     "ParamSpecKwargs",
     "Protocol",
+    "ReadOnly",
     "Required",
     "Self",
     "SupportsIndex",
