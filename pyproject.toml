@@ -60,7 +60,7 @@ pytest-cov = "^4.1.0"
 python-rapidjson = "^1.14"
 xdoctest = ">=1.0.1"
 click = "^8.1.7"
-mypy = "^1.7"
+mypy = "^1.8"
 pydantic = ">=2.0.2"
 pydantic-core = ">=2.1.2"
 
@@ -82,7 +82,7 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.1.8"
+ruff = "^0.1.9"
 anyio = { extras = ["trio"], version = "^3.7.1" }
 nox = "^2023.4.22"
 packaging = "^23.2"
