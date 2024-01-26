@@ -48,7 +48,7 @@ mkdocs-material = "9.5.5"
 mkdocs-jupyter = "0.24.3"
 
 [tool.poetry.dev-dependencies]
-black = "^23.12.1"
+black = "^24.1.0"
 flake8 = "^7.0.0"
 h5py = "^3.10.0"
 isort = "^5.13.2"
