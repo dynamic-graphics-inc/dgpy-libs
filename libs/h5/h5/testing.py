@@ -97,9 +97,9 @@ def make_test_hdf5_file(filepath: Union[str, Path]) -> str:
         aa_subsubgrp_dataset = aa_subsubgrp.create_dataset(
             "aa_subsubgroup_dataset", data=aa_subsubgrp_data
         )
-        aa_subsubgrp_dataset.attrs[
-            "aa_subsubgroup_dataset_attr"
-        ] = "aa_subsubgroup_dataset_attr_value"
+        aa_subsubgrp_dataset.attrs["aa_subsubgroup_dataset_attr"] = (
+            "aa_subsubgroup_dataset_attr_value"
+        )
 
         dset_vanilla = f.create_dataset("vanilla", data=dset_vanilla_data)
         dset_vanilla.attrs["desc"] = "vanilla-dataset"

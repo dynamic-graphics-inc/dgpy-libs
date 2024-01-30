@@ -218,31 +218,27 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def __init__(
         self,
         *args: Dict[_KT, _VT],
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def __init__(
         self,
         *args: Dict[_KT, _VT],
         **kwargs: _VT,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def __init__(
         self,
         *args: Mapping[_KT, _VT],
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def __init__(
         self,
         *args: Mapping[_KT, _VT],
         **kwargs: _VT,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def __init__(
         self,
@@ -543,9 +539,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 cast(
                     Dict[str, _VT],
                     {
-                        k: v
-                        if not isinstance(v, (dict, JsonObj))
-                        else JsonObj(v).filter_none(recursive=True)
+                        k: (
+                            v
+                            if not isinstance(v, (dict, JsonObj))
+                            else JsonObj(v).filter_none(recursive=True)
+                        )
                         for k, v in self.items()
                         if v is not None  # type: ignore[redundant-expr]
                     },
@@ -617,9 +615,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 cast(
                     Dict[str, _VT],
                     {
-                        k: v
-                        if not isinstance(v, (dict, JsonObj))
-                        else JsonObj(v).filter_false(recursive=True)
+                        k: (
+                            v
+                            if not isinstance(v, (dict, JsonObj))
+                            else JsonObj(v).filter_false(recursive=True)
+                        )
                         for k, v in self.items()
                         if v
                     },
@@ -649,9 +649,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         return chain(
             *(
-                ((str(k),),)
-                if not isinstance(v, JsonObj)
-                else (*((str(k), *dk) for dk in jsonify(v).dot_keys()),)
+                (
+                    ((str(k),),)
+                    if not isinstance(v, JsonObj)
+                    else (*((str(k), *dk) for dk in jsonify(v).dot_keys()),)
+                )
                 for k, v in self.items()
             )
         )
@@ -740,19 +742,21 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         return chain.from_iterable(
             (
                 (
-                    *(
-                        (
+                    (
+                        *(
                             (
-                                str(k),
-                                *dk,
-                            ),
-                            dv,
-                        )
-                        for dk, dv in as_json_obj(v).dot_items()
-                    ),
+                                (
+                                    str(k),
+                                    *dk,
+                                ),
+                                dv,
+                            )
+                            for dk, dv in as_json_obj(v).dot_items()
+                        ),
+                    )
+                    if isinstance(v, (JsonObj, dict))
+                    else (((str(k),), v),)
                 )
-                if isinstance(v, (JsonObj, dict))
-                else (((str(k),), v),)
                 for k, v in self.items()
             )
         )
@@ -1088,23 +1092,19 @@ def objectify(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
 
 
 @overload
-def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT:
-    ...
+def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT: ...
 
 
 @overload
-def jsonify(value: List[JsonPrimitiveT]) -> List[JsonPrimitiveT]:
-    ...
+def jsonify(value: List[JsonPrimitiveT]) -> List[JsonPrimitiveT]: ...
 
 
 @overload
-def jsonify(value: Tuple[JsonPrimitiveT, ...]) -> Tuple[JsonPrimitiveT, ...]:
-    ...
+def jsonify(value: Tuple[JsonPrimitiveT, ...]) -> Tuple[JsonPrimitiveT, ...]: ...
 
 
 @overload
-def jsonify(value: _VT) -> _VT:
-    ...
+def jsonify(value: _VT) -> _VT: ...
 
 
 def jsonify(value: Any) -> Any:
@@ -1143,13 +1143,11 @@ class JSONMeta(type):
 
     @overload
     @staticmethod
-    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT:
-        ...
+    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT: ...
 
     @overload
     @staticmethod
-    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]:
-        ...
+    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]: ...
 
     @staticmethod
     def __call__(value: Optional[Any] = None) -> Any:
@@ -1167,18 +1165,15 @@ class JsonModule:
     Null = Null
     JSONDecodeError = JSONDecodeError
 
-    def __init__(self) -> None:
-        ...
+    def __init__(self) -> None: ...
 
     @overload
     @staticmethod
-    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT:
-        ...
+    def __call__(value: JsonPrimitiveT) -> JsonPrimitiveT: ...
 
     @overload
     @staticmethod
-    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]:
-        ...
+    def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]: ...
 
     @staticmethod
     def __call__(value: Optional[Any] = None) -> Any:

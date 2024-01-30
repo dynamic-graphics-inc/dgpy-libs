@@ -69,8 +69,7 @@ class JsonBaseConfig:
     use_enum_values = True
 
 
-class JsonBaseModelDefaultConfig(JsonBaseConfig):
-    ...
+class JsonBaseModelDefaultConfig(JsonBaseConfig): ...
 
 
 def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], Dict[str, Any]]]:
