@@ -8,6 +8,7 @@ extend-ignore =
     E203
     E266
     E302
+    E701
     I001
     Q000
     T002
