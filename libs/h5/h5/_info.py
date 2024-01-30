@@ -107,8 +107,7 @@ class H5ABC(ABC):
     key: str
 
     @abstractmethod
-    def dict(self) -> Any:
-        ...
+    def dict(self) -> Any: ...
 
     # abstyract prop
     @property
@@ -294,21 +293,25 @@ class GroupInfo(GroupLikeInfo):
         return {
             "h5type": self.h5type,
             "key": self.key,
-            "groups": {
-                k: v.dict(attributes=attributes, datasets=datasets, groups=groups)
-                for k, v in self.groups.items()
-            }
-            if groups
-            else {},
+            "groups": (
+                {
+                    k: v.dict(attributes=attributes, datasets=datasets, groups=groups)
+                    for k, v in self.groups.items()
+                }
+                if groups
+                else {}
+            ),
             "attrs": self.attrs if attributes else {},
-            "datasets": {
-                k: v.dict(
-                    attributes=attributes,
-                )
-                for k, v in self.datasets.items()
-            }
-            if datasets
-            else {},
+            "datasets": (
+                {
+                    k: v.dict(
+                        attributes=attributes,
+                    )
+                    for k, v in self.datasets.items()
+                }
+                if datasets
+                else {}
+            ),
         }
 
     def dump(self, attributes: bool = True) -> GroupInfoDumpDict:
@@ -386,18 +389,20 @@ class FileInfo(GroupLikeInfo):
             "fspath": self.fspath,
             "fssize": self.fssize,
             "key": self.key,
-            "groups": {
-                k: v.dict(attributes=attributes, datasets=datasets, groups=groups)
-                for k, v in self.groups.items()
-            }
-            if groups
-            else {},
+            "groups": (
+                {
+                    k: v.dict(attributes=attributes, datasets=datasets, groups=groups)
+                    for k, v in self.groups.items()
+                }
+                if groups
+                else {}
+            ),
             "attrs": self.attrs if attributes else {},
-            "datasets": {
-                k: v.dict(attributes=attributes) for k, v in self.datasets.items()
-            }
-            if datasets
-            else {},
+            "datasets": (
+                {k: v.dict(attributes=attributes) for k, v in self.datasets.items()}
+                if datasets
+                else {}
+            ),
         }
 
     @classmethod
