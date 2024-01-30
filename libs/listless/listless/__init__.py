@@ -272,18 +272,15 @@ def chunkstr(string: str, n: int) -> Iterable[str]:
 
 
 @overload
-def chunks(it: str, chunk_size: int) -> Iterable[str]:
-    ...
+def chunks(it: str, chunk_size: int) -> Iterable[str]: ...
 
 
 @overload
-def chunks(it: List[_T], chunk_size: int) -> Iterable[List[_T]]:
-    ...
+def chunks(it: List[_T], chunk_size: int) -> Iterable[List[_T]]: ...
 
 
 @overload
-def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]:
-    ...
+def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]: ...
 
 
 def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], str]]:

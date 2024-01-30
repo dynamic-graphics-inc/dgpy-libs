@@ -1,4 +1,5 @@
 """h5._types"""
+
 from __future__ import annotations
 
 from os import PathLike
