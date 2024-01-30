@@ -34,13 +34,11 @@ _R = TypeVar("_R")
 
 
 class SupportsDunderLT(Protocol):
-    def __lt__(self, __other: Any) -> bool:
-        ...
+    def __lt__(self, __other: Any) -> bool: ...
 
 
 class SupportsDunderGT(Protocol):
-    def __gt__(self, __other: Any) -> bool:
-        ...
+    def __gt__(self, __other: Any) -> bool: ...
 
 
 SupportsRichComparison = Union[SupportsDunderLT, SupportsDunderGT]
@@ -123,14 +121,12 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def sort(
         self: JsonArr[SupportsRichComparisonT], *, key: None = None, reverse: bool = ...
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def sort(
         self, *, key: Callable[[_T], SupportsRichComparison], reverse: bool = ...
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def sort(
         self,
@@ -149,12 +145,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     __hash__: None  # type: ignore[assignment]
 
     @overload
-    def __getitem__(self, __i: SupportsIndex) -> _T:
-        ...
+    def __getitem__(self, __i: SupportsIndex) -> _T: ...
 
     @overload
-    def __getitem__(self, __s: slice) -> JsonArr[_T]:
-        ...
+    def __getitem__(self, __s: slice) -> JsonArr[_T]: ...
 
     def __getitem__(self, __i: Union[SupportsIndex, slice]) -> Union[_T, JsonArr[_T]]:
         if isinstance(__i, slice):
@@ -162,12 +156,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         return self.__arr[__i]
 
     @overload
-    def __setitem__(self, __i: SupportsIndex, __o: _T) -> None:
-        ...
+    def __setitem__(self, __i: SupportsIndex, __o: _T) -> None: ...
 
     @overload
-    def __setitem__(self, __s: slice, __o: Iterable[_T]) -> None:
-        ...
+    def __setitem__(self, __s: slice, __o: Iterable[_T]) -> None: ...
 
     def __setitem__(self, __i: Any, __o: Any) -> None:
         return self.__arr.__setitem__(__i, __o)
@@ -236,20 +228,17 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def enumerate(
         self, start: int = 0, flip: Literal[False] = False
-    ) -> Iterator[Tuple[int, _T]]:
-        ...
+    ) -> Iterator[Tuple[int, _T]]: ...
 
     @overload
     def enumerate(
         self, start: int = 0, flip: Literal[True] = True
-    ) -> Iterator[Tuple[_T, int]]:
-        ...
+    ) -> Iterator[Tuple[_T, int]]: ...
 
     @overload
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]:
-        ...
+    ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]: ...
 
     def enumerate(
         self, start: int = 0, flip: bool = False

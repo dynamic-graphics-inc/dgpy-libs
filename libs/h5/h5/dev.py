@@ -3,8 +3,7 @@
 from __future__ import annotations
 
 
-def _main() -> None:
-    ...
+def _main() -> None: ...
 
 
 if __name__ == "__main__":
