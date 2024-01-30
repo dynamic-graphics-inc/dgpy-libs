@@ -14,47 +14,41 @@ class OsFsAbc(ABC):  # pragma: nocov
 
     @staticmethod
     @abstractmethod
-    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        ...
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None: ...
 
     @staticmethod
     @abstractmethod
     def link_dirs(
         link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @staticmethod
     @abstractmethod
-    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
-        ...
+    def link_file(
+        linkpath: str, targetpath: str, *, exist_ok: bool = False
+    ) -> None: ...
 
     @staticmethod
     @abstractmethod
     def link_files(
         link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @staticmethod
     @abstractmethod
-    def unlink_dir(link: str) -> None:
-        ...
+    def unlink_dir(link: str) -> None: ...
 
     @staticmethod
     @abstractmethod
-    def unlink_dirs(links: IterableStr) -> None:
-        ...
+    def unlink_dirs(links: IterableStr) -> None: ...
 
     @staticmethod
     @abstractmethod
-    def unlink_file(link: str) -> None:
-        ...
+    def unlink_file(link: str) -> None: ...
 
     @staticmethod
     @abstractmethod
-    def unlink_files(links: IterableStr) -> None:
-        ...
+    def unlink_files(links: IterableStr) -> None: ...
 
 
 # =============================================================================
