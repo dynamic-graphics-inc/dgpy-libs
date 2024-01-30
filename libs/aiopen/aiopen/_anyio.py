@@ -76,8 +76,7 @@ def aiopen(  # type: ignore[overload-overlap]
     newline: Optional[str] = ...,
     closefd: bool = ...,
     opener: Optional[Callable[[str, int], int]] = ...,
-) -> AsyncFileContextManager[bytes]:
-    ...
+) -> AsyncFileContextManager[bytes]: ...
 
 
 @overload
@@ -90,8 +89,7 @@ def aiopen(
     newline: Optional[str] = ...,
     closefd: bool = ...,
     opener: Optional[Callable[[str, int], int]] = ...,
-) -> AsyncFileContextManager[str]:
-    ...
+) -> AsyncFileContextManager[str]: ...
 
 
 def aiopen(

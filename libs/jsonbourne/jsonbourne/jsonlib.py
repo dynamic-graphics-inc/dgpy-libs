@@ -114,8 +114,7 @@ class JsonLibABC(ABC):
         append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
-    ) -> str:
-        ...
+    ) -> str: ...
 
     @staticmethod
     @abstractmethod
@@ -127,8 +126,7 @@ class JsonLibABC(ABC):
         append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
-    ) -> bytes:
-        ...
+    ) -> bytes: ...
 
     @staticmethod
     @abstractmethod
@@ -137,13 +135,11 @@ class JsonLibABC(ABC):
         jsonc: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
-    ) -> Any:
-        ...
+    ) -> Any: ...
 
     @staticmethod
     @abstractmethod
-    def usable() -> bool:
-        ...
+    def usable() -> bool: ...
 
     @staticmethod
     def default(obj: Any) -> Any:
@@ -168,8 +164,7 @@ class JsonLibABC(ABC):
         append_newline: bool = False,
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
-    ) -> Any:
-        ...
+    ) -> Any: ...
 
 
 class JSON_STDLIB(JsonLibABC):
