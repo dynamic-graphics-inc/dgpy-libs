@@ -848,9 +848,11 @@ def walk_gen(
     if check and not isdir(dirpath):
         raise NotADirectoryError(dirpath)
     return (
-        str(path_string)
-        if abspath
-        else str(path_string).replace(dirpath, "").strip(sep)
+        (
+            str(path_string)
+            if abspath
+            else str(path_string).replace(dirpath, "").strip(sep)
+        )
         for path_string in chain.from_iterable(
             (
                 pwd,
