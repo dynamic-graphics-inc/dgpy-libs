@@ -25,7 +25,7 @@ from typing import (
     Union,
 )
 
-from typing_extensions import Literal, ParamSpec
+from typing_extensions import Literal, ParamSpec, TypeAlias
 
 __all_typing__: Tuple[str, ...] = (
     "AbstractSet",
@@ -368,8 +368,11 @@ HrTime = Tuple[int, int]  # node/js hrtime type annotation
 ###############################
 ## Function type annotations ##
 ###############################
-FsPath = Union[str, Path, PathLike[Any]]
-FsPathLike = PathLike[Any]
+PathLikeAny: TypeAlias = "PathLike[Any]"
+PathLikeStr: TypeAlias = "PathLike[str]"
+PathLikeBytes: TypeAlias = "PathLike[bytes]"
+FsPath = Union[str, Path, PathLikeAny]
+FsPathLike = "PathLike[Any]"
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
 CmdArgs = CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
@@ -407,9 +410,9 @@ JsonArrT = List[Any]
 ###################
 ## FROM TYPESHED ##
 ###################
-StrPath = Union[str, PathLike[str]]  # stable
-BytesPath = Union[bytes, PathLike[bytes]]  # stable
-StrOrBytesPath = Union[str, bytes, PathLike[Any]]
+StrPath = Union[str, "PathLike[str]"]  # stable
+BytesPath = Union[bytes, "PathLike[bytes]"]  # stable
+StrOrBytesPath = Union[str, bytes, "PathLike[Any]"]
 
 OpenTextModeUpdating = Literal[
     "r+",

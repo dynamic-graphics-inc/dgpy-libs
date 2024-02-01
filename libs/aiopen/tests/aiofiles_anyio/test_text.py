@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """PEP 0492/Python 3.5+ tests for text files."""
+from __future__ import annotations
+
 import io
 
 from os.path import dirname, join

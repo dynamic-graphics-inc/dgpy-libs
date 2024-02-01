@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import Any, Dict, Literal, Optional, Union
+from typing import TYPE_CHECKING, Any, Dict, Literal, Optional, Union
 
 import numpy.typing as npt
 
@@ -20,7 +20,18 @@ __all__ = (
     "H5pyAttributesDict",
 )
 
-FsPath = Union[str, Path, PathLike[Any]]
+if TYPE_CHECKING:
+    PathLikeAny = PathLike[Any]
+    PathLikeStr = PathLike[str]
+    PathLikeBytes = PathLike[bytes]
+    PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
+else:
+    PathLikeAny = PathLike
+    PathLikeStr = PathLike
+    PathLikeBytes = PathLike
+    PathLikeStrBytes = PathLike
+
+FsPath = Union[str, Path, PathLikeAny]
 FileOrGroup = Union[File, Group]
 GroupLikeOrFsPath = Union[File, Group, FsPath]
 H5pyCompression = Literal["gzip", "lzf", "szip"]

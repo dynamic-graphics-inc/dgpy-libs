@@ -39,7 +39,7 @@ from xtyping import ParamSpec
 P = ParamSpec("P")
 T = TypeVar("T")
 
-PathType = Union[str, PathLike[Any]]
+PathType = Union[str, "PathLike[Any]"]
 
 _open = open
 __all__ = ("aiopen",)
