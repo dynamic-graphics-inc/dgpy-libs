@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lager"
-version = "0.18.1"
+version = "0.18.2"
 description = "EZ-PZ logging based on loguru"
 authors = ["jesse rubin <jesse@dgi.com>"]
 license = "MIT"
@@ -33,6 +33,7 @@ keywords = [
 [tool.poetry.dependencies]
 python = "^3.8"
 loguru = ">=0.7.0"
+typing-extensions = "^4.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^8.0.0"
