@@ -9,11 +9,18 @@ from typing import Any, Callable, List, Optional, Tuple, Union
 import click
 import numpy as np
 
-from globsters import Globsters, globster
-from rich.console import Console
 from typing_extensions import TypeGuard
 
 import h5
+
+try:
+    from globsters import Globsters, globster
+    from rich.console import Console
+except ImportError as e:
+    raise ModuleNotFoundError(
+        "h5.cli requires rich and globsters. `pip install -U rich globsters`"
+    ) from e
+
 
 console = Console()
 
@@ -40,8 +47,16 @@ def _json_default(obj: Any) -> Any:
         return float(obj)
     if is_np_integer(obj):
         return int(obj)
-
+    if isinstance(obj, (np.bytes_, bytes)):
+        try:
+            return obj.decode("utf-8")
+        except UnicodeDecodeError:
+            return str(obj)
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
+
+def _print_json(data: Any) -> None:
+    console.print_json(data=data, default=_json_default)
 
 
 def true(string: str) -> bool:
@@ -138,7 +153,7 @@ def is_hdf5(
     exit_: bool = False,
 ) -> None:
     data = {filepath: h5.is_hdf5(filepath) for filepath in fspaths}
-    console.print_json(data=data, default=_json_default)
+    _print_json(data)
 
     # if any of the paths are not HDF5 files, exit with a non-zero exit code
     if exit_:
@@ -221,11 +236,12 @@ def dump(
     with h5.File(fspath, "r") as f:
         data = {key: h5.info(value) for key, value in h5.h5iter(f) if matcher(key)}
         data_dump = {key: value.dump() for key, value in data.items()}
-    console.print_json(data=data_dump, default=_json_default)
+    _print_json(data_dump)
 
 
 @cli.command(
     help="HDF5 file as tree",
+    name="tree",
 )
 @click.argument(
     "fspath",
@@ -269,7 +285,7 @@ def tree(
     H5CliConfig.from_cli(datasets=datasets, attributes=attributes, groups=groups)
     file_info = h5.FileInfo.from_fspath(fspath)
     if json_:
-        console.print_json(data=file_info.dict(), default=_json_default)
+        _print_json(file_info.dict())
     else:
         console.print(file_info)
 
@@ -317,7 +333,7 @@ def keys(
 ) -> None:
     cfg = H5CliConfig.from_cli(datasets=datasets, attributes=False, groups=groups)
     file_keys = _keys(fspath, cfg)
-    console.print_json(data=file_keys, default=_json_default)
+    _print_json(file_keys)
 
 
 @cli.command(help="List keys", name="ls")
@@ -382,7 +398,7 @@ def ls(
     )
     file_keys = _keys(fspath, cfg)
     if json_:
-        console.print_json(data=file_keys, default=_json_default)
+        _print_json(file_keys)
     else:
         console.print("\n".join(file_keys))
 
@@ -428,7 +444,7 @@ def lsd(
     )
     file_keys = _keys(fspath, cfg)
     if json_:
-        console.print_json(data=file_keys, default=_json_default)
+        _print_json(file_keys)
     else:
         console.print("\n".join(file_keys))
 
@@ -474,7 +490,7 @@ def lsg(
     )
     file_keys = _keys(fspath, cfg)
     if json_:
-        console.print_json(data=file_keys, default=_json_default)
+        _print_json(file_keys)
     else:
         console.print("\n".join(file_keys))
 
@@ -513,7 +529,7 @@ def attrs(
                 cfg.datasets and isinstance(h5obj, h5.Dataset)
             ):
                 attrs[h5obj.name] = {**h5obj.attrs}
-    console.print_json(data=attrs, default=_json_default)
+    _print_json(attrs)
 
 
 def _command_not_implemented(cmd: str) -> None:
