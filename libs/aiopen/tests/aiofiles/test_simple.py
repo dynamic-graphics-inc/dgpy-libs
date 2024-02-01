@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Simple tests verifying basic functionality."""
+from __future__ import annotations
+
 import asyncio
 
 from asyncio import AbstractEventLoop
