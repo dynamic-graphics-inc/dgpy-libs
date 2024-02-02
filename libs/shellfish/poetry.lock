@@ -2,17 +2,17 @@
 
 [[package]]
 name = "aiopen"
-version = "0.5.5"
+version = "0.6.1"
 description = "Async file io"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "aiopen-0.5.5-py3-none-any.whl", hash = "sha256:34c5025de030a45a7c14485b1921cd3a56cfe0313aef67d41bfc9c9caf5f359f"},
-    {file = "aiopen-0.5.5.tar.gz", hash = "sha256:7dfc09a11b5220471f902fa049ffd2b6a1408d5ed867aa6d3861042ddf95335d"},
+    {file = "aiopen-0.6.1-py3-none-any.whl", hash = "sha256:8427dc5d6d82ace0bdf8fd1ed99770708931f337e29f8c770cbc9a17d42ab78c"},
+    {file = "aiopen-0.6.1.tar.gz", hash = "sha256:1cf3a60ee318e935076db29e935c5073a1132695b3409b2ba8f31eff05ce7f1a"},
 ]
 
 [package.dependencies]
-funkify = ">=0.4.0,<0.5.0"
+funkify = ">=0.4.0"
 xtyping = ">=0.5.0"
 
 [[package]]
@@ -31,17 +31,17 @@ typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.9\""}
 
 [[package]]
 name = "asyncify"
-version = "0.9.2"
+version = "0.10.0"
 description = "sync 2 async"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "asyncify-0.9.2-py3-none-any.whl", hash = "sha256:ee7efe8ecc11f348d4f25d4d1c5fb2f56a187aaa907aea3608106359728a2cdd"},
-    {file = "asyncify-0.9.2.tar.gz", hash = "sha256:5f06016a5d805354505e98e9c009595cba7905ceb767ed7cd61bf60f2341d896"},
+    {file = "asyncify-0.10.0-py3-none-any.whl", hash = "sha256:9e2bbf1f88ec8a2238b1ff2690c98c1710db967abdc50e51b64b4b22a03a38f3"},
+    {file = "asyncify-0.10.0.tar.gz", hash = "sha256:548f7bf14e418bc6b37fa5b1384d76a007c4f8704022c521951f081fdf3efead"},
 ]
 
 [package.dependencies]
-funkify = ">=0.4.0,<0.5.0"
+funkify = ">=0.4.0"
 xtyping = ">=0.5.0"
 
 [[package]]
@@ -510,13 +510,13 @@ files = [
 
 [[package]]
 name = "xtyping"
-version = "0.7.0"
+version = "0.8.1"
 description = "xtyping = typing + typing_extensions"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "xtyping-0.7.0-py3-none-any.whl", hash = "sha256:5b72b08d5b4775c1ff34a8b7bbdfaae92249aaa11c53b33f26a0a788ca209fda"},
-    {file = "xtyping-0.7.0.tar.gz", hash = "sha256:441e597b227fcb51645e33de7cb47b7b23c014ee7c487a996b312652b8cacde0"},
+    {file = "xtyping-0.8.1-py3-none-any.whl", hash = "sha256:4969c614788bceb8b59f1a558121fb8dd78d9965f7058ccd5f220c42a714b630"},
+    {file = "xtyping-0.8.1.tar.gz", hash = "sha256:3ec1bdb89379d0673e307286b4e7f8161637ce8d047ed2b71d9b9994640e3972"},
 ]
 
 [package.dependencies]
