@@ -463,13 +463,13 @@ files = [
 
 [[package]]
 name = "xtyping"
-version = "0.7.0"
+version = "0.8.1"
 description = "xtyping = typing + typing_extensions"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = ">=3.8,<4.0"
 files = [
-    {file = "xtyping-0.7.0-py3-none-any.whl", hash = "sha256:5b72b08d5b4775c1ff34a8b7bbdfaae92249aaa11c53b33f26a0a788ca209fda"},
-    {file = "xtyping-0.7.0.tar.gz", hash = "sha256:441e597b227fcb51645e33de7cb47b7b23c014ee7c487a996b312652b8cacde0"},
+    {file = "xtyping-0.8.1-py3-none-any.whl", hash = "sha256:4969c614788bceb8b59f1a558121fb8dd78d9965f7058ccd5f220c42a714b630"},
+    {file = "xtyping-0.8.1.tar.gz", hash = "sha256:3ec1bdb89379d0673e307286b4e7f8161637ce8d047ed2b71d9b9994640e3972"},
 ]
 
 [package.dependencies]
