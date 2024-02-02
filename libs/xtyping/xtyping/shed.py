@@ -7,6 +7,7 @@ from os import PathLike
 from pathlib import Path
 from typing import (
     IO,
+    TYPE_CHECKING,
     Any,
     AsyncIterable,
     AsyncIterator,
@@ -25,7 +26,7 @@ from typing import (
     Union,
 )
 
-from typing_extensions import Literal, ParamSpec, TypeAlias
+from typing_extensions import Literal, ParamSpec
 
 __all_typing__: Tuple[str, ...] = (
     "AbstractSet",
@@ -364,9 +365,16 @@ HrTime = Tuple[int, int]  # node/js hrtime type annotation
 ###############################
 ## Function type annotations ##
 ###############################
-PathLikeAny: TypeAlias = "PathLike[Any]"
-PathLikeStr: TypeAlias = "PathLike[str]"
-PathLikeBytes: TypeAlias = "PathLike[bytes]"
+if TYPE_CHECKING:
+    PathLikeAny = PathLike[Any]
+    PathLikeStr = PathLike[str]
+    PathLikeBytes = PathLike[bytes]
+    PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
+else:
+    PathLikeAny = PathLike
+    PathLikeStr = PathLike
+    PathLikeBytes = PathLike
+    PathLikeStrBytes = PathLike
 FsPath = Union[str, Path, PathLikeAny]
 FsPathLike = "PathLike[Any]"
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
@@ -587,6 +595,7 @@ __all__ = (
     "PathLikeAny",
     "PathLikeBytes",
     "PathLikeStr",
+    "PathLikeStrBytes",
     "R",
     "RT",
     "ReturnT",

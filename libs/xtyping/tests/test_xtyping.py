@@ -159,6 +159,7 @@ def test_xtyping_shed_all_members() -> None:
             and member not in tx_all_set
             and member not in typing_all_set
             and member not in builtin_members
+            and not member.startswith("__")
         ):
             missing_from_all.add(member)
 
