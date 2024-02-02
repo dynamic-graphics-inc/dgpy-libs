@@ -80,7 +80,6 @@ class ExeABC:
 
     def __post_init__(self) -> None:
         """Post-initialization"""
-        ...
 
     @classmethod
     def _from_exe_config(cls: Type[TExe], config: ExeConfig) -> TExe:
