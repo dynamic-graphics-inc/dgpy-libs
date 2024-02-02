@@ -354,7 +354,6 @@ class Flag(metaclass=FlagMeta):
 
     """
 
-    ...
 
 
 def mkenv(env: Dict[str, str], extenv: bool = True) -> Dict[str, str]:

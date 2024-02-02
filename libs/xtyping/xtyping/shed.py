@@ -277,13 +277,11 @@ _KT_contra = TypeVar("_KT_contra", contravariant=True)
 class StringEnum(str, Enum):
     """String enum base class -- based on usage with pydantic"""
 
-    ...
 
 
 class StrEnum(StringEnum):
     """Alias for StringEnum"""
 
-    ...
 
 
 ################
