@@ -243,7 +243,6 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def enumerate(
         self, start: int = 0, flip: bool = False
     ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]:
-        ...
         if flip:
             return zip(self.__arr, range(start, len(self.__arr) + start))
         return enumerate(self.__arr, start=start)
