@@ -9,7 +9,7 @@ from functools import wraps
 from time import time
 from typing import Any, Callable, Dict, Optional, TypeVar, Union
 
-from loguru import logger as logger
+from loguru import logger as logger, Record
 from loguru._handler import Handler
 
 from lager.const import LOG_LEVELS
@@ -223,6 +223,7 @@ __hoisted__ = (
     "parse",
     "patch",
     "remove",
+    "Record",
     "start",
     "stop",
     "success",
@@ -291,6 +292,7 @@ __all__ = (
     "parse",
     "patch",
     "remove",
+    "Record",
     "start",
     "stop",
     "success",
