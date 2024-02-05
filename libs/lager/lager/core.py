@@ -32,10 +32,11 @@ T = TypeVar("T")
 
 class _RecordAttribute:
     def __repr__(self) -> str:
-        return self.name
+        return "value"
 
     def __format__(self, spec: str) -> str:
-        return self.name.__format__(spec)
+        formatted_str = "Formatted string based on {}".format(spec)
+        return formatted_str
 
 
 class RecordFile(_RecordAttribute):
