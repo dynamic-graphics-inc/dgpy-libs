@@ -35,7 +35,7 @@ class _RecordAttribute:
         return "value"
 
     def __format__(self, spec: str) -> str:
-        formatted_str = "Formatted string based on {}".format(spec)
+        formatted_str = f"Formatted string based on {spec}"
         return formatted_str
 
 
