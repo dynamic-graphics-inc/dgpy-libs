@@ -7,15 +7,76 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import Any, Callable, Dict, Optional, TypeVar, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    NamedTuple,
+    Optional,
+    Type,
+    TypedDict,
+    TypeVar,
+    Union,
+)
+from types import TracebackType
+from datetime import datetime, time, timedelta
 
-from loguru import logger as logger, Record as Record
+from loguru import logger
 from loguru._handler import Handler
 
 
 from lager.const import LOG_LEVELS
 
 T = TypeVar("T")
+
+
+class _RecordAttribute:
+    def __repr__(self) -> str: ...
+    def __format__(self, spec: str) -> str: ...
+
+
+class RecordFile(_RecordAttribute):
+    name: str
+    path: str
+
+
+class RecordLevel(_RecordAttribute):
+    name: str
+    no: int
+    icon: str
+
+
+class RecordException(NamedTuple):
+    type: Optional[Type[BaseException]]
+    value: Optional[BaseException]
+    traceback: Optional[TracebackType]
+
+
+class RecordThread(_RecordAttribute):
+    id: int
+    name: str
+
+
+class RecordProcess(_RecordAttribute):
+    id: int
+    name: str
+
+
+class Record(TypedDict):
+    elapsed: timedelta
+    exception: Optional[RecordException]
+    extra: Dict[Any, Any]
+    file: RecordFile
+    function: str
+    level: RecordLevel
+    line: int
+    message: str
+    module: str
+    name: Union[str, None]
+    process: RecordProcess
+    thread: RecordThread
+    time: datetime
+
 
 try:
     import orjson
