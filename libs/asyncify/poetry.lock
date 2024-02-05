@@ -357,13 +357,13 @@ tests-strict = ["pytest (==4.6.0)", "pytest (==4.6.0)", "pytest (==6.2.5)", "pyt
 
 [[package]]
 name = "xtyping"
-version = "0.8.1"
+version = "0.8.2"
 description = "xtyping = typing + typing_extensions"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "xtyping-0.8.1-py3-none-any.whl", hash = "sha256:4969c614788bceb8b59f1a558121fb8dd78d9965f7058ccd5f220c42a714b630"},
-    {file = "xtyping-0.8.1.tar.gz", hash = "sha256:3ec1bdb89379d0673e307286b4e7f8161637ce8d047ed2b71d9b9994640e3972"},
+    {file = "xtyping-0.8.2-py3-none-any.whl", hash = "sha256:9c80bbf5bcc9aa4ec5d5ad4b05c1778ac5312476a7169502e79f31eedbf77590"},
+    {file = "xtyping-0.8.2.tar.gz", hash = "sha256:219d14d2782d986e86d7310e4190701e2b521f158350cf9b5afc0f0c793cb98f"},
 ]
 
 [package.dependencies]
