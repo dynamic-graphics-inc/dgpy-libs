@@ -9,9 +9,9 @@ from functools import wraps
 from time import time
 from typing import Any, Callable, Dict, Optional, TypeVar, Union
 
-from loguru import logger as logger
+from loguru import logger as logger, Record as Record
 from loguru._handler import Handler
-from loguru._defaults import Record
+
 
 from lager.const import LOG_LEVELS
 
