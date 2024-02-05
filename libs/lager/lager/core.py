@@ -5,8 +5,10 @@ from __future__ import annotations
 import asyncio
 import sys as _sys
 
+from datetime import datetime, timedelta
 from functools import wraps
 from time import time
+from types import TracebackType
 from typing import (
     Any,
     Callable,
@@ -18,12 +20,9 @@ from typing import (
     TypeVar,
     Union,
 )
-from types import TracebackType
-from datetime import datetime, timedelta
 
 from loguru import logger
 from loguru._handler import Handler
-
 
 from lager.const import LOG_LEVELS
 
