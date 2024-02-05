@@ -19,7 +19,7 @@ from typing import (
     Union,
 )
 from types import TracebackType
-from datetime import datetime, time, timedelta
+from datetime import datetime, timedelta
 
 from loguru import logger
 from loguru._handler import Handler
@@ -31,8 +31,11 @@ T = TypeVar("T")
 
 
 class _RecordAttribute:
-    def __repr__(self) -> str: ...
-    def __format__(self, spec: str) -> str: ...
+    def __repr__(self) -> str:
+        return self.name
+
+    def __format__(self, spec: str) -> str:
+        return self.name.__format__(spec)
 
 
 class RecordFile(_RecordAttribute):
