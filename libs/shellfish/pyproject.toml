@@ -41,7 +41,7 @@ listless = ">=0.1.0"
 xtyping = ">=0.6.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^8.0.0"
+pytest = "^8.0.1"
 pytest-asyncio = "^0.23.5"
 pytest-cov = "^4.1.0"
 
