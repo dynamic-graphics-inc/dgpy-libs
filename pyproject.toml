@@ -266,6 +266,11 @@ reportMissingTypeStubs = false
 
 [tool.ruff]
 target-version = "py38"
+
+line-length = 88
+
+[tool.ruff.lint]
+preview = true
 select = [
   "RUF100", # no unused 'noqa' comments
   "E", # pyflakes errors
@@ -292,7 +297,6 @@ select = [
   # pie (PIE)
   "PIE",
 ]
-line-length = 88
 
 ignore = [
   # "B004",
@@ -320,10 +324,10 @@ ignore = [
   "PIE804" # unnecessary-dict-kwargs -- TODO: revisit?
 ]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 20
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "libs/requires/tests/test_requires.py" = [
   "F821", # undefined name; not valid for this test file
 ]
@@ -350,10 +354,10 @@ max-complexity = 20
   "I001" # isort something wrong with in try block import
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 combine-as-imports = true
 lines-between-types = 1
 lines-after-imports = -1
