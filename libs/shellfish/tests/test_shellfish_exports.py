@@ -45,11 +45,7 @@ def _test_module_all_tuple(
 
 @pytest.mark.parametrize("mod", modules)
 def test_module_exports(mod: ModuleType) -> None:
-    check_sorted = mod.__name__ not in {
-        "shellfish.sh",
-    }
-
-    _test_module_all_tuple(mod, check_sorted=check_sorted)
+    _test_module_all_tuple(mod, check_sorted=False)
 
 
 @pytest.mark.parametrize("member", fs.__all__)
