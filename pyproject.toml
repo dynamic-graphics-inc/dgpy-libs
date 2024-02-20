@@ -273,6 +273,7 @@ line-length = 88
 preview = true
 select = [
   "RUF100", # no unused 'noqa' comments
+  "RUF022",
   "E", # pyflakes errors
   "F", # pyflakes warnings
   "B", # bugbear
@@ -304,6 +305,7 @@ ignore = [
   "C417", # super annoying
   "C901", # too complex
   "E501", # line too long,
+  "E266", # too many leading '#' for block comment
 
   # PYUPGRADE
   # keep runtime typing

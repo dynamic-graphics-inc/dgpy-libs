@@ -27,6 +27,7 @@ import numpy as np
 from h5._types import H5pyCompression
 
 __all__ = (
+    "H5ABC",
     "DatasetInfo",
     "DatasetInfoDict",
     "FileInfo",
@@ -36,7 +37,6 @@ __all__ = (
     "GroupInfoDict",
     "GroupInfoDumpDict",
     "GroupLikeInfo",
-    "H5ABC",
     "H5Mixin",
     "TTypedDict",
     "T_GroupInfo",

@@ -61,7 +61,7 @@ def test_jsonobj_basic_unpacking() -> None:
     merged = {**thing, **thing2}
     assert merged["a"] == 234
     merged_jsonobj = JsonObj({**thing, **thing2})
-    assert {**merged_jsonobj} == merged
+    assert merged == {**merged_jsonobj}
 
 
 @pytest.mark.skip(reason="no longer the impl")

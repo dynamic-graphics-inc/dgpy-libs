@@ -16,11 +16,11 @@ from requires.core import (
 funkify(requires, key="requires")
 
 __all__ = (
-    "__version__",
-    "requires",
-    "require",
-    "RequirementError",
     "Requirement",
-    "RequirementProxy",
     "RequirementAttributeError",
+    "RequirementError",
+    "RequirementProxy",
+    "__version__",
+    "require",
+    "requires",
 )

@@ -16,7 +16,9 @@ from shellfish.fs import promises as fsp
 modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
 
 
-def _test_module_all_tuple(mod: ModuleType, check_sorted: bool = True) -> None:
+def _test_module_all_tuple(
+    mod: ModuleType, check_sorted: bool = False  # now handled by RUF022
+) -> None:
     assert hasattr(mod, "__all__"), f"{mod} has no __all__"
     mod_all = getattr(mod, "__all__")  # noqa: B009
     mod_name = mod.__name__

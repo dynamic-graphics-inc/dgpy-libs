@@ -14,9 +14,9 @@ from xtyping import FsPath
 
 __all__ = (
     "assert_symlink_exists",
-    "random_string",
-    "random_directory_path",
     "mk_random_dirtree",
+    "random_directory_path",
+    "random_string",
 )
 
 

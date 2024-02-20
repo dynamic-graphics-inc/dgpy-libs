@@ -13,11 +13,11 @@ from h5py import File, Group
 __all__ = (
     "FileOrGroup",
     "FsPath",
+    "GroupLikeOrFsPath",
+    "H5pyAttributesDict",
     "H5pyCompression",
     "H5pyDriver",
     "H5pyMode",
-    "GroupLikeOrFsPath",
-    "H5pyAttributesDict",
 )
 
 if TYPE_CHECKING:

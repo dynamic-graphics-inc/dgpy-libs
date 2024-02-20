@@ -29,9 +29,9 @@ SYS_PATH_SEP: str = pathsep
 
 __all__ = (
     "ENV",
-    "Env",
     "PYTHON_IMPLEMENTATION",
     "SYS_PATH_SEP",
+    "Env",
     "env",
     "env_dict",
     "is_cpython",

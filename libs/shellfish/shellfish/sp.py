@@ -43,16 +43,16 @@ __subprocess_all__ = (
     "DEVNULL",
 )
 __all__ = (
-    "CompletedProcessDict",
-    "completed_process_dict",
-    "runb",
-    "runs",
+    "DEVNULL",
+    "PIPE",
     # from subprocess
     "CompletedProcess",
-    "run",
+    "CompletedProcessDict",
     "Popen",
-    "PIPE",
-    "DEVNULL",
+    "completed_process_dict",
+    "run",
+    "runb",
+    "runs",
 )
 
 

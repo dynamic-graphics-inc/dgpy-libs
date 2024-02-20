@@ -12,4 +12,4 @@ warnings.warn(
     stacklevel=2,
 )
 
-__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")
+__all__ = ("__description__", "__pkgroot__", "__title__", "__version__")
