@@ -32,7 +32,6 @@ from shellfish import __version__ as __shellfish_version__
 from xtyping import __version__ as __xtyping_version__
 
 __all__ = (
-    "__version__",
     "__aiopen_version__",
     "__asyncify_version__",
     "__dgpylibs_version__",
@@ -42,8 +41,9 @@ __all__ = (
     "__jsonbourne_version__",
     "__lager_version__",
     "__listless_version__",
-    "__shellfish_version__",
     "__requires_version__",
+    "__shellfish_version__",
+    "__version__",
     "__xtyping_version__",
     "aiopen",
     "asyncify",

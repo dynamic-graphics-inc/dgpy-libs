@@ -40,10 +40,10 @@ except ImportError:
     )
 
 __all__ = (
+    "MISSING",
     "Field",
     "FrozenInstanceError",
     "InitVar",
-    "MISSING",
     "__pydantic__",
     "__pydantic_version__",
     "asdict",

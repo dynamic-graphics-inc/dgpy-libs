@@ -76,7 +76,7 @@ def update_abouts():
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',
             "from __future__ import annotations\n",
-            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
+            '__all__ = ("__description__", "__pkgroot__", "__title__", "__version__")',
             '__title__ = "{}"'.format(poetry_metadata["name"]),
             '__description__ = "{}"'.format(poetry_metadata["description"]),
             '__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\\\")',

@@ -9,8 +9,8 @@ from jsonbourne.protocols import (
 )
 
 __all__ = (
+    "Dumpable",
     "JsonInterface",
     "JsonInterfaceProperty",
     "JsonInterfaceProtocol",
-    "Dumpable",
 )

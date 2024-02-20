@@ -23,10 +23,10 @@ funkify(asyncify, key="asyncify")
 __all__ = (
     "ANYIO",
     "__version__",
-    "aiterable",
     "aiorun",
     "aiorun_anyio",
     "aiorun_asyncio",
+    "aiterable",
     "anyio_asyncify",
     "anyio_run",
     "asyncify",

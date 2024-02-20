@@ -35,15 +35,15 @@ T = TypeVar("T")
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
 
 __all__ = (
-    "JsonBaseConfig",
-    "JsonBaseModelDefaultConfig",
-    "JsonBaseModel",
-    "JsonBaseModelT",
-    # pydantic
-    "__pydantic_version__",
     "BaseModel",
     "Field",
+    "JsonBaseConfig",
+    "JsonBaseModel",
+    "JsonBaseModelDefaultConfig",
+    "JsonBaseModelT",
     "ValidationError",
+    # pydantic
+    "__pydantic_version__",
 )
 
 json_model_base_config: ConfigDict = {

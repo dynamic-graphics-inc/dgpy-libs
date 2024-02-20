@@ -37,12 +37,12 @@ unjsonify = _JSON.unjsonify
 JSONDecodeError = _JSON.JSONDecodeError
 
 __all__ = (
+    "UNDEFINED",
     "JSONModuleCls",
     "JsonDict",
     "JsonObj",
     "JsonObjMutableMapping",
     "Null",
-    "UNDEFINED",
     "__version__",
     "binify",
     "dumpb",

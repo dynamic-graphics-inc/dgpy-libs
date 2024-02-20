@@ -4,10 +4,10 @@ from __future__ import annotations
 from xtyping import Any, Protocol, Union
 
 __all__ = (
+    "Dumpable",
     "JsonInterface",
     "JsonInterfaceProperty",
     "JsonInterfaceProtocol",
-    "Dumpable",
 )
 
 

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING, Callable, Dict, Iterator, Union
 if TYPE_CHECKING:
     from hashlib import _Hash
 
-__all__ = ("string2hasher", "hash_bytes_gen")
+__all__ = ("hash_bytes_gen", "string2hasher")
 
 _HASHERS: Dict[str, Callable[[], "_Hash"]] = {
     "blake2b": blake2b,

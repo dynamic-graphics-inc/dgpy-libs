@@ -25,6 +25,7 @@ PopenEnv = Mapping[str, str]
 SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
 
 __all__ = (
+    "FsPath",
     "PathLikeBytes",
     "PathLikeStr",
     "PathLikeStrBytes",
@@ -32,6 +33,5 @@ __all__ = (
     "PopenArgs",
     "PopenArgv",
     "PopenEnv",
-    "FsPath",
     "SymlinkType",
 )

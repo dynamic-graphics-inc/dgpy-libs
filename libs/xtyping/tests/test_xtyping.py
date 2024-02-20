@@ -72,7 +72,9 @@ def test_xtyping_imports_typing() -> None:
 
 
 def _test_module_all_tuple(
-    mod_name: str, mod_all: Tuple[str, ...], check_sorted: bool = True
+    mod_name: str,
+    mod_all: Tuple[str, ...],
+    check_sorted: bool = False,  # now handled by RUF022
 ) -> None:
     assert isinstance(mod_all, tuple), "__all__ should be tuple"
     assert len(set(mod_all)) == len(mod_all)

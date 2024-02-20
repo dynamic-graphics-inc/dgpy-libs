@@ -49,13 +49,13 @@ JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = (
     "JSON",
+    "UNDEFINED",
     "JSONModuleCls",
     "JsonDict",
     "JsonObj",
     "JsonObjMutableMapping",
     "JsonObjT",
     "Null",
-    "UNDEFINED",
     "jsonify",
     "null",
     "objectify",

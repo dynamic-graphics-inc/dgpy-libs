@@ -25,8 +25,8 @@ except ImportError as e:
 console = Console()
 
 __all__ = (
-    "cli",
     "H5CliConfig",
+    "cli",
 )
 
 Matcher = Union[Callable[[str], bool], Globsters]
