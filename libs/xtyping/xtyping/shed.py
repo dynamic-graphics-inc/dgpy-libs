@@ -134,6 +134,7 @@ __all_typing_extensions__: Tuple[str, ...] = (
     "overload",
     "runtime",
     "runtime_checkable",
+    "TypeIs",
 )
 
 __all_typing_extensions_future__: Tuple[str, ...] = (
