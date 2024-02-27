@@ -47,7 +47,12 @@ def test_xtyping_all() -> None:
 
 def test_xtyping_imports() -> None:
     for el in xtyping.__all__:
-        if el not in {"_typing", "_typing_extensions", "shed", "_meta"}:
+        if el not in {
+            "_typing",
+            "_typing_extensions",
+            "shed",
+            "_meta",
+        }:
             assert hasattr(xtyping, el)
 
 
