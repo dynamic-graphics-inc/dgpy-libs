@@ -105,7 +105,6 @@ from typing_extensions import (
     TypeAlias,
     TypedDict,
     TypeGuard,
-    # type: ignore[attr-defined]
     TypeIs,
     TypeVarTuple,
     Unpack,
