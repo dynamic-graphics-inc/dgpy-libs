@@ -147,7 +147,6 @@ def _mypy(session):
         "-U",
         "mypy",
         "typing-extensions",
-        "typing_extensions",
         "pydantic",
         "pydantic_core",
         "anyio",
@@ -156,7 +155,7 @@ def _mypy(session):
     )
     session.install("orjson", "types-orjson", "fastapi", "click==8.1.3")
     session.run("mypy", "--version")
-    session.run("typing_extensions", "--version")
+    session.run("typing-extensions", "--version")
     session.run(
         "mypy",
         "--show-error-codes",
