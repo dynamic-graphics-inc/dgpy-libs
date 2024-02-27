@@ -70,8 +70,6 @@ from annotated_types import (
     Timezone,
     UpperCase,
 )
-
-
 from typing_extensions import (
     TYPE_CHECKING,
     Annotated,
