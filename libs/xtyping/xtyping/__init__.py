@@ -71,7 +71,7 @@ from annotated_types import (
     UpperCase,
 )
 
-# type: ignore[attr-defined]
+
 from typing_extensions import (
     TYPE_CHECKING,
     Annotated,
@@ -107,6 +107,7 @@ from typing_extensions import (
     TypeAlias,
     TypedDict,
     TypeGuard,
+    # type: ignore[attr-defined]
     TypeIs,
     TypeVarTuple,
     Unpack,
