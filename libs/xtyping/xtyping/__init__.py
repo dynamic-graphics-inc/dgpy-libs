@@ -502,6 +502,7 @@ __all__ = (
     "TupleStrs",
     "Txt",
     "Type",
+    "TypeIs",
     "TypeAlias",
     "TypeGuard",
     "TypeVar",
