@@ -143,6 +143,7 @@ __all_typing_extensions_future__: Tuple[str, ...] = (
     "Never",
     "ReadOnly",
     "TypeAliasType",
+    "TypeIs",
     "assert_never",
     "assert_type",
     "clear_overloads",
