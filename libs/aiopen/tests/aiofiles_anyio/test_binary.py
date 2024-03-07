@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """PEP 0492/Python 3.5+ tests for binary files."""
+
 from __future__ import annotations
 
 import io

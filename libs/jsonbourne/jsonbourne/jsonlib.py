@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """jsonbourne jsonlib api"""
+
 # pyright: reportOptionalMemberAccess=false
 from __future__ import annotations
 
@@ -470,7 +471,7 @@ def _import_json_stdlib() -> "Type[JSON_STDLIB]":
 
 
 def import_json(
-    jsonlibs: Optional[Union[Tuple[str, ...], List[str]]] = None
+    jsonlibs: Optional[Union[Tuple[str, ...], List[str]]] = None,
 ) -> "Type[JsonLibABC]":
     lib2funk = {
         "rapidjson": _import_rapidjson,

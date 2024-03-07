@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """pkg entry ~ `python -m asyncify`"""
+
 from __future__ import annotations
 
 import sys

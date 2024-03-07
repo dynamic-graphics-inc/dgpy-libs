@@ -181,7 +181,7 @@ def _mypy(session):
 def _ruff(session: nox.Session) -> None:
     session.install("ruff")
     session.run("ruff", "--version")
-    session.run("ruff", ".")
+    session.run("ruff", "check", ".")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
@@ -193,7 +193,6 @@ def mypy(session):
 def lint(session):
     _mypy(session)
     _ruff(session)
-    _flake(session)
 
 
 ruffext = """

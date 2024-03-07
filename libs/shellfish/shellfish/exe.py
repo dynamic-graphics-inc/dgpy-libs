@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Exes/commands"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

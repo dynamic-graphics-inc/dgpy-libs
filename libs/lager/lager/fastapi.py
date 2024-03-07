@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """FastAPI logging"""
+
 from __future__ import annotations
 
 from typing import List, Optional, Set, Tuple, Union
@@ -19,7 +20,7 @@ FASTAPI_LOGGERS = [
 
 
 def fastapi_intercept(
-    loggers: Optional[Union[List[str], Set[str], Tuple[str, ...]]] = None
+    loggers: Optional[Union[List[str], Set[str], Tuple[str, ...]]] = None,
 ) -> None:
     _loggers2intercept = (
         FASTAPI_LOGGERS if not loggers else sorted(set(*(*FASTAPI_LOGGERS, loggers)))

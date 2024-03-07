@@ -38,7 +38,7 @@ nukepoetry:
 
 .PHONY: ruff
 ruff:
-	ruff .
+	ruff check .
 
 ###########
 ## CLEAN ##

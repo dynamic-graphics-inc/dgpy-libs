@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Jsonbourne wrapper around httpx clients -- lets you do response.JSON()"""
+
 from __future__ import annotations
 
 from typing import Any

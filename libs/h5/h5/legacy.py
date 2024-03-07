@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Legacy; to be deprecated"""
+
 from __future__ import annotations
 
 from functools import wraps

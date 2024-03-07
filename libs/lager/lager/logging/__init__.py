@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Lager/Loguru + std logging"""
+
 from __future__ import annotations
 
 import logging

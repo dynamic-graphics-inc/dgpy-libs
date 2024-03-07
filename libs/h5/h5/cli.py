@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """h5.cli"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass

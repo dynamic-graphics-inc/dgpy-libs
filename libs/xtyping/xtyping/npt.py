@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """import numpy.typing as npt"""
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any

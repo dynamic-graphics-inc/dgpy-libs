@@ -6,7 +6,6 @@ test_lager
 Tests for `lager` module.
 """
 
-
 from __future__ import annotations
 
 

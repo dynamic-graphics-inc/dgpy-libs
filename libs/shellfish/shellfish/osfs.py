@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Os specific filesystem utils/operations"""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

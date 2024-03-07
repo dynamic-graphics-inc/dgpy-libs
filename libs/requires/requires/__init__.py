@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """`requires` ~ dependency utils"""
+
 from __future__ import annotations
 
 from funkify import funkify

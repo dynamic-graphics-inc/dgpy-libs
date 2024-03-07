@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Python lager brewed by a loguru"""
+
 from __future__ import annotations
 
 import asyncio

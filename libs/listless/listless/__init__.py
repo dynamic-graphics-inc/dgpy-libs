@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
 """Listless = generators, iterators, and async iterators, Oh My!"""
+
 from __future__ import annotations
 
 import asyncio
@@ -519,7 +520,7 @@ def flatten_strings(
     *args: Union[
         _T,
         Iterable[_T],
-    ]
+    ],
 ) -> Iterable[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
