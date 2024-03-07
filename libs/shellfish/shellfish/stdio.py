@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """stdio utils"""
+
 from __future__ import annotations
 
 from enum import IntEnum

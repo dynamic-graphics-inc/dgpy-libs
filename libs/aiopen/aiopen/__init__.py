@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """`aiopen` ~ Async version of python's built in open -- based on aiofiles"""
+
 from __future__ import annotations
 
 from aiopen.__about__ import __version__

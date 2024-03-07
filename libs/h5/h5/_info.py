@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """h5._info ~ Info objs!"""
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
@@ -488,7 +489,7 @@ class FileInfo(GroupLikeInfo):
 
 
 def h5py_obj_info(
-    obj: Union[h5py.Group, h5py.Dataset, h5py.File]
+    obj: Union[h5py.Group, h5py.Dataset, h5py.File],
 ) -> Union[GroupInfo, DatasetInfo, FileInfo]:
     if isinstance(obj, h5py.Group):
         return GroupInfo.from_h5py_group(obj)
@@ -501,7 +502,7 @@ def h5py_obj_info(
 
 
 def info(
-    file: Union[str, Path, h5py.File, h5py.Group, h5py.Dataset]
+    file: Union[str, Path, h5py.File, h5py.Group, h5py.Dataset],
 ) -> Union[GroupInfo, DatasetInfo, FileInfo]:
     if isinstance(file, (str, Path)):
         return FileInfo.from_fspath(str(file))

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """xtyping = typing | typing_extensions | misc"""
+
 from __future__ import annotations
 
 from enum import Enum

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Test concurrency properties of the implementation."""
+
 from __future__ import annotations
 
 import asyncio

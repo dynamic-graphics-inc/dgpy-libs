@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """typing + typing_extensions + misc types/aliases"""
+
 from __future__ import annotations
 
 import typing

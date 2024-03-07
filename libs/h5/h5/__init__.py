@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """HDF5 functions, and utils, and generators, OH MY!"""
+
 from __future__ import annotations
 
 from h5py import AttributeManager, Dataset, File, Group, __version__ as __h5py_version__

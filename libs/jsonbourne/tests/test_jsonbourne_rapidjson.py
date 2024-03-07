@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Rapidjson tests"""
+
 from __future__ import annotations
 
 import os

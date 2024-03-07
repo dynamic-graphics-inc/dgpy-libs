@@ -310,10 +310,11 @@ def make_requirement(
         if "as" in requirement:
             requirement["_as"] = requirement.pop("as")
         return Requirement(**requirement)
+
+    str_type = str(type(requirement))
+    str_req = str(requirement)
     raise RequirementError(
-        "Unable to create requirement (type: {}): {}".format(
-            str(type(requirement)), str(requirement)
-        )
+        f"Unable to create requirement (type: {str_type}): {str_req})"
     )
 
 

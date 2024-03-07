@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Python builtin data structure utils"""
+
 from __future__ import annotations
 
 import datetime

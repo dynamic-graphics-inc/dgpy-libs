@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Constants"""
+
 from __future__ import annotations
 
 from xtyping import Final, Literal

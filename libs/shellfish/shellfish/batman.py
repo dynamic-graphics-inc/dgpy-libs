@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """batman = bat/cmd windows utils"""
+
 from __future__ import annotations
 
 import tempfile

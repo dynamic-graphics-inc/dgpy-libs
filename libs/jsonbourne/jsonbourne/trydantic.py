@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """trydantic = try + pydantic"""
+
 from __future__ import annotations
 
 from dataclasses import (

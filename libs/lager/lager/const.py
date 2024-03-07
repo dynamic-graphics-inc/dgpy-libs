@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Constants go here!"""
+
 from __future__ import annotations
 
 from typing import Dict

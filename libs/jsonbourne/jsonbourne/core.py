@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Json Bourne -- EZ-PZ-JSON with lots o goodies"""
+
 from __future__ import annotations
 
 import keyword

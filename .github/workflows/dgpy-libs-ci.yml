@@ -31,7 +31,7 @@ jobs:
           ruff --version
       - name: ruff-check
         run: |
-          ruff .
+          ruff check .
 
   lint:
     runs-on: ubuntu-latest

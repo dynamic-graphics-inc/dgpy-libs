@@ -15,7 +15,7 @@ codespell:
 fmt: black
 
 ruff:
-    ruff .
+    ruff check .
 
 noxlint:
     nox -s lint

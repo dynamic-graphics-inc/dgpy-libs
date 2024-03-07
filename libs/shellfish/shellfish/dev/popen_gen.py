@@ -100,7 +100,5 @@ def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str]
             the subprocess created.
 
     """
-    with Popen(
-        *popenargs, **popenkwargs, stdout=PIPE, stderr=PIPE, text=True
-    ) as proc:  # type: ignore[call-overload]
+    with Popen(*popenargs, **popenkwargs, stdout=PIPE, stderr=PIPE, text=True) as proc:  # type: ignore[call-overload]
         yield from popen_pipes_gen(proc)

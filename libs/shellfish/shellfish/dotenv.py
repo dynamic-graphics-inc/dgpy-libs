@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """dot.env utils"""
+
 from __future__ import annotations
 
 import re

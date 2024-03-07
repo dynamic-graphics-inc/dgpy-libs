@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Lager & pydantic"""
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta
