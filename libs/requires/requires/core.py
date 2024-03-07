@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Core for requires"""
+
 from __future__ import annotations
 
 import asyncio
@@ -296,7 +297,7 @@ def string2requirement(string: str) -> Requirement:
 
 
 def make_requirement(
-    requirement: Union[str, Requirement, Dict[str, str]]
+    requirement: Union[str, Requirement, Dict[str, str]],
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
@@ -325,7 +326,7 @@ def make_requirements(
         str,
         Requirement,
         Dict[str, str],
-    ]
+    ],
 ) -> List[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]

@@ -193,7 +193,6 @@ def mypy(session):
 def lint(session):
     _mypy(session)
     _ruff(session)
-    # _flake(session)
 
 
 ruffext = """
