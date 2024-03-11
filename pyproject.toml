@@ -54,13 +54,13 @@ h5py = "^3.10.0"
 isort = "^5.13.2"
 nox = "^2024.3.2"
 orjson = "^3.9.15"
-pytest = "^8.1.0"
+pytest = "^8.1.1"
 pytest-asyncio = "^0.23.5"
 pytest-cov = "^4.1.0"
 python-rapidjson = "^1.16"
 xdoctest = ">=1.0.1"
 click = "^8.1.7"
-mypy = "^1.8"
+mypy = "^1.9"
 pydantic = ">=2.0.2"
 pydantic-core = ">=2.1.2"
 
@@ -82,10 +82,10 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.3.1"
+ruff = "^0.3.2"
 anyio = { extras = ["trio"], version = "^3.7.1" }
 nox = "^2024.3.2"
-packaging = "^23.2"
+packaging = "^24.0"
 codespell = "^2.2.6"
 
 [build-system]
