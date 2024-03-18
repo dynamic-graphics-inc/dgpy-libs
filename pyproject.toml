@@ -44,11 +44,11 @@ flake8-eradicate = "1.5.0"
 httpx = "0.27.0"
 pip-tools = "7.4.1"
 mkdocs = "1.5.3"
-mkdocs-material = "9.5.13"
+mkdocs-material = "9.5.14"
 mkdocs-jupyter = "0.24.3"
 
 [tool.poetry.dev-dependencies]
-black = "^24.2.0"
+black = "^24.3.0"
 flake8 = "^7.0.0"
 h5py = "^3.10.0"
 isort = "^5.13.2"
@@ -82,7 +82,7 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 dgpydev = "dgpydev.cli:main"
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.3.2"
+ruff = "^0.3.3"
 anyio = { extras = ["trio"], version = "^3.7.1" }
 nox = "^2024.3.2"
 packaging = "^24.0"
