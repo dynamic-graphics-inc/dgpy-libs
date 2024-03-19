@@ -425,13 +425,13 @@ testing = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygm
 
 [[package]]
 name = "pytest-asyncio"
-version = "0.23.5.post1"
+version = "0.23.6"
 description = "Pytest support for asyncio"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-asyncio-0.23.5.post1.tar.gz", hash = "sha256:b9a8806bea78c21276bc34321bbf234ba1b2ea5b30d9f0ce0f2dea45e4685813"},
-    {file = "pytest_asyncio-0.23.5.post1-py3-none-any.whl", hash = "sha256:30f54d27774e79ac409778889880242b0403d09cabd65b727ce90fe92dd5d80e"},
+    {file = "pytest-asyncio-0.23.6.tar.gz", hash = "sha256:ffe523a89c1c222598c76856e76852b787504ddb72dd5d9b6617ffa8aa2cde5f"},
+    {file = "pytest_asyncio-0.23.6-py3-none-any.whl", hash = "sha256:68516fdd1018ac57b846c9846b954f0393b26f094764a28c955eabb0536a4e8a"},
 ]
 
 [package.dependencies]
@@ -499,4 +499,4 @@ typing-extensions = ">=4.4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "1a36e146f73f3d58df56630bd2d7747eab3efc0609a204e5f822f4c9877c5589"
+content-hash = "9085b4d48e8de7631e87e89b8c0fab74135e31e72af2fe2b8616d5bcab316e1d"
