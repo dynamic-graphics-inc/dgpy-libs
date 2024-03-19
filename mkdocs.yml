@@ -4,7 +4,7 @@ site_dir: public
 site_url: ''
 repo_url: 'https://github.com/dynamic-graphics-inc/dgpy-libs/'
 repo_name: 'GitHub'
-site_author: 'Sheldon & jesse'
+site_author: 'jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
 watch:
@@ -15,6 +15,7 @@ watch:
   - libs/h5/h5
   - libs/jsonbourne/jsonbourne
   - libs/listless/listless
+  - libs/requires/requires
   - libs/shellfish/shellfish
   - libs/xtyping/xtyping
 
@@ -74,19 +75,34 @@ theme:
         icon: material/weather-sunny
         name: Switch to dark mode
   features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
     - content.code.annotate
+    - content.code.copy
+    - content.tooltips
+    - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.sections
     - navigation.tabs
     - navigation.tabs.sticky
-    - navigation.expand
-    - navigation.instant
     - navigation.top
+    - search
     - search.highlight
+    - search.suggest
+    - toc.follow
+    - toc.integrate
 
 markdown_extensions:
+  - attr_list
   - admonition
   - callouts
+  - footnotes
   - pymdownx.details
   - pymdownx.emoji
+  - pymdownx.tilde
   - pymdownx.magiclink
   - pymdownx.escapeall
   - pymdownx.highlight
@@ -100,54 +116,67 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.betterem:
       smart_enable: all
-  - attr_list
   - toc:
       permalink: ⚓︎
 
 plugins:
   - search:
       lang: en
-      # - mkdocs-jupyter:
-      # execute: False
+  - mkdocs-jupyter:
+      execute: false
   ### MKDOCSTRINGS ###
   - mkdocstrings:
       handlers:
         python:
-          setup_commands:
-            - import sys
-            - from os import path
-            - sys.path.append("docs")
-            - sys.path.append(path.join("libs", "aiopen"))
-            - sys.path.append(path.join("libs", "asyncify"))
-            - sys.path.append(path.join("libs", "dgpylibs"))
-            - sys.path.append(path.join("libs", "dgpytest"))
-            - sys.path.append(path.join("libs", "fmts"))
-            - sys.path.append(path.join("libs", "funkify"))
-            - sys.path.append(path.join("libs", "h5"))
-            - sys.path.append(path.join("libs", "jsonbourne"))
-            - sys.path.append(path.join("libs", "lager"))
-            - sys.path.append(path.join("libs", "listless"))
-            - sys.path.append(path.join("libs", "shellfish"))
-            - sys.path.append(path.join("libs", "xtyping"))
+          paths:
+            - libs/aiopen
+            - libs/asyncify
+            - libs/fmts
+            - libs/funkify
+            - libs/h5
+            - libs/jsonbourne
+            - libs/requires
+            - libs/listless
+            - libs/shellfish
+            - libs/xtyping
+          # setup_commands:
+          #   - import sys
+          #   - from os import path
+          #   - sys.path.append("docs")
+          #   - sys.path.append(path.join("libs", "aiopen"))
+          #   - sys.path.append(path.join("libs", "asyncify"))
+          #   - sys.path.append(path.join("libs", "dgpylibs"))
+          #   - sys.path.append(path.join("libs", "dgpytest"))
+          #   - sys.path.append(path.join("libs", "fmts"))
+          #   - sys.path.append(path.join("libs", "funkify"))
+          #   - sys.path.append(path.join("libs", "h5"))
+          #   - sys.path.append(path.join("libs", "jsonbourne"))
+          #   - sys.path.append(path.join("libs", "lager"))
+          #   - sys.path.append(path.join("libs", "listless"))
+          #   - sys.path.append(path.join("libs", "shellfish"))
+          #   - sys.path.append(path.join("libs", "xtyping"))
           inherited_members: true
           docstring_style: google
           options:
-            separate_signature: true
-            merge_init_into_class: true
             docstring_options:
               ignore_init_summary: true
-            show_source: true
-            show_root_heading: true
-            show_root_full_path:  false
-            show_signature_annotations: true
-            show_category_heading: true
-            show_root_members_full_path: false
-            show_object_full_path: false
-            show_if_no_docstring: true
-            show_root_toc_entry: true
             heading_level: 2
-            # members: true
+            inherited_members: true
+            merge_init_into_class: true
+            new_path_syntax: false
+            separate_signature: false
+            show_category_heading: true
+            show_object_full_path: true
+            show_root_full_path: true
+            show_root_heading: true
+            show_root_members_full_path: true
+            show_signature_annotations: true
+            show_source: true
+            show_submodules: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            signature_crossrefs: true
             filters:
               - "!^_"  # exclude all members starting with _
               - "^__init__$"  # but always include __init__ modules and methods
-            new_path_syntax: false
+              - "^__.*__$"  # include all dunder methods
