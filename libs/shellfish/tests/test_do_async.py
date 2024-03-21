@@ -64,12 +64,90 @@ async def test_timeout_subprocess_aio(tmp_path: Path) -> None:
     script_2sec_filepath = "script_2sec.py"
     fs.sstring(script_1sec_filepath, script_1sec)
     fs.sstring(script_2sec_filepath, script_2sec)
-    proc = await sh.do_async(args=["python", script_1sec_filepath], timeout=2)
+    proc = await sh.do_async(args=["python", script_1sec_filepath], timeout=0.2)
     assert proc.stdout == "About to sleep for 1 sec\nslept for 1 sec\n"
 
     if process.is_win() and sys.version_info < (3, 8):
         with pytest.raises(TimeoutExpired):
-            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=2)
+            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=0.2)
     else:
         with pytest.raises(asyncio.TimeoutError):
-            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=2)
+            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=0.2)
+
+
+async def _test_timeout_subprocess_aio_inner(tmp_path: Path) -> None:
+    sh.cd(str(tmp_path))
+    script_1sec = (
+        "from time import sleep\n"
+        "print('About to sleep for 1 sec')\n"
+        "sleep(1)\n"
+        "print('slept for 1 sec')"
+    )
+
+    script_2sec = (
+        "from time import sleep\n"
+        "print('About to sleep for 3 sec')\n"
+        "sleep(2)\n"
+        "print('slept for 3 sec')"
+    )
+    script_1sec_filepath = "script_1sec.py"
+    script_2sec_filepath = "script_2sec.py"
+    fs.sstring(script_1sec_filepath, script_1sec)
+    fs.sstring(script_2sec_filepath, script_2sec)
+    proc = await sh.do_async(args=["python", script_1sec_filepath], timeout=0.2)
+    assert proc.stdout == "About to sleep for 1 sec\nslept for 1 sec\n"
+
+    if process.is_win() and sys.version_info < (3, 8):
+        with pytest.raises(TimeoutExpired):
+            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=0.2)
+    else:
+        with pytest.raises(asyncio.TimeoutError):
+            proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=0.2)
+
+
+@pytest.mark.timeout()
+def test_timeout_subprocess_aio_sync(tmp_path: Path) -> None:
+    with pytest.raises(TimeoutExpired):
+        _proc = asyncio.run(_test_timeout_subprocess_aio_inner(tmp_path))
+
+
+async def _test_timeout_subprocess_aio_inner_shell_true(tmp_path: Path) -> None:
+    sh.cd(str(tmp_path))
+    script_1sec = (
+        "from time import sleep\n"
+        "print('About to sleep for 1 sec')\n"
+        "sleep(1)\n"
+        "print('slept for 1 sec')"
+    )
+
+    script_2sec = (
+        "from time import sleep\n"
+        "print('About to sleep for 3 sec')\n"
+        "sleep(2)\n"
+        "print('slept for 3 sec')"
+    )
+    script_1sec_filepath = "script_1sec.py"
+    script_2sec_filepath = "script_2sec.py"
+    fs.sstring(script_1sec_filepath, script_1sec)
+    fs.sstring(script_2sec_filepath, script_2sec)
+    proc = await sh.do_async(
+        args=["python", script_1sec_filepath], timeout=0.2, shell=True
+    )
+    assert proc.stdout == "About to sleep for 1 sec\nslept for 1 sec\n"
+
+    if process.is_win() and sys.version_info < (3, 8):
+        with pytest.raises(TimeoutExpired):
+            proc = await sh.do_async(
+                args=["python", script_2sec_filepath], timeout=0.2, shell=True
+            )
+    else:
+        with pytest.raises(asyncio.TimeoutError):
+            proc = await sh.do_async(
+                args=["python", script_2sec_filepath], timeout=0.2, shell=True
+            )
+
+
+@pytest.mark.timeout()
+def test_timeout_subprocess_aio_sync_shell_true(tmp_path: Path) -> None:
+    with pytest.raises(TimeoutExpired):
+        _proc = asyncio.run(_test_timeout_subprocess_aio_inner_shell_true(tmp_path))

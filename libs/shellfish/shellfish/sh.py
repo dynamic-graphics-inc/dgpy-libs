@@ -874,7 +874,7 @@ def _do(
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[int] = None,
+    timeout: Optional[float] = None,
     text: bool = False,
     tee: bool = False,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
@@ -989,7 +989,7 @@ def do(
     tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[int] = None,
+    timeout: Optional[Union[float, int]] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1050,7 +1050,7 @@ def shell(
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[int] = None,
+    timeout: Optional[Union[float, int]] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1109,7 +1109,7 @@ async def run_async(
     capture_output: bool = False,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
-    timeout: Optional[int] = None,
+    timeout: Optional[Union[float, int]] = None,
     check: bool = False,
     encoding: Optional[str] = None,
     errors: Optional[str] = None,
@@ -1148,7 +1148,7 @@ async def do_asyncify(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[int] = None,
+    timeout: Optional[Union[float, int]] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1181,7 +1181,7 @@ async def _do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[int] = None,
+    timeout: Optional[Union[float, int]] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1256,7 +1256,7 @@ async def _do_async(
     if dryrun:
         return Done(
             args=_args,
-            returncode=0,
+            returncode=-1,
             stdout="",
             stderr="",
             ti=0,
@@ -1283,13 +1283,12 @@ async def _do_async(
         input=_input,
         universal_newlines=True,
     )
-
     _args_array = (
         list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
     )
     return Done(
         args=_args_array,
-        returncode=_proc.returncode or -1,
+        returncode=_proc.returncode,
         stdout=decode_stdio_bytes(_proc.stdout),
         stderr=decode_stdio_bytes(_proc.stderr),
         stdin=input.decode(encoding="utf-8") if isinstance(input, bytes) else None,
@@ -1314,7 +1313,7 @@ async def do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[int] = None,
+    timeout: Optional[float] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1391,7 +1390,7 @@ async def doa(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[int] = None,
+    timeout: Optional[float] = None,
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
