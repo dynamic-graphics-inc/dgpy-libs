@@ -178,7 +178,6 @@ async def run_dtee_async(
                         _proc.communicate(),  # wait for subprocess to finish
                         timeout=timeout,
                     )
-
                 tf = time()
             except (TimeoutError, asyncio.TimeoutError) as te:
                 _proc.terminate()

@@ -2,14 +2,13 @@
 from __future__ import annotations
 
 import asyncio
-import sys
 
 from os import path
 from pathlib import Path
 
 import pytest
 
-from shellfish import fs, process, sh
+from shellfish import fs, sh
 
 PWD = path.split(path.realpath(__file__))[0]
 
