@@ -106,7 +106,9 @@ def aiopen(
     return AsyncFileContextManager(
         coro=open_file(
             file=file,
-            mode=cast(Union[OpenBinaryMode, OpenTextMode], mode),  # pyright: ignore[reportGeneralTypeIssues]
+            mode=cast(
+                Union[OpenBinaryMode, OpenTextMode], mode
+            ),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,
