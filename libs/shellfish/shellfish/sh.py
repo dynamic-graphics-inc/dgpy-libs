@@ -12,7 +12,7 @@ from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
 from shutil import which as _which
-from subprocess import PIPE, CompletedProcess, SubprocessError, run
+from subprocess import PIPE, CompletedProcess, SubprocessError, run, TimeoutExpired
 from time import time
 from typing import (
     IO,
@@ -161,14 +161,15 @@ from shellfish.stdio import Stdio as Stdio
 from xtyping import STDIN, AnyStr, IterableStr, TypedDict
 
 __all__ = (
-    "LIN",
-    "WIN",
     "Done",
     "DoneError",
     "DoneObj",
     "Flag",
     "FlagMeta",
     "HrTime",
+    "LIN",
+    "TimeoutExpired",
+    "WIN",
     # fs exports
     "Stdio",
     "SymlinkType",

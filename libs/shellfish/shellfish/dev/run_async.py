@@ -180,7 +180,7 @@ async def run_dtee_async(
                     )
 
                 tf = time()
-            except TimeoutError as te:
+            except (TimeoutError, asyncio.TimeoutError) as te:
                 _proc.terminate()
                 raise TimeoutExpired(
                     cmd=_args,
