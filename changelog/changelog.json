@@ -1,5 +1,5 @@
 {
-  "updated": "2024-03-21T17:21:00.964792",
+  "updated": "2024-03-21T17:37:49.465018",
   "changes": [
     {
       "lib": "fmts",
@@ -12,6 +12,12 @@
       "version": "0.5.0",
       "msg": "run_async timeout shutdown fixed",
       "timestamp": "2024-03-21T17:21:00.964792"
+    },
+    {
+      "lib": "shellfish",
+      "version": "0.5.0",
+      "msg": "shellfish re-exports everything from top level",
+      "timestamp": "2024-03-21T17:37:49.465018"
     }
   ]
 }
