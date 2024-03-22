@@ -17,6 +17,9 @@ fmt: black
 ruff:
     ruff check .
 
+ruffmt:
+    ruff format .
+
 noxlint:
     nox -s lint
 

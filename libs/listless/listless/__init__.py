@@ -257,9 +257,7 @@ def is_sequence(seq: Any) -> bool:
         len(seq)
     except TypeError:
         return False
-    if is_subscriptable(seq):
-        return True
-    return False
+    return is_subscriptable(seq)
 
 
 def chunkseq(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:

@@ -105,9 +105,7 @@ def is_identifier(string: str) -> bool:
         return False
     if not string.isidentifier():
         return False
-    if keyword.iskeyword(string):
-        return False
-    return True
+    return not keyword.iskeyword(string)
 
 
 def is_float(value: Any) -> bool:

@@ -20,7 +20,7 @@ class DoDict(TypedDict):
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]]
     shell: bool
     tee: bool
-    timeout: Optional[int]
+    timeout: Optional[Union[float, int]]
     verbose: bool
 
 
@@ -36,7 +36,7 @@ class Do(JsonBaseModel):
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = (0,)
     shell: bool = False
     tee: bool = False
-    timeout: Optional[int] = None
+    timeout: Optional[Union[float, int]] = None
     verbose: bool = False
 
     def typed_dict(self) -> DoDict:

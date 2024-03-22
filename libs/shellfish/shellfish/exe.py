@@ -29,7 +29,7 @@ class ExeConfig:
     cwd: Optional[str] = None
     shell: bool = False
     verbose: bool = False
-    timeout: Optional[int] = None
+    timeout: Optional[Union[float, int]] = None
     ok_code: Union[int, Set[int]] = field(default_factory=lambda: {0})
     check: bool = False
 
@@ -43,7 +43,7 @@ class ExeABC:
     cwd: Optional[FsPath] = None
     shell: bool = False
     verbose: bool = False
-    timeout: Optional[int] = None
+    timeout: Optional[Union[float, int]] = None
     ok_code: Union[int, Set[int]] = 0  # List[int], Tuple[int, ...], Set[int]] = (0,)
     check: bool = False
 
@@ -57,7 +57,7 @@ class ExeABC:
         env: Optional[Dict[str, str]] = None,
         ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         shell: bool = False,
-        timeout: Optional[int] = None,
+        timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
     ):
         self.cmd = cmd
@@ -160,7 +160,7 @@ class ExeABC:
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: Optional[int] = None,
+        timeout: Optional[Union[float, int]] = None,
         ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -192,7 +192,7 @@ class ExeABC:
         loop: Optional[Any] = None,
         ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         shell: bool = False,
-        timeout: Optional[int] = None,
+        timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
     ) -> Done:
         _args = self._cmdargs(popenargs, args)
@@ -228,7 +228,7 @@ class Exe(ExeABC):
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: Optional[int] = None,
+        timeout: Optional[Union[float, int]] = None,
         ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -261,7 +261,7 @@ class ExeAsync(ExeABC):
         input: STDIN = None,
         loop: Optional[Any] = None,
         shell: bool = False,
-        timeout: Optional[int] = None,
+        timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
     ) -> Done:
         return await self._do_async(

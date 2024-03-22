@@ -138,16 +138,6 @@ async def run_dtee_async(
                 )
                 tf = time()
             except ValueError as ve:
-                tf = time()
-                _proc.terminate()
-                raise TimeoutExpired(
-                    cmd=_args,
-                    timeout=timeout,
-                    output=_out_buf.getvalue(),
-                    stderr=_err_buf.getvalue(),
-                ) from ve
-            except TimeoutError as te:
-                tf = time()
                 for task in _bg:
                     task.cancel()
                 _proc.terminate()
@@ -156,7 +146,18 @@ async def run_dtee_async(
                     timeout=timeout,
                     output=_out_buf.getvalue(),
                     stderr=_err_buf.getvalue(),
+                ) from ve
+            except TimeoutError as te:
+                for task in _bg:
+                    task.cancel()
+                raise TimeoutExpired(
+                    cmd=_args,
+                    timeout=timeout,
+                    output=_out_buf.getvalue(),
+                    stderr=_err_buf.getvalue(),
                 ) from te
+            finally:
+                await _proc.wait()
         else:
             await asyncio.gather(
                 *_bg,
@@ -177,9 +178,8 @@ async def run_dtee_async(
                         _proc.communicate(),  # wait for subprocess to finish
                         timeout=timeout,
                     )
-
                 tf = time()
-            except TimeoutError as te:
+            except (TimeoutError, asyncio.TimeoutError) as te:
                 _proc.terminate()
                 raise TimeoutExpired(
                     cmd=_args,
@@ -187,6 +187,8 @@ async def run_dtee_async(
                     output=_out_buf.getvalue(),
                     stderr=_err_buf.getvalue(),
                 ) from te
+            finally:
+                await _proc.wait()
         else:
             (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)
             tf = time()

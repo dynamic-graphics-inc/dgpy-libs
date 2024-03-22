@@ -1883,9 +1883,7 @@ def is_identifier(string: str) -> bool:
         return False
     if not string.isidentifier():
         return False
-    if iskeyword(string):
-        return False
-    return True
+    return not iskeyword(string)
 
 
 def isidentifier(string: AnyStr) -> bool:
