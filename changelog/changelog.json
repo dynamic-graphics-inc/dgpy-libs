@@ -1,11 +1,17 @@
 {
-  "updated": "2023-12-01T12:55:53.945521",
+  "updated": "2024-03-21T17:21:00.964792",
   "changes": [
     {
       "lib": "fmts",
       "version": "0.2.0",
       "msg": "added negative num handling to fmts.nbytes_str",
       "timestamp": "2023-12-01T12:55:53.945521"
+    },
+    {
+      "lib": "shellfish",
+      "version": "0.5.0",
+      "msg": "run_async timeout shutdown fixed",
+      "timestamp": "2024-03-21T17:21:00.964792"
     }
   ]
 }
