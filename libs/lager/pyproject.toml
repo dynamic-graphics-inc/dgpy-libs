@@ -37,7 +37,7 @@ typing-extensions = "^4.5.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^8.1.1"
-pytest-cov = "^4.1.0"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.group.dev.dependencies]
 typing-extensions = "^4.5.0"
