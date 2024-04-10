@@ -50,7 +50,7 @@ mkdocs-jupyter = "0.24.7"
 [tool.poetry.dev-dependencies]
 black = "^24.3.0"
 flake8 = "^7.0.0"
-h5py = "^3.10.0"
+h5py = "^3.11.0"
 isort = "^5.13.2"
 nox = "^2024.3.2"
 orjson = "^3.10.0"
