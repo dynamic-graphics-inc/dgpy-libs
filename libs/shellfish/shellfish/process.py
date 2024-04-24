@@ -256,6 +256,21 @@ def opsys() -> str:
     return "lin"
 
 
+def linux_version() -> str:
+    """Return rhel7 or rhel8 based on the current linux version"""
+    try:
+        with open("/etc/redhat-release", "r") as file:
+            release_info = file.read()
+            if "Red Hat Enterprise Linux release 7" in release_info:
+                return "rhel7"
+            elif "Red Hat Enterprise Linux release 8" in release_info:
+                return "rhel8"
+            else:
+                return "other"
+    except FileNotFoundError:
+        return "linux"
+
+
 def hostname() -> str:
     """Return the current computer's hostname
 
