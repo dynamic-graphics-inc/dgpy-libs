@@ -253,7 +253,7 @@ def opsys() -> str:
         return "wsl"
     if is_mac():
         return "mac"
-    return "lin"
+    return linux_version()
 
 
 def linux_version() -> str:
