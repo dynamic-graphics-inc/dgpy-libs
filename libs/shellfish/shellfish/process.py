@@ -259,7 +259,7 @@ def opsys() -> str:
 def linux_version() -> str:
     """Return rhel7 or rhel8 based on the current linux version"""
     try:
-        with open("/etc/redhat-release", "r") as file:
+        with open("/etc/redhat-release") as file:
             release_info = file.read()
             if "Red Hat Enterprise Linux release 7" in release_info:
                 return "rhel7"
