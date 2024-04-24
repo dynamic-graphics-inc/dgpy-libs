@@ -261,9 +261,9 @@ def linux_version() -> str:
     try:
         with open("/etc/redhat-release") as file:
             release_info = file.read()
-            if "Red Hat Enterprise Linux release 7" in release_info:
+            if "release 7" in release_info:
                 return "rhel7"
-            elif "Red Hat Enterprise Linux release 8" in release_info:
+            elif "release 8" in release_info:
                 return "rhel8"
             else:
                 return "other"
