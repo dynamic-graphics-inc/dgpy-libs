@@ -48,7 +48,7 @@ mkdocs-material = "9.5.18"
 mkdocs-jupyter = "0.24.7"
 
 [tool.poetry.dev-dependencies]
-black = "^24.4.0"
+black = "^24.4.1"
 flake8 = "^7.0.0"
 h5py = "^3.11.0"
 isort = "^5.13.2"
@@ -60,7 +60,7 @@ pytest-cov = "^5.0.0"
 python-rapidjson = "^1.16"
 xdoctest = ">=1.0.1"
 click = "^8.1.7"
-mypy = "^1.9"
+mypy = "^1.10"
 pydantic = ">=2.0.2"
 pydantic-core = ">=2.1.2"
 
