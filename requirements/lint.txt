@@ -28,7 +28,7 @@ pycodestyle==2.8.0
     # via
     #   flake8
     #   flake8-print
-pydantic==1.9.1
+pydantic==1.10.13
     # via -r lint.in
 pyflakes==2.4.0
     # via flake8
