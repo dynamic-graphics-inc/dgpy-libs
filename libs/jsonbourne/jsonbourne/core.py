@@ -1297,23 +1297,27 @@ class JsonModule:
         string: Union[bytes, str],
         obj: bool = False,
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         """Parse JSON string/bytes and return raw representation"""
         if obj:
-            return jsonify(jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs))
-        return jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs)
+            return jsonify(
+                jsonlib.loads(string, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
+            )
+        return jsonlib.loads(string, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
 
     @staticmethod
     def rjson(
         fspath: Union[Path, str],
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         """Read JSON file and return raw representation"""
-        return jsonlib.rjson(fspath, jsonc=jsonc, ndjson=ndjson, **kwargs)
+        return jsonlib.rjson(fspath, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
 
     @staticmethod
     def wjson(
@@ -1343,13 +1347,16 @@ class JsonModule:
         string: Union[bytes, str],
         obj: bool = False,
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         """Parse JSON string/bytes"""
         if obj:
-            return jsonify(jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs))
-        return jsonlib.loads(string, jsonc=jsonc, ndjson=ndjson, **kwargs)
+            return jsonify(
+                jsonlib.loads(string, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
+            )
+        return jsonlib.loads(string, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
 
     @staticmethod
     def orjson_usable() -> bool:

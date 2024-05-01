@@ -134,6 +134,7 @@ class JsonLibABC(ABC):
     def loads(
         string: Union[bytes, str],
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any: ...
@@ -222,12 +223,13 @@ class JSON_STDLIB(JsonLibABC):
     def loads(
         string: Union[bytes, str],
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         if jsonc:
             string = jsonc2json(string)
-        if ndjson:
+        if ndjson or jsonl:
             return [
                 pyjson.loads(line, **kwargs)
                 for line in string.splitlines(keepends=False)
@@ -312,12 +314,13 @@ class ORJSON(JsonLibABC):
     def loads(
         string: Union[bytes, str],
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         if jsonc:
             string = jsonc2json(string)
-        if ndjson:
+        if ndjson or jsonl:
             return [orjson.loads(line) for line in string.splitlines(keepends=False)]
         return orjson.loads(string)
 
@@ -406,12 +409,13 @@ class RAPIDJSON(JsonLibABC):
     def loads(
         string: Union[bytes, str],
         jsonc: bool = False,
+        jsonl: bool = False,
         ndjson: bool = False,
         **kwargs: Any,
     ) -> Any:
         if jsonc and "parse_mode" not in kwargs:
             kwargs["parse_mode"] = rapidjson.PM_COMMENTS
-        if ndjson:
+        if ndjson or jsonl:
             return [
                 rapidjson.loads(line, **kwargs)
                 for line in string.splitlines(keepends=False)
@@ -638,9 +642,13 @@ def dumpb(
 
 
 def loads(
-    string: Union[bytes, str], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+    string: Union[bytes, str],
+    jsonc: bool = False,
+    jsonl: bool = False,
+    ndjson: bool = False,
+    **kwargs: Any,
 ) -> Any:
-    if ndjson:
+    if ndjson or jsonl:
         return [
             JSONLIB.loads(line, jsonc=jsonc, **kwargs)
             for line in string.splitlines(keepends=False)
@@ -672,11 +680,15 @@ def wjson(
 
 
 def rjson(
-    fspath: Union[str, Path], jsonc: bool = False, ndjson: bool = False, **kwargs: Any
+    fspath: Union[str, Path],
+    jsonc: bool = False,
+    jsonl: bool = False,
+    ndjson: bool = False,
+    **kwargs: Any,
 ) -> Any:
     with open(fspath, "rb") as f:
         s = f.read()
-    return loads(s, jsonc=jsonc, ndjson=ndjson, **kwargs)
+    return loads(s, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson, **kwargs)
 
 
 def jsoncp(
