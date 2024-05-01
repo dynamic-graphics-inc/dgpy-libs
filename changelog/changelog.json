@@ -1,5 +1,5 @@
 {
-  "updated": "2024-03-21T17:21:00.964792",
+  "updated": "2024-05-01T10:14:36.257049",
   "changes": [
     {
       "lib": "fmts",
@@ -12,6 +12,18 @@
       "version": "0.5.0",
       "msg": "run_async timeout shutdown fixed",
       "timestamp": "2024-03-21T17:21:00.964792"
+    },
+    {
+      "lib": "jsonbourne",
+      "version": "0.29.0",
+      "msg": "jsonl added as kwarg alias for ndjson to jsonbourne and shellfish",
+      "timestamp": "2024-05-01T10:14:30.972712"
+    },
+    {
+      "lib": "shellfish",
+      "version": "0.5.0",
+      "msg": "jsonl added as kwarg alias for ndjson to jsonbourne and shellfish",
+      "timestamp": "2024-05-01T10:14:36.257049"
     }
   ]
 }
