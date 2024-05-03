@@ -16,9 +16,10 @@ from time import time
 from typing import TYPE_CHECKING, Callable, Optional
 
 from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
-from shellfish.sp import PopenArgs, ProcessDt
+from shellfish.sp import ProcessDt
 
 if TYPE_CHECKING:
+    from shellfish._types import PopenArgs
     from xtyping import IO, Any, FsPath, List, Mapping, Set, Tuple, Union
 
 __all__ = ("run_async",)
