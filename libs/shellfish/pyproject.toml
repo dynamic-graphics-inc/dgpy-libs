@@ -77,7 +77,6 @@ markers = [
 
 [tool.coverage.run]
 source = ['shellfish']
-branch = true
 context = '${CONTEXT}'
 omit = ["**/__main__.py"]
 
