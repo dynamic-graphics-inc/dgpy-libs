@@ -133,15 +133,30 @@ from shellfish.fs import (
 )
 from shellfish.process import env as env
 from shellfish.sh import (
+    LIN as LIN,
+    WIN as WIN,
     Done as Done,
     DoneDict as DoneDict,
+    DoneError as DoneError,
+    DoneObj as DoneObj,
+    Flag as Flag,
+    FlagMeta as FlagMeta,
+    HrTime as HrTime,
+    TimeoutExpired as TimeoutExpired,
     basename as basename,
     cd as cd,
+    decode_stdio_bytes as decode_stdio_bytes,
     dirname as dirname,
     do as do,
+    do_ as do_,
     do_async as do_async,
+    doa as doa,
     export as export,
     flatten_args as flatten_args,
+    link_dir as link_dir,
+    link_dirs as link_dirs,
+    link_file as link_file,
+    link_files as link_files,
     ls as ls,
     ls_dirs as ls_dirs,
     ls_files as ls_files,
@@ -152,16 +167,24 @@ from shellfish.sh import (
     q as q,
     quote as quote,
     rm as rm,
+    run as run,
     seconds2hrtime as seconds2hrtime,
     setenv as setenv,
     shell as shell,
     shplit as shplit,
+    shx as shx,
     source as source,
+    sync as sync,
     tree as tree,
+    unlink_dir as unlink_dir,
+    unlink_dirs as unlink_dirs,
+    unlink_file as unlink_file,
+    unlink_files as unlink_files,
     utf8_string as utf8_string,
     where as where,
     which as which,
     which_lru as which_lru,
+    x as x,
 )
 from shellfish.stdio import Stdio as Stdio
 
@@ -169,7 +192,6 @@ _funkify(sh.do, key="shellfish.sh")
 _funkify(sh.do, key="shellfish")
 
 ps = process
-
 
 __all__ = (
     "LIN",
@@ -265,6 +287,7 @@ __all__ = (
     "lstring_async",
     "mkdir",
     "mkdirp",
+    "mkenv",
     "move",
     "mv",
     "path_gen",
@@ -303,6 +326,7 @@ __all__ = (
     "scandir",
     "scandir_gen",
     "scandir_list",
+    "seconds2hrtime",
     "sep_join",
     "sep_lstrip",
     "sep_rstrip",
@@ -331,6 +355,7 @@ __all__ = (
     "unlink_dirs",
     "unlink_file",
     "unlink_files",
+    "utf8_string",
     "walk_gen",
     "wbin",
     "wbin_async",

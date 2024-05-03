@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shellfish"
-version = "0.5.0"
+version = "0.5.1"
 description = "shellfish ~ shell & file-system utils"
 license = "MIT"
 authors = ["jesse <jesse@dgi.com>"]
@@ -77,7 +77,6 @@ markers = [
 
 [tool.coverage.run]
 source = ['shellfish']
-branch = true
 context = '${CONTEXT}'
 omit = ["**/__main__.py"]
 

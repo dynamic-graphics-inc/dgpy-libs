@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections import Counter
 from pprint import pformat
 from types import ModuleType
+from typing import Any
 
 import pytest
 
@@ -11,9 +12,41 @@ import shellfish
 
 from shellfish import _types as shellfish_types, aios, dotenv, fs, process, sh
 from shellfish.aios import _path as aiospath
-from shellfish.fs import promises as fsp
+from shellfish.fs import _async as fs_async, promises as fsp
 
-modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
+modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp, fs_async]
+
+
+def _test_module_members_missing_from_all(mod: ModuleType) -> None:
+    mod_name = mod.__name__
+    members = [e for e in dir(mod) if not e.startswith("_")]
+    dunder_all_public = [e for e in mod.__all__ if not e.startswith("_")]
+    missing_members = [m for m in dunder_all_public if m not in members]
+    assert (
+        not missing_members
+    ), f"missing members in {mod_name}.__all__: {missing_members}"
+
+
+def _is_defined_under_shellfish(member: Any, mod: ModuleType = shellfish) -> bool:
+    if not hasattr(member, "__module__"):
+        return False
+    mod_name = member.__module__
+    if not isinstance(mod_name, str):
+        return False
+    return mod_name == mod.__name__ or mod_name.startswith(mod.__name__ + ".")
+
+
+def _test_module_all_missing_members(mod: ModuleType) -> None:
+    mod_name = mod.__name__
+    members = [e for e in dir(mod) if not e.startswith("_")]
+    dunder_all_public = [e for e in mod.__all__ if not e.startswith("_")]
+    missing_all = [
+        m
+        for m in members
+        if m not in dunder_all_public
+        and _is_defined_under_shellfish(getattr(mod, m), mod)
+    ]
+    assert not missing_all, f"missing members in {mod_name}: {missing_all}"
 
 
 def _test_module_all_tuple(
@@ -47,6 +80,8 @@ def _test_module_all_tuple(
 @pytest.mark.parametrize("mod", modules)
 def test_module_exports(mod: ModuleType) -> None:
     _test_module_all_tuple(mod, check_sorted=False)
+    _test_module_members_missing_from_all(mod)
+    _test_module_all_missing_members(mod)
 
 
 @pytest.mark.parametrize("member", fs.__all__)

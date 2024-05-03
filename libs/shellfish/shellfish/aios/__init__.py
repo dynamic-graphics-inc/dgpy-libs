@@ -11,6 +11,7 @@ from asyncify import asyncify
 from shellfish.aios import _path
 
 __all__ = (
+    "DirEntryAsync",
     "chmod",
     "listdir",
     "lstat",
@@ -24,6 +25,7 @@ __all__ = (
     "renames",
     "replace",
     "rmdir",
+    "scandir",
     "stat",
     "truncate",
 )
