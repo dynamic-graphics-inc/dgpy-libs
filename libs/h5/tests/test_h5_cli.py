@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -10,6 +10,9 @@ from click.testing import CliRunner
 
 from h5 import testing as h5testing
 from h5.cli import cli
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.fixture

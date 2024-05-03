@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import h5py
 import numpy as np
@@ -15,6 +15,9 @@ from h5.testing import (
     EXPECTED_GROUPS_KEYS,
     make_test_hdf5_file,
 )
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 def test_is_hdf5_file(tmp_path: Path) -> None:

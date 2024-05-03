@@ -7,10 +7,7 @@ from functools import lru_cache
 from itertools import chain
 from os import PathLike
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple, TypeVar, Union, cast
-
-import numpy as np
-import numpy.typing as npt
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Tuple, TypeVar, Union, cast
 
 from h5py import (
     AttributeManager,
@@ -23,6 +20,10 @@ from h5py import (
 from typing_extensions import ParamSpec, TypeGuard
 
 from h5._types import FsPath, H5pyAttributesDict
+
+if TYPE_CHECKING:
+    import numpy as np
+    import numpy.typing as npt
 
 _P = ParamSpec("_P")
 _R = TypeVar("_R")

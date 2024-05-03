@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from os import chdir
-from pathlib import Path
 from subprocess import CompletedProcess
+from typing import TYPE_CHECKING
 
 import pytest
 
 from shellfish.dev.run_async import run_async
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.mark.asyncio

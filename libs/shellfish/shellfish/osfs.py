@@ -5,9 +5,12 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
+from typing import TYPE_CHECKING
 
 from shellfish import batman
-from xtyping import IterableStr, List, Tuple
+
+if TYPE_CHECKING:
+    from xtyping import IterableStr, List, Tuple
 
 
 class OsFsAbc(ABC):  # pragma: nocov

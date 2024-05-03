@@ -5,12 +5,25 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from shlex import split as _shplit
-from typing import Any, Dict, List, Optional, Set, Tuple, Type, TypeVar, Union
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+)
 
 from shellfish import sh
-from shellfish._types import PopenArgs, PopenArgv
 from shellfish.sh import Done, flatten_args
-from xtyping import STDIN, FsPath
+
+if TYPE_CHECKING:
+    from shellfish._types import PopenArgs, PopenArgv
+    from xtyping import STDIN, FsPath
 
 __all__ = (
     "Exe",

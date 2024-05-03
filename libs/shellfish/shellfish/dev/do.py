@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import TYPE_CHECKING, Dict, List, Optional, Set, Tuple, Union
 
 from typing_extensions import TypedDict
 
 from jsonbourne.pydantic import JsonBaseModel
-from shellfish._types import FsPath
+
+if TYPE_CHECKING:
+    from shellfish._types import FsPath
 
 
 class DoDict(TypedDict):

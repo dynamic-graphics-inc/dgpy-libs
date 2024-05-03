@@ -8,7 +8,6 @@ import keyword
 from functools import lru_cache
 from itertools import chain
 from json import JSONDecodeError
-from pathlib import Path
 from pprint import pformat
 from shutil import get_terminal_size
 from types import ModuleType
@@ -38,6 +37,8 @@ from typing import (
 from jsonbourne import jsonlib
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from pydantic import GetCoreSchemaHandler
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)

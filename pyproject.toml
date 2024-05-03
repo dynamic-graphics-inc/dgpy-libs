@@ -277,6 +277,7 @@ select = [
   "E", # pyflakes errors
   "F", # pyflakes warnings
   "B", # bugbear
+  "TCH",
   "C4", # comprehensions
   "ERA001", # erradicate
   "I", # isort

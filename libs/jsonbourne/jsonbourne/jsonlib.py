@@ -11,12 +11,13 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import Any, Callable, List, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Type, Union
 from uuid import UUID
 
 from jsonc2json import jsonc2json
 
-from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
+if TYPE_CHECKING:
+    from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:
     import dataclasses

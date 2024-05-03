@@ -5,7 +5,7 @@ import itertools as it
 
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import click
 import tomli
@@ -19,7 +19,9 @@ from rich.tree import Tree
 from dgpydev.const import DGPY_LIBS
 from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
-from xtyping import FsPath
+
+if TYPE_CHECKING:
+    from xtyping import FsPath
 
 console = Console()
 

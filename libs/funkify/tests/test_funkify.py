@@ -4,10 +4,12 @@ from __future__ import annotations
 import asyncio
 
 from os import path
+from typing import TYPE_CHECKING
 
 import pytest
 
-from xtyping import Awaitable, T
+if TYPE_CHECKING:
+    from xtyping import Awaitable, T
 
 PWD = path.split(path.realpath(__file__))[0]
 

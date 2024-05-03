@@ -2,14 +2,10 @@
 # pyright: reportUndefinedVariable=false
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+import json
 
 import pytest
-
-if TYPE_CHECKING:
-    import json
-
-    import rapidjson
+import rapidjson
 
 
 def test_requires_json_n_rapid_json() -> None:

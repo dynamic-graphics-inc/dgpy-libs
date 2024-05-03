@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from collections import Counter
 from pprint import pformat
-from types import ModuleType
+from typing import TYPE_CHECKING
 
 import pytest
 
@@ -12,6 +12,9 @@ import shellfish
 from shellfish import _types as shellfish_types, aios, dotenv, fs, process, sh
 from shellfish.aios import _path as aiospath
 from shellfish.fs import promises as fsp
+
+if TYPE_CHECKING:
+    from types import ModuleType
 
 modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp]
 

@@ -4,15 +4,16 @@ import sys
 
 from dataclasses import dataclass
 from os import environ
-from typing import TypedDict
+from typing import TYPE_CHECKING, TypedDict
 
 import pytest
 
-from _pytest.config import Config, PytestPluginManager
-from _pytest.config.argparsing import Parser
-from _pytest.python import Function
-
 from dgpytest import hooks
+
+if TYPE_CHECKING:
+    from _pytest.config import Config, PytestPluginManager
+    from _pytest.config.argparsing import Parser
+    from _pytest.python import Function
 
 _CI = environ.get("CI", "false").lower() == "true"
 

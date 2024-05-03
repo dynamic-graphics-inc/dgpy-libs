@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
 from shellfish import sh
 from shellfish.dev.popen_gen import popen_gen, popen_pipes_gen
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 python_script = r"""
 import sys
