@@ -35,6 +35,7 @@ __all__ = (
     "Env",
     "env",
     "env_dict",
+    "hostname",
     "is_cpython",
     "is_mac",
     "is_notebook",
@@ -44,8 +45,11 @@ __all__ = (
     "ismac",
     "iswin",
     "iswsl",
+    "linux_version",
     "opsys",
     "sys_path_sep",
+    "syspath_paths",
+    "tmpenv",
 )
 _OS_ENVIRON_ATTRS = set(dir(environ))
 

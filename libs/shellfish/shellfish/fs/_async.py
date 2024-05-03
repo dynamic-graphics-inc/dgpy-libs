@@ -14,7 +14,10 @@ from shellfish import aios
 from xtyping import AsyncIterator, FsPath, Iterable, Union
 
 __all__ = (
+    "dir_exists_async",
     "exists_async",
+    "file_exists_async",
+    "filesize_async",
     "is_dir_async",
     "is_file_async",
     "is_link_async",
@@ -28,6 +31,8 @@ __all__ = (
     "lstat_async",
     "lstr_async",
     "lstring_async",
+    "mkdir_async",
+    "mkdirp_async",
     "rbin_async",
     "rbin_gen_async",
     "rbytes_async",
@@ -128,6 +133,32 @@ async def dir_exists_async(fspath: FsPath) -> bool:
 async def listdir_async(fspath: FsPath) -> List[str]:
     """Async version of `os.listdir`"""
     return await aios.listdir(_fspath(fspath))
+
+
+async def mkdir_async(
+    fspath: FsPath, *, parents: bool = False, p: bool = False, exist_ok: bool = False
+) -> None:
+    """Make directory at given fspath (async)
+
+    Args:
+        fspath (FsPath): Directory path to create
+        parents (bool): Make parent dirs if True; do not make parent dirs if False
+        p (bool): Make parent dirs if True; do not make parent dirs if False (alias of parents)
+        exist_ok (bool): Throw error if directory exists and exist_ok is False
+
+    Returns:
+         None
+
+    """
+    _parents = parents or p
+    if _parents or exist_ok:
+        return await aios.makedirs(_fspath(fspath), exist_ok=_parents or exist_ok)
+    return await aios.mkdir(_fspath(fspath))
+
+
+async def mkdirp_async(fspath: FsPath) -> None:
+    """Make directory and parents (async)"""
+    return await aios.makedirs(_fspath(fspath), exist_ok=True)
 
 
 # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO #

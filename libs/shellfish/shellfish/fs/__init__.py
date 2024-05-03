@@ -71,7 +71,7 @@ from shellfish.fs._async import (
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
-from shellfish.process import is_win as is_win
+from shellfish.process import is_win as _is_win
 from shellfish.stdio import Stdio as Stdio
 from xtyping import (
     Any,
@@ -1597,7 +1597,7 @@ def stat(fspath: FsPath) -> os_stat_result:
 
 
 def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:
-    if is_win():
+    if _is_win():
         raise NotImplementedError("TODO")
     _symlink(str(link), str(target))
 
@@ -1705,6 +1705,7 @@ __all__ = (
     "filesize",
     "filesize_async",
     "fspath",
+    "glob",
     "is_dir",
     "is_dir_async",
     "is_file",
@@ -1764,6 +1765,7 @@ __all__ = (
     "sbytes_gen_async",
     "scandir",
     "scandir_gen",
+    "scandir_gen_filter",
     "scandir_list",
     "sep_join",
     "sep_lstrip",

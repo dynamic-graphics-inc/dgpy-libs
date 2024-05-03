@@ -8,7 +8,7 @@ import re
 from os import getcwd, path
 from shlex import split as shplit
 
-from shellfish.fs import rstring
+from shellfish.fs import rstring as _rstring
 from xtyping import Dict, FsPath, Optional
 
 __all__ = ("ldotenv", "parse_dotenv", "parse_env", "strip_comments")
@@ -124,7 +124,7 @@ def ldotenv(fspath: Optional[FsPath] = None) -> Dict[str, str]:
     """
     if fspath:
         if path.isfile(str(fspath)):
-            dotenv_string = rstring(fspath)
+            dotenv_string = _rstring(fspath)
             return parse_dotenv(dotenv_string)
         if path.isdir(str(fspath)):
             dotenv_filepath = path.join(str(fspath), ".env")
