@@ -31,6 +31,8 @@ def _is_defined_under_shellfish(member: Any, mod: ModuleType = shellfish) -> boo
     if not hasattr(member, "__module__"):
         return False
     mod_name = member.__module__
+    if not isinstance(mod_name, str):
+        return False
     return mod_name == mod.__name__ or mod_name.startswith(mod.__name__ + ".")
 
 
