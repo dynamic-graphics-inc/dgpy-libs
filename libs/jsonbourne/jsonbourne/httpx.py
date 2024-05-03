@@ -14,6 +14,7 @@ __all__ = (
     "Client",
     "Cookies",
     "Response",
+    "patch_httpx",
 )
 
 
@@ -22,4 +23,9 @@ def _JSON(self: Response, **kwargs: Any) -> Any:
     return JSON.jsonify(json_data)
 
 
-Response.JSON = _JSON
+def patch_httpx() -> None:
+    """Patch httpx to add a .JSON() method to Response objects."""
+    Response.JSON = _JSON  # type: ignore[attr-defined]
+
+
+patch_httpx()
