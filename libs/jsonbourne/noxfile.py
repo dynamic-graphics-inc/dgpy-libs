@@ -65,7 +65,13 @@ def flake_tests(session: nox.Session) -> None:
 
 def install_common_test_deps(session: nox.Session) -> None:
     session.install(
-        "pytest", "pytest-cov", "coverage", "xtyping", "jsonc2json", "pydantic"
+        "coverage",
+        "httpx",
+        "jsonc2json",
+        "pydantic",
+        "pytest",
+        "pytest-cov",
+        "xtyping",
     )
 
 
