@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import cast, overload
+from typing import TYPE_CHECKING, cast, overload
 
 from xtyping import (
-    TYPE_CHECKING,
     Any,
     Callable,
     Generic,
