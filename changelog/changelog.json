@@ -1,5 +1,5 @@
 {
-  "updated": "2024-05-01T10:14:36.257049",
+  "updated": "2024-05-03T13:14:06.507745",
   "changes": [
     {
       "lib": "fmts",
@@ -24,6 +24,12 @@
       "version": "0.5.0",
       "msg": "jsonl added as kwarg alias for ndjson to jsonbourne and shellfish",
       "timestamp": "2024-05-01T10:14:36.257049"
+    },
+    {
+      "lib": "shellfish",
+      "version": "0.5.1",
+      "msg": "fixed missing exports and imports in shellfish",
+      "timestamp": "2024-05-03T13:14:06.507745"
     }
   ]
 }
