@@ -24,7 +24,7 @@ griffe==0.22.0
     # via mkdocstrings-python
 importlib-metadata==4.12.0
     # via mkdocs
-jinja2==3.1.3
+jinja2==3.1.4
     # via
     #   mkdocs
     #   mkdocs-material
@@ -109,7 +109,7 @@ nest-asyncio==1.5.5
     # via
     #   jupyter-client
     #   nbclient
-packaging==21.3
+packaging==24.0
     # via
     #   -c dev.txt
     #   mkdocs
@@ -125,10 +125,6 @@ pymdown-extensions==10.0
     # via
     #   mkdocs-material
     #   mkdocstrings
-pyparsing==3.0.9
-    # via
-    #   -c dev.txt
-    #   packaging
 pyrsistent==0.18.1
     # via jsonschema
 python-dateutil==2.8.2
