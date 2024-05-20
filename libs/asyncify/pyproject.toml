@@ -28,8 +28,8 @@ funkify = ">=0.4.0"
 xtyping = ">=0.5.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^8.2.0"
-pytest-asyncio = "^0.23.6"
+pytest = "^8.2.1"
+pytest-asyncio = "^0.23.7"
 anyio = { extras = ["trio"], version = "^4.3.0" }
 xdoctest = ">=1.0.1"
 
