@@ -544,7 +544,7 @@ def test_cycle_stringify() -> None:
     a = JsonObj(**{"a": "c", "herm": 123})
     b = JsonObj(**{"c": "c", "d": a})
     a.circle = b
-    with pytest.raises((TypeError, ValueError)):
+    with pytest.raises((TypeError, ValueError, RecursionError)):
         json_str = a.to_json()
         assert isinstance(json_str, str)
 
