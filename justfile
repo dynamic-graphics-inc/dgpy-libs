@@ -49,3 +49,7 @@ lint: fmt noxlint
 # format the justfile(s) (w/ just)
 fmt-justfile:
     just --fmt --unstable
+
+# nuke poetry cache
+poetry-nuke-cache:
+    poetry cache clear pypi --all -v
