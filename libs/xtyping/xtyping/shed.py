@@ -139,9 +139,11 @@ __all_typing_extensions__: Tuple[str, ...] = (
 
 __all_typing_extensions_future__: Tuple[str, ...] = (
     "Buffer",
+    "CapsuleType",
     "Doc",
     "LiteralString",
     "Never",
+    "NoDefault",
     "ReadOnly",
     "TypeAliasType",
     "TypeIs",
