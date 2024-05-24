@@ -158,15 +158,7 @@ jobs:
         run: |
           cd libs/jsonbourne
           nox -k test
-  #      - name: list dist files
-  #        run: |
-  #          ${{ matrix.ls || 'ls -lh' }} dist/
-  #          twine check dist/*
-  #      - name: Store dist artifacts
-  #        uses: actions/upload-artifact@v1
-  #        with:
-  #          name: pypi_files
-  #          path: dist
+
   mkdocs:
     permissions:
       contents: write
@@ -182,11 +174,7 @@ jobs:
       - name: setup-poetry
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
-      # - name: setup-poetry
-      #   run: |
-      #     curl -sSL https://install.python-poetry.org | python3 -
-      #     which poetry
-      #     poetry config virtualenvs.create false
+
       - name: poetry install
         run: |
           poetry install
