@@ -49,20 +49,6 @@ def _get_jsonbourne_version() -> str:
     return version
 
 
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake(session: nox.Session) -> None:
-    session.install("flake8")
-    session.install("flake8-print")
-    session.install("flake8-eradicate")
-    session.run("flake8", JSONBOURNE_PKG_DIRPATH)
-
-
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake_tests(session: nox.Session) -> None:
-    session.install("flake8")
-    session.run("flake8", TESTS_DIRPATH)
-
-
 def install_common_test_deps(session: nox.Session) -> None:
     session.install(
         "coverage",

@@ -93,7 +93,7 @@ testpaths = [
 ]
 
 [tool.coverage.run]
-source = ['jsonbourne', 'JSON.py']
+source = ['jsonbourne']
 branch = true
 context = '${CONTEXT}'
 omit = ["**/__main__.py"]
