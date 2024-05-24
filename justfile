@@ -1,29 +1,55 @@
-default: fmt ruff
+#!/usr/bin/env just --justfile
+# 'justfile'
+# just-repo: https://github.com/casey/just
+# just-docs: https://just.systems/man/en/
+# list all targets (default)
+@_default:
+    just --list --unsorted
 
-black:
-    black .
-
+# fix imports
 rsort:
     ruff check --select "I" --show-fixes --fix .
 
-isort:
-    isort --sp pyproject.toml libs
+# sort imports
+isort: rsort
 
+# check spelling
 codespell:
     codespell .
 
-fmt: black
+# format python
+fmt:
+    ruff format
+    ruff check --select "I" --show-fixes --fix .
 
+# format-check
+fmtc:
+    ruff format --check
+    ruff check --select "I" --show-fixes .
+
+# ruff lint
 ruff:
     ruff check .
 
+# ruff lint & fix
 ruffix:
     ruff check . --fix
 
-ruffmt:
-    ruff format .
-
+# nox lint
 noxlint:
     nox -s lint
 
-lint: fmt noxlint codespell
+# mypy
+mypy: fmt
+    nox -s mypy
+
+# lint
+lint: fmt noxlint
+
+# format the justfile(s) (w/ just)
+fmt-justfile:
+    just --fmt --unstable
+
+# nuke poetry cache
+poetry-nuke-cache:
+    poetry cache clear pypi --all -v
