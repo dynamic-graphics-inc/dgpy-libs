@@ -10,7 +10,21 @@ jobs:
       - uses: psf/black@stable
         with:
           options: "--check"
-          src: "."
+  #         src: "."
+  fmtc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.8
+      - name: ruff-check
+        run: |
+          python -m pip install --upgrade pip
+          pip install -U ruff
+          ruff format --check .
+          ruff check --select "I" .
 
   ruff:
     runs-on: ubuntu-latest
@@ -53,11 +67,6 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install isort black
-
-      - name: check isort & black
-        run: |
-          make lint
 
       - name: flake8 & mypy
         run: |

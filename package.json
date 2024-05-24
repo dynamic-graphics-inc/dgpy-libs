@@ -17,7 +17,7 @@
     "pyrightw": "pyright -w"
   },
   "devDependencies": {
-    "dprint": "^0.36.1",
-    "pyright": "^1.1.333"
+    "dprint": "^0.45.1",
+    "pyright": "^1.1.364"
   }
 }

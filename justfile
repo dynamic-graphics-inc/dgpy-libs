@@ -39,8 +39,12 @@ ruffix:
 noxlint:
     nox -s lint
 
+# mypy
+mypy: fmt
+    nox -s mypy
+
 # lint
-lint: fmt noxlint codespell
+lint: fmt noxlint
 
 # format the justfile(s) (w/ just)
 fmt-justfile:

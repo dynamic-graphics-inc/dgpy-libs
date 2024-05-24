@@ -192,7 +192,6 @@ def mypy(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def lint(session):
     _mypy(session)
-    _ruff(session)
 
 
 ruffext = """

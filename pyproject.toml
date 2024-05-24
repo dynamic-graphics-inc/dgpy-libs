@@ -148,6 +148,8 @@ addopts = [
   "--disable-warnings",
 ]
 testpaths = [
+
+
   # "libs/aiopen",
   # "libs/asyncify",
   # "libs/funkify",
@@ -323,7 +325,7 @@ ignore = [
   "SIM115", # open-file-with-context-handler
   "SIM105", # suppressible-exception
   # PIE
-  "PIE804" # unnecessary-dict-kwargs -- TODO: revisit?
+  "PIE804", # unnecessary-dict-kwargs -- TODO: revisit?
 ]
 
 [tool.ruff.lint.mccabe]
@@ -353,7 +355,7 @@ max-complexity = 20
 ]
 
 "libs/jsonbourne/jsonbourne/trydantic.py" = [
-  "I001" # isort something wrong with in try block import
+  "I001", # isort something wrong with in try block import
 ]
 
 [tool.ruff.lint.pydocstyle]
