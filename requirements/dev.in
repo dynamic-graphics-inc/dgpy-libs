@@ -1,11 +1,5 @@
 anyio
-black
-flake8
-flake8-comprehensions
-flake8-eradicate
-flake8-print
 httpx
-isort
 mypy
 nox
 orjson
@@ -15,6 +9,7 @@ pytest
 pytest-asyncio
 pytest-cov
 python-rapidjson
+ruff
 toml
 types-orjson
 types-toml

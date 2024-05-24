@@ -81,64 +81,25 @@ def _get_session_python_site_packages_dir(session):
     return site_packages_dir
 
 
-def _flake(session):
-    # TODO add using the package "flake8-pytest-style"
-    session.install(
-        "flake8",
-        "flake8-print",
-        "flake8-eradicate",
-        "flake8-comprehensions",
-    )
-    session.run("flake8", *list(SOURCE_DIRS.values()))
-    session.run("flake8", *list(TESTS_DIRS.values()))
-
-
-def _flake_w_pytest(session):
-    # TODO add using the package "flake8-pytest-style"
-    session.install(
-        "flake8",
-        "flake8-print",
-        "flake8-eradicate",
-        "flake8-comprehensions",
-        "flake8-pytest-style",
-    )
-    session.run(
-        "flake8",
-        "--config",
-        ".flake8",
-        *list(SOURCE_DIRS.values()),
-    )
-    session.run(
-        "flake8",
-        "--config",
-        ".flake8",
-        *list(TESTS_DIRS.values()),
-    )
-
-
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake(session):
-    _flake(session)
-
-
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def flake_strict(session):
-    _flake_w_pytest(session)
-
-
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def pipc(session):
     session.install("pip-tools")
     reqs_ini = (
         "dev.in",
         "docs.in",
-        "lint.in",
-        "flake.in",
-        "fmt.in",
     )
     for reqs_file in reqs_ini:
+        output_filepath = path.join(
+            PWD, "requirements", reqs_file.replace(".in", ".txt")
+        )
+
         session.run(
-            "pip-compile", path.join(PWD, "requirements", reqs_file), "--no-header"
+            "uv",
+            "pip",
+            "compile",
+            "-o",
+            output_filepath,
+            path.join(PWD, "requirements", reqs_file),
         )
 
 
@@ -192,7 +153,6 @@ def mypy(session):
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def lint(session):
     _mypy(session)
-    _ruff(session)
 
 
 ruffext = """
