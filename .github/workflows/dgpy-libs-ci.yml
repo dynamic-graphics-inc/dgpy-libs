@@ -3,14 +3,6 @@ name: dgpy-libs-ci
 on: [push, pull_request]
 
 jobs:
-  black:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          options: "--check"
-  #         src: "."
   fmtc:
     runs-on: ubuntu-latest
     steps:
@@ -51,15 +43,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          options: "--check"
-          src: "."
-      # TODO: Figure out if we still need isort...
-      #       something is wrong with isort
-      # - uses: isort/isort-action@master
-      #   with:
-      #     configuration: "--settings-path pyproject.toml --check-only --diff"
       - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
