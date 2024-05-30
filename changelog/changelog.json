@@ -1,5 +1,5 @@
 {
-  "updated": "2024-05-03T13:14:06.507745",
+  "updated": "2024-05-30T09:44:54.321674",
   "changes": [
     {
       "lib": "fmts",
@@ -30,6 +30,12 @@
       "version": "0.5.1",
       "msg": "fixed missing exports and imports in shellfish",
       "timestamp": "2024-05-03T13:14:06.507745"
+    },
+    {
+      "lib": "listless",
+      "version": "0.2.0",
+      "msg": "fixed listless.chunks typing for typing.Collection",
+      "timestamp": "2024-05-30T09:44:54.321674"
     }
   ]
 }
