@@ -15,6 +15,7 @@ from typing import (
     AsyncIterable,
     AsyncIterator,
     Callable,
+    Collection,
     Deque,
     Iterable,
     Iterator,
@@ -282,7 +283,13 @@ def chunks(it: List[_T], chunk_size: int) -> Iterable[List[_T]]: ...
 def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Sequence[_T]]: ...
 
 
-def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], str]]:
+@overload
+def chunks(it: Collection[_T], chunk_size: int) -> Iterable[Collection[_T]]: ...
+
+
+def chunks(
+    it: Union[Sequence[_T], Collection[_T]], chunk_size: int
+) -> Iterable[Union[Sequence[_T], Collection[_T], str]]:
     """Yield chunks of something slice-able with length <= chunk_size
 
     Args:
@@ -312,7 +319,7 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], st
     if isinstance(it, str):
         yield from chunkstr(it, chunk_size)
     elif isinstance(it, (list, tuple)) or is_sequence(it):
-        yield from chunkseq(it, chunk_size)
+        yield from chunkseq(cast(Sequence[_T], it), chunk_size)
     else:
         while True:
             _chunk = tuple(islice(it, chunk_size))
@@ -321,8 +328,10 @@ def chunks(it: Sequence[_T], chunk_size: int) -> Iterable[Union[Sequence[_T], st
             yield _chunk
 
 
-def chunk(it: Sequence[_T], n: int) -> Iterable[Sequence[_T]]:
-    """Yield chunks of size n from a Sequence
+def chunk(
+    it: Union[Sequence[_T], Collection[_T]], n: int
+) -> Iterable[Union[Sequence[_T], Collection[_T], str]]:
+    """Yield chunks of size n from an iterable/sequence/collection
 
     Examples:
         >>> list(chunk([1, 2, 3, 4, 5, 6], 3))
