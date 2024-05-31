@@ -239,13 +239,13 @@ files = [
 
 [[package]]
 name = "listless"
-version = "0.1.6"
+version = "0.2.0"
 description = "generator utils; aka listless"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "listless-0.1.6-py3-none-any.whl", hash = "sha256:91633ed2de934ca531f9234aa9fb6d6c5fc4aecfed9e913f983e28f77570da2c"},
-    {file = "listless-0.1.6.tar.gz", hash = "sha256:daff1628cc9fb9c5c3c9f8099fc44ed5ef8d88dc6c1ac1c6da94d447258455d1"},
+    {file = "listless-0.2.0-py3-none-any.whl", hash = "sha256:a2774a259fe69902eb11ff2f7af9172e512a4182b6224ab63fadca5f63bdd1ab"},
+    {file = "listless-0.2.0.tar.gz", hash = "sha256:dc58db739a4cd178618b33b13a65104ddb33f9cd29d86d11bfd87e07a94b44b7"},
 ]
 
 [[package]]
