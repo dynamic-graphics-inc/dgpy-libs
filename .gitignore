@@ -140,3 +140,7 @@ thingy.py
 herm.py
 yarn.lock
 .pdm-python
+
+
+# used for merging multiple branches at once
+branches.txt
