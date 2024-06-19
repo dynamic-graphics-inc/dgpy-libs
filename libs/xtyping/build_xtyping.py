@@ -62,7 +62,7 @@ def main():
     with open(os.path.join("xtyping", "__init__.py"), "w") as f:
         f.write("\n".join(init_parts))
 
-    run(args=["make", "fmt"])
+    run(args=["just", "fmt"])
 
 
 if __name__ == "__main__":

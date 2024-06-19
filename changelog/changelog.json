@@ -1,5 +1,5 @@
 {
-  "updated": "2024-05-30T09:44:54.321674",
+  "updated": "2024-06-19T15:17:51.861306",
   "changes": [
     {
       "lib": "fmts",
@@ -36,6 +36,12 @@
       "version": "0.2.0",
       "msg": "fixed listless.chunks typing for typing.Collection",
       "timestamp": "2024-05-30T09:44:54.321674"
+    },
+    {
+      "lib": "h5",
+      "version": "0.9.2",
+      "msg": "better err msg for h5 cli when click not installed",
+      "timestamp": "2024-06-19T15:17:51.861306"
     }
   ]
 }

@@ -7,12 +7,18 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Callable, List, Optional, Tuple, Union
 
-import click
 import numpy as np
 
 from typing_extensions import TypeGuard
 
 import h5
+
+try:
+    import click
+except ImportError as e:
+    raise ModuleNotFoundError(
+        "h5.cli requires click -- `pip install -U click` or  `pip install -U h5[cli]`"
+    ) from e
 
 try:
     from globsters import Globsters, globster
