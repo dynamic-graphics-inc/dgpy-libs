@@ -59,7 +59,7 @@ pytest = "^8.2.2"
 pytest-asyncio = "^0.23.7"
 pytest-cov = "^5.0.0"
 python-rapidjson = "^1.17"
-ruff = "^0.4.9"
+ruff = "^0.4.10"
 xdoctest = ">=1.0.1"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
