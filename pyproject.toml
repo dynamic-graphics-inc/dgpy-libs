@@ -51,7 +51,7 @@ codespell = "^2.3.0"
 h5py = "^3.11.0"
 mypy = "^1.10"
 nox = "^2024.4.15"
-orjson = "^3.10.5"
+orjson = "^3.10.6"
 packaging = "^24.1"
 pydantic = ">=2.0.2"
 pydantic-core = ">=2.1.2"
@@ -81,7 +81,7 @@ dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.6.0"
 mkdocs-material = "^9.5.28"
-mkdocs-jupyter = "^0.24.7"
+mkdocs-jupyter = "^0.24.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
