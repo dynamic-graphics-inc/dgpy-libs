@@ -10,7 +10,7 @@ argcomplete==3.3.0
     # via nox
 build==1.2.1
     # via pip-tools
-certifi==2024.2.2
+certifi==2024.7.4
     # via
     #   httpcore
     #   httpx
@@ -18,7 +18,7 @@ click==8.1.7
     # via pip-tools
 colorlog==6.8.2
     # via nox
-coverage==7.5.1
+coverage[toml]==7.5.1
     # via pytest-cov
 distlib==0.3.8
     # via virtualenv
@@ -49,8 +49,6 @@ packaging==24.0
     #   build
     #   nox
     #   pytest
-pip==24.0
-    # via pip-tools
 pip-tools==7.4.1
     # via -r dev.in
 platformdirs==4.2.2
@@ -78,8 +76,6 @@ python-rapidjson==1.17
     # via -r dev.in
 ruff==0.4.5
     # via -r dev.in
-setuptools==70.0.0
-    # via pip-tools
 sniffio==1.3.1
     # via
     #   anyio
