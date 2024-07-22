@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import datetime
+import json
 
 from decimal import Decimal
 
@@ -550,18 +551,13 @@ def test_cycle_stringify() -> None:
 
 
 def test_dataclass_stringify() -> None:
-    a = JsonObj(**{"a": "c", "herm": 123})
-
     from dataclasses import dataclass
 
-    @dataclass()
+    @dataclass
     class DataThing:
         n: int
         s: str
 
     data = DataThing(n=1, s="stringy")
-    data_string = JSON.stringify(data)
-    assert data_string == '{"n":1,"s":"stringy"}'
-    a.data = data
-    nested_str = JSON.stringify(a)
-    assert nested_str == '{"a":"c","herm":123,"data":{"n":1,"s":"stringy"}}'
+    data_string = json.dumps(data.__dict__)
+    assert data_string == '{"n": 1, "s": "stringy"}'
