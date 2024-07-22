@@ -562,7 +562,7 @@ def test_dataclass_stringify() -> None:
 
     data = DataThing(n=1, s="stringy")
     data_string = json.dumps(data.__dict__)
-    assert data_string == '{"n":1,"s":"stringy"}'
+    assert data_string == '{"n": 1, "s": "stringy"}'
     a.data = data
     nested_str = JSON.stringify(a)
     assert nested_str == '{"a":"c","herm":123,"data":{"n":1,"s":"stringy"}}'
