@@ -551,8 +551,6 @@ def test_cycle_stringify() -> None:
 
 
 def test_dataclass_stringify() -> None:
-    a = JsonObj(**{"a": "c", "herm": 123})
-
     from dataclasses import dataclass
 
     @dataclass
