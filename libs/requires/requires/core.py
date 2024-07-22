@@ -194,7 +194,7 @@ class Requirement:
     def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
-            async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> R:
+            async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> Any:
                 try:
                     return await f(*args, **kwargs)
                 except NameError as ne:
