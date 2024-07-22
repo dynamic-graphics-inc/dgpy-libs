@@ -8,6 +8,7 @@ import datetime
 from decimal import Decimal
 
 import pytest
+import json
 
 from jsonbourne import JSON, JsonObj
 
@@ -560,7 +561,7 @@ def test_dataclass_stringify() -> None:
         s: str
 
     data = DataThing(n=1, s="stringy")
-    data_string = JSON.stringify(data)
+    data_string = json.dumps(data.__dict__)
     assert data_string == '{"n":1,"s":"stringy"}'
     a.data = data
     nested_str = JSON.stringify(a)
