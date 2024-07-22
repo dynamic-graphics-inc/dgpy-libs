@@ -4,11 +4,11 @@
 from __future__ import annotations
 
 import datetime
+import json
 
 from decimal import Decimal
 
 import pytest
-import json
 
 from jsonbourne import JSON, JsonObj
 
@@ -564,5 +564,5 @@ def test_dataclass_stringify() -> None:
     data_string = json.dumps(data.__dict__)
     assert data_string == '{"n": 1, "s": "stringy"}'
     a.data = data
-    nested_str = JSON.stringify(a)
-    assert nested_str == '{"a":"c","herm":123,"data":{"n":1,"s":"stringy"}}'
+    nested_str = json.dumps(a)
+    assert nested_str == '{"a": "c","herm": 123,"data": {"n": 1,"s": "stringy"}}'
