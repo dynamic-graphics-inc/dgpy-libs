@@ -68,7 +68,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
 
 @overload
-def aiopen(  # type: ignore[overload-overlap]
+def aiopen(
     file: Union[str, PathLike[str], int],
     mode: OpenBinaryMode = ...,
     buffering: int = ...,
