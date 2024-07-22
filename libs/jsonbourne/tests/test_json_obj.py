@@ -554,7 +554,7 @@ def test_dataclass_stringify() -> None:
 
     from dataclasses import dataclass
 
-    @dataclass()
+    @dataclass
     class DataThing:
         n: int
         s: str
