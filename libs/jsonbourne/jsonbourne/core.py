@@ -1115,7 +1115,7 @@ def jsonify(value: Any) -> Any:
     if isinstance(value, list):
         return [jsonify(el) for el in value]
     if isinstance(value, tuple):
-        return tuple([jsonify(el) for el in value])
+        return tuple(jsonify(el) for el in value)
     if isinstance(value, str):
         try:
             data = jsonlib.loads(value)
@@ -1133,7 +1133,7 @@ def unjsonify(value: Any) -> Any:
     if isinstance(value, list):
         return [unjsonify(el) for el in value]
     if isinstance(value, tuple):
-        return tuple([unjsonify(el) for el in value])
+        return tuple(unjsonify(el) for el in value)
     return value
 
 
