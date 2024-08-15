@@ -59,7 +59,7 @@ pytest = "^8.3.2"
 pytest-asyncio = "^0.23.8"
 pytest-cov = "^5.0.0"
 python-rapidjson = "^1.20"
-ruff = "^0.5.7"
+ruff = "^0.6.0"
 xdoctest = ">=1.0.1"
 
 aiopen = { path = "./libs/aiopen/", develop = true }
@@ -333,6 +333,7 @@ max-complexity = 20
 "libs/requires/tests/test_requires_w_json_libs.py" = [
   "F821", # undefined name; not valid for this test file
 ]
+"*.ipynb" = ["T201", "F811", "F821", "E741","F401"]
 
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
