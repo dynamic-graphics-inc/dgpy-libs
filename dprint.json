@@ -22,6 +22,7 @@
     "**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,toml,dockerfile}"
   ],
   "excludes": [
+    "pnpm-lock.yaml",
     "**/*-lock.json",
     "**/.ipynb_checkpoints",
     "**/.mypy_cache",
@@ -36,10 +37,10 @@
     "**/tests"
   ],
   "plugins": [
-    "https://plugins.dprint.dev/dockerfile-0.3.0.wasm",
-    "https://plugins.dprint.dev/json-0.19.2.wasm",
-    "https://plugins.dprint.dev/markdown-0.17.0.wasm",
-    "https://plugins.dprint.dev/toml-0.6.1.wasm",
-    "https://plugins.dprint.dev/typescript-0.90.5.wasm"
+    "https://plugins.dprint.dev/dockerfile-0.3.2.wasm",
+    "https://plugins.dprint.dev/json-0.19.3.wasm",
+    "https://plugins.dprint.dev/markdown-0.17.2.wasm",
+    "https://plugins.dprint.dev/toml-0.6.2.wasm",
+    "https://plugins.dprint.dev/typescript-0.91.6.wasm"
   ]
 }
