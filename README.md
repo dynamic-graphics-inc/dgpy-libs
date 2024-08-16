@@ -6,7 +6,6 @@
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-
 Docs: [dynamic-graphics-inc.github.io/dgpy-libs](https://dynamic-graphics-inc.github.io/dgpy-libs/)
 
 Repo: [github.com/dynamic-graphics-inc/dgpy-libs](https://github.com/dynamic-graphics-inc/dgpy-libs)

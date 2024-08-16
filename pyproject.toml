@@ -76,8 +76,6 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
-
-
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.6.0"
 mkdocs-material = "^9.5.31"
@@ -333,7 +331,13 @@ max-complexity = 20
 "libs/requires/tests/test_requires_w_json_libs.py" = [
   "F821", # undefined name; not valid for this test file
 ]
-"*.ipynb" = ["T201", "F811", "F821", "E741","F401"]
+"*.ipynb" = [
+  "T201",
+  "F811",
+  "F821",
+  "E741",
+  "F401",
+]
 
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
