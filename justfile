@@ -6,6 +6,9 @@
 @_default:
     just --list --unsorted
 
+dev:
+    uv sync --all-extras --dev
+
 # fix imports
 rsort:
     ruff check --select "I" --show-fixes --fix .
