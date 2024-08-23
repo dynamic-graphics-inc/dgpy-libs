@@ -310,7 +310,7 @@ def listdir_gen(
 ) -> Iterator[Path]:
     r"""Return an iterator of strings from DirEntries
 
-    Examples
+    Examples:
         >>> tmpdir = 'listdir_gen.doctest'
         >>> from shellfish import sh
         >>> from os import makedirs, path, chdir
