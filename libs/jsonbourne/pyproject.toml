@@ -13,6 +13,17 @@ requires-python = ">=3.8,<4.0"
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/jsonbourne"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
+[project.optional-dependencies]
+httpx = [
+    "httpx>=0.27.0",
+]
+orjson = [
+    "orjson>=3.10.7",
+]
+test = [
+    "pytest>=8.3.2",
+]
+
 [tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -86,6 +97,13 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/jsonbourne"]
+
+[tool.uv]
+dev-dependencies = [
+    "orjson>=3.10.7",
+    "python-rapidjson>=1.20",
+    "httpx>=0.27.0",
+]
 
 [build-system]
 requires = ["hatchling"]
