@@ -96,7 +96,6 @@ exclude_lines = [
 [tool.coverage.paths]
 source = ['fmts/']
 
-
 [tool.ruff]
 extend = "../../pyproject.toml"
 

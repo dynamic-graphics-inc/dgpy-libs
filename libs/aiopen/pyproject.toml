@@ -46,9 +46,9 @@ build-backend = "poetry.core.masonry.api"
 
 [project.optional-dependencies]
 test = [
-    "anyio>=4.4.0",
-    "pytest>=8.3.2",
-    "pytest-asyncio>=0.23.8",
+  "anyio>=4.4.0",
+  "pytest>=8.3.2",
+  "pytest-asyncio>=0.23.8",
 ]
 
 [tool]
@@ -71,7 +71,6 @@ filterwarnings = [
 ]
 markers = ["asyncio", "anyio", "version"]
 testpaths = ["aiopen", "tests"]
-
 
 [tool.mypy]
 # --strict
@@ -131,8 +130,8 @@ packages = ["src/aiopen"]
 
 [tool.uv]
 dev-dependencies = [
-    "pytest-asyncio>=0.23.8",
-    "anyio>=4.4.0",
+  "pytest-asyncio>=0.23.8",
+  "anyio>=4.4.0",
 ]
 
 [build-system]

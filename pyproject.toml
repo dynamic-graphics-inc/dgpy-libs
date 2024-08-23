@@ -87,10 +87,10 @@ build-backend = "hatchling.build"
 
 [tool.uv]
 dev-dependencies = [
-    "tomli>=2.0.1",
-    "mypy>=1.11.1",
-    "ruff>=0.6.2",
-    "nox>=2024.4.15",
+  "tomli>=2.0.1",
+  "mypy>=1.11.1",
+  "ruff>=0.6.2",
+  "nox>=2024.4.15",
 ]
 
 [tool.uv.workspace]

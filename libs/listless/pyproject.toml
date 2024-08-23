@@ -35,18 +35,15 @@ python = "^3.8"
 [tool.poetry.dev-dependencies]
 pytest = "^8.3.3"
 
-
-
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
 authors = [
-    {name = "jesse", email = "jesse@dgi.com"},
+  { name = "jesse", email = "jesse@dgi.com" },
 ]
-license = {text = "MIT"}
+license = { text = "MIT" }
 requires-python = "<4.0,>=3.8"
 dependencies = []
 name = "listless"
@@ -54,22 +51,22 @@ version = "0.2.0"
 description = "generator utils; aka listless"
 readme = "README.md"
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Typing :: Typed",
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
 ]
 keywords = [
-    "generators",
-    "itertools",
-    "dgpy",
-    "typed",
+  "generators",
+  "itertools",
+  "dgpy",
+  "typed",
 ]
 
 [project.urls]
@@ -78,12 +75,11 @@ repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [tool.uv]
 dev-dependencies = [
-    "pytest>=8.3.2",
+  "pytest>=8.3.2",
 ]
 
 [tool.ruff]
 extend = "../../pyproject.toml"
-
 
 [tool.pytest.ini_options]
 minversion = "6.0"
