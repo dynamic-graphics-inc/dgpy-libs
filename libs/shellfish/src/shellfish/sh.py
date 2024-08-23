@@ -442,8 +442,7 @@ class HrTime(JsonBaseModel):
 
 
 class DoneError(SubprocessError):
-    """Raised when run() is called with check=True and the process
-    returns a non-zero exit status.
+    """Error raised when a process returns a non-zero/ok exit status
 
     Attributes:
         cmd (str): command that was run

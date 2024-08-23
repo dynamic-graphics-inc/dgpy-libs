@@ -132,7 +132,7 @@ def pcheck(
     process: CompletedProcess[Any],
     ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
 ) -> None:
-    """
+    """Check process return code
 
     Args:
         process: CompletedProcess object

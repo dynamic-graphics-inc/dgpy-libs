@@ -1517,6 +1517,7 @@ def rm_gen(
     dryrun: bool = False,
 ) -> Generator[str, Any, Any]:
     """Remove files & directories in the style of the shell
+
     Args:
         fspath (FsPath): Path to file or directory to remove
         force (bool): Force removal of files and directories
@@ -1564,11 +1565,13 @@ def rm(
     verbose: bool = False,
 ) -> Union[List[str], None]:
     """Remove files & directories in the style of the shell
+
     Args:
         fspath (FsPath): Path to file or directory to remove
         force (bool): ignore errors and missing files/dirs; default is False
         recursive (bool): Flag to remove recursively (like the `-r` in `rm -r dir`)
         dryrun (bool): Do not remove file if True
+        verbose (bool): Print the files being removed
 
     Raises:
         ValueError: If recursive and r are `False` and fspath is a directory

@@ -155,7 +155,6 @@ def h5py_obj_gen(
 ) -> Iterable[Tuple[str, Union[Dataset, Group, File]]]:
     """Recursive h5 dataset/group generator.
 
-
     Args:
         h5py_obj: h5-h5py group object
         h5_path: path so far (Default value = "")

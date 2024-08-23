@@ -115,7 +115,6 @@ async def scandir(path: AnyStr) -> AsyncIterator[DirEntryAsync[AnyStr]]:
         def scandir(path: AnyStr) -> Iterator[DirEntry[AnyStr]]: ...
         ```
     """
-
     # for dir_entry in map(_dir_entry_async, os.scandir(path)):
     for dir_entry in (DirEntryAsync(el) for el in os.scandir(path)):
         yield dir_entry
