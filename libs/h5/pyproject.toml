@@ -57,7 +57,7 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = ['h5/']
+source = ['src/h5/']
 
 
 [tool.pytest.ini_options]
