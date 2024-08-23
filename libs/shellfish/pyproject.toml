@@ -89,6 +89,11 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/shellfish"]
 
+[tool.uv]
+dev-dependencies = [
+    "pytest-asyncio>=0.23.8",
+]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

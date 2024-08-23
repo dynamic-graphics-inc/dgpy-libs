@@ -32,11 +32,19 @@ dependencies = [
     { name = "xtyping" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest-asyncio" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest-asyncio", specifier = ">=0.23.8" }]
 
 [[package]]
 name = "annotated-types"
@@ -86,11 +94,19 @@ dependencies = [
     { name = "xtyping" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest-asyncio" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest-asyncio", specifier = ">=0.23.8" }]
 
 [[package]]
 name = "attrs"
@@ -1869,6 +1885,11 @@ dependencies = [
     { name = "xtyping" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "pytest-asyncio" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "aiopen", editable = "libs/aiopen" },
@@ -1879,6 +1900,9 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.0.3" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest-asyncio" }]
 
 [[package]]
 name = "six"
