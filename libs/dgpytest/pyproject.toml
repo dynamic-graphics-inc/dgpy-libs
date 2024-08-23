@@ -21,6 +21,9 @@ dgpytest = "dgpytest.plugin"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[project.entry-points.pytest11]
+dgpytest = "dgpytest.plugin"
+
 [tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
