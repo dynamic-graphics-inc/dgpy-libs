@@ -9,7 +9,7 @@ classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience
 dependencies = ["pydantic>=2.0.3", "aiopen>=0.5.0", "asyncify>=0.9.1", "funkify>=0.4.0", "jsonbourne>=0.29.0", "listless>=0.1.0", "xtyping>=0.6.0"]
 requires-python = ">=3.8,<4.0"
 
-["project.urls"]
+[project.urls]
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/shellfish"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 

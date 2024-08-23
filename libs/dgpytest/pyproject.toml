@@ -9,7 +9,7 @@ classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience
 dependencies = ["pytest>=7.2.2", "pytest-asyncio>=0.21,<0.24"]
 requires-python = ">=3.8.1"
 
-["project.urls"]
+[project.urls]
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/dgpytest"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
