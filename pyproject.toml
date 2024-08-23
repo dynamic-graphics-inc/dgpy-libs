@@ -175,9 +175,7 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
-plugins = [
-  "pydantic.mypy",
-]
+plugins = ["pydantic.mypy"]
 python_version = "3.8"
 show_error_codes = true
 follow_imports = 'silent'
@@ -263,12 +261,12 @@ preview = true
 select = [
   "RUF100", # no unused 'noqa' comments
   "RUF022",
-  "E", # pyflakes errors
-  "F", # pyflakes warnings
-  "B", # bugbear
-  "C4", # comprehensions
+  "E",      # pyflakes errors
+  "F",      # pyflakes warnings
+  "B",      # bugbear
+  "C4",     # comprehensions
   "ERA001", # erradicate
-  "I", # isort
+  "I",      # isort
   "W",
   # "SIM",
   # "PT", # pytest
@@ -276,7 +274,7 @@ select = [
   # pyupgrade
   "UP",
   # pydocstyle
-  # "D",
+  "D",
   "D207", # docstring is under-indented
   "D208", # docstring is over-indented
   "D414",
@@ -306,6 +304,17 @@ ignore = [
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
   # PYDOCSTYLE
+  "D100", # undocumented-public-module
+  "D101", # undocumented-public-class
+  "D102", # undocumented-public-method
+  "D103", # undocumented-public-function
+  "D104", # undocumented-public-package
+  "D105", # undocumented-magic-method
+  "D107", # undocumented-public-init
+  "D212", # multi-line-summary-first-line
+  "D301", # escape-sequence-in-docstring
+
+  "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
 
   # flake8-simplify (SIM)
@@ -336,12 +345,8 @@ max-complexity = 20
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
 ]
-"**/noxfile.py" = [
-  "D",
-]
-"**/conftest.py" = [
-  "D",
-]
+"**/noxfile.py" = ["D"]
+"**/conftest.py" = ["D"]
 "**/test_*.py" = [
   "D1",
   "D102",

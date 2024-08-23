@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-test_lager
-----------------------------------
+"""lager-tests
 
 Tests for `lager` module.
 """

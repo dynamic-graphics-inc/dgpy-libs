@@ -61,7 +61,6 @@ EXPECTED_GROUPS_KEYS = [
 
 def make_test_hdf5_file(filepath: Union[str, Path]) -> str:
     """Make test hdf5 file and return filepath"""
-
     root_data = np.arange(10, dtype="i8").reshape(2, 5)
     a_data = np.arange(10, dtype="i8").reshape(2, 5)
     b_data = np.arange(10, dtype="i8").reshape(2, 5)
