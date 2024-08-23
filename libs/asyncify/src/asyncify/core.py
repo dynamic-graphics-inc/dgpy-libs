@@ -59,7 +59,7 @@ except ImportError:  # pragma: no cover
     def anyio_asyncify(
         funk: Callable[P, T],
         *,
-        cancellable: bool = False,
+        abandon_on_cancel: bool = False,
         limiter: Optional[CapacityLimiter] = None,
     ) -> Callable[P, Awaitable[T]]:
         raise ImportError("install anyio; `pip install anyio`")

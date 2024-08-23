@@ -7,6 +7,12 @@ from typing import Any
 
 import pytest
 
+_UVLOOP = True
+try:
+    import uvloop  # noqa: F401
+except ImportError:
+    _UVLOOP = False
+
 _is_windows = os.name == "nt"
 
 
@@ -16,7 +22,7 @@ anyio_pytest_fixture = (
             pytest.param(("asyncio", {"use_uvloop": False}), id="asyncio"),
         ]
     )
-    if _is_windows
+    if _is_windows or not _UVLOOP
     else pytest.fixture(
         params=[
             pytest.param(("asyncio", {"use_uvloop": True}), id="asyncio+uvloop"),
