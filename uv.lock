@@ -49,8 +49,8 @@ dev = [
 requires-dist = [
     { name = "anyio", marker = "extra == 'test'", specifier = ">=4.4.0" },
     { name = "funkify", editable = "libs/funkify" },
-    { name = "pytest", marker = "extra == 'test'" },
-    { name = "pytest-asyncio", marker = "extra == 'test'" },
+    { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.2" },
+    { name = "pytest-asyncio", marker = "extra == 'test'", specifier = ">=0.23.8" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
 
@@ -124,6 +124,7 @@ dependencies = [
 [package.dev-dependencies]
 dev = [
     { name = "anyio" },
+    { name = "pytest" },
     { name = "pytest-asyncio" },
 ]
 
@@ -136,6 +137,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "anyio", specifier = ">=4.4.0" },
+    { name = "pytest", specifier = ">=8.3.2" },
     { name = "pytest-asyncio", specifier = ">=0.23.8" },
 ]
 
