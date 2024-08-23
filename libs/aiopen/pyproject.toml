@@ -1,49 +1,20 @@
-[tool.poetry]
+[project]
 name = "aiopen"
 version = "0.6.1"
 description = "Async file io"
-license = "MIT"
-authors = ["jesse <jesse@dgi.com>"]
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
-readme = 'README.md'
-packages = [
-  { include = "aiopen", from = "." },
-]
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Typing :: Typed",
-]
-keywords = [
-  "anyio",
-  "fs",
-  "aiopen",
-  "async",
-  "dgpy",
-]
+authors = [{name = "jesse",email = "jesse@dgi.com"}]
+readme = "README.md"
+keywords = ["anyio", "fs", "aiopen", "async", "dgpy"]
+classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Typing :: Typed"]
+dependencies = [
+    "funkify>=0.4.0", "xtyping>=0.5.0"
+    ]
+requires-python = ">=3.8,<4.0"
+[project.urls]
+Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
+Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-funkify = ">=0.4.0"
-xtyping = ">=0.5.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^8.3.2"
-pytest-asyncio = "^0.23.8"
-anyio = { extras = ["trio"], version = "^4.4.0" }
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
+[tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
@@ -63,6 +34,7 @@ filterwarnings = [
 ]
 markers = ["asyncio", "anyio", "version"]
 testpaths = ["aiopen", "tests"]
+
 
 [tool.mypy]
 # --strict
@@ -86,6 +58,7 @@ strict_equality = true
 extend = "../../pyproject.toml"
 
 # COVERAGE
+
 [tool.coverage.run]
 source = ['aiopen']
 branch = true
@@ -108,3 +81,20 @@ exclude_lines = [
 
 [tool.coverage.paths]
 source = ['aiopen/']
+
+[tool.rye]
+managed = true
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aiopen"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+funkify = { workspace = true }
