@@ -8,16 +8,16 @@ site_author: 'jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
 watch:
-  - libs/aiopen/aiopen
-  - libs/asyncify/asyncify
-  - libs/fmts/fmts
-  - libs/funkify/funkify
-  - libs/h5/h5
-  - libs/jsonbourne/jsonbourne
-  - libs/listless/listless
-  - libs/requires/requires
-  - libs/shellfish/shellfish
-  - libs/xtyping/xtyping
+  - libs/aiopen/src/aiopen
+  - libs/asyncify/src/asyncify
+  - libs/fmts/src/fmts
+  - libs/funkify/src/funkify
+  - libs/h5/src/h5
+  - libs/jsonbourne/src/jsonbourne
+  - libs/listless/src/listless
+  - libs/requires/src/requires
+  - libs/shellfish/src/shellfish
+  - libs/xtyping/src/xtyping
 
 
 nav:
