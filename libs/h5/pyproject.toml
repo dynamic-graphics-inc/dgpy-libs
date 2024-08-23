@@ -78,7 +78,7 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = ['src/h5/']
+source = ['src/h5']
 
 
 [tool.pytest.ini_options]
@@ -98,7 +98,7 @@ managed = true
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["h5"]
+packages = ["src/h5"]
 
 [tool.uv]
 dev-dependencies = [
