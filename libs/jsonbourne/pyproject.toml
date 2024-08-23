@@ -99,7 +99,7 @@ managed = true
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/jsonbourne"]
+packages = ["src/jsonbourne", "src/JSON.py", "src/david_webb.py"]
 
 [tool.uv]
 dev-dependencies = [
