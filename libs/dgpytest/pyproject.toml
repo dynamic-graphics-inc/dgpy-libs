@@ -2,10 +2,20 @@
 name = "dgpytest"
 version = "0.0.4"
 description = "dgpytest = dgpy + pytest"
-authors = [{name = "jesse",email = "jesse@dgi.com"}]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["pytest", "dgpy", "typed", "plugin"]
-classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Typing :: Typed"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
 dependencies = ["pytest>=7.2.2", "pytest-asyncio>=0.21,<0.24"]
 requires-python = ">=3.8.1"
 
@@ -39,7 +49,6 @@ markers = [
   "timeout",
 ]
 
-
 [tool.coverage.run]
 branch = true
 source = ['dgpytest']
@@ -65,7 +74,6 @@ exclude_lines = [
   'pragma: no cover',
   'pragma: nocov',
 ]
-
 
 [tool.ruff]
 extend = "../../pyproject.toml"

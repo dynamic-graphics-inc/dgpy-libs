@@ -2,13 +2,25 @@
 name = "aiopen"
 version = "0.6.1"
 description = "Async file io"
-authors = [{name = "jesse",email = "jesse@dgi.com"}]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["anyio", "fs", "aiopen", "async", "dgpy"]
-classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Typing :: Typed"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
 dependencies = [
-    "funkify>=0.4.0", "xtyping>=0.5.0"
-    ]
+  "funkify>=0.4.0",
+  "xtyping>=0.5.0",
+]
 requires-python = ">=3.8,<4.0"
 [project.urls]
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
@@ -16,9 +28,9 @@ Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [project.optional-dependencies]
 test = [
-    "anyio>=4.4.0",
-    "pytest>=8.3.2",
-    "pytest-asyncio>=0.23.8",
+  "anyio>=4.4.0",
+  "pytest>=8.3.2",
+  "pytest-asyncio>=0.23.8",
 ]
 
 [tool]
@@ -41,7 +53,6 @@ filterwarnings = [
 ]
 markers = ["asyncio", "anyio", "version"]
 testpaths = ["aiopen", "tests"]
-
 
 [tool.mypy]
 # --strict
@@ -101,8 +112,8 @@ packages = ["src/aiopen"]
 
 [tool.uv]
 dev-dependencies = [
-    "pytest-asyncio>=0.23.8",
-    "anyio>=4.4.0",
+  "pytest-asyncio>=0.23.8",
+  "anyio>=4.4.0",
 ]
 
 [build-system]

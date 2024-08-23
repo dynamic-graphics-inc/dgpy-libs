@@ -16,17 +16,17 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-    "asyncify",
-    "aiopen",
-    "fmts",
-    "funkify",
-    "h5",
-    "jsonbourne",
-    "lager",
-    "listless",
-    "requires",
-    "shellfish",
-    "xtyping",
+  "asyncify",
+  "aiopen",
+  "fmts",
+  "funkify",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
 ]
 requires-python = ">=3.8,<4.0"
 

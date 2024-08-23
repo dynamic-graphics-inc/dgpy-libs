@@ -2,10 +2,21 @@
 name = "lager"
 version = "0.18.2"
 description = "EZ-PZ logging based on loguru"
-authors = [{name = "jesse rubin",email = "jesse@dgi.com"}]
+authors = [{ name = "jesse rubin", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["logging", "dgpy", "dgi", "loguru", "beer"]
-classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Typing :: Typed"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Typing :: Typed",
+]
 dependencies = ["loguru>=0.7.0", "typing-extensions>=4.5.0,<5.0.0"]
 requires-python = ">=3.8,<4.0"
 
@@ -33,7 +44,6 @@ exclude_lines = [
   'if 0:',
   'if False:',
 ]
-
 
 [tool.ruff]
 extend = "../../pyproject.toml"

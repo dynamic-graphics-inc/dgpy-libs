@@ -2,10 +2,21 @@
 name = "funkify"
 version = "0.5.0"
 description = "Funkify modules so that they are callable"
-authors = [{name = "jesse",email = "jesse@dgi.com"}]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["funk", "dgpy", "python", "modules", "funky"]
-classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Typing :: Typed"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
 dependencies = []
 requires-python = ">=3.8,<4.0"
 
@@ -33,7 +44,6 @@ markers = [
   "version",
 ]
 
-
 [tool.coverage.run]
 source = ['funkify']
 branch = true
@@ -53,7 +63,6 @@ exclude_lines = [
   'if 0:',
   'if False:',
 ]
-
 
 [tool.ruff]
 extend = "../../pyproject.toml"

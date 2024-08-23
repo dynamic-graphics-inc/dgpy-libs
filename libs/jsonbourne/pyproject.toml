@@ -2,10 +2,21 @@
 name = "jsonbourne"
 version = "0.29.0"
 description = "EZPZ JSON"
-authors = [{name = "jesse",email = "jesse@dgi.com"}]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["dgpy", "pydantic", "json", "orjson", "rapidjson"]
-classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Typing :: Typed"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
 dependencies = ["xtyping>=0.5.0", "jsonc2json>=0.0.2,<0.0.5"]
 requires-python = ">=3.8,<4.0"
 
@@ -15,16 +26,16 @@ Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [project.optional-dependencies]
 httpx = [
-    "httpx>=0.27.0",
+  "httpx>=0.27.0",
 ]
 orjson = [
-    "orjson>=3.10.7",
+  "orjson>=3.10.7",
 ]
 test = [
-    "pytest>=8.3.2",
+  "pytest>=8.3.2",
 ]
 pydantic = [
-    "pydantic>=2.8.2",
+  "pydantic>=2.8.2",
 ]
 
 [tool]
@@ -66,7 +77,6 @@ testpaths = [
   "tests",
 ]
 
-
 [tool.coverage.run]
 source = ['jsonbourne']
 branch = true
@@ -87,7 +97,6 @@ exclude_lines = [
   'if False:',
 ]
 
-
 [tool.ruff]
 extend = "../../pyproject.toml"
 
@@ -103,10 +112,10 @@ packages = ["src/jsonbourne", "src/JSON.py", "src/david_webb.py"]
 
 [tool.uv]
 dev-dependencies = [
-    "orjson>=3.10.7",
-    "python-rapidjson>=1.20",
-    "httpx>=0.27.0",
-    "pydantic>=2.8.2",
+  "orjson>=3.10.7",
+  "python-rapidjson>=1.20",
+  "httpx>=0.27.0",
+  "pydantic>=2.8.2",
 ]
 
 [build-system]
