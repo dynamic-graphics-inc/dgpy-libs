@@ -87,27 +87,27 @@ jobs:
       - name: test listless
         run: |
           cd libs/listless
-          uv run pytest --doctest-modules tests listless
+          uv run pytest --doctest-modules
 
       - name: test fmts
         run: |
           cd libs/fmts
-          uv run pytest --doctest-modules tests fmts
+          uv run pytest --doctest-modules
 
       - name: test xtyping
         run: |
           cd libs/xtyping
-          uv run pytest tests
+          uv run pytest
 
       - name: test funkify
         run: |
           cd libs/funkify
-          uv run pytest --cov=funkify tests
+          uv run pytest --cov=funkify
 
       - name: test asyncify
         run: |
           cd libs/asyncify
-          uv run pytest --cov=asyncify tests asyncify --doctest-modules
+          uv run pytest --cov=asyncify --doctest-modules
 
       - name: test requires
         run: |
@@ -117,17 +117,17 @@ jobs:
       - name: test aiopen
         run: |
           cd libs/aiopen
-          uv run pytest --doctest-modules tests aiopen
+          uv run pytest --doctest-modules
 
       - name: test lager
         run: |
           cd libs/lager
-          uv run pytest tests lager
+          uv run pytest tests
 
       - name: test jsonbourne
         run: |
           cd libs/jsonbourne
-          uv run pytest --doctest-modules tests jsonbourne
+          uv run pytest --doctest-modules
 
       - name: test shellfish
         run: |
