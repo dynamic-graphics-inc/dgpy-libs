@@ -177,7 +177,6 @@ async def test_simple_close(mode: str, tmp_path: Path) -> None:
     """Open a file, read a byte, and close it."""
     filename = "bigfile.bin"
     content = "0" * 4 * io.DEFAULT_BUFFER_SIZE
-
     full_file = tmp_path.joinpath(filename)
     full_file.write_text(content)
 
