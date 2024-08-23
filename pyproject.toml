@@ -209,12 +209,12 @@ preview = true
 select = [
   "RUF100", # no unused 'noqa' comments
   "RUF022",
-  "E",      # pyflakes errors
-  "F",      # pyflakes warnings
-  "B",      # bugbear
-  "C4",     # comprehensions
+  "E", # pyflakes errors
+  "F", # pyflakes warnings
+  "B", # bugbear
+  "C4", # comprehensions
   "ERA001", # erradicate
-  "I",      # isort
+  "I", # isort
   "W",
   # "SIM",
   # "PT", # pytest
