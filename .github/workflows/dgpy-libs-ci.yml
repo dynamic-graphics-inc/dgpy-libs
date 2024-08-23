@@ -132,12 +132,12 @@ jobs:
       - name: test shellfish
         run: |
           cd libs/shellfish
-          uv run pytest --doctest-modules tests shellfish
+          uv run pytest --doctest-modules
 
       - name: test dgpylibs
         run: |
           cd libs/dgpylibs
-          uv run pytest --doctest-modules tests dgpylibs
+          uv run pytest --doctest-modules
 
   test-jsonbourne:
     needs: [lint]
