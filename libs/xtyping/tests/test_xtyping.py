@@ -37,7 +37,7 @@ def test_xtyping_all() -> None:
         for el in members
         if el not in set(xtyping.__all_typing__)
         and not el.startswith("__")
-        and el not in {"_typing", "_typing_extensions", "shed", "_meta", "npt"}
+        and el not in {"_typing", "_typing_extensions", "shed", "_meta", "npt", "_all"}
     ]
     xtyping_all = xtyping.__all__
     if not all(el in xtyping_all for el in non_typing_members):
