@@ -44,6 +44,13 @@ anyio = { extras = ["trio"], version = "^4.5.2" }
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[project.optional-dependencies]
+test = [
+    "anyio>=4.4.0",
+    "pytest>=8.3.2",
+    "pytest-asyncio>=0.23.8",
+]
+
 [tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -125,6 +132,7 @@ packages = ["src/aiopen"]
 [tool.uv]
 dev-dependencies = [
     "pytest-asyncio>=0.23.8",
+    "anyio>=4.4.0",
 ]
 
 [build-system]
