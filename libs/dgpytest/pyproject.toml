@@ -13,6 +13,9 @@ requires-python = ">=3.8.1"
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/dgpytest"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
+[project.entry-points.pytest11]
+dgpytest = "dgpytest.plugin"
+
 [tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
