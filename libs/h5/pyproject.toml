@@ -27,6 +27,9 @@ requires-python = ">=3.8.0"
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
+[project.scripts]
+h5 = "h5.cli:main"
+
 [project.optional-dependencies]
 cli = [
   "click>=8.1.7",
