@@ -16,20 +16,6 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-keywords = [
-  "pytest",
-  "dgpy",
-  "typed",
-  "plugin",
-]
-
-[tool.poetry.dependencies]
-python = ">=3.8.1"
-pytest = ">=7.2.2"
-pytest-asyncio = ">=0.21,<0.25"
-
-[tool.poetry.plugins.pytest11]
-dgpytest = "dgpytest.plugin"
 
 [tool]
 [tool.pytest.ini_options]

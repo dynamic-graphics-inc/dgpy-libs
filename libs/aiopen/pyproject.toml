@@ -26,14 +26,6 @@ requires-python = ">=3.8,<4.0"
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
-[tool.poetry.dev-dependencies]
-pytest = "^8.3.3"
-pytest-asyncio = "^0.24.0"
-anyio = { extras = ["trio"], version = "^4.5.2" }
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
