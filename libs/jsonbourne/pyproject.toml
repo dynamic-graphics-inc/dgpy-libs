@@ -110,6 +110,14 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/jsonbourne", "src/JSON.py", "src/david_webb.py"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
 [tool.uv]
 dev-dependencies = [
   "orjson>=3.10.7",

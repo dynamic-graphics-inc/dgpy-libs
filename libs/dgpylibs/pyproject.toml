@@ -48,6 +48,13 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/dgpylibs"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+]
+
 [tool.uv.sources]
 asyncify = { workspace = true }
 aiopen = { workspace = true }

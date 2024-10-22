@@ -110,6 +110,14 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/aiopen"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
 [tool.uv]
 dev-dependencies = [
   "pytest-asyncio>=0.23.8",

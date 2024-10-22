@@ -80,6 +80,14 @@ allow-direct-references = true
 [tool.hatch.build.targets.wheel]
 packages = ["src/h5"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
 [tool.uv]
 dev-dependencies = [
   "pytest>=8.3.2",
