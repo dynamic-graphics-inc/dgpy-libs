@@ -24,8 +24,10 @@ except ImportError:
 try:
     from jsonc2json import jsonc2json
 except ImportError:
+
     def jsonc2json(s: str) -> str:
         raise ImportError("jsonc2json not installed")
+
 
 try:
     import rapidjson
