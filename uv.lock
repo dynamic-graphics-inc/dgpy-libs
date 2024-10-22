@@ -462,6 +462,7 @@ docs = [
 dev = [
     { name = "mypy" },
     { name = "nox" },
+    { name = "pytest-cov" },
     { name = "ruff" },
     { name = "tomli" },
 ]
@@ -492,6 +493,7 @@ requires-dist = [
 dev = [
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "nox", specifier = ">=2024.4.15" },
+    { name = "pytest-cov", specifier = ">=5.0.0" },
     { name = "ruff", specifier = ">=0.6.2" },
     { name = "tomli", specifier = ">=2.0.1" },
 ]

@@ -39,6 +39,7 @@ dev-dependencies = [
   "mypy>=1.11.1",
   "ruff>=0.6.2",
   "nox>=2024.4.15",
+  "pytest-cov>=5.0.0",
 ]
 
 [tool.uv.workspace]
