@@ -17,8 +17,21 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
-dependencies = ["funkify>=0.4.0", "xtyping>=0.5.0"]
-requires-python = ">=3.8,<4.0"
+keywords = [
+  "requires",
+  "dgpy",
+  "import",
+  "funkify",
+  "decorator",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+funkify = ">=0.4.0"
+xtyping = ">=0.5.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.3"
 
 [project.urls]
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/requires"

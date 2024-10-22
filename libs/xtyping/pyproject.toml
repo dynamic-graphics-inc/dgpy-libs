@@ -17,8 +17,15 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
-dependencies = ["typing-extensions>=4.4.0", "annotated-types>=0.5.0"]
-requires-python = ">=3.8,<4.0"
+keywords = ["typing", "dgpy", "typed", "types"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typing-extensions = ">=4.4.0"
+annotated-types = ">=0.5.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.3"
 
 [project.urls]
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/xtyping"

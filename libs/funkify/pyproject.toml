@@ -20,11 +20,13 @@ classifiers = [
 dependencies = []
 requires-python = ">=3.8,<4.0"
 
-[project.urls]
-Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/funkify"
-Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+[tool.poetry.dev-dependencies]
+pytest = "^8.3.3"
 
-[tool]
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [

@@ -16,14 +16,19 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-dependencies = ["pytest>=7.2.2", "pytest-asyncio>=0.21,<0.24"]
-requires-python = ">=3.8.1"
+keywords = [
+  "pytest",
+  "dgpy",
+  "typed",
+  "plugin",
+]
 
-[project.urls]
-Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/dgpytest"
-Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+[tool.poetry.dependencies]
+python = ">=3.8.1"
+pytest = ">=7.2.2"
+pytest-asyncio = ">=0.21,<0.25"
 
-[project.entry-points.pytest11]
+[tool.poetry.plugins.pytest11]
 dgpytest = "dgpytest.plugin"
 
 [tool]
