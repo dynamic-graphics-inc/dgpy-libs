@@ -13,6 +13,7 @@
 *.ply text eol=lf
 *.prod text eol=lf
 *.path text eol=lf
+LICENSE text eol=lf
 
 # BINARY
 *.2grd binary

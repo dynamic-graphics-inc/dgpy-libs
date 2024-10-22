@@ -39,6 +39,17 @@ pytest = "^8.3.3"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/listless"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
 [project]
 authors = [
   { name = "jesse", email = "jesse@dgi.com" },
