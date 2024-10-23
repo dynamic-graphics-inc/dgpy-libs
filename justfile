@@ -25,6 +25,10 @@ fmt:
     ruff format
     ruff check --select "I" --show-fixes --fix .
 
+# fmt pyproject.toml files
+fmt-pyproject:
+    find . -type f -name pyproject.toml | xargs -n1 pyproject-fmt
+
 # format-check
 fmtc:
     ruff format --check

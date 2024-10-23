@@ -12,10 +12,12 @@ def _get_version() -> str:
     for _i in range(3):
         _filepath = path.join(_dirpath, "pyproject.toml")
         if path.exists(_filepath):
+            with open(_filepath) as f:
+                _file = f.read()
             version = (
                 [
                     line
-                    for line in open(_filepath).read().split("\n")
+                    for line in _file.split("\n")
                     if "version" in line
                 ][0]
                 .replace("version = ", "")
