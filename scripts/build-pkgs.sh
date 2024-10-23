@@ -20,7 +20,7 @@ function build_pkg() {
     echo "____________"
     echo "Pkg: ${pkgname} -- Dirpath: ${dirpath}"
     cd "${DGPY_LIBS_REPO_ROOT}/${dirpath}"
-    poetry build
+    uv build --wheel
     mkdir -p "${LOCAL_DGPY_PACKAGES}/${pkgname}"
     cp -v dist/* "${LOCAL_DGPY_PACKAGES}/${pkgname}"
 
