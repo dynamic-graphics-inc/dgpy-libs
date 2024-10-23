@@ -23,7 +23,6 @@ def test_aiorun_asyncio() -> None:
         assert aiorun_asyncio(add_async(1, 3), 1, 2)
 
 
-
 def test_aiorun() -> None:
     assert aiorun(add_async, 1, 2) == 3
     assert aiorun(add_async(1, 3)) == 4

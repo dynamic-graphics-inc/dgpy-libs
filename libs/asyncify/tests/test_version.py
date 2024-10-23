@@ -15,11 +15,7 @@ def _get_version() -> str:
             with open(_filepath) as f:
                 _file = f.read()
             version = (
-                [
-                    line
-                    for line in _file.split("\n")
-                    if "version" in line
-                ][0]
+                [line for line in _file.split("\n") if "version" in line][0]
                 .replace("version = ", "")
                 .strip('"')
             )
