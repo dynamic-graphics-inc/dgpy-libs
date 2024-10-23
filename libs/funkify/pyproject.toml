@@ -1,15 +1,10 @@
-[tool.poetry]
+[project]
 name = "funkify"
 version = "0.5.0"
 description = "Funkify modules so that they are callable"
-license = "MIT"
-authors = ["jesse <jesse@dgi.com>"]
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/funkify"
-readme = 'README.md'
-packages = [
-  { include = "funkify", from = "." },
-]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+readme = "README.md"
+keywords = ["funk", "dgpy", "python", "modules", "funky"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -22,13 +17,8 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
-keywords = [
-  "funk",
-  "dgpy",
-  "python",
-  "modules",
-  "funky",
-]
+dependencies = []
+requires-python = ">=3.8,<4.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -36,10 +26,8 @@ python = "^3.8"
 [tool.poetry.dev-dependencies]
 pytest = "^8.3.3"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
+[tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
@@ -81,3 +69,25 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[tool.rye]
+managed = true
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/funkify"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]

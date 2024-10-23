@@ -1,12 +1,9 @@
-[tool.poetry]
+[project]
 name = "dgpylibs"
 version = "0.0.7"
 description = "Dynamic Graphics Python libraries"
-authors = ["jessekrubin <jesse@dgi.com>"]
-license = "MIT"
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-packages = [{ include = "dgpylibs", from = "." }]
+authors = [{ name = "jessekrubin", email = "jesse@dgi.com" }]
+keywords = ["dgpy", "dgi", "typed", "python3"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -18,32 +15,62 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Typing :: Typed",
 ]
-keywords = ["dgpy", "dgi", "typed", "python3"]
+dependencies = [
+  "asyncify",
+  "aiopen",
+  "fmts",
+  "funkify",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
+]
+requires-python = ">=3.8,<4.0"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-aiopen = "*"
-asyncify = "*"
-fmts = "*"
-funkify = "*"
-h5 = ">=0.8.8"
-jsonbourne = "*"
-lager = ">=0.17.1"
-listless = "*"
-requires = "*"
-shellfish = "*"
-xtyping = "*"
-dgpytest = { version = ">=0.0.1,<0.0.3", optional = true }
+[project.urls]
+Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
-[tool.poetry.dev-dependencies]
-xdoctest = ">=0.15.10"
+[tool]
+[tool.ruff]
+extend = "../../pyproject.toml"
 
-[tool.poetry.extras]
-test = ["dgpytest"]
+[tool.rye]
+managed = true
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dgpylibs"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+]
+
+[tool.uv.sources]
+asyncify = { workspace = true }
+aiopen = { workspace = true }
+fmts = { workspace = true }
+funkify = { workspace = true }
+h5 = { workspace = true }
+jsonbourne = { workspace = true }
+lager = { workspace = true }
+listless = { workspace = true }
+requires = { workspace = true }
+shellfish = { workspace = true }
+xtyping = { workspace = true }
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 # =============================================================================
 # /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -53,6 +80,3 @@ build-backend = "poetry.core.masonry.api"
 # =============================================================================
 # \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 # =============================================================================
-
-[tool.ruff]
-extend = "../../pyproject.toml"

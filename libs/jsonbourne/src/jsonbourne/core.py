@@ -737,7 +737,6 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 else:
                     yield k, value
         """
-
         return chain.from_iterable(
             (
                 (
@@ -1050,7 +1049,6 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             str: JSON string of the JsonObj object
 
         """
-
         return jsonlib.dumps(
             self.to_dict(),
             fmt=fmt,

@@ -251,7 +251,6 @@ def is_sequence(seq: Any) -> bool:
         True
 
     """
-
     if isinstance(seq, str):
         return False
     try:

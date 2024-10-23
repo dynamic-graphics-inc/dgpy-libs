@@ -47,7 +47,7 @@ LIB_DIRS = {
     for el in os.listdir(LIBS_DIR)
     if el[0] != "." and el in LIBS
 }
-SOURCE_DIRS = {el: path.join(LIBS_DIR, el, el) for el in LIBS}
+SOURCE_DIRS = {el: path.join(LIBS_DIR, el, "src", el) for el in LIBS}
 TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 
 

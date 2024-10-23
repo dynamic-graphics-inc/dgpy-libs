@@ -23,7 +23,7 @@ T = TypeVar("T")
 def asyncify(
     funk: Callable[P, T],
     *,
-    cancellable: bool = False,
+    abandon_on_cancel: bool = False,
     limiter: Optional[CapacityLimiter] = None,
 ) -> Callable[P, Awaitable[T]]:
     """asyncify decorator/wrapper that for use w/ anyio"""
@@ -32,7 +32,7 @@ def asyncify(
     async def _async_fn(*args: P.args, **kwargs: P.kwargs) -> T:
         partial_f = partial(funk, *args, **kwargs)
         return await to_thread.run_sync(
-            partial_f, cancellable=cancellable, limiter=limiter
+            partial_f, abandon_on_cancel=abandon_on_cancel, limiter=limiter
         )
 
     return _async_fn

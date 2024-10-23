@@ -94,7 +94,6 @@ def update_abouts():
 
 def _relock():
     """relock all dgpy-libs"""
-
     for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
@@ -129,7 +128,6 @@ def update():
 @cli.command()
 def patchall():
     """relock all dgpy-libs"""
-
     for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
@@ -243,7 +241,6 @@ def dgpylibs_topo_sorted() -> list[str]:
 @cli.command()
 def tree():
     """Print dependency tree
-
 
     possible grep???
 

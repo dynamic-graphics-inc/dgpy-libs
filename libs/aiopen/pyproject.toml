@@ -1,9 +1,11 @@
-[tool.poetry]
+[project]
 name = "aiopen"
 version = "0.6.1"
 description = "Async file io"
 license = "MIT"
-authors = ["jesse <jesse@dgi.com>"]
+authors = [
+    { name = "jesse", email = "jessekrubin@gmail.com" },
+]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
 readme = 'README.md'
@@ -40,10 +42,14 @@ pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 anyio = { extras = ["trio"], version = "^4.5.2" }
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[project.optional-dependencies]
+test = [
+  "anyio>=4.4.0",
+  "pytest>=8.3.2",
+  "pytest-asyncio>=0.23.8",
+]
 
+[tool]
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
@@ -86,6 +92,7 @@ strict_equality = true
 extend = "../../pyproject.toml"
 
 # COVERAGE
+
 [tool.coverage.run]
 source = ['aiopen']
 branch = true
@@ -108,3 +115,34 @@ exclude_lines = [
 
 [tool.coverage.paths]
 source = ['aiopen/']
+
+[tool.rye]
+managed = true
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aiopen"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
+[tool.uv]
+dev-dependencies = [
+  "pytest-asyncio>=0.23.8",
+  "anyio>=4.4.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+funkify = { workspace = true }

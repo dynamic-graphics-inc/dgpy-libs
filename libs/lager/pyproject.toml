@@ -1,15 +1,10 @@
-[tool.poetry]
+[project]
 name = "lager"
 version = "0.18.2"
 description = "EZ-PZ logging based on loguru"
-authors = ["jesse rubin <jesse@dgi.com>"]
-license = "MIT"
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/lager"
-readme = 'README.md'
-packages = [
-  { include = "lager", from = "." },
-]
+authors = [{ name = "jesse rubin", email = "jesse@dgi.com" }]
+readme = "README.md"
+keywords = ["logging", "dgpy", "dgi", "loguru", "beer"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -22,13 +17,8 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Typing :: Typed",
 ]
-keywords = [
-  "logging",
-  "dgpy",
-  "dgi",
-  "loguru",
-  "beer",
-]
+dependencies = ["loguru>=0.7.0", "typing-extensions>=4.5.0,<5.0.0"]
+requires-python = ">=3.8,<4.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -43,9 +33,10 @@ pytest-cov = "^5.0.0"
 typing-extensions = "^4.5.0"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
+[tool]
 [tool.coverage.run]
 source = ['lager']
 branch = true
@@ -68,3 +59,22 @@ exclude_lines = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[tool.rye]
+managed = true
+dev-dependencies = ["typing-extensions>=4.5.0,<5.0.0"]
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lager"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]

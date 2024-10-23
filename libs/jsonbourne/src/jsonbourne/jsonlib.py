@@ -14,14 +14,20 @@ from sys import modules as _sys_modules
 from typing import Any, Callable, List, Optional, Tuple, Type, Union
 from uuid import UUID
 
-from jsonc2json import jsonc2json
-
 from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:
     import dataclasses
 except ImportError:
     dataclasses = None  # type: ignore[assignment]
+
+try:
+    from jsonc2json import jsonc2json
+except ImportError:
+
+    def jsonc2json(s: str) -> str:
+        raise ImportError("jsonc2json not installed")
+
 
 try:
     import rapidjson
