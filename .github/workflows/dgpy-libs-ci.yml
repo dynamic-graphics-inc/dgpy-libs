@@ -188,8 +188,8 @@ jobs:
       # - name: poetry install
         # run: |
           # poetry install
-      # - name: install docs deps
-        # run: poetry run pip install mkdocs-material mkdocs-jupyter mkdocstrings[python] markdown-callouts
+      - name: install docs deps
+        run: uv pip install '.[docs]'
       - name: mkdocs build
         if: github.ref != 'refs/heads/main'
         run: uv run mkdocs build
