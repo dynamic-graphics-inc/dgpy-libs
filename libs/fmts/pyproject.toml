@@ -2,9 +2,11 @@
 name = "fmts"
 version = "0.2.0"
 description = "str transformation utils"
-authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
 keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
+authors = [
+  { name = "jesse", email = "jessekrubin@gmail.com" },
+]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -24,35 +26,6 @@ requires-python = ">=3.8,<4.0"
 Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
 Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
-[tool.pdm]
-includes = ["./fmts"]
-
-[tool.pdm.dev-dependencies]
-dev = ["pytest<7.0.0,>=6.2.2"]
-
-[tool.poetry]
-name = "fmts"
-version = "0.2.0"
-description = "str transformation utils"
-license = "MIT"
-authors = ["jesse <jesse@dgi.com>"]
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
-readme = 'README.md'
-packages = [{ include = "fmts", from = "." }]
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Typing :: Typed",
-]
-keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -61,18 +34,8 @@ python = "^3.8"
 pytest = "^8.3.3"
 
 [build-system]
-requires = ["pdm-pep517"]
-build-backend = "pdm.pep517.api"
-
-# POETRY BUILD SYSTEM
-# [build-system]
-# requires = ["poetry-core>=1.0.0"]
-# build-backend = "poetry.core.masonry.api"
-
-# PDM BUILD SYSTEM
-# [build-system]
-# requires = ["pdm-pep517"]
-# build-backend = "pdm.pep517.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.coverage.run]
 source = ['fmts']
@@ -116,7 +79,3 @@ include = [
   "README.md",
   "LICENSE",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"

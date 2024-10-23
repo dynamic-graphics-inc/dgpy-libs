@@ -19,6 +19,10 @@ classifiers = [
 dependencies = ["pytest>=7.2.2", "pytest-asyncio>=0.21,<0.24"]
 requires-python = ">=3.8.1"
 
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.poetry.dependencies]
 python = ">=3.8.1"
 pytest = ">=7.2.2"
@@ -26,10 +30,6 @@ pytest-asyncio = ">=0.21,<0.25"
 
 [tool.poetry.plugins.pytest11]
 dgpytest = "dgpytest.plugin"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [project.entry-points.pytest11]
 dgpytest = "dgpytest.plugin"
@@ -104,6 +104,3 @@ include = [
   "LICENSE",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"

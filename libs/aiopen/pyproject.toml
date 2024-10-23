@@ -3,7 +3,9 @@ name = "aiopen"
 version = "0.6.1"
 description = "Async file io"
 license = "MIT"
-authors = ["jesse <jesse@dgi.com>"]
+authors = [
+    { name = "jesse", email = "jessekrubin@gmail.com" },
+]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
 readme = 'README.md'
@@ -39,10 +41,6 @@ xtyping = ">=0.5.0"
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 anyio = { extras = ["trio"], version = "^4.5.2" }
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [project.optional-dependencies]
 test = [
