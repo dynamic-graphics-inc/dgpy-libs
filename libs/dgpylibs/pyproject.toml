@@ -1,23 +1,41 @@
+[build-system]
+build-backend = "hatchling.build"
+
+# =============================================================================
+# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+# =============================================================================
+#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
+# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
+# =============================================================================
+# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# =============================================================================
+requires = ["hatchling"]
+
 [project]
 name = "dgpylibs"
 version = "0.0.7"
 description = "Dynamic Graphics Python libraries"
+keywords = ["dgi", "dgpy", "python3", "typed"]
 authors = [{ name = "jessekrubin", email = "jesse@dgi.com" }]
-keywords = ["dgpy", "dgi", "typed", "python3"]
+requires-python = ">=3.8,<4.0"
+
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
 dependencies = [
-  "asyncify",
   "aiopen",
+  "asyncify",
   "fmts",
   "funkify",
   "h5",
@@ -28,18 +46,8 @@ dependencies = [
   "shellfish",
   "xtyping",
 ]
-requires-python = ">=3.8,<4.0"
-
-[project.urls]
-Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-
-[tool]
-[tool.ruff]
-extend = "../../pyproject.toml"
-
-[tool.rye]
-managed = true
+urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [tool.hatch]
 [tool.hatch.metadata]
@@ -55,6 +63,11 @@ include = [
   "README.md",
 ]
 
+[tool.ruff]
+extend = "../../pyproject.toml"
+
+[tool]
+
 [tool.uv.sources]
 asyncify = { workspace = true }
 aiopen = { workspace = true }
@@ -67,16 +80,3 @@ listless = { workspace = true }
 requires = { workspace = true }
 shellfish = { workspace = true }
 xtyping = { workspace = true }
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================

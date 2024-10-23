@@ -1,4 +1,7 @@
 #!/bin/bash
+# This script builds all the dgpy-libs packages however, we previously used
+# poetry and have since moved to uv, which supports `uv build --all` so
+# this script may be not long for this world...
 set -e
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 DGPY_LIBS_REPO_ROOT="$(dirname $DIR)"
@@ -11,16 +14,13 @@ mkdir -p "$LOCAL_DGPY_PACKAGES"
 rm -rfv "${LOCAL_DGPY_PACKAGES}/latest" || true
 mkdir -p "${LOCAL_DGPY_PACKAGES}/latest"
 
-DGPY=$(pwd)/dgpy
-LIBS=$(pwd)/dgpy-libs
-
 function build_pkg() {
     dirpath="$1"
     pkgname=$(basename "${dirpath}")
     echo "____________"
     echo "Pkg: ${pkgname} -- Dirpath: ${dirpath}"
     cd "${DGPY_LIBS_REPO_ROOT}/${dirpath}"
-    poetry build
+    uv build --wheel
     mkdir -p "${LOCAL_DGPY_PACKAGES}/${pkgname}"
     cp -v dist/* "${LOCAL_DGPY_PACKAGES}/${pkgname}"
 
@@ -73,5 +73,4 @@ build_pkg "libs/jsonbourne"
 build_pkg "libs/lager"
 build_pkg "libs/requires"
 build_pkg "libs/shellfish"
-
 mkzip

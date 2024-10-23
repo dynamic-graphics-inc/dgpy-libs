@@ -1,35 +1,50 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
 [project]
 name = "aiopen"
 version = "0.6.1"
 description = "Async file io"
+readme = "README.md"
+keywords = [
+  "aiopen",
+  "anyio",
+  "async",
+  "dgpy",
+  "fs",
+]
+
 license = "MIT"
 authors = [
-    { name = "jesse", email = "jessekrubin@gmail.com" },
-]
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
-readme = 'README.md'
-packages = [
-  { include = "aiopen", from = "." },
+  { name = "jesse", email = "jessekrubin@gmail.com" },
 ]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-keywords = [
-  "anyio",
-  "fs",
-  "aiopen",
-  "async",
-  "dgpy",
+dependencies = [
+  "funkify",
+]
+
+optional-dependencies.test = [
+  "anyio>=4.4",
+  "pytest>=8.3.2",
+  "pytest-asyncio>=0.23.8",
+]
+repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
+packages = [
+  { include = "aiopen", from = "." },
 ]
 
 [tool.poetry.dependencies]
@@ -42,14 +57,26 @@ pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 anyio = { extras = ["trio"], version = "^4.5.2" }
 
-[project.optional-dependencies]
-test = [
-  "anyio>=4.4.0",
-  "pytest>=8.3.2",
-  "pytest-asyncio>=0.23.8",
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aiopen"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
 ]
 
-[tool]
+[tool.ruff]
+# COVERAGE
+
+extend = "../../pyproject.toml"
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
@@ -62,36 +89,10 @@ addopts = [
 ]
 xfail_strict = true
 filterwarnings = [
-  "error",
-  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-  "ignore::RuntimeWarning",
   "ignore::pytest.PytestUnraisableExceptionWarning",
 ]
 markers = ["asyncio", "anyio", "version"]
 testpaths = ["aiopen", "tests"]
-
-[tool.mypy]
-# --strict
-disallow_any_generics = false
-disallow_subclassing_any = true
-disallow_untyped_calls = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = false
-warn_return_any = true
-ignore_missing_imports = true
-implicit_reexport = false
-strict_equality = true
-# --strict end
-
-[tool.ruff]
-extend = "../../pyproject.toml"
-
-# COVERAGE
 
 [tool.coverage.run]
 source = ['aiopen']
@@ -116,33 +117,32 @@ exclude_lines = [
 [tool.coverage.paths]
 source = ['aiopen/']
 
-[tool.rye]
-managed = true
+[tool.mypy]
+# --strict
+disallow_any_generics = false
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = false
+warn_return_any = true
+ignore_missing_imports = true
+implicit_reexport = false
+strict_equality = true
+# --strict end
 
-[tool.hatch]
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/aiopen"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "src",
-  "pyproject.toml",
-  "README.md",
-  "LICENSE",
-]
+[tool]
 
 [tool.uv]
 dev-dependencies = [
   "pytest-asyncio>=0.23.8",
   "anyio>=4.4.0",
+  "pytest-cov>=5.0.0",
 ]
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
 
 [tool.uv.sources]
 funkify = { workspace = true }

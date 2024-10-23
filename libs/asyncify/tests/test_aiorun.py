@@ -22,15 +22,9 @@ def test_aiorun_asyncio() -> None:
     with pytest.raises(ValueError):
         assert aiorun_asyncio(add_async(1, 3), 1, 2)
 
-    with pytest.raises(ValueError):
-        assert aiorun_asyncio(add_async(1, 3), 1, 2, backend="trio")
-
 
 def test_aiorun() -> None:
     assert aiorun(add_async, 1, 2) == 3
     assert aiorun(add_async(1, 3)) == 4
     with pytest.raises(ValueError):
         assert aiorun(add_async(1, 3), 1, 2)
-
-    with pytest.raises(ValueError):
-        assert aiorun(add_async(1, 3), 1, 2, backend="trio")

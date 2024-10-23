@@ -1,27 +1,33 @@
+[build-system]
+build-backend = "hatchling.build"
+
+requires = ["hatchling"]
+
 [project]
 name = "dgpytest"
 version = "0.0.4"
 description = "dgpytest = dgpy + pytest"
-authors = [{ name = "jesse", email = "jesse@dgi.com" }]
 readme = "README.md"
-keywords = ["pytest", "dgpy", "typed", "plugin"]
+keywords = ["dgpy", "plugin", "pytest", "typed"]
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+requires-python = ">=3.8.1"
+
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
 dependencies = ["pytest>=7.2.2", "pytest-asyncio>=0.21,<0.24"]
-requires-python = ">=3.8.1"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+entry-points.pytest11.dgpytest = "dgpytest.plugin"
 
 [tool.poetry.dependencies]
 python = ">=3.8.1"
@@ -31,10 +37,24 @@ pytest-asyncio = ">=0.21,<0.25"
 [tool.poetry.plugins.pytest11]
 dgpytest = "dgpytest.plugin"
 
-[project.entry-points.pytest11]
-dgpytest = "dgpytest.plugin"
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
 
-[tool]
+[tool.hatch.build.targets.wheel]
+packages = ["src/dgpytest"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
+[tool.ruff]
+extend = "../../pyproject.toml"
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = [
@@ -83,23 +103,4 @@ exclude_lines = [
   'pragma: nocov',
 ]
 
-[tool.ruff]
-extend = "../../pyproject.toml"
-
-[tool.rye]
-managed = true
-
-[tool.hatch]
-[tool.hatch.metadata]
-allow-direct-references = true
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/dgpytest"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "src",
-  "pyproject.toml",
-  "README.md",
-  "LICENSE",
-]
+[tool]
