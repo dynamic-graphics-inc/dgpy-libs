@@ -33,10 +33,9 @@ class TestDgpyLib:
         pyproject_toml = tomli.loads(pyproject_toml_string)
         lager.debug("pyproject.toml", pyproject_toml)
 
+        assert "project" in pyproject_toml
         assert "tool" in pyproject_toml
-        assert "poetry" in pyproject_toml["tool"]
-        assert "version" in pyproject_toml["tool"]["poetry"]
-
-        assert pyproject_toml["tool"]["poetry"]["version"] == lib_metadata.version
+        assert "version" in pyproject_toml["project"]
+        assert pyproject_toml["project"]["version"] == lib_metadata.version
 
         lager.info("lib metadata", lib_metadata)

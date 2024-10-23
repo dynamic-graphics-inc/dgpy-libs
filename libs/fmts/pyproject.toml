@@ -2,13 +2,9 @@
 name = "fmts"
 version = "0.2.0"
 description = "str transformation utils"
-authors = [
-  { name = "jesse", email = "jessekrubin@gmail.com" },
-  { name = "jesse", email = "jesse@dgi.com" },
-]
-dependencies = []
-requires-python = ">=3.7.0,<4.0"
-license = { text = "MIT" }
+authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+readme = "README.md"
+keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -21,11 +17,12 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
   "Typing :: Typed",
 ]
-keywords = ["str", "utils", "dgpy", "vanilla", "typed"]
+dependencies = []
+requires-python = ">=3.8,<4.0"
 
 [project.urls]
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
+Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [tool.pdm]
 includes = ["./fmts"]
@@ -99,5 +96,20 @@ exclude_lines = [
 [tool.coverage.paths]
 source = ['fmts/']
 
+
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[tool.rye]
+managed = true
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fmts"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

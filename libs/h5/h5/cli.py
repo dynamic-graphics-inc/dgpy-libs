@@ -21,7 +21,8 @@ except ImportError as e:
     ) from e
 
 try:
-    from globsters import Globsters, globster
+    import ry
+
     from rich.console import Console
 except ImportError as e:
     raise ModuleNotFoundError(
@@ -36,7 +37,7 @@ __all__ = (
     "cli",
 )
 
-Matcher = Union[Callable[[str], bool], Globsters]
+Matcher = Union[Callable[[str], bool], ry.Globster]
 
 
 def is_np_integer(obj: Any) -> TypeGuard[np.integer]:
@@ -74,13 +75,13 @@ def true(string: str) -> bool:
 def make_globster(
     include: Optional[Tuple[str, ...]] = ("**/*",),
     exclude: Optional[Tuple[str, ...]] = None,
-) -> Union[Callable[[str], bool], Globsters]:
+) -> Union[Callable[[str], bool], ry.Globster]:
     patterns: List[str] = []
     if include:
         patterns.extend(include)
     if exclude:
         patterns.extend(f"!{el}" for el in exclude)
-    return globster(patterns)
+    return ry.globs(patterns)
 
 
 @dataclass

@@ -1,24 +1,24 @@
-[tool.poetry]
+[project]
 name = "dgpydev"
-version = "0.0.3"
-description = "Dynamic Graphics Python libraries"
-authors = ["jessekrubin <jesse@dgi.com>"]
-license = "MIT"
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-packages = [{ include = "dgpydev", from = "." }]
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Typing :: Typed",
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "aiopen",
+  "asyncify",
+  "dgpylibs",
+  "dgpytest",
+  "fmts",
+  "funkify",
+  "h5",
+  "jsonbourne",
+  "lager",
+  "listless",
+  "requires",
+  "shellfish",
+  "xtyping",
 ]
-keywords = ["dgpy", "dgi", "typed", "python3"]
 
 [tool.poetry.dependencies]
 python = ">=3.8.1,<4"
@@ -82,54 +82,47 @@ mkdocs-material = "^9.5.42"
 mkdocs-jupyter = "^0.24.8"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================
+[tool.uv]
+dev-dependencies = [
+    "tomli>=2.0.1",
+    "mypy>=1.11.1",
+    "ruff>=0.6.2",
+]
 
-[tool.black]
-line-length = 88
-target-version = ['py38']
-skip-string-normalization = false
-include = '\.pyi?$'
-exclude = '\.ipynb$'
-extend-exclude = '''
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.nox
-    | \.nox_win
-    | \.nox_lin
-    | \.nox_wsl
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | .pytype
-  )/
-)
-'''
+[tool.uv.workspace]
+members = [
+  "libs/aiopen",
+  "libs/asyncify",
+  "libs/dgpylibs",
+  "libs/dgpytest",
+  "libs/fmts",
+  "libs/funkify",
+  "libs/h5",
+  "libs/jsonbourne",
+  "libs/lager",
+  "libs/listless",
+  "libs/requires",
+  "libs/shellfish",
+  "libs/xtyping",
+]
 
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================
+[tool.uv.sources]
+aiopen = { workspace = true }
+asyncify = { workspace = true }
+dgpylibs = { workspace = true }
+dgpytest = { workspace = true }
+fmts = { workspace = true }
+funkify = { workspace = true }
+h5 = { workspace = true }
+jsonbourne = { workspace = true }
+lager = { workspace = true }
+listless = { workspace = true }
+requires = { workspace = true }
+shellfish = { workspace = true }
+xtyping = { workspace = true }
 
 [tool.pytest.ini_options]
 minversion = "6.0"
@@ -354,7 +347,7 @@ max-complexity = 20
   "D103", # missing docstring
 ]
 
-"libs/jsonbourne/jsonbourne/trydantic.py" = [
+"libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
 
@@ -389,38 +382,6 @@ known-first-party = [
 # =============================================================================
 # \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 # =============================================================================
-
-[tool.isort]
-combine_as_imports = true
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 88
-lines_between_types = 1
-lines_after_imports = 1
-multi_line_output = 3
-profile = "black"
-skip_glob = [
-  "*/setup.py",
-  ".nox*",
-  "*/.nox_win/**",
-  "*/.pytype/*",
-  "*/loguru_tests/*",
-]
-known_first_party = [
-  "aiopen",
-  "asyncify",
-  "dgpylibs",
-  "dgpytest",
-  "funkify",
-  "fmts",
-  "h5",
-  "jsonbourne",
-  "lager",
-  "listless",
-  "requires",
-  "shellfish",
-  "xtyping",
-]
 
 [tool.codespell]
 skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*,./poetry.lock"

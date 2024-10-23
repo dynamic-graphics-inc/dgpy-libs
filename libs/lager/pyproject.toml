@@ -1,34 +1,13 @@
-[tool.poetry]
+[project]
 name = "lager"
 version = "0.18.2"
 description = "EZ-PZ logging based on loguru"
-authors = ["jesse rubin <jesse@dgi.com>"]
-license = "MIT"
-repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
-homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/lager"
-readme = 'README.md'
-packages = [
-  { include = "lager", from = "." },
-]
-classifiers = [
-  "Development Status :: 5 - Production/Stable",
-  "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Typing :: Typed",
-]
-keywords = [
-  "logging",
-  "dgpy",
-  "dgi",
-  "loguru",
-  "beer",
-]
+authors = [{name = "jesse rubin",email = "jesse@dgi.com"}]
+readme = "README.md"
+keywords = ["logging", "dgpy", "dgi", "loguru", "beer"]
+classifiers = ["Development Status :: 5 - Production/Stable", "Intended Audience :: Developers", "License :: OSI Approved :: MIT License", "Programming Language :: Python", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Typing :: Typed"]
+dependencies = ["loguru>=0.7.0", "typing-extensions>=4.5.0,<5.0.0"]
+requires-python = ">=3.8,<4.0"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -46,6 +25,7 @@ typing-extensions = "^4.5.0"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool]
 [tool.coverage.run]
 source = ['lager']
 branch = true
@@ -66,5 +46,21 @@ exclude_lines = [
   'if False:',
 ]
 
+
 [tool.ruff]
 extend = "../../pyproject.toml"
+
+[tool.rye]
+managed = true
+dev-dependencies = ["typing-extensions>=4.5.0,<5.0.0"]
+
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lager"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
