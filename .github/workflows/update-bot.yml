@@ -27,8 +27,8 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.SHELDON_GITHUB_ACTIONS_TOKEN }}
-          commit-message: Update uv lockfile
-          title: Update uv lockfile
+          commit-message: Update uv lockfile dependencies
+          title: Update dependencies in uv.lock
           body-path: uv_output.md
           branch: update-uv
           base: main
