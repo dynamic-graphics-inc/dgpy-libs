@@ -2,9 +2,7 @@ name: update-bot
 
 on:
   workflow_dispatch:
-  # Set the schedule, for example every week at 8:00am on Monday
-  schedule:
-    - cron: 0 8 * * 4
+
 
 permissions:
   contents: write
