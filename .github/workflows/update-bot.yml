@@ -19,9 +19,9 @@ jobs:
       - uses: astral-sh/setup-uv@v3
 
       - run: |
-          echo "\`\`\`" > uv_output.md
-          uv lock -U >> uv_output.md
-          echo "\`\`\`" >> uv_output.md
+          echo ``` >> uv_output.md
+          uv lock -U >> uv_output.md 2>&1
+          echo ``` >> uv_output.md
 
       - name: Create pull request
         uses: peter-evans/create-pull-request@v7
