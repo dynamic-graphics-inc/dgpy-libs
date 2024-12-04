@@ -5,7 +5,7 @@ requires = ["hatchling"]
 [project]
 name = "dgpydev"
 version = "0.1.0"
-description = "Add your description here"
+description = "dgpy-libs development"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -55,6 +55,8 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
+[project.scripts]
+dgpydev = "dgpydev.cli:main"
 #[tool.hatch]
 #[tool.hatch.metadata]
 #allow-direct-references = true
@@ -210,17 +212,20 @@ addopts = [
   "--disable-warnings",
 ]
 testpaths = [
-
-
-  # "libs/aiopen",
-  # "libs/asyncify",
-  # "libs/funkify",
-  # "libs/h5",
-  # "libs/jsonbourne",
-  # "libs/lager",
-  # "libs/requires",
-  # "libs/shellfish",
-  # "libs/xtyping",
+  "libs/src/aiopen",
+  "libs/src/asyncify",
+  "libs/src/dgpylibs",
+  "libs/src/dgpytest",
+  "libs/src/fmts",
+  "libs/src/funkify",
+  "libs/src/h5",
+  "libs/src/jsonbourne",
+  "libs/src/lager",
+  "libs/src/listless",
+  "libs/src/requires",
+  "libs/src/shellfish",
+  "libs/src/xtyping",
+  "tests",
 ]
 
 xfail_strict = true
