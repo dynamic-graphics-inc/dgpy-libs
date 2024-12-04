@@ -532,7 +532,6 @@ def requires(
         _requirements = make_requirements(list(requirements))
 
     def _requires_dec(f: Callable[P, R]) -> Callable[P, R]:
-        print("herm")
         _wrapped_fn = f
         requirements_meta = RequirementsMeta(requirements=set())
         for el in _requirements:
