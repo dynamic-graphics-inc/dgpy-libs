@@ -57,16 +57,6 @@ class RequirementAttributeError(AttributeError):
     """Requirement attribute error"""
 
 
-class RequiresWrapper:
-    def __init__(self, func: Callable[..., T], requirements: List[Requirement]):
-        self.func = func
-        self.requirements = requirements
-        wraps(func)(self)
-
-    def __call__(self, *args: Any, **kwargs: Any) -> Any:
-        return self.func(*args, **kwargs)
-
-
 class RequirementDict(TypedDict):
     """Requirement dict"""
 
@@ -92,10 +82,9 @@ class Requirement:
     conda: Optional[Union[str, bool]] = None
     conda_forge: Optional[Union[str, bool]] = None
     details: Optional[Union[str, List[str]]] = None
-    lazy: Optional[bool] = field(default=True)
+    lazy: bool = field(default=True)
 
-    def __post_init__(self) -> None:
-        pass
+    def __post_init__(self) -> None: ...
 
     def to_dict(self) -> RequirementDict:
         return {
@@ -236,21 +225,9 @@ class Requirement:
     def alias(self) -> str:
         return self._as or self._import
 
-    def _lazy(self) -> bool:
-        return self.lazy is None or self.lazy is True
-
-    @property
-    def eager(self) -> bool:
-        """Opposite of lazy
-
-        lazy == True | None -> eager == False
-        lazy == False -> eager == True
-        """
-        return not self._lazy()
-
     def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         _f_globals = _fn_globals(f)
-        if self.eager:
+        if not self.lazy:
             # Eagerly import the requirement
             try:
                 if self.alias not in _f_globals:
@@ -296,7 +273,7 @@ class Requirement:
                     return f(*args, **kwargs)
                 except NameError as ne:
                     if self.alias not in parse_name_error(ne):
-                        raise ne
+                        raise ne from ne
                 except TypeError:
                     pass
                 try:
@@ -546,7 +523,7 @@ def requires(
                 conda=conda,
                 conda_forge=conda_forge,
                 details=details,
-                lazy=lazy,
+                lazy=lazy if lazy is not None else True,
             )
         ]
     else:
@@ -555,6 +532,7 @@ def requires(
         _requirements = make_requirements(list(requirements))
 
     def _requires_dec(f: Callable[P, R]) -> Callable[P, R]:
+        print("herm")
         _wrapped_fn = f
         requirements_meta = RequirementsMeta(requirements=set())
         for el in _requirements:

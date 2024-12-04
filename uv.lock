@@ -2002,11 +2002,19 @@ dependencies = [
     { name = "xtyping" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "python-rapidjson" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "python-rapidjson", specifier = ">=1.20" }]
 
 [[package]]
 name = "rich"

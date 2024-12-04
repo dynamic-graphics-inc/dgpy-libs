@@ -91,4 +91,9 @@ exclude_lines = [
   'if False:',
 ]
 
+[dependency-groups]
+dev = [
+    "python-rapidjson>=1.20",
+]
+
 [tool]
