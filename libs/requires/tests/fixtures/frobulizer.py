@@ -1,3 +1,5 @@
+# ruff: noqa: F821
+
 from typing import TYPE_CHECKING, Any, List, Tuple
 
 import requires
