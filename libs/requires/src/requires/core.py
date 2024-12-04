@@ -23,6 +23,7 @@ from typing import (
     TypedDict,
     TypeVar,
     Union,
+    cast,
 )
 
 from xtyping import ParamSpec
@@ -80,6 +81,9 @@ class RequirementDict(TypedDict):
     lazy: Optional[bool]  # default true
 
 
+TRequirementDict = Union[RequirementDict, Dict[str, Any]]
+
+
 @dataclass(frozen=True, unsafe_hash=True)
 class Requirement:
     _import: str
@@ -89,7 +93,7 @@ class Requirement:
     conda: Optional[Union[str, bool]] = None
     conda_forge: Optional[Union[str, bool]] = None
     details: Optional[Union[str, List[str]]] = None
-    lazy: bool = True
+    lazy: Optional[bool] = field(default=True)
 
     def __post_init__(self) -> None:
         pass
@@ -116,7 +120,7 @@ class Requirement:
             conda=req_dict["conda"],
             conda_forge=req_dict["conda_forge"],
             details=req_dict["details"],
-            lazy=req_dict.get("lazy", True),
+            lazy=req_dict.get("lazy", True) or True,
         )
 
     @property
@@ -233,9 +237,21 @@ class Requirement:
     def alias(self) -> str:
         return self._as or self._import
 
+    def _lazy(self) -> bool:
+        return self.lazy is None or self.lazy is True
+
+    @property
+    def eager(self) -> bool:
+        """Opposite of lazy
+
+        lazy == True | None -> eager == False
+        lazy == False -> eager == True
+        """
+        return not self._lazy()
+
     def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
         _f_globals = _fn_globals(f)
-        if not self.lazy:
+        if self.eager:
             # Eagerly import the requirement
             try:
                 if self.alias not in _f_globals:
@@ -271,7 +287,7 @@ class Requirement:
                         tb = sys.exc_info()[2]
                         raise self.err().with_traceback(tb) from mnfe
 
-            return _requires_dec_async
+            return _requires_dec_async  # type: ignore[return-value]
 
         @wraps(f)
         def _requires_dec(*args: P.args, **kwargs: P.kwargs) -> R:
@@ -303,7 +319,7 @@ class Requirement:
         if hasattr(f, "__requires__"):
             f.__requires__.add(self)
         else:
-            f.__requires__ = RequirementsMeta(requirements={self})
+            setattr(f, "__requires__", RequirementsMeta(requirements={self}))
         return _requires_dec
 
 
@@ -440,7 +456,7 @@ def string2requirement(string: str) -> Requirement:
 
 
 def make_requirement(
-    requirement: Union[str, Requirement, Dict[str, str]],
+    requirement: Union[str, Requirement, TRequirementDict],
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
@@ -448,11 +464,11 @@ def make_requirement(
         return string2requirement(string=requirement)
     elif isinstance(requirement, dict):
         if "import" in requirement:
-            requirement["_import"] = requirement.pop("import")
+            requirement["_import"] = requirement.pop("import")  # type: ignore[typeddict-item]
         if "from" in requirement:
-            requirement["_from"] = requirement.pop("from")
+            requirement["_from"] = requirement.pop("from")  # type: ignore[typeddict-item]
         if "as" in requirement:
-            requirement["_as"] = requirement.pop("as")
+            requirement["_as"] = requirement.pop("as")  # type: ignore[typeddict-item]
         return Requirement(**requirement)
 
     str_type = str(type(requirement))
@@ -464,11 +480,11 @@ def make_requirement(
 
 def make_requirements(
     requirements: Union[
-        List[Union[str, Requirement, Dict[str, str]]],
-        Tuple[Union[str, Requirement, Dict[str, str]]],
+        List[Union[str, Requirement, TRequirementDict]],
+        Tuple[Union[str, Requirement, TRequirementDict]],
         str,
         Requirement,
-        Dict[str, str],
+        TRequirementDict,
     ],
 ) -> List[Requirement]:
     if isinstance(requirements, (list, tuple)):
@@ -481,7 +497,7 @@ def require(*args: Any, **kwargs: Any) -> Requirement:
 
 
 def requires(
-    *requirements: Union[str, Dict[str, str], Requirement],
+    *requirements: Union[str, TRequirementDict, Requirement],
     _import: Optional[str] = None,
     _as: Optional[str] = None,
     _from: Optional[str] = None,
@@ -490,7 +506,7 @@ def requires(
     conda_forge: Optional[Union[str, bool]] = None,
     details: Optional[str] = None,
     lazy: Optional[bool] = None,
-) -> Callable[[Callable[..., T]], Callable[..., T]]:
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """Decorator to specify the packages a function or class requires
 
     The decorator will not do anything unless a NameError is thrown. If a
@@ -539,13 +555,13 @@ def requires(
             raise ValueError("No requirements specified in 'requires' decorator.")
         _requirements = make_requirements(list(requirements))
 
-    def _requires_dec(f: Callable[..., T]) -> Callable[..., T]:
+    def _requires_dec(f: Callable[P, R]) -> Callable[P, R]:
         _wrapped_fn = f
         requirements_meta = RequirementsMeta(requirements=set())
         for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
             requirements_meta.add(el)
-        _wrapped_fn.__requires__ = requirements_meta
+        setattr(_wrapped_fn, "__requires__", requirements_meta)
         wraps(f)(_wrapped_fn)
         return _wrapped_fn
 
@@ -559,7 +575,8 @@ def scope_requirements(debug: bool = False) -> RequirementsMeta:
         debug (bool): If True, log debug info.
 
     Returns:
-        List[RequirementError]: A list of requirement errors found during the check.
+        RequirementsMeta: A RequirementsMeta instance with the requirements found during the check.
+
     """
     calling_frame = sys._getframe(2)
     _f_globals = calling_frame.f_globals
