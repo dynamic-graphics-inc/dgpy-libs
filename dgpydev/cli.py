@@ -71,7 +71,8 @@ def cli(debug: bool = False) -> None:
 def update_abouts():
     for libname, pyproject_toml_dict in pyproject_tomls().items():
         project_metadata = pyproject_toml_dict["project"]
-        lib_about_filepath = lib_dirpath(libname) / libname / "__about__.py"
+        lib_about_filepath = lib_dirpath(libname) / "src" / libname / "__about__.py"
+        print(lib_about_filepath)
         metadata_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',

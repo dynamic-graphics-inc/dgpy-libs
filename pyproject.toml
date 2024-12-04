@@ -9,6 +9,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
+  "Private :: Do Not Upload",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -54,12 +55,12 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
-[tool.hatch]
-[tool.hatch.metadata]
-allow-direct-references = true
+#[tool.hatch]
+#[tool.hatch.metadata]
+#allow-direct-references = true
 
-[tool.hatch.build.targets.wheel]
-packages = ["dgpydev"]
+#[tool.hatch.build.targets.wheel]
+#packages = ["dgpydev"]
 
 #[tool.hatch.build.targets.sdist]
 #include = [
