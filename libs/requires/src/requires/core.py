@@ -23,7 +23,6 @@ from typing import (
     TypedDict,
     TypeVar,
     Union,
-    cast,
 )
 
 from xtyping import ParamSpec
@@ -319,7 +318,7 @@ class Requirement:
         if hasattr(f, "__requires__"):
             f.__requires__.add(self)
         else:
-            setattr(f, "__requires__", RequirementsMeta(requirements={self}))
+            f.__requires__ = RequirementsMeta(requirements={self})  # type: ignore[attr-defined]
         return _requires_dec
 
 
@@ -561,7 +560,7 @@ def requires(
         for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
             requirements_meta.add(el)
-        setattr(_wrapped_fn, "__requires__", requirements_meta)
+        _wrapped_fn.__requires__ = requirements_meta  # type: ignore[attr-defined]
         wraps(f)(_wrapped_fn)
         return _wrapped_fn
 
