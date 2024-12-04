@@ -54,6 +54,21 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
+[tool.hatch]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["dgpydev"]
+
+#[tool.hatch.build.targets.sdist]
+#include = [
+#  "src",
+#  "pyproject.toml",
+#  "README.md",
+#  "LICENSE",
+#]
+
 [tool.ruff]
 target-version = "py38"
 

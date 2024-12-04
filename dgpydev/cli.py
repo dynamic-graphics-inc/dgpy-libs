@@ -46,12 +46,12 @@ def lib_pyproject_toml(libname: str):
 
 
 def lib_version(libname: str) -> str:
-    return lib_pyproject_toml(libname)["tool"]["poetry"]["version"]
+    return lib_pyproject_toml(libname)["project"]["version"]
 
 
 def lib_pyproject_toml_2_deps(libname: str, dgpylibs_only: bool = True):
     pyproject_toml_dict = lib_pyproject_toml(libname)
-    deps = pyproject_toml_dict["tool"]["poetry"]["dependencies"]
+    deps = pyproject_toml_dict["project"]["dependencies"]
     return {k: v for k, v in deps.items() if k in DGPY_LIBS} if dgpylibs_only else deps
 
 
@@ -70,17 +70,17 @@ def cli(debug: bool = False) -> None:
 
 def update_abouts():
     for libname, pyproject_toml_dict in pyproject_tomls().items():
-        poetry_metadata = pyproject_toml_dict["tool"]["poetry"]
+        project_metadata = pyproject_toml_dict["project"]
         lib_about_filepath = lib_dirpath(libname) / libname / "__about__.py"
         metadata_file_lines = [
             "# -*- coding: utf-8 -*-",
             '"""Package metadata/info"""\n',
             "from __future__ import annotations\n",
             '__all__ = ("__description__", "__pkgroot__", "__title__", "__version__")',
-            '__title__ = "{}"'.format(poetry_metadata["name"]),
-            '__description__ = "{}"'.format(poetry_metadata["description"]),
+            '__title__ = "{}"'.format(project_metadata["name"]),
+            '__description__ = "{}"'.format(project_metadata["description"]),
             '__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\\\")',
-            '__version__ = "{}"\n'.format(poetry_metadata["version"]),
+            '__version__ = "{}"\n'.format(project_metadata["version"]),
         ]
         if lib_about_filepath.exists():
             current = lib_about_filepath.read_text()
@@ -192,7 +192,7 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
         dgpylibs_deps = lib_pyproject_toml_2_deps(lib)
         lib_info = DgpyLibInfo(
             name=lib,
-            version=pyproject_toml_dict["tool"]["poetry"]["version"],
+            version=pyproject_toml_dict["project"]["version"],
             dependencies=set(dgpylibs_deps),
             dependents=set(),
         )
