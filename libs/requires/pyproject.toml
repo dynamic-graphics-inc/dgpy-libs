@@ -4,7 +4,7 @@ requires = ["hatchling"]
 
 [project]
 name = "requires"
-version = "0.10.5"
+version = "0.11.0.dev0"
 description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = ["decorator", "dgpy", "funkify", "import", "requires"]
@@ -89,6 +89,11 @@ exclude_lines = [
   '\(Protocol\):$',
   'if 0:',
   'if False:',
+]
+
+[dependency-groups]
+dev = [
+    "python-rapidjson>=1.20",
 ]
 
 [tool]

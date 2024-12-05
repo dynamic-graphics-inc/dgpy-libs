@@ -341,8 +341,8 @@ def test_from_json_import_dumps_as_via_dict() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
-    @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
-    @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
+    @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})  # type: ignore[arg-type]
+    @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})  # type: ignore[arg-type]
     def fn() -> Tuple[str, Dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
@@ -355,8 +355,8 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
 
 
 def test_from_json_import_dumps_via_dicts_multi() -> None:
-    @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})
-    @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
+    @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})  # type: ignore[arg-type]
+    @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})  # type: ignore[arg-type]
     def fn() -> Tuple[str, Dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
