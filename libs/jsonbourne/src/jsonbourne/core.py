@@ -544,11 +544,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                             else JsonObj(v).filter_none(recursive=True)
                         )
                         for k, v in self.items()
-                        if v is not None  # type: ignore[redundant-expr]
+                        if v is not None
                     },
                 )
             )
-        return JsonObj({k: v for k, v in self.items() if v is not None})  # type: ignore[redundant-expr]
+        return JsonObj({k: v for k, v in self.items() if v is not None})
 
     def filter_false(self, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is false-y

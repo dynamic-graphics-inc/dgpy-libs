@@ -10,8 +10,8 @@ if TYPE_CHECKING:
 __all__ = ("hash_bytes_gen", "string2hasher")
 
 _HASHERS: Dict[str, Callable[[], "_Hash"]] = {
-    "blake2b": blake2b,
-    "blake2s": blake2s,
+    "blake2b": blake2b,  # type: ignore[dict-item]
+    "blake2s": blake2s,  # type: ignore[dict-item]
     "md5": md5,
     "sha1": sha1,
     "sha224": sha224,
