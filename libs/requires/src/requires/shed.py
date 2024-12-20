@@ -326,3 +326,6 @@ requires_typing_extensions_as_tx = Requirement(
 requires_nox = Requirement(_import="nox", pip=True, conda=True, conda_forge=True)
 # TOX
 requires_tox = Requirement(_import="tox", pip=True, conda=True, conda_forge=True)
+
+# RY
+requires_ry = Requirement(_import="ry", pip=True, conda=False, conda_forge=False)

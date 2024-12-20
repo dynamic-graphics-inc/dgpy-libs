@@ -34,7 +34,7 @@ except ImportError:
     from functools import wraps
 
     # TODO: remove type-ignore if possible
-    dataclass = wraps(_dataclass)(  # type: ignore[assignment]
+    dataclass = wraps(_dataclass)(
         lambda *args, **kwargs: _dataclass(
             *args, **{k: v for k, v in kwargs.items() if k != "config"}
         )
