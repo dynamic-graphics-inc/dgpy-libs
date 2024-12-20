@@ -42,6 +42,7 @@ __all__ = (
     "requires_rapidjson",
     "requires_rich",
     "requires_ruamel_yaml",
+    "requires_ry",
     "requires_scipy",
     "requires_toml",
     "requires_tomli",
