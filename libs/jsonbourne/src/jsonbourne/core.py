@@ -308,7 +308,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             return None
         if identifier and not is_identifier(key):
             raise ValueError(
-                f"Invalid key: ({key}).\n" f"Key(s) is not a valid python identifier"
+                f"Invalid key: ({key}).\nKey(s) is not a valid python identifier"
             )
         self._data[key] = value
 

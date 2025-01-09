@@ -58,13 +58,18 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+
+    # matrix of python versions to test against
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, 3.10, "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
 
       - name: install-uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
