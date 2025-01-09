@@ -140,6 +140,7 @@ lint.ignore = [
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
+  "UP045", # union type over `Optional`
 ]
 lint.per-file-ignores."**/conftest.py" = ["D"]
 lint.per-file-ignores."**/noxfile.py" = ["D"]
