@@ -110,18 +110,18 @@ def test_xtyping_has_all_typing_extensions_members():
         - set(xtyping.__all_typing_extensions_future__)
     )
     _xtyping_all_set = set(xtyping.__all_typing_extensions__) - all_typing
-    assert (
-        _xtyping_all_set == _typing_extensions_members
-    ), "xtyping.__all_typing_extensions__ is missing: {} \n SHOULD BE: \n__all_typing_extensions__ = {}".format(
-        tuple(sorted(set(_typing_extensions_members - _xtyping_all_set))),
-        tuple(
-            sorted(
-                set(
-                    list(_xtyping_all_set)
-                    + list(_typing_extensions_members - _xtyping_all_set)
+    assert _xtyping_all_set == _typing_extensions_members, (
+        "xtyping.__all_typing_extensions__ is missing: {} \n SHOULD BE: \n__all_typing_extensions__ = {}".format(
+            tuple(sorted(set(_typing_extensions_members - _xtyping_all_set))),
+            tuple(
+                sorted(
+                    set(
+                        list(_xtyping_all_set)
+                        + list(_typing_extensions_members - _xtyping_all_set)
+                    )
                 )
-            )
-        ),
+            ),
+        )
     )
 
 

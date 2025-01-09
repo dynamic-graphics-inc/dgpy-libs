@@ -47,9 +47,9 @@ def test_h5_core_exports():
         and el
         not in {"File", "Group", "__h5py_version__", "Dataset", "AttributeManager"}
     ]
-    assert (
-        not incorrectly_exported
-    ), f"incorrectly exported members: {incorrectly_exported}"
+    assert not incorrectly_exported, (
+        f"incorrectly exported members: {incorrectly_exported}"
+    )
 
 
 def test_h5_info_exports():
@@ -64,9 +64,9 @@ def test_h5_info_exports():
         and el
         not in {"File", "Group", "__h5py_version__", "Dataset", "AttributeManager"}
     ]
-    assert (
-        not incorrectly_exported
-    ), f"incorrectly exported members: {incorrectly_exported}"
+    assert not incorrectly_exported, (
+        f"incorrectly exported members: {incorrectly_exported}"
+    )
 
 
 def test_h5_exports():
