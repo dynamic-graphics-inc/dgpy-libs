@@ -22,9 +22,9 @@ def _test_module_members_missing_from_all(mod: ModuleType) -> None:
     members = [e for e in dir(mod) if not e.startswith("_")]
     dunder_all_public = [e for e in mod.__all__ if not e.startswith("_")]
     missing_members = [m for m in dunder_all_public if m not in members]
-    assert (
-        not missing_members
-    ), f"missing members in {mod_name}.__all__: {missing_members}"
+    assert not missing_members, (
+        f"missing members in {mod_name}.__all__: {missing_members}"
+    )
 
 
 def _is_defined_under_shellfish(member: Any, mod: ModuleType = shellfish) -> bool:

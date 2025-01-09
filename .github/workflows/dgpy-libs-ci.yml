@@ -58,27 +58,37 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+
+    # matrix of python versions to test against
+    strategy:
+      matrix:
+        python-version: [3.9, "3.10", "3.11", "3.12", "3.13"]
+
+    # set uv environment variables
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
-
-      - name: install-uv
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+          python-version: ${{ matrix.python-version }}
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      # - name: install-uv
+      #   run: curl -LsSf https://astral.sh/uv/install.sh | sh
       # - name: python-sane-setup
       #   run: |
       #     python -m pip install --upgrade pip
       # - name: setup-poetry
-        # id: setup-poetry
-        # uses: ./.github/actions/setup-poetry
+      # id: setup-poetry
+      # uses: ./.github/actions/setup-poetry
       - name: uv-sync
         run: uv sync --all-extras --dev
       # - name: Install dependencies
-        # run: |
-          # poetry install
+      # run: |
+      # poetry install
 
       - name: test-dgpydev
         run: |
@@ -186,8 +196,8 @@ jobs:
       #   uses: ./.github/actions/setup-poetry
 
       # - name: poetry install
-        # run: |
-          # poetry install
+      # run: |
+      # poetry install
       - name: install docs deps
         run: uv pip install '.[docs]'
       - name: mkdocs build

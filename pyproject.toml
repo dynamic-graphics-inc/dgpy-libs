@@ -7,7 +7,7 @@ name = "dgpydev"
 version = "0.1.0"
 description = "dgpy-libs development"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 classifiers = [
   "Private :: Do Not Upload",
   "Programming Language :: Python :: 3 :: Only",
@@ -140,6 +140,7 @@ lint.ignore = [
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
+  "UP045", # union type over `Optional`
 ]
 lint.per-file-ignores."**/conftest.py" = ["D"]
 lint.per-file-ignores."**/noxfile.py" = ["D"]

@@ -606,11 +606,11 @@ def nseconds(nsec: float) -> str:
     elif nsec == 0.0:
         return "0 sec"
     elif 0.000001 > nsec >= 0.000000001:
-        return f"{(10 ** 9) * nsec:.3f} ns"
+        return f"{(10**9) * nsec:.3f} ns"
     elif 0.001 > nsec >= 0.000001:
-        return f"{(10 ** 6) * nsec:.3f} ÃŽÂ¼s"
+        return f"{(10**6) * nsec:.3f} ÃŽÂ¼s"
     elif 1 > nsec >= 0.001:
-        return f"{(10 ** 3) * nsec:.3f} ms"
+        return f"{(10**3) * nsec:.3f} ms"
     elif nsec < 60:
         return f"{nsec:.3f} sec"
     elif nsec < 3600:

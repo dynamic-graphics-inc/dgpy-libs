@@ -15,6 +15,6 @@ def test_shed_exports():
 
 def test_all_sorted():
     expected = tuple(sorted(set(requires_shed.__all__)))
-    assert requires_shed.__all__ == tuple(
-        sorted(set(requires_shed.__all__))
-    ), f"__all__ should be sorted -- __all__ = {expected}"
+    assert requires_shed.__all__ == tuple(sorted(set(requires_shed.__all__))), (
+        f"__all__ should be sorted -- __all__ = {expected}"
+    )
