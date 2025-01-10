@@ -47,16 +47,6 @@ packages = [
   { include = "aiopen", from = "." },
 ]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-funkify = ">=0.4.0"
-xtyping = ">=0.5.0"
-
-[tool.poetry.dev-dependencies]
-pytest = "^8.3.3"
-pytest-asyncio = "^0.24.0"
-anyio = { extras = ["trio"], version = "^4.5.2" }
-
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true

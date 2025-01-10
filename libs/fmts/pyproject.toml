@@ -32,12 +32,6 @@ dependencies = []
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
-[tool.poetry.dependencies]
-python = "^3.8"
-
-[tool.poetry.dev-dependencies]
-pytest = "^8.3.3"
-
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
