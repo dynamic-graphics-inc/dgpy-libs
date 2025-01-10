@@ -7,7 +7,15 @@ import signal
 import sys
 
 from functools import lru_cache
-from os import chdir, environ, fspath as _fspath, getcwd, listdir, makedirs, path
+from os import (
+    chdir,
+    environ,
+    fspath as _fspath,
+    getcwd,
+    listdir,
+    makedirs,
+    path as path,
+)
 from pathlib import Path
 from platform import system
 from shlex import quote as _quote, split as _shplit
@@ -253,6 +261,7 @@ __all__ = (
     "mkenv",
     "move",
     "mv",
+    "path",
     "path_gen",
     "popen_has_pipe_character",
     "pstderr",
