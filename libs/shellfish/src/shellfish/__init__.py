@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+from os import path as path
+
 from asyncify import aiorun as aiorun
 from funkify import funkify as _funkify
 from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
@@ -290,6 +292,7 @@ __all__ = (
     "mkenv",
     "move",
     "mv",
+    "path",
     "path_gen",
     "process",
     "ps",
