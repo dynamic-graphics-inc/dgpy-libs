@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "dgpydev"
@@ -11,6 +11,8 @@ requires-python = ">=3.9"
 classifiers = [
   "Private :: Do Not Upload",
   "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -41,6 +43,18 @@ optional-dependencies.docs = [
   "mkdocstrings>=0.25.2",
   "mkdocstrings-python>=1.10.9",
 ]
+#[tool.hatch]
+#[tool.hatch.metadata]
+#allow-direct-references = true
+#[tool.hatch.build.targets.wheel]
+#packages = ["dgpydev"]
+#[tool.hatch.build.targets.sdist]
+#include = [
+#  "src",
+#  "pyproject.toml",
+#  "README.md",
+#  "LICENSE",
+#]
 aiopen = { path = "./libs/aiopen/", develop = true }
 asyncify = { path = "./libs/asyncify/", develop = true }
 fmts = { path = "./libs/fmts/", develop = true }
@@ -55,22 +69,7 @@ xtyping = { path = "./libs/xtyping/", develop = true }
 dgpytest = { path = "./libs/dgpytest/", develop = true }
 dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
-[project.scripts]
-dgpydev = "dgpydev.cli:main"
-#[tool.hatch]
-#[tool.hatch.metadata]
-#allow-direct-references = true
-
-#[tool.hatch.build.targets.wheel]
-#packages = ["dgpydev"]
-
-#[tool.hatch.build.targets.sdist]
-#include = [
-#  "src",
-#  "pyproject.toml",
-#  "README.md",
-#  "LICENSE",
-#]
+scripts.dgpydev = "dgpydev.cli:main"
 
 [tool.ruff]
 target-version = "py38"
@@ -78,18 +77,18 @@ target-version = "py38"
 line-length = 88
 
 lint.select = [
-  "B", # bugbear
+  "B",  # bugbear
   "C4", # comprehensions
   # pydocstyle
   "D",
-  "D207", # docstring is under-indented
-  "D208", # docstring is over-indented
+  "D207",   # docstring is under-indented
+  "D208",   # docstring is over-indented
   "D414",
   "D417",
-  "E", # pyflakes errors
+  "E",      # pyflakes errors
   "ERA001", # erradicate
-  "F", # pyflakes warnings
-  "I", # isort
+  "F",      # pyflakes warnings
+  "I",      # isort
   # pie (PIE)
   "PIE",
   "RUF022",
@@ -142,8 +141,8 @@ lint.ignore = [
   "UP037",
   "UP045", # union type over `Optional`
 ]
-lint.per-file-ignores."**/conftest.py" = ["D"]
-lint.per-file-ignores."**/noxfile.py" = ["D"]
+lint.per-file-ignores."**/conftest.py" = [ "D" ]
+lint.per-file-ignores."**/noxfile.py" = [ "D" ]
 lint.per-file-ignores."**/test_*.py" = [
   "D1",
   "D102",
@@ -256,7 +255,7 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = [ "pydantic.mypy" ]
 python_version = "3.8"
 show_error_codes = true
 follow_imports = 'silent'
@@ -276,7 +275,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
-enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
