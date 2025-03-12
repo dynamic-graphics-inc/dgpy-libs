@@ -128,6 +128,8 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
+          inventories:
+            - https://docs.python.org/3/objects.inv
           paths:
             - libs/aiopen
             - libs/asyncify
@@ -139,44 +141,23 @@ plugins:
             - libs/listless
             - libs/shellfish
             - libs/xtyping
-          # setup_commands:
-          #   - import sys
-          #   - from os import path
-          #   - sys.path.append("docs")
-          #   - sys.path.append(path.join("libs", "aiopen"))
-          #   - sys.path.append(path.join("libs", "asyncify"))
-          #   - sys.path.append(path.join("libs", "dgpylibs"))
-          #   - sys.path.append(path.join("libs", "dgpytest"))
-          #   - sys.path.append(path.join("libs", "fmts"))
-          #   - sys.path.append(path.join("libs", "funkify"))
-          #   - sys.path.append(path.join("libs", "h5"))
-          #   - sys.path.append(path.join("libs", "jsonbourne"))
-          #   - sys.path.append(path.join("libs", "lager"))
-          #   - sys.path.append(path.join("libs", "listless"))
-          #   - sys.path.append(path.join("libs", "shellfish"))
-          #   - sys.path.append(path.join("libs", "xtyping"))
           inherited_members: true
           docstring_style: google
           options:
             docstring_options:
               ignore_init_summary: true
-            heading_level: 2
+            docstring_section_style: list
+            filters: ["!^_"]
+            heading_level: 1
             inherited_members: true
             merge_init_into_class: true
-            new_path_syntax: false
-            separate_signature: false
-            show_category_heading: true
-            show_object_full_path: true
-            show_root_full_path: true
+            parameter_headings: true
+            separate_signature: true
             show_root_heading: true
-            show_root_members_full_path: true
+            show_root_full_path: false
             show_signature_annotations: true
-            show_source: true
-            show_submodules: true
+            show_source: false
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             signature_crossrefs: true
-            filters:
-              - "!^_"  # exclude all members starting with _
-              - "^__init__$"  # but always include __init__ modules and methods
-              - "^__.*__$"  # include all dunder methods
+            summary: true
