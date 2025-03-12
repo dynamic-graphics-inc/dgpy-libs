@@ -762,21 +762,16 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.10.0"
+version = "0.10.1"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "click" },
     { name = "h5py" },
     { name = "numpy", version = "2.0.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "numpy", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
-    { name = "ry" },
-    { name = "typing-extensions" },
-]
-
-[package.optional-dependencies]
-cli = [
     { name = "rich" },
     { name = "ry" },
+    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -790,12 +785,10 @@ requires-dist = [
     { name = "click", specifier = ">=8.1.7" },
     { name = "h5py", specifier = ">=3.7" },
     { name = "numpy", specifier = ">=1.23.2" },
-    { name = "rich", marker = "extra == 'cli'", specifier = ">=13.7.1" },
+    { name = "rich", specifier = ">=13.7.1" },
     { name = "ry", specifier = ">=0.0.37" },
-    { name = "ry", marker = "extra == 'cli'", specifier = ">=0.0.37" },
     { name = "typing-extensions", specifier = ">=4.5,<5" },
 ]
-provides-extras = ["cli"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -882,7 +875,7 @@ name = "importlib-metadata"
 version = "8.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "python_full_version < '3.10'" },
+    { name = "zipp" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/33/08/c1395a292bb23fd03bdf572a1357c5a733d3eecbab877641ceacab23db6e/importlib_metadata-8.6.1.tar.gz", hash = "sha256:310b41d755445d74569f993ccfc22838295d9fe005425094fad953d7f15c8580", size = 55767 }
 wheels = [
