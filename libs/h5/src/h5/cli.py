@@ -26,7 +26,7 @@ try:
     from rich.console import Console
 except ImportError as e:
     raise ModuleNotFoundError(
-        "h5.cli requires rich and globsters. `pip install -U rich globsters`"
+        "h5.cli requires rich and ry. `pip install -U rich ry`"
     ) from e
 
 
@@ -81,7 +81,7 @@ def make_globster(
         patterns.extend(include)
     if exclude:
         patterns.extend(f"!{el}" for el in exclude)
-    return ry.globs(patterns)
+    return ry.globster(patterns)
 
 
 @dataclass

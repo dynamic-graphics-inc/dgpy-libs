@@ -4,7 +4,7 @@ requires = ["hatchling"]
 
 [project]
 name = "h5"
-version = "0.9.3"
+version = "0.9.4"
 description = "H5py utils"
 readme = "README.md"
 keywords = ["h5", "h5py", "hdf5", "numpy"]
@@ -26,14 +26,13 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
+  "click>=8.1.7",
   "h5py>=3.7",
   "numpy>=1.23.2",
-  "ry>=0.0.9",
+  "ry>=0.0.37",
   "typing-extensions>=4.5,<5",
 ]
 optional-dependencies.cli = [
-  "click>=8.1.7",
-  "globsters>=0.0.3",
   "rich>=13.7.1",
   "ry>=0.0.9",
 ]
