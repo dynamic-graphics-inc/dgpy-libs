@@ -1,6 +1,6 @@
 version = 1
 revision = 1
-requires-python = ">=3.9, <4.0"
+requires-python = ">=3.9.0, <4.0"
 resolution-markers = [
     "python_full_version >= '3.11'",
     "python_full_version == '3.10.*'",
@@ -754,7 +754,7 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.9.4"
+version = "0.10.0"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "click" },
@@ -784,7 +784,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.23.2" },
     { name = "rich", marker = "extra == 'cli'", specifier = ">=13.7.1" },
     { name = "ry", specifier = ">=0.0.37" },
-    { name = "ry", marker = "extra == 'cli'", specifier = ">=0.0.9" },
+    { name = "ry", marker = "extra == 'cli'", specifier = ">=0.0.37" },
     { name = "typing-extensions", specifier = ">=4.5,<5" },
 ]
 provides-extras = ["cli"]

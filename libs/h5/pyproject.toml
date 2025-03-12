@@ -4,12 +4,12 @@ requires = ["hatchling"]
 
 [project]
 name = "h5"
-version = "0.9.4"
+version = "0.10.0"
 description = "H5py utils"
 readme = "README.md"
 keywords = ["h5", "h5py", "hdf5", "numpy"]
 authors = [{ name = "jesse", email = "jesse@dgi.com" }]
-requires-python = ">=3.8.0"
+requires-python = ">=3.9.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
@@ -34,7 +33,7 @@ dependencies = [
 ]
 optional-dependencies.cli = [
   "rich>=13.7.1",
-  "ry>=0.0.9",
+  "ry>=0.0.37",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
