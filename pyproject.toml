@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = ["hatchling"]
 
 [project]
 name = "dgpydev"
@@ -34,14 +34,18 @@ dependencies = [
 ]
 
 optional-dependencies.docs = [
+  "Markdown>=3.6",
+  "importlib-metadata>=4.6; python_version < '3.10'",
   "markdown-callouts>=0.4",
-  "mkdocs>=1.6.1",
-  "mkdocs-autorefs>=1.1",
+  "mkdocs-autorefs>=1.4",
   "mkdocs-jupyter>=0.25.1",
-  "mkdocs-material>=9.5.42",
   "mkdocs-material-extensions>=1.3.1",
-  "mkdocstrings>=0.25.2",
+  "mkdocs-material>=9.5.42",
+  "mkdocs>=1.6",
   "mkdocstrings-python>=1.10.9",
+  "mkdocstrings>=0.25.2",
+  "pymdown-extensions>=6.3",
+  "typing-extensions>=4.1; python_version < '3.10'",
 ]
 #[tool.hatch]
 #[tool.hatch.metadata]
@@ -141,20 +145,14 @@ lint.ignore = [
   "UP037",
   "UP045", # union type over `Optional`
 ]
-lint.per-file-ignores."**/conftest.py" = [ "D" ]
-lint.per-file-ignores."**/noxfile.py" = [ "D" ]
+lint.per-file-ignores."**/conftest.py" = ["D"]
+lint.per-file-ignores."**/noxfile.py" = ["D"]
 lint.per-file-ignores."**/test_*.py" = [
   "D1",
   "D102",
   "D103", # missing docstring
 ]
-lint.per-file-ignores."*.ipynb" = [
-  "E741",
-  "F401",
-  "F811",
-  "F821",
-  "T201",
-]
+lint.per-file-ignores."*.ipynb" = ["E741", "F401", "F811", "F821", "T201"]
 lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
@@ -255,7 +253,7 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
-plugins = [ "pydantic.mypy" ]
+plugins = ["pydantic.mypy"]
 python_version = "3.8"
 show_error_codes = true
 follow_imports = 'silent'
@@ -275,7 +273,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
