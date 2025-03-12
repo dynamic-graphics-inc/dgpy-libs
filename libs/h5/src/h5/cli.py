@@ -7,28 +7,14 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, Callable, List, Optional, Tuple, Union
 
+import click
 import numpy as np
+import ry
 
+from rich.console import Console
 from typing_extensions import TypeGuard
 
 import h5
-
-try:
-    import click
-except ImportError as e:
-    raise ModuleNotFoundError(
-        "h5.cli requires click -- `pip install -U click` or  `pip install -U h5[cli]`"
-    ) from e
-
-try:
-    import ry
-
-    from rich.console import Console
-except ImportError as e:
-    raise ModuleNotFoundError(
-        "h5.cli requires rich and ry. `pip install -U rich ry`"
-    ) from e
-
 
 console = Console()
 

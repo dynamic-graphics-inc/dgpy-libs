@@ -4,7 +4,7 @@ requires = ["hatchling"]
 
 [project]
 name = "h5"
-version = "0.10.0"
+version = "0.10.1"
 description = "H5py utils"
 readme = "README.md"
 keywords = ["h5", "h5py", "hdf5", "numpy"]
@@ -28,12 +28,9 @@ dependencies = [
   "click>=8.1.7",
   "h5py>=3.7",
   "numpy>=1.23.2",
-  "ry>=0.0.37",
-  "typing-extensions>=4.5,<5",
-]
-optional-dependencies.cli = [
   "rich>=13.7.1",
   "ry>=0.0.37",
+  "typing-extensions>=4.5,<5",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
