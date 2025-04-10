@@ -23,7 +23,7 @@ codespell:
 # format python
 fmt:
     ruff format
-    ruff check --select "I" --show-fixes --fix .
+    ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
 
 # fmt pyproject.toml files
 fmt-pyproject:
