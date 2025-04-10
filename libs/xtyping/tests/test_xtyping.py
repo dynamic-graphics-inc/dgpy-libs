@@ -5,6 +5,7 @@ from os import path
 from pprint import pformat
 from typing import Tuple
 
+import pytest
 import typing_extensions
 
 import xtyping
@@ -103,8 +104,6 @@ def test_root_has_everything() -> None:
     }
     for el in xtyping.__all_typing__:
         assert el in xtyping_all_set
-    for el in xtyping.__all_typing_extensions__:
-        assert el in xtyping_all_set
     for el in xtyping.__all_shed__:
         assert el in xtyping_all_set
 
@@ -176,6 +175,9 @@ def test_xtyping_shed_all_members() -> None:
     assert len(missing_from_all) == 0, f"xtyping.shed is missing: {missing_from_all}"
 
 
+@pytest.mark.skip(
+    reason="Flakey as typing_extensions gets new things often and we don't keep in lock-step"
+)
 def test_all_typing_extensions_reexported() -> None:
     __xtyping_all__ = xtyping.__all__
     xtyping_all_set = set(__xtyping_all__)
