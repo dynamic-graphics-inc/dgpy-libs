@@ -77,7 +77,13 @@ def _test_module_all_tuple(
     check_sorted: bool = False,  # now handled by RUF022
 ) -> None:
     assert isinstance(mod_all, tuple), "__all__ should be tuple"
-    assert len(set(mod_all)) == len(mod_all)
+
+    if len(set(mod_all)) != len(mod_all):
+        from collections import Counter
+
+        counts = Counter(mod_all)
+        any_duplicates = [item for item, count in counts.items() if count > 1]
+        raise ValueError(f"Duplicate items found in {mod_name}: {any_duplicates}")
     if check_sorted:
         sorted_all_tuple = tuple(sorted(mod_all))
         try:
@@ -92,7 +98,9 @@ def _test_module_all_tuple(
 
 
 def test_root_has_everything() -> None:
-    xtyping_all_set = set(xtyping.__all__)
+    xtyping_all_set = set(xtyping.__all__) - {
+        "ByteString",
+    }
     for el in xtyping.__all_typing__:
         assert el in xtyping_all_set
     for el in xtyping.__all_typing_extensions__:

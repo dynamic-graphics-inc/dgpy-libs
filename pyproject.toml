@@ -338,6 +338,7 @@ dev-dependencies = [
   "pytest-cov>=5.0.0",
   "anyio>=4.6.2.post1",
   "rich>=13.9.3",
+  "ipython>=8.18.1",
 ]
 
 [tool.uv.workspace]

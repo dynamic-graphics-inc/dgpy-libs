@@ -6,7 +6,13 @@ from __future__ import annotations
 from enum import Enum
 from os import PathLike
 from pathlib import Path
-from typing import (
+from typing import __all__ as __all_typing
+
+from annotated_types import (
+    __all__ as __all_annotated_types,
+    __version__ as __version_annotated_types__,
+)
+from typing_extensions import (
     IO,
     TYPE_CHECKING,
     Any,
@@ -18,172 +24,35 @@ from typing import (
     Iterable,
     Iterator,
     List,
+    Literal,
     Mapping,
     Optional,
+    ParamSpec,
     Sequence,
     Set,
     Tuple,
     TypeVar,
     Union,
+    __all__ as __all_typing_extensions,
 )
 
-from typing_extensions import Literal, ParamSpec
+######################
+## DEPRECATED TYPES ##
+######################
+__DEPRECATED_TYPES__: Tuple[str, ...] = ("ByteString",)
 
-__all_typing__: Tuple[str, ...] = (
-    "AbstractSet",
-    "Any",
-    "AnyStr",
-    "AsyncContextManager",
-    "AsyncGenerator",
-    "AsyncIterable",
-    "AsyncIterator",
-    "Awaitable",
-    "ByteString",
-    "Callable",
-    "ChainMap",
-    "ClassVar",
-    "Collection",
-    "Container",
-    "ContextManager",
-    "Coroutine",
-    "Counter",
-    "DefaultDict",
-    "Deque",
-    "Dict",
-    "FrozenSet",
-    "Generator",
-    "Generic",
-    "Hashable",
-    "IO",
-    "ItemsView",
-    "Iterable",
-    "Iterator",
-    "KeysView",
-    "List",
-    "Mapping",
-    "MappingView",
-    "MutableMapping",
-    "MutableSequence",
-    "MutableSet",
-    "NamedTuple",
-    "NewType",
-    "Optional",
-    "Reversible",
-    "Sequence",
-    "Set",
-    "Sized",
-    "SupportsAbs",
-    "SupportsBytes",
-    "SupportsComplex",
-    "SupportsFloat",
-    "SupportsInt",
-    "SupportsRound",
-    "TYPE_CHECKING",
-    "Text",
-    "Tuple",
-    "Type",
-    "TypeVar",
-    "Union",
-    "ValuesView",
-    "cast",
-    "get_type_hints",
-    "no_type_check",
-    "no_type_check_decorator",
-    "overload",
+#############
+## __all__ ##
+#############
+__all_typing__: Tuple[str, ...] = tuple(
+    e for e in __all_typing if e not in __DEPRECATED_TYPES__
 )
-__all_typing_extensions__: Tuple[str, ...] = (
-    "Annotated",
-    "AsyncContextManager",
-    "AsyncGenerator",
-    "AsyncIterable",
-    "AsyncIterator",
-    "Awaitable",
-    "ChainMap",
-    "ClassVar",
-    "Concatenate",
-    "ContextManager",
-    "Coroutine",
-    "Counter",
-    "DefaultDict",
-    "Deque",
-    "Final",
-    "IntVar",
-    "Literal",
-    "NewType",
-    "NoReturn",
-    "NotRequired",
-    "OrderedDict",
-    "ParamSpec",
-    "ParamSpecArgs",
-    "ParamSpecKwargs",
-    "Protocol",
-    "Required",
-    "Self",
-    "SupportsIndex",
-    "TYPE_CHECKING",
-    "Text",
-    "Type",
-    "TypeAlias",
-    "TypeGuard",
-    "TypeVarTuple",
-    "TypedDict",
-    "Unpack",
-    "final",
-    "get_args",
-    "get_origin",
-    "get_type_hints",
-    "overload",
-    "runtime",
-    "runtime_checkable",
+__all_typing_extensions__: Tuple[str, ...] = tuple(
+    {*__all_typing_extensions, *__all_typing__}
 )
-
-__all_typing_extensions_future__: Tuple[str, ...] = (
-    "Buffer",
-    "CapsuleType",
-    "Doc",
-    "LiteralString",
-    "Never",
-    "NoDefault",
-    "ReadOnly",
-    "TypeAliasType",
-    "TypeIs",
-    "assert_never",
-    "assert_type",
-    "clear_overloads",
-    "dataclass_transform",
-    "deprecated",
-    "get_original_bases",
-    "get_overloads",
-    "is_typeddict",
-    "override",
-    "reveal_type",
-    # These might not be future imports...?
-    "BinaryIO",
-    "ForwardRef",
-    "Match",
-    "Pattern",
-    "TextIO",
-    "get_protocol_members",
-    "is_protocol",
-)
-
-__all_annotated_types__: Tuple[str, ...] = (
-    "BaseMetadata",
-    "Ge",
-    "GroupedMetadata",
-    "Gt",
-    "Interval",
-    "IsDigits",
-    "Le",
-    "Len",
-    "LowerCase",
-    "Lt",
-    "MaxLen",
-    "MinLen",
-    "MultipleOf",
-    "Predicate",
-    "Timezone",
-    "UpperCase",
+__all_typing_extensions_future__: Tuple[str, ...] = ()
+__all_annotated_types__: Tuple[str, ...] = tuple(
+    e for e in __all_annotated_types if e != "__version__"
 )
 
 #############
@@ -516,6 +385,7 @@ __all__ = (
     "_RT",
     "_T",
     "_VT",
+    "__DEPRECATED_TYPES__",
     "AFn",
     "AnyAsyncCallable",
     "AnyCallable",
@@ -655,6 +525,7 @@ __all__ = (
     "__all_typing__",
     "__all_typing_extensions__",
     "__all_typing_extensions_future__",
+    "__version_annotated_types__",
     "annotations",
     "null",
 )

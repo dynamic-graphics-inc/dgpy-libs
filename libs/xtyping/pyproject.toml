@@ -4,7 +4,7 @@ requires = ["hatchling"]
 
 [project]
 name = "xtyping"
-version = "0.8.2"
+version = "0.9.0"
 description = "xtyping = typing + typing_extensions"
 readme = "README.md"
 keywords = ["dgpy", "typed", "types", "typing"]
@@ -25,7 +25,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = ["annotated-types>=0.5", "typing-extensions>=4.4"]
+dependencies = ["annotated-types>=0.7", "typing-extensions>=4.12.2"]
 
 [tool.hatch]
 [tool.hatch.metadata]
