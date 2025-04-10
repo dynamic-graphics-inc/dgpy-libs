@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#     "typing-extensions==4.12.2",
+#     "typing-extensions",
 #     "annotated-types",
 # ]
 # ///
