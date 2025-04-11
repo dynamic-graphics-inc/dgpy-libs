@@ -1,7 +1,7 @@
 [build-system]
 build-backend = "hatchling.build"
 
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "listless"
@@ -34,12 +34,12 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [  ]
 urls.homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/listless"
 urls.repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/listless"]
+packages = [ "src/listless" ]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -70,7 +70,7 @@ markers = [
 
 [tool.coverage.run]
 branch = true
-source = ['listless']
+source = [ 'listless' ]
 omit = [
   '_meta.py',
 ]

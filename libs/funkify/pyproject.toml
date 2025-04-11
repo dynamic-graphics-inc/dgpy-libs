@@ -1,15 +1,15 @@
 [build-system]
 build-backend = "hatchling.build"
 
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "funkify"
 version = "0.5.0"
 description = "Funkify modules so that they are callable"
 readme = "README.md"
-keywords = ["dgpy", "funk", "funky", "modules", "python"]
-authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+keywords = [ "dgpy", "funk", "funky", "modules", "python" ]
+authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.8,<4.0"
 
 classifiers = [
@@ -26,14 +26,14 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [  ]
 
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/funkify"]
+packages = [ "src/funkify" ]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -66,10 +66,10 @@ markers = [
 ]
 
 [tool.coverage.run]
-source = ['funkify']
+source = [ 'funkify' ]
 branch = true
 context = '${CONTEXT}'
-omit = ["**/__main__.py"]
+omit = [ "**/__main__.py" ]
 
 [tool.coverage.report]
 precision = 2
