@@ -9,14 +9,14 @@ build-backend = "hatchling.build"
 # =============================================================================
 # \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 # =============================================================================
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "dgpylibs"
 version = "0.0.7"
 description = "Dynamic Graphics Python libraries"
-keywords = ["dgi", "dgpy", "python3", "typed"]
-authors = [{ name = "jessekrubin", email = "jesse@dgi.com" }]
+keywords = [ "dgi", "dgpy", "python3", "typed" ]
+authors = [ { name = "jessekrubin", email = "jesse@dgi.com" } ]
 requires-python = ">=3.8,<4.0"
 
 classifiers = [
@@ -54,7 +54,7 @@ urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/dgpylibs"]
+packages = [ "src/dgpylibs" ]
 
 [tool.hatch.build.targets.sdist]
 include = [

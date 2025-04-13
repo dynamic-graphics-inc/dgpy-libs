@@ -1,14 +1,14 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "asyncify"
 version = "0.10.0"
 description = "sync 2 async"
 readme = "README.md"
-keywords = ["async", "asyncify", "asyncio", "dgpy"]
-authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+keywords = [ "async", "asyncify", "asyncio", "dgpy" ]
+authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.8,<4.0"
 
 classifiers = [
@@ -25,14 +25,14 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = ["funkify>=0.4", "xtyping>=0.5"]
+dependencies = [ "funkify>=0.4", "xtyping>=0.5" ]
 
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/asyncify"]
+packages = [ "src/asyncify" ]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -60,14 +60,14 @@ filterwarnings = [
   "error",
   "ignore::pytest.PytestUnraisableExceptionWarning",
 ]
-markers = ["asyncio", "anyio"]
-testpaths = ["asyncify", "tests"]
+markers = [ "asyncio", "anyio" ]
+testpaths = [ "asyncify", "tests" ]
 
 [tool.coverage.run]
-source = ['asyncify']
+source = [ 'asyncify' ]
 branch = true
 context = '${CONTEXT}'
-omit = ["**/__main__.py"]
+omit = [ "**/__main__.py" ]
 
 [tool.coverage.report]
 precision = 2
@@ -84,7 +84,7 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = ['asyncify/']
+source = [ 'asyncify/' ]
 
 [tool]
 

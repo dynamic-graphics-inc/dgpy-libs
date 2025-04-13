@@ -1,14 +1,14 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "h5"
 version = "0.10.1"
 description = "H5py utils"
 readme = "README.md"
-keywords = ["h5", "h5py", "hdf5", "numpy"]
-authors = [{ name = "jesse", email = "jesse@dgi.com" }]
+keywords = [ "h5", "h5py", "hdf5", "numpy" ]
+authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.9.0"
 
 classifiers = [
@@ -40,7 +40,7 @@ scripts.h5 = "h5.cli:main"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/h5"]
+packages = [ "src/h5" ]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -55,19 +55,19 @@ extend = "../../pyproject.toml"
 target-version = "py38"
 
 [tool.pytest.ini_options]
-markers = ["version"]
+markers = [ "version" ]
 # add cov to pytest args
-addopts = ["--cov=h5", "--cov-fail-under=75"]
+addopts = [ "--cov=h5", "--cov-fail-under=75" ]
 
 [tool.coverage.run]
-source = ['h5']
+source = [ 'h5' ]
 branch = true
 context = '${CONTEXT}'
 
 [tool.coverage.report]
 show_missing = true
 precision = 2
-omit = ["*/legacy.py"]
+omit = [ "*/legacy.py" ]
 exclude_lines = [
   'pragma: no cover',
   'raise NotImplementedError',
@@ -80,7 +80,7 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = ['src/h5']
+source = [ 'src/h5' ]
 
 [tool.uv]
 dev-dependencies = [

@@ -1785,7 +1785,7 @@ def t9_mapping() -> Dict[str, int]:
     }
 
 
-@lru_cache(maxsize=None)
+@lru_cache(maxsize=1)
 def t9_translation() -> Dict[int, str]:
     return str.maketrans({k: str(v) for k, v in t9_mapping().items()})
 

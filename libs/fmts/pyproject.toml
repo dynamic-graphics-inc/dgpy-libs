@@ -1,14 +1,14 @@
 [build-system]
 build-backend = "hatchling.build"
 
-requires = ["hatchling"]
+requires = [ "hatchling" ]
 
 [project]
 name = "fmts"
 version = "0.2.0"
 description = "str transformation utils"
 readme = "README.md"
-keywords = ["dgpy", "str", "typed", "utils", "vanilla"]
+keywords = [ "dgpy", "str", "typed", "utils", "vanilla" ]
 authors = [
   { name = "jesse", email = "jessekrubin@gmail.com" },
 ]
@@ -28,7 +28,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [  ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/fmts"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
@@ -37,7 +37,7 @@ urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/fmts"]
+packages = [ "src/fmts" ]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -51,14 +51,14 @@ include = [
 extend = "../../pyproject.toml"
 
 [tool.coverage.run]
-source = ['fmts']
+source = [ 'fmts' ]
 branch = true
 context = '${CONTEXT}'
 
 [tool.coverage.report]
 show_missing = true
 precision = 2
-omit = []
+omit = [  ]
 exclude_lines = [
   'pragma: no cover',
   'raise NotImplementedError',
@@ -70,4 +70,4 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = ['fmts/']
+source = [ 'fmts/' ]
