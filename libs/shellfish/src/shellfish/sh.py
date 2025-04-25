@@ -24,6 +24,7 @@ from subprocess import PIPE, CompletedProcess, SubprocessError, TimeoutExpired, 
 from time import time
 from typing import (
     IO,
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -42,11 +43,6 @@ from jsonbourne.pydantic import JsonBaseModel
 from listless import flatten_strings as _flatten_strings
 from shellfish import fs, sp
 from shellfish.__about__ import __version__
-from shellfish._types import (
-    FsPath as FsPath,
-    PopenArg as PopenArg,
-    PopenArgs as PopenArgs,
-)
 from shellfish.dev import run_async as __run_async
 from shellfish.echo import echo as echo
 from shellfish.fs import (
@@ -169,6 +165,13 @@ from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
 from xtyping import STDIN, AnyStr, IterableStr, TypedDict
+
+if TYPE_CHECKING:
+    from shellfish._types import (
+        FsPath as FsPath,
+        PopenArg as PopenArg,
+        PopenArgs as PopenArgs,
+    )
 
 __all__ = (
     "LIN",

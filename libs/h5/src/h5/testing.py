@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Union
+from typing import TYPE_CHECKING, Union
 
 import numpy as np
 
 import h5
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 __all__ = (
     "EXPECTED_ATTRS",

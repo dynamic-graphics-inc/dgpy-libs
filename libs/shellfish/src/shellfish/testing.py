@@ -7,10 +7,12 @@ from os import getcwd, makedirs, path
 from os.path import sep
 from pathlib import Path
 from random import choice as rand_choice, randint
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 
 from shellfish.fs import wstring
-from xtyping import FsPath
+
+if TYPE_CHECKING:
+    from xtyping import FsPath
 
 __all__ = (
     "assert_symlink_exists",

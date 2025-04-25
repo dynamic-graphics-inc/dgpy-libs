@@ -318,7 +318,7 @@ def chunks(
     if isinstance(it, str):
         yield from chunkstr(it, chunk_size)
     elif isinstance(it, (list, tuple)) or is_sequence(it):
-        yield from chunkseq(cast(Sequence[_T], it), chunk_size)
+        yield from chunkseq(cast("Sequence[_T]", it), chunk_size)
     else:
         while True:
             _chunk = tuple(islice(it, chunk_size))
@@ -490,7 +490,7 @@ def flatten(*args: Union[_T, Iterable[_T]]) -> Iterable[_T]:
 
     """
     return cast(
-        Iterable[_T],
+        "Iterable[_T]",
         chain(
             *(
                 flatten(*arg) if isinstance(arg, (list, tuple)) else (arg,)

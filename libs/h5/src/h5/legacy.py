@@ -4,16 +4,11 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import Any, Callable, Dict, Iterable, Tuple, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, Iterable, Tuple, TypeVar, Union
 from warnings import warn
 
-import numpy as np
-import numpy.typing as npt
-
-from h5py import AttributeManager, Dataset, File, Group
 from typing_extensions import ParamSpec
 
-from h5._types import FsPath, H5pyAttributesDict
 from h5.core import (
     attrs_dict,
     attrs_gen,
@@ -22,6 +17,14 @@ from h5.core import (
     datasets_gen,
     datasets_gen_from_fspath,
 )
+
+if TYPE_CHECKING:
+    import numpy as np
+    import numpy.typing as npt
+
+    from h5py import AttributeManager, Dataset, File, Group
+
+    from h5._types import FsPath, H5pyAttributesDict
 
 _P = ParamSpec("_P")
 _R = TypeVar("_R")

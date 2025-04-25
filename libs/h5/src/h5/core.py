@@ -7,10 +7,7 @@ from functools import lru_cache
 from itertools import chain
 from os import PathLike
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Tuple, TypeVar, Union, cast
-
-import numpy as np
-import numpy.typing as npt
+from typing import TYPE_CHECKING, Any, Dict, Iterable, List, Tuple, TypeVar, Union, cast
 
 from h5py import (
     AttributeManager,
@@ -23,6 +20,10 @@ from h5py import (
 from typing_extensions import ParamSpec, TypeGuard
 
 from h5._types import FsPath, H5pyAttributesDict
+
+if TYPE_CHECKING:
+    import numpy as np
+    import numpy.typing as npt
 
 _P = ParamSpec("_P")
 _R = TypeVar("_R")
@@ -533,6 +534,6 @@ def attrs_dict(
         with File(str(h5_obj), mode="r") as h5file:
             return attrs_dict(h5_obj=h5file, h5_path=h5_path)
     return {
-        k: cast(H5pyAttributesDict, {**v})
+        k: cast("H5pyAttributesDict", {**v})
         for k, v in h5py_obj_attrs_gen(h5_obj, h5_path=h5_path)
     }

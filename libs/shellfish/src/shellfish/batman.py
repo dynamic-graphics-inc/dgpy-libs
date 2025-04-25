@@ -9,9 +9,10 @@ from os import fspath as _fspath, getenv as _getenv
 from pathlib import Path
 from shutil import which
 from subprocess import CompletedProcess, run
-from typing import Sequence
+from typing import TYPE_CHECKING, Sequence
 
-from xtyping import AnyStr, FsPath, Tuple, Union
+if TYPE_CHECKING:
+    from xtyping import AnyStr, FsPath, Tuple, Union
 
 MAX_CMD_LENGTH: int = 8192
 

@@ -5,9 +5,12 @@ from concurrent.futures.thread import ThreadPoolExecutor
 from queue import Empty, Queue
 from subprocess import PIPE, Popen, TimeoutExpired
 from time import time
+from typing import TYPE_CHECKING
 
 from shellfish.fs import Stdio
-from xtyping import IO, Any, AnyStr, Iterable, Optional, Tuple
+
+if TYPE_CHECKING:
+    from xtyping import IO, Any, AnyStr, Iterable, Optional, Tuple
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 

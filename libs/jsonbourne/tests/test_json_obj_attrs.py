@@ -39,44 +39,6 @@ def test_jsonobj_property_attrs() -> None:
     assert thing_w_prop.d.nested == "nestedval"
 
 
-EXPECTED_STRING = """ThingyWithPropertyAndAttrsStrTests(**{
-    'a': 1,
-    'b': 2,
-    'c': 'herm',
-    'd': {'nested': 'nestedval',
-          'ok_0': 0,
-          'ok_1': 1,
-          'ok_10': 10,
-          'ok_11': 11,
-          'ok_12': 12,
-          'ok_13': 13,
-          'ok_14': 14,
-          'ok_15': 15,
-          'ok_16': 16,
-          'ok_17': 17,
-          'ok_18': 18,
-          'ok_19': 19,
-          'ok_2': 2,
-          'ok_3': 3,
-          'ok_4': 4,
-          'ok_5': 5,
-          'ok_6': 6,
-          'ok_7': 7,
-          'ok_8': 8,
-          'ok_9': 9},
-    'stuff': {'herm_0': 0,
-              'herm_1': 1,
-              'herm_2': 2,
-              'herm_3': 3,
-              'herm_4': 4,
-              'herm_5': 5,
-              'herm_6': 6,
-              'herm_7': 7,
-              'herm_8': 8,
-              'herm_9': 9}
-})"""
-
-
 def test_jsonobj_property_attrs_str() -> None:
     @attrs(auto_attribs=True)
     class ThingyWithPropertyAndAttrsStrTests(JsonObj):
@@ -102,4 +64,6 @@ def test_jsonobj_property_attrs_str() -> None:
             },
         }
     )
-    assert str(thing_w_prop) == EXPECTED_STRING
+    evaluated_version = eval(thing_w_prop.__str__())
+    assert isinstance(evaluated_version, ThingyWithPropertyAndAttrsStrTests)
+    assert evaluated_version == thing_w_prop

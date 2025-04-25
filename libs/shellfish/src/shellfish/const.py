@@ -3,7 +3,10 @@
 
 from __future__ import annotations
 
-from xtyping import Final, Literal
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from xtyping import Final, Literal
 
 a: Final[Literal["a"]] = "a"
 r: Final[Literal["r"]] = "r"

@@ -6,8 +6,6 @@ Inspired by aiofiles
 
 from __future__ import annotations
 
-from os import PathLike
-from types import TracebackType
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -26,6 +24,9 @@ from anyio import AsyncFile, open_file
 from xtyping import Generic  # , OpenBinaryMode, OpenTextMode, Optional
 
 if TYPE_CHECKING:
+    from os import PathLike
+    from types import TracebackType
+
     from _typeshed import OpenBinaryMode, OpenTextMode, ReadableBuffer, WriteableBuffer
 else:
     ReadableBuffer = OpenBinaryMode = OpenTextMode = WriteableBuffer = object
@@ -106,7 +107,7 @@ def aiopen(
     return AsyncFileContextManager(
         coro=open_file(
             file=file,
-            mode=cast(Union[OpenBinaryMode, OpenTextMode], mode),  # pyright: ignore[reportGeneralTypeIssues]
+            mode=cast("Union[OpenBinaryMode, OpenTextMode]", mode),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,

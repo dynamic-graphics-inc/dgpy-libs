@@ -97,7 +97,7 @@ class _EnvObjMeta(type):
     ) -> Optional[Union[Callable[[], str], Callable[[str], None], str]]:
         try:
             if item in _OS_ENVIRON_ATTRS:
-                return cast(Callable[..., str], environ.__getattribute__(item))
+                return cast("Callable[..., str]", environ.__getattribute__(item))
         except AttributeError:
             ...
         return cls.__getitem__(item)

@@ -9,7 +9,6 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, BaseEventLoop
-from collections.abc import Coroutine
 from functools import partial, singledispatch, wraps
 from io import (
     BufferedRandom,
@@ -19,9 +18,8 @@ from io import (
     TextIOBase,
     TextIOWrapper,
 )
-from os import PathLike
-from types import TracebackType
 from typing import (
+    TYPE_CHECKING,
     Any,
     AnyStr,
     AsyncContextManager,
@@ -36,6 +34,11 @@ from typing import (
 )
 
 from xtyping import ParamSpec
+
+if TYPE_CHECKING:
+    from collections.abc import Coroutine
+    from os import PathLike
+    from types import TracebackType
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -53,9 +56,9 @@ def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
         retval = await self._loop.run_in_executor(
             self._executor, partial(fn, *args, **kwargs)
         )
-        return cast(T, retval)
+        return cast("T", retval)
 
-    return cast(Callable[P, Awaitable[T]], _async_funk)
+    return cast("Callable[P, Awaitable[T]]", _async_funk)
 
 
 class AsyncBase(Generic[AnyStr]):  # pragma: no cover
@@ -87,7 +90,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
         """Simulate normal file iteration."""
         line = await self.readline()
         if line:
-            return cast(AnyStr, line)
+            return cast("AnyStr", line)
         else:
             raise StopAsyncIteration
 

@@ -3,11 +3,13 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
-from types import TracebackType
-from typing import Any, Dict, Optional, Type, Union
+from typing import TYPE_CHECKING, Any, Dict, Optional, Type, Union
 
 from jsonbourne.pydantic import JsonBaseModel
+
+if TYPE_CHECKING:
+    from datetime import datetime, timedelta
+    from types import TracebackType
 
 
 class RecordFile(JsonBaseModel):

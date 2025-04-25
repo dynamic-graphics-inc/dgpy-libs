@@ -1,7 +1,10 @@
 from __future__ import annotations
 
-from _pytest.config import Config
-from _pytest.mark import Mark
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from _pytest.config import Config
+    from _pytest.mark import Mark
 
 
 def pytest_dgpy_set_mark(mark: Mark, config: Config) -> None:  # pragma: no cover
