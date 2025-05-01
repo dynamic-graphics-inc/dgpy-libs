@@ -48,32 +48,19 @@ optional-dependencies.docs = [
   "typing-extensions>=4.1; python_version<'3.10'",
 ]
 scripts.dgpydev = "dgpydev.cli:main"
-
-#[tool.hatch]
-#[tool.hatch.metadata]
-#allow-direct-references = true
-#[tool.hatch.build.targets.wheel]
-#packages = ["dgpydev"]
-#[tool.hatch.build.targets.sdist]
-#include = [
-#  "src",
-#  "pyproject.toml",
-#  "README.md",
-#  "LICENSE",
-#]
-aiopen = { path = "./libs/aiopen/", develop = true }
-asyncify = { path = "./libs/asyncify/", develop = true }
-fmts = { path = "./libs/fmts/", develop = true }
-funkify = { path = "./libs/funkify/", develop = true }
-h5 = { path = "./libs/h5/", develop = true }
-jsonbourne = { path = "./libs/jsonbourne/", develop = true }
-lager = { path = "./libs/lager/", develop = true }
-listless = { path = "./libs/listless/", develop = true }
-requires = { path = "./libs/requires/", develop = true }
-shellfish = { path = "./libs/shellfish/", develop = true }
-xtyping = { path = "./libs/xtyping/", develop = true }
-dgpytest = { path = "./libs/dgpytest/", develop = true }
-dgpylibs = { path = "./libs/dgpylibs/", develop = true }
+# aiopen = { path = "./libs/aiopen/", develop = true }
+# asyncify = { path = "./libs/asyncify/", develop = true }
+# fmts = { path = "./libs/fmts/", develop = true }
+# funkify = { path = "./libs/funkify/", develop = true }
+# h5 = { path = "./libs/h5/", develop = true }
+# jsonbourne = { path = "./libs/jsonbourne/", develop = true }
+# lager = { path = "./libs/lager/", develop = true }
+# listless = { path = "./libs/listless/", develop = true }
+# requires = { path = "./libs/requires/", develop = true }
+# shellfish = { path = "./libs/shellfish/", develop = true }
+# xtyping = { path = "./libs/xtyping/", develop = true }
+# dgpytest = { path = "./libs/dgpytest/", develop = true }
+# dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
 [tool.ruff]
 target-version = "py38"
@@ -83,6 +70,7 @@ line-length = 88
 lint.select = [
   "B",  # bugbear
   "C4", # comprehensions
+  "FA102", # require `from __future__ import annotations`
   # pydocstyle
   "D",
   "D207",   # docstring is under-indented
@@ -103,6 +91,7 @@ lint.select = [
   # "SIM",
   # "PT", # pytest
   "T201", # print
+  "TC",
   # pyupgrade
   "UP",
   "W",
@@ -333,7 +322,7 @@ reportMissingTypeStubs = false
 dev-dependencies = [
   "tomli>=2.0.1",
   "mypy>=1.11.1",
-  "ruff>=0.6.2",
+  "ruff>=0.11.7",
   "nox>=2024.4.15",
   "pytest-cov>=5.0.0",
   "anyio>=4.6.2.post1",

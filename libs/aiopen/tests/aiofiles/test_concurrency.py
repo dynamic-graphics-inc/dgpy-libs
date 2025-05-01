@@ -7,13 +7,14 @@ import asyncio
 import time
 
 from os.path import dirname, join
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
-from _pytest.monkeypatch import MonkeyPatch
-
 import aiopen as aio
+
+if TYPE_CHECKING:
+    from _pytest.monkeypatch import MonkeyPatch
 
 
 @pytest.mark.asyncio()

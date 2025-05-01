@@ -7,10 +7,13 @@
 # ///
 from __future__ import annotations
 
-from pathlib import Path
 from subprocess import run
+from typing import TYPE_CHECKING
 
 from ry import glob
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 echo = print
 

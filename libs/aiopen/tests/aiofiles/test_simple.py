@@ -5,12 +5,14 @@ from __future__ import annotations
 
 import asyncio
 
-from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
 import aiopen as aio
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.mark.asyncio()

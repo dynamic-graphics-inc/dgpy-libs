@@ -49,7 +49,7 @@ def default_export(
 
     class ModuleCls(ModuleType):
         def __call__(self, *args: Any, **kwargs: Any) -> T:
-            return cast(T, funk(*args, **kwargs))  # type: ignore[operator]
+            return cast("T", funk(*args, **kwargs))  # type: ignore[operator]
 
     class ModuleClsStaticValue(ModuleCls):
         def __call__(self, *args: Any, **kwargs: Any) -> T:

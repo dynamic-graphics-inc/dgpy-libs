@@ -6,11 +6,14 @@ from __future__ import annotations
 import io
 
 from os import path
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
 from aiopen import aiopen
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 pytestmark = pytest.mark.anyio
 

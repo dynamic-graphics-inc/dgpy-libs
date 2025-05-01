@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-from types import ModuleType
-from typing import Any, List, Optional
+from typing import TYPE_CHECKING, Any, List, Optional
 
 import h5
 import h5._info as h5info
 
 from h5 import core as h5core
+
+if TYPE_CHECKING:
+    from types import ModuleType
 
 H5_ALL_SET = set(h5.__all__)
 H5_CORE_ALL_SET = set(h5core.__all__)

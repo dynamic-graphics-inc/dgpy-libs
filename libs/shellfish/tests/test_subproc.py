@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from os import path
-from pathlib import Path
 from subprocess import TimeoutExpired
+from typing import TYPE_CHECKING
 
 import pytest
 
 from shellfish import fs, process, sh
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 PWD = path.split(path.realpath(__file__))[0]
 

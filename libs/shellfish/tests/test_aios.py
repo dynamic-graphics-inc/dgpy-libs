@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 from os import stat_result as os_stat_result
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
 from shellfish import sh
 from shellfish.aios import scandir as aioscandir
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 
 @pytest.mark.asyncio()

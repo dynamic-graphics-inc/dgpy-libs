@@ -9,6 +9,7 @@ from itertools import chain
 from os import path
 from pathlib import Path
 from typing import (
+    TYPE_CHECKING,
     Any,
     Dict,
     Iterable,
@@ -25,7 +26,8 @@ from typing import (
 import h5py
 import numpy as np
 
-from h5._types import H5pyCompression
+if TYPE_CHECKING:
+    from h5._types import H5pyCompression
 
 __all__ = (
     "H5ABC",

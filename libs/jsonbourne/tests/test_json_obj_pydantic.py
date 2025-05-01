@@ -16,7 +16,7 @@ try:
     from pydantic import BaseModel, ConfigDict
 
     _extra = "allow" if "pytest" in sys.modules else "ignore"
-    _model_config = cast(ConfigDict, {"extra": _extra})
+    _model_config = cast("ConfigDict", {"extra": _extra})
 
     class PydanticJsonObj(BaseModel, JsonObj[Union[str, int]]):  # type: ignore[misc]
         a: int

@@ -280,13 +280,13 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     ) -> JsonArr[_T]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
-            _fn3 = cast(Callable[[_T, int, JsonArr[_T]], bool], func)
+            _fn3 = cast("Callable[[_T, int, JsonArr[_T]], bool]", func)
             return self._filter_el_ix_arr(_fn3)
         elif _fn_args == 2:
-            _fn2 = cast(Callable[[_T, int], bool], func)
+            _fn2 = cast("Callable[[_T, int], bool]", func)
             return self._filter_el_ix(_fn2)
         elif _fn_args == 1:
-            _fn1 = cast(Callable[[_T], bool], func)
+            _fn1 = cast("Callable[[_T], bool]", func)
             return self._filter_el(_fn1)
         raise TypeError("Could not determine number of arguments for filter function")
 
@@ -312,13 +312,13 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     ) -> JsonArr[_R]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
-            _fn3 = cast(Callable[[_T, int, JsonArr[_T]], _R], func)
+            _fn3 = cast("Callable[[_T, int, JsonArr[_T]], _R]", func)
             return self._map_el_ix_arr(_fn3)
         elif _fn_args == 2:
-            _fn2 = cast(Callable[[_T, int], _R], func)
+            _fn2 = cast("Callable[[_T, int], _R]", func)
             return self._map_el_ix(_fn2)
         elif _fn_args == 1:
-            _fn1 = cast(Callable[[_T], _R], func)
+            _fn1 = cast("Callable[[_T], _R]", func)
             return self._map_el(_fn1)
         raise TypeError("Could not determine number of arguments for map function")
 
