@@ -20,6 +20,7 @@ authors = [ { name = "jessekrubin", email = "jesse@dgi.com" } ]
 requires-python = ">=3.9,<4.0"
 
 classifiers = [
+  "Private :: Do Not Upload",
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
