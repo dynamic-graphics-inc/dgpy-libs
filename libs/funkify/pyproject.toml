@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "funkify"
-version = "0.5.0"
+version = "0.6.0"
 description = "Funkify modules so that they are callable"
 readme = "README.md"
 keywords = [ "dgpy", "funk", "funky", "modules", "python" ]

@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "listless"
-version = "0.2.0"
+version = "0.3.0"
 description = "generator utils; aka listless"
 readme = "README.md"
 keywords = [

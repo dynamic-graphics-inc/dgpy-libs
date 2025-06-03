@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "fmts"
-version = "0.2.0"
+version = "0.3.0"
 description = "str transformation utils"
 readme = "README.md"
 keywords = [ "dgpy", "str", "typed", "utils", "vanilla" ]

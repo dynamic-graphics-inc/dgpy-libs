@@ -7,4 +7,4 @@ __all__ = ("__description__", "__pkgroot__", "__title__", "__version__")
 __title__ = "xtyping"
 __description__ = "xtyping = typing + typing_extensions"
 __pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\")
-__version__ = "0.9.0"
+__version__ = "0.10.0"

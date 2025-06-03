@@ -27,7 +27,7 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.6.1"
+version = "0.7.0"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
@@ -116,7 +116,7 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.10.0"
+version = "0.11.0"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
@@ -749,12 +749,12 @@ wheels = [
 
 [[package]]
 name = "fmts"
-version = "0.2.0"
+version = "0.3.0"
 source = { editable = "libs/fmts" }
 
 [[package]]
 name = "funkify"
-version = "0.5.0"
+version = "0.6.0"
 source = { editable = "libs/funkify" }
 
 [[package]]
@@ -792,7 +792,7 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.10.1"
+version = "0.11.0"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -1061,7 +1061,7 @@ wheels = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.30.0"
+version = "0.31.0"
 source = { editable = "libs/jsonbourne" }
 dependencies = [
     { name = "xtyping" },
@@ -1195,7 +1195,7 @@ wheels = [
 
 [[package]]
 name = "lager"
-version = "0.18.2"
+version = "0.19.0"
 source = { editable = "libs/lager" }
 dependencies = [
     { name = "loguru" },
@@ -1210,7 +1210,7 @@ requires-dist = [
 
 [[package]]
 name = "listless"
-version = "0.2.0"
+version = "0.3.0"
 source = { editable = "libs/listless" }
 
 [package.dev-dependencies]
@@ -2471,7 +2471,7 @@ wheels = [
 
 [[package]]
 name = "requires"
-version = "0.11.0.dev0"
+version = "0.11.0"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
@@ -2769,7 +2769,7 @@ wheels = [
 
 [[package]]
 name = "shellfish"
-version = "0.5.2"
+version = "0.6.0"
 source = { editable = "libs/shellfish" }
 dependencies = [
     { name = "aiopen" },
@@ -3030,7 +3030,7 @@ wheels = [
 
 [[package]]
 name = "xtyping"
-version = "0.9.0"
+version = "0.10.0"
 source = { editable = "libs/xtyping" }
 dependencies = [
     { name = "annotated-types" },
