@@ -244,7 +244,7 @@ markers = [
 
 [tool.mypy]
 plugins = [ "pydantic.mypy" ]
-python_version = "3.8"
+python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
 disallow_any_generics = true
