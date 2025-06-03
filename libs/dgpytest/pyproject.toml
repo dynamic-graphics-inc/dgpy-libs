@@ -10,7 +10,7 @@ description = "dgpytest = dgpy + pytest"
 readme = "README.md"
 keywords = [ "dgpy", "plugin", "pytest", "typed" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.8.1"
+requires-python = ">=3.9,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -18,7 +18,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",

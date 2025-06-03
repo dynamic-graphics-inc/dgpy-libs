@@ -63,7 +63,7 @@ scripts.dgpydev = "dgpydev.cli:main"
 # dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 
 line-length = 88
 
