@@ -47,7 +47,6 @@ optional-dependencies.docs = [
   "pymdown-extensions>=6.3",
   "typing-extensions>=4.1; python_version<'3.10'",
 ]
-scripts.dgpydev = "dgpydev.cli:main"
 # aiopen = { path = "./libs/aiopen/", develop = true }
 # asyncify = { path = "./libs/asyncify/", develop = true }
 # fmts = { path = "./libs/fmts/", develop = true }
@@ -62,15 +61,16 @@ scripts.dgpydev = "dgpydev.cli:main"
 # dgpytest = { path = "./libs/dgpytest/", develop = true }
 # dgpylibs = { path = "./libs/dgpylibs/", develop = true }
 
+scripts.dgpydev = "dgpydev.cli:main"
+
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 
 line-length = 88
 
 lint.select = [
   "B",  # bugbear
   "C4", # comprehensions
-  "FA102", # require `from __future__ import annotations`
   # pydocstyle
   "D",
   "D207",   # docstring is under-indented
@@ -80,6 +80,7 @@ lint.select = [
   "E",      # pyflakes errors
   "ERA001", # erradicate
   "F",      # pyflakes warnings
+  "FA102",  # require `from __future__ import annotations`
   "I",      # isort
   # pie (PIE)
   "PIE",
@@ -243,7 +244,7 @@ markers = [
 
 [tool.mypy]
 plugins = [ "pydantic.mypy" ]
-python_version = "3.8"
+python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
 disallow_any_generics = true

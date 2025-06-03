@@ -4,6 +4,7 @@
 # pyright: reportOptionalMemberAccess=false
 from __future__ import annotations
 
+import dataclasses
 import json as pyjson
 
 from abc import ABC, abstractmethod
@@ -16,11 +17,6 @@ from uuid import UUID
 
 if TYPE_CHECKING:
     from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
-
-try:
-    import dataclasses
-except ImportError:
-    dataclasses = None  # type: ignore[assignment]
 
 try:
     from jsonc2json import jsonc2json

@@ -5,12 +5,12 @@ requires = [ "hatchling" ]
 
 [project]
 name = "funkify"
-version = "0.5.0"
+version = "0.6.0"
 description = "Funkify modules so that they are callable"
 readme = "README.md"
 keywords = [ "dgpy", "funk", "funky", "modules", "python" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.8,<4.0"
+requires-python = ">=3.9,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -18,7 +18,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",

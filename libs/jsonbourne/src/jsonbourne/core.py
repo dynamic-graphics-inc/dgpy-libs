@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import keyword
 
-from functools import lru_cache
+from functools import cache
 from itertools import chain
 from json import JSONDecodeError
 from pprint import pformat
@@ -1412,7 +1412,7 @@ class JSONModuleCls(ModuleType, JsonModule):
         return jsonify(value)
 
 
-@lru_cache(maxsize=None)
+@cache
 def _cls_protected_attrs(cls: Any) -> Set[str]:
     """Return attrs-attribute names for an object decorated with attrs"""
     return set(dir(cls))

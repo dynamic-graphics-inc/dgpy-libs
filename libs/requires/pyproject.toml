@@ -4,12 +4,12 @@ requires = [ "hatchling" ]
 
 [project]
 name = "requires"
-version = "0.11.0.dev0"
+version = "0.11.0"
 description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = [ "decorator", "dgpy", "funkify", "import", "requires" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.8,<4.0"
+requires-python = ">=3.9,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",

@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "listless"
-version = "0.2.0"
+version = "0.3.0"
 description = "generator utils; aka listless"
 readme = "README.md"
 keywords = [
@@ -19,14 +19,13 @@ license = { text = "MIT" }
 authors = [
   { name = "jesse", email = "jesse@dgi.com" },
 ]
-requires-python = "<4.0,>=3.8"
+requires-python = ">=3.9,<4.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.8",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
