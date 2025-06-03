@@ -6,7 +6,7 @@ from __future__ import annotations
 import signal
 import sys
 
-from functools import lru_cache
+from functools import cache, lru_cache
 from os import (
     chdir,
     environ,
@@ -365,7 +365,7 @@ class FlagMeta(type):
     """Meta class"""
 
     @staticmethod
-    @lru_cache(maxsize=None)
+    @cache
     def attr2flag(string: str) -> str:
         """Convert and return attr to string"""
         return string.replace("_", "-")
