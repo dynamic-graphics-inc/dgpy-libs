@@ -9,7 +9,7 @@ description = "shellfish ~ shell & file-system utils"
 readme = "README.md"
 keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.8,<4.0"
+requires-python = ">=3.9,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
