@@ -598,12 +598,16 @@ docs = [
 [package.dev-dependencies]
 dev = [
     { name = "anyio" },
+    { name = "httpx" },
     { name = "ipython", version = "8.18.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "ipython", version = "8.37.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "ipython", version = "9.3.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "mypy" },
     { name = "nox" },
+    { name = "orjson" },
+    { name = "pydantic" },
     { name = "pytest-cov" },
+    { name = "python-rapidjson" },
     { name = "rich" },
     { name = "ruff" },
     { name = "tomli" },
@@ -642,10 +646,14 @@ provides-extras = ["docs"]
 [package.metadata.requires-dev]
 dev = [
     { name = "anyio", specifier = ">=4.6.2.post1" },
+    { name = "httpx", specifier = ">=0.28.1" },
     { name = "ipython", specifier = ">=8.18.1" },
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "nox", specifier = ">=2024.4.15" },
+    { name = "orjson", specifier = ">=3.10.18" },
+    { name = "pydantic", specifier = ">=2.11.5" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
+    { name = "python-rapidjson", specifier = ">=1.20" },
     { name = "rich", specifier = ">=13.9.3" },
     { name = "ruff", specifier = ">=0.11.7" },
     { name = "tomli", specifier = ">=2.0.1" },

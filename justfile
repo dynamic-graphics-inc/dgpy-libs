@@ -6,10 +6,15 @@
 @_default:
     just --list --unsorted
 
-dev:
+# sync && test
+dev: test
+
+# sync deps
+sync:
     uv sync --all-extras --dev
 
-test: dev
+# test root + all libraries
+test: sync
     uv run pytest tests dgpydev
     cd libs/aiopen && uv run pytest
     cd libs/aiopen && uv run pytest
@@ -25,6 +30,13 @@ test: dev
     cd libs/requires && uv run pytest
     cd libs/shellfish && uv run pytest
     cd libs/xtyping && uv run pytest
+
+# test a specific library `just test-lib h5`
+test-lib dgpylib: dev
+    cd libs/{{dgpylib}} && uv run pytest
+
+# test all libraries
+test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "funkify") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish") (test-lib "xtyping")
 
 # fix imports
 rsort:
