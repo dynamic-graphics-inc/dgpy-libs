@@ -37,6 +37,11 @@ dependencies = [  ]
 urls.homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/listless"
 urls.repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 
+[dependency-groups]
+dev = [
+  "pytest>=8.4",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = [ "src/listless" ]
 
@@ -91,9 +96,4 @@ exclude_lines = [
   'if sys.version_info >= (3, 8):',
   'pragma: no cover',
   'pragma: nocov',
-]
-
-[tool.uv]
-dev-dependencies = [
-  "pytest>=8.3.2",
 ]

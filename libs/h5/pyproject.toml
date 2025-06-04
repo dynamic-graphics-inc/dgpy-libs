@@ -36,6 +36,12 @@ urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/lib
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 scripts.h5 = "h5.cli:main"
 
+[dependency-groups]
+dev = [
+  "pytest>=8.4",
+  "pytest-cov>=6.1.1",
+]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
@@ -81,9 +87,3 @@ exclude_lines = [
 
 [tool.coverage.paths]
 source = [ 'src/h5' ]
-
-[tool.uv]
-dev-dependencies = [
-  "pytest>=8.3.2",
-  "pytest-cov>=5.0.0",
-]

@@ -27,6 +27,11 @@ classifiers = [
 ]
 dependencies = [ "loguru>=0.7", "typing-extensions>=4.5,<5" ]
 
+[dependency-groups]
+dev = [
+  "typing-extensions>=4.5,<5",
+]
+
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -64,6 +69,3 @@ exclude_lines = [
   'if 0:',
   'if False:',
 ]
-
-[tool]
-dev-dependencies = [ "typing-extensions>=4.5.0,<5.0.0" ]
