@@ -9,6 +9,23 @@
 dev:
     uv sync --all-extras --dev
 
+test: dev
+    uv run pytest tests dgpydev
+    cd libs/aiopen && uv run pytest
+    cd libs/aiopen && uv run pytest
+    cd libs/asyncify && uv run pytest
+    cd libs/dgpylibs && uv run pytest
+    cd libs/dgpytest && uv run pytest
+    cd libs/fmts && uv run pytest
+    cd libs/funkify && uv run pytest
+    cd libs/h5 && uv run pytest
+    cd libs/jsonbourne && uv run pytest
+    cd libs/lager && uv run pytest
+    cd libs/listless && uv run pytest
+    cd libs/requires && uv run pytest
+    cd libs/shellfish && uv run pytest
+    cd libs/xtyping && uv run pytest
+
 # fix imports
 rsort:
     ruff check --select "I" --show-fixes --fix .
