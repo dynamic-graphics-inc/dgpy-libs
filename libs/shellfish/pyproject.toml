@@ -34,6 +34,13 @@ dependencies = [
   "xtyping>=0.6",
 ]
 
+[dependency-groups]
+dev = [
+  "anyio>=4.9",
+  "pytest>=8.4",
+  "pytest-asyncio>=0.23.8",
+]
+
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -90,8 +97,3 @@ exclude_lines = [
 ]
 
 [tool]
-
-[tool.uv]
-dev-dependencies = [
-  "pytest-asyncio>=0.23.8",
-]

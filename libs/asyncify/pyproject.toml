@@ -26,6 +26,13 @@ classifiers = [
 ]
 dependencies = [ "funkify>=0.4", "xtyping>=0.5" ]
 
+[dependency-groups]
+dev = [
+  "anyio>=4.4",
+  "pytest>=8.3.2",
+  "pytest-asyncio>=0.23.8",
+]
+
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -86,10 +93,3 @@ exclude_lines = [
 source = [ 'asyncify/' ]
 
 [tool]
-
-[tool.uv]
-dev-dependencies = [
-  "pytest-asyncio>=0.23.8",
-  "anyio>=4.4.0",
-  "pytest>=8.3.2",
-]
