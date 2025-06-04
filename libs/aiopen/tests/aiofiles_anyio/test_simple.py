@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import asyncio
 
-from asyncio import AbstractEventLoop
 from typing import TYPE_CHECKING, Any
 
 import pytest
@@ -17,9 +16,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.anyio()
-async def test_serve_small_bin_file_sync(
-    event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
-) -> None:
+async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -> None:
     """Fire up a small simple file server, and fetch a file.
 
     The file is read into memory synchronously, so this test doesn't actually
@@ -56,9 +53,7 @@ async def test_serve_small_bin_file_sync(
 
 
 @pytest.mark.anyio()
-async def test_serve_small_bin_file(
-    event_loop: AbstractEventLoop, tmp_path: Path, unused_tcp_port: int
-) -> None:
+async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> None:
     """Fire up a small simple file server, and fetch a file."""
     # First we'll write a small file.
     filename = "test.bin"
