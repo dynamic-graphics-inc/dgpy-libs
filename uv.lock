@@ -58,9 +58,9 @@ provides-extras = ["test"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "anyio", specifier = ">=4.4.0" },
+    { name = "anyio", specifier = ">=4.4" },
     { name = "pytest-asyncio", specifier = ">=0.23.8" },
-    { name = "pytest-cov", specifier = ">=5.0.0" },
+    { name = "pytest-cov", specifier = ">=5" },
 ]
 
 [[package]]
@@ -138,7 +138,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "anyio", specifier = ">=4.4.0" },
+    { name = "anyio", specifier = ">=4.4" },
     { name = "pytest", specifier = ">=8.3.2" },
     { name = "pytest-asyncio", specifier = ">=0.23.8" },
 ]
@@ -823,7 +823,7 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "pytest", specifier = ">=8.4.0" },
+    { name = "pytest", specifier = ">=8.4" },
     { name = "pytest-cov", specifier = ">=6.1.1" },
 ]
 
@@ -1202,11 +1202,19 @@ dependencies = [
     { name = "typing-extensions" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "typing-extensions" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "loguru", specifier = ">=0.7" },
     { name = "typing-extensions", specifier = ">=4.5,<5" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "typing-extensions", specifier = ">=4.5,<5" }]
 
 [[package]]
 name = "listless"
@@ -1221,7 +1229,7 @@ dev = [
 [package.metadata]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.4.0" }]
+dev = [{ name = "pytest", specifier = ">=8.4" }]
 
 [[package]]
 name = "loguru"
@@ -2801,8 +2809,8 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "anyio", specifier = ">=4.9.0" },
-    { name = "pytest", specifier = ">=8.4.0" },
+    { name = "anyio", specifier = ">=4.9" },
+    { name = "pytest", specifier = ">=8.4" },
     { name = "pytest-asyncio", specifier = ">=0.23.8" },
 ]
 
