@@ -60,7 +60,7 @@ provides-extras = ["test"]
 dev = [
     { name = "anyio", specifier = ">=4.4" },
     { name = "pytest-asyncio", specifier = ">=1.0.0" },
-    { name = "pytest-cov", specifier = ">=5" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
 ]
 
 [[package]]
@@ -645,7 +645,7 @@ dev = [
     { name = "ipython", specifier = ">=8.18.1" },
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "nox", specifier = ">=2024.4.15" },
-    { name = "pytest-cov", specifier = ">=5" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
     { name = "rich", specifier = ">=13.9.3" },
     { name = "ruff", specifier = ">=0.11.7" },
     { name = "tomli", specifier = ">=2.0.1" },
