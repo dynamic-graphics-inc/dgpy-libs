@@ -2,7 +2,7 @@ import pytest
 
 import requires
 
-from .fixtures.frobulizer import frobulize, frobulize_multiple_requirments
+from .fixtures.frobulizer import frobulize, frobulize_multiple_requirements
 
 
 def test_preflight_check_warns():
@@ -19,4 +19,4 @@ def test_frobulize_errs():
     with pytest.raises(requires.RequirementError):
         frobulize(["a", "b", "c"])
     with pytest.raises(requires.RequirementError):
-        frobulize_multiple_requirments(["a", "b", "c"])
+        frobulize_multiple_requirements(["a", "b", "c"])
