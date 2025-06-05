@@ -17,7 +17,6 @@ sync:
 test: sync
     uv run pytest tests dgpydev
     cd libs/aiopen && uv run pytest
-    cd libs/aiopen && uv run pytest
     cd libs/asyncify && uv run pytest
     cd libs/dgpylibs && uv run pytest
     cd libs/dgpytest && uv run pytest
