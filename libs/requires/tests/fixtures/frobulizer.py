@@ -12,7 +12,7 @@ def frobulize(inputs: List[str]) -> List[str]:
 
 @requires.requires("import somelibrary as sl")
 @requires.requires("import some_other_lib as sol")  # sol=shit out o luck?
-def frobulize_multiple_requirments(inputs: List[str]) -> Tuple[Any, ...]:
+def frobulize_multiple_requirements(inputs: List[str]) -> Tuple[Any, ...]:
     return (sl.frobulize(sl.frobulize(inputs)), sol.do_stuff())  # type: ignore[name-defined]
 
 
@@ -28,10 +28,10 @@ if TYPE_CHECKING:
 
     @r1
     @r1
-    def frobulize_multiple_requirments_v2(inputs: List[str]) -> Tuple[Any, ...]:
+    def frobulize_multiple_requirements_v2(inputs: List[str]) -> Tuple[Any, ...]:
         return (sl.frobulize(sl.frobulize(inputs)), sol.do_stuff())  # type: ignore[name-defined]
 
     reveal_type(frobulize)
-    reveal_type(frobulize_multiple_requirments)
+    reveal_type(frobulize_multiple_requirements)
     reveal_type(frobulize_v2)
-    reveal_type(frobulize_multiple_requirments_v2)
+    reveal_type(frobulize_multiple_requirements_v2)

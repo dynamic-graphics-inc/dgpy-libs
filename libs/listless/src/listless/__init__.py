@@ -748,7 +748,7 @@ async def enumerate_async(
 
 
 async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ...]]:
-    """Async verstion of builtin zip function
+    """Async version of builtin zip function
 
     Example:
         >>> from asyncio import run as aiorun
