@@ -129,7 +129,6 @@ lint.ignore = [
 
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
-
   "E266", # too many leading '#' for block comment
 
   "E501", # line too long,
@@ -149,10 +148,12 @@ lint.ignore = [
   "UP037",
   "UP045", # union type over `Optional`
 ]
+
 lint.per-file-ignores."**/conftest.py" = [ "D" ]
 lint.per-file-ignores."**/noxfile.py" = [ "D" ]
-lint.per-file-ignores."**/test_*.py" = [
+lint.per-file-ignores."**/tests/*.py" = [
   "D1",
+  "D100", # missing docstring in public module
   "D102",
   "D103", # missing docstring
 ]
