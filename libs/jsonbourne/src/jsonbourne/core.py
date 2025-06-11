@@ -939,7 +939,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return JSON string of the JsonObj object (and children)
+        r"""Return JSON string of the JsonObj object (and children)
 
         Args:
             fmt (bool): If True, return a JSON string with newlines and indentation
@@ -972,7 +972,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return JSON string of the JsonObj object (and children)
+        r"""Return JSON string of the JsonObj object (and children)
 
         Args:
             fmt (bool): If True, return a JSON string with newlines and indentation
@@ -1004,7 +1004,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return JSON string of the JsonObj object (and children)
+        r"""Return JSON string of the JsonObj object (and children)
 
         Args:
             fmt (bool): If True, return a JSON string with newlines and indentation
@@ -1036,7 +1036,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         default: Optional[Callable[[Any], Any]] = None,
         **kwargs: Any,
     ) -> str:
-        """Return JSON string of the JsonObj object (and children)
+        r"""Return JSON string of the JsonObj object (and children)
 
         Args:
             fmt (bool): If True, return a JSON string with newlines and indentation

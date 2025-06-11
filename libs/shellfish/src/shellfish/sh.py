@@ -755,7 +755,7 @@ class Done(JsonBaseModel):
 
 
 def decode_stdio_bytes(stdio_bytes: Union[str, bytes], lf: bool = True) -> str:
-    """Return Stdio bytes from stdout/stderr as a string
+    r"""Return Stdio bytes from stdout/stderr as a string
 
     Args:
         stdio_bytes (bytes): STDOUT/STDERR bytes
@@ -1946,7 +1946,7 @@ def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]
 
 
 def quote(string: str) -> str:
-    """Typed alias for shlex.quote
+    r"""Typed alias for shlex.quote
 
     Args:
         string (str): string to quote
@@ -1958,14 +1958,14 @@ def quote(string: str) -> str:
         >>> quote("hello world")
         "'hello world'"
         >>> quote("hello 'world'")
-        '\\'hello \\'"\\'"\\'world\\'"\\'"\\'\\''
+        '\'hello \'"\'"\'world\'"\'"\'\''
 
     """
     return _quote(string)
 
 
 def q(string: str) -> str:
-    """Typed alias for shlex.quote
+    r"""Typed alias for shlex.quote
 
     Args:
         string (str): string to quote
@@ -1977,7 +1977,7 @@ def q(string: str) -> str:
         >>> q("hello world")
         "'hello world'"
         >>> q("hello 'world'")
-        '\\'hello \\'"\\'"\\'world\\'"\\'"\\'\\''
+        '\'hello \'"\'"\'world\'"\'"\'\''
 
     """
     return _quote(string)

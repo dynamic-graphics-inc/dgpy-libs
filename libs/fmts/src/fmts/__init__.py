@@ -1231,7 +1231,7 @@ def rm_multilines(string: str) -> str:
 
 
 def ensure_utf8(string: Union[str, bytes]) -> str:
-    """Return a string that ensured to be utf-8.
+    r"""Return a string that ensured to be utf-8.
 
     This is often needed for those rare cases where some weird non-unicode
     character or escape sequence is present within a string; This method
@@ -1248,7 +1248,7 @@ def ensure_utf8(string: Union[str, bytes]) -> str:
         'hello'
         >>> ensure_utf8(b'hello')
         'hello'
-        >>> latin_bytes_with_weird_characters = b'hello\\xc3\\xa9'
+        >>> latin_bytes_with_weird_characters = b'hello\xc3\xa9'
         >>> latin_string = ensure_utf8(latin_bytes_with_weird_characters)
         >>> latin_string
         'helloé'

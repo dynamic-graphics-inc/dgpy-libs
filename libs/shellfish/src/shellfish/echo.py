@@ -15,7 +15,7 @@ def echo(
     file: Optional[IO[str]] = None,
     flush: bool = False,
 ) -> None:
-    """Print/echo function
+    r"""Print/echo function
 
     Args:
         *objects: Item(s) to print/echo
