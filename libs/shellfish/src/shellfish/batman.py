@@ -135,8 +135,7 @@ def MKLINK(
     J: bool = False,
     check: bool = False,
 ) -> CompletedProcess[str]:
-    """
-    Creates a symbolic link.
+    """Creates a symbolic link.
 
     Returns:
         pass
@@ -210,8 +209,7 @@ def RD(
     A: bool = False,
     check: bool = False,
 ) -> CompletedProcess[str]:
-    """
-    Removes a directory.
+    """Removes a directory.
 
     Returns:
         pass

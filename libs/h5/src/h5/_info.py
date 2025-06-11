@@ -410,7 +410,7 @@ class FileInfo(GroupLikeInfo):
 
     @classmethod
     def from_h5py_file(cls, h5py_group: h5py.File) -> FileInfo:
-        """
+        """Return `FileInfo` from `h5py.File` object
 
         could do with dict-comprehension, but  not readable (imo)
 
