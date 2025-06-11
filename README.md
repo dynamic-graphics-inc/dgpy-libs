@@ -50,19 +50,20 @@ pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires s
 uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping
 ```
 
-| Package | Install | Wheel | Version | Python Versions |
-|--------|---------|-------|---------|-----------------|
-| [aiopen](./libs/aiopen) | `pip install aiopen` | ![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg) | ![Version](https://img.shields.io/pypi/v/aiopen.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg) |
-| [asyncify](./libs/asyncify) | `pip install asyncify` | ![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg) | ![Version](https://img.shields.io/pypi/v/asyncify.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg) |
-| [fmts](./libs/fmts) | `pip install fmts` | ![Wheel](https://img.shields.io/pypi/wheel/fmts.svg) | ![Version](https://img.shields.io/pypi/v/fmts.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/fmts.svg) |
-| [funkify](./libs/funkify) | `pip install funkify` | ![Wheel](https://img.shields.io/pypi/wheel/funkify.svg) | ![Version](https://img.shields.io/pypi/v/funkify.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/funkify.svg) |
-| [h5](./libs/h5) | `pip install h5` | ![Wheel](https://img.shields.io/pypi/wheel/h5.svg) | ![Version](https://img.shields.io/pypi/v/h5.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/h5.svg) |
-| [jsonbourne](./libs/jsonbourne) | `pip install jsonbourne` | ![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg) | ![Version](https://img.shields.io/pypi/v/jsonbourne.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/jsonbourne.svg) |
-| [lager](./libs/lager) | `pip install lager` | ![Wheel](https://img.shields.io/pypi/wheel/lager.svg) | ![Version](https://img.shields.io/pypi/v/lager.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/lager.svg) |
-| [listless](./libs/listless) | `pip install listless` | ![Wheel](https://img.shields.io/pypi/wheel/listless.svg) | ![Version](https://img.shields.io/pypi/v/listless.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/listless.svg) |
-| [requires](./libs/requires) | `pip install requires` | ![Wheel](https://img.shields.io/pypi/wheel/requires.svg) | ![Version](https://img.shields.io/pypi/v/requires.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/requires.svg) |
-| [shellfish](./libs/shellfish) | `pip install shellfish` | ![Wheel](https://img.shields.io/pypi/wheel/shellfish.svg) | ![Version](https://img.shields.io/pypi/v/shellfish.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/shellfish.svg) |
-| [xtyping](./libs/xtyping) | `pip install xtyping` | ![Wheel](https://img.shields.io/pypi/wheel/xtyping.svg) | ![Version](https://img.shields.io/pypi/v/xtyping.svg) | ![py_versions](https://img.shields.io/pypi/pyversions/xtyping.svg) |
+| Package | Install | Version | Python Versions |
+|--------|---------|---------|-----------------|
+| [aiopen](./libs/aiopen) | `pip install aiopen` | [![PyPI](https://img.shields.io/pypi/v/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/) |
+| [asyncify](./libs/asyncify) | `pip install asyncify` | [![PyPI](https://img.shields.io/pypi/v/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/) |
+| [fmts](./libs/fmts) | `pip install fmts` | [![PyPI](https://img.shields.io/pypi/v/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/) |
+| [funkify](./libs/funkify) | `pip install funkify` | [![PyPI](https://img.shields.io/pypi/v/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/) |
+| [h5](./libs/h5) | `pip install h5` | [![PyPI](https://img.shields.io/pypi/v/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/) |
+| [jsonbourne](./libs/jsonbourne) | `pip install jsonbourne` | [![PyPI](https://img.shields.io/pypi/v/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) |
+| [lager](./libs/lager) | `pip install lager` | [![PyPI](https://img.shields.io/pypi/v/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/) |
+| [listless](./libs/listless) | `pip install listless` | [![PyPI](https://img.shields.io/pypi/v/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/) |
+| [requires](./libs/requires) | `pip install requires` | [![PyPI](https://img.shields.io/pypi/v/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/) |
+| [shellfish](./libs/shellfish) | `pip install shellfish` | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/) |
+| [xtyping](./libs/xtyping) | `pip install xtyping` | [![PyPI](https://img.shields.io/pypi/v/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/) |
+
 
 ## About
 

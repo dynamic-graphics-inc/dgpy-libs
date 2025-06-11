@@ -24,7 +24,7 @@ Dynamic Graphics python libraries, home of:
 
 ## Libs
 
-```
+```txt
 libs
 ├── aiopen
 ├── asyncify
@@ -41,33 +41,29 @@ libs
 └── xtyping
 ```
 
-**Install:** `pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping`
+**Install:**
 
-### [aiopen](./libs/aiopen) ~ `pip install aiopen` ~ [![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg) [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg) [![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg)
+```bash
+# pip
+pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping
+# uv
+uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping
+```
 
-### [asyncify](./libs/asyncify) ~ `pip install asyncify` ~ [![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg) [![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)
+| Package | Install | Version | Python Versions |
+|--------|---------|---------|-----------------|
+| [aiopen](./libs/aiopen) | `pip install aiopen` | [![PyPI](https://img.shields.io/pypi/v/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/) |
+| [asyncify](./libs/asyncify) | `pip install asyncify` | [![PyPI](https://img.shields.io/pypi/v/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/) |
+| [fmts](./libs/fmts) | `pip install fmts` | [![PyPI](https://img.shields.io/pypi/v/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/) |
+| [funkify](./libs/funkify) | `pip install funkify` | [![PyPI](https://img.shields.io/pypi/v/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/) |
+| [h5](./libs/h5) | `pip install h5` | [![PyPI](https://img.shields.io/pypi/v/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/) |
+| [jsonbourne](./libs/jsonbourne) | `pip install jsonbourne` | [![PyPI](https://img.shields.io/pypi/v/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) |
+| [lager](./libs/lager) | `pip install lager` | [![PyPI](https://img.shields.io/pypi/v/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/) |
+| [listless](./libs/listless) | `pip install listless` | [![PyPI](https://img.shields.io/pypi/v/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/) |
+| [requires](./libs/requires) | `pip install requires` | [![PyPI](https://img.shields.io/pypi/v/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/) |
+| [shellfish](./libs/shellfish) | `pip install shellfish` | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/) |
+| [xtyping](./libs/xtyping) | `pip install xtyping` | [![PyPI](https://img.shields.io/pypi/v/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/) |
 
-### [dgpylibs](./libs/dgpylibs) ~ `pip install dgpylibs` ~ [![Wheel](https://img.shields.io/pypi/wheel/dgpylibs.svg)](https://img.shields.io/pypi/wheel/dgpylibs.svg) [![Version](https://img.shields.io/pypi/v/dgpylibs.svg)](https://img.shields.io/pypi/v/dgpylibs.svg) [![py_versions](https://img.shields.io/pypi/pyversions/dgpylibs.svg)](https://img.shields.io/pypi/pyversions/dgpylibs.svg)
-
-### [dgpytest](./libs/dgpytest) ~ `pip install dgpytest` ~ [![Wheel](https://img.shields.io/pypi/wheel/dgpytest.svg)](https://img.shields.io/pypi/wheel/dgpytest.svg) [![Version](https://img.shields.io/pypi/v/dgpytest.svg)](https://img.shields.io/pypi/v/dgpytest.svg) [![py_versions](https://img.shields.io/pypi/pyversions/dgpytest.svg)](https://img.shields.io/pypi/pyversions/dgpytest.svg)
-
-### [fmts](./libs/fmts) ~ `pip install fmts` ~ [![Wheel](https://img.shields.io/pypi/wheel/fmts.svg)](https://img.shields.io/pypi/wheel/fmts.svg) [![Version](https://img.shields.io/pypi/v/fmts.svg)](https://img.shields.io/pypi/v/fmts.svg) [![py_versions](https://img.shields.io/pypi/pyversions/fmts.svg)](https://img.shields.io/pypi/pyversions/fmts.svg)
-
-### [funkify](./libs/funkify) ~ `pip install funkify` ~ [![Wheel](https://img.shields.io/pypi/wheel/funkify.svg)](https://img.shields.io/pypi/wheel/funkify.svg) [![Version](https://img.shields.io/pypi/v/funkify.svg)](https://img.shields.io/pypi/v/funkify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/funkify.svg)](https://img.shields.io/pypi/pyversions/funkify.svg)
-
-### [h5](./libs/h5) ~ `pip install h5` ~ [![Wheel](https://img.shields.io/pypi/wheel/h5.svg)](https://img.shields.io/pypi/wheel/h5.svg) [![Version](https://img.shields.io/pypi/v/h5.svg)](https://img.shields.io/pypi/v/h5.svg) [![py_versions](https://img.shields.io/pypi/pyversions/h5.svg)](https://img.shields.io/pypi/pyversions/h5.svg)
-
-### [jsonbourne](./libs/jsonbourne) ~ `pip install jsonbourne` ~ [![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg)](https://img.shields.io/pypi/wheel/jsonbourne.svg) [![Version](https://img.shields.io/pypi/v/jsonbourne.svg)](https://img.shields.io/pypi/v/jsonbourne.svg) [![py_versions](https://img.shields.io/pypi/pyversions/jsonbourne.svg)](https://img.shields.io/pypi/pyversions/jsonbourne.svg)
-
-### [lager](./libs/lager) ~ `pip install lager` ~ [![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg) [![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg) [![py_versions](https://img.shields.io/pypi/pyversions/lager.svg)](https://img.shields.io/pypi/pyversions/lager.svg)
-
-### [listless](./libs/listless) ~ `pip install listless` ~ [![Wheel](https://img.shields.io/pypi/wheel/listless.svg)](https://img.shields.io/pypi/wheel/listless.svg) [![Version](https://img.shields.io/pypi/v/listless.svg)](https://img.shields.io/pypi/v/listless.svg) [![py_versions](https://img.shields.io/pypi/pyversions/listless.svg)](https://img.shields.io/pypi/pyversions/listless.svg)
-
-### [requires](./libs/requires) ~ `pip install requires` ~ [![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg) [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg) [![py_versions](https://img.shields.io/pypi/pyversions/requires.svg)](https://img.shields.io/pypi/pyversions/requires.svg)
-
-### [shellfish](./libs/shellfish) ~ `pip install shellfish` ~ [![Wheel](https://img.shields.io/pypi/wheel/shellfish.svg)](https://img.shields.io/pypi/wheel/shellfish.svg) [![Version](https://img.shields.io/pypi/v/shellfish.svg)](https://img.shields.io/pypi/v/shellfish.svg) [![py_versions](https://img.shields.io/pypi/pyversions/shellfish.svg)](https://img.shields.io/pypi/pyversions/shellfish.svg)
-
-### [xtyping](./libs/xtyping) ~ `pip install xtyping` ~ [![Wheel](https://img.shields.io/pypi/wheel/xtyping.svg)](https://img.shields.io/pypi/wheel/xtyping.svg) [![Version](https://img.shields.io/pypi/v/xtyping.svg)](https://img.shields.io/pypi/v/xtyping.svg) [![py_versions](https://img.shields.io/pypi/pyversions/xtyping.svg)](https://img.shields.io/pypi/pyversions/xtyping.svg)
 
 ## About
 
@@ -77,12 +73,11 @@ This repo (dgpy-libs) are the polished gems formed under intense pressure below 
 
 - dgpy-libs must have excellent names and be published on pip
 - Embrace `async/await`
-- Python 3.6 'n up, baby! (May move to 3.7 for `__future___.annotations`... tbd)
+- Python 3.9+ 'n up, baby!
 - Use type annotations everywhere
 - No dead or commented out code
 - Prefer pure-python & compiled-3rd-party-libs over writing packages with compiled extensions
 - Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present
-- Offer integrations with the super-hot-fire modern python packages all the kids are using
 - Optional dependencies are good! Missing optional deps should trigger an error msg that is helpful to installing the relevant dependency ONLY IF THE DEPENDENCY IS NEEDED.
 - Test coverage is usually a dumb metric and 100% test coverage `!=` bug-free code (tests of dgpy-libs are slowly being migrated from internal/private repos to this repo)
 
@@ -118,19 +113,19 @@ notebooks/
 
 ---
 
-## Contributor(s):
+## Contributor(s)
 
 - [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
 - [Dan Costello](https://github.com/dan-costello) ~ `dan@dgi.com` / `dan.costello2@gmail.com`
 - Possibly you!?
 
-## Contributing:
+## Contributing
 
 Plz do! Send me that PR!
 
 ---
 
-## TODO:
+## TODO
 
 - Have CI/CD auto build n publish
 - Changelog (for real)
