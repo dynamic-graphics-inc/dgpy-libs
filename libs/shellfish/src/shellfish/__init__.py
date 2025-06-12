@@ -293,6 +293,7 @@ __all__ = (
     "move",
     "mv",
     "path",
+    "path",
     "path_gen",
     "process",
     "ps",
