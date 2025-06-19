@@ -266,7 +266,7 @@ typing-extensions==4.12.0
     #   exceptiongroup
     #   ipython
     #   mkdocstrings
-urllib3==2.2.2
+urllib3==2.5.0
     # via requests
 watchdog==4.0.1
     # via mkdocs
