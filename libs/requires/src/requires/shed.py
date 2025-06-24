@@ -27,6 +27,7 @@ __all__ = (
     "requires_numba_as_nb",
     "requires_numpy",
     "requires_numpy_as_np",
+    "requires_obstore",
     "requires_opencv",
     "requires_orjson",
     "requires_pandas",
@@ -330,3 +331,11 @@ requires_tox = Requirement(_import="tox", pip=True, conda=True, conda_forge=True
 
 # RY
 requires_ry = Requirement(_import="ry", pip=True, conda=False, conda_forge=False)
+
+# OBSTORE ~ https://github.com/developmentseed/obstore
+requires_obstore = Requirement(
+    _import="obstore",
+    pip=True,
+    conda=False,
+    conda_forge=True,
+)
