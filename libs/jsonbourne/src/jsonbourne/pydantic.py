@@ -315,7 +315,8 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         if self.has_required_fields():
             return False
         return all(
-            mfield.default == self[fname] for fname, mfield in self.model_fields.items()
+            mfield.default == self[fname]
+            for fname, mfield in self.__class__.model_fields.items()
         )
 
     def __delattr__(self, item: str) -> Any:
