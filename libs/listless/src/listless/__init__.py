@@ -524,8 +524,8 @@ def flatten_seq(*args: Union[_T, Sequence[_T]], anystr: bool = False) -> Iterabl
 
 def flatten_strings(
     *args: Union[
-        _T,
-        Iterable[_T],
+        Any,
+        Iterable[Any],
     ],
 ) -> Iterable[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
