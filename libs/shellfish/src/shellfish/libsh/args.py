@@ -52,7 +52,7 @@ def flatten_args(*args: PopenArgs) -> List[str]:
         ['cmd', 'uno', 'dos', 'tres', '4444', 'five']
 
     """
-    return list(_flatten_strings(args))  # type: ignore[arg-type]
+    return list(_flatten_strings(args))
 
 
 def args2cmd(args: PopenArgs) -> Union[str, bytes]:
