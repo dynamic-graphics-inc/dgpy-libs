@@ -9,15 +9,6 @@ import pytest
 
 from shellfish import fs
 
-# lbytes = rbin = lbin = deprecated_alias(rbytes)
-# sbytes = wbin = sbin = deprecated_alias(wbytes)
-# lbytes_gen = rbin_gen = deprecated_alias(rbytes_gen)
-# sbytes_gen = wbin_gen = deprecated_alias(wbytes_gen)
-# lstring = rstr = lstr = deprecated_alias(rstring)
-# sstring = wstr = sstr = deprecated_alias(wstring)
-# ljson = deprecated_alias(rjson)
-# sjson = deprecated_alias(wjson)
-
 _FILEPATH = Path(__file__).resolve()
 
 _READ_BYTES_GEN_DEPRECATED_ALIASES = [
