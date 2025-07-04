@@ -57,7 +57,7 @@ from shellfish.fs._async import (
     read_bytes_async as read_bytes_async,
     read_bytes_gen_async as read_bytes_gen_async,
     read_json_async as read_json_async,
-    read_string_async as read_string_async,
+    read_str_async as read_str_async,
     rjson_async as rjson_async,
     rstr_async as rstr_async,
     rstring_async as rstring_async,
@@ -76,7 +76,7 @@ from shellfish.fs._async import (
     write_bytes_async as write_bytes_async,
     write_bytes_gen_async as write_bytes_gen_async,
     write_json_async as write_json_async,
-    write_string_async as write_string_async,
+    write_str_async as write_str_async,
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
@@ -1031,8 +1031,8 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
         >>> string
         '1\n2\n3\n4\n5\n6\n7\n8\n9'
         >>> fspath = "file_lines_gen.doctest.txt"
-        >>> from shellfish.fs import write_string
-        >>> write_string(fspath, string)
+        >>> from shellfish.fs import write_str
+        >>> write_str(fspath, string)
         17
         >>> for file_line in file_lines_gen(fspath):
         ...     file_line
@@ -1116,7 +1116,7 @@ def write_bytes_gen(
     return nbytes_written
 
 
-def read_string(filepath: FsPath, *, encoding: str = "utf-8") -> str:
+def read_str(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     r"""Load/Read a string given a fspath
 
     Args:
@@ -1128,7 +1128,7 @@ def read_string(filepath: FsPath, *, encoding: str = "utf-8") -> str:
 
     Examples:
         ``` python
-        >>> from shellfish.fs import read_string, write_string
+        >>> from shellfish.fs import read_str, write_str
         >>> fspath = "lstring.doctest.txt"
         >>> sstring(fspath, r'Check out this string')
         21
@@ -1147,7 +1147,7 @@ def read_string(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     return _bytes.decode(encoding="latin2")
 
 
-def write_string(
+def write_str(
     filepath: FsPath,
     string: str,
     *,
@@ -1168,11 +1168,11 @@ def write_string(
         None
 
     Examples:
-        >>> from shellfish.fs import read_string, write_string
+        >>> from shellfish.fs import read_str, write_str
         >>> fspath = "sstring.doctest.txt"
-        >>> write_string(fspath, r'Check out this string')
+        >>> write_str(fspath, r'Check out this string')
         21
-        >>> read_string(fspath)
+        >>> read_str(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
 
@@ -1686,8 +1686,8 @@ lbytes = rbin = lbin = rbytes = deprecated_alias(read_bytes)
 sbytes = wbin = sbin = wbytes = deprecated_alias(write_bytes)
 lbytes_gen = rbin_gen = rbytes_gen = deprecated_alias(read_bytes_gen)
 sbytes_gen = wbin_gen = wbytes_gen = deprecated_alias(write_bytes_gen)
-lstring = rstr = lstr = rstring = deprecated_alias(read_string)
-sstring = wstr = sstr = wstring = deprecated_alias(write_string)
+lstring = rstr = lstr = rstring = deprecated_alias(read_str)
+sstring = wstr = sstr = wstring = deprecated_alias(write_str)
 ljson = rjson = deprecated_alias(read_json)
 sjson = wjson = deprecated_alias(write_json)
 
@@ -1764,8 +1764,8 @@ __all__ = (
     "read_bytes_gen_async",
     "read_json",
     "read_json_async",
-    "read_string",
-    "read_string_async",
+    "read_str",
+    "read_str_async",
     "rename",
     "rjson",
     "rjson_async",
@@ -1821,8 +1821,8 @@ __all__ = (
     "write_bytes_gen_async",
     "write_json",
     "write_json_async",
-    "write_string",
-    "write_string_async",
+    "write_str",
+    "write_str_async",
     "wstr",
     "wstr_async",
     "wstring",

@@ -41,7 +41,7 @@ __all__ = (
     "read_bytes_async",
     "read_bytes_gen_async",
     "read_json_async",
-    "read_string_async",
+    "read_str_async",
     "rjson_async",
     "rstr_async",
     "rstring_async",
@@ -60,7 +60,7 @@ __all__ = (
     "write_bytes_async",
     "write_bytes_gen_async",
     "write_json_async",
-    "write_string_async",
+    "write_str_async",
     "wstr_async",
     "wstring_async",
 )
@@ -413,7 +413,7 @@ async def write_bytes_gen_async(
     return _bytes_written
 
 
-async def read_string_async(filepath: FsPath, encoding: str = "utf-8") -> str:
+async def read_str_async(filepath: FsPath, encoding: str = "utf-8") -> str:
     r"""(ASYNC) Load/Read a string given a fspath
 
     Args:
@@ -427,7 +427,7 @@ async def read_string_async(filepath: FsPath, encoding: str = "utf-8") -> str:
     return (await read_bytes_async(filepath)).decode(encoding=encoding)
 
 
-async def write_string_async(
+async def write_str_async(
     filepath: FsPath,
     string: str,
     *,
@@ -584,10 +584,10 @@ sbytes_async = wbin_async = sbin_async = wbytes_async = deprecated_alias(
     write_bytes_async
 )
 lstring_async = rstr_async = lstr_async = rstring_async = deprecated_alias(
-    read_string_async
+    read_str_async
 )
 sstring_async = wstr_async = sstr_async = wstring_async = deprecated_alias(
-    write_string_async
+    write_str_async
 )
 lbytes_gen_async = rbin_gen_async = rbytes_gen_async = deprecated_alias(
     read_bytes_gen_async

@@ -164,7 +164,7 @@ class TestDeprecatedAliasesAsync:
 
     @pytest.mark.anyio()
     @pytest.mark.parametrize("func", _READ_STRING_DEPRECATED_ALIASES_ASYNC)
-    async def test_deprecated_read_string_alias_async(
+    async def test_deprecated_read_str_alias_async(
         self,
         func: Callable[[Path | str], Awaitable[str]],
     ) -> None:

@@ -27,10 +27,10 @@ def mk_dummy_dir() -> None:
     sh.mkdirp(os.path.join("dir", "a", "b", "c"))
     sh.mkdirp(os.path.join("dir", "a", "b", "d"))
     sh.mkdirp(os.path.join("dir", "e", "f"))
-    sh.write_string(os.path.join("dir", "a", "b", "c", "uno.txt"), "uno")
-    sh.write_string(os.path.join("dir", "a", "b", "dos.txt"), "dos")
-    sh.write_string(os.path.join("dir", "a", "b", "d", "three.txt"), "three")
-    sh.write_string(os.path.join("dir", "e", "f", "quatro.txt"), "four")
+    sh.write_str(os.path.join("dir", "a", "b", "c", "uno.txt"), "uno")
+    sh.write_str(os.path.join("dir", "a", "b", "dos.txt"), "dos")
+    sh.write_str(os.path.join("dir", "a", "b", "d", "three.txt"), "three")
+    sh.write_str(os.path.join("dir", "e", "f", "quatro.txt"), "four")
 
 
 def test_sh_tree_one(tmp_path: Path) -> None:
