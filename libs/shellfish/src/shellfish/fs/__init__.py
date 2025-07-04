@@ -1299,7 +1299,7 @@ def read_json(filepath: FsPath) -> Any:
         >>> os.remove(fspath)
 
     """
-    return JSON.loads(lstring(filepath=filepath))
+    return JSON.loads(read_bytes(filepath=filepath))
 
 
 def extension(fspath: str, *, period: bool = False) -> str:
@@ -1632,7 +1632,7 @@ def copy_file(
     elif not _dest.parent.exists() or not _dest.parent.is_dir():
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
     if not dryrun:
-        write_bytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+        write_bytes_gen(dest, read_bytes_gen(src, blocksize=2**18))
         _copystat(src, dest, follow_symlinks=True)
     return (str(src), str(dest))
 
