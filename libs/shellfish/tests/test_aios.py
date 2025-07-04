@@ -16,8 +16,8 @@ if TYPE_CHECKING:
 async def test_scandir_async(tmp_path: Path) -> None:
     # Create a temporary directory with some files and sub-directories
     sh.cd(tmp_path)
-    sh.wstring("a.txt", "a")
-    sh.wstring("b.txt", "b")
+    sh.write_str("a.txt", "a")
+    sh.write_str("b.txt", "b")
     sh.mkdirp("dir1")
     sh.mkdirp("dir2")
 

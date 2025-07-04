@@ -14,54 +14,66 @@ _FILEPATH = Path(__file__).resolve()
 _READ_BYTES_GEN_DEPRECATED_ALIASES = [
     fs.rbin_gen,
     fs.lbytes_gen,
+    fs.rbytes_gen,
 ]
 _READ_JSON_DEPRECATED_ALIASES = [
     fs.ljson,
+    fs.rjson,
 ]
 _READ_STRING_DEPRECATED_ALIASES = [
     fs.lstring,
     fs.lstr,
     fs.rstr,
+    fs.rstring,
 ]
 _WRITE_STRING_DEPRECATED_ALIASES = [
     fs.sstring,
     fs.sstr,
     fs.wstr,
+    fs.wstring,
 ]
 _WRITE_BYTES_DEPRECATED_ALIASES = [
     fs.sbytes,
     fs.wbin,
     fs.sbin,
+    fs.wbytes,
 ]
 _WRITE_JSON_DEPRECATED_ALIASES = [
     fs.sjson,
+    fs.wjson,
 ]
 # async deprecated aliases
 _READ_BYTES_GEN_DEPRECATED_ALIASES_ASYNC = [
     fs.rbin_gen_async,
     fs.lbytes_gen_async,
+    fs.rbytes_gen_async,
 ]
 _READ_JSON_DEPRECATED_ALIASES_ASYNC = [
     fs.ljson_async,
+    fs.rjson_async,
 ]
 _READ_STRING_DEPRECATED_ALIASES_ASYNC = [
     fs.lstring_async,
+    fs.rstring_async,
     fs.lstr_async,
     fs.rstr_async,
 ]
 
 _WRITE_STRING_DEPRECATED_ALIASES_ASYNC = [
     fs.sstring_async,
+    fs.wstring_async,
     fs.sstr_async,
     fs.wstr_async,
 ]
 _WRITE_BYTES_DEPRECATED_ALIASES_ASYNC = [
+    fs.wbytes_async,
     fs.sbytes_async,
     fs.wbin_async,
     fs.sbin_async,
 ]
 _WRITE_JSON_DEPRECATED_ALIASES_ASYNC = [
     fs.sjson_async,
+    fs.wjson_async,
 ]
 
 
@@ -152,7 +164,7 @@ class TestDeprecatedAliasesAsync:
 
     @pytest.mark.anyio()
     @pytest.mark.parametrize("func", _READ_STRING_DEPRECATED_ALIASES_ASYNC)
-    async def test_deprecated_read_string_alias_async(
+    async def test_deprecated_read_str_alias_async(
         self,
         func: Callable[[Path | str], Awaitable[str]],
     ) -> None:

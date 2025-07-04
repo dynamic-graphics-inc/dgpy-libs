@@ -21,7 +21,7 @@ for i in range(10):
 
 def test_popen_gen(tmp_path: Path) -> None:
     sh.cd(tmp_path)
-    sh.wstring("test.py", python_script)
+    sh.write_str("test.py", python_script)
 
     stdout_lines = []
     stderr_lines = []

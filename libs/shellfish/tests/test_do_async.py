@@ -63,8 +63,8 @@ async def test_timeout_subprocess_aio(tmp_path: Path) -> None:
     )
     script_1sec_filepath = "script_1sec.py"
     script_2sec_filepath = "script_2sec.py"
-    fs.wstring(script_1sec_filepath, script_1sec)
-    fs.wstring(script_2sec_filepath, script_2sec)
+    fs.write_str(script_1sec_filepath, script_1sec)
+    fs.write_str(script_2sec_filepath, script_2sec)
     proc = await sh.do_async(args=["python", script_1sec_filepath], timeout=2)
     assert proc.stdout == "About to sleep for 1 sec\nslept for 1 sec\n"
     with pytest.raises(sh.TimeoutExpired):
@@ -88,8 +88,8 @@ async def _test_timeout_subprocess_aio_inner(tmp_path: Path) -> None:
     )
     script_1sec_filepath = "script_1sec.py"
     script_2sec_filepath = "script_2sec.py"
-    fs.wstring(script_1sec_filepath, script_1sec)
-    fs.wstring(script_2sec_filepath, script_2sec)
+    fs.write_str(script_1sec_filepath, script_1sec)
+    fs.write_str(script_2sec_filepath, script_2sec)
     proc = await sh.do_async(args=["python", script_1sec_filepath], timeout=2)
     assert proc.stdout == "About to sleep for 1 sec\nslept for 1 sec\n"
 
@@ -119,8 +119,8 @@ async def _test_timeout_subprocess_aio_inner_shell_true(tmp_path: Path) -> None:
     )
     script_1sec_filepath = "script_1sec.py"
     script_2sec_filepath = "script_2sec.py"
-    fs.wstring(script_1sec_filepath, script_1sec)
-    fs.wstring(script_2sec_filepath, script_2sec)
+    fs.write_str(script_1sec_filepath, script_1sec)
+    fs.write_str(script_2sec_filepath, script_2sec)
     proc = await sh.do_async(
         args=["python", script_1sec_filepath], timeout=2, shell=True
     )

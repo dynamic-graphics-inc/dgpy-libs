@@ -16,7 +16,7 @@ from shellfish.fs import _async as fs_async, promises as fsp
 if TYPE_CHECKING:
     from types import ModuleType
 
-modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fsp, fs_async]
+modules = [shellfish, fs, sh, dotenv, process, fsp, aiospath, aios, fs_async]
 
 
 def _test_module_members_missing_from_all(mod: ModuleType) -> None:

@@ -65,11 +65,11 @@ def test_pipe_stdout(tmp_path: Path) -> None:
     sh.cd(tmp_path)
     proc = sh.do(["echo", "hello"])
     proc > "stdout.txt"  # noqa: B015
-    stdout = fs.rstring("stdout.txt")
+    stdout = fs.read_str("stdout.txt")
     assert stdout == proc.stdout
 
     proc >> "stdout.txt"
-    stdout = fs.rstring("stdout.txt")
+    stdout = fs.read_str("stdout.txt")
     assert stdout == proc.stdout * 2
 
 
@@ -78,11 +78,11 @@ def test_pipe_stderr(tmp_path: Path) -> None:
     proc = sh.do(["echo", "hello"])
     proc.stderr = "STDERR IS THIS"
     proc >= "stderr.txt"  # noqa: B015
-    stderr = fs.rstring("stderr.txt")
+    stderr = fs.read_str("stderr.txt")
     assert stderr == proc.stderr
 
     proc >>= "stderr.txt"
-    stdout = fs.rstring("stderr.txt")
+    stdout = fs.read_str("stderr.txt")
     assert stdout == proc.stderr * 2
 
 
@@ -117,8 +117,8 @@ def test_timeout_subprocess(tmp_path: Path) -> None:
     )
     script_2sec_filepath = "script_2sec.py"
     script_4sec_filepath = "script_4sec.py"
-    fs.wstring(script_2sec_filepath, script_2sec)
-    fs.wstring(script_4sec_filepath, script_4sec)
+    fs.write_str(script_2sec_filepath, script_2sec)
+    fs.write_str(script_4sec_filepath, script_4sec)
     proc = sh.do(args=["python", script_2sec_filepath], timeout=3)
     assert proc.stdout == "About to sleep for 2 sec\nslept for 2 seconds\n"
     with pytest.raises(TimeoutExpired):
