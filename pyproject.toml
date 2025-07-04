@@ -89,10 +89,10 @@ lint.select = [
   "C4", # comprehensions
   # pydocstyle
   "D",
-  "D207",   # docstring is under-indented
-  "D208",   # docstring is over-indented
-  "D414",
-  "D417",
+  # "D207",   # docstring is under-indented
+  # "D208",   # docstring is over-indented
+  # "D414",
+  # "D417",
   "E",      # pyflakes errors
   "ERA001", # erradicate
   "F",      # pyflakes warnings
@@ -129,7 +129,7 @@ lint.ignore = [
 
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
-  "E266", # too many leading '#' for block comment
+  # "E266", # too many leading '#' for block comment
 
   "E501", # line too long,
   # PIE

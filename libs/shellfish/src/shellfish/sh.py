@@ -1855,9 +1855,7 @@ class WIN(_WIN):
 # \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 # =============================================================================
 
-##################
-## OS DEPENDENT ##
-##################
+# OS DEPENDENT
 _OS: Union[Type[LIN], Type[WIN]] = (
     WIN if "windows" in system().lower() else LIN
 )  # Use LIN/WIN as _OS
@@ -1882,9 +1880,6 @@ unlink_files = _OS.unlink_files
 # =============================================================================
 
 
-#############
-## ALIASES ##
-#############
 def pwd() -> str:
     """Return present-working-directory path string; alias for os.getcwd
 
