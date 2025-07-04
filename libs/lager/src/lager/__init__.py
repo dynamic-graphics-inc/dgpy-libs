@@ -56,9 +56,7 @@ __all__ = (
     "LOGURU_DEFAULT_FMT",
     "TORNADO_FMT",
     "__version__",
-    #############
-    ## HOISTED ##
-    #############
+    # __HOISTED__
     "_change_activation",
     "_core",
     "_find_iter",

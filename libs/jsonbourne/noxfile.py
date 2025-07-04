@@ -30,9 +30,6 @@ VENV_BACKEND = None if (is_win() or IS_GITHUB_CI or not which("conda")) else "co
 REUSE_TEST_ENVS = True
 
 
-#############
-### UTILS ###
-#############
 def latest_wheel() -> str:
     wheels = sorted([el for el in os.listdir("dist") if el.endswith(".whl")])
     latest = wheels[-1]

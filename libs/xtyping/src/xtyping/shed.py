@@ -36,14 +36,14 @@ from typing_extensions import (
     __all__ as __all_typing_extensions,
 )
 
-######################
-## DEPRECATED TYPES ##
-######################
+# =============================================================================
+# DEPRECATED TYPES
+# =============================================================================
 __DEPRECATED_TYPES__: Tuple[str, ...] = ("ByteString",)
 
-#############
-## __all__ ##
-#############
+# =============================================================================
+# __all__
+# =============================================================================
 __all_typing__: Tuple[str, ...] = tuple(
     e for e in __all_typing if e not in __DEPRECATED_TYPES__
 )
@@ -55,9 +55,9 @@ __all_annotated_types__: Tuple[str, ...] = tuple(
     e for e in __all_annotated_types if e != "__version__"
 )
 
-#############
-## Aliases ##
-#############
+# =============================================================================
+# Aliases
+# =============================================================================
 D = Dict
 Lit = Literal
 L = Literal
@@ -66,17 +66,17 @@ Opt = Optional
 U = Union
 Seq = Sequence
 
-###############
-## LITERALLY ##
-###############
+# =============================================================================
+# LITERAL(LY)  # noqa: ERA001
+# =============================================================================
 TRUE = Literal[True]
 FALSE = Literal[False]
 ZERO = Literal[0]
 ONE = Literal[1]
 
-##########
-## NONE ##
-##########
+# =============================================================================
+# NONE
+# =============================================================================
 null = Null = None.__class__
 NoneType = None.__class__
 NoneStr = Optional[str]
@@ -84,15 +84,15 @@ NoneBytes = Optional[bytes]
 StrBytes = Union[str, bytes]
 NoneStrBytes = Optional[StrBytes]
 
-############
-## NUMBER ##
-############
+# =============================================================================
+# NUMBER
+# =============================================================================
 Number = Union[float, int]  # float or int
 Flint = Union[float, int]  # float or int
 
-##############
-## TypeVars ##
-##############
+# =============================================================================
+# TypeVars
+# =============================================================================
 T = TypeVar("T")  # Any type.
 _T = TypeVar("_T")
 KT = TypeVar("KT")  # Key type.
@@ -116,17 +116,17 @@ DT = TypeVar("DT")
 _DT = TypeVar("_DT")
 T_Retval = TypeVar("T_Retval")
 
-###############
-## ParamSpec ##
-###############
+# =============================================================================
+# ParamSpec
+# =============================================================================
 P = ParamSpec("P")
 PT = ParamSpec("PT")
 T_ParamSpec = ParamSpec("T_ParamSpec")
 
 
-########################
-## Covariant TypeVars ##
-########################
+# =============================================================================
+# Covariant TypeVars
+# =============================================================================
 KT_co = TypeVar("KT_co", covariant=True)
 T_co = TypeVar("T_co", covariant=True)  # Any type covariant containers.
 V_co = TypeVar("V_co", covariant=True)  # Any type covariant containers.
@@ -137,9 +137,9 @@ _T_co = TypeVar("_T_co", covariant=True)
 _V_co = TypeVar("_V_co", covariant=True)
 _VT_co = TypeVar("_VT_co", covariant=True)
 
-############################
-## Contravariant TypeVars ##
-############################
+# =============================================================================
+# Contravariant TypeVars
+# =============================================================================
 T_contra = TypeVar("T_contra", contravariant=True)  # Ditto contravariant.
 _T_contra = TypeVar("_T_contra", contravariant=True)  # Ditto contravariant.
 VT_contra = TypeVar("VT_contra", contravariant=True)
@@ -156,9 +156,9 @@ class StrEnum(StringEnum):
     """Alias for StringEnum"""
 
 
-################
-## Function-y ##
-################
+# =============================================================================
+# Function-y
+# =============================================================================
 AnyCallable = Callable[..., Any]
 AnyAsyncCallable = Callable[..., Awaitable[Any]]
 FuncType = Callable[..., Any]
@@ -170,15 +170,15 @@ AF = TypeVar("AF", bound=Awaitable[Any])
 AFn = TypeVar("AFn", bound=Awaitable[Any])
 AsyncFn = TypeVar("AsyncFn", bound=Awaitable[Any])
 
-#################
-## STDIO/STDIN ##
-#################
+# =============================================================================
+# STDIO/STDIN
+# =============================================================================
 STDIO = Union[None, int, bytes, IO[Any]]
 STDIN = Union[bytes, str, None]
 
-###########
-## LISTS ##
-###########
+# =============================================================================
+# LISTS
+# =============================================================================
 ListAny = List[Any]
 ListT = List[T]
 ListStr = List[str]
@@ -186,9 +186,9 @@ ListInt = List[int]
 ListFloat = List[float]
 ListNumber = List[Number]
 
-############################
-## LISTLESS AKA iterables ##
-############################
+# =============================================================================
+# LISTLESS AKA iterables
+# =============================================================================
 IterableAny = Iterable[Any]
 IterableT = Iterable[T]
 IterableStr = Iterable[str]
@@ -196,9 +196,9 @@ IterableInt = Iterable[int]
 IterableFloat = Iterable[float]
 IterableNumber = Iterable[Number]
 
-##########
-## DICT ##
-##########
+# =============================================================================
+# DICT
+# =============================================================================
 DictAny = Dict[Any, Any]
 DictStr = Dict[str, str]
 DictInt = Dict[int, int]
@@ -212,9 +212,9 @@ DictNumberNumber = Dict[Number, Number]
 DictStrAny = Dict[str, Any]
 DictStrInt = Dict[str, int]
 
-#########
-## SET ##
-#########
+# =============================================================================
+# SET
+# =============================================================================
 SetAny = Set[Any]
 SetT = Set[T]
 SetStr = Set[str]
@@ -222,9 +222,9 @@ SetInt = Set[int]
 SetFloat = Set[float]
 SetNumber = Set[Number]
 
-##########
-## MISC ##
-##########
+# =============================================================================
+# MISC
+# =============================================================================
 IntStr = Union[int, str]
 Bytes = Union[bytes, bytearray]
 Txt = Union[bytes, str]
@@ -235,9 +235,9 @@ AnyFunction = Union[Callable[..., R], Callable[..., Awaitable[R]]]
 StrIntFloat = Union[str, float, int]
 HrTime = Tuple[int, int]  # node/js hrtime type annotation
 
-###############################
-## Function type annotations ##
-###############################
+# =============================================================================
+# Function type annotations
+# =============================================================================
 if TYPE_CHECKING:
     PathLikeAny = PathLike[Any]
     PathLikeStr = PathLike[str]
@@ -253,9 +253,9 @@ FsPathLike = "PathLike[Any]"
 EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
 CmdArgs = CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
 
-##############
-## LISTLESS ##
-##############
+# =============================================================================
+# LISTLESS
+# =============================================================================
 ArrShape = Tuple[int, ...]
 ArrayShape = Tuple[int, ...]
 ShapeType = Tuple[int, ...]
@@ -263,9 +263,9 @@ TupleStrs = Tuple[str, ...]
 ListListStr = List[List[str]]
 TupleStrStr = Tuple[str, str]
 
-#########
-## OPT ##
-#########
+# =============================================================================
+# OPT
+# =============================================================================
 OptionalInt = Optional[int]
 OptInt = Optional[int]
 OptionalStr = Optional[str]
@@ -273,9 +273,9 @@ OptStr = Optional[str]
 OptionalFloat = Optional[float]
 OptFloat = Optional[float]
 
-##########
-## JSON ##
-##########
+# =============================================================================
+# JSON
+# =============================================================================
 JsonPrimitive = Union[None, bool, int, float, str]
 Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]
 JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]
@@ -284,9 +284,9 @@ JsonListT = List[Any]
 JsonObjT = Dict[str, Any]
 JsonArrT = List[Any]
 
-###################
-## FROM TYPESHED ##
-###################
+# =============================================================================
+# FROM TYPESHED
+# =============================================================================
 StrPath = Union[str, "PathLike[str]"]  # stable
 BytesPath = Union[bytes, "PathLike[bytes]"]  # stable
 StrOrBytesPath = Union[str, bytes, "PathLike[Any]"]
@@ -362,9 +362,9 @@ OpenBinaryMode = Union[
     OpenBinaryModeUpdating, OpenBinaryModeReading, OpenBinaryModeWriting
 ]
 
-#############
-## __all__ ##
-#############
+# =============================================================================
+# __all__
+# =============================================================================
 __all__ = (
     "AF",
     "DT",
