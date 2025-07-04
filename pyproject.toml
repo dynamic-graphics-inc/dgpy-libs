@@ -126,7 +126,6 @@ lint.ignore = [
   "D104", # undocumented-public-package
   "D105", # undocumented-magic-method
   "D107", # undocumented-public-init
-
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
   # "E266", # too many leading '#' for block comment
