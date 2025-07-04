@@ -14,10 +14,7 @@ R = TypeVar("R")
 def deprecated_alias(
     target: Callable[P, R], *, msg: str | None = None
 ) -> Callable[P, R]:
-    _warn_msg = (
-        f"{target.__name__}() is deprecated and will be removed in a future "
-        f"release; use {target.__name__}() instead."
-    )
+    _warn_msg = f"use of deprecated alias which will be removed in a future release; use {target.__name__}() instead."
 
     @wraps(target)
     def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
