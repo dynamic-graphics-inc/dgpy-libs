@@ -11,6 +11,7 @@ from typing import Any, AsyncIterable, Callable, List, Optional
 from aiopen import aiopen
 from jsonbourne import JSON
 from shellfish import aios
+from shellfish._internal import deprecated_alias
 from xtyping import AsyncIterator, FsPath, Iterable, Union
 
 __all__ = (
@@ -568,14 +569,14 @@ async def wjson_async(
     )
 
 
-ljson_async = rjson_async
-sjson_async = wjson_async
-lbytes_async = rbin_async = rbytes_async
-sbytes_async = wbin_async = sbin_async = wbytes_async
-lstring_async = rstr_async = lstr_async = rstring_async
-sstring_async = wstr_async = sstr_async = wstring_async
-lbytes_gen_async = rbin_gen_async = rbytes_gen_async
-sbytes_gen_async = wbin_gen_async = wbytes_gen_async
+ljson_async = deprecated_alias(rjson_async)
+sjson_async = deprecated_alias(wjson_async)
+lbytes_async = rbin_async = deprecated_alias(rbytes_async)
+sbytes_async = wbin_async = sbin_async = deprecated_alias(wbytes_async)
+lstring_async = rstr_async = lstr_async = deprecated_alias(rstring_async)
+sstring_async = wstr_async = sstr_async = deprecated_alias(wstring_async)
+lbytes_gen_async = rbin_gen_async = deprecated_alias(rbytes_gen_async)
+sbytes_gen_async = wbin_gen_async = deprecated_alias(wbytes_gen_async)
 
 if __name__ == "__main__":
     import doctest

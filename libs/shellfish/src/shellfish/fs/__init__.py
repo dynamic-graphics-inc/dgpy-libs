@@ -30,6 +30,7 @@ from jsonbourne import JSON
 from listless import exhaust
 from shellfish import const
 from shellfish.__about__ import __version__
+from shellfish._internal import deprecated_alias
 from shellfish._types import FsPath, SymlinkType
 from shellfish.fs._async import (
     dir_exists_async as dir_exists_async,
@@ -1673,14 +1674,14 @@ def cp(
 mv = move
 
 # IO function aliases ~ for backwards compatibility and convenience
-lbytes = rbin = lbin = rbytes
-sbytes = wbin = sbin = wbytes
-lbytes_gen = rbin_gen = rbytes_gen
-sbytes_gen = wbin_gen = wbytes_gen
-lstring = rstr = lstr = rstring
-sstring = wstr = sstr = wstring
-ljson = rjson
-sjson = wjson
+lbytes = rbin = lbin = deprecated_alias(rbytes)
+sbytes = wbin = sbin = deprecated_alias(wbytes)
+lbytes_gen = rbin_gen = deprecated_alias(rbytes_gen)
+sbytes_gen = wbin_gen = deprecated_alias(wbytes_gen)
+lstring = rstr = lstr = deprecated_alias(rstring)
+sstring = wstr = sstr = deprecated_alias(wstring)
+ljson = deprecated_alias(rjson)
+sjson = deprecated_alias(wjson)
 
 # module exports
 __all__ = (

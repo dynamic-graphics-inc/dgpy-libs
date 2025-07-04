@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "shellfish"
-version = "0.6.0"
+version = "0.6.1"
 description = "shellfish ~ shell & file-system utils"
 readme = "README.md"
 keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]
