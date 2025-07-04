@@ -54,6 +54,10 @@ from shellfish.fs._async import (
     rbin_gen_async as rbin_gen_async,
     rbytes_async as rbytes_async,
     rbytes_gen_async as rbytes_gen_async,
+    read_bytes_async as read_bytes_async,
+    read_bytes_gen_async as read_bytes_gen_async,
+    read_json_async as read_json_async,
+    read_string_async as read_string_async,
     rjson_async as rjson_async,
     rstr_async as rstr_async,
     rstring_async as rstring_async,
@@ -69,6 +73,10 @@ from shellfish.fs._async import (
     wbytes_async as wbytes_async,
     wbytes_gen_async as wbytes_gen_async,
     wjson_async as wjson_async,
+    write_bytes_async as write_bytes_async,
+    write_bytes_gen_async as write_bytes_gen_async,
+    write_json_async as write_json_async,
+    write_string_async as write_string_async,
     wstr_async as wstr_async,
     wstring_async as wstring_async,
 )
@@ -939,7 +947,7 @@ def path_gen(
     )
 
 
-def wbytes(
+def write_bytes(
     filepath: FsPath,
     bites: bytes,
     *,
@@ -962,14 +970,14 @@ def wbytes(
         int: Number of bytes written
 
     Examples:
-        >>> from shellfish.fs import rbytes, wbytes
+        >>> from shellfish.fs import read_bytes, write_bytes
         >>> fspath = "wbytes.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
-        >>> wbytes(fspath, bites_to_save)
+        >>> write_bytes(fspath, bites_to_save)
         20
-        >>> rbytes(fspath)
+        >>> read_bytes(fspath)
         b'These are some bytes'
         >>> import os; os.remove(fspath)
 
@@ -982,8 +990,8 @@ def wbytes(
     return nbytes
 
 
-def rbytes(filepath: FsPath) -> bytes:
-    """Load/Read bytes from a fspath
+def read_bytes(filepath: FsPath) -> bytes:
+    """Read bytes from a fspath
 
     Args:
         filepath: fspath read as bytes
@@ -992,14 +1000,14 @@ def rbytes(filepath: FsPath) -> bytes:
         bytes from the fspath
 
     Examples:
-        >>> from shellfish.fs import rbytes, wbytes
+        >>> from shellfish.fs import read_bytes, write_bytes
         >>> fspath = "rbytes.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
-        >>> wbytes(fspath, bites_to_save)
+        >>> write_bytes(fspath, bites_to_save)
         20
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
-        >>> rbytes(fspath)
+        >>> read_bytes(fspath)
         b'These are some bytes'
         >>> import os; os.remove(fspath)
 
@@ -1023,8 +1031,8 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
         >>> string
         '1\n2\n3\n4\n5\n6\n7\n8\n9'
         >>> fspath = "file_lines_gen.doctest.txt"
-        >>> from shellfish.fs import wstring
-        >>> wstring(fspath, string)
+        >>> from shellfish.fs import write_string
+        >>> write_string(fspath, string)
         17
         >>> for file_line in file_lines_gen(fspath):
         ...     file_line
@@ -1059,7 +1067,7 @@ def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
             yield from (line.rstrip("\n").rstrip("\r\n") for line in f)
 
 
-def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
+def read_bytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
     """Yield bytes from a given fspath"""
     with open(filepath, "rb") as f:
         while True:
@@ -1069,7 +1077,7 @@ def rbytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
             yield data
 
 
-def wbytes_gen(
+def write_bytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
@@ -1088,14 +1096,14 @@ def wbytes_gen(
         int: Number of bytes written
 
     Examples:
-        >>> from shellfish.fs import rbytes, wbytes
+        >>> from shellfish.fs import read_bytes, write_bytes
         >>> fspath = "wbytes_gen.doctest.txt"
         >>> bites_to_save = (b"These are some bytes... ", b"more bytes!")
         >>> bites_to_save  # they are bytes!
         (b'These are some bytes... ', b'more bytes!')
-        >>> wbytes_gen(fspath, (b for b in bites_to_save))
+        >>> write_bytes_gen(fspath, (b for b in bites_to_save))
         35
-        >>> rbytes(fspath)
+        >>> read_bytes(fspath)
         b'These are some bytes... more bytes!'
         >>> import os; os.remove(fspath)
 
@@ -1108,7 +1116,7 @@ def wbytes_gen(
     return nbytes_written
 
 
-def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
+def read_string(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     r"""Load/Read a string given a fspath
 
     Args:
@@ -1120,7 +1128,7 @@ def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
 
     Examples:
         ``` python
-        >>> from shellfish.fs import rstring, wstring
+        >>> from shellfish.fs import read_string, write_string
         >>> fspath = "lstring.doctest.txt"
         >>> sstring(fspath, r'Check out this string')
         21
@@ -1131,7 +1139,7 @@ def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
         ```
 
     """
-    _bytes = rbytes(filepath=filepath)
+    _bytes = read_bytes(filepath=filepath)
     try:
         return _bytes.decode(encoding=encoding)
     except UnicodeDecodeError:  # Catch the unicode decode error
@@ -1139,7 +1147,7 @@ def rstring(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     return _bytes.decode(encoding="latin2")
 
 
-def wstring(
+def write_string(
     filepath: FsPath,
     string: str,
     *,
@@ -1160,16 +1168,16 @@ def wstring(
         None
 
     Examples:
-        >>> from shellfish.fs import rstring, wstring
+        >>> from shellfish.fs import read_string, write_string
         >>> fspath = "sstring.doctest.txt"
-        >>> wstring(fspath, r'Check out this string')
+        >>> write_string(fspath, r'Check out this string')
         21
-        >>> rstring(fspath)
+        >>> read_string(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
 
     """
-    return wbytes(
+    return write_bytes(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
@@ -1177,7 +1185,7 @@ def wstring(
     )
 
 
-def wjson(
+def write_json(
     filepath: FsPath,
     data: Any,
     *,
@@ -1210,15 +1218,15 @@ def wjson(
     Examples:
         Imports:
 
-        >>> from shellfish.fs import rjson, wjson
+        >>> from shellfish.fs import read_json, write_json
 
         Dictionaries:
 
         >>> data = {'a': 1, 'b': 2, 'c': 3}
         >>> fspath = "rjson_dict.doctest.json"
-        >>> wjson(fspath, data)
+        >>> write_json(fspath, data)
         19
-        >>> rjson(fspath)
+        >>> read_json(fspath)
         {'a': 1, 'b': 2, 'c': 3}
         >>> import os; os.remove(fspath)
 
@@ -1229,15 +1237,15 @@ def wjson(
         >>> data  # has tuples, but will be saved as strings
         [('a', 1), ('b', 2), ('c', 3)]
         >>> fspath = "rjson_dict.doctest.json"
-        >>> wjson(fspath, data)
+        >>> write_json(fspath, data)
         25
-        >>> rjson(fspath)
+        >>> read_json(fspath)
         [['a', 1], ['b', 2], ['c', 3]]
         >>> os.remove(fspath)
 
 
     """
-    return wbytes(
+    return write_bytes(
         filepath=filepath,
         bites=JSON.dumpb(
             data=data,
@@ -1253,7 +1261,7 @@ def wjson(
     )
 
 
-def rjson(filepath: FsPath) -> Any:
+def read_json(filepath: FsPath) -> Any:
     """Load/Read-&-parse json data given a fspath
 
     Args:
@@ -1265,15 +1273,15 @@ def rjson(filepath: FsPath) -> Any:
     Examples:
         Imports:
 
-        >>> from shellfish.fs import rjson, wjson
+        >>> from shellfish.fs import read_json, write_json
 
         Dictionaries:
 
         >>> data = {'a': 1, 'b': 2, 'c': 3}
         >>> fspath = "rjson_dict.doctest.json"
-        >>> wjson(fspath, data)
+        >>> write_json(fspath, data)
         19
-        >>> rjson(fspath)
+        >>> read_json(fspath)
         {'a': 1, 'b': 2, 'c': 3}
         >>> import os; os.remove(fspath)
 
@@ -1284,9 +1292,9 @@ def rjson(filepath: FsPath) -> Any:
         >>> data  # has tuples, but will be saved as strings
         [('a', 1), ('b', 2), ('c', 3)]
         >>> fspath = "rjson_dict.doctest.json"
-        >>> wjson(fspath, data)
+        >>> write_json(fspath, data)
         25
-        >>> rjson(fspath)
+        >>> read_json(fspath)
         [['a', 1], ['b', 2], ['c', 3]]
         >>> os.remove(fspath)
 
@@ -1369,8 +1377,8 @@ def filecmp(
     return not any(
         left_chunk != right_chunk
         for left_chunk, right_chunk in zip(
-            rbytes_gen(left, blocksize=blocksize),
-            rbytes_gen(right, blocksize=blocksize),
+            read_bytes_gen(left, blocksize=blocksize),
+            read_bytes_gen(right, blocksize=blocksize),
         )
     )
 
@@ -1624,7 +1632,7 @@ def copy_file(
     elif not _dest.parent.exists() or not _dest.parent.is_dir():
         raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
     if not dryrun:
-        wbytes_gen(dest, lbytes_gen(src, blocksize=2**18))
+        write_bytes_gen(dest, lbytes_gen(src, blocksize=2**18))
         _copystat(src, dest, follow_symlinks=True)
     return (str(src), str(dest))
 
@@ -1674,14 +1682,14 @@ def cp(
 mv = move
 
 # IO function aliases ~ for backwards compatibility and convenience
-lbytes = rbin = lbin = deprecated_alias(rbytes)
-sbytes = wbin = sbin = deprecated_alias(wbytes)
-lbytes_gen = rbin_gen = deprecated_alias(rbytes_gen)
-sbytes_gen = wbin_gen = deprecated_alias(wbytes_gen)
-lstring = rstr = lstr = deprecated_alias(rstring)
-sstring = wstr = sstr = deprecated_alias(wstring)
-ljson = deprecated_alias(rjson)
-sjson = deprecated_alias(wjson)
+lbytes = rbin = lbin = rbytes = deprecated_alias(read_bytes)
+sbytes = wbin = sbin = wbytes = deprecated_alias(write_bytes)
+lbytes_gen = rbin_gen = rbytes_gen = deprecated_alias(read_bytes_gen)
+sbytes_gen = wbin_gen = wbytes_gen = deprecated_alias(write_bytes_gen)
+lstring = rstr = lstr = rstring = deprecated_alias(read_string)
+sstring = wstr = sstr = wstring = deprecated_alias(write_string)
+ljson = rjson = deprecated_alias(read_json)
+sjson = wjson = deprecated_alias(write_json)
 
 # module exports
 __all__ = (
@@ -1750,6 +1758,14 @@ __all__ = (
     "rbytes_async",
     "rbytes_gen",
     "rbytes_gen_async",
+    "read_bytes",
+    "read_bytes_async",
+    "read_bytes_gen",
+    "read_bytes_gen_async",
+    "read_json",
+    "read_json_async",
+    "read_string",
+    "read_string_async",
     "rename",
     "rjson",
     "rjson_async",
@@ -1799,6 +1815,14 @@ __all__ = (
     "wbytes_gen_async",
     "wjson",
     "wjson_async",
+    "write_bytes",
+    "write_bytes_async",
+    "write_bytes_gen",
+    "write_bytes_gen_async",
+    "write_json",
+    "write_json_async",
+    "write_string",
+    "write_string_async",
     "wstr",
     "wstr_async",
     "wstring",

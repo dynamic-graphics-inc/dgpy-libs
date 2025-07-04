@@ -107,6 +107,14 @@ from shellfish.fs import (
     rbytes_async as rbytes_async,
     rbytes_gen as rbytes_gen,
     rbytes_gen_async as rbytes_gen_async,
+    read_bytes as read_bytes,
+    read_bytes_async as read_bytes_async,
+    read_bytes_gen as read_bytes_gen,
+    read_bytes_gen_async as read_bytes_gen_async,
+    read_json as read_json,
+    read_json_async as read_json_async,
+    read_string as read_string,
+    read_string_async as read_string_async,
     rename as rename,
     rjson as rjson,
     rjson_async as rjson_async,
@@ -155,6 +163,14 @@ from shellfish.fs import (
     wbytes_gen_async as wbytes_gen_async,
     wjson as wjson,
     wjson_async as wjson_async,
+    write_bytes as write_bytes,
+    write_bytes_async as write_bytes_async,
+    write_bytes_gen as write_bytes_gen,
+    write_bytes_gen_async as write_bytes_gen_async,
+    write_json as write_json,
+    write_json_async as write_json_async,
+    write_string as write_string,
+    write_string_async as write_string_async,
     wstr as wstr,
     wstr_async as wstr_async,
     wstring as wstring,
@@ -281,6 +297,14 @@ __all__ = (
     "rbytes_async",
     "rbytes_gen",
     "rbytes_gen_async",
+    "read_bytes",
+    "read_bytes_async",
+    "read_bytes_gen",
+    "read_bytes_gen_async",
+    "read_json",
+    "read_json_async",
+    "read_string",
+    "read_string_async",
     "rename",
     "rjson",
     "rjson_async",
@@ -351,6 +375,14 @@ __all__ = (
     "which_lru",
     "wjson",
     "wjson_async",
+    "write_bytes",
+    "write_bytes_async",
+    "write_bytes_gen",
+    "write_bytes_gen_async",
+    "write_json",
+    "write_json_async",
+    "write_string",
+    "write_string_async",
     "wstr",
     "wstr_async",
     "wstring",
@@ -637,7 +669,7 @@ class Done(JsonBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.wstring(Path(filepath), self.stdout, append=append)
+        fs.write_string(Path(filepath), self.stdout, append=append)
 
     def completed_process(self) -> CompletedProcess[str]:
         """Return subprocess.CompletedProcess object"""
@@ -656,7 +688,7 @@ class Done(JsonBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.wstring(Path(filepath), self.stderr, append=append)
+        fs.write_string(Path(filepath), self.stderr, append=append)
 
     def __gt__(self, filepath: FsPath) -> None:
         """Operator overload for writing a stdout to a fspath

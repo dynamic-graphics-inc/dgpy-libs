@@ -9,7 +9,7 @@ from os import getcwd, path
 from shlex import split as shplit
 from typing import TYPE_CHECKING
 
-from shellfish.fs import rstring as _rstring
+from shellfish.fs import read_string as _rstring
 
 if TYPE_CHECKING:
     from xtyping import Dict, FsPath, Optional

@@ -414,7 +414,7 @@ def change(
     )
     if not changelog_json_filepath.exists():
         console.log(f"Creating {changelog_json_filepath}")
-        sh.wjson(
+        sh.write_json(
             changelog_json_filepath,
             {"changes": [], "updated": datetime.datetime.now().isoformat()},
         )

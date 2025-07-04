@@ -9,7 +9,7 @@ from pathlib import Path
 from random import choice as rand_choice, randint
 from typing import TYPE_CHECKING, Dict, List, Optional
 
-from shellfish.fs import wstring
+from shellfish.fs import write_string
 
 if TYPE_CHECKING:
     from xtyping import FsPath
@@ -87,5 +87,5 @@ def mk_random_dirtree(
             file_name = random_string(5) + ".txt"
             file_path = path.join(dp, file_name)
             all_filepaths.append(file_path)
-            wstring(file_path, file_string)
+            write_string(file_path, file_string)
     return {"dirpaths": all_dirpaths, "filepaths": all_filepaths}

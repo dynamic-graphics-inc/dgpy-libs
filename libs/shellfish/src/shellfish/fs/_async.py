@@ -38,6 +38,10 @@ __all__ = (
     "rbin_gen_async",
     "rbytes_async",
     "rbytes_gen_async",
+    "read_bytes_async",
+    "read_bytes_gen_async",
+    "read_json_async",
+    "read_string_async",
     "rjson_async",
     "rstr_async",
     "rstring_async",
@@ -53,6 +57,10 @@ __all__ = (
     "wbytes_async",
     "wbytes_gen_async",
     "wjson_async",
+    "write_bytes_async",
+    "write_bytes_gen_async",
+    "write_json_async",
+    "write_string_async",
     "wstr_async",
     "wstring_async",
 )
@@ -163,7 +171,7 @@ async def mkdirp_async(fspath: FsPath) -> None:
 
 
 # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO # IO #
-async def wbytes_async(
+async def write_bytes_async(
     filepath: FsPath,
     bites: bytes,
     *,
@@ -185,15 +193,15 @@ async def wbytes_async(
         None
 
     Examples:
-        >>> from shellfish.fs._async import rbytes_async, wbytes_async
+        >>> from shellfish.fs._async import read_bytes_async, write_bytes_async
         >>> from asyncio import run as aiorun
         >>> fspath = "wbytes_async.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
-        >>> aiorun(wbytes_async(fspath, bites_to_save))
+        >>> aiorun(write_bytes_async(fspath, bites_to_save))
         20
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
-        >>> aiorun(rbytes_async(fspath))
+        >>> aiorun(read_bytes_async(fspath))
         b'These are some bytes'
         >>> import os; os.remove(fspath)
 
@@ -206,7 +214,7 @@ async def wbytes_async(
     return int(nbytes)
 
 
-async def rbytes_async(filepath: FsPath) -> bytes:
+async def read_bytes_async(filepath: FsPath) -> bytes:
     """(ASYNC) Load/Read bytes from a fspath
 
     Args:
@@ -216,15 +224,15 @@ async def rbytes_async(filepath: FsPath) -> bytes:
         bytes from the fspath
 
     Examples:
-        >>> from shellfish.fs._async import rbytes_async, wbytes_async
+        >>> from shellfish.fs._async import read_bytes_async, write_bytes_async
         >>> from asyncio import run as aiorun
         >>> fspath = "rbytes_async.doctest.txt"
         >>> bites_to_save = b"These are some bytes"
-        >>> aiorun(wbytes_async(fspath, bites_to_save))
+        >>> aiorun(write_bytes_async(fspath, bites_to_save))
         20
         >>> bites_to_save  # they are bytes!
         b'These are some bytes'
-        >>> aiorun(rbytes_async(fspath))
+        >>> aiorun(read_bytes_async(fspath))
         b'These are some bytes'
         >>> import os; os.remove(fspath)
 
@@ -234,7 +242,7 @@ async def rbytes_async(filepath: FsPath) -> bytes:
     return bytes(b)
 
 
-async def rbytes_gen_async(
+async def read_bytes_gen_async(
     filepath: FsPath, blocksize: int = 65536
 ) -> AsyncIterable[Union[bytes, str]]:
     """Yield (asynchronously) bytes from a given fspath
@@ -249,15 +257,15 @@ async def rbytes_gen_async(
     Examples:
         >>> from os import remove
         >>> from asyncio import run
-        >>> from shellfish.fs._async import wbytes_gen_async, rbytes_gen_async
+        >>> from shellfish.fs._async import write_bytes_gen_async, read_bytes_gen_async
         >>> fspath = 'rbytes_gen_async.doctest.txt'
         >>> bites_to_save = (b"These are some bytes... ", b"more bytes!")
         >>> bites_to_save
         (b'These are some bytes... ', b'more bytes!')
-        >>> run(wbytes_gen_async(fspath, bites_to_save))
+        >>> run(write_bytes_gen_async(fspath, bites_to_save))
         35
         >>> async def read():
-        ...     async for b in rbytes_gen_async(fspath, blocksize=4):
+        ...     async for b in read_bytes_gen_async(fspath, blocksize=4):
         ...         print(b)
         >>> run(read())
         b'Thes'
@@ -273,7 +281,7 @@ async def rbytes_gen_async(
         >>> async def async_gen():
         ...     for b in bites_to_save:
         ...        yield b
-        >>> run(wbytes_gen_async(fspath, bites_to_save))
+        >>> run(write_bytes_gen_async(fspath, bites_to_save))
         35
         >>> run(read())
         b'Thes'
@@ -289,7 +297,7 @@ async def rbytes_gen_async(
         >>> class AsyncIterable:
         ...     def __aiter__(self):
         ...         return async_gen()
-        >>> run(wbytes_gen_async(fspath, AsyncIterable()))
+        >>> run(write_bytes_gen_async(fspath, AsyncIterable()))
         35
         >>> run(read())
         b'Thes'
@@ -312,7 +320,7 @@ async def rbytes_gen_async(
             yield data
 
 
-async def wbytes_gen_async(
+async def write_bytes_gen_async(
     filepath: FsPath,
     bytes_gen: Union[Iterable[bytes], AsyncIterable[bytes]],
     *,
@@ -333,15 +341,15 @@ async def wbytes_gen_async(
     Examples:
         >>> from os import remove
         >>> from asyncio import run
-        >>> from shellfish.fs._async import wbytes_gen_async, rbytes_gen_async
+        >>> from shellfish.fs._async import write_bytes_gen_async, read_bytes_gen_async
         >>> fspath = 'wbytes_gen_async.doctest.txt'
         >>> bites_to_save = (b"These are some bytes... ", b"more bytes!")
         >>> bites_to_save
         (b'These are some bytes... ', b'more bytes!')
-        >>> run(wbytes_gen_async(fspath, bites_to_save))
+        >>> run(write_bytes_gen_async(fspath, bites_to_save))
         35
         >>> async def read():
-        ...     async for b in rbytes_gen_async(fspath, blocksize=4):
+        ...     async for b in read_bytes_gen_async(fspath, blocksize=4):
         ...         print(b)
         >>> run(read())
         b'Thes'
@@ -357,7 +365,7 @@ async def wbytes_gen_async(
         >>> async def async_gen():
         ...     for b in bites_to_save:
         ...        yield b
-        >>> run(wbytes_gen_async(fspath, bites_to_save))
+        >>> run(write_bytes_gen_async(fspath, bites_to_save))
         35
         >>> run(read())
         b'Thes'
@@ -373,7 +381,7 @@ async def wbytes_gen_async(
         >>> class AsyncIterable:
         ...     def __aiter__(self):
         ...         return async_gen()
-        >>> run(wbytes_gen_async(fspath, AsyncIterable()))
+        >>> run(write_bytes_gen_async(fspath, AsyncIterable()))
         35
         >>> run(read())
         b'Thes'
@@ -405,7 +413,7 @@ async def wbytes_gen_async(
     return _bytes_written
 
 
-async def rstring_async(filepath: FsPath, encoding: str = "utf-8") -> str:
+async def read_string_async(filepath: FsPath, encoding: str = "utf-8") -> str:
     r"""(ASYNC) Load/Read a string given a fspath
 
     Args:
@@ -416,10 +424,10 @@ async def rstring_async(filepath: FsPath, encoding: str = "utf-8") -> str:
         str: String read from given fspath
 
     """
-    return (await rbytes_async(filepath)).decode(encoding=encoding)
+    return (await read_bytes_async(filepath)).decode(encoding=encoding)
 
 
-async def wstring_async(
+async def write_string_async(
     filepath: FsPath,
     string: str,
     *,
@@ -440,7 +448,7 @@ async def wstring_async(
         int: number of bytes written
 
     """
-    return await wbytes_async(
+    return await write_bytes_async(
         filepath=filepath,
         bites=string.encode(encoding),
         append=append,
@@ -448,7 +456,7 @@ async def wstring_async(
     )
 
 
-async def rjson_async(filepath: FsPath) -> Any:
+async def read_json_async(filepath: FsPath) -> Any:
     """Load/Read-&-parse json data given a fspath
 
     Args:
@@ -461,15 +469,15 @@ async def rjson_async(filepath: FsPath) -> Any:
         Imports:
 
         >>> from asyncio import run
-        >>> from shellfish.fs._async import rjson_async, wjson_async
+        >>> from shellfish.fs._async import read_json_async, write_json_async
 
         Dictionaries:
 
         >>> data = {'a': 1, 'b': 2, 'c': 3}
         >>> fspath = "rjson_async_dict.doctest.json"
-        >>> run(wjson_async(fspath, data))
+        >>> run(write_json_async(fspath, data))
         19
-        >>> run(rjson_async(fspath))
+        >>> run(read_json_async(fspath))
         {'a': 1, 'b': 2, 'c': 3}
         >>> import os; os.remove(fspath)
 
@@ -480,19 +488,19 @@ async def rjson_async(filepath: FsPath) -> Any:
         >>> data  # has tuples, but will be saved as strings
         [('a', 1), ('b', 2), ('c', 3)]
         >>> fspath = "rjson_async_list.doctest.json"
-        >>> run(wjson_async(fspath, data))
+        >>> run(write_json_async(fspath, data))
         25
-        >>> run(rjson_async(fspath))
+        >>> run(read_json_async(fspath))
         [['a', 1], ['b', 2], ['c', 3]]
 
         >>> import os; os.remove(fspath)
 
     """
-    json_string = await rbytes_async(filepath)
+    json_string = await read_bytes_async(filepath)
     return JSON.loads(json_string)
 
 
-async def wjson_async(
+async def write_json_async(
     filepath: FsPath,
     data: Any,
     *,
@@ -526,15 +534,15 @@ async def wjson_async(
         Imports:
 
         >>> from asyncio import run
-        >>> from shellfish.fs._async import rjson_async, wjson_async
+        >>> from shellfish.fs._async import read_json_async, write_json_async
 
         Dictionaries:
 
         >>> data = {'a': 1, 'b': 2, 'c': 3}
         >>> fspath = "wjson_async_dict.doctest.json"
-        >>> run(wjson_async(fspath, data))
+        >>> run(write_json_async(fspath, data))
         19
-        >>> run(rjson_async(fspath))
+        >>> run(read_json_async(fspath))
         {'a': 1, 'b': 2, 'c': 3}
         >>> import os; os.remove(fspath)
 
@@ -545,15 +553,15 @@ async def wjson_async(
         >>> data  # has tuples, but will be saved as strings
         [('a', 1), ('b', 2), ('c', 3)]
         >>> fspath = "wjson_async_list.doctest.json"
-        >>> run(wjson_async(fspath, data))
+        >>> run(write_json_async(fspath, data))
         25
-        >>> run(rjson_async(fspath))
+        >>> run(read_json_async(fspath))
         [['a', 1], ['b', 2], ['c', 3]]
 
         >>> import os; os.remove(fspath)
 
     """
-    return await wbytes_async(
+    return await write_bytes_async(
         filepath=filepath,
         bites=JSON.dumpb(
             data=data,
@@ -569,14 +577,24 @@ async def wjson_async(
     )
 
 
-ljson_async = deprecated_alias(rjson_async)
-sjson_async = deprecated_alias(wjson_async)
-lbytes_async = rbin_async = deprecated_alias(rbytes_async)
-sbytes_async = wbin_async = sbin_async = deprecated_alias(wbytes_async)
-lstring_async = rstr_async = lstr_async = deprecated_alias(rstring_async)
-sstring_async = wstr_async = sstr_async = deprecated_alias(wstring_async)
-lbytes_gen_async = rbin_gen_async = deprecated_alias(rbytes_gen_async)
-sbytes_gen_async = wbin_gen_async = deprecated_alias(wbytes_gen_async)
+ljson_async = rjson_async = deprecated_alias(read_json_async)
+sjson_async = wjson_async = deprecated_alias(write_json_async)
+lbytes_async = rbin_async = rbytes_async = deprecated_alias(read_bytes_async)
+sbytes_async = wbin_async = sbin_async = wbytes_async = deprecated_alias(
+    write_bytes_async
+)
+lstring_async = rstr_async = lstr_async = rstring_async = deprecated_alias(
+    read_string_async
+)
+sstring_async = wstr_async = sstr_async = wstring_async = deprecated_alias(
+    write_string_async
+)
+lbytes_gen_async = rbin_gen_async = rbytes_gen_async = deprecated_alias(
+    read_bytes_gen_async
+)
+sbytes_gen_async = wbin_gen_async = wbytes_gen_async = deprecated_alias(
+    write_bytes_gen_async
+)
 
 if __name__ == "__main__":
     import doctest
