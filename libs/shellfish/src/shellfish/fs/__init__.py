@@ -25,6 +25,17 @@ from os import (
 from pathlib import Path
 from shutil import copystat as _copystat, copytree, move as _move, rmtree
 from time import time
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    AnyStr,
+    Callable,
+    List,
+    Optional,
+    Tuple,
+    Union,
+    cast,
+)
 
 from jsonbourne import JSON
 from listless import exhaust
@@ -82,19 +93,9 @@ from shellfish.fs._async import (
 )
 from shellfish.process import is_win as _is_win
 from shellfish.stdio import Stdio as Stdio
-from xtyping import (
-    Any,
-    AnyStr,
-    Callable,
-    Generator,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Tuple,
-    Union,
-    cast,
-)
+
+if TYPE_CHECKING:
+    from collections.abc import Generator, Iterable, Iterator
 
 # END-IMPORTS
 

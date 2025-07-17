@@ -1525,8 +1525,8 @@ class LIN(_LIN):
         dest: str,
         delete: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> List[str]:
         """Return args for rsync command on linux/mac
 
@@ -1601,8 +1601,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> Done:
         """Run an `rsync` subprocess
 
@@ -1667,8 +1667,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> Done:
         return LIN.rsync(
             src,

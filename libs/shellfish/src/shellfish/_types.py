@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-import os
-
-from typing import TYPE_CHECKING, Mapping, Sequence, Union
+from collections.abc import Mapping, Sequence
+from os import PathLike
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Union
 
 from typing_extensions import Literal
 
-from xtyping import FsPath as FsPath
-
 if TYPE_CHECKING:
-    PathLikeStr = os.PathLike[str]
-    PathLikeBytes = os.PathLike[bytes]
+    PathLikeAny = PathLike[Any]
+    PathLikeStr = PathLike[str]
+    PathLikeBytes = PathLike[bytes]
     PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
 else:
-    PathLikeStr = os.PathLike
-    PathLikeBytes = os.PathLike
-    PathLikeStrBytes = os.PathLike
-
+    PathLikeAny = PathLike
+    PathLikeStr = PathLike
+    PathLikeBytes = PathLike
+    PathLikeStrBytes = PathLike
+FsPath = Union[str, Path, PathLikeAny]
 PopenArg = Union[str, bytes, PathLikeStrBytes]
 PopenArgv = Sequence[PopenArg]
 PopenArgs = Union[bytes, str, PopenArgv]
