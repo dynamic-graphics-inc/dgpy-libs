@@ -1130,10 +1130,10 @@ def read_str(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     Examples:
         ``` python
         >>> from shellfish.fs import read_str, write_str
-        >>> fspath = "lstring.doctest.txt"
-        >>> sstring(fspath, r'Check out this string')
+        >>> fspath = "read_str.doctest.txt"
+        >>> write_str(fspath, r'Check out this string')
         21
-        >>> lstring(fspath)
+        >>> read_str(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
 
