@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 
 from os import path
-from typing import TYPE_CHECKING, Awaitable, TypeVar
+from typing import Awaitable, TypeVar
 
 import pytest
 
