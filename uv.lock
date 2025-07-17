@@ -2865,7 +2865,6 @@ dependencies = [
     { name = "listless" },
     { name = "pydantic" },
     { name = "typing-extensions" },
-    { name = "xtyping" },
 ]
 
 [package.dev-dependencies]
@@ -2884,7 +2883,6 @@ requires-dist = [
     { name = "listless", editable = "libs/listless" },
     { name = "pydantic", specifier = ">=2.0.3" },
     { name = "typing-extensions", specifier = ">=4.12.2" },
-    { name = "xtyping", editable = "libs/xtyping" },
 ]
 
 [package.metadata.requires-dev]

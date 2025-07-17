@@ -22,8 +22,7 @@ from shellfish import sh
 from shellfish.sh import Done, flatten_args
 
 if TYPE_CHECKING:
-    from shellfish._types import PopenArgs, PopenArgv
-    from xtyping import STDIN, FsPath
+    from shellfish._types import STDIN, FsPath, PopenArgs, PopenArgv
 
 __all__ = (
     "Exe",

@@ -15,17 +15,10 @@ from subprocess import (
     run as run,
 )
 from time import time
-
-from shellfish._types import PopenArgs as PopenArgs  # noqa: TC001
-from shellfish.dev.popen_gen import popen_pipes_gen
-from shellfish.libsh.args import args2cmd
-from shellfish.process import is_win
-from xtyping import (
+from typing import (
     IO,
-    STDIN,
     Any,
     Dict,
-    FsPath,
     List,
     Mapping,
     Optional,
@@ -34,6 +27,15 @@ from xtyping import (
     TypedDict,
     Union,
 )
+
+from shellfish._types import (
+    STDIN,
+    FsPath,
+    PopenArgs as PopenArgs,  # noqa: TC001
+)
+from shellfish.dev.popen_gen import popen_pipes_gen
+from shellfish.libsh.args import args2cmd
+from shellfish.process import is_win
 
 __subprocess_all__ = (
     "CompletedProcess",

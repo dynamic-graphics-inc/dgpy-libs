@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING
 from shellfish.fs import Stdio
 
 if TYPE_CHECKING:
-    from xtyping import IO, Any, AnyStr, Iterable, Optional, Tuple
+    from typing import IO, Any, AnyStr, Iterable, Optional, Tuple
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 
@@ -90,7 +90,9 @@ def popen_pipes_gen(
         raise ValueError("proc.stdout and proc.stderr must be not None")
 
 
-def popen_gen(*popenargs: Any, **popenkwargs: Any) -> Iterable[Tuple[Stdio, str | bytes]]:
+def popen_gen(
+    *popenargs: Any, **popenkwargs: Any
+) -> Iterable[Tuple[Stdio, str | bytes]]:
     """Create and open a subprocess and yield tuples with stdout/stderr lines
 
     Args:
