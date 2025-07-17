@@ -10,7 +10,10 @@ from funkify import funkify as _funkify
 from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
 from shellfish.__about__ import __version__ as __version__
 from shellfish._types import (
+    STDIN as STDIN,
+    STDIO as STDIO,
     FsPath as FsPath,
+    PathLikeAny as PathLikeAny,
     PathLikeBytes as PathLikeBytes,
     PathLikeStr as PathLikeStr,
     PathLikeStrBytes as PathLikeStrBytes,

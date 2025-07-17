@@ -6,7 +6,7 @@ from os import PathLike
 from pathlib import Path
 from typing import IO, TYPE_CHECKING, Any, Union
 
-from typing_extensions import Literal
+from typing_extensions import Literal, TypeAlias
 
 if TYPE_CHECKING:
     PathLikeAny = PathLike[Any]
@@ -24,8 +24,8 @@ PopenArgv = Sequence[PopenArg]
 PopenArgs = Union[bytes, str, PopenArgv]
 PopenEnv = Mapping[str, str]
 SymlinkType = Union[Literal["dir"], Literal["file"], Literal["junction"], str]
-STDIN = Union[bytes, str, None]
-STDIO = Union[None, int, bytes, IO[Any]]
+STDIN: TypeAlias = Union[bytes, str, None]
+STDIO: TypeAlias = Union[None, int, bytes, IO[Any]]
 
 __all__ = (
     "STDIN",
