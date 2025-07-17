@@ -8,11 +8,11 @@ import logging
 import sys
 import warnings
 
-from collections.abc import Iterable
 from dataclasses import dataclass, field
 from functools import wraps
 from importlib import import_module
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -26,6 +26,9 @@ from typing import (
 )
 
 from typing_extensions import ParamSpec
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 T = TypeVar("T")
 R = TypeVar("R")
