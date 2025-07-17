@@ -17,6 +17,7 @@ from subprocess import (
 from time import time
 from typing import (
     IO,
+    TYPE_CHECKING,
     Any,
     Dict,
     List,
@@ -29,13 +30,17 @@ from typing import (
 )
 
 from shellfish._types import (
-    STDIN,
-    FsPath,
     PopenArgs as PopenArgs,  # noqa: TC001
 )
 from shellfish.dev.popen_gen import popen_pipes_gen
 from shellfish.libsh.args import args2cmd
 from shellfish.process import is_win
+
+if TYPE_CHECKING:
+    from shellfish._types import (
+        STDIN,
+        FsPath,
+    )
 
 __subprocess_all__ = (
     "CompletedProcess",
