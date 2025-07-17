@@ -1074,7 +1074,7 @@ wheels = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.31.0"
+version = "0.31.1"
 source = { editable = "libs/jsonbourne" }
 dependencies = [
     { name = "typing-extensions" },
@@ -2530,7 +2530,7 @@ wheels = [
 
 [[package]]
 name = "requires"
-version = "0.11.0"
+version = "0.11.1"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
