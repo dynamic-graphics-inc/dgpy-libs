@@ -4,13 +4,12 @@ requires = [ "hatchling" ]
 
 [project]
 name = "asyncify"
-version = "0.11.0"
+version = "0.11.1"
 description = "sync 2 async"
 readme = "README.md"
 keywords = [ "async", "asyncify", "asyncio", "dgpy" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.9,<4.0"
-
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -24,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [ "funkify>=0.4", "xtyping>=0.5" ]
+dependencies = [ "funkify>=0.4", "typing-extensions>=4.12.2" ]
 
 [dependency-groups]
 dev = [

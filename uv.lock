@@ -27,10 +27,11 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.7.0"
+version = "0.7.1"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
+    { name = "typing-extensions" },
 ]
 
 [package.optional-dependencies]
@@ -53,6 +54,7 @@ requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.2" },
     { name = "pytest-asyncio", marker = "extra == 'test'", specifier = ">=1.0.0" },
+    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 provides-extras = ["test"]
 
@@ -116,11 +118,11 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.11.0"
+version = "0.11.1"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
-    { name = "xtyping" },
+    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -133,7 +135,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
-    { name = "xtyping", editable = "libs/xtyping" },
+    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -722,7 +724,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -917,7 +919,7 @@ name = "importlib-metadata"
 version = "8.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp" },
+    { name = "zipp", marker = "python_full_version < '3.10'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/76/66/650a33bd90f786193e4de4b3ad86ea60b53c89b669a5c7be931fac31cdb0/importlib_metadata-8.7.0.tar.gz", hash = "sha256:d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000", size = 56641, upload-time = "2025-04-27T15:29:01.736Z" }
 wheels = [
@@ -1075,7 +1077,7 @@ name = "jsonbourne"
 version = "0.31.0"
 source = { editable = "libs/jsonbourne" }
 dependencies = [
-    { name = "xtyping" },
+    { name = "typing-extensions" },
 ]
 
 [package.optional-dependencies]
@@ -1107,7 +1109,7 @@ requires-dist = [
     { name = "orjson", marker = "extra == 'orjson'", specifier = ">=3.10.7" },
     { name = "pydantic", marker = "extra == 'pydantic'", specifier = ">=2.8.2" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.2" },
-    { name = "xtyping", editable = "libs/xtyping" },
+    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 provides-extras = ["httpx", "orjson", "pydantic", "test"]
 
@@ -2532,7 +2534,7 @@ version = "0.11.0"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
-    { name = "xtyping" },
+    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -2543,7 +2545,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
-    { name = "xtyping", editable = "libs/xtyping" },
+    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -2862,6 +2864,7 @@ dependencies = [
     { name = "jsonbourne" },
     { name = "listless" },
     { name = "pydantic" },
+    { name = "typing-extensions" },
     { name = "xtyping" },
 ]
 
@@ -2880,6 +2883,7 @@ requires-dist = [
     { name = "jsonbourne", editable = "libs/jsonbourne" },
     { name = "listless", editable = "libs/listless" },
     { name = "pydantic", specifier = ">=2.0.3" },
+    { name = "typing-extensions", specifier = ">=4.12.2" },
     { name = "xtyping", editable = "libs/xtyping" },
 ]
 

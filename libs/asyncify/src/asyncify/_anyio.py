@@ -2,14 +2,14 @@
 from __future__ import annotations
 
 from functools import partial, wraps
+from typing import Awaitable, Callable, Optional, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,
     run as anyio_run,
     to_thread as to_thread,
 )
-
-from xtyping import Awaitable, Callable, Optional, ParamSpec, TypeVar
+from typing_extensions import ParamSpec
 
 __all__ = (
     "anyio_run",

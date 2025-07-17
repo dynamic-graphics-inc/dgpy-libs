@@ -8,8 +8,7 @@ import asyncio
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from functools import partial, wraps
 from inspect import isawaitable
-
-from xtyping import (
+from typing import (
     TYPE_CHECKING,
     Any,
     AsyncIterable,
@@ -20,12 +19,12 @@ from xtyping import (
     Dict,
     Iterable,
     Optional,
-    ParamSpec,
-    TypeGuard,
     TypeVar,
     Union,
     cast,
 )
+
+from typing_extensions import ParamSpec, TypeGuard
 
 if TYPE_CHECKING:  # pragma: no cover
     from anyio import CapacityLimiter
@@ -165,7 +164,7 @@ def asyncify(
         pfunc: Callable[[], T] = partial(funk, *args, **kwargs)
         return await loop.run_in_executor(_executor, pfunc)
 
-    return cast(Callable[P, Awaitable[T]], _async_funk)
+    return cast("Callable[P, Awaitable[T]]", _async_funk)
 
 
 def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
@@ -268,7 +267,7 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
         5
 
     """
-    return cast(T, await obj if isawaitable(obj) else obj)
+    return cast("T", await obj if isawaitable(obj) else obj)
 
 
 def aiorun_anyio(
@@ -296,11 +295,11 @@ def aiorun_anyio(
             raise ValueError("args must be empty when calling a coroutine")
 
         def _aw() -> Coroutine[Any, Any, T_Retval]:
-            return cast(Coroutine[Any, Any, T_Retval], awaitable_or_func)
+            return cast("Coroutine[Any, Any, T_Retval]", awaitable_or_func)
 
         return anyio_run(_aw, backend=backend, backend_options=backend_options)
     return anyio_run(
-        cast(Callable[..., Coroutine[Any, Any, T_Retval]], awaitable_or_func),
+        cast("Callable[..., Coroutine[Any, Any, T_Retval]]", awaitable_or_func),
         *args,
         backend=backend,
         backend_options=backend_options,
@@ -330,7 +329,7 @@ def aiorun_asyncio(
     if args:
         raise ValueError("args must be empty when calling a coroutine")
     return asyncio_run(
-        cast(Coroutine[Any, Any, T_Retval], awaitable_or_func), debug=_debug
+        cast("Coroutine[Any, Any, T_Retval]", awaitable_or_func), debug=_debug
     )
 
 

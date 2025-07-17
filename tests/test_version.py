@@ -4,6 +4,8 @@ from typing import Callable
 import pytest
 import tomli
 
+from rich import print
+
 import dgpylibs
 
 from dgpydev import DGPY_LIBS
@@ -17,7 +19,6 @@ class TestDgpyLib:
     def test_version(
         self,
         dgpy_lib_name: str,
-        dgpy_lib_dirpath: Callable[[str], str],
         dgpy_lib_pyproject_toml_string: Callable[[str], str],
     ) -> None:
         if dgpy_lib_name == "dgpytest" and not hasattr(dgpylibs, "dgpytest"):
@@ -39,3 +40,17 @@ class TestDgpyLib:
         assert pyproject_toml["project"]["version"] == lib_metadata.version
 
         lager.info("lib metadata", lib_metadata)
+
+    def test_project_has_requires_python_version(
+        self,
+        dgpy_lib_name: str,
+        dgpy_lib_dirpath: Callable[[str], str],
+        dgpy_lib_pyproject_toml_string: Callable[[str], str],
+    ) -> None:
+        pyproject_toml_string = dgpy_lib_pyproject_toml_string(dgpy_lib_name)
+        pyproject_toml = tomli.loads(pyproject_toml_string)
+        assert "requires-python" in pyproject_toml["project"], (
+            "requires-python not found in project section of pyproject.toml"
+        )
+
+        print(pyproject_toml["project"])

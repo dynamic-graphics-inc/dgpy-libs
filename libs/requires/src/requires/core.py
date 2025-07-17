@@ -8,6 +8,7 @@ import logging
 import sys
 import warnings
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from functools import wraps
 from importlib import import_module
@@ -15,7 +16,6 @@ from typing import (
     Any,
     Callable,
     Dict,
-    Iterable,
     List,
     Optional,
     Set,
@@ -25,7 +25,7 @@ from typing import (
     Union,
 )
 
-from xtyping import ParamSpec
+from typing_extensions import ParamSpec
 
 T = TypeVar("T")
 R = TypeVar("R")

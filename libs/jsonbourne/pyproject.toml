@@ -24,7 +24,9 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [ "xtyping>=0.5" ]
+dependencies = [
+  "typing-extensions>=4.12.2",
+]
 optional-dependencies.httpx = [
   "httpx>=0.27",
 ]

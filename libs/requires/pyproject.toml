@@ -24,12 +24,10 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [ "funkify>=0.4", "xtyping>=0.5" ]
+dependencies = [ "funkify>=0.4", "typing-extensions>=4.12.2" ]
 
 [dependency-groups]
-dev = [
-  "python-rapidjson>=1.20",
-]
+dev = [ "python-rapidjson>=1.20" ]
 
 [tool.hatch]
 [tool.hatch.metadata]
@@ -39,24 +37,14 @@ allow-direct-references = true
 packages = [ "src/requires" ]
 
 [tool.hatch.build.targets.sdist]
-include = [
-  "src",
-  "pyproject.toml",
-  "README.md",
-  "LICENSE",
-]
+include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
 
 [tool.ruff]
 extend = "../../pyproject.toml"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = [
-  "-ra",
-  "--strict-config",
-  "--strict-markers",
-  "--doctest-modules",
-]
+addopts = [ "-ra", "--strict-config", "--strict-markers", "--doctest-modules" ]
 xfail_strict = true
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",

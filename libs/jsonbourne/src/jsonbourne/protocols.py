@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from xtyping import Any, Protocol, Union
+from typing import Any, Protocol, Union
 
 __all__ = (
     "Dumpable",
