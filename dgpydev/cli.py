@@ -21,7 +21,7 @@ from jsonbourne.pydantic import JsonBaseModel
 from shellfish import sh
 
 if TYPE_CHECKING:
-    from xtyping import FsPath
+    from shellfish._types import FsPath
 
 console = Console()
 
