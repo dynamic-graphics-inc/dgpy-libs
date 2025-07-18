@@ -19,12 +19,7 @@ from typing import (
     IO,
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
-    Mapping,
     Optional,
-    Set,
-    Tuple,
     TypedDict,
     Union,
 )
@@ -37,6 +32,8 @@ from shellfish.libsh.args import args2cmd
 from shellfish.process import is_win
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
+
     from shellfish._types import (
         STDIN,
         FsPath,
@@ -88,7 +85,7 @@ class ProcessDt:
 
 
 class CompletedProcessDict(TypedDict):
-    args: List[str]
+    args: list[str]
     stdout: str
     stderr: str
     returncode: int
@@ -137,7 +134,7 @@ def completed_process_dict(
 
 def pcheck(
     process: CompletedProcess[Any],
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
 ) -> None:
     """Check process return code
 
@@ -184,7 +181,7 @@ def runb(
     capture_output: bool = False,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
     process = run(
@@ -221,7 +218,7 @@ def runs(
     capture_output: bool = False,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[str]:
     """Run command with txt output"""
@@ -248,11 +245,11 @@ def runs(
 def run_dtee(
     args: PopenArgs,
     cwd: Optional[FsPath] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     input: Optional[STDIN] = None,
     shell: bool = False,
     timeout: Optional[float] = None,
-) -> Tuple[CompletedProcess[bytes], ProcessDt]:
+) -> tuple[CompletedProcess[bytes], ProcessDt]:
     stdout_bio = BytesIO()
     stderr_bio = BytesIO()
     args_str = args2cmd(args)
@@ -317,7 +314,7 @@ def run_dtee(
 def run_tee(
     args: PopenArgs,
     cwd: Optional[str] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     input: Optional[STDIN] = None,
     shell: bool = False,
     timeout: Optional[float] = None,

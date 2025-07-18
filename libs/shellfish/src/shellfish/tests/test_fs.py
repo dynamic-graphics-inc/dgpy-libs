@@ -1,13 +1,18 @@
 """Testing shelfish.fs"""
 
+from __future__ import annotations
+
 from collections import Counter
 from os import path
 from pathlib import Path
-from typing import Callable, Iterable
+from typing import TYPE_CHECKING, Callable
 
 import pytest
 
 from shellfish import sh
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 
 def test_is_file_dir_link(tmp_path: Path) -> None:

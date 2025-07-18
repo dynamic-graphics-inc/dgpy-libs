@@ -15,22 +15,19 @@ from random import choice
 from string import ascii_letters, ascii_lowercase, ascii_uppercase, digits, printable
 from textwrap import indent as _indent
 from typing import (
+    TYPE_CHECKING,
     Any,
     AnyStr,
     Callable,
-    Dict,
-    ItemsView,
-    Iterable,
-    List,
     Optional,
-    Sequence,
-    Set,
-    Tuple,
     TypeVar,
     Union,
 )
 
 from fmts.__about__ import __version__
+
+if TYPE_CHECKING:
+    from collections.abc import ItemsView, Iterable, Sequence
 
 # END IMPORTS
 
@@ -139,7 +136,7 @@ def bytes2str(bites: bytes, encoding: str = "utf-8") -> str:
 
 
 @lru_cache(maxsize=1)
-def camel_characters_set() -> Set[str]:
+def camel_characters_set() -> set[str]:
     """Return a set of all the characters that are allowed in camel case
 
     Examples:
@@ -153,7 +150,7 @@ def camel_characters_set() -> Set[str]:
 
 
 @lru_cache(maxsize=1)
-def kebab_characters_set() -> Set[str]:
+def kebab_characters_set() -> set[str]:
     """Return a set of all the characters that are allowed in camel case
 
     Examples:
@@ -167,11 +164,11 @@ def kebab_characters_set() -> Set[str]:
 
 
 @lru_cache(maxsize=1)
-def printable_characters_set() -> Set[str]:
+def printable_characters_set() -> set[str]:
     """Return set of all printable characters
 
     Returns:
-        Set[str]: set of all printable characters
+        set[str]: set of all printable characters
 
     Examples:
         >>> printable_characters_set() == {c for c in printable}
@@ -182,7 +179,7 @@ def printable_characters_set() -> Set[str]:
 
 
 @lru_cache(maxsize=1)
-def snake_characters_set() -> Set[str]:
+def snake_characters_set() -> set[str]:
     return set(SNAKE_CHARACTERS)
 
 
@@ -828,7 +825,7 @@ def strip_comments(string: str) -> str:
 def multi_replace(
     string: str,
     replacements: Union[
-        List[Tuple[str, str]], List[List[str]], Dict[str, str], ItemsView[str, str]
+        list[tuple[str, str]], list[list[str]], dict[str, str], ItemsView[str, str]
     ],
 ) -> str:
     """Replace multiple patterns in a string
@@ -1272,7 +1269,7 @@ def ensure_utf8(string: Union[str, bytes]) -> str:
     return str(string)
 
 
-def body_contents(html_string: str) -> List[str]:
+def body_contents(html_string: str) -> list[str]:
     r"""Parse the innertext for body tags in an html string
 
     Args:
@@ -1293,7 +1290,7 @@ def body_contents(html_string: str) -> List[str]:
 class pstr(str):
     """Pretty-string subclass"""
 
-    def __new__(cls, content: str) -> "pstr":
+    def __new__(cls, content: str) -> pstr:
         """Create and return new pstr from a str"""
         if "\n" in content and (content[0] == "\n" or content[-1] == "\n"):
             return str.__new__(cls, content.strip("\n"))
@@ -1673,7 +1670,7 @@ def base64_jpg_html(b64_string: Union[str, bytes]) -> str:
     return f'<img src="data:image/jpeg;base64,{str(b64_string)}">'
 
 
-def enum_strings(strings: List[str], numsep: str = ")") -> Iterable[str]:
+def enum_strings(strings: list[str], numsep: str = ")") -> Iterable[str]:
     """Return a generator with enumerated strings
 
     Returns:
@@ -1690,11 +1687,11 @@ def enum_strings(strings: List[str], numsep: str = ")") -> Iterable[str]:
     )
 
 
-def space_pad_strings(strings: List[str], justify: str = "left") -> List[str]:
+def space_pad_strings(strings: list[str], justify: str = "left") -> list[str]:
     """Space pads strings to match the string with the max length
 
     Returns:
-        List[str]: List of space-padded strings
+        list[str]: List of space-padded strings
 
     Examples:
         >>> space_pad_strings(["a", "bb", "ccc"])
@@ -1718,7 +1715,7 @@ def space_pad_strings(strings: List[str], justify: str = "left") -> List[str]:
     return [s.ljust(_max_len) for s in strings]
 
 
-def t9_mapping() -> Dict[str, int]:
+def t9_mapping() -> dict[str, int]:
     return {
         " ": 0,
         ",": 1,
@@ -1786,7 +1783,7 @@ def t9_mapping() -> Dict[str, int]:
 
 
 @lru_cache(maxsize=1)
-def t9_translation() -> Dict[int, str]:
+def t9_translation() -> dict[int, str]:
     return str.maketrans({k: str(v) for k, v in t9_mapping().items()})
 
 

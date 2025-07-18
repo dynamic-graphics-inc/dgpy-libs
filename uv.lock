@@ -27,7 +27,7 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.7.1"
+version = "0.7.2"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
@@ -118,7 +118,7 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.11.1"
+version = "0.11.2"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
@@ -664,7 +664,7 @@ dev = [
 
 [[package]]
 name = "dgpylibs"
-version = "0.0.7"
+version = "0.0.8"
 source = { editable = "libs/dgpylibs" }
 dependencies = [
     { name = "aiopen" },
@@ -697,7 +697,7 @@ requires-dist = [
 
 [[package]]
 name = "dgpytest"
-version = "0.0.4"
+version = "0.0.5"
 source = { editable = "libs/dgpytest" }
 dependencies = [
     { name = "pytest" },
@@ -760,12 +760,12 @@ wheels = [
 
 [[package]]
 name = "fmts"
-version = "0.3.0"
+version = "0.3.1"
 source = { editable = "libs/fmts" }
 
 [[package]]
 name = "funkify"
-version = "0.6.0"
+version = "0.6.1"
 source = { editable = "libs/funkify" }
 
 [[package]]
@@ -803,7 +803,7 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.11.0"
+version = "0.11.1"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "click", version = "8.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
@@ -1074,7 +1074,7 @@ wheels = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.31.1"
+version = "0.31.2"
 source = { editable = "libs/jsonbourne" }
 dependencies = [
     { name = "typing-extensions" },
@@ -1208,7 +1208,7 @@ wheels = [
 
 [[package]]
 name = "lager"
-version = "0.19.0"
+version = "0.19.1"
 source = { editable = "libs/lager" }
 dependencies = [
     { name = "loguru" },
@@ -1231,7 +1231,7 @@ dev = [{ name = "typing-extensions", specifier = ">=4.5,<5" }]
 
 [[package]]
 name = "listless"
-version = "0.3.0"
+version = "0.3.1"
 source = { editable = "libs/listless" }
 
 [package.dev-dependencies]
@@ -2530,7 +2530,7 @@ wheels = [
 
 [[package]]
 name = "requires"
-version = "0.11.1"
+version = "0.11.2"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
@@ -2855,7 +2855,7 @@ wheels = [
 
 [[package]]
 name = "shellfish"
-version = "0.6.3"
+version = "0.6.4"
 source = { editable = "libs/shellfish" }
 dependencies = [
     { name = "aiopen" },
@@ -3122,7 +3122,7 @@ wheels = [
 
 [[package]]
 name = "xtyping"
-version = "0.10.0"
+version = "0.10.1"
 source = { editable = "libs/xtyping" }
 dependencies = [
     { name = "annotated-types" },

@@ -13,7 +13,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "dgpylibs"
-version = "0.0.7"
+version = "0.0.8"
 description = "Dynamic Graphics Python libraries"
 keywords = [ "dgi", "dgpy", "python3", "typed" ]
 authors = [ { name = "jessekrubin", email = "jesse@dgi.com" } ]

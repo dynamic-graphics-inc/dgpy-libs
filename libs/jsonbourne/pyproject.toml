@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "jsonbourne"
-version = "0.31.1"
+version = "0.31.2"
 description = "EZPZ JSON"
 readme = "README.md"
 keywords = [ "dgpy", "json", "orjson", "pydantic", "rapidjson" ]

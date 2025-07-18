@@ -10,11 +10,9 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Awaitable,
     Callable,
     Generic,
     Optional,
-    Type,
     Union,
     cast,
     overload,
@@ -23,6 +21,7 @@ from typing import (
 from anyio import AsyncFile, open_file
 
 if TYPE_CHECKING:
+    from collections.abc import Awaitable
     from os import PathLike
     from types import TracebackType
 
@@ -59,7 +58,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
     async def __aexit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ) -> None:

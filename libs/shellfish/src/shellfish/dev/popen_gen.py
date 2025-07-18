@@ -10,7 +10,8 @@ from typing import TYPE_CHECKING
 from shellfish.fs import Stdio
 
 if TYPE_CHECKING:
-    from typing import IO, Any, AnyStr, Iterable, Optional, Tuple
+    from collections.abc import Iterable
+    from typing import IO, Any, AnyStr, Optional
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 
@@ -38,7 +39,7 @@ def _enqueue_output_iter_readline(
 
 def popen_pipes_gen(
     proc: Popen[AnyStr], timeout: Optional[float] = None
-) -> Iterable[Tuple[Stdio, str | bytes]]:
+) -> Iterable[tuple[Stdio, str | bytes]]:
     """Yield stdout and stderr lines from a subprocess
 
     Args:
@@ -46,7 +47,7 @@ def popen_pipes_gen(
         timeout (Optional[float], optional): Timeout in seconds. Defaults to None.
 
     Yields:
-        Tuple[Stdio, str | bytes]: Tuples with stdio enum marker followed by a string
+        tuple[Stdio, str | bytes]: Tuples with stdio enum marker followed by a string
 
     Raises:
         ValueError: if proc is not Popen or proc.stdout or proc.stderr is None
@@ -92,7 +93,7 @@ def popen_pipes_gen(
 
 def popen_gen(
     *popenargs: Any, **popenkwargs: Any
-) -> Iterable[Tuple[Stdio, str | bytes]]:
+) -> Iterable[tuple[Stdio, str | bytes]]:
     """Create and open a subprocess and yield tuples with stdout/stderr lines
 
     Args:
@@ -100,7 +101,7 @@ def popen_gen(
         **popenkwargs: Kwargs to be passed to Popen
 
     Yields:
-        Tuple[str, str]: Tuples that are of the form ('stdout', stdout_line)
+        tuple[str, str]: Tuples that are of the form ('stdout', stdout_line)
             or ('stderr', stderr_line) for the stdout and stderr lines for
             the subprocess created.
 

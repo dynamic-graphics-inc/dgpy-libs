@@ -4,9 +4,12 @@ from __future__ import annotations
 import asyncio
 
 from os import path
-from typing import Awaitable, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import pytest
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable
 
 PWD = path.split(path.realpath(__file__))[0]
 

@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = [ "hatchling" ]
+requires = ["hatchling"]
 
 [project]
 name = "dgpydev"
@@ -130,6 +130,7 @@ lint.ignore = [
   "D415", # first line should end with a period/exclamation point
   # "E266", # too many leading '#' for block comment
 
+  "FA",
   "E501", # line too long,
   # PIE
   "PIE804", # unnecessary-dict-kwargs -- TODO: revisit?
@@ -143,20 +144,29 @@ lint.ignore = [
   "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
-  "UP035", # unnecessary typing-extensions imports... must check xtying...
-  "UP037",
+  # "UP035", # unnecessary typing-extensions imports... must check xtying...
+  # "UP037",
   "UP045", # union type over `Optional`
 ]
 
-lint.per-file-ignores."**/conftest.py" = [ "D" ]
-lint.per-file-ignores."**/noxfile.py" = [ "D" ]
+lint.per-file-ignores."**/conftest.py" = ["D"]
+lint.per-file-ignores."**/noxfile.py" = ["D"]
 lint.per-file-ignores."**/tests/*.py" = [
   "D1",
   "D100", # missing docstring in public module
   "D102",
   "D103", # missing docstring
 ]
-lint.per-file-ignores."*.ipynb" = [ "E741", "F401", "F811", "F821", "T201" ]
+lint.per-file-ignores."libs/xtyping/**/*.py" = [
+  "UP007",
+  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
+  "UP022", # must test shellfish first...
+  "UP035",
+  "UP037",
+  "UP045", # union type over `Optional`
+  "UP045", # union type over `Optional`
+]
+lint.per-file-ignores."*.ipynb" = ["E741", "F401", "F811", "F821", "T201"]
 lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
@@ -257,7 +267,7 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
-plugins = [ "pydantic.mypy" ]
+plugins = ["pydantic.mypy"]
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
@@ -277,7 +287,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
@@ -285,7 +295,7 @@ ignore_missing_imports = true
 check_untyped_defs = true
 disallow_untyped_decorators = false
 disallow_any_generics = false
-disallow_untyped_defs = false
+disallow_untyped_defs = true
 
 [tool.pyright]
 pythonVersion = "3.8"

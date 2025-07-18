@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import Any, List, Union
+from typing import Any, Union
 
 import pytest
 
@@ -41,7 +41,7 @@ try:
             return self.json()
 
         @classmethod
-        def from_json(cls, json_string: Union[str, bytes]) -> "JsonObjModel":
+        def from_json(cls, json_string: Union[str, bytes]) -> JsonObjModel:
             return cls(**JSON.loads(json_string))
 
     def test_json_base_model_w_prop() -> None:
@@ -75,7 +75,7 @@ try:
             y: int
 
         class JsonModelHasRootType(JsonBaseModel):
-            __root__: List[str]
+            __root__: list[str]
 
         assert not JsonModelNoRootType.__custom_root_type__  # type: ignore[attr-defined]
         assert JsonModelHasRootType.__custom_root_type__  # type: ignore[attr-defined]

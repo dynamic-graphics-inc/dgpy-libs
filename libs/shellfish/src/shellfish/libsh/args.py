@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from shlex import quote as _quote
-from typing import TYPE_CHECKING, AnyStr, List, Union
+from typing import TYPE_CHECKING, AnyStr, Union
 
 from listless import flatten_strings as _flatten_strings
 
@@ -42,7 +42,7 @@ def argstr(string: Union[str, bytes]) -> str:
     return arganystr(string if isinstance(string, str) else string.decode())
 
 
-def flatten_args(*args: PopenArgs) -> List[str]:
+def flatten_args(*args: PopenArgs) -> list[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:

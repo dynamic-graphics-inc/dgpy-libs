@@ -8,7 +8,7 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import Any, Callable, Dict, Optional, TypeVar, Union
+from typing import Any, Callable, Optional, TypeVar, Union
 
 from loguru import logger as logger
 from loguru._handler import Handler
@@ -34,7 +34,7 @@ try:
         else _stringify_no_new_line
     )
 
-    def _serialize_record(text: str, record: Dict[str, Any]) -> str:
+    def _serialize_record(text: str, record: dict[str, Any]) -> str:
         exception = record["exception"]
 
         if exception is not None:
@@ -189,7 +189,7 @@ def flog(
     return _flog(funk) if funk else _flog  # type: ignore[return-value]
 
 
-def handlers() -> Dict[int, Handler]:
+def handlers() -> dict[int, Handler]:
     """Return all handlers"""
     return logger._core.handlers  # type: ignore[no-any-return]
 

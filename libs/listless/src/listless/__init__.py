@@ -7,23 +7,21 @@ from __future__ import annotations
 import asyncio
 
 from collections import deque
+from collections.abc import (
+    AsyncIterable,
+    AsyncIterator,
+    Collection,
+    Iterable,
+    Iterator,
+    Sequence,
+)
 from functools import reduce
 from itertools import chain, count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
-    AsyncIterable,
-    AsyncIterator,
     Callable,
-    Collection,
-    Deque,
-    Iterable,
-    Iterator,
-    List,
     Optional,
-    Sequence,
-    Set,
-    Tuple,
     TypeVar,
     Union,
     cast,
@@ -110,7 +108,7 @@ def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
 iter_async = aiterable
 
 
-def pairs(it: Iterable[_T]) -> Iterable[Tuple[_T, _T]]:
+def pairs(it: Iterable[_T]) -> Iterable[tuple[_T, _T]]:
     """Yield pairs of adjacent elements
 
     Examples:
@@ -275,7 +273,7 @@ def chunks(it: str, chunk_size: int) -> Iterable[str]: ...
 
 
 @overload
-def chunks(it: List[_T], chunk_size: int) -> Iterable[List[_T]]: ...
+def chunks(it: list[_T], chunk_size: int) -> Iterable[list[_T]]: ...
 
 
 @overload
@@ -340,7 +338,7 @@ def chunk(
     return chunks(it, n)
 
 
-def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> Deque[_T]:
+def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
     """Exhaust an interable; useful for evaluating a map object.
 
     Args:
@@ -372,7 +370,7 @@ def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> Deque[_T]:
 
 def xmap(
     func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: Optional[int] = 0
-) -> Deque[_R]:
+) -> deque[_R]:
     """Apply a function to each element of an iterable immediately
 
     Args:
@@ -595,7 +593,7 @@ def it_product(it: Iterable[Union[int, float]]) -> Union[int, float]:
 
 def spliterable(
     it: Iterable[_T], fn: Callable[[_T], bool]
-) -> Tuple[Iterable[_T], Iterable[_T]]:
+) -> tuple[Iterable[_T], Iterable[_T]]:
     """1 generator + True/False-function => 2 generators (True-gen, False-gen)
 
     Args:
@@ -639,11 +637,11 @@ def unique_gen(
 
     """
     if key is None:
-        have: Set[_T] = set()
+        have: set[_T] = set()
         have_add = have.add
         return (x for x in it if not (x in have or have_add(x)))
     else:
-        havek: Set[_K] = set()
+        havek: set[_K] = set()
         havek_add = havek.add
 
         return (
@@ -700,7 +698,7 @@ async def next_async(it: AnyIterator[_T]) -> _T:
         raise StopAsyncIteration  # noqa: B904
 
 
-async def list_async(itr: AnyIterable[_T]) -> List[_T]:
+async def list_async(itr: AnyIterable[_T]) -> list[_T]:
     """Consume any iterable (async/sync) and return as a list
 
     Examples:
@@ -714,7 +712,7 @@ async def list_async(itr: AnyIterable[_T]) -> List[_T]:
     return [item async for item in aiterable(itr)]
 
 
-async def set_async(itr: AnyIterable[_T]) -> Set[_T]:
+async def set_async(itr: AnyIterable[_T]) -> set[_T]:
     """Consume any iterable (async/sync) and return as a list
 
     Examples:
@@ -730,7 +728,7 @@ async def set_async(itr: AnyIterable[_T]) -> Set[_T]:
 
 async def enumerate_async(
     it: AnyIterable[_T], start: int = 0
-) -> AsyncIterator[Tuple[int, _T]]:
+) -> AsyncIterator[tuple[int, _T]]:
     """Enumerate (async) over any iterable
 
     Examples:
@@ -747,7 +745,7 @@ async def enumerate_async(
         index += 1
 
 
-async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ...]]:
+async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[tuple[Any, ...]]:
     """Async version of builtin zip function
 
     Example:
@@ -759,7 +757,7 @@ async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[Tuple[Any, ..
         [(0, 0, 0), (1, 1, 1), (2, 2, 2), (3, 3, 3)]
 
     """
-    its: List[AsyncIterator[Any]] = [aiterable(it) for it in iterables]
+    its: list[AsyncIterator[Any]] = [aiterable(it) for it in iterables]
 
     while True:
         try:

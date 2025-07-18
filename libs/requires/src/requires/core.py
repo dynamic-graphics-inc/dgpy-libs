@@ -15,17 +15,13 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
-    List,
     Optional,
-    Set,
-    Tuple,
     TypedDict,
     TypeVar,
     Union,
 )
 
-from typing_extensions import ParamSpec
+from typing_extensions import ParamSpec, TypeAlias
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
@@ -69,11 +65,11 @@ class RequirementDict(TypedDict):
     pip: Optional[Union[str, bool]]
     conda: Optional[Union[str, bool]]
     conda_forge: Optional[Union[str, bool]]
-    details: Optional[Union[str, List[str]]]
+    details: Optional[Union[str, list[str]]]
     lazy: Optional[bool]  # default true
 
 
-TRequirementDict = Union[RequirementDict, Dict[str, Any]]
+TRequirementDict: TypeAlias = Union[RequirementDict, dict[str, Any]]
 
 
 @dataclass(frozen=True, unsafe_hash=True)
@@ -84,7 +80,7 @@ class Requirement:
     pip: Optional[Union[str, bool]] = None
     conda: Optional[Union[str, bool]] = None
     conda_forge: Optional[Union[str, bool]] = None
-    details: Optional[Union[str, List[str]]] = None
+    details: Optional[Union[str, list[str]]] = None
     lazy: bool = field(default=True)
 
     def __post_init__(self) -> None: ...
@@ -193,10 +189,10 @@ class Requirement:
     def raise_error(self) -> None:
         raise self.err()
 
-    def __proxy__(self) -> "RequirementProxy":
+    def __proxy__(self) -> RequirementProxy:
         return RequirementProxy(req=self)
 
-    def proxy(self) -> "RequirementProxy":
+    def proxy(self) -> RequirementProxy:
         return self.__proxy__()
 
     def import_requirement(self) -> Any:
@@ -304,7 +300,7 @@ class Requirement:
 
 @dataclass
 class RequirementsMeta:
-    requirements: Set[Requirement] = field(default_factory=set)
+    requirements: set[Requirement] = field(default_factory=set)
 
     def __post_init__(self) -> None: ...
 
@@ -327,8 +323,8 @@ class RequirementsMeta:
         self,
         *,
         warn: bool = False,
-        on_missing: Optional[Callable[[Set[Requirement]], None]],
-    ) -> Set[Requirement]:
+        on_missing: Optional[Callable[[set[Requirement]], None]],
+    ) -> set[Requirement]:
         """Check if requirements are met
 
         Args:
@@ -392,7 +388,7 @@ class RequirementProxy:
         raise self.req.err()
 
 
-def parse_name_error(ne: NameError) -> List[str]:
+def parse_name_error(ne: NameError) -> list[str]:
     """Return a list of the missing items specified in a `NameError`
 
     Args:
@@ -459,13 +455,13 @@ def make_requirement(
 
 def make_requirements(
     requirements: Union[
-        List[Union[str, Requirement, TRequirementDict]],
-        Tuple[Union[str, Requirement, TRequirementDict]],
+        list[Union[str, Requirement, TRequirementDict]],
+        tuple[Union[str, Requirement, TRequirementDict]],
         str,
         Requirement,
         TRequirementDict,
     ],
-) -> List[Requirement]:
+) -> list[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]
     return make_requirements([requirements])
@@ -579,13 +575,13 @@ def scope_requirements(debug: bool = False) -> RequirementsMeta:
 def preflight_check(
     *,
     warn: bool = False,
-    on_missing: Optional[Callable[[Set[Requirement]], None]] = None,
+    on_missing: Optional[Callable[[set[Requirement]], None]] = None,
 ) -> RequirementsMeta:
     """Scan and check calling module scope for objs/fns wrapped with requirements.
 
     Args:
         warn (bool): If True, issues warnings for missing requirements.
-        on_missing (Optional[Callable[[Set[Requirement]], None]]): Callback to do something on missing requirements.
+        on_missing (Optional[Callable[[set[Requirement]], None]]): Callback to do something on missing requirements.
 
     Returns:
         RequirementsMeta: A RequirementsMeta instance with the requirements found during the check.

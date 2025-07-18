@@ -5,6 +5,14 @@ from __future__ import annotations
 
 import keyword
 
+from collections.abc import (
+    ItemsView,
+    Iterable,
+    Iterator,
+    KeysView,
+    Mapping,
+    MutableMapping,
+)
 from functools import cache
 from itertools import chain
 from json import JSONDecodeError
@@ -15,19 +23,8 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
     Generic,
-    ItemsView,
-    Iterable,
-    Iterator,
-    KeysView,
-    List,
-    Mapping,
-    MutableMapping,
     Optional,
-    Set,
-    Tuple,
-    Type,
     TypeVar,
     Union,
     cast,
@@ -212,18 +209,18 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     """
 
-    _data: Dict[_KT, _VT]
+    _data: dict[_KT, _VT]
 
     @overload
     def __init__(
         self,
-        *args: Dict[_KT, _VT],
+        *args: dict[_KT, _VT],
     ) -> None: ...
 
     @overload
     def __init__(
         self,
-        *args: Dict[_KT, _VT],
+        *args: dict[_KT, _VT],
         **kwargs: _VT,
     ) -> None: ...
 
@@ -390,7 +387,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _is_pydantic_model(cls) -> bool:
         return is_pydantic_model(cls)
 
-    def __getitem__(self, key: Union[_KT, Tuple[_KT, ...]]) -> Any:
+    def __getitem__(self, key: Union[_KT, tuple[_KT, ...]]) -> Any:
         if self._is_pydantic_model():
             if isinstance(key, tuple):
                 if len(key) == 1:
@@ -537,7 +534,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         if recursive:
             return JsonObj(
                 cast(
-                    "Dict[str, _VT]",
+                    "dict[str, _VT]",
                     {
                         k: (
                             v
@@ -613,7 +610,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         if recursive:
             return JsonObj(
                 cast(
-                    "Dict[str, _VT]",
+                    "dict[str, _VT]",
                     {
                         k: (
                             v
@@ -627,7 +624,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         return JsonObj({k: v for k, v in self.items() if v})
 
-    def dot_keys(self) -> Iterable[Tuple[str, ...]]:
+    def dot_keys(self) -> Iterable[tuple[str, ...]]:
         """Yield the JsonObj's dot-notation keys
 
         Returns:
@@ -658,30 +655,30 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         )
 
-    def dot_keys_list(self, sort_keys: bool = False) -> List[Tuple[str, ...]]:
+    def dot_keys_list(self, sort_keys: bool = False) -> list[tuple[str, ...]]:
         """Return a list of the JsonObj's dot-notation friendly keys
 
         Args:
             sort_keys (bool): Flag to have the dot-keys be returned sorted
 
         Returns:
-            List[str]: List of the dot-notation friendly keys
+            list[str]: List of the dot-notation friendly keys
 
         """
         if sort_keys:
             return sorted(self.dot_keys_list())
         return list(self.dot_keys())
 
-    def dot_keys_set(self) -> Set[Tuple[str, ...]]:
+    def dot_keys_set(self) -> set[tuple[str, ...]]:
         """Return a set of the JsonObj's dot-notation friendly keys
 
         Returns:
-            Set[str]: List of the dot-notation friendly keys
+            set[str]: List of the dot-notation friendly keys
 
         """
         return set(self.dot_keys())
 
-    def dot_lookup(self, key: Union[str, Tuple[str, ...], List[str]]) -> Any:
+    def dot_lookup(self, key: Union[str, tuple[str, ...], list[str]]) -> Any:
         """Look up JsonObj keys using dot notation as a string
 
         Args:
@@ -692,7 +689,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
         Raises:
             KeyError: Raised if the dot-key is not in in the object
-            ValueError: Raised if key is not a str/Tuple[str, ...]/List[str]
+            ValueError: Raised if key is not a str/Tuple[str, ...]/list[str]
 
         """
         if not isinstance(key, (str, list, tuple)):
@@ -717,17 +714,17 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                     err_msg += "".join(
                         (
                             f"\nNOTE!!! lookup performed with string ('{key}') ",
-                            "PREFER lookup using List[str] or Tuple[str, ...]",
+                            "PREFER lookup using list[str] or Tuple[str, ...]",
                         )
                     )
                 raise KeyError(err_msg) from e
         return cur_val
 
-    def dot_items(self) -> Iterator[Tuple[Tuple[str, ...], _VT]]:
+    def dot_items(self) -> Iterator[tuple[tuple[str, ...], _VT]]:
         """Yield tuples of the form (dot-key, value)
 
         OG-version:
-            def dot_items(self) -> Iterator[Tuple[str, Any]]:
+            def dot_items(self) -> Iterator[tuple[str, Any]]:
                 return ((dk, self.dot_lookup(dk)) for dk in self.dot_keys())
 
         Readable-version:
@@ -760,7 +757,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         )
 
-    def dot_items_list(self) -> List[Tuple[Tuple[str, ...], Any]]:
+    def dot_items_list(self) -> list[tuple[tuple[str, ...], Any]]:
         """Return list of tuples of the form (dot-key, value)"""
         return list(self.dot_items())
 
@@ -799,7 +796,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         return f"<pre>{self.__str__()}</pre>"
 
     @classmethod
-    def _cls_attr_names(cls) -> Set[str]:
+    def _cls_attr_names(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return {el.name for el in cls.__attrs_attrs__}  # type: ignore[attr-defined]
@@ -807,7 +804,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             raise AttributeError("Class is not decorated with attr.attrs") from ae
 
     @classmethod
-    def _cls_fields(cls) -> Set[str]:
+    def _cls_fields(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return cls.__fields__  # type: ignore[attr-defined, no-any-return]
@@ -817,7 +814,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             ) from ae
 
     @classmethod
-    def _cls_field_names(cls) -> Set[str]:
+    def _cls_field_names(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
             return set(cls.__fields__)  # type: ignore[attr-defined]
@@ -827,7 +824,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             ) from ae
 
     @classmethod
-    def _cls_protected_attrs(cls) -> Set[str]:
+    def _cls_protected_attrs(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         return {
             "asdict",
@@ -862,11 +859,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             "values",
         }
 
-    def _field_names(self) -> Set[str]:
+    def _field_names(self) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         return self.__class__._cls_field_names()
 
-    def eject(self) -> Dict[_KT, _VT]:
+    def eject(self) -> dict[_KT, _VT]:
         """Eject to python-builtin dictionary object
 
         Examples:
@@ -887,22 +884,22 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 "JSON.stringify recursion err; cycle/circular-refs detected"
             ) from re
 
-    def to_dict(self) -> Dict[_KT, Any]:
+    def to_dict(self) -> dict[_KT, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""
         return self.eject()
 
-    def asdict(self) -> Dict[_KT, Any]:
+    def asdict(self) -> dict[_KT, Any]:
         """Return the JsonObj object (and children) as a python dictionary"""
         return self.eject()
 
     @classmethod
-    def from_dict(cls: Type[JsonObj[_VT]], data: Dict[_KT, _VT]) -> JsonObj[_VT]:
+    def from_dict(cls: type[JsonObj[_VT]], data: dict[_KT, _VT]) -> JsonObj[_VT]:
         """Return a JsonObj object from a dictionary of data"""
         return cls(**data)
 
     @classmethod
     def from_json(
-        cls: Type[JsonObj[_VT]], json_string: Union[bytes, str]
+        cls: type[JsonObj[_VT]], json_string: Union[bytes, str]
     ) -> JsonObj[_VT]:
         """Return a JsonObj object from a json string
 
@@ -917,7 +914,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     @classmethod
     def _from_json(
-        cls: Type[JsonObj[_VT]], json_string: Union[bytes, str]
+        cls: type[JsonObj[_VT]], json_string: Union[bytes, str]
     ) -> JsonObj[_VT]:
         """Return a JsonObj object from a json string
 
@@ -1061,7 +1058,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         )
 
     @classmethod
-    def validate_type(cls: Type[JsonObj[_VT]], val: Any) -> JsonObj[_VT]:
+    def validate_type(cls: type[JsonObj[_VT]], val: Any) -> JsonObj[_VT]:
         """Validate and convert a value to a JsonObj object"""
         return cls(val)
 
@@ -1077,13 +1074,13 @@ class JsonDict(JsonObj[_VT], Generic[_VT]):
     """Alias for JsonObj"""
 
 
-def as_json_obj(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
+def as_json_obj(value: Union[JsonObj[_VT], dict[_KT, _VT]]) -> JsonObj[_VT]:
     if isinstance(value, dict):
         return JsonObj(value)
     return value
 
 
-def objectify(value: Union[JsonObj[_VT], Dict[_KT, _VT]]) -> JsonObj[_VT]:
+def objectify(value: Union[JsonObj[_VT], dict[_KT, _VT]]) -> JsonObj[_VT]:
     if isinstance(value, dict):
         return JsonObj(value)
     return value
@@ -1094,11 +1091,11 @@ def jsonify(value: JsonPrimitiveT) -> JsonPrimitiveT: ...
 
 
 @overload
-def jsonify(value: List[JsonPrimitiveT]) -> List[JsonPrimitiveT]: ...
+def jsonify(value: list[JsonPrimitiveT]) -> list[JsonPrimitiveT]: ...
 
 
 @overload
-def jsonify(value: Tuple[JsonPrimitiveT, ...]) -> Tuple[JsonPrimitiveT, ...]: ...
+def jsonify(value: tuple[JsonPrimitiveT, ...]) -> tuple[JsonPrimitiveT, ...]: ...
 
 
 @overload
@@ -1413,7 +1410,7 @@ class JSONModuleCls(ModuleType, JsonModule):
 
 
 @cache
-def _cls_protected_attrs(cls: Any) -> Set[str]:
+def _cls_protected_attrs(cls: Any) -> set[str]:
     """Return attrs-attribute names for an object decorated with attrs"""
     return set(dir(cls))
 

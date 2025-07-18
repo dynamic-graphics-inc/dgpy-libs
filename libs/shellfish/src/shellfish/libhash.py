@@ -2,14 +2,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from hashlib import blake2b, blake2s, md5, sha1, sha224, sha256, sha384, sha512
-from typing import TYPE_CHECKING, Callable, Dict, Iterator, Union
+from typing import TYPE_CHECKING, Callable, Union
 
 if TYPE_CHECKING:
+    from collections.abc import Iterator
     from hashlib import _Hash
 
 __all__ = ("hash_bytes_gen", "string2hasher")
 
-_HASHERS: Dict[str, Callable[[], "_Hash"]] = {
+_HASHERS: dict[str, Callable[[], _Hash]] = {
     "blake2b": blake2b,  # type: ignore[dict-item]
     "blake2s": blake2s,  # type: ignore[dict-item]
     "md5": md5,
@@ -33,7 +34,7 @@ class Hashed:
     __slots__ = ("b", "s")
 
 
-def string2hasher(string: str) -> "_Hash":
+def string2hasher(string: str) -> _Hash:
     """Return a hash object from a string
 
     Args:
@@ -51,7 +52,7 @@ def string2hasher(string: str) -> "_Hash":
         ) from None
 
 
-def hasher(obj: HashLike) -> "_Hash":
+def hasher(obj: HashLike) -> _Hash:
     """Return a hash object from a string or a hash object
 
     Args:

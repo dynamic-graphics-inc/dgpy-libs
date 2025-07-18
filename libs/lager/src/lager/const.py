@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-from typing import Dict
-
 LAGER_PORT = 52437
 
 TORNADO_FMT = "".join(
@@ -30,7 +28,7 @@ LOGURU_DEFAULT_FMT = "".join(
     ]
 )
 
-LOG_LEVELS: Dict[str, str] = {
+LOG_LEVELS: dict[str, str] = {
     "notset": "NOTSET",
     "n": "NOTSET",
     "debug": "DEBUG",

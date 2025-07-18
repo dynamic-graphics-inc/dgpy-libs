@@ -5,7 +5,7 @@ from __future__ import annotations
 from shellfish import sh
 
 
-def test_done_parse_json():
+def test_done_parse_json() -> None:
     print_some_json = "import json; print(json.dumps({'a': 1, 'b': 2, 'c': 3}))"
     done = sh.do(
         f'python -c "{print_some_json}"',

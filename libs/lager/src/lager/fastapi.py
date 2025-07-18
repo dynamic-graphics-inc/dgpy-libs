@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import List, Optional, Set, Tuple, Union
+from typing import Optional, Union
 
 from lager.logging import intercept
 
@@ -20,7 +20,7 @@ FASTAPI_LOGGERS = [
 
 
 def fastapi_intercept(
-    loggers: Optional[Union[List[str], Set[str], Tuple[str, ...]]] = None,
+    loggers: Optional[Union[list[str], set[str], tuple[str, ...]]] = None,
 ) -> None:
     _loggers2intercept = (
         FASTAPI_LOGGERS if not loggers else sorted(set(*(*FASTAPI_LOGGERS, loggers)))

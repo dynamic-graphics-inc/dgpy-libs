@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from enum import Enum
-from typing import Tuple
+from __future__ import annotations
 
-CLASSIFIERS: Tuple[str, ...] = (
+from enum import Enum
+
+CLASSIFIERS: tuple[str, ...] = (
     "Development Status :: 1 - Planning",
     "Development Status :: 2 - Pre-Alpha",
     "Development Status :: 3 - Alpha",

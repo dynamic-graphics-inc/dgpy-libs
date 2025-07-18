@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, BaseEventLoop
+from contextlib import AbstractAsyncContextManager
 from functools import partial, singledispatch, wraps
 from io import (
     BufferedRandom,
@@ -22,12 +23,9 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    AsyncContextManager,
-    Awaitable,
     Callable,
     Generic,
     Optional,
-    Type,
     TypeVar,
     Union,
     cast,
@@ -36,7 +34,7 @@ from typing import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Coroutine
+    from collections.abc import Awaitable, Coroutine
     from os import PathLike
     from types import TracebackType
 
@@ -82,7 +80,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> "AsyncBase[AnyStr]":
+    def __aiter__(self) -> AsyncBase[AnyStr]:
         return self
 
     # async def __anext__(self) -> Union[bytes, str]:
@@ -266,7 +264,7 @@ def _fileio_async_dispatcher(
 
 
 class AiopenContextManager(
-    AsyncContextManager[
+    AbstractAsyncContextManager[
         Union[
             BufferedIOAsyncBase,
             BufferedReaderAsync,
@@ -293,7 +291,7 @@ class AiopenContextManager(
 
     def throw(
         self,
-        typ: Type[BaseException],
+        typ: type[BaseException],
         val: Any = None,
         tb: Optional[TracebackType] = None,
     ) -> Any:
@@ -352,7 +350,7 @@ class AiopenContextManager(
 
     async def __aexit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc: Optional[BaseException],
         tb: Optional[TracebackType],
     ) -> None:

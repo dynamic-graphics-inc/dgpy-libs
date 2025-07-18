@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import json
 
+from typing import Any
+
 import pytest
 import rapidjson
 
@@ -12,7 +14,7 @@ def test_requires_json_n_rapid_json() -> None:
     from requires import requires
 
     @requires("json")
-    def uno():
+    def uno() -> str:
         return json.dumps({"a": 1, "b": 2})
 
     @requires(
@@ -20,7 +22,7 @@ def test_requires_json_n_rapid_json() -> None:
         pip="python-rapidjson",
         conda_forge="python-rapidjson",
     )
-    def tres():
+    def tres() -> Any:
         return rapidjson.dumps({"a": 1, "b": 2})
 
     try:

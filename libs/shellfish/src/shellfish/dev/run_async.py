@@ -19,7 +19,8 @@ from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten
 from shellfish.sp import PopenArgs, ProcessDt
 
 if TYPE_CHECKING:
-    from typing import IO, Any, List, Mapping, Set, Tuple, Union
+    from collections.abc import Mapping
+    from typing import IO, Any, Union
 
     from shellfish._types import FsPath
 
@@ -58,10 +59,10 @@ async def run_dtee_async(
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
     tee: bool = False,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
-) -> Tuple[CompletedProcess[bytes], ProcessDt]:
+) -> tuple[CompletedProcess[bytes], ProcessDt]:
     _args = list(_flatten_args(*popenargs))
 
     _stdin = DEVNULL if input is None else asyncio.subprocess.PIPE
@@ -240,7 +241,7 @@ async def run_async(
     capture_output: bool = True,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     tee: bool = False,
     universal_newlines: bool = True,
     **other_popen_kwargs: Any,

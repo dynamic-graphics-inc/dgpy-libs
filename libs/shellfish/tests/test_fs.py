@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from os import makedirs, path
-from typing import Set
 
 from jsonbourne.trydantic import dataclass
 from shellfish import fs
@@ -11,13 +10,13 @@ from shellfish.fs import touch
 @dataclass
 class DummyDataDir:
     root: str
-    files: Set[str]
-    dirs: Set[str]
+    files: set[str]
+    dirs: set[str]
 
 
-def dummy_data_dir_from_filepaths(root: str, filepaths: Set[str]) -> DummyDataDir:
-    files: Set[str] = set()
-    dirs: Set[str] = set()
+def dummy_data_dir_from_filepaths(root: str, filepaths: set[str]) -> DummyDataDir:
+    files: set[str] = set()
+    dirs: set[str] = set()
     for filepath in filepaths:
         dirs.add(path.dirname(filepath))
         files.add(filepath)

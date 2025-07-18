@@ -76,7 +76,7 @@ noxlint:
 
 # mypy
 mypy: fmt
-    nox -s mypy
+    uv run nox -s mypy
 
 # lint
 lint: fmt noxlint

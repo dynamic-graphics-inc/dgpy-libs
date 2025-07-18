@@ -3,11 +3,14 @@ from __future__ import annotations
 import json
 
 from pathlib import Path
-from typing import AsyncIterable, Awaitable, Callable, Iterable
+from typing import TYPE_CHECKING, Callable
 
 import pytest
 
 from shellfish import fs
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterable, Awaitable, Iterable
 
 _FILEPATH = Path(__file__).resolve()
 

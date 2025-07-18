@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "requires"
-version = "0.11.1"
+version = "0.11.2"
 description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = [ "decorator", "dgpy", "funkify", "import", "requires" ]

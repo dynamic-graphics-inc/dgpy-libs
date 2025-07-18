@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import re
 
-from typing import Match
+from re import Match
 
 __all__ = ("STRIP_JSON_COMMENTS_REGEX", "rm_js_comments", "strip_comments")
 

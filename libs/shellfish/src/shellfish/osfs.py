@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
-from typing import TYPE_CHECKING, List, Tuple
+from typing import TYPE_CHECKING
 
 from shellfish import batman
 
@@ -23,7 +23,7 @@ class OsFsAbc(ABC):  # pragma: nocov
     @staticmethod
     @abstractmethod
     def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None: ...
 
     @staticmethod
@@ -35,7 +35,7 @@ class OsFsAbc(ABC):  # pragma: nocov
     @staticmethod
     @abstractmethod
     def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None: ...
 
     @staticmethod
@@ -86,7 +86,7 @@ class LIN(OsFsAbc):  # pragma: nocov
 
     @staticmethod
     def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None:
         """Make multiple directory symlinks
 
@@ -119,7 +119,7 @@ class LIN(OsFsAbc):  # pragma: nocov
 
     @staticmethod
     def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None:
         """Make multiple file symlinks
 
@@ -203,7 +203,7 @@ class WIN(OsFsAbc):  # pragma: nocov
 
     @staticmethod
     def link_dirs(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None:
         """Make multiple directory symlinks
 
@@ -246,7 +246,7 @@ class WIN(OsFsAbc):  # pragma: nocov
 
     @staticmethod
     def link_files(
-        link_target_tuples: List[Tuple[str, str]], *, exist_ok: bool = False
+        link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
     ) -> None:
         """Make multiple file symlinks
 

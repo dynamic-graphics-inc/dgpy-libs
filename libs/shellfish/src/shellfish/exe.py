@@ -8,12 +8,7 @@ from shlex import split as _shplit
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    List,
     Optional,
-    Set,
-    Tuple,
-    Type,
     TypeVar,
     Union,
 )
@@ -35,39 +30,39 @@ TExe = TypeVar("TExe", bound="ExeABC")
 @dataclass
 class ExeConfig:
     cmd: str
-    subcmd: Optional[Tuple[str, ...]] = None
+    subcmd: Optional[tuple[str, ...]] = None
     abspath: Optional[str] = None
-    env: Optional[Dict[str, str]] = None
+    env: Optional[dict[str, str]] = None
     cwd: Optional[str] = None
     shell: bool = False
     verbose: bool = False
     timeout: Optional[Union[float, int]] = None
-    ok_code: Union[int, Set[int]] = field(default_factory=lambda: {0})
+    ok_code: Union[int, set[int]] = field(default_factory=lambda: {0})
     check: bool = False
 
 
 class ExeABC:
     cmd: str
-    subcmd: Optional[Tuple[str, ...]] = None
+    subcmd: Optional[tuple[str, ...]] = None
 
     abspath: Optional[str] = None
-    env: Optional[Dict[str, str]] = None
+    env: Optional[dict[str, str]] = None
     cwd: Optional[FsPath] = None
     shell: bool = False
     verbose: bool = False
     timeout: Optional[Union[float, int]] = None
-    ok_code: Union[int, Set[int]] = 0  # List[int], Tuple[int, ...], Set[int]] = (0,)
+    ok_code: Union[int, set[int]] = 0
     check: bool = False
 
     def __init__(
         self,
         cmd: str,
-        subcmd: Optional[Union[Tuple[str, ...], List[str], str]] = None,
+        subcmd: Optional[Union[tuple[str, ...], list[str], str]] = None,
         abspath: Optional[str] = None,
         check: bool = False,
         cwd: Optional[FsPath] = None,
-        env: Optional[Dict[str, str]] = None,
-        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+        env: Optional[dict[str, str]] = None,
+        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
         shell: bool = False,
         timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
@@ -95,7 +90,7 @@ class ExeABC:
         """Post-initialization"""
 
     @classmethod
-    def _from_exe_config(cls: Type[TExe], config: ExeConfig) -> TExe:
+    def _from_exe_config(cls: type[TExe], config: ExeConfig) -> TExe:
         """Return a new instance from the config"""
         return cls(
             cmd=config.cmd,
@@ -141,9 +136,9 @@ class ExeABC:
 
     def _unredundify(
         self,
-        popenargs: Tuple[PopenArgs, ...],
+        popenargs: tuple[PopenArgs, ...],
         args: Optional[PopenArgs] = None,
-    ) -> Tuple[str, ...]:
+    ) -> tuple[str, ...]:
         _args = popenargs if args is None else args
         if len(_args) == 1 and isinstance(_args[0], str):
             _args_list = _shplit(_args[0])
@@ -155,7 +150,7 @@ class ExeABC:
 
     def _cmdargs(
         self,
-        popenargs: Tuple[PopenArgs, ...],
+        popenargs: tuple[PopenArgs, ...],
         args: Optional[PopenArgs] = None,
     ) -> PopenArgv:
         argv = self._unredundify(popenargs, args)
@@ -165,7 +160,7 @@ class ExeABC:
         self,
         *popenargs: PopenArgs,
         args: Optional[PopenArgs] = None,
-        env: Optional[Dict[str, str]] = None,
+        env: Optional[dict[str, str]] = None,
         extenv: bool = True,
         cwd: Optional[FsPath] = None,
         shell: bool = False,
@@ -173,7 +168,7 @@ class ExeABC:
         verbose: bool = False,
         input: STDIN = None,
         timeout: Optional[Union[float, int]] = None,
-        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
         _args = self._cmdargs(popenargs, args)
@@ -198,11 +193,11 @@ class ExeABC:
         check: bool = False,
         cwd: Optional[str] = None,
         dryrun: bool = False,
-        env: Optional[Dict[str, str]] = None,
+        env: Optional[dict[str, str]] = None,
         extenv: bool = True,
         input: STDIN = None,
         loop: Optional[Any] = None,
-        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
         shell: bool = False,
         timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
@@ -233,7 +228,7 @@ class Exe(ExeABC):
         self,
         *popenargs: PopenArgs,
         args: Optional[PopenArgs] = None,
-        env: Optional[Dict[str, str]] = None,
+        env: Optional[dict[str, str]] = None,
         extenv: bool = True,
         cwd: Optional[FsPath] = None,
         shell: bool = False,
@@ -241,7 +236,7 @@ class Exe(ExeABC):
         verbose: bool = False,
         input: STDIN = None,
         timeout: Optional[Union[float, int]] = None,
-        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
         dryrun: bool = False,
     ) -> Done:
         return self._do(
@@ -268,7 +263,7 @@ class ExeAsync(ExeABC):
         check: bool = False,
         cwd: Optional[str] = None,
         dryrun: bool = False,
-        env: Optional[Dict[str, str]] = None,
+        env: Optional[dict[str, str]] = None,
         extenv: bool = True,
         input: STDIN = None,
         loop: Optional[Any] = None,

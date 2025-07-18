@@ -12,7 +12,7 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Type, Union
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 from uuid import UUID
 
 if TYPE_CHECKING:
@@ -454,7 +454,7 @@ class RAPIDJSON(JsonLibABC):
         )
 
 
-def pick_lib() -> "Type[JsonLibABC]":
+def pick_lib() -> type[JsonLibABC]:
     if ORJSON.usable():
         return ORJSON
     if RAPIDJSON.usable():
@@ -462,25 +462,25 @@ def pick_lib() -> "Type[JsonLibABC]":
     return JSON_STDLIB
 
 
-def _import_rapidjson() -> "Type[RAPIDJSON]":
+def _import_rapidjson() -> type[RAPIDJSON]:
     if RAPIDJSON.usable():
         return RAPIDJSON
     raise ImportError("rapidjson (python-rapidjson) not installed")
 
 
-def _import_orjson() -> "Type[ORJSON]":
+def _import_orjson() -> type[ORJSON]:
     if ORJSON.usable():
         return ORJSON
     raise ImportError("orjson not installed")
 
 
-def _import_json_stdlib() -> "Type[JSON_STDLIB]":
+def _import_json_stdlib() -> type[JSON_STDLIB]:
     return JSON_STDLIB
 
 
 def import_json(
-    jsonlibs: Optional[Union[Tuple[str, ...], List[str]]] = None,
-) -> "Type[JsonLibABC]":
+    jsonlibs: Optional[Union[tuple[str, ...], list[str]]] = None,
+) -> type[JsonLibABC]:
     lib2funk = {
         "rapidjson": _import_rapidjson,
         "orjson": _import_orjson,
@@ -498,11 +498,11 @@ def import_json(
 
 
 class JsonLib:
-    _jsonlib: Type[JsonLibABC]
-    _oj: Optional[Type[ORJSON]] = None
-    _rj: Optional[Type[RAPIDJSON]] = None
+    _jsonlib: type[JsonLibABC]
+    _oj: Optional[type[ORJSON]] = None
+    _rj: Optional[type[RAPIDJSON]] = None
 
-    def __init__(self, jsonlib: Optional[Type[JsonLibABC]] = None):
+    def __init__(self, jsonlib: Optional[type[JsonLibABC]] = None):
         if jsonlib:
             self._jsonlib = jsonlib
         else:
@@ -601,7 +601,7 @@ class JsonLib:
         )
 
 
-_JSONLIB: Type[JsonLibABC] = import_json()
+_JSONLIB: type[JsonLibABC] = import_json()
 JSONLIB = JsonLib(_JSONLIB)
 
 
