@@ -13,15 +13,15 @@ def test_skip_if_windows() -> None:
 
 
 @pytest.mark.skip_darwin
-def test_darwin_marker_skip():
+def test_darwin_marker_skip() -> None:
     assert sys.platform != "darwin"
 
 
 @pytest.mark.skip_linux
-def test_linux_marker_skip():
+def test_linux_marker_skip() -> None:
     assert sys.platform != "linux"
 
 
 @pytest.mark.skip_win32
-def test_if_win32_crashes_skip():
+def test_if_win32_crashes_skip() -> None:
     assert sys.platform != "win32"

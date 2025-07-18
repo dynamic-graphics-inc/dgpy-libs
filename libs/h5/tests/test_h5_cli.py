@@ -20,7 +20,7 @@ def runner() -> CliRunner:
     return CliRunner()
 
 
-def test_help():
+def test_help() -> None:
     """Test help"""
     runner = CliRunner()
     result = runner.invoke(cli, ["--help"])

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import numpy as np
 import pytest
 
@@ -7,6 +9,9 @@ import h5
 
 from h5._info import DatasetInfo, FileInfo, GroupInfo
 from h5.testing import make_test_hdf5_file
+
+if TYPE_CHECKING:
+    from pathlib import Path
 
 array = np.array
 
@@ -176,8 +181,8 @@ h5_test_file_info = FileInfo(
 )
 
 
-def test_h5_info_objects(tmpdir):
-    filepath = tmpdir.join("test.h5").strpath
+def test_h5_info_objects(tmp_path: Path) -> None:
+    filepath = tmp_path / "test.h5"
     make_test_hdf5_file(filepath)
 
     file_info = h5.info(filepath)
@@ -191,30 +196,30 @@ def test_h5_info_objects(tmpdir):
 
 
 class TestH5FileInfoObj:
-    def test_contains(self):
+    def test_contains(self) -> None:
         assert "vanilla" in h5_test_file_info.datasets
         assert "vanilla" in h5_test_file_info
 
         assert "root_dataset" in h5_test_file_info.datasets
         assert "root_dataset" in h5_test_file_info
 
-    def test_len(self):
+    def test_len(self) -> None:
         assert len(h5_test_file_info) == len(h5_test_file_info.datasets) + len(
             h5_test_file_info.groups
         )
 
-    def test_getitem(self):
+    def test_getitem(self) -> None:
         assert h5_test_file_info["vanilla"] == h5_test_file_info.datasets["vanilla"]
         assert (
             h5_test_file_info["root_dataset"]
             == h5_test_file_info.datasets["root_dataset"]
         )
 
-    def test_getitem_raises(self):
+    def test_getitem_raises(self) -> None:
         with pytest.raises(KeyError):
             h5_test_file_info.get("nonexistent")
 
-    def test_get(self):
+    def test_get(self) -> None:
         vanilla_dataset = h5_test_file_info.datasets["vanilla"]
         assert h5_test_file_info.get("vanilla") == vanilla_dataset
         assert (
@@ -225,7 +230,7 @@ class TestH5FileInfoObj:
         with pytest.raises(TypeError):
             assert h5_test_file_info.get("nonexistent", default=123)  # type: ignore[arg-type]
 
-    def test_dump_gen(self):
+    def test_dump_gen(self) -> None:
         list_dump_gen = list(h5_test_file_info.dump_gen(attributes=False))
         dump_gen_expected = [
             {
@@ -399,6 +404,6 @@ class TestH5FileInfoObj:
         ]
         assert list_dump_gen == dump_gen_expected_no_attrs
 
-    def test_setitem_type_error(self):
+    def test_setitem_type_error(self) -> None:
         with pytest.raises(TypeError):
             h5_test_file_info["vanilla"] = 123  # type: ignore[assignment]

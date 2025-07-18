@@ -6,14 +6,15 @@ from __future__ import annotations
 import json
 import sys
 
+from importlib import metadata as importlib_metadata
 from typing import Optional
 
 from h5.__about__ import __pkgroot__, __title__, __version__
 
 __click_version__: Optional[str] = None
 try:
-    from click import __version__ as __click_version__
-except ImportError:
+    __click_version__ = importlib_metadata.version("click")
+except importlib_metadata.PackageNotFoundError:
     ...
 
 

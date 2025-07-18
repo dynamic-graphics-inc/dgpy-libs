@@ -37,7 +37,7 @@ def module_members(
     return [k for k, v in members.items() if obj_module_name(v) == module_name]
 
 
-def test_h5_core_exports():
+def test_h5_core_exports() -> None:
     members = module_members(h5core)
     missing_members = [el for el in members if el not in H5_CORE_ALL_SET]
     assert not missing_members, f"missing members: {missing_members}"
@@ -54,7 +54,7 @@ def test_h5_core_exports():
     )
 
 
-def test_h5_info_exports():
+def test_h5_info_exports() -> None:
     members = module_members(h5info)
     missing_members = [el for el in members if el not in H5_INFO_ALL_SET]
     assert not missing_members, f"missing members: {missing_members}"
@@ -71,7 +71,7 @@ def test_h5_info_exports():
     )
 
 
-def test_h5_exports():
+def test_h5_exports() -> None:
     exported_from_h5_core = H5_CORE_ALL_SET
     missing_from_h5 = [el for el in exported_from_h5_core if el not in H5_ALL_SET]
     assert not missing_from_h5, f"missing from h5: {missing_from_h5}"
