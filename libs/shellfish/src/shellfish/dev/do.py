@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Dict, List, Optional, Set, Tuple, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 from typing_extensions import TypedDict
 
@@ -13,13 +13,13 @@ if TYPE_CHECKING:
 class DoDict(TypedDict):
     """Do dictionary"""
 
-    args: Union[List[str], Tuple[str, ...]]
+    args: Union[list[str], tuple[str, ...]]
     check: bool
     cwd: Optional[FsPath]
     dryrun: bool
-    env: Optional[Dict[str, str]]
+    env: Optional[dict[str, str]]
     extenv: bool
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]]
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]]
     shell: bool
     tee: bool
     timeout: Optional[Union[float, int]]
@@ -29,13 +29,13 @@ class DoDict(TypedDict):
 class Do(JsonBaseModel):
     """PRun => 'ProcessRun' for finished processes"""
 
-    args: Union[List[str], Tuple[str, ...]]
+    args: Union[list[str], tuple[str, ...]]
     check: bool = False
     cwd: Optional[FsPath] = None
     dryrun: bool = False
-    env: Optional[Dict[str, str]] = None
+    env: Optional[dict[str, str]] = None
     extenv: bool = True
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = (0,)
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = (0,)
     shell: bool = False
     tee: bool = False
     timeout: Optional[Union[float, int]] = None

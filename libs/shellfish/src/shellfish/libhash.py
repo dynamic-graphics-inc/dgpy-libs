@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from hashlib import blake2b, blake2s, md5, sha1, sha224, sha256, sha384, sha512
-from typing import TYPE_CHECKING, Callable, Dict, Union
+from typing import TYPE_CHECKING, Callable, Union
 
 if TYPE_CHECKING:
     from collections.abc import Iterator
@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 __all__ = ("hash_bytes_gen", "string2hasher")
 
-_HASHERS: Dict[str, Callable[[], "_Hash"]] = {
+_HASHERS: dict[str, Callable[[], "_Hash"]] = {
     "blake2b": blake2b,  # type: ignore[dict-item]
     "blake2s": blake2s,  # type: ignore[dict-item]
     "md5": md5,

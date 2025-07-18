@@ -7,7 +7,7 @@ from os import getcwd, makedirs, path
 from os.path import sep
 from pathlib import Path
 from random import choice as rand_choice, randint
-from typing import TYPE_CHECKING, Dict, List, Optional
+from typing import TYPE_CHECKING, Optional
 
 from shellfish.fs import write_str
 
@@ -67,7 +67,7 @@ def mk_random_dirtree(
     n_subdirectories: int = 8,
     max_subdirectory_files: int = 4,
     max_file_string_len: int = 100,
-) -> Dict[str, List[str]]:
+) -> dict[str, list[str]]:
     """Make a random directory tree full of dummy files at a given dirpath"""
     dest = dest or getcwd()
     dirpaths = [random_directory_path() for i in range(n_subdirectories)]

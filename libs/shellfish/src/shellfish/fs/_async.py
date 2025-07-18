@@ -7,7 +7,7 @@ import os
 
 from collections.abc import AsyncIterable, AsyncIterator, Iterable
 from os import fspath as _fspath
-from typing import TYPE_CHECKING, Any, Callable, List, Optional, Union
+from typing import TYPE_CHECKING, Any, Callable, Optional, Union
 
 from aiopen import aiopen
 from jsonbourne import JSON
@@ -142,7 +142,7 @@ async def dir_exists_async(fspath: FsPath) -> bool:
     return await aios.path.isdir(_fspath(fspath))
 
 
-async def listdir_async(fspath: FsPath) -> List[str]:
+async def listdir_async(fspath: FsPath) -> list[str]:
     """Async version of `os.listdir`"""
     return await aios.listdir(_fspath(fspath))
 

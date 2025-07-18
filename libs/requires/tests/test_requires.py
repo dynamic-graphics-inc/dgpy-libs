@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Tuple
+from typing import Any
 
 import pytest
 
@@ -146,7 +146,7 @@ def test_requirement_as_decorator() -> None:
 def test_requirement_as_decorator_multiple_xfail() -> None:
     with pytest.raises(NameError):
 
-        def fn() -> Tuple[str, Any]:
+        def fn() -> tuple[str, Any]:
             d = {"herm": 1}
             s = dumps(d)  # type: ignore[name-defined]
             f = loads(s)  # type: ignore[name-defined]
@@ -166,7 +166,7 @@ def test_requirement_as_decorator_multiple() -> None:
 
     @json_dumps_req
     @json_loads_req
-    def fn() -> Tuple[str, Any]:
+    def fn() -> tuple[str, Any]:
         d = {"herm": 1}
         s = dumps(d)  # type: ignore[name-defined]
         f = loads(s)  # type: ignore[name-defined]
@@ -327,7 +327,7 @@ def test_from_json_import_dumps_via_dicts() -> None:
 
 def test_from_json_import_dumps_as_via_dict() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})
-    def fn() -> Tuple[str, Dict[str, int]]:
+    def fn() -> tuple[str, dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
         from json import loads
@@ -343,7 +343,7 @@ def test_from_json_import_dumps_as_via_dict() -> None:
 def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})  # type: ignore[arg-type]
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})  # type: ignore[arg-type]
-    def fn() -> Tuple[str, Dict[str, int]]:
+    def fn() -> tuple[str, dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
         f = loads_test_dicts(s)  # type: ignore[name-defined]
@@ -357,7 +357,7 @@ def test_from_json_import_dumps_via_dicts_multi_single_dec() -> None:
 def test_from_json_import_dumps_via_dicts_multi() -> None:
     @requires(**{"_from": "json", "_import": "loads", "_as": "loads_test_dicts"})  # type: ignore[arg-type]
     @requires(**{"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"})  # type: ignore[arg-type]
-    def fn() -> Tuple[str, Dict[str, int]]:
+    def fn() -> tuple[str, dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
         f = loads_test_dicts(s)  # type: ignore[name-defined]

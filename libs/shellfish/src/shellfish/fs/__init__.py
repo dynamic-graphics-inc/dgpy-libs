@@ -30,9 +30,7 @@ from typing import (
     Any,
     AnyStr,
     Callable,
-    List,
     Optional,
-    Tuple,
     Union,
     cast,
 )
@@ -190,14 +188,14 @@ def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     return cast("Iterable[DirEntry[AnyStr]]", _scandir(fspath(dirpath)))
 
 
-def scandir_list(dirpath: FsPath = ".") -> List[DirEntry[AnyStr]]:
+def scandir_list(dirpath: FsPath = ".") -> list[DirEntry[AnyStr]]:
     """Return a list of os.DirEntry objects
 
     Args:
         dirpath: Dirpath to scan
 
     Returns:
-        List[DirEntry]: List of os.DirEntry objects
+        list[DirEntry]: List of os.DirEntry objects
 
     """
     return list(scandir(dirpath))
@@ -639,7 +637,7 @@ def files_dirs_gen(
     onerror: Optional[Callable[[OSError], Any]] = None,
     followlinks: bool = False,
     check: bool = True,
-) -> Tuple[Iterator[str], Iterator[str]]:
+) -> tuple[Iterator[str], Iterator[str]]:
     r"""Return a files_gen() and a dirs_gen() in one swell-foop
 
     Args:
@@ -1321,7 +1319,7 @@ def extension(fspath: str, *, period: bool = False) -> str:
     return "".join(Path(fspath).suffixes).lstrip(".")
 
 
-def sep_split(fspath: FsPath) -> Tuple[str, ...]:
+def sep_split(fspath: FsPath) -> tuple[str, ...]:
     """Split a string on the current platform os.path.sep value"""
     return tuple(el for el in str(fspath).split(sep) if el != sep and el != "")
 
@@ -1462,7 +1460,7 @@ def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[
     return iglob(pattern, recursive=recursive or r)
 
 
-def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> Tuple[FsPath, FsPath]:
+def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> tuple[FsPath, FsPath]:
     if not dryrun:
         _move(fspath(src), dest)
     return (src, dest)
@@ -1573,7 +1571,7 @@ def rm(
     recursive: bool = False,
     dryrun: bool = False,
     verbose: bool = False,
-) -> Union[List[str], None]:
+) -> Union[list[str], None]:
     """Remove files & directories in the style of the shell
 
     Args:
@@ -1617,7 +1615,7 @@ def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> Non
 
 def copy_file(
     src: FsPath, dest: FsPath, *, dryrun: bool = False, mkdirp: bool = False
-) -> Tuple[str, str]:
+) -> tuple[str, str]:
     """Copy a file given a source-path and a destination-path
 
     Args:

@@ -9,7 +9,7 @@ from os import fspath as _fspath, getenv as _getenv
 from pathlib import Path
 from shutil import which
 from subprocess import CompletedProcess, run
-from typing import TYPE_CHECKING, AnyStr, Tuple, Union
+from typing import TYPE_CHECKING, AnyStr, Union
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -21,7 +21,7 @@ MAX_CMD_LENGTH: int = 8192
 WIN_DEFAULT_PATHEXT: str = ".COM;.EXE;.BAT;.CMD;.VBS;.JS;.WS;.MSC"
 
 
-def pathext() -> Tuple[str, ...]:
+def pathext() -> tuple[str, ...]:
     pathext_source = _getenv("PATHEXT") or WIN_DEFAULT_PATHEXT
     return tuple(pathext_source.split(";"))
 
@@ -61,7 +61,7 @@ def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
 
 
 def run_cmds_as_bat_file(
-    commands: Sequence[Union[Tuple[str, ...], str]], *, text: bool = True
+    commands: Sequence[Union[tuple[str, ...], str]], *, text: bool = True
 ) -> CompletedProcess[AnyStr]:
     if len(commands) == 0:
         raise ValueError("no commands given")
@@ -116,7 +116,7 @@ def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, 
 
 def MKLINK_ARGS(
     link: FsPath, target: FsPath, *, D: bool = False, H: bool = False, J: bool = False
-) -> Union[Tuple[str, str, str, str], Tuple[str, str, str]]:
+) -> Union[tuple[str, str, str, str], tuple[str, str, str]]:
     link_path = Path(link).absolute()
     target_path = Path(target).absolute()
     mklink_opt = MKLINK_OPT(D=D, H=H, J=J)
@@ -175,7 +175,7 @@ def RD_ARGS(
     Y: bool = False,
     Z: bool = False,
     A: bool = False,
-) -> Tuple[str, ...]:
+) -> tuple[str, ...]:
     opts = (
         "/S" if S else None,
         "/Q" if Q else None,
@@ -240,7 +240,7 @@ def RD(
     return run(args=_args, check=check, capture_output=True, text=True, shell=True)
 
 
-def DEL_ARGS(fspath: FsPath) -> Tuple[str, str]:
+def DEL_ARGS(fspath: FsPath) -> tuple[str, str]:
     path_obj = Path(fspath).absolute()
     return (
         "DEL",

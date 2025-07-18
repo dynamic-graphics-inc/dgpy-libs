@@ -28,12 +28,7 @@ from typing import (
     Any,
     AnyStr,
     Callable,
-    Dict,
-    List,
     Optional,
-    Set,
-    Tuple,
-    Type,
     Union,
 )
 
@@ -422,20 +417,20 @@ class Flag(metaclass=FlagMeta):
     """
 
 
-def mkenv(env: Dict[str, str], extenv: bool = True) -> Dict[str, str]:
+def mkenv(env: dict[str, str], extenv: bool = True) -> dict[str, str]:
     if extenv:
         return {**dict(environ), **env}
     return env
 
 
-def seconds2hrtime(seconds: Union[float, int]) -> Tuple[int, int]:
-    """Return hr-time Tuple[int, int] (seconds, nanoseconds)
+def seconds2hrtime(seconds: Union[float, int]) -> tuple[int, int]:
+    """Return hr-time tuple[int, int] (seconds, nanoseconds)
 
     Args:
         seconds (float): number of seconds
 
     Returns:
-        Tuple[int, int]: (seconds, nanoseconds)
+        tuple[int, int]: (seconds, nanoseconds)
 
     """
     _sec, _ns = divmod(int(seconds * 1_000_000_000), 1_000_000_000)
@@ -504,7 +499,7 @@ class DoneError(SubprocessError):
     returncode: int
     stdout: str
     stderr: str
-    cmd: List[str]
+    cmd: list[str]
 
     def __init__(self, done: Done) -> None:
         self.returncode = done.returncode
@@ -537,7 +532,7 @@ class DoneError(SubprocessError):
 
 
 class DoneDict(TypedDict):
-    args: List[str]
+    args: list[str]
     returncode: int
     stdout: str
     stderr: str
@@ -553,7 +548,7 @@ class DoneDict(TypedDict):
 class DoneObj(TypedDict):
     """TODO: deprecate this in favor of DoneDict"""
 
-    args: List[str]
+    args: list[str]
     returncode: int
     stdout: str
     stderr: str
@@ -569,7 +564,7 @@ class DoneObj(TypedDict):
 class Done(JsonBaseModel):
     """PRun => 'ProcessRun' for finished processes"""
 
-    args: List[str]
+    args: list[str]
     returncode: int
     stdout: str
     stderr: str
@@ -597,14 +592,14 @@ class Done(JsonBaseModel):
             return self.hrdt.hrdt_obj()
         return HrTime.from_seconds(seconds=self.dt).hrdt_obj()
 
-    def stdout_lines(self, keepends: bool = False) -> List[str]:
+    def stdout_lines(self, keepends: bool = False) -> list[str]:
         return self.stdout.splitlines(keepends=keepends)
 
-    def stderr_lines(self, keepends: bool = False) -> List[str]:
+    def stderr_lines(self, keepends: bool = False) -> list[str]:
         return self.stderr.splitlines(keepends=keepends)
 
     @property
-    def lines(self) -> List[str]:
+    def lines(self) -> list[str]:
         return self.stdout_lines(keepends=False)
 
     def done_dict(self) -> DoneDict:
@@ -645,7 +640,7 @@ class Done(JsonBaseModel):
 
     def check(
         self,
-        ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     ) -> None:
         """Check returncode and stderr
 
@@ -774,14 +769,14 @@ class Done(JsonBaseModel):
         """Return json parsed stdout (alias bc I keep flip-flopping the fn name)"""
         return self.json_parse(stderr=stderr, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
-    def grep(self, string: str) -> List[str]:
+    def grep(self, string: str) -> list[str]:
         """Return lines in stdout that have
 
         Args:
             string (str): String to search for
 
         Returns:
-            List[str]: List of strings of stdout lines containing the given
+            list[str]: List of strings of stdout lines containing the given
                 search string
 
         """
@@ -849,7 +844,7 @@ def pstderr(proc: CompletedProcess[AnyStr]) -> str:
     return decode_stdio_bytes(proc.stderr)
 
 
-def pstdout_pstderr(proc: CompletedProcess[AnyStr]) -> Tuple[str, str]:
+def pstdout_pstderr(proc: CompletedProcess[AnyStr]) -> tuple[str, str]:
     """Get the STDOUT and STDERR as strings from a subprocess
 
     Args:
@@ -878,7 +873,7 @@ def utf8_string(val: Union[str, bytes, bytearray]) -> str:
     return val
 
 
-def flatten_args(*args: Union[Any, List[Any]]) -> List[str]:
+def flatten_args(*args: Union[Any, list[Any]]) -> list[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
@@ -891,7 +886,7 @@ def flatten_args(*args: Union[Any, List[Any]]) -> List[str]:
     return list(_flatten_strings(*args))
 
 
-def validate_popen_args(args: Union[PopenArgs, Tuple[PopenArgs, ...]]) -> List[str]:
+def validate_popen_args(args: Union[PopenArgs, tuple[PopenArgs, ...]]) -> list[str]:
     if len(args) == 0:
         raise ValueError("args must be a non-empty sequence")
     if len(args) == 1:
@@ -902,12 +897,12 @@ def validate_popen_args(args: Union[PopenArgs, Tuple[PopenArgs, ...]]) -> List[s
     return flatten_args(args)
 
 
-def popen_has_pipe_character(args: Union[List[PopenArg], Tuple[PopenArg, ...]]) -> bool:
+def popen_has_pipe_character(args: Union[list[PopenArg], tuple[PopenArg, ...]]) -> bool:
     return any(arg == "|" for arg in args)
 
 
 def validate_popen_args_windows(
-    args: PopenArgs, env: Optional[Dict[str, str]] = None
+    args: PopenArgs, env: Optional[dict[str, str]] = None
 ) -> PopenArgs:
     args = validate_popen_args(args)
     _path = None
@@ -923,7 +918,7 @@ def _do_tee(
     args: PopenArgs,
     input: Optional[STDIN],
     cwd: Optional[FsPath],
-    env: Optional[Dict[str, str]],
+    env: Optional[dict[str, str]],
     timeout: Optional[float],
     shell: bool = False,
 ) -> Done:
@@ -944,7 +939,7 @@ def _do_tee(
 def _do(
     args: PopenArgs,
     *,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[FsPath] = None,
     shell: bool = False,
@@ -954,7 +949,7 @@ def _do(
     timeout: Optional[float] = None,
     text: bool = False,
     tee: bool = False,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -1058,7 +1053,7 @@ def _do(
 def do(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[FsPath] = None,
     shell: bool = False,
@@ -1067,7 +1062,7 @@ def do(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -1120,7 +1115,7 @@ def do(
 def shell(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     shell: bool = True,
     extenv: bool = True,
     cwd: Optional[FsPath] = None,
@@ -1128,7 +1123,7 @@ def shell(
     verbose: bool = False,
     input: STDIN = None,
     timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously in current shell
@@ -1191,7 +1186,7 @@ async def run_async(
     encoding: Optional[str] = None,
     errors: Optional[str] = None,
     text: bool = False,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[Any]:
@@ -1218,7 +1213,7 @@ async def run_async(
 async def do_asyncify(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
     shell: bool = False,
@@ -1226,7 +1221,7 @@ async def do_asyncify(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
@@ -1251,7 +1246,7 @@ async def do_asyncify(
 async def _do_async(
     args: PopenArgs,
     *,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
     shell: bool = False,
@@ -1259,7 +1254,7 @@ async def _do_async(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await completion
@@ -1383,7 +1378,7 @@ async def _do_async(
 async def do_async(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
     shell: bool = False,
@@ -1391,7 +1386,7 @@ async def do_async(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[float] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1460,7 +1455,7 @@ do_ = do_async
 async def doa(
     *popenargs: PopenArgs,
     args: Optional[PopenArgs] = None,
-    env: Optional[Dict[str, str]] = None,
+    env: Optional[dict[str, str]] = None,
     extenv: bool = True,
     cwd: Optional[str] = None,
     shell: bool = False,
@@ -1468,7 +1463,7 @@ async def doa(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[float] = None,
-    ok_code: Union[int, List[int], Tuple[int, ...], Set[int]] = 0,
+    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1531,7 +1526,7 @@ class LIN(_LIN):
         dry_run: bool = False,
         exclude: Optional[Iterable[str]] = None,
         include: Optional[Iterable[str]] = None,
-    ) -> List[str]:
+    ) -> list[str]:
         """Return args for rsync command on linux/mac
 
         Args:
@@ -1582,7 +1577,7 @@ class LIN(_LIN):
             dest = f"{dest}/"
         if not src.endswith("/"):
             src = f"{src}/"
-        _args: List[Union[str, None]] = [
+        _args: list[Union[str, None]] = [
             "rsync",
             "-a",
             "-O",
@@ -1706,10 +1701,10 @@ class WIN(_WIN):
         dest: str,
         *,
         delete: bool = False,
-        exclude_files: Optional[List[str]] = None,
-        exclude_dirs: Optional[List[str]] = None,
+        exclude_files: Optional[list[str]] = None,
+        exclude_dirs: Optional[list[str]] = None,
         dry_run: bool = False,
-    ) -> List[str]:
+    ) -> list[str]:
         """Return list of robocopy command args
 
         Args:
@@ -1860,7 +1855,7 @@ class WIN(_WIN):
 # =============================================================================
 
 # OS DEPENDENT
-_OS: Union[Type[LIN], Type[WIN]] = (
+_OS: Union[type[LIN], type[WIN]] = (
     WIN if "windows" in system().lower() else LIN
 )  # Use LIN/WIN as _OS
 sync = _OS.sync
@@ -1935,7 +1930,7 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
+def export(key: str, val: Optional[str] = None) -> tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
@@ -1957,7 +1952,7 @@ def export(key: str, val: Optional[str] = None) -> Tuple[str, str]:
     )
 
 
-def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
+def setenv(key: str, val: Optional[str] = None) -> tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
@@ -1965,13 +1960,13 @@ def setenv(key: str, val: Optional[str] = None) -> Tuple[str, str]:
         val (str): environment variable value
 
     Returns:
-        Tuple[str, str]: environment variable key/value pair
+        tuple[str, str]: environment variable key/value pair
 
     """
     return export(key=key, val=val)
 
 
-def shplit(string: str, comments: bool = False, posix: bool = True) -> List[str]:
+def shplit(string: str, comments: bool = False, posix: bool = True) -> list[str]:
     """Typed alias for shlex.split"""
     return _shplit(string, comments=comments, posix=posix)
 
@@ -2124,7 +2119,7 @@ def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> s
     )
 
 
-def ls(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+def ls(dirpath: FsPath = ".", abspath: bool = False) -> list[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
     Args:
@@ -2140,7 +2135,7 @@ def ls(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
     return listdir(str(dirpath))
 
 
-def ls_files(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
+def ls_files(dirpath: FsPath = ".", *, abspath: bool = False) -> list[str]:
     """List the files in a given directory path
 
     Args:
@@ -2157,7 +2152,7 @@ def ls_files(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
     return list(map(lambda el: el.name, files))
 
 
-def ls_dirs(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
+def ls_dirs(dirpath: FsPath = ".", *, abspath: bool = False) -> list[str]:
     """List the directories in a given directory path
 
     Args:
@@ -2176,7 +2171,7 @@ def ls_dirs(dirpath: FsPath = ".", *, abspath: bool = False) -> List[str]:
 
 def ls_files_dirs(
     dirpath: FsPath = ".", *, abspath: bool = False
-) -> Tuple[List[str], List[str]]:
+) -> tuple[list[str], list[str]]:
     """List the files and directories given directory path
 
     Args:
@@ -2196,7 +2191,7 @@ def ls_files_dirs(
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
 
 
-async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> List[str]:
+async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> list[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
     Args:

@@ -12,10 +12,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
-    List,
     Optional,
-    Type,
     Union,
     cast,
 )
@@ -54,7 +51,7 @@ _OS_ENVIRON_ATTRS = set(dir(environ))
 
 
 @contextmanager
-def tmpenv(**kwargs: str) -> Generator[Type[Env], Any, None]:
+def tmpenv(**kwargs: str) -> Generator[type[Env], Any, None]:
     """Context manager for Env"""
     old_env = dict(environ)
     if kwargs:
@@ -106,10 +103,10 @@ class _EnvObjMeta(type):
             raise ValueError(f"Key ({key}) is protected; set with __setitem__")
         return cls.__setitem__(key, value)
 
-    def update(self, d: Dict[str, str]) -> None:
+    def update(self, d: dict[str, str]) -> None:
         return environ.update(d)
 
-    def update_from_dict(self, d: Dict[str, str]) -> None:
+    def update_from_dict(self, d: dict[str, str]) -> None:
         return self.update(d)
 
     def get(self, key: str, default: Optional[str] = None) -> str:
@@ -132,7 +129,7 @@ class _EnvObjMeta(type):
     def items(self) -> ItemsView[str, str]:
         return environ.items()
 
-    def asdict(cls) -> Dict[str, str]:
+    def asdict(cls) -> dict[str, str]:
         return dict(environ.items())
 
 
@@ -166,7 +163,7 @@ class Env(metaclass=_EnvObjMeta):
 env = ENV = Env
 
 
-def env_dict() -> Dict[str, str]:
+def env_dict() -> dict[str, str]:
     """Return the current environment-variables as a dictionary"""
     return env.asdict()
 
@@ -304,7 +301,7 @@ def sys_path_sep() -> str:
     return pathsep
 
 
-def syspath_paths(syspath: Optional[str] = None) -> List[str]:
+def syspath_paths(syspath: Optional[str] = None) -> list[str]:
     """Return the current sys.path as a list
 
     Examples:
