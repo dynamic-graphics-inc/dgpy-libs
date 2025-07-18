@@ -108,7 +108,7 @@ def test_root_has_everything() -> None:
         assert el in xtyping_all_set
 
 
-def test_xtyping_has_all_typing_extensions_members():
+def test_xtyping_has_all_typing_extensions_members() -> None:
     all_typing = set(xtyping.__all_typing__)
     typing_extensions_all_list = list(typing_extensions.__all__)
     _typing_extensions_members = (
