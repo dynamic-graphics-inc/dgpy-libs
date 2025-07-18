@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from collections.abc import Awaitable
 from functools import partial, wraps
-from typing import Callable, Optional, TypeVar
+from typing import TYPE_CHECKING, Callable, Optional, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,
@@ -11,6 +10,9 @@ from anyio import (
     to_thread as to_thread,
 )
 from typing_extensions import ParamSpec
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable
 
 __all__ = (
     "anyio_run",

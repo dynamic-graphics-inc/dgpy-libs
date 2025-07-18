@@ -6,7 +6,6 @@ Inspired by aiofiles
 
 from __future__ import annotations
 
-from collections.abc import Awaitable
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -23,6 +22,7 @@ from typing import (
 from anyio import AsyncFile, open_file
 
 if TYPE_CHECKING:
+    from collections.abc import Awaitable
     from os import PathLike
     from types import TracebackType
 

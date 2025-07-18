@@ -6,7 +6,6 @@ from __future__ import annotations
 import re
 
 from binascii import hexlify
-from collections.abc import ItemsView, Iterable, Sequence
 from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
 from functools import lru_cache
@@ -16,6 +15,7 @@ from random import choice
 from string import ascii_letters, ascii_lowercase, ascii_uppercase, digits, printable
 from textwrap import indent as _indent
 from typing import (
+    TYPE_CHECKING,
     Any,
     AnyStr,
     Callable,
@@ -29,6 +29,9 @@ from typing import (
 )
 
 from fmts.__about__ import __version__
+
+if TYPE_CHECKING:
+    from collections.abc import ItemsView, Iterable, Sequence
 
 # END IMPORTS
 

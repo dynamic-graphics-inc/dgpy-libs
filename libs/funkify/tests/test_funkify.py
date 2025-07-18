@@ -3,11 +3,13 @@ from __future__ import annotations
 
 import asyncio
 
-from collections.abc import Awaitable
 from os import path
-from typing import TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 import pytest
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable
 
 PWD = path.split(path.realpath(__file__))[0]
 

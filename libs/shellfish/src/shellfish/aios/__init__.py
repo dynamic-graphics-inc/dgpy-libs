@@ -5,11 +5,13 @@ from __future__ import annotations
 
 import os
 
-from collections.abc import AsyncIterator
-from typing import AnyStr, Generic
+from typing import TYPE_CHECKING, AnyStr, Generic
 
 from asyncify import asyncify
 from shellfish.aios import _path
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncIterator
 
 __all__ = (
     "DirEntryAsync",

@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import sys
 
-from collections.abc import Mapping
 from dataclasses import dataclass
 from io import BytesIO
 from subprocess import (
@@ -37,6 +36,8 @@ from shellfish.libsh.args import args2cmd
 from shellfish.process import is_win
 
 if TYPE_CHECKING:
+    from collections.abc import Mapping
+
     from shellfish._types import (
         STDIN,
         FsPath,

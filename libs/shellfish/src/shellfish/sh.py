@@ -6,7 +6,6 @@ from __future__ import annotations
 import signal
 import sys
 
-from collections.abc import Iterable
 from functools import cache, lru_cache
 from os import (
     chdir,
@@ -185,6 +184,8 @@ from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
+
     from shellfish._types import (
         STDIN as STDIN,
         FsPath as FsPath,

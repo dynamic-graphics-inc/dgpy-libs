@@ -6,10 +6,10 @@ from __future__ import annotations
 import platform
 import sys
 
-from collections.abc import Generator, ItemsView, Iterator, KeysView, ValuesView
 from contextlib import contextmanager
 from os import environ, name as os_name, pathsep
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
@@ -19,6 +19,9 @@ from typing import (
     Union,
     cast,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import Generator, ItemsView, Iterator, KeysView, ValuesView
 
 IS_WIN = os_name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()

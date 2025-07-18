@@ -9,7 +9,6 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, BaseEventLoop
-from collections.abc import Awaitable
 from functools import partial, singledispatch, wraps
 from io import (
     BufferedRandom,
@@ -36,7 +35,7 @@ from typing import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Coroutine
+    from collections.abc import Awaitable, Coroutine
     from os import PathLike
     from types import TracebackType
 
