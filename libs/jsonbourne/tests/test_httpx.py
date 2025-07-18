@@ -4,7 +4,7 @@ from jsonbourne import JsonObj
 from jsonbourne.httpx import Client
 
 
-def test_response_dot_JSON():
+def test_response_dot_JSON() -> None:
     something_url = "https://jsonplaceholder.typicode.com/todos/1"
     c = Client()
     r = c.get(something_url)

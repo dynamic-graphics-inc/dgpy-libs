@@ -187,7 +187,7 @@ def test_requirement_as_decorator_multiple_aliases() -> None:
 
     @json_dumps_req
     @json_loads_req
-    def fn():
+    def fn() -> tuple[str, Any]:
         d = {"herm": 1}
         s = dumps2(d)  # type: ignore[name-defined]
         f = loads2(s)  # type: ignore[name-defined]
@@ -205,11 +205,11 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
     with pytest.raises(NameError) as re:
         assert re  # type: ignore[truthy-bool]
 
-        async def fn2():
+        async def fn2() -> tuple[str, Any]:
             _f = somefunction(s)  # type: ignore[name-defined]
             return s, _f
 
-        s, f = asyncio.run(fn2())  # type: ignore[no-untyped-call]
+        s, f = asyncio.run(fn2())
         assert s == '{"herm": 1}'
 
         assert f == {"herm": 1}
@@ -223,7 +223,7 @@ def test_requirement_as_decorator_multiple_async() -> None:
 
     @json_dumps_req
     @json_loads_req
-    async def fn():
+    async def fn() -> tuple[str, Any]:
         d = {"herm": 1}
         s = dumps(d)  # type: ignore[name-defined]
         f = loads(s)  # type: ignore[name-defined]
@@ -301,7 +301,7 @@ def test_from_json_import_dumps_via_dict() -> None:
 
 def test_from_json_import_dumps_via_dict_simple() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
-    def fn():
+    def fn() -> Any:
         d = {"herm": 1}
         s = dumps_test_dict(d)  # type: ignore[name-defined]
         return s
@@ -314,7 +314,7 @@ def test_from_json_import_dumps_via_dicts() -> None:
         {"_from": "json", "_import": "dumps", "_as": "dumps_test_dicts"},
         {"from": "json", "import": "loads", "as": "loads_test_dicts"},
     )
-    def fn():
+    def fn() -> tuple[str, dict[str, int]]:
         d = {"herm": 1}
         s = dumps_test_dicts(d)  # type: ignore[name-defined]
         f = loads_test_dicts(s)  # type: ignore[name-defined]
@@ -382,7 +382,7 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
     try:
 
         @requires("from json import DUMPSNOTANATTR")
-        def fn():
+        def fn() -> Any:
             d = {"herm": 1}
             s = DUMPSNOTANATTR(d)  # type: ignore[name-defined]
             return s
@@ -395,7 +395,7 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
 
 def test_requires() -> None:
     @requires("a_fake_module")
-    def fn():
+    def fn() -> int:
         return 123
 
     assert fn() == 123
@@ -406,7 +406,7 @@ def test_requires_name_error() -> None:
         assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
-        def fn():
+        def fn() -> Any:
             _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
             return _some_value
 
@@ -419,7 +419,7 @@ async def test_requires_name_error_async() -> None:
         assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
-        async def fn():
+        async def fn() -> Any:
             _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
             return _some_value
 
@@ -431,7 +431,7 @@ def test_requires_err_msg() -> None:
         assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
-        def fn():
+        def fn() -> Any:
             return a_fake_module.a_fake_function()  # type: ignore[name-defined]
 
         fn()
@@ -448,7 +448,7 @@ def test_stacked_requirements() -> None:
     @requires("json")
     @requires("from os import path")
     @requires_ruamel_yaml
-    def jsonify(d):
+    def jsonify(d: Any) -> Any:
         return json.dumps(d)  # type: ignore[name-defined]
 
     data = {"herm": 123}
@@ -460,7 +460,7 @@ def test_module_wrap() -> None:
     np = np_requirement.__requirement__
 
     @requires(_import="numpy", _as="np")
-    def mkvec(vector):
+    def mkvec(vector: Any) -> Any:
         vector = np.ndarray(vector)
         return vector
 
