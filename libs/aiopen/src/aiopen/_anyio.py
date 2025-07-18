@@ -13,7 +13,6 @@ from typing import (
     Callable,
     Generic,
     Optional,
-    Type,
     Union,
     cast,
     overload,
@@ -59,7 +58,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
     async def __aexit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ) -> None:

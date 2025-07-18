@@ -63,7 +63,7 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
+from typing import Any, Callable, Optional, Union
 
 from typing_extensions import Literal, Self, TypeAlias
 
@@ -150,11 +150,11 @@ __aliases__ = {
 }
 
 _SysExcInfoType: TypeAlias = Union[
-    Tuple[Type[BaseException], BaseException, Union[TracebackType, None]],
-    Tuple[None, None, None],
+    tuple[type[BaseException], BaseException, Union[TracebackType, None]],
+    tuple[None, None, None],
 ]
 _ExcInfoType: TypeAlias = Union[None, bool, _SysExcInfoType, BaseException]
-_ArgsType: TypeAlias = Union[Tuple[object, ...], Mapping[str, object]]
+_ArgsType: TypeAlias = Union[tuple[object, ...], Mapping[str, object]]
 _FilterType: TypeAlias = Union[Filter, Callable[[LogRecord], bool]]
 _Level: TypeAlias = Union[int, str]
 _FormatStyle: TypeAlias = Literal["%", "{", "$"]
@@ -182,7 +182,7 @@ class Logger(_Logger):
 
     def find_caller(
         self, stack_info: bool = False, stacklevel: int = 1
-    ) -> Tuple[str, int, str, Union[str, None]]:
+    ) -> tuple[str, int, str, Union[str, None]]:
         """snake_case alias for findCaller"""
         return self.findCaller(stack_info, stacklevel)
 
@@ -276,11 +276,11 @@ def _logger_dict() -> Any:
     return logging.root.manager.loggerDict
 
 
-def loggers_dict() -> Dict[str, logging.Logger]:
+def loggers_dict() -> dict[str, logging.Logger]:
     return {name: logging.getLogger(name) for name in _logger_dict()}
 
 
-def intercept(loggers: List[str]) -> None:
+def intercept(loggers: list[str]) -> None:
     for logger in loggers:
         std_logger = logging.getLogger(logger)
         std_logger.handlers = [StdLoggingHandler()]

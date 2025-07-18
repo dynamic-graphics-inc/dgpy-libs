@@ -13,7 +13,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
-    Dict,
     Optional,
     TypeVar,
     Union,
@@ -62,7 +61,7 @@ except ImportError:  # pragma: no cover
         func: Callable[..., Coroutine[Any, Any, T_Retval]],
         *args: object,
         backend: str = "asyncio",
-        backend_options: Optional[Dict[str, Any]] = None,
+        backend_options: Optional[dict[str, Any]] = None,
     ) -> T_Retval:
         raise ImportError("install anyio; `pip install anyio`")
 
@@ -272,7 +271,7 @@ def aiorun_anyio(
     ],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[Dict[str, Any]] = None,
+    backend_options: Optional[dict[str, Any]] = None,
 ) -> T_Retval:
     """Run an async function or awaitable using anyio
 
@@ -308,7 +307,7 @@ def aiorun_asyncio(
     ],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[Dict[str, Any]] = None,
+    backend_options: Optional[dict[str, Any]] = None,
 ) -> T_Retval:
     if backend != "asyncio":
         raise ValueError(
@@ -335,7 +334,7 @@ def aiorun(
     ],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[Dict[str, Any]] = None,
+    backend_options: Optional[dict[str, Any]] = None,
 ) -> T_Retval:
     return (
         aiorun_asyncio(

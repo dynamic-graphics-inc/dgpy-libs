@@ -7,7 +7,7 @@ import re
 
 from os import getcwd, path
 from shlex import split as shplit
-from typing import TYPE_CHECKING, Dict, Optional
+from typing import TYPE_CHECKING, Optional
 
 from shellfish.fs import read_str as _rstring
 
@@ -64,7 +64,7 @@ def strip_comments(string: str) -> str:
     return "\n".join(_strip_comments_line(line) for line in filelines)
 
 
-def parse_dotenv(string: str) -> Dict[str, str]:
+def parse_dotenv(string: str) -> dict[str, str]:
     r"""Parse env string to dictionary
 
     Examples:
@@ -88,7 +88,7 @@ def parse_dotenv(string: str) -> Dict[str, str]:
     }
 
 
-def parse_env(string: str) -> Dict[str, str]:
+def parse_env(string: str) -> dict[str, str]:
     r"""Parse env string to dictionary
 
     Examples:
@@ -101,7 +101,7 @@ def parse_env(string: str) -> Dict[str, str]:
     return parse_dotenv(string)
 
 
-def ldotenv(fspath: Optional[FsPath] = None) -> Dict[str, str]:
+def ldotenv(fspath: Optional[FsPath] = None) -> dict[str, str]:
     r"""Load a dotenv file from a fspath and return the keyvalues as a dict
 
     Examples:

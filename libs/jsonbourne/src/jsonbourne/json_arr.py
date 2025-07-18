@@ -7,13 +7,10 @@ from typing import (
     Any,
     Callable,
     Generic,
-    List,
     Literal,
     Optional,
     Protocol,
     SupportsIndex,
-    Tuple,
-    Type,
     TypeVar,
     Union,
     cast,
@@ -62,7 +59,7 @@ def n_args(fn: Callable[..., _R]) -> int:
 
 
 class JsonArr(MutableSequence[_T], Generic[_T]):
-    __arr: List[_T]
+    __arr: list[_T]
 
     def __init__(self, iterable: Optional[Iterable[_T]] = None) -> None:
         self.__arr = list(iterable or [])
@@ -190,26 +187,26 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def __reversed__(self) -> Iterator[_T]:
         return reversed(self.__arr)
 
-    def __gt__(self, __x: List[_T]) -> bool:
+    def __gt__(self, __x: list[_T]) -> bool:
         return self.__arr > __x
 
-    def __ge__(self, __x: List[_T]) -> bool:
+    def __ge__(self, __x: list[_T]) -> bool:
         return self.__arr >= __x
 
-    def __lt__(self, __x: List[_T]) -> bool:
+    def __lt__(self, __x: list[_T]) -> bool:
         return self.__arr < __x
 
-    def __le__(self, __x: List[_T]) -> bool:
+    def __le__(self, __x: list[_T]) -> bool:
         return self.__arr <= __x
 
-    def as_list(self) -> List[_T]:
+    def as_list(self) -> list[_T]:
         return list(self.__arr)
 
-    def as_tuple(self) -> Tuple[_T, ...]:
+    def as_tuple(self) -> tuple[_T, ...]:
         return tuple(self.__arr)
 
     @classmethod
-    def validate_type(cls: Type[JsonArr[_T]], val: Any) -> JsonArr[_T]:
+    def validate_type(cls: type[JsonArr[_T]], val: Any) -> JsonArr[_T]:
         """Validate and convert a value to a JsonObj object"""
         return cls(val)
 
@@ -220,27 +217,27 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         """Return the JsonObj validator functions"""
         yield cls.validate_type
 
-    def eject(self) -> List[_T]:
+    def eject(self) -> list[_T]:
         return self.__arr
 
     @overload
     def enumerate(
         self, start: int = 0, flip: Literal[False] = False
-    ) -> Iterator[Tuple[int, _T]]: ...
+    ) -> Iterator[tuple[int, _T]]: ...
 
     @overload
     def enumerate(
         self, start: int = 0, flip: Literal[True] = True
-    ) -> Iterator[Tuple[_T, int]]: ...
+    ) -> Iterator[tuple[_T, int]]: ...
 
     @overload
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]: ...
+    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]: ...
 
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[Tuple[int, _T]], Iterator[Tuple[_T, int]]]:
+    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]:
         if flip:
             return zip(self.__arr, range(start, len(self.__arr) + start))
         return enumerate(self.__arr, start=start)
@@ -248,10 +245,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def _iter_el(self) -> Iterator[_T]:
         return iter(self.__arr)
 
-    def _iter_el_ix(self) -> Iterator[Tuple[_T, int]]:
+    def _iter_el_ix(self) -> Iterator[tuple[_T, int]]:
         return self.enumerate(flip=True)
 
-    def _iter_el_ix_arr(self) -> Iterator[Tuple[_T, int, JsonArr[_T]]]:
+    def _iter_el_ix_arr(self) -> Iterator[tuple[_T, int, JsonArr[_T]]]:
         return ((el, ix, self) for el, ix in self.enumerate(flip=True))
 
     def _filter_el(self, func: Callable[[_T], bool]) -> JsonArr[_T]:

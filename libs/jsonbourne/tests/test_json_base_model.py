@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import Any, List, Union
+from typing import Any, Union
 
 import pytest
 
@@ -75,7 +75,7 @@ try:
             y: int
 
         class JsonModelHasRootType(JsonBaseModel):
-            __root__: List[str]
+            __root__: list[str]
 
         assert not JsonModelNoRootType.__custom_root_type__  # type: ignore[attr-defined]
         assert JsonModelHasRootType.__custom_root_type__  # type: ignore[attr-defined]

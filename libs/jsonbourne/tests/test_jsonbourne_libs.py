@@ -6,7 +6,7 @@ import pathlib
 import uuid
 
 from decimal import Decimal
-from typing import NamedTuple, Tuple
+from typing import NamedTuple
 
 import pytest
 
@@ -29,7 +29,7 @@ class Point3dDumpable(NamedTuple):
     y: int
     z: int
 
-    def __dumpable__(self) -> Tuple[int, ...]:
+    def __dumpable__(self) -> tuple[int, ...]:
         return tuple(self)
 
 
@@ -38,7 +38,7 @@ class Point3dJsonInterface(NamedTuple):
     y: int
     z: int
 
-    def __json_interface__(self) -> Tuple[int, ...]:
+    def __json_interface__(self) -> tuple[int, ...]:
         return tuple(self)
 
 
@@ -48,7 +48,7 @@ class Point3dJsonInterfaceProperty(NamedTuple):
     z: int
 
     @property
-    def __json_interface__(self) -> Tuple[int, ...]:
+    def __json_interface__(self) -> tuple[int, ...]:
         return tuple(self)
 
 

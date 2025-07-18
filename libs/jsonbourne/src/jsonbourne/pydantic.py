@@ -8,14 +8,11 @@ from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
 from typing import (
+    TYPE_CHECKING,
     Annotated,
     Any,
     Callable,
-    Dict,
     Optional,
-    Set,
-    Tuple,
-    Type,
     TypeVar,
     Union,
 )
@@ -31,6 +28,9 @@ from pydantic.functional_validators import BeforeValidator
 from typing_extensions import TypeGuard
 
 from jsonbourne.core import JSON, JsonObj
+
+if TYPE_CHECKING:
+    import builtins
 
 T = TypeVar("T")
 JsonBaseModelT = TypeVar("JsonBaseModelT", bound="JsonBaseModel")
@@ -73,12 +73,12 @@ class JsonBaseConfig:
 class JsonBaseModelDefaultConfig(JsonBaseConfig): ...
 
 
-def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], Dict[str, Any]]]:
+def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], dict[str, Any]]]:
     return isinstance(v, (JsonObj, dict))
 
 
 def json_obj_before_validator(
-    v: Union[JsonObj[T], Dict[str, T], Any],
+    v: Union[JsonObj[T], dict[str, T], Any],
 ) -> JsonObj[T]:
     if not is_json_obj_like(v):
         raise ValueError(f"Expected JsonObj, got {type(v)}")
@@ -103,19 +103,19 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         self.__post_init__()
 
     @property
-    def _data(self) -> Dict[str, Any]:  # type: ignore[override]
+    def _data(self) -> dict[str, Any]:  # type: ignore[override]
         return self.__dict__
 
-    def __dumpable__(self) -> Dict[str, Any]:
+    def __dumpable__(self) -> dict[str, Any]:
         return self.model_dump()
 
-    def __json_interface__(self) -> Dict[str, Any]:
+    def __json_interface__(self) -> dict[str, Any]:
         return self.model_dump()
 
     # ===================================
     # ALIASES (SANS DEPRECATION WARNINGS)
     # ===================================
-    def dict(self, *args: Any, **kwargs: Any) -> Dict[str, Any]:
+    def dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
         """Alias for `model_dump`"""
         return self.model_dump(*args, **kwargs)
 
@@ -155,7 +155,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         """Return the HTML representation of the object"""
         return f"<pre>{self.__str__()}</pre>"
 
-    def to_dict_filter_none(self) -> Dict[str, Any]:
+    def to_dict_filter_none(self) -> builtins.dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default
 
         Examples:
@@ -176,7 +176,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         """
         return {k: v for k, v in self.model_dump().items() if v is not None}
 
-    def to_dict_filter_defaults(self) -> Dict[str, Any]:
+    def to_dict_filter_defaults(self) -> builtins.dict[str, Any]:
         """Eject object and filter key-values equal to (sub)class' default
 
         Examples:
@@ -252,7 +252,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         """
         return self.to_json_obj()
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> builtins.dict[str, Any]:
         """Eject and return object as plain jane dictionary"""
         return self.eject()
 
@@ -277,10 +277,10 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
 
     @classmethod
     def from_dict_filtered(
-        cls: Type[JsonBaseModelT], dictionary: Dict[str, Any]
+        cls: type[JsonBaseModelT], dictionary: builtins.dict[str, Any]
     ) -> JsonBaseModelT:
         """Create class from dict filtering keys not in (sub)class' fields"""
-        attr_names: Set[str] = set(cls._cls_field_names())
+        attr_names: set[str] = set(cls._cls_field_names())
         return cls(**{k: v for k, v in dictionary.items() if k in attr_names})
 
     @classmethod
@@ -324,7 +324,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
-    def __iter__(self) -> Generator[Tuple[str, Any], None, None]:  # type: ignore[override]
+    def __iter__(self) -> Generator[tuple[str, Any], None, None]:  # type: ignore[override]
         return super().__iter__()
 
     def __getitem__(self, item: str) -> Any:  # type: ignore[override]
@@ -336,11 +336,11 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
             raise ae from None
 
     @classmethod
-    def defaults_dict(cls) -> Dict[str, Any]:
+    def defaults_dict(cls) -> builtins.dict[str, Any]:
         """Return a dictionary of non-required keys -> default value(s)
 
         Returns:
-            Dict[str, Any]: Dictionary of non-required keys -> default value
+            dict[str, Any]: Dictionary of non-required keys -> default value
 
         Examples:
             >>> class Thing(JsonBaseModel):
@@ -373,13 +373,13 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         return object.__setattr__(self, name, value)
 
     @property
-    def __property_fields__(self) -> Set[str]:
+    def __property_fields__(self) -> set[str]:
         """Returns a set of property names for the class that have a setter"""
         return self.__class__._cls_property_fields()
 
     @classmethod
     @lru_cache(maxsize=1)
-    def _cls_property_fields(cls) -> Set[str]:
+    def _cls_property_fields(cls) -> set[str]:
         """Return a set of property names with a setter function"""
         return {
             k
@@ -388,10 +388,10 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         }
 
     @classmethod
-    def _cls_field_names(cls) -> Set[str]:
+    def _cls_field_names(cls) -> set[str]:
         """Return pydantic field names"""
         return set(cls.model_fields)
 
-    def _field_names(self) -> Set[str]:
+    def _field_names(self) -> set[str]:
         """Return pydantic field names"""
         return self.__class__._cls_field_names()
