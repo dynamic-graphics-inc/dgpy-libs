@@ -458,7 +458,7 @@ class HrTime(JsonBaseModel):
     ns: int
 
     @classmethod
-    def from_seconds(cls, seconds: float) -> "HrTime":
+    def from_seconds(cls, seconds: float) -> HrTime:
         """Return HrTime object from seconds
 
         Args:
@@ -698,7 +698,7 @@ class Done(JsonBaseModel):
         """
         self.write_stdout(filepath)
 
-    def __ge__(self, filepath: FsPath) -> "Done":
+    def __ge__(self, filepath: FsPath) -> Done:
         """Operator overload for writing stderr to fspath
 
         Args:
@@ -720,7 +720,7 @@ class Done(JsonBaseModel):
         """
         self.write_stdout(filepath, append=True)
 
-    def __irshift__(self, filepath: FsPath) -> "Done":
+    def __irshift__(self, filepath: FsPath) -> Done:
         """Operator overload for appending stderr to fspath
 
         Args:

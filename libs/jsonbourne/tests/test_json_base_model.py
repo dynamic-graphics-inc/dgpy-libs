@@ -41,7 +41,7 @@ try:
             return self.json()
 
         @classmethod
-        def from_json(cls, json_string: Union[str, bytes]) -> "JsonObjModel":
+        def from_json(cls, json_string: Union[str, bytes]) -> JsonObjModel:
             return cls(**JSON.loads(json_string))
 
     def test_json_base_model_w_prop() -> None:

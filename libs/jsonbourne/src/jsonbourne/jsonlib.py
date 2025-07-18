@@ -454,7 +454,7 @@ class RAPIDJSON(JsonLibABC):
         )
 
 
-def pick_lib() -> "type[JsonLibABC]":
+def pick_lib() -> type[JsonLibABC]:
     if ORJSON.usable():
         return ORJSON
     if RAPIDJSON.usable():
@@ -462,25 +462,25 @@ def pick_lib() -> "type[JsonLibABC]":
     return JSON_STDLIB
 
 
-def _import_rapidjson() -> "type[RAPIDJSON]":
+def _import_rapidjson() -> type[RAPIDJSON]:
     if RAPIDJSON.usable():
         return RAPIDJSON
     raise ImportError("rapidjson (python-rapidjson) not installed")
 
 
-def _import_orjson() -> "type[ORJSON]":
+def _import_orjson() -> type[ORJSON]:
     if ORJSON.usable():
         return ORJSON
     raise ImportError("orjson not installed")
 
 
-def _import_json_stdlib() -> "type[JSON_STDLIB]":
+def _import_json_stdlib() -> type[JSON_STDLIB]:
     return JSON_STDLIB
 
 
 def import_json(
     jsonlibs: Optional[Union[tuple[str, ...], list[str]]] = None,
-) -> "type[JsonLibABC]":
+) -> type[JsonLibABC]:
     lib2funk = {
         "rapidjson": _import_rapidjson,
         "orjson": _import_orjson,

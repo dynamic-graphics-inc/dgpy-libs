@@ -26,7 +26,7 @@ class _DirTree:
     def __init__(
         self,
         path: Union[str, Path],
-        parent_path: Optional["_DirTree"],
+        parent_path: Optional[_DirTree],
         is_last: bool,
     ) -> None:
         """Construct a DirTree object
@@ -46,10 +46,10 @@ class _DirTree:
     def make_tree(
         cls,
         root: Path,
-        parent: Optional["_DirTree"] = None,
+        parent: Optional[_DirTree] = None,
         is_last: bool = False,
         filterfn: Optional[Callable[..., bool]] = None,
-    ) -> Iterator["_DirTree"]:
+    ) -> Iterator[_DirTree]:
         """Make a DirTree object
 
         Args:

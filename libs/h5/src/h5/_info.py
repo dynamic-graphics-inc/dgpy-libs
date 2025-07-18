@@ -207,7 +207,7 @@ class DatasetInfo(H5Mixin):
 
 @dataclass
 class GroupLikeInfo(H5Mixin):
-    groups: Dict[str, "GroupInfo"]
+    groups: Dict[str, GroupInfo]
     attrs: Dict[str, Any]
     datasets: Dict[str, DatasetInfo]
 

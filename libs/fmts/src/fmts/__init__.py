@@ -1290,7 +1290,7 @@ def body_contents(html_string: str) -> list[str]:
 class pstr(str):
     """Pretty-string subclass"""
 
-    def __new__(cls, content: str) -> "pstr":
+    def __new__(cls, content: str) -> pstr:
         """Create and return new pstr from a str"""
         if "\n" in content and (content[0] == "\n" or content[-1] == "\n"):
             return str.__new__(cls, content.strip("\n"))

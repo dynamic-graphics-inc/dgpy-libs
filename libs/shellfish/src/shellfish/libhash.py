@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 __all__ = ("hash_bytes_gen", "string2hasher")
 
-_HASHERS: dict[str, Callable[[], "_Hash"]] = {
+_HASHERS: dict[str, Callable[[], _Hash]] = {
     "blake2b": blake2b,  # type: ignore[dict-item]
     "blake2s": blake2s,  # type: ignore[dict-item]
     "md5": md5,
@@ -34,7 +34,7 @@ class Hashed:
     __slots__ = ("b", "s")
 
 
-def string2hasher(string: str) -> "_Hash":
+def string2hasher(string: str) -> _Hash:
     """Return a hash object from a string
 
     Args:
@@ -52,7 +52,7 @@ def string2hasher(string: str) -> "_Hash":
         ) from None
 
 
-def hasher(obj: HashLike) -> "_Hash":
+def hasher(obj: HashLike) -> _Hash:
     """Return a hash object from a string or a hash object
 
     Args:

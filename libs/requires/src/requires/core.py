@@ -189,10 +189,10 @@ class Requirement:
     def raise_error(self) -> None:
         raise self.err()
 
-    def __proxy__(self) -> "RequirementProxy":
+    def __proxy__(self) -> RequirementProxy:
         return RequirementProxy(req=self)
 
-    def proxy(self) -> "RequirementProxy":
+    def proxy(self) -> RequirementProxy:
         return self.__proxy__()
 
     def import_requirement(self) -> Any:

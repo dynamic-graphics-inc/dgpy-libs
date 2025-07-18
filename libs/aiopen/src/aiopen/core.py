@@ -80,7 +80,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
         self._loop = loop
         self._executor = executor
 
-    def __aiter__(self) -> "AsyncBase[AnyStr]":
+    def __aiter__(self) -> AsyncBase[AnyStr]:
         return self
 
     # async def __anext__(self) -> Union[bytes, str]:
