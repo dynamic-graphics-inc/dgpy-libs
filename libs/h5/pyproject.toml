@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "h5"
-version = "0.11.0"
+version = "0.11.1"
 description = "H5py utils"
 readme = "README.md"
 keywords = [ "h5", "h5py", "hdf5", "numpy" ]
