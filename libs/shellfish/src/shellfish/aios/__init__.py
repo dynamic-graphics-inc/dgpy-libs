@@ -5,7 +5,8 @@ from __future__ import annotations
 
 import os
 
-from typing import AnyStr, AsyncIterator, Generic
+from collections.abc import AsyncIterator
+from typing import AnyStr, Generic
 
 from asyncify import asyncify
 from shellfish.aios import _path

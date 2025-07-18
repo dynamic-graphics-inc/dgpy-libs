@@ -1,9 +1,10 @@
 """Testing shelfish.fs"""
 
 from collections import Counter
+from collections.abc import Iterable
 from os import path
 from pathlib import Path
-from typing import Callable, Iterable
+from typing import Callable
 
 import pytest
 

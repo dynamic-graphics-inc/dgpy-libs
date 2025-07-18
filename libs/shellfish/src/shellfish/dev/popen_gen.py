@@ -10,7 +10,8 @@ from typing import TYPE_CHECKING
 from shellfish.fs import Stdio
 
 if TYPE_CHECKING:
-    from typing import IO, Any, AnyStr, Iterable, Optional, Tuple
+    from collections.abc import Iterable
+    from typing import IO, Any, AnyStr, Optional, Tuple
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 

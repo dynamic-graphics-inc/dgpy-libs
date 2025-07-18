@@ -6,6 +6,7 @@ from __future__ import annotations
 import re
 
 from binascii import hexlify
+from collections.abc import ItemsView, Iterable, Sequence
 from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
 from functools import lru_cache
@@ -19,11 +20,8 @@ from typing import (
     AnyStr,
     Callable,
     Dict,
-    ItemsView,
-    Iterable,
     List,
     Optional,
-    Sequence,
     Set,
     Tuple,
     TypeVar,

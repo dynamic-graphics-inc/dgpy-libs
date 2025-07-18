@@ -6,6 +6,7 @@ from __future__ import annotations
 import signal
 import sys
 
+from collections.abc import Iterable
 from functools import cache, lru_cache
 from os import (
     chdir,
@@ -26,9 +27,9 @@ from typing import (
     IO,
     TYPE_CHECKING,
     Any,
+    AnyStr,
     Callable,
     Dict,
-    Iterable,
     List,
     Optional,
     Set,
@@ -37,7 +38,7 @@ from typing import (
     Union,
 )
 
-from typing_extensions import AnyStr, TypedDict
+from typing_extensions import TypedDict
 
 from asyncify import asyncify
 from jsonbourne import JSON

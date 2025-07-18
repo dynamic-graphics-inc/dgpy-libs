@@ -3,8 +3,9 @@ from __future__ import annotations
 
 import asyncio
 
+from collections.abc import Awaitable
 from os import path
-from typing import Awaitable, TypeVar
+from typing import TypeVar
 
 import pytest
 

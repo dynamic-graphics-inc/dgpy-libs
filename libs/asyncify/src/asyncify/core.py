@@ -6,18 +6,14 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Coroutine, Iterable
 from functools import partial, wraps
 from inspect import isawaitable
 from typing import (
     TYPE_CHECKING,
     Any,
-    AsyncIterable,
-    AsyncIterator,
-    Awaitable,
     Callable,
-    Coroutine,
     Dict,
-    Iterable,
     Optional,
     TypeVar,
     Union,

@@ -19,7 +19,8 @@ from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten
 from shellfish.sp import PopenArgs, ProcessDt
 
 if TYPE_CHECKING:
-    from typing import IO, Any, List, Mapping, Set, Tuple, Union
+    from collections.abc import Mapping
+    from typing import IO, Any, List, Set, Tuple, Union
 
     from shellfish._types import FsPath
 

@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+from collections.abc import Iterable, Iterator, MutableSequence
 from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
     Generic,
-    Iterable,
-    Iterator,
     List,
     Literal,
-    MutableSequence,
     Optional,
     Protocol,
     SupportsIndex,

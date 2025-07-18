@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import logging
 
+from collections.abc import Mapping
 from logging import (
     BASIC_FORMAT as BASIC_FORMAT,
     CRITICAL as CRITICAL,
@@ -62,7 +63,7 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple, Type, Union
+from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
 
 from typing_extensions import Literal, Self, TypeAlias
 

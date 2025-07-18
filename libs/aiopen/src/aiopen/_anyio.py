@@ -6,11 +6,11 @@ Inspired by aiofiles
 
 from __future__ import annotations
 
+from collections.abc import Awaitable
 from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Awaitable,
     Callable,
     Generic,
     Optional,

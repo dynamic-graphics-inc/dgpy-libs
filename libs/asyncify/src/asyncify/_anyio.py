@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+from collections.abc import Awaitable
 from functools import partial, wraps
-from typing import Awaitable, Callable, Optional, TypeVar
+from typing import Callable, Optional, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,

@@ -5,6 +5,14 @@ from __future__ import annotations
 
 import keyword
 
+from collections.abc import (
+    ItemsView,
+    Iterable,
+    Iterator,
+    KeysView,
+    Mapping,
+    MutableMapping,
+)
 from functools import cache
 from itertools import chain
 from json import JSONDecodeError
@@ -17,13 +25,7 @@ from typing import (
     Callable,
     Dict,
     Generic,
-    ItemsView,
-    Iterable,
-    Iterator,
-    KeysView,
     List,
-    Mapping,
-    MutableMapping,
     Optional,
     Set,
     Tuple,

@@ -7,21 +7,23 @@ from __future__ import annotations
 import asyncio
 
 from collections import deque
+from collections.abc import (
+    AsyncIterable,
+    AsyncIterator,
+    Collection,
+    Iterable,
+    Iterator,
+    Sequence,
+)
 from functools import reduce
 from itertools import chain, count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
-    AsyncIterable,
-    AsyncIterator,
     Callable,
-    Collection,
     Deque,
-    Iterable,
-    Iterator,
     List,
     Optional,
-    Sequence,
     Set,
     Tuple,
     TypeVar,

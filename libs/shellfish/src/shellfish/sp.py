@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import sys
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from io import BytesIO
 from subprocess import (
@@ -21,7 +22,6 @@ from typing import (
     Any,
     Dict,
     List,
-    Mapping,
     Optional,
     Set,
     Tuple,

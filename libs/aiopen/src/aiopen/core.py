@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, BaseEventLoop
+from collections.abc import Awaitable
 from functools import partial, singledispatch, wraps
 from io import (
     BufferedRandom,
@@ -23,7 +24,6 @@ from typing import (
     Any,
     AnyStr,
     AsyncContextManager,
-    Awaitable,
     Callable,
     Generic,
     Optional,

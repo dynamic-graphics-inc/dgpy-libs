@@ -6,21 +6,17 @@ from __future__ import annotations
 import platform
 import sys
 
+from collections.abc import Generator, ItemsView, Iterator, KeysView, ValuesView
 from contextlib import contextmanager
 from os import environ, name as os_name, pathsep
 from typing import (
     Any,
     Callable,
     Dict,
-    Generator,
-    ItemsView,
-    Iterator,
-    KeysView,
     List,
     Optional,
     Type,
     Union,
-    ValuesView,
     cast,
 )
 

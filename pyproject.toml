@@ -143,7 +143,7 @@ lint.ignore = [
   "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
-  "UP035", # unnecessary typing-extensions imports... must check xtying...
+  # "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",
   "UP045", # union type over `Optional`
 ]
@@ -155,6 +155,15 @@ lint.per-file-ignores."**/tests/*.py" = [
   "D100", # missing docstring in public module
   "D102",
   "D103", # missing docstring
+]
+lint.per-file-ignores."libs/xtyping/**/*.py"=[
+  "UP007",
+  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
+  "UP022", # must test shellfish first...
+  "UP035",
+  "UP037",
+  "UP045", # union type over `Optional`
+  "UP045", # union type over `Optional`
 ]
 lint.per-file-ignores."*.ipynb" = [ "E741", "F401", "F811", "F821", "T201" ]
 lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [

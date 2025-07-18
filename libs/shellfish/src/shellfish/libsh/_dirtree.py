@@ -3,8 +3,9 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Callable, Iterator, Optional, Union
+from typing import Callable, Optional, Union
 
 
 class _DirTree:
