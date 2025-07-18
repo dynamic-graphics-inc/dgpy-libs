@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """aios = asyncio + os"""
 
+from __future__ import annotations
+
 from os import path
 
 from asyncify import asyncify
