@@ -5,12 +5,12 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from os import makedirs, path, symlink, unlink
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Tuple
 
 from shellfish import batman
 
 if TYPE_CHECKING:
-    from xtyping import IterableStr, List, Tuple
+    from collections.abc import Iterable
 
 
 class OsFsAbc(ABC):  # pragma: nocov
@@ -44,7 +44,7 @@ class OsFsAbc(ABC):  # pragma: nocov
 
     @staticmethod
     @abstractmethod
-    def unlink_dirs(links: IterableStr) -> None: ...
+    def unlink_dirs(links: Iterable[str]) -> None: ...
 
     @staticmethod
     @abstractmethod
@@ -52,7 +52,7 @@ class OsFsAbc(ABC):  # pragma: nocov
 
     @staticmethod
     @abstractmethod
-    def unlink_files(links: IterableStr) -> None: ...
+    def unlink_files(links: Iterable[str]) -> None: ...
 
 
 # =============================================================================
@@ -144,7 +144,7 @@ class LIN(OsFsAbc):  # pragma: nocov
         unlink(str(link))
 
     @staticmethod
-    def unlink_dirs(links: IterableStr) -> None:
+    def unlink_dirs(links: Iterable[str]) -> None:
         """Unlink directory symlinks given the paths the links
 
         Args:
@@ -165,7 +165,7 @@ class LIN(OsFsAbc):  # pragma: nocov
         unlink(str(link))
 
     @staticmethod
-    def unlink_files(links: IterableStr) -> None:
+    def unlink_files(links: Iterable[str]) -> None:
         """Unlink directory symlinks given the paths the links
 
         Args:
@@ -283,7 +283,7 @@ class WIN(OsFsAbc):  # pragma: nocov
             batman.RD(link)
 
     @staticmethod
-    def unlink_dirs(links: IterableStr) -> None:
+    def unlink_dirs(links: Iterable[str]) -> None:
         """Unlink directory symlinks given the paths the links
 
         Args:
@@ -312,7 +312,7 @@ class WIN(OsFsAbc):  # pragma: nocov
             batman.DEL(link)
 
     @staticmethod
-    def unlink_files(links: IterableStr) -> None:
+    def unlink_files(links: Iterable[str]) -> None:
         """Unlink directory symlinks given the paths the links
 
         Args:

@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Dict, List, Optional
 from shellfish.fs import write_str
 
 if TYPE_CHECKING:
-    from xtyping import FsPath
+    from shellfish._types import FsPath
 
 __all__ = (
     "assert_symlink_exists",

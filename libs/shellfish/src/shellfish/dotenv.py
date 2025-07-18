@@ -7,12 +7,12 @@ import re
 
 from os import getcwd, path
 from shlex import split as shplit
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict, Optional
 
 from shellfish.fs import read_str as _rstring
 
 if TYPE_CHECKING:
-    from xtyping import Dict, FsPath, Optional
+    from shellfish._types import FsPath
 
 __all__ = ("ldotenv", "parse_dotenv", "parse_env", "strip_comments")
 

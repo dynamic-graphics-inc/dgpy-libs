@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "shellfish"
-version = "0.6.2"
+version = "0.6.3"
 description = "shellfish ~ shell & file-system utils"
 readme = "README.md"
 keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]
@@ -31,7 +31,7 @@ dependencies = [
   "jsonbourne>=0.29",
   "listless>=0.1",
   "pydantic>=2.0.3",
-  "xtyping>=0.6",
+  "typing-extensions>=4.12.2",
 ]
 
 [dependency-groups]

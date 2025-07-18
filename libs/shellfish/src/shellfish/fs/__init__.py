@@ -25,6 +25,17 @@ from os import (
 from pathlib import Path
 from shutil import copystat as _copystat, copytree, move as _move, rmtree
 from time import time
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    AnyStr,
+    Callable,
+    List,
+    Optional,
+    Tuple,
+    Union,
+    cast,
+)
 
 from jsonbourne import JSON
 from listless import exhaust
@@ -82,19 +93,9 @@ from shellfish.fs._async import (
 )
 from shellfish.process import is_win as _is_win
 from shellfish.stdio import Stdio as Stdio
-from xtyping import (
-    Any,
-    AnyStr,
-    Callable,
-    Generator,
-    Iterable,
-    Iterator,
-    List,
-    Optional,
-    Tuple,
-    Union,
-    cast,
-)
+
+if TYPE_CHECKING:
+    from collections.abc import Generator, Iterable, Iterator
 
 # END-IMPORTS
 
@@ -1129,10 +1130,10 @@ def read_str(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     Examples:
         ``` python
         >>> from shellfish.fs import read_str, write_str
-        >>> fspath = "lstring.doctest.txt"
-        >>> sstring(fspath, r'Check out this string')
+        >>> fspath = "read_str.doctest.txt"
+        >>> write_str(fspath, r'Check out this string')
         21
-        >>> lstring(fspath)
+        >>> read_str(fspath)
         'Check out this string'
         >>> import os; os.remove(fspath)
 

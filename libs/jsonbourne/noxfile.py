@@ -54,7 +54,6 @@ def install_common_test_deps(session: nox.Session) -> None:
         "pydantic",
         "pytest",
         "pytest-cov",
-        "xtyping",
     )
 
 

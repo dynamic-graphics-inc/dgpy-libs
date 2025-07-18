@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import cast, overload
-
-from xtyping import (
+from typing import (
     TYPE_CHECKING,
     Any,
     Callable,
@@ -20,6 +18,8 @@ from xtyping import (
     Type,
     TypeVar,
     Union,
+    cast,
+    overload,
 )
 
 if TYPE_CHECKING:

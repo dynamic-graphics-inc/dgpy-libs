@@ -12,10 +12,10 @@ from dataclasses import dataclass, field
 from functools import wraps
 from importlib import import_module
 from typing import (
+    TYPE_CHECKING,
     Any,
     Callable,
     Dict,
-    Iterable,
     List,
     Optional,
     Set,
@@ -25,7 +25,10 @@ from typing import (
     Union,
 )
 
-from xtyping import ParamSpec
+from typing_extensions import ParamSpec
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 T = TypeVar("T")
 R = TypeVar("R")

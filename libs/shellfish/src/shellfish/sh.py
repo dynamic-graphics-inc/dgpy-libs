@@ -37,6 +37,8 @@ from typing import (
     Union,
 )
 
+from typing_extensions import AnyStr, TypedDict
+
 from asyncify import asyncify
 from jsonbourne import JSON
 from jsonbourne.pydantic import JsonBaseModel
@@ -180,10 +182,10 @@ from shellfish.libsh._dirtree import _DirTree
 from shellfish.osfs import LIN as _LIN, WIN as _WIN
 from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
-from xtyping import STDIN, AnyStr, IterableStr, TypedDict
 
 if TYPE_CHECKING:
     from shellfish._types import (
+        STDIN as STDIN,
         FsPath as FsPath,
         PopenArg as PopenArg,
         PopenArgs as PopenArgs,
@@ -1525,8 +1527,8 @@ class LIN(_LIN):
         dest: str,
         delete: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> List[str]:
         """Return args for rsync command on linux/mac
 
@@ -1601,8 +1603,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> Done:
         """Run an `rsync` subprocess
 
@@ -1667,8 +1669,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> Done:
         return LIN.rsync(
             src,
@@ -1832,8 +1834,8 @@ class WIN(_WIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[IterableStr] = None,
-        include: Optional[IterableStr] = None,
+        exclude: Optional[Iterable[str]] = None,
+        include: Optional[Iterable[str]] = None,
     ) -> Done:  # pragma: nocov
         return WIN.robocopy(
             src=src,

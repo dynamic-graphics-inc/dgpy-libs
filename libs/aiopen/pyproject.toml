@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "aiopen"
-version = "0.7.0"
+version = "0.7.1"
 description = "Async file io"
 readme = "README.md"
 keywords = [
@@ -19,6 +19,7 @@ license = "MIT"
 authors = [
   { name = "jesse", email = "jessekrubin@gmail.com" },
 ]
+requires-python = ">=3.9"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
@@ -34,6 +35,7 @@ classifiers = [
 ]
 dependencies = [
   "funkify",
+  "typing-extensions>=4.12.2",
 ]
 
 optional-dependencies.test = [

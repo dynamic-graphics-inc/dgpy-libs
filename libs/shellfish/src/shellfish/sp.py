@@ -4,7 +4,7 @@ from __future__ import annotations
 import sys
 
 from dataclasses import dataclass
-from io import StringIO
+from io import BytesIO
 from subprocess import (
     DEVNULL as DEVNULL,
     PIPE as PIPE,
@@ -15,17 +15,11 @@ from subprocess import (
     run as run,
 )
 from time import time
-
-from shellfish._types import PopenArgs as PopenArgs  # noqa: TC001
-from shellfish.dev.popen_gen import popen_pipes_gen
-from shellfish.libsh.args import args2cmd
-from shellfish.process import is_win
-from xtyping import (
+from typing import (
     IO,
-    STDIN,
+    TYPE_CHECKING,
     Any,
     Dict,
-    FsPath,
     List,
     Mapping,
     Optional,
@@ -34,6 +28,19 @@ from xtyping import (
     TypedDict,
     Union,
 )
+
+from shellfish._types import (
+    PopenArgs as PopenArgs,  # noqa: TC001
+)
+from shellfish.dev.popen_gen import popen_pipes_gen
+from shellfish.libsh.args import args2cmd
+from shellfish.process import is_win
+
+if TYPE_CHECKING:
+    from shellfish._types import (
+        STDIN,
+        FsPath,
+    )
 
 __subprocess_all__ = (
     "CompletedProcess",
@@ -188,6 +195,7 @@ def runb(
         stdout=stdout,
         stderr=stderr,
         shell=shell,
+        text=False,
         cwd=cwd,
         timeout=timeout,
         env=env,
@@ -244,9 +252,9 @@ def run_dtee(
     input: Optional[STDIN] = None,
     shell: bool = False,
     timeout: Optional[float] = None,
-) -> Tuple[CompletedProcess[str], ProcessDt]:
-    stdout_sio = StringIO()
-    stderr_sio = StringIO()
+) -> Tuple[CompletedProcess[bytes], ProcessDt]:
+    stdout_bio = BytesIO()
+    stderr_bio = BytesIO()
     args_str = args2cmd(args)
     with Popen(
         args=args if is_win() or not shell else args_str,
@@ -266,17 +274,18 @@ def run_dtee(
                 proc.stdin.close()
             ti = time()
             for io_type, line in popen_pipes_gen(proc, timeout=timeout):
+                line_bytes = line if isinstance(line, bytes) else line.encode()
                 if io_type == 1:  # stdout is 1
-                    sys.stdout.write(line)
+                    sys.stdout.buffer.write(line_bytes)
                     sys.stdout.flush()
-                    stdout_sio.write(line)
+                    stdout_bio.write(line_bytes)
                 elif io_type == 2:  # stderr is 2
-                    sys.stderr.write(line)
+                    sys.stderr.buffer.write(line_bytes)
                     sys.stderr.flush()
-                    stderr_sio.write(line)
+                    stderr_bio.write(line_bytes)
             tf = time()
-            stdout_str = stdout_sio.getvalue()
-            stderr_str = stderr_sio.getvalue()
+            stdout_bin = stdout_bio.getvalue()
+            stderr_bin = stderr_bio.getvalue()
         except TimeoutExpired as e:
             tf = time()
             proc.kill()
@@ -294,8 +303,8 @@ def run_dtee(
         CompletedProcess(
             args=args,
             returncode=proc.returncode,
-            stdout=stdout_str,
-            stderr=stderr_str,
+            stdout=stdout_bin,
+            stderr=stderr_bin,
         ),
         ProcessDt(
             ti=ti,
@@ -312,7 +321,7 @@ def run_tee(
     input: Optional[STDIN] = None,
     shell: bool = False,
     timeout: Optional[float] = None,
-) -> CompletedProcess[str]:
+) -> CompletedProcess[bytes]:
     completed_process, _pdt = run_dtee(
         args=args,
         input=input,

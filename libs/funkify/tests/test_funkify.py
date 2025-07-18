@@ -4,14 +4,13 @@ from __future__ import annotations
 import asyncio
 
 from os import path
-from typing import TYPE_CHECKING
+from typing import Awaitable, TypeVar
 
 import pytest
 
-if TYPE_CHECKING:
-    from xtyping import Awaitable, T
-
 PWD = path.split(path.realpath(__file__))[0]
+
+T = TypeVar("T")
 
 
 def run(aw: Awaitable[T]) -> T:

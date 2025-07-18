@@ -6,10 +6,9 @@ import pathlib
 import uuid
 
 from decimal import Decimal
+from typing import NamedTuple, Tuple
 
 import pytest
-
-from xtyping import NamedTuple, Tuple
 
 try:
     from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON

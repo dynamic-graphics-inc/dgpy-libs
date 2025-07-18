@@ -33,7 +33,7 @@ from typing import (
     cast,
 )
 
-from xtyping import ParamSpec
+from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
     from collections.abc import Coroutine

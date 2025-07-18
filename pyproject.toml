@@ -141,7 +141,7 @@ lint.ignore = [
   # PYUPGRADE
   # keep runtime typing
   "UP007",
-  "UP009", # utf-8 encoding declaration (I am supersticious)
+  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
   "UP035", # unnecessary typing-extensions imports... must check xtying...
   "UP037",

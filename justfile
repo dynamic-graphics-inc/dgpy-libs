@@ -55,7 +55,7 @@ fmt:
 
 # fmt pyproject.toml files
 fmt-pyproject:
-    find . -type f -name pyproject.toml | xargs -n1 pyproject-fmt
+    find . -type f -name pyproject.toml | xargs -n1 pyproject-fmt --keep-full-version
 
 # format-check
 fmtc:

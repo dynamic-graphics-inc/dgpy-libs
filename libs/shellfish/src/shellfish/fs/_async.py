@@ -5,14 +5,17 @@ from __future__ import annotations
 
 import os
 
+from collections.abc import AsyncIterable, AsyncIterator, Iterable
 from os import fspath as _fspath
-from typing import Any, AsyncIterable, Callable, List, Optional
+from typing import TYPE_CHECKING, Any, Callable, List, Optional, Union
 
 from aiopen import aiopen
 from jsonbourne import JSON
 from shellfish import aios
 from shellfish._internal import deprecated_alias
-from xtyping import AsyncIterator, FsPath, Iterable, Union
+
+if TYPE_CHECKING:
+    from shellfish._types import FsPath
 
 __all__ = (
     "dir_exists_async",

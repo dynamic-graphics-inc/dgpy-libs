@@ -12,6 +12,7 @@ from typing import (
     AnyStr,
     Awaitable,
     Callable,
+    Generic,
     Optional,
     Type,
     Union,
@@ -20,8 +21,6 @@ from typing import (
 )
 
 from anyio import AsyncFile, open_file
-
-from xtyping import Generic  # , OpenBinaryMode, OpenTextMode, Optional
 
 if TYPE_CHECKING:
     from os import PathLike
