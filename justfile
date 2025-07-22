@@ -13,6 +13,10 @@ dev: test
 sync:
     uv sync --all-extras --dev
 
+# build packages
+build:
+    uv build --no-sources --all-packages -v
+
 # test root + all libraries
 test: sync
     uv run pytest tests dgpydev
