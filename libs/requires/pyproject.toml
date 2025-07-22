@@ -43,7 +43,7 @@ include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
 extend = "../../pyproject.toml"
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "8.0"
 addopts = [ "-ra", "--strict-config", "--strict-markers", "--doctest-modules" ]
 xfail_strict = true
 markers = [

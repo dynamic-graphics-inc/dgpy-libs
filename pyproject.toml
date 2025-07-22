@@ -215,7 +215,7 @@ skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modul
 ignore-words-list = "opps,te"
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "8.0"
 addopts = [
   "-ra",
   "--strict-config",
