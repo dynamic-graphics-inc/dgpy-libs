@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, List, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import h5
 import h5._info as h5info
@@ -25,7 +25,7 @@ def obj_module_name(obj: Any) -> Optional[str]:
 
 def module_members(
     module: ModuleType, include_dunders: bool = False, include_private: bool = False
-) -> List[str]:
+) -> list[str]:
     module_name = module.__name__
     members = dict(vars(module).items())
     if not include_dunders:

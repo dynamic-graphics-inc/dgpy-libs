@@ -215,7 +215,7 @@ skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modul
 ignore-words-list = "opps,te"
 
 [tool.pytest.ini_options]
-minversion = "6.0"
+minversion = "8.0"
 addopts = [
   "-ra",
   "--strict-config",
@@ -298,36 +298,36 @@ disallow_any_generics = false
 disallow_untyped_defs = true
 
 [tool.pyright]
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 include = [
-  "libs/aiopen",
-  "libs/asyncify",
-  "libs/dgpylibs",
-  "libs/dgpytest",
-  "libs/fmts",
-  "libs/funkify",
-  "libs/h5",
-  "libs/jsonbourne/jsonbourne",
-  "libs/lager",
-  "libs/listless",
-  "libs/requires",
+  "libs/aiopen/src",
+  "libs/asyncify/src",
+  "libs/dgpylibs/src",
+  "libs/dgpytest/src",
+  "libs/fmts/src",
+  "libs/funkify/src",
+  "libs/h5/src",
+  "libs/jsonbourne/src",
+  "libs/lager/src",
+  "libs/listless/src",
+  "libs/requires/src",
   #    "libs/shellfish",
-  "libs/listless",
-  "libs/xtyping",
+  "libs/listless/src",
+  "libs/xtyping/src",
 ]
 extraPaths = [
-  "libs/aiopen",
-  "libs/asyncify",
-  "libs/funkify",
-  "libs/fmts",
-  "libs/h5",
-  "libs/jsonbourne",
-  "libs/lager",
-  "libs/listless",
-  "libs/requires",
-  "libs/shellfish",
-  "libs/listless",
-  "libs/xtyping",
+  "libs/aiopen/src",
+  "libs/asyncify/src",
+  "libs/funkify/src",
+  "libs/fmts/src",
+  "libs/h5/src",
+  "libs/jsonbourne/src",
+  "libs/lager/src",
+  "libs/listless/src",
+  "libs/requires/src",
+  "libs/shellfish/src",
+  "libs/listless/src",
+  "libs/xtyping/src",
 ]
 exclude = [
   "**/.pytype",

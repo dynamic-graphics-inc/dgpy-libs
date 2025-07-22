@@ -29,7 +29,7 @@ dependencies = [
   "h5py>=3.7",
   "numpy>=1.23.2",
   "rich>=13.7.1",
-  "ry>=0.0.37",
+  "ry>=0.0.50",
   "typing-extensions>=4.5,<5",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
@@ -58,7 +58,7 @@ include = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
-target-version = "py38"
+target-version = "py39"
 
 [tool.pytest.ini_options]
 markers = [ "version" ]

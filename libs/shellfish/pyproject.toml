@@ -61,7 +61,7 @@ extend = "../../pyproject.toml"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-minversion = "6.0"
+minversion = "8.0"
 addopts = [
   "--strict-config",
   "--strict-markers",

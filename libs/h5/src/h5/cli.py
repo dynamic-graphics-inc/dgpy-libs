@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any, Callable, List, Optional, Tuple, Union
+from typing import Any, Callable, Optional, Union
 
 import click
 import numpy as np
@@ -59,10 +59,10 @@ def true(string: str) -> bool:
 
 @lru_cache(maxsize=16)
 def make_globster(
-    include: Optional[Tuple[str, ...]] = ("**/*",),
-    exclude: Optional[Tuple[str, ...]] = None,
+    include: Optional[tuple[str, ...]] = ("**/*",),
+    exclude: Optional[tuple[str, ...]] = None,
 ) -> Union[Callable[[str], bool], ry.Globster]:
-    patterns: List[str] = []
+    patterns: list[str] = []
     if include:
         patterns.extend(include)
     if exclude:
@@ -75,8 +75,8 @@ class H5CliConfig:
     datasets: bool
     attributes: bool
     groups: bool
-    include: Optional[Tuple[str, ...]] = None
-    exclude: Optional[Tuple[str, ...]] = None
+    include: Optional[tuple[str, ...]] = None
+    exclude: Optional[tuple[str, ...]] = None
 
     def filter_is_none(self) -> bool:
         """Check if filter is None"""
@@ -100,8 +100,8 @@ class H5CliConfig:
         datasets: bool,
         attributes: bool,
         groups: bool,
-        include: Optional[Tuple[str, ...]] = ("**/*",),
-        exclude: Optional[Tuple[str, ...]] = None,
+        include: Optional[tuple[str, ...]] = ("**/*",),
+        exclude: Optional[tuple[str, ...]] = None,
     ) -> H5CliConfig:
         return (
             cls(
@@ -143,7 +143,7 @@ def cli(debug: bool = False) -> None:
     help="Exit with non-zero exit code if any of the paths are not HDF5 files",
 )
 def is_hdf5(
-    fspaths: Tuple[str, ...],
+    fspaths: tuple[str, ...],
     exit_: bool = False,
 ) -> None:
     data = {filepath: h5.is_hdf5(filepath) for filepath in fspaths}
@@ -216,8 +216,8 @@ def dump(
     datasets: bool = False,
     attributes: bool = False,
     groups: bool = False,
-    include: Tuple[str, ...] = ("**/*",),
-    exclude: Optional[Tuple[str, ...]] = None,
+    include: tuple[str, ...] = ("**/*",),
+    exclude: Optional[tuple[str, ...]] = None,
 ) -> None:
     config = H5CliConfig.from_cli(
         datasets=datasets,
@@ -284,8 +284,8 @@ def tree(
         console.print(file_info)
 
 
-def _keys(fspath: str, clicfg: H5CliConfig) -> List[str]:
-    file_keys: List[str] = []
+def _keys(fspath: str, clicfg: H5CliConfig) -> list[str]:
+    file_keys: list[str] = []
     matcher = clicfg.matcher()
     with h5.File(fspath) as f:
         if clicfg.datasets and clicfg.groups:
@@ -380,8 +380,8 @@ def ls(
     datasets: bool = False,
     groups: bool = False,
     json_: bool = False,
-    include: Tuple[str, ...] = ("**/*",),
-    exclude: Optional[Tuple[str, ...]] = None,
+    include: tuple[str, ...] = ("**/*",),
+    exclude: Optional[tuple[str, ...]] = None,
 ) -> None:
     cfg = H5CliConfig.from_cli(
         datasets=datasets,
@@ -429,8 +429,8 @@ def ls(
 def lsd(
     fspath: str,
     json_: bool = False,
-    include: Tuple[str, ...] = ("**/*",),
-    exclude: Optional[Tuple[str, ...]] = None,
+    include: tuple[str, ...] = ("**/*",),
+    exclude: Optional[tuple[str, ...]] = None,
 ) -> None:
     """List datasets"""
     cfg = H5CliConfig.from_cli(
@@ -475,8 +475,8 @@ def lsd(
 def lsg(
     fspath: str,
     json_: bool = False,
-    include: Tuple[str, ...] = ("**/*",),
-    exclude: Optional[Tuple[str, ...]] = None,
+    include: tuple[str, ...] = ("**/*",),
+    exclude: Optional[tuple[str, ...]] = None,
 ) -> None:
     """List groups"""
     cfg = H5CliConfig.from_cli(
