@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "hatchling.build"
-requires = ["hatchling"]
+build-backend = "uv_build"
+requires = [ "uv-build>=0.8.0,<0.9" ]
 
 [project]
 name = "dgpydev"
@@ -128,10 +128,10 @@ lint.ignore = [
   "D107", # undocumented-public-init
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
+  "E501", # line too long,
   # "E266", # too many leading '#' for block comment
 
   "FA",
-  "E501", # line too long,
   # PIE
   "PIE804", # unnecessary-dict-kwargs -- TODO: revisit?
   "SIM105", # suppressible-exception
@@ -149,24 +149,15 @@ lint.ignore = [
   "UP045", # union type over `Optional`
 ]
 
-lint.per-file-ignores."**/conftest.py" = ["D"]
-lint.per-file-ignores."**/noxfile.py" = ["D"]
+lint.per-file-ignores."**/conftest.py" = [ "D" ]
+lint.per-file-ignores."**/noxfile.py" = [ "D" ]
 lint.per-file-ignores."**/tests/*.py" = [
   "D1",
   "D100", # missing docstring in public module
   "D102",
   "D103", # missing docstring
 ]
-lint.per-file-ignores."libs/xtyping/**/*.py" = [
-  "UP007",
-  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
-  "UP022", # must test shellfish first...
-  "UP035",
-  "UP037",
-  "UP045", # union type over `Optional`
-  "UP045", # union type over `Optional`
-]
-lint.per-file-ignores."*.ipynb" = ["E741", "F401", "F811", "F821", "T201"]
+lint.per-file-ignores."*.ipynb" = [ "E741", "F401", "F811", "F821", "T201" ]
 lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
@@ -178,6 +169,14 @@ lint.per-file-ignores."libs/requires/tests/test_requires_w_json_libs.py" = [
 ]
 lint.per-file-ignores."libs/shellfish/tests/*" = [
   "D100", # missing docstring
+]
+lint.per-file-ignores."libs/xtyping/**/*.py" = [
+  "UP007",
+  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
+  "UP022", # must test shellfish first...
+  "UP035",
+  "UP037",
+  "UP045", # union type over `Optional`
 ]
 lint.isort.combine-as-imports = true
 lint.isort.known-first-party = [
@@ -267,7 +266,7 @@ markers = [
 # =============================================================================
 
 [tool.mypy]
-plugins = ["pydantic.mypy"]
+plugins = [ "pydantic.mypy" ]
 python_version = "3.9"
 show_error_codes = true
 follow_imports = 'silent'
@@ -287,7 +286,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
-enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
