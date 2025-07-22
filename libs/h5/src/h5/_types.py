@@ -4,11 +4,12 @@ from __future__ import annotations
 
 from os import PathLike
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Dict, Literal, Optional, Union
+from typing import TYPE_CHECKING, Any, Literal, Optional, Union
 
 import numpy.typing as npt
 
 from h5py import File, Group
+from typing_extensions import TypeAlias
 
 __all__ = (
     "FileOrGroup",
@@ -48,4 +49,6 @@ a        Read/write if exists, create otherwise
 """
 H5pyMode = Literal["r", "r+", "w", "w-", "x", "a"]
 H5pyDriver = Optional[Literal["core", "sec2", "direct", "stdio", "mpio", "ros3"]]
-H5pyAttributesDict = Dict[str, Union[str, int, float, bool, npt.NDArray[Any]]]
+H5pyAttributesDict: TypeAlias = dict[
+    str, Union[str, int, float, bool, npt.NDArray[Any]]
+]

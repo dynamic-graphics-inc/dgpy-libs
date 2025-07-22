@@ -11,13 +11,8 @@ from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
     Literal,
     Optional,
-    Tuple,
     TypedDict,
     TypeVar,
     Union,
@@ -27,6 +22,8 @@ import h5py
 import numpy as np
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable, Iterator
+
     from h5._types import H5pyCompression
 
 __all__ = (
@@ -52,26 +49,26 @@ T_GroupInfo = TypeVar("T_GroupInfo", bound="GroupInfo")
 
 class DatasetInfoDict(TypedDict):
     h5type: Literal["dataset"]
-    attrs: Dict[str, Any]
+    attrs: dict[str, Any]
     key: str
-    shape: Tuple[int, ...]
+    shape: tuple[int, ...]
     ndim: int
     dtype: str
     dtype_str: str
     size: int
     nbytes: int
     compression: Optional[H5pyCompression]
-    compression_opts: Optional[Union[Tuple[int, int], int]]
-    maxshape: Optional[Tuple[int, ...]]
-    chunks: Optional[Tuple[int, ...]]
+    compression_opts: Optional[Union[tuple[int, int], int]]
+    maxshape: Optional[tuple[int, ...]]
+    chunks: Optional[tuple[int, ...]]
 
 
 class GroupInfoDict(TypedDict):
     h5type: Literal["group"]
     key: str
-    groups: Dict[str, GroupInfoDict]
-    attrs: Dict[str, Any]
-    datasets: Dict[str, DatasetInfoDict]
+    groups: dict[str, GroupInfoDict]
+    attrs: dict[str, Any]
+    datasets: dict[str, DatasetInfoDict]
 
 
 class FileInfoDict(TypedDict):
@@ -79,17 +76,17 @@ class FileInfoDict(TypedDict):
     fspath: str
     fssize: int
     key: str
-    groups: Dict[str, GroupInfoDict]
-    attrs: Dict[str, Any]
-    datasets: Dict[str, DatasetInfoDict]
+    groups: dict[str, GroupInfoDict]
+    attrs: dict[str, Any]
+    datasets: dict[str, DatasetInfoDict]
 
 
 class GroupInfoDumpDict(TypedDict):
     h5type: Literal["group"]
     key: str
-    groups: List[str]
-    attrs: Dict[str, Any]
-    datasets: List[str]
+    groups: list[str]
+    attrs: dict[str, Any]
+    datasets: list[str]
 
 
 class FileInfoDumpDict(TypedDict):
@@ -97,9 +94,9 @@ class FileInfoDumpDict(TypedDict):
     fspath: str
     fssize: int
     key: str
-    groups: List[str]
-    attrs: Dict[str, Any]
-    datasets: List[str]
+    groups: list[str]
+    attrs: dict[str, Any]
+    datasets: list[str]
 
 
 H5TypedDict = Union[DatasetInfoDict, GroupInfoDict, FileInfoDict]
@@ -120,9 +117,9 @@ class H5ABC(ABC):
 
 
 class H5Mixin(H5ABC):
-    attrs: Dict[str, Any]
+    attrs: dict[str, Any]
 
-    def attributes_unnumpy(self) -> Dict[str, Any]:
+    def attributes_unnumpy(self) -> dict[str, Any]:
         return {
             k: v.tolist() if isinstance(v, np.ndarray) else v
             for k, v in self.attrs.items()
@@ -151,8 +148,8 @@ class H5Mixin(H5ABC):
 @dataclass
 class DatasetInfo(H5Mixin):
     key: str
-    attrs: Dict[str, Any]
-    shape: Tuple[int, ...]
+    attrs: dict[str, Any]
+    shape: tuple[int, ...]
     ndim: int
     dtype: str
     dtype_str: str
@@ -160,9 +157,9 @@ class DatasetInfo(H5Mixin):
     nbytes: int
     h5type: Literal["dataset"] = "dataset"
     compression: Optional[H5pyCompression] = None
-    compression_opts: Optional[Union[Tuple[int, int], int]] = None
-    maxshape: Optional[Tuple[int, ...]] = None
-    chunks: Optional[Tuple[int, ...]] = None
+    compression_opts: Optional[Union[tuple[int, int], int]] = None
+    maxshape: Optional[tuple[int, ...]] = None
+    chunks: Optional[tuple[int, ...]] = None
 
     def dict(self, *, attributes: bool = True) -> DatasetInfoDict:
         return {
@@ -207,9 +204,9 @@ class DatasetInfo(H5Mixin):
 
 @dataclass
 class GroupLikeInfo(H5Mixin):
-    groups: Dict[str, GroupInfo]
-    attrs: Dict[str, Any]
-    datasets: Dict[str, DatasetInfo]
+    groups: dict[str, GroupInfo]
+    attrs: dict[str, Any]
+    datasets: dict[str, DatasetInfo]
 
     def __contains__(self, item: str) -> bool:
         return item in self.groups or item in self.datasets
@@ -359,7 +356,7 @@ class GroupInfo(GroupLikeInfo):
 
     def items(
         self, datasets: bool = True, groups: bool = True
-    ) -> Iterable[Tuple[str, Union[DatasetInfo, GroupInfo]]]:
+    ) -> Iterable[tuple[str, Union[DatasetInfo, GroupInfo]]]:
         if datasets:
             yield from self.datasets.items()
         if groups:
@@ -371,9 +368,9 @@ class FileInfo(GroupLikeInfo):
     fspath: str
     fssize: int
     key: str
-    groups: Dict[str, GroupInfo]
-    attrs: Dict[str, Any]
-    datasets: Dict[str, DatasetInfo]
+    groups: dict[str, GroupInfo]
+    attrs: dict[str, Any]
+    datasets: dict[str, DatasetInfo]
     h5type: Literal["file"]
 
     @property
@@ -474,7 +471,7 @@ class FileInfo(GroupLikeInfo):
         self,
         datasets: bool = True,
         groups: bool = True,
-    ) -> Iterable[Tuple[str, Union[FileInfo, DatasetInfo, GroupInfo]]]:
+    ) -> Iterable[tuple[str, Union[FileInfo, DatasetInfo, GroupInfo]]]:
         if datasets:
             yield from ((val.key, val) for val in self.datasets.values())
         if groups:
