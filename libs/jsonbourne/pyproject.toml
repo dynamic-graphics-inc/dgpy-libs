@@ -50,6 +50,8 @@ dev = [
   "pydantic>=2.11.5",
   "python-rapidjson>=1.20",
 ]
+[tool.uv.build-backend]
+module-name = [ "jsonbourne", "JSON", "david_webb" ]
 
 [tool.hatch]
 [tool.hatch.metadata]
