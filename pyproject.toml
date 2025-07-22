@@ -1,6 +1,6 @@
 [build-system]
-build-backend = "hatchling.build"
-requires = ["hatchling"]
+build-backend = "uv_build"
+requires = [ "uv-build>=0.8.0,<0.9" ]
 
 [project]
 name = "dgpydev"
@@ -47,21 +47,11 @@ optional-dependencies.docs = [
   "pymdown-extensions>=6.3",
   "typing-extensions>=4.1; python_version<'3.10'",
 ]
-# aiopen = { path = "./libs/aiopen/", develop = true }
-# asyncify = { path = "./libs/asyncify/", develop = true }
-# fmts = { path = "./libs/fmts/", develop = true }
-# funkify = { path = "./libs/funkify/", develop = true }
-# h5 = { path = "./libs/h5/", develop = true }
-# jsonbourne = { path = "./libs/jsonbourne/", develop = true }
-# lager = { path = "./libs/lager/", develop = true }
-# listless = { path = "./libs/listless/", develop = true }
-# requires = { path = "./libs/requires/", develop = true }
-# shellfish = { path = "./libs/shellfish/", develop = true }
-# xtyping = { path = "./libs/xtyping/", develop = true }
-# dgpytest = { path = "./libs/dgpytest/", develop = true }
-# dgpylibs = { path = "./libs/dgpylibs/", develop = true }
-
 scripts.dgpydev = "dgpydev.cli:main"
+
+[tool.uv.build-backend]
+module-name = "dgpydev"
+module-root = ""
 
 [dependency-groups]
 dev = [
@@ -196,14 +186,6 @@ lint.isort.known-first-party = [
   "xtyping",
 ]
 
-# =============================================================================
-# /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-# =============================================================================
-#  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\  /\
-# /  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \/  \
-# =============================================================================
-# \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-# =============================================================================
 lint.isort.lines-after-imports = -1
 lint.isort.lines-between-types = 1
 lint.mccabe.max-complexity = 20
