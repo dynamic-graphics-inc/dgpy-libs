@@ -35,7 +35,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
     _coro: Awaitable[AsyncFile[AnyStr]]
     _obj: Optional[AsyncFile[AnyStr]]
 
-    def __init__(self, coro: Awaitable[AsyncFile[AnyStr]]):
+    def __init__(self, coro: Awaitable[AsyncFile[AnyStr]]) -> None:
         self._coro = coro
         self._obj = None
 

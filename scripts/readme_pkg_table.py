@@ -27,7 +27,7 @@ class PackagesTableRow:
         )
 
 
-def main():
+def main() -> None:
     packages = [
         "aiopen",
         "asyncify",

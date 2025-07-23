@@ -18,12 +18,14 @@ def dgpy_libs_dirpath() -> str:
 
 
 @pytest.fixture
-def dgpy_lib_dirpath(dgpy_libs_dirpath) -> Callable[[str], str]:
+def dgpy_lib_dirpath(dgpy_libs_dirpath: str) -> Callable[[str], str]:
     return lambda libname: path.join(dgpy_libs_dirpath, libname)
 
 
 @pytest.fixture
-def dgpy_lib_pyproject_toml_string(dgpy_lib_dirpath) -> Callable[[str], str]:
+def dgpy_lib_pyproject_toml_string(
+    dgpy_lib_dirpath: Callable[[str], str],
+) -> Callable[[str], str]:
     def _get_pyproject_toml_string(libname: str) -> str:
         pyproject_toml_filepath = path.join(dgpy_lib_dirpath(libname), "pyproject.toml")
         with open(pyproject_toml_filepath) as f:
