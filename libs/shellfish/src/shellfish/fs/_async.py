@@ -247,7 +247,7 @@ async def read_bytes_async(filepath: FsPath) -> bytes:
 
 async def read_bytes_gen_async(
     filepath: FsPath, blocksize: int = 65536
-) -> AsyncIterable[Union[bytes, str]]:
+) -> AsyncIterable[bytes]:
     """Yield (asynchronously) bytes from a given fspath
 
     Args:
