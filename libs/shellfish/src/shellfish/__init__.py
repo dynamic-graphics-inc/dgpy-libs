@@ -23,6 +23,13 @@ from shellfish._types import (
     PopenEnv as PopenEnv,
     SymlinkType as SymlinkType,
 )
+from shellfish.done import (
+    Done as Done,
+    DoneDict as DoneDict,
+    DoneError as DoneError,
+    DoneObj as DoneObj,
+    HrTime as HrTime,
+)
 from shellfish.echo import echo as echo
 from shellfish.fs import (
     chmod as chmod,
@@ -156,13 +163,8 @@ from shellfish.process import env as env
 from shellfish.sh import (
     LIN as LIN,
     WIN as WIN,
-    Done as Done,
-    DoneDict as DoneDict,
-    DoneError as DoneError,
-    DoneObj as DoneObj,
     Flag as Flag,
     FlagMeta as FlagMeta,
-    HrTime as HrTime,
     TimeoutExpired as TimeoutExpired,
     basename as basename,
     cd as cd,
@@ -189,7 +191,6 @@ from shellfish.sh import (
     quote as quote,
     rm as rm,
     run as run,
-    seconds2hrtime as seconds2hrtime,
     setenv as setenv,
     shell as shell,
     shplit as shplit,
@@ -205,7 +206,6 @@ from shellfish.sh import (
     where as where,
     which as which,
     which_lru as which_lru,
-    x as x,
 )
 from shellfish.stdio import Stdio as Stdio
 
@@ -356,7 +356,6 @@ __all__ = (
     "scandir",
     "scandir_gen",
     "scandir_list",
-    "seconds2hrtime",
     "sep_join",
     "sep_lstrip",
     "sep_rstrip",
@@ -412,5 +411,4 @@ __all__ = (
     "wstr_async",
     "wstring",
     "wstring_async",
-    "x",
 )
