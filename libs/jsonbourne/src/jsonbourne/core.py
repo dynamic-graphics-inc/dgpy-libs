@@ -1402,7 +1402,7 @@ JSON = JsonModule()
 
 class JSONModuleCls(ModuleType, JsonModule):
     @staticmethod
-    def __call__(value: Any = None) -> Any:
+    def __call__(value: Any = None) -> Any:  # type: ignore[no-untyped-def]
         """Jsonify a value"""
         if value is None:
             return JsonObj()
