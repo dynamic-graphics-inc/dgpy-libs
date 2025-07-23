@@ -189,7 +189,6 @@ from shellfish.sh import (
     quote as quote,
     rm as rm,
     run as run,
-    seconds2hrtime as seconds2hrtime,
     setenv as setenv,
     shell as shell,
     shplit as shplit,
