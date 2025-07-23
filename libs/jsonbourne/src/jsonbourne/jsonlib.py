@@ -502,7 +502,7 @@ class JsonLib:
     _oj: Optional[type[ORJSON]] = None
     _rj: Optional[type[RAPIDJSON]] = None
 
-    def __init__(self, jsonlib: Optional[type[JsonLibABC]] = None):
+    def __init__(self, jsonlib: Optional[type[JsonLibABC]] = None) -> None:
         if jsonlib:
             self._jsonlib = jsonlib
         else:

@@ -27,7 +27,7 @@ def fmt_pyproject(p: list[Path]) -> bool:
     return done.returncode == 0
 
 
-def main():
+def main() -> None:
     files = glob("**/pyproject.toml").collect()
     fmt_pyproject(files)
 

@@ -102,10 +102,12 @@ lint.select = [
   # pyupgrade
   "UP",
   "W",
+  "ANN", # annotations
 ]
 lint.ignore = [
   # "B004",
   # "B904",
+"ANN401", # use of Any
   "C417", # super annoying
   "C901", # too complex
   # PYDOCSTYLE
@@ -142,6 +144,7 @@ lint.ignore = [
 lint.per-file-ignores."**/conftest.py" = ["D"]
 lint.per-file-ignores."**/noxfile.py" = ["D"]
 lint.per-file-ignores."**/tests/*.py" = [
+  "ANN401",  # use of Any
   "D1",
   "D100", # missing docstring in public module
   "D102",
@@ -156,7 +159,7 @@ lint.per-file-ignores."libs/xtyping/**/*.py" = [
   "UP045", # union type over `Optional`
   "UP045", # union type over `Optional`
 ]
-lint.per-file-ignores."*.ipynb" = ["E741", "F401", "F811", "F821", "T201"]
+lint.per-file-ignores."*.ipynb" = ["E741", "F401", "F811", "F821", "T201", "ANN"]
 lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]

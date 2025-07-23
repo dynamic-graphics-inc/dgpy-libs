@@ -41,7 +41,7 @@ def lib_dirpath(libname: str) -> Path:
     return libs_dirpath() / libname
 
 
-def lib_pyproject_toml(libname: str):
+def lib_pyproject_toml(libname: str) -> dict[str, Any]:
     pyproject_toml_filepath = lib_dirpath(libname) / "pyproject.toml"
     with open(pyproject_toml_filepath) as f:
         return tomli.loads(f.read())
@@ -51,13 +51,15 @@ def lib_version(libname: str) -> str:
     return lib_pyproject_toml(libname)["project"]["version"]
 
 
-def lib_pyproject_toml_2_deps(libname: str, dgpylibs_only: bool = True):
+def lib_pyproject_toml_2_deps(
+    libname: str, dgpylibs_only: bool = True
+) -> dict[str, str]:
     pyproject_toml_dict = lib_pyproject_toml(libname)
     deps = pyproject_toml_dict["project"]["dependencies"]
     return {k: v for k, v in deps.items() if k in DGPY_LIBS} if dgpylibs_only else deps
 
 
-def pyproject_tomls():
+def pyproject_tomls() -> dict[str, dict[str, Any]]:
     return {libname: lib_pyproject_toml(libname) for libname in DGPY_LIBS}
 
 
@@ -70,7 +72,7 @@ def cli(debug: bool = False) -> None:
         console.log("dgpydev-debug: ON")
 
 
-def update_abouts():
+def update_abouts() -> None:
     for libname, pyproject_toml_dict in pyproject_tomls().items():
         project_metadata = pyproject_toml_dict["project"]
         lib_about_filepath = lib_dirpath(libname) / "src" / libname / "__about__.py"
@@ -94,7 +96,7 @@ def update_abouts():
                 )
 
 
-def _relock():
+def _relock() -> None:
     """relock all dgpy-libs"""
     for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
@@ -108,7 +110,7 @@ def _relock():
 
 
 @cli.command()
-def depsup():
+def depsup() -> None:
     """Update dependencies with `poetry update`"""
     for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
@@ -122,13 +124,13 @@ def depsup():
 
 
 @cli.command()
-def update():
+def update() -> None:
     """Update all dgpy-libs metadata files."""
     update_abouts()
 
 
 @cli.command()
-def patchall():
+def patchall() -> None:
     """relock all dgpy-libs"""
     for libname, _pyproject_toml_dict in pyproject_tomls().items():
         dirpath = lib_dirpath(libname)
@@ -141,7 +143,7 @@ def patchall():
 
 
 @cli.command()
-def relock():
+def relock() -> None:
     """relock all dgpy-libs"""
     _relock()
 
@@ -172,7 +174,7 @@ def topo_sort(dgpylibs_deptree: dict[str, DgpyLibInfo]) -> list[str]:
 
 
 @cli.command(name="ls", help="List dgpy-libs")
-def ls():
+def ls() -> None:
     from rich.table import Table
 
     t = Table(
@@ -210,10 +212,10 @@ def deps_tree() -> dict[str, DgpyLibInfo]:
     return dgpylibs_deptree
 
 
-def deps_tree_rich(deptree: dict[str, DgpyLibInfo]):
+def deps_tree_rich(deptree: dict[str, DgpyLibInfo]) -> Tree:
     def add_dependencies(
         node: Tree, lib_info: DgpyLibInfo, lib_dict: dict[str, DgpyLibInfo]
-    ):
+    ) -> None:
         for dep_name in lib_info.dependencies:
             if dep_name in lib_dict:
                 dep_info = lib_dict[dep_name]
@@ -241,7 +243,7 @@ def dgpylibs_topo_sorted() -> list[str]:
 
 
 @cli.command()
-def tree():
+def tree() -> None:
     """Print dependency tree
 
     possible grep???
@@ -263,7 +265,7 @@ def tree():
 
 
 @cli.command()
-def publish():
+def publish() -> None:
     """Publish all dgpy-libs to PyPI."""
     import subprocess
 
@@ -305,7 +307,7 @@ def version(
     lib: str,
     version: Optional[str] = None,
     dry_run: bool = False,
-):
+) -> None:
     """Bump version of lib (TODO)"""
     console.print(f"lib: {lib}")
     console.print(f"version: {version}")
@@ -371,7 +373,7 @@ class Changelog(JsonBaseModel):
         except ValueError:
             return datetime.datetime.now()
 
-    def check_similar_changes(self):
+    def check_similar_changes(self) -> None:
         unique_changes_ignoring_timestamp = set(
             it.chain.from_iterable(
                 (a.dedupe(b) for a, b in it.combinations(self.changes, 2))
@@ -381,13 +383,14 @@ class Changelog(JsonBaseModel):
             unique_changes_ignoring_timestamp, key=lambda change: change.timestamp
         )
 
-    def update(self):
+    def update(self) -> None:
         self.check_similar_changes()
         self.updated = self.new_updated_timestamp()
 
     def write2fspath(self, filepath: FsPath) -> str:
         self.update()
         string = self.model_dump_json(indent=2)
+
         filepath.write_text(
             string,
             encoding="utf-8",
@@ -402,7 +405,7 @@ class Changelog(JsonBaseModel):
 def change(
     msg: str,
     lib: Optional[str] = None,
-):
+) -> None:
     """Make changelog message"""
     # ask which lib if not provided blah blah blah
     if lib is None:
@@ -444,7 +447,7 @@ def change(
     )
 
 
-def main():
+def main() -> None:
     cli()
 
 

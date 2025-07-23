@@ -6,16 +6,16 @@ from rich import print
 from shellfish import sh
 
 
-def get_wheel_files_list(wheel_filepath: str):
+def get_wheel_files_list(wheel_filepath: str) -> list[str]:
     return zipfile.ZipFile(wheel_filepath).namelist()
 
 
-def get_targz_files_list(targz_filepath):
+def get_targz_files_list(targz_filepath: str) -> list[str]:
     with tarfile.open(targz_filepath, "r:gz") as tar:
         return tar.getnames()
 
 
-def main():
+def main() -> None:
     files = list(sh.files_gen("dist"))
     wheels = [f for f in files if f.endswith(".whl")]
     targzs = [f for f in files if f.endswith(".tar.gz")]

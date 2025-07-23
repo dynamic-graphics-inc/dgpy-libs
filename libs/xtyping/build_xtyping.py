@@ -49,7 +49,7 @@ NEVER_REEXPORT = {
 }
 
 
-def main():
+def main() -> None:
     # typing + typing_extensions - deprecated types
     import_from_typing_extensions = {
         el

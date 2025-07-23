@@ -66,7 +66,7 @@ class ExeABC:
         shell: bool = False,
         timeout: Optional[Union[float, int]] = None,
         verbose: bool = False,
-    ):
+    ) -> None:
         self.cmd = cmd
         if subcmd is not None:
             self.subcmd = (subcmd,) if isinstance(subcmd, str) else tuple(subcmd)

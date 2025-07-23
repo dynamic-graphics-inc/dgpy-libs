@@ -6,7 +6,7 @@ PWD = path.split(path.abspath(__file__))[0]
 REPO_ROOT = path.split(PWD)[0]
 
 
-def test_libs_listing():
+def test_libs_listing() -> None:
     libs_dir = path.join(REPO_ROOT, "libs")
     if not path.isdir(libs_dir):
         raise AssertionError("libs dir not found", libs_dir)

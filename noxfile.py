@@ -58,33 +58,8 @@ TESTS_DIRS = {el: path.join(LIBS_DIR, el, "tests") for el in LIB_DIRS}
 # #############
 
 
-def _get_session_python_site_packages_dir(session):
-    try:
-        site_packages_dir = session._runner._site_packages_dir
-    except AttributeError:
-        old_install_only_value = session._runner.global_config.install_only
-        try:
-            # Force install only to be false for the following chunk of code
-            # For additional information as to why see:
-            #   https://github.com/theacodes/nox/pull/181
-            session._runner.global_config.install_only = False
-            site_packages_dir = session.run(
-                "python",
-                "-c"
-                "import sys; "
-                "from distutils.sysconfig import get_python_lib; "
-                "sys.stdout.write(get_python_lib())",
-                silent=True,
-                log=False,
-            )
-            session._runner._site_packages_dir = site_packages_dir
-        finally:
-            session._runner.global_config.install_only = old_install_only_value
-    return site_packages_dir
-
-
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def pipc(session):
+def pipc(session: nox.Session) -> None:
     session.install("pip-tools")
     reqs_ini = (
         "dev.in",
@@ -105,7 +80,7 @@ def pipc(session):
         )
 
 
-def _mypy(session):
+def _mypy(session: nox.Session) -> None:
     session.install(
         "-U",
         "mypy",
@@ -148,12 +123,12 @@ def _ruff(session: nox.Session) -> None:
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def mypy(session):
+def mypy(session: nox.Session) -> None:
     _mypy(session)
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def lint(session):
+def lint(session: nox.Session) -> None:
     _mypy(session)
 
 
@@ -165,10 +140,10 @@ extend = "../../pyproject.toml"
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def dev(session):
+def dev(session: nox.Session) -> None:
     from pprint import pprint
 
-    import toml
+    import tomllib
 
     for libname, dirpath in LIB_DIRS.items():
         echo(libname, dirpath)
@@ -176,11 +151,11 @@ def dev(session):
         with open(pyproject_toml_fspath) as f:
             pyproject_toml_str = f.read().rstrip("\n")
 
-        data = toml.loads(pyproject_toml_str)
+        data = tomllib.loads(pyproject_toml_str)
         pprint(data)
 
 
-def _pkg_entry_point(pkg_name):
+def _pkg_entry_point(pkg_name: str) -> str:
     return "\n".join(
         [
             "# -*- coding: utf-8 -*-",
@@ -197,20 +172,19 @@ def _pkg_entry_point(pkg_name):
     )
 
 
-def echo(*args, **kwargs):
-    print(*args, **kwargs)  # noqa: T201
+echo = print
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def update_metadata(session):
-    import toml
+def update_metadata(session: nox.Session) -> None:
+    import tomllib
 
     libs2update = {k: v for k, v in LIB_DIRS.items() if k not in {"dgpylibs"}}
     for libname, dirpath in libs2update.items():
         echo(libname, dirpath)
         with open(path.join(dirpath, "pyproject.toml")) as f:
             pyproject_toml_str = f.read()
-        data = toml.loads(pyproject_toml_str)
+        data = tomllib.loads(pyproject_toml_str)
         echo("____________________________")
         poetry_metadata = data["tool"]["poetry"]
         assert "name" in poetry_metadata and poetry_metadata["name"] == libname
@@ -257,7 +231,7 @@ def update_metadata(session):
             f.write("\n".join(deprecated_meta_file_lines))
 
 
-def _install_mkdocs_deps(session):
+def _install_mkdocs_deps(session: nox.Session) -> None:
     session.install(
         "mkdocs",  # docs!
         "mkdocs-material",  # material theme
@@ -269,19 +243,19 @@ def _install_mkdocs_deps(session):
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def mkdocs_serve(session):
+def mkdocs_serve(session: nox.Session) -> None:
     _install_mkdocs_deps(session)
     session.run("mkdocs", "serve")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def mkdocs(session):
+def mkdocs(session: nox.Session) -> None:
     _install_mkdocs_deps(session)
     session.run("mkdocs", "build")
 
 
 @nox.session(reuse_venv=True)
-def freeze(session):
+def freeze(session: nox.Session) -> None:
     for lib in LIBS:
         session.install(lib)
     _freeze = session.run("pip", "freeze", "--local", "-l")
