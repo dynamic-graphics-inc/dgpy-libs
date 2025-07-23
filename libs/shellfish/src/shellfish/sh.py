@@ -389,7 +389,6 @@ __all__ = (
     "wstr_async",
     "wstring",
     "wstring_async",
-    "x",
 )
 
 IS_WIN: bool = is_win()
@@ -773,7 +772,7 @@ def shell(
         *popenargs: Args given as `*args`; Cannot use both *popenargs and args
         args: Args as strings for the subprocess
         env: Environment variables as a dictionary (Default value = None)
-        shell: Run in shell or sub-shell; default is True for `shx`
+        shell: Run in shell or sub-shell; default is True for `shell`
         extenv: Extend the environment with the current environment (Default value = True)
         cwd: Current working directory (Default value = None)
         check: Check the outputs (generally useless)
@@ -806,7 +805,6 @@ def shell(
 
 
 shx = shell
-x = shell
 
 _run_async = asyncify(run)
 _do_asyncify = asyncify(do)
