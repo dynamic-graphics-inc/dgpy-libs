@@ -191,6 +191,9 @@ def is_snake(string: AnyStr) -> bool:
         string: string to check
 
     Returns:
+        bool: True if the string is snake_case, False otherwise
+
+    Examples:
         >>> is_snake('snake_case')
         True
         >>> is_snake('kebab-case')
@@ -210,7 +213,7 @@ def snake2kebab(string: AnyStr) -> AnyStr:
     Args:
         string: snake case string
 
-    Returns:
+    Examples:
         >>> snake2kebab('kebab_case')
         'kebab-case'
         >>> snake2kebab(b'kebab_case')
@@ -228,7 +231,7 @@ def kebab2snake(string: AnyStr) -> AnyStr:
     Args:
         string: kebab case string
 
-    Returns:
+    Examples:
         >>> kebab2snake('kebab-case')
         'kebab_case'
         >>> kebab2snake(b'kebab-case')
@@ -315,7 +318,7 @@ def snake2camel(string: AnyStr) -> AnyStr:
     Args:
         string: snake case string
 
-    Returns:
+    Examples:
         >>> snake2camel('camel_case')
         'camelCase'
         >>> snake2camel(b'camel_case')

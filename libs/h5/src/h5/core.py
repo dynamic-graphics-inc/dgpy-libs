@@ -138,7 +138,7 @@ def _ensure_single_leading_slash(path: str) -> str:
 def fmt_h5_path(head: str, tail: str) -> str:
     """Format function for HDF5-path-strings
 
-    Example:
+    Examples:
         >>> fmt_h5_path("foo", "bar")
         '/foo/bar'
 
