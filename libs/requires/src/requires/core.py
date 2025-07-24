@@ -74,6 +74,8 @@ TRequirementDict: TypeAlias = Union[RequirementDict, dict[str, Any]]
 
 @dataclass(frozen=True, unsafe_hash=True)
 class Requirement:
+    """Requirement class to specify a package or module requirement"""
+
     _import: str
     _from: Optional[str] = None
     _as: Optional[str] = None
@@ -352,6 +354,8 @@ class RequirementsMeta:
 
 
 class RequirementProxy:
+    """Proxy for a requirement that raises an error when called or accessed"""
+
     req: Requirement
 
     def __init__(self, req: Requirement) -> None:

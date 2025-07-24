@@ -748,7 +748,7 @@ async def enumerate_async(
 async def zip_async(*iterables: AnyIterable[Any]) -> AsyncIterator[tuple[Any, ...]]:
     """Async version of builtin zip function
 
-    Example:
+    Examples:
         >>> from asyncio import run as aiorun
         >>> from listless import zip_async
         >>> from listless import list_async, iter_async  # for fake async iters
