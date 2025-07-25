@@ -5,6 +5,7 @@
 # dgpy-libs
 
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
 Docs: [dynamic-graphics-inc.github.io/dgpy-libs](https://dynamic-graphics-inc.github.io/dgpy-libs/)
 
@@ -67,7 +68,7 @@ uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellf
 
 ## About
 
-This repo (dgpy-libs) are the polished gems formed under intense pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These pure-python libraries are all published on pip under the listed names.
+This repo (dgpy-libs) are the polished gems formed under intense geological pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These python libraries are all published on pip under the listed names.
 
 ### Design PhilosoPY
 
@@ -76,23 +77,23 @@ This repo (dgpy-libs) are the polished gems formed under intense pressure below 
 - Python 3.9+ 'n up, baby!
 - Use type annotations everywhere
 - No dead or commented out code
-- Prefer pure-python & compiled-3rd-party-libs over writing packages with compiled extensions
 - Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present
 - Optional dependencies are good! Missing optional deps should trigger an error msg that is helpful to installing the relevant dependency ONLY IF THE DEPENDENCY IS NEEDED.
 - Test coverage is usually a dumb metric and 100% test coverage `!=` bug-free code (tests of dgpy-libs are slowly being migrated from internal/private repos to this repo)
 
 ### Third party friends
 
-- [pydantic](https://pydantic-docs.helpmanual.io/); best python lib you will ever use
-- [loguru](https://github.com/Delgan/loguru); base of lager
-- [httpx](https://www.python-httpx.org/) ; don't use requests
-- [attrs](https://github.com/python-attrs/attrs); pydantic alternative
-- [poetry](https://github.com/python-poetry/poetry); best dep management python has to offer
-- [orjson](https://github.com/ijl/orjson); fastest python json lib (opt dep of jsonbourne)
+- [uv](https://github.com/astral-sh/uv): the greatest thing since sliced bread
+- [ruff](https://github.com/astral-sh/ruff): python linter and formatter
+- [pydantic](https://pydantic-docs.helpmanual.io/): no need for explanation
+- [loguru](https://github.com/Delgan/loguru): very nice python logging library
+- [httpx](https://www.python-httpx.org/): http client library
+- [attrs](https://github.com/python-attrs/attrs); class decorators library
+- [orjson](https://github.com/ijl/orjson); fastest python json library (optional dep of jsonbourne)
 - [rapidjson/python-rapidjson](https://github.com/python-rapidjson/python-rapidjson); best mostly drop-in replacement for python's json module
 - [h5py](https://github.com/h5py/h5py); base of h5
-- [rich](https://github.com/willmcgugan/rich); best python console formatting lib
-- [nox](https://github.com/theacodes/nox); like tox but less maddening
+- [rich](https://github.com/willmcgugan/rich); best python console formatting library
+- [nox](https://github.com/theacodes/nox); truely a work of art
 
 ---
 
@@ -125,9 +126,32 @@ Plz do! Send me that PR!
 
 ---
 
-## TODO
+## License
 
-- Have CI/CD auto build n publish
-- Changelog (for real)
-- Figure out why the combine-prs workflow doesn't trigger github actions...
-- Update mkdocs to include all dgpy-libs
+All dgpy-libs are MIT licensed
+
+```txt
+dgpy-libs
+
+The MIT License (MIT)
+
+Copyright (c) 2019-2025 Dynamic Graphics Inc (dgi)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
