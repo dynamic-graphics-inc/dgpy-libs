@@ -17,31 +17,28 @@ Repo:
 
 Dynamic Graphics python libraries, home of:
 
-- Callable modules and packages
-- Recursive list/gen comprehensions
-- Nutty decorators
-- Secret agent JSON Bourne
-- The best package names around
-- Notebooks with funky python
-- Dynamic imports
+- Callable modules/packages
+- Recursive list/generator comprehensions
+- Many decorators
+- Secret agent JSON-Bourne
 
 ## Libs
 
 ```txt
 libs
-├── aiopen
-├── asyncify
-├── dgpylibs
-├── dgpytest
-├── fmts
-├── funkify
-├── h5
-├── jsonbourne
-├── lager
-├── listless
-├── requires
-├── shellfish
-└── xtyping
+├── aiopen      - async file-io
+├── asyncify    - async/await utilities
+├── dgpylibs    - dgpy-libs mega package
+├── dgpytest    - pytest plugin (WIP)
+├── fmts        - string formatting tools
+├── funkify     - callable modules
+├── h5          - hdf5 tools
+├── jsonbourne  - JSON tools/wrappers
+├── lager       - logging library built on loguru
+├── listless    - generator tools
+├── requires    - dynamic import(s)
+├── shellfish   - shell and filesystem tools
+└── xtyping     - types
 ```
 
 **Install:**
