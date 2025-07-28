@@ -1,7 +1,0 @@
--c dev.txt
-markdown-callouts
-markdown-include
-mkdocs
-mkdocs-jupyter
-mkdocs-material
-mkdocstrings[python]
