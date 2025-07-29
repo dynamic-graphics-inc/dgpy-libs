@@ -27,7 +27,9 @@ classifiers = [
 dependencies = [ "funkify>=0.4", "typing-extensions>=4.12.2" ]
 
 [dependency-groups]
-dev = [ "python-rapidjson>=1.20" ]
+dev = [
+ "orjson>=3.11.0",
+]
 
 [tool.hatch]
 [tool.hatch.metadata]
