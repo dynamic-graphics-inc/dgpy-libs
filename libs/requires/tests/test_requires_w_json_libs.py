@@ -6,8 +6,8 @@ import json
 
 from typing import Any
 
+import orjson
 import pytest
-import rapidjson
 
 
 def test_requires_json_n_rapid_json() -> None:
@@ -18,12 +18,12 @@ def test_requires_json_n_rapid_json() -> None:
         return json.dumps({"a": 1, "b": 2})
 
     @requires(
-        _import="rapidjson",
-        pip="python-rapidjson",
-        conda_forge="python-rapidjson",
+        _import="orjson",
+        pip="orjson",
+        conda_forge="orjson",
     )
     def tres() -> Any:
-        return rapidjson.dumps({"a": 1, "b": 2})
+        return orjson.dumps({"a": 1, "b": 2}).decode()
 
     try:
         tres()
@@ -40,12 +40,12 @@ def test_requires_json_n_rapid_json_pkg_callable() -> None:
         return json.dumps({"a": 1, "b": 2})
 
     @requires(  # type: ignore[operator]
-        _import="rapidjson",
-        pip="python-rapidjson",
-        conda_forge="python-rapidjson",
+        _import="orjson",
+        pip="orjson",
+        conda_forge="orjson",
     )
     def tres() -> str:
-        return rapidjson.dumps({"a": 1, "b": 2})  # type: ignore[no-any-return]
+        return orjson.dumps({"a": 1, "b": 2}).decode()
 
     try:
         tres()
