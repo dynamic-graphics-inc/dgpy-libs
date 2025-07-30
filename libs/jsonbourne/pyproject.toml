@@ -51,7 +51,7 @@ dev = [
   "python-rapidjson>=1.20",
 ]
 [tool.uv.build-backend]
-module-name = [ "jsonbourne", "JSON", "david_webb" ]
+module-name = "jsonbourne"
 
 [tool.hatch]
 [tool.hatch.metadata]
