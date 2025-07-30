@@ -7,6 +7,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
 from typing import TYPE_CHECKING, Any, Optional, Union
 
+from pydantic import Field
 from typing_extensions import TypedDict
 
 from jsonbourne import JSON
@@ -157,7 +158,42 @@ class DoneObj(TypedDict):
 
 
 class Done(JsonBaseModel):
-    """PRun => 'ProcessRun' for finished processes"""
+    r"""Completed subprocess
+
+    Examples:
+        >>> d = Done(
+        ...    args=['python', '--version'],
+        ...    returncode=0,
+        ...    stdout='Python 3.13.5\n',
+        ...    stderr='',
+        ...    ti=1753910725.1278882,
+        ...    tf=1753910725.167228,
+        ...    dt=0.03933978080749512,
+        ...    hrdt=HrTime(sec=0, ns=39339780),
+        ...    stdin=None,
+        ...    async_proc=False,
+        ...    verbose=False,
+        ...    dryrun=False
+        ... )
+        >>> d
+        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt=HrTime(sec=0, ns=39339780), stdin=None, async_proc=False, dryrun=False, verbose=False)
+        >>> print(d)
+        Done(
+            args=['python', '--version']
+            returncode=0
+            stdout='Python 3.13.5\n'
+            stderr=''
+            ti=1753910725.1278882
+            tf=1753910725.167228
+            dt=0.03933978080749512
+            hrdt={'sec': 0, 'ns': 39339780}
+            stdin=None
+            async_proc=False
+            verbose=False
+            dryrun=False
+        )
+
+    """
 
     args: list[str]
     returncode: int
@@ -169,13 +205,33 @@ class Done(JsonBaseModel):
     hrdt: Optional[HrTime] = None
     stdin: Optional[str] = None
     async_proc: bool = False
-    verbose: bool = False
     dryrun: bool = False
+    verbose: bool = Field(False, exclude=True)
 
     def __post_init__(self) -> None:
         """Write the stdout/stdout to sys.stdout/sys.stderr post object init"""
         if self.verbose:
             self.sys_print()
+
+    def __str__(self) -> str:
+        return "\n".join(
+            [
+                "Done(",
+                f"    args={self.args}",
+                f"    returncode={self.returncode}",
+                f"    stdout={self.stdout!r}",
+                f"    stderr={self.stderr!r}",
+                f"    ti={self.ti}",
+                f"    tf={self.tf}",
+                f"    dt={self.dt}",
+                f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()}",
+                f"    stdin={self.stdin!r}",
+                f"    async_proc={self.async_proc}",
+                f"    verbose={self.verbose}",
+                f"    dryrun={self.dryrun}",
+                ")",
+            ]
+        )
 
     def hrdt_dict(self) -> HrTimeDict:
         if self.hrdt:
