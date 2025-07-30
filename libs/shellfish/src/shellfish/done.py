@@ -3,9 +3,10 @@ from __future__ import annotations
 import signal
 import sys
 
+from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, AnyStr, Optional, Union
 
 from pydantic import Field
 from typing_extensions import TypedDict
@@ -157,6 +158,27 @@ class DoneObj(TypedDict):
     verbose: bool
 
 
+@lru_cache(maxsize=32)
+def _pfmt_stdio(s: AnyStr) -> AnyStr:
+    """Pretty format stdout/stderr strings"""
+    # BYTES
+    if isinstance(s, bytes):
+        if not s:
+            return b"b''"
+
+        lines = s.splitlines(keepends=True)
+        return (
+            b"(\n"
+            + b"\n".join(f"        {line!r},".encode() for line in lines)
+            + b"\n    )"
+        )
+    # STR
+    if not s:
+        return "''"
+    lines = s.splitlines(keepends=True)
+    return "(\n" + "\n".join(f"        {line!r}," for line in lines) + "\n    )"
+
+
 class Done(_ShellfishBaseModel):
     """Completed subprocess"""
 
@@ -180,7 +202,7 @@ class Done(_ShellfishBaseModel):
 
     def __str__(self) -> str:
         return "\n".join(
-            [
+            (
                 "Done(",
                 f"    args={self.args},",
                 f"    returncode={self.returncode},",
@@ -195,12 +217,12 @@ class Done(_ShellfishBaseModel):
                 f"    verbose={self.verbose},",
                 f"    dryrun={self.dryrun},",
                 ")",
-            ]
+            )
         )
 
     def __repr__(self) -> str:
         return " ".join(
-            [
+            (
                 f"Done(args={self.args},",
                 f"returncode={self.returncode},",
                 f"stdout={self.stdout!r},",
@@ -213,7 +235,7 @@ class Done(_ShellfishBaseModel):
                 f"async_proc={self.async_proc},",
                 f"verbose={self.verbose},",
                 f"dryrun={self.dryrun})",
-            ]
+            )
         )
 
     def hrdt_dict(self) -> HrTimeDict:
@@ -302,7 +324,7 @@ class Done(_ShellfishBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.write_str(Path(filepath), self.stdout, append=append)
+        fs.write_bytes(Path(filepath), self.stdout.encode("utf-8"), append=append)
 
     def completed_process(self) -> CompletedProcess[str]:
         """Return subprocess.CompletedProcess object"""
@@ -321,7 +343,7 @@ class Done(_ShellfishBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.write_str(Path(filepath), self.stderr, append=append)
+        fs.write_bytes(Path(filepath), self.stderr.encode("utf-8"), append=append)
 
     def __gt__(self, filepath: FsPath) -> None:
         """Operator overload for writing a stdout to a fspath
