@@ -89,6 +89,3 @@ lint: fmt noxlint
 fmt-justfile:
     just --fmt --unstable
 
-# nuke poetry cache
-poetry-nuke-cache:
-    poetry cache clear pypi --all -v

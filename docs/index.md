@@ -101,7 +101,7 @@ python libraries are all published on pip under the listed names.
 - [h5py](https://github.com/h5py/h5py); base of h5
 - [rich](https://github.com/willmcgugan/rich); best python console formatting
   library
-- [nox](https://github.com/theacodes/nox); truely a work of art
+- [nox](https://github.com/theacodes/nox); truly a work of art
 
 ---
 

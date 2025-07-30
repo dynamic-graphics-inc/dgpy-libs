@@ -157,7 +157,7 @@ CLASSIFIERS: tuple[str, ...] = (
     "Framework :: Odoo :: 16.0",
     "Framework :: Odoo :: 8.0",
     "Framework :: Odoo :: 9.0",
-    "Framework :: Opps",
+    "Framework :: Opps",  # typos: ignore
     "Framework :: Paste",
     "Framework :: Pelican",
     "Framework :: Pelican :: Plugins",
