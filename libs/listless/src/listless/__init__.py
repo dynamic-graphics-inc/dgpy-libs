@@ -339,7 +339,7 @@ def chunk(
 
 
 def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
-    """Exhaust an interable; useful for evaluating a map object.
+    """Exhaust an iterable; useful for evaluating a map object.
 
     Args:
         it: Iterable to exhaust
