@@ -11,8 +11,8 @@ from pydantic import Field
 from typing_extensions import TypedDict
 
 from jsonbourne import JSON
-from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
+from shellfish._pydantic import _ShellfishBaseModel
 
 if TYPE_CHECKING:
     from shellfish._types import (
@@ -47,7 +47,7 @@ class HrTimeObj(TypedDict):
     ns: int
 
 
-class HrTime(JsonBaseModel):
+class HrTime(_ShellfishBaseModel):
     """High resolution time"""
 
     sec: int
@@ -157,7 +157,7 @@ class DoneObj(TypedDict):
     verbose: bool
 
 
-class Done(JsonBaseModel):
+class Done(_ShellfishBaseModel):
     r"""Completed subprocess
 
     Examples:
@@ -205,7 +205,7 @@ class Done(JsonBaseModel):
     hrdt: Optional[HrTime] = None
     stdin: Optional[str] = None
     async_proc: bool = False
-    dryrun: bool = False
+    dryrun: bool = Field(False)
     verbose: bool = Field(False, exclude=True)
 
     def __post_init__(self) -> None:
@@ -217,19 +217,37 @@ class Done(JsonBaseModel):
         return "\n".join(
             [
                 "Done(",
-                f"    args={self.args}",
-                f"    returncode={self.returncode}",
-                f"    stdout={self.stdout!r}",
-                f"    stderr={self.stderr!r}",
-                f"    ti={self.ti}",
-                f"    tf={self.tf}",
-                f"    dt={self.dt}",
-                f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()}",
-                f"    stdin={self.stdin!r}",
-                f"    async_proc={self.async_proc}",
-                f"    verbose={self.verbose}",
-                f"    dryrun={self.dryrun}",
+                f"    args={self.args},",
+                f"    returncode={self.returncode},",
+                f"    stdout={self.stdout!r},",
+                f"    stderr={self.stderr!r},",
+                f"    ti={self.ti},",
+                f"    tf={self.tf},",
+                f"    dt={self.dt},",
+                f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+                f"    stdin={self.stdin!r},",
+                f"    async_proc={self.async_proc},",
+                f"    verbose={self.verbose},",
+                f"    dryrun={self.dryrun},",
                 ")",
+            ]
+        )
+
+    def __repr__(self) -> str:
+        return " ".join(
+            [
+                f"Done(args={self.args},",
+                f"returncode={self.returncode},",
+                f"stdout={self.stdout!r},",
+                f"stderr={self.stderr!r},",
+                f"ti={self.ti},",
+                f"tf={self.tf},",
+                f"dt={self.dt},",
+                f"hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+                f"stdin={self.stdin!r},",
+                f"async_proc={self.async_proc},",
+                f"verbose={self.verbose},",
+                f"dryrun={self.dryrun})",
             ]
         )
 
