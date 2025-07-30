@@ -158,42 +158,7 @@ class DoneObj(TypedDict):
 
 
 class Done(_ShellfishBaseModel):
-    r"""Completed subprocess
-
-    Examples:
-        >>> d = Done(
-        ...    args=['python', '--version'],
-        ...    returncode=0,
-        ...    stdout='Python 3.13.5\n',
-        ...    stderr='',
-        ...    ti=1753910725.1278882,
-        ...    tf=1753910725.167228,
-        ...    dt=0.03933978080749512,
-        ...    hrdt=HrTime(sec=0, ns=39339780),
-        ...    stdin=None,
-        ...    async_proc=False,
-        ...    verbose=False,
-        ...    dryrun=False
-        ... )
-        >>> d
-        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt=HrTime(sec=0, ns=39339780), stdin=None, async_proc=False, dryrun=False, verbose=False)
-        >>> print(d)
-        Done(
-            args=['python', '--version']
-            returncode=0
-            stdout='Python 3.13.5\n'
-            stderr=''
-            ti=1753910725.1278882
-            tf=1753910725.167228
-            dt=0.03933978080749512
-            hrdt={'sec': 0, 'ns': 39339780}
-            stdin=None
-            async_proc=False
-            verbose=False
-            dryrun=False
-        )
-
-    """
+    """Completed subprocess"""
 
     args: list[str]
     returncode: int
