@@ -200,6 +200,9 @@ class Done(_ShellfishBaseModel):
         if self.verbose:
             self.sys_print()
 
+    def model_post_init(self, _context: Any) -> None:
+        self.__post_init__()
+
     def __str__(self) -> str:
         return "\n".join(
             (
