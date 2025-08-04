@@ -3,15 +3,17 @@ from __future__ import annotations
 import signal
 import sys
 
+from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, AnyStr, Optional, Union
 
+from pydantic import Field
 from typing_extensions import TypedDict
 
 from jsonbourne import JSON
-from jsonbourne.pydantic import JsonBaseModel
 from shellfish import fs
+from shellfish._pydantic import _ShellfishBaseModel
 
 if TYPE_CHECKING:
     from shellfish._types import (
@@ -46,7 +48,7 @@ class HrTimeObj(TypedDict):
     ns: int
 
 
-class HrTime(JsonBaseModel):
+class HrTime(_ShellfishBaseModel):
     """High resolution time"""
 
     sec: int
@@ -156,8 +158,29 @@ class DoneObj(TypedDict):
     verbose: bool
 
 
-class Done(JsonBaseModel):
-    """PRun => 'ProcessRun' for finished processes"""
+@lru_cache(maxsize=32)
+def _pfmt_stdio(s: AnyStr) -> AnyStr:
+    """Pretty format stdout/stderr strings"""
+    # BYTES
+    if isinstance(s, bytes):
+        if not s:
+            return b"b''"
+
+        lines = s.splitlines(keepends=True)
+        return (
+            b"(\n"
+            + b"\n".join(f"        {line!r},".encode() for line in lines)
+            + b"\n    )"
+        )
+    # STR
+    if not s:
+        return "''"
+    lines = s.splitlines(keepends=True)
+    return "(\n" + "\n".join(f"        {line!r}," for line in lines) + "\n    )"
+
+
+class Done(_ShellfishBaseModel):
+    """Completed subprocess"""
 
     args: list[str]
     returncode: int
@@ -169,13 +192,51 @@ class Done(JsonBaseModel):
     hrdt: Optional[HrTime] = None
     stdin: Optional[str] = None
     async_proc: bool = False
-    verbose: bool = False
-    dryrun: bool = False
+    dryrun: bool = Field(False)
+    verbose: bool = Field(False, exclude=True)
 
     def __post_init__(self) -> None:
         """Write the stdout/stdout to sys.stdout/sys.stderr post object init"""
         if self.verbose:
             self.sys_print()
+
+    def __str__(self) -> str:
+        return "\n".join(
+            (
+                "Done(",
+                f"    args={self.args},",
+                f"    returncode={self.returncode},",
+                f"    stdout={self.stdout!r},",
+                f"    stderr={self.stderr!r},",
+                f"    ti={self.ti},",
+                f"    tf={self.tf},",
+                f"    dt={self.dt},",
+                f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+                f"    stdin={self.stdin!r},",
+                f"    async_proc={self.async_proc},",
+                f"    verbose={self.verbose},",
+                f"    dryrun={self.dryrun},",
+                ")",
+            )
+        )
+
+    def __repr__(self) -> str:
+        return " ".join(
+            (
+                f"Done(args={self.args},",
+                f"returncode={self.returncode},",
+                f"stdout={self.stdout!r},",
+                f"stderr={self.stderr!r},",
+                f"ti={self.ti},",
+                f"tf={self.tf},",
+                f"dt={self.dt},",
+                f"hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+                f"stdin={self.stdin!r},",
+                f"async_proc={self.async_proc},",
+                f"verbose={self.verbose},",
+                f"dryrun={self.dryrun})",
+            )
+        )
 
     def hrdt_dict(self) -> HrTimeDict:
         if self.hrdt:
@@ -263,7 +324,7 @@ class Done(JsonBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.write_str(Path(filepath), self.stdout, append=append)
+        fs.write_bytes(Path(filepath), self.stdout.encode("utf-8"), append=append)
 
     def completed_process(self) -> CompletedProcess[str]:
         """Return subprocess.CompletedProcess object"""
@@ -282,7 +343,7 @@ class Done(JsonBaseModel):
             append (bool): Flag to append to file or plain write to file
 
         """
-        fs.write_str(Path(filepath), self.stderr, append=append)
+        fs.write_bytes(Path(filepath), self.stderr.encode("utf-8"), append=append)
 
     def __gt__(self, filepath: FsPath) -> None:
         """Operator overload for writing a stdout to a fspath
