@@ -104,7 +104,7 @@ async def exists_async(fspath: FsPath) -> bool:
 
 
 async def stat_async(fspath: FsPath) -> os.stat_result:
-    """Async version of `os.lstat`"""
+    """Async version of `os.stat`"""
     return await aios.stat(str(fspath))
 
 
