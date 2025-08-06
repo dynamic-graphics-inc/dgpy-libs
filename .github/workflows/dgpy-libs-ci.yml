@@ -17,27 +17,22 @@ jobs:
           pip install -U ruff
           ruff format --check .
           ruff check --select "I" .
-
   ruff:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: setup-python-3
-        uses: actions/setup-python@v5
+        with:
+          submodules: true
+      - name: install-uv
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: 3.9
-      - name: install-upgrade-pip
-        run: |
-          python -m pip install --upgrade pip
-      - name: install-ruff
-        run: |
-          pip install ruff
-      - name: ruff-version
-        run: |
-          ruff --version
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
       - name: ruff-check
         run: |
-          ruff check .
+          uvx ruff --version
+          uvx ruff check .
 
   lint:
     runs-on: ubuntu-latest
@@ -72,23 +67,14 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      
       - name: Install uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
-      # - name: install-uv
-      #   run: curl -LsSf https://astral.sh/uv/install.sh | sh
-      # - name: python-sane-setup
-      #   run: |
-      #     python -m pip install --upgrade pip
-      # - name: setup-poetry
-      # id: setup-poetry
-      # uses: ./.github/actions/setup-poetry
+      
       - name: uv-sync
         run: uv sync --all-extras --dev
-      # - name: Install dependencies
-      # run: |
-      # poetry install
 
       - name: test-dgpydev
         run: |
@@ -149,32 +135,6 @@ jobs:
           cd libs/dgpylibs
           uv run pytest --doctest-modules
 
-  # -----
-  # NOT SURE IF THESE WERE ACTUALLY DOING ANYTHING USEFUL ANYMORE
-  # -----
-  # test-jsonbourne:
-  #   needs: [lint]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       os:
-  #         - ubuntu
-  #       python-version: ["3.8", "3.9", "3.10", "3.11"]
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Set up Python ${{ matrix.python-version }}
-  #       uses: actions/setup-python@v5
-  #       with:
-  #         python-version: ${{ matrix.python-version }}
-  #     - name: Install dependencies
-  #       run: |
-  #         python -m pip install --upgrade pip
-  #         pip install flake8 pytest nox
-  #     - name: Test with pytest
-  #       run: |
-  #         cd libs/jsonbourne
-  #         nox -k test
-
   mkdocs:
     permissions:
       contents: write
@@ -191,13 +151,6 @@ jobs:
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: uv-sync
         run: uv sync --all-extras --dev
-      # - name: setup-poetry
-      #   id: setup-poetry
-      #   uses: ./.github/actions/setup-poetry
-
-      # - name: poetry install
-      # run: |
-      # poetry install
       - name: install docs deps
         run: uv pip install '.[docs]'
       - name: mkdocs build
