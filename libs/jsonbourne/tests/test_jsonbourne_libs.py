@@ -6,7 +6,7 @@ import pathlib
 import uuid
 
 from decimal import Decimal
-from typing import NamedTuple, Type
+from typing import NamedTuple, Union, cast
 
 import pytest
 
@@ -15,14 +15,7 @@ from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON, JsonLibABC
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
 
 
-LIBS: list[Type[JsonLibABC]] = [
-    e
-    for e in [
-        ORJSON,
-        RAPIDJSON,
-    ]
-    if e.usable()
-]
+JSONLIBS = (ORJSON, RAPIDJSON)
 
 
 class Point3d(NamedTuple):
@@ -105,11 +98,18 @@ def test_jsoncp() -> None:
 
 # fixture that provides a jsonlibrary
 @pytest.fixture(
-    params=[pytest.param(jsonlib, id=jsonlib.__name__.lower()) for jsonlib in LIBS]
+    params=[
+        pytest.param(jsonlib, id=jsonlib.__class__.__name__.lower())
+        for jsonlib in JSONLIBS
+    ]
 )
-def jsonlib(request: pytest.FixtureRequest) -> JsonLibABC:
+def jsonlib(request: pytest.FixtureRequest) -> Union[ORJSON, RAPIDJSON]:
     """Fixture that provides a json library."""
-    return request.param
+    # skip if the library is not usable
+    if not request.param.usable():
+        pytest.skip(f"{request.param.__name__} not installed")
+    # return the library
+    return cast("Union[ORJSON, RAPIDJSON]", request.param)
 
 
 # dumps tests
