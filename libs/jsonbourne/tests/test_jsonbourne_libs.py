@@ -6,7 +6,7 @@ import pathlib
 import uuid
 
 from decimal import Decimal
-from typing import NamedTuple
+from typing import NamedTuple, Type
 
 import pytest
 
@@ -15,7 +15,7 @@ from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON, JsonLibABC
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
 
 
-LIBS: list[JsonLibABC] = [
+LIBS: list[Type[JsonLibABC]] = [
     e
     for e in [
         ORJSON,
@@ -257,7 +257,6 @@ def test_datetime_dumpb(jsonlib: JsonLibABC) -> None:
         jsonlib.dumpb(data),
         JSON_STDLIB.dumpb(data),
     ]
-    print(json_str)
     assert all(isinstance(el, bytes) for el in json_str)
     assert len(set(json_str)) == 1
 
