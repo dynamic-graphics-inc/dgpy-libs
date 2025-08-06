@@ -17,7 +17,6 @@ from functools import cache
 from itertools import chain
 from json import JSONDecodeError
 from pprint import pformat
-from shutil import get_terminal_size
 from types import ModuleType
 from typing import (
     TYPE_CHECKING,
