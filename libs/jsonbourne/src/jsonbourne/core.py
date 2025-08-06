@@ -17,7 +17,6 @@ from functools import cache
 from itertools import chain
 from json import JSONDecodeError
 from pprint import pformat
-from shutil import get_terminal_size
 from types import ModuleType
 from typing import (
     TYPE_CHECKING,
@@ -773,12 +772,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
         if not bool(self._data):
             return f"{type(self).__name__}(**{{}})"
-        _width = get_terminal_size(fallback=(88, 24)).columns - 12
         return "".join(
             [
                 type(self).__name__,
                 "(**{\n    ",
-                pformat(self.eject(), width=_width)[1:-1].replace("\n", "\n   "),
+                pformat(self.eject(), width=79)[1:-1].replace("\n", "\n   "),
                 "\n})",
             ]
         ).replace("JsonObj(**{}),", "{},")

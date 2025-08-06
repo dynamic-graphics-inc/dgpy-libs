@@ -6,16 +6,16 @@ import pathlib
 import uuid
 
 from decimal import Decimal
-from typing import NamedTuple
+from typing import NamedTuple, Union, cast
 
 import pytest
 
-try:
-    from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON
-except (ImportError, ModuleNotFoundError):
-    pass
+from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON, JsonLibABC
 
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
+
+
+JSONLIBS = (ORJSON, RAPIDJSON)
 
 
 class Point3d(NamedTuple):
@@ -86,160 +86,179 @@ def test_jsoncp() -> None:
             "key": "value",
         },
     }
-    rj = RAPIDJSON.jsoncp(_d)
-    assert rj == _d
+
     oj = ORJSON.jsoncp(_d)
     assert oj == _d
     sj = JSON_STDLIB.jsoncp(_d)
     assert sj == _d
+    if RAPIDJSON.usable():
+        rj = RAPIDJSON.jsoncp(_d)
+        assert rj == _d
+
+
+# fixture that provides a jsonlibrary
+@pytest.fixture(
+    params=[
+        pytest.param(jsonlib, id=jsonlib.__class__.__name__.lower())
+        for jsonlib in JSONLIBS
+    ]
+)
+def jsonlib(request: pytest.FixtureRequest) -> Union[ORJSON, RAPIDJSON]:
+    """Fixture that provides a json library."""
+    # skip if the library is not usable
+    if not request.param.usable():
+        pytest.skip(f"{request.param.__name__} not installed")
+    # return the library
+    return cast("Union[ORJSON, RAPIDJSON]", request.param)
 
 
 # dumps tests
-def test_basic_dumps() -> None:
-    rj = RAPIDJSON.dumps(D)
-    oj = ORJSON.dumps(D)
-    sj = JSON_STDLIB.dumps(D)
-    a = [rj, oj, sj]
+def test_basic_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D),
+        JSON_STDLIB.dumps(D),
+    ]
     assert len(set(a)) == 1
 
 
-def test_fmt_dumps() -> None:
-    rj = RAPIDJSON.dumps(D, fmt=True)
-    oj = ORJSON.dumps(D, fmt=True)
-    sj = JSON_STDLIB.dumps(D, fmt=True)
-    a = [rj, oj, sj]
+def test_fmt_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, fmt=True),
+        JSON_STDLIB.dumps(D, fmt=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_pretty_dumps() -> None:
-    rj = RAPIDJSON.dumps(D, pretty=True)
-    oj = ORJSON.dumps(D, pretty=True)
-    sj = JSON_STDLIB.dumps(D, pretty=True)
-    a = [rj, oj, sj]
+def test_pretty_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, pretty=True),
+        JSON_STDLIB.dumps(D, pretty=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_sort_keys_dumps() -> None:
-    rj = RAPIDJSON.dumps(D, sort_keys=True)
-    oj = ORJSON.dumps(D, sort_keys=True)
-    sj = JSON_STDLIB.dumps(D, sort_keys=True)
-    a = [rj, oj, sj]
+def test_sort_keys_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, sort_keys=True),
+        JSON_STDLIB.dumps(D, sort_keys=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_append_newline_dumps() -> None:
-    rj = RAPIDJSON.dumps(D, append_newline=True)
-    oj = ORJSON.dumps(D, append_newline=True)
-    sj = JSON_STDLIB.dumps(D, append_newline=True)
-    a = [rj, oj, sj]
+def test_append_newline_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, append_newline=True),
+        JSON_STDLIB.dumps(D, append_newline=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_pretty_sort_keys_dumps() -> None:
-    rj = RAPIDJSON.dumps(D, pretty=True, sort_keys=True)
-    oj = ORJSON.dumps(D, pretty=True, sort_keys=True)
-    sj = JSON_STDLIB.dumps(D, pretty=True, sort_keys=True)
-    a = [rj, oj, sj]
+def test_pretty_sort_keys_dumps(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, pretty=True, sort_keys=True),
+        JSON_STDLIB.dumps(D, pretty=True, sort_keys=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_dump_numpy_array_dumps() -> None:
+def test_dump_numpy_array_dumps(jsonlib: JsonLibABC) -> None:
     import numpy as np
 
     arr = np.array([[1, 2], [3, 4]])
-    rj = RAPIDJSON.dumps(arr)
-    oj = ORJSON.dumps(arr)
-    sj = JSON_STDLIB.dumps(arr)
-    a = [rj, oj, sj]
-    assert len(set(a)) == 1
+    json_bytes = [
+        jsonlib.dumps(arr),
+        JSON_STDLIB.dumps(arr),
+    ]
+    assert len(set(json_bytes)) == 1
 
 
-def test_datetime_dumps() -> None:
+def test_datetime_dumps(jsonlib: JsonLibABC) -> None:
     data = {
         "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
-    rj = RAPIDJSON.dumps(data)
-    oj = ORJSON.dumps(data)
-    sj = JSON_STDLIB.dumps(data)
-    a = [rj, oj, sj]
+    json_strings = [
+        jsonlib.dumps(data),
+        JSON_STDLIB.dumps(data),
+    ]
+    assert len(set(json_strings)) == 1
 
-    assert all(isinstance(el, str) for el in a)
-    assert len(set(a)) == 1
-    rj_bin = RAPIDJSON.dumpb(data)
-    oj_bin = ORJSON.dumpb(data)
-    sj_bin = JSON_STDLIB.dumpb(data)
-    b = [rj_bin, oj_bin, sj_bin]
-    assert all(isinstance(el, bytes) for el in b)
+    assert all(isinstance(el, str) for el in json_strings)
+    json_bytes = [jsonlib.dumpb(data), JSON_STDLIB.dumpb(data)]
+    assert len(set(json_bytes)) == 1
+    assert all(isinstance(el, bytes) for el in json_bytes)
 
 
 # dumpb tests
-def test_basic_dumpb() -> None:
-    rj = RAPIDJSON.dumpb(D)
-    oj = ORJSON.dumpb(D)
-    sj = JSON_STDLIB.dumpb(D)
-    a = [rj, oj, sj]
+def test_basic_dumpb(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D),
+        JSON_STDLIB.dumps(D),
+    ]
     assert len(set(a)) == 1
 
 
-def test_pretty_dumpb() -> None:
-    rj = RAPIDJSON.dumpb(D, pretty=True)
-    oj = ORJSON.dumpb(D, pretty=True)
-    sj = JSON_STDLIB.dumpb(D, pretty=True)
-    a = [rj, oj, sj]
+def test_pretty_dumpb(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, pretty=True),
+        JSON_STDLIB.dumps(D, pretty=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_sort_keys_dumpb() -> None:
-    rj = RAPIDJSON.dumpb(D, sort_keys=True)
-    oj = ORJSON.dumpb(D, sort_keys=True)
-    sj = JSON_STDLIB.dumpb(D, sort_keys=True)
-    a = [rj, oj, sj]
+def test_sort_keys_dumpb(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, sort_keys=True),
+        JSON_STDLIB.dumps(D, sort_keys=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_append_newline_dumpb() -> None:
-    rj = RAPIDJSON.dumpb(D, append_newline=True)
-    oj = ORJSON.dumpb(D, append_newline=True)
-    sj = JSON_STDLIB.dumpb(D, append_newline=True)
-    a = [rj, oj, sj]
+def test_append_newline_dumpb(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, append_newline=True),
+        JSON_STDLIB.dumps(D, append_newline=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_pretty_sort_keys_dumpb() -> None:
-    rj = RAPIDJSON.dumpb(D, pretty=True, sort_keys=True)
-    oj = ORJSON.dumpb(D, pretty=True, sort_keys=True)
-    sj = JSON_STDLIB.dumpb(D, pretty=True, sort_keys=True)
-    a = [rj, oj, sj]
+def test_pretty_sort_keys_dumpb(jsonlib: JsonLibABC) -> None:
+    a = [
+        jsonlib.dumps(D, pretty=True, sort_keys=True),
+        JSON_STDLIB.dumps(D, pretty=True, sort_keys=True),
+    ]
     assert len(set(a)) == 1
 
 
-def test_dump_numpy_array_dumpb() -> None:
+def test_dump_numpy_array_dumpb(jsonlib: JsonLibABC) -> None:
     import numpy as np
 
     arr = np.array([[1, 2], [3, 4]])
-    rj = RAPIDJSON.dumpb(arr)
-    oj = ORJSON.dumpb(arr)
-    sj = JSON_STDLIB.dumpb(arr)
-    a = [rj, oj, sj]
-    assert len(set(a)) == 1
+
+    json_bytes = [
+        jsonlib.dumps(arr),
+        JSON_STDLIB.dumps(arr),
+    ]
+    assert len(set(json_bytes)) == 1
 
 
-def test_datetime_dumpb() -> None:
+def test_datetime_dumpb(jsonlib: JsonLibABC) -> None:
     data = {
         "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
-    rj = RAPIDJSON.dumpb(data)
-    oj = ORJSON.dumpb(data)
-    sj = JSON_STDLIB.dumpb(data)
-    a = [rj, oj, sj]
 
-    assert all(isinstance(el, bytes) for el in a)
-    assert len(set(a)) == 1
-    rj_bin = RAPIDJSON.dumpb(data)
-    oj_bin = ORJSON.dumpb(data)
-    sj_bin = JSON_STDLIB.dumpb(data)
-    b = [rj_bin, oj_bin, sj_bin]
-    assert all(isinstance(el, bytes) for el in b)
+    json_bytes = [
+        jsonlib.dumps(data),
+        JSON_STDLIB.dumps(data),
+    ]
+    assert len(set(json_bytes)) == 1
+    assert all(isinstance(el, str) for el in json_bytes)
+
+    json_str = [
+        jsonlib.dumpb(data),
+        JSON_STDLIB.dumpb(data),
+    ]
+    assert all(isinstance(el, bytes) for el in json_str)
+    assert len(set(json_str)) == 1
 
 
 # library import tests
@@ -248,8 +267,14 @@ def test_datetime_dumpb() -> None:
 def test_import_rapidjson() -> None:
     from jsonbourne.jsonlib import _import_rapidjson
 
-    rj = _import_rapidjson()
-    assert rj
+    if not RAPIDJSON.usable():
+        with pytest.raises(
+            ImportError, match=r"rapidjson \(python-rapidjson\) not installed"
+        ):
+            _import_rapidjson()
+    else:
+        rj = _import_rapidjson()
+        assert rj
 
 
 def test_import_orjson() -> None:
