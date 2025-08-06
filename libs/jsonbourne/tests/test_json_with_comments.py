@@ -5,10 +5,21 @@ import json
 
 from os import path
 
+import pytest
+
 from jsonbourne import JSON
 from jsonbourne.helpers import rm_js_comments
 
 PWD = path.dirname(path.abspath(__file__))
+
+
+def _lib_installed(libname: str) -> bool:
+    """Check if a library is installed."""
+    try:
+        __import__(libname)
+        return True
+    except ImportError:
+        return False
 
 
 def test_strip_comments_from_json() -> None:
@@ -30,6 +41,7 @@ def test_strip_comments_from_json() -> None:
     assert removed_comments_str == expected
 
 
+@pytest.mark.skipif(not _lib_installed("jsonc2json"), reason="jsonc2json not installed")
 def test_loads_jsonc() -> None:
     rush_with_comments_filepath = path.join(PWD, "data", "rush.comments.json")
     rush_no_comments_filepath = path.join(PWD, "data", "rush.no-comments.json")

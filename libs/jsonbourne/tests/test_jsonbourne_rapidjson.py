@@ -8,6 +8,7 @@ import os
 import pytest
 
 from jsonbourne import import_json
+from jsonbourne.jsonlib import RAPIDJSON
 
 os.path.dirname(os.path.abspath(__file__))
 
@@ -22,6 +23,7 @@ def test_uno() -> None:
     assert dictionary == json.loads(string)
 
 
+@pytest.mark.skipif(not RAPIDJSON.usable(), reason="rapidjson not installed")
 def test_rapidjson() -> None:
     libname = "rapidjson"
     _rapidjson = import_json((libname,))

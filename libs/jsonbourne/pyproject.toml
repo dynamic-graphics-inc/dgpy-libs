@@ -48,7 +48,6 @@ dev = [
   "httpx>=0.28.1",
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
-  "python-rapidjson>=1.20",
 ]
 [tool.uv.build-backend]
 module-name = "jsonbourne"
