@@ -15,7 +15,14 @@ from jsonbourne.jsonlib import JSON_STDLIB, ORJSON, RAPIDJSON, JsonLibABC
 pytestmark = [pytest.mark.jsonlibs, pytest.mark.optdeps]
 
 
-JSONLIBS = (ORJSON, RAPIDJSON)
+LIBS: list[JsonLibABC] = [
+    e
+    for e in [
+        ORJSON,
+        RAPIDJSON,
+    ]
+    if e.usable()
+]
 
 
 class Point3d(NamedTuple):
@@ -98,18 +105,11 @@ def test_jsoncp() -> None:
 
 # fixture that provides a jsonlibrary
 @pytest.fixture(
-    params=[
-        pytest.param(jsonlib, id=jsonlib.__class__.__name__.lower())
-        for jsonlib in JSONLIBS
-    ]
+    params=[pytest.param(jsonlib, id=jsonlib.__name__.lower()) for jsonlib in LIBS]
 )
-def jsonlib(request: pytest.FixtureRequest) -> Union[ORJSON, RAPIDJSON]:
+def jsonlib(request: pytest.FixtureRequest) -> JsonLibABC:
     """Fixture that provides a json library."""
-    # skip if the library is not usable
-    if not request.param.usable():
-        pytest.skip(f"{request.param.__name__} not installed")
-    # return the library
-    return cast("Union[ORJSON, RAPIDJSON]", request.param)
+    return request.param
 
 
 # dumps tests
@@ -257,6 +257,7 @@ def test_datetime_dumpb(jsonlib: JsonLibABC) -> None:
         jsonlib.dumpb(data),
         JSON_STDLIB.dumpb(data),
     ]
+    print(json_str)
     assert all(isinstance(el, bytes) for el in json_str)
     assert len(set(json_str)) == 1
 
