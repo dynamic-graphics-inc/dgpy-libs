@@ -50,7 +50,7 @@ jobs:
         with:
           token: ${{ secrets.SHELDON_GITHUB_ACTIONS_TOKEN }}
           commit-message: Update uv lockfile dependencies
-          title: Update dependencies in uv.lock
+          title: "chore: update uv lockfile dependencies"
           body-path: uv_output.md
           branch: update-uv
           base: main
