@@ -22,7 +22,6 @@ from typing import (
     Optional,
     TypeGuard,
     TypeVar,
-    Union,
     cast,
 )
 
@@ -73,7 +72,7 @@ except ImportError:  # pragma: no cover
         raise ImportError("install anyio; `pip install anyio`")
 
 
-def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
+def aiterable(it: Iterable[T] | AsyncIterable[T]) -> AsyncIterator[T]:
     """Convert any-iterable to an async iterator
 
     Examples:
@@ -256,7 +255,7 @@ def is_coro(obj: Any) -> TypeGuard[Awaitable[Any]]:
     return asyncio.iscoroutine(obj)
 
 
-async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
+async def await_or_return(obj: Awaitable[T] | T) -> T:
     """Return the result of an awaitable or return the object
 
     Examples:
@@ -273,9 +272,8 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
 
 
 def aiorun_anyio(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
     backend_options: Optional[dict[str, Any]] = None,
@@ -309,9 +307,8 @@ def aiorun_anyio(
 
 
 def aiorun_asyncio(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
     backend_options: Optional[dict[str, Any]] = None,
@@ -336,9 +333,8 @@ def aiorun_asyncio(
 
 
 def aiorun(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
     backend_options: Optional[dict[str, Any]] = None,

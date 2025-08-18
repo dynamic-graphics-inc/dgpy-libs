@@ -6,7 +6,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, AnyStr, Optional, Union
+from typing import TYPE_CHECKING, Any, AnyStr, Optional
 
 from pydantic import Field
 from typing_extensions import TypedDict
@@ -299,7 +299,7 @@ class Done(_ShellfishBaseModel):
 
     def check(
         self,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     ) -> None:
         """Check returncode and stderr
 

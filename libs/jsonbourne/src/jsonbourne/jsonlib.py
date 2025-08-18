@@ -12,7 +12,7 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 from uuid import UUID
 
 if TYPE_CHECKING:
@@ -138,7 +138,7 @@ class JsonLibABC(ABC):
     @staticmethod
     @abstractmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -227,7 +227,7 @@ class JSON_STDLIB(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -318,7 +318,7 @@ class ORJSON(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -413,7 +413,7 @@ class RAPIDJSON(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -481,7 +481,7 @@ def _import_json_stdlib() -> type[JSON_STDLIB]:
 
 
 def import_json(
-    jsonlibs: Optional[Union[tuple[str, ...], list[str]]] = None,
+    jsonlibs: Optional[tuple[str, ...] | list[str]] = None,
 ) -> type[JsonLibABC]:
     lib2funk = {
         "rapidjson": _import_rapidjson,
@@ -554,9 +554,7 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(
-        self, string: Union[bytes, str], jsonc: bool = False, **kwargs: Any
-    ) -> Any:
+    def loads(self, string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
         if jsonc and self._rj:
             return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
@@ -648,7 +646,7 @@ def dumpb(
 
 
 def loads(
-    string: Union[bytes, str],
+    string: bytes | str,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,
@@ -662,12 +660,12 @@ def loads(
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
-def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+def parse(string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
     return loads(string, jsonc=jsonc, **kwargs)
 
 
 def wjson(
-    fspath: Union[str, Path],
+    fspath: str | Path,
     data: Any,
     fmt: bool = False,
     pretty: bool = False,
@@ -686,7 +684,7 @@ def wjson(
 
 
 def rjson(
-    fspath: Union[str, Path],
+    fspath: str | Path,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,

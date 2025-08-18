@@ -30,7 +30,6 @@ from typing import (
     Any,
     AnyStr,
     Optional,
-    Union,
     cast,
 )
 
@@ -201,7 +200,7 @@ def scandir_list(dirpath: FsPath = ".") -> list[DirEntry[AnyStr]]:
 
 
 def scandir_gen_filter(
-    it: Union[Iterator[DirEntry[AnyStr]], Iterable[DirEntry[AnyStr]]],
+    it: Iterator[DirEntry[AnyStr]] | Iterable[DirEntry[AnyStr]],
     *,
     follow_symlinks: bool = True,
     files: bool = True,
@@ -1382,7 +1381,7 @@ def filecmp(
     )
 
 
-def shebang(fspath: FsPath) -> Union[None, str]:
+def shebang(fspath: FsPath) -> None | str:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
     Args:
@@ -1571,7 +1570,7 @@ def rm(
     recursive: bool = False,
     dryrun: bool = False,
     verbose: bool = False,
-) -> Union[list[str], None]:
+) -> list[str] | None:
     """Remove files & directories in the style of the shell
 
     Args:

@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 
 from jsonbourne.pydantic import JsonBaseModel
 
@@ -49,7 +49,7 @@ class Record(JsonBaseModel):
     line: int
     message: str
     module: str
-    name: Union[str, None]
+    name: str | None
     process: RecordProcess
     thread: RecordThread
     time: datetime

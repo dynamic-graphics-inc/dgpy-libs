@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from shlex import quote as _quote
-from typing import TYPE_CHECKING, AnyStr, Union
+from typing import TYPE_CHECKING, AnyStr
 
 from listless import flatten_strings as _flatten_strings
 
@@ -27,7 +27,7 @@ def arganystr(string: AnyStr) -> AnyStr:
     return _quote(string) if " " in string else string
 
 
-def argstr(string: Union[str, bytes]) -> str:
+def argstr(string: str | bytes) -> str:
     """Return given string with quotes if needed
 
     Examples:
@@ -55,7 +55,7 @@ def flatten_args(*args: PopenArgs) -> list[str]:
     return list(_flatten_strings(args))
 
 
-def args2cmd(args: PopenArgs) -> Union[str, bytes]:
+def args2cmd(args: PopenArgs) -> str | bytes:
     """Return single command string from given popenargs
 
     Examples:

@@ -16,10 +16,9 @@ from dataclasses import (
     make_dataclass,
     replace,
 )
-from typing import Union
 
 __pydantic__: bool = False
-__pydantic_version__: Union[str, bool] = False
+__pydantic_version__: str | bool = False
 
 try:
     import pydantic

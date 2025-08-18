@@ -7,7 +7,7 @@ import os
 
 from collections.abc import AsyncIterable, AsyncIterator, Callable, Iterable
 from os import fspath as _fspath
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional
 
 from aiopen import aiopen
 from jsonbourne import JSON
@@ -325,7 +325,7 @@ async def read_bytes_gen_async(
 
 async def write_bytes_gen_async(
     filepath: FsPath,
-    bytes_gen: Union[Iterable[bytes], AsyncIterable[bytes]],
+    bytes_gen: Iterable[bytes] | AsyncIterable[bytes],
     *,
     append: bool = False,
     chmod: Optional[int] = None,

@@ -12,7 +12,6 @@ from typing import (
     AnyStr,
     Generic,
     Optional,
-    Union,
     cast,
     overload,
 )
@@ -67,7 +66,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
 @overload
 def aiopen(
-    file: Union[str, PathLike[str], int],
+    file: str | PathLike[str] | int,
     mode: OpenBinaryMode = ...,
     buffering: int = ...,
     encoding: Optional[str] = ...,
@@ -80,7 +79,7 @@ def aiopen(
 
 @overload
 def aiopen(
-    file: Union[str, PathLike[str], int],
+    file: str | PathLike[str] | int,
     mode: OpenTextMode = ...,
     buffering: int = ...,
     encoding: Optional[str] = ...,
@@ -92,8 +91,8 @@ def aiopen(
 
 
 def aiopen(
-    file: Union[str, PathLike[str], int],
-    mode: Union[str, OpenBinaryMode, OpenTextMode] = "r",
+    file: str | PathLike[str] | int,
+    mode: str | OpenBinaryMode | OpenTextMode = "r",
     buffering: int = -1,
     encoding: Optional[str] = None,
     errors: Optional[str] = None,
@@ -104,7 +103,7 @@ def aiopen(
     return AsyncFileContextManager(
         coro=open_file(
             file=file,
-            mode=cast("Union[OpenBinaryMode, OpenTextMode]", mode),  # pyright: ignore[reportGeneralTypeIssues]
+            mode=cast("OpenBinaryMode | OpenTextMode", mode),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,

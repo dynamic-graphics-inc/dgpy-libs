@@ -12,7 +12,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Optional,
-    Union,
     cast,
 )
 
@@ -96,7 +95,7 @@ class _EnvObjMeta(type):
 
     def __getattr__(
         cls, item: str
-    ) -> Optional[Union[Callable[[], str], Callable[[str], None], str]]:
+    ) -> Optional[Callable[[], str] | Callable[[str], None] | str]:
         try:
             if item in _OS_ENVIRON_ATTRS:
                 return cast("Callable[..., str]", environ.__getattribute__(item))

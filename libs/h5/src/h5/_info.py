@@ -58,7 +58,7 @@ class DatasetInfoDict(TypedDict):
     size: int
     nbytes: int
     compression: Optional[H5pyCompression]
-    compression_opts: Optional[Union[tuple[int, int], int]]
+    compression_opts: Optional[tuple[int, int] | int]
     maxshape: Optional[tuple[int, ...]]
     chunks: Optional[tuple[int, ...]]
 
@@ -157,7 +157,7 @@ class DatasetInfo(H5Mixin):
     nbytes: int
     h5type: Literal["dataset"] = "dataset"
     compression: Optional[H5pyCompression] = None
-    compression_opts: Optional[Union[tuple[int, int], int]] = None
+    compression_opts: Optional[tuple[int, int] | int] = None
     maxshape: Optional[tuple[int, ...]] = None
     chunks: Optional[tuple[int, ...]] = None
 
@@ -214,7 +214,7 @@ class GroupLikeInfo(H5Mixin):
     def __len__(self) -> int:
         return len(self.groups) + len(self.datasets)
 
-    def __getitem__(self, item: str) -> Union[GroupInfo, DatasetInfo]:
+    def __getitem__(self, item: str) -> GroupInfo | DatasetInfo:
         if item in self.groups:
             return self.groups[item]
         elif item in self.datasets:
@@ -222,8 +222,8 @@ class GroupLikeInfo(H5Mixin):
         raise KeyError(f"{item} not found in {self.key}")
 
     def get(
-        self, item: str, default: Optional[Union[GroupInfo, DatasetInfo]] = None
-    ) -> Union[GroupInfo, DatasetInfo]:
+        self, item: str, default: Optional[GroupInfo | DatasetInfo] = None
+    ) -> GroupInfo | DatasetInfo:
         if not default:
             return self[item]
         try:
@@ -245,7 +245,7 @@ class GroupLikeInfo(H5Mixin):
             raise KeyError(f"{key} already exists as a dataset")
         self.groups[key] = value
 
-    def __setitem__(self, key: str, value: Union[GroupInfo, DatasetInfo]) -> None:
+    def __setitem__(self, key: str, value: GroupInfo | DatasetInfo) -> None:
         if isinstance(value, GroupInfo):
             return self._set_group(key, value)
         elif isinstance(value, DatasetInfo):
@@ -325,7 +325,7 @@ class GroupInfo(GroupLikeInfo):
 
     def dump_gen(
         self, attributes: bool = True, unnumpy: bool = False
-    ) -> Iterable[Union[GroupInfoDumpDict, DatasetInfoDict]]:
+    ) -> Iterable[GroupInfoDumpDict | DatasetInfoDict]:
         yield self.dump(attributes=attributes)
         for group in self.groups.values():
             yield from group.dump_gen(attributes=attributes)
@@ -356,7 +356,7 @@ class GroupInfo(GroupLikeInfo):
 
     def items(
         self, datasets: bool = True, groups: bool = True
-    ) -> Iterable[tuple[str, Union[DatasetInfo, GroupInfo]]]:
+    ) -> Iterable[tuple[str, DatasetInfo | GroupInfo]]:
         if datasets:
             yield from self.datasets.items()
         if groups:
@@ -460,7 +460,7 @@ class FileInfo(GroupLikeInfo):
 
     def values(
         self, datasets: bool = True, groups: bool = True
-    ) -> Iterable[Union[DatasetInfo, GroupInfo, FileInfo]]:
+    ) -> Iterable[DatasetInfo | GroupInfo | FileInfo]:
         yield self
         if datasets:
             yield from self.datasets.values()
@@ -471,7 +471,7 @@ class FileInfo(GroupLikeInfo):
         self,
         datasets: bool = True,
         groups: bool = True,
-    ) -> Iterable[tuple[str, Union[FileInfo, DatasetInfo, GroupInfo]]]:
+    ) -> Iterable[tuple[str, FileInfo | DatasetInfo | GroupInfo]]:
         if datasets:
             yield from ((val.key, val) for val in self.datasets.values())
         if groups:
@@ -479,7 +479,7 @@ class FileInfo(GroupLikeInfo):
 
     def dump_gen(
         self, attributes: bool = True
-    ) -> Iterable[Union[FileInfoDumpDict, GroupInfoDumpDict, DatasetInfoDict]]:
+    ) -> Iterable[FileInfoDumpDict | GroupInfoDumpDict | DatasetInfoDict]:
         yield self.dump(attributes=attributes)
         for group in self.groups.values():
             yield from group.dump_gen(attributes=attributes)
@@ -488,8 +488,8 @@ class FileInfo(GroupLikeInfo):
 
 
 def h5py_obj_info(
-    obj: Union[h5py.Group, h5py.Dataset, h5py.File],
-) -> Union[GroupInfo, DatasetInfo, FileInfo]:
+    obj: h5py.Group | h5py.Dataset | h5py.File,
+) -> GroupInfo | DatasetInfo | FileInfo:
     if isinstance(obj, h5py.Group):
         return GroupInfo.from_h5py_group(obj)
     elif isinstance(obj, h5py.Dataset):
@@ -501,8 +501,8 @@ def h5py_obj_info(
 
 
 def info(
-    file: Union[str, Path, h5py.File, h5py.Group, h5py.Dataset],
-) -> Union[GroupInfo, DatasetInfo, FileInfo]:
+    file: str | Path | h5py.File | h5py.Group | h5py.Dataset,
+) -> GroupInfo | DatasetInfo | FileInfo:
     if isinstance(file, (str, Path)):
         return FileInfo.from_fspath(str(file))
     return h5py_obj_info(file)

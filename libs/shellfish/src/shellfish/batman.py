@@ -9,7 +9,7 @@ from os import fspath as _fspath, getenv as _getenv
 from pathlib import Path
 from shutil import which
 from subprocess import CompletedProcess, run
-from typing import TYPE_CHECKING, AnyStr, Union
+from typing import TYPE_CHECKING, AnyStr
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -61,7 +61,7 @@ def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
 
 
 def run_cmds_as_bat_file(
-    commands: Sequence[Union[tuple[str, ...], str]], *, text: bool = True
+    commands: Sequence[tuple[str, ...] | str], *, text: bool = True
 ) -> CompletedProcess[AnyStr]:
     if len(commands) == 0:
         raise ValueError("no commands given")
@@ -77,7 +77,7 @@ def run_cmds_as_bat_file(
         return bat(bat_filepath, text=text)
 
 
-def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, None]:
+def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> str | None:
     """Return the appropriate /D, /H, or /J option for windows mklink
 
     Args:
@@ -116,7 +116,7 @@ def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> Union[str, 
 
 def MKLINK_ARGS(
     link: FsPath, target: FsPath, *, D: bool = False, H: bool = False, J: bool = False
-) -> Union[tuple[str, str, str, str], tuple[str, str, str]]:
+) -> tuple[str, str, str, str] | tuple[str, str, str]:
     link_path = Path(link).absolute()
     target_path = Path(target).absolute()
     mklink_opt = MKLINK_OPT(D=D, H=H, J=J)

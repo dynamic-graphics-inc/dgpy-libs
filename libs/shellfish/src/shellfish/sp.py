@@ -21,7 +21,6 @@ from typing import (
     Any,
     Optional,
     TypedDict,
-    Union,
 )
 
 from shellfish._types import (
@@ -134,7 +133,7 @@ def completed_process_dict(
 
 def pcheck(
     process: CompletedProcess[Any],
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
 ) -> None:
     """Check process return code
 
@@ -171,17 +170,17 @@ def runb(
     args: PopenArgs,
     *,
     executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    stdin: Optional[IO[Any] | int] = None,
     input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    stdout: Optional[IO[Any] | int] = None,
+    stderr: Optional[IO[Any] | int] = None,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
     timeout: Optional[float] = None,
     capture_output: bool = False,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
     process = run(
@@ -208,17 +207,17 @@ def runs(
     args: PopenArgs,
     *,
     executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    stdin: Optional[IO[Any] | int] = None,
     input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    stdout: Optional[IO[Any] | int] = None,
+    stderr: Optional[IO[Any] | int] = None,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
     timeout: Optional[float] = None,
     capture_output: bool = False,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[str]:
     """Run command with txt output"""

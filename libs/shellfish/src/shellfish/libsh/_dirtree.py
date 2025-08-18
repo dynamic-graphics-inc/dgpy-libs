@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterator
@@ -25,7 +25,7 @@ class _DirTree:
 
     def __init__(
         self,
-        path: Union[str, Path],
+        path: str | Path,
         parent_path: Optional[_DirTree],
         is_last: bool,
     ) -> None:

@@ -59,12 +59,12 @@ dev = [
   "pydantic>=2.11.5",
   "pytest-cov>=6.1.1",
   "rich>=13.9.3",
-  "ruff>=0.11.7",
+  "ruff>=0.12.9",
   "tomli>=2.0.1",
 ]
 
 [tool.ruff]
-target-version = "py39"
+target-version = "py310"
 
 line-length = 88
 
@@ -127,7 +127,7 @@ lint.ignore = [
 
   # PYUPGRADE
   # keep runtime typing
-  "UP007",
+  # "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
   # "UP035", # unnecessary typing-extensions imports... must check xtying...
@@ -246,7 +246,7 @@ markers = [
 
 [tool.mypy]
 plugins = [ "pydantic.mypy" ]
-python_version = "3.9"
+python_version = "3.10"
 show_error_codes = true
 follow_imports = 'silent'
 disallow_any_generics = true
@@ -276,7 +276,7 @@ disallow_any_generics = false
 disallow_untyped_defs = true
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 include = [
   "libs/aiopen/src",
   "libs/asyncify/src",

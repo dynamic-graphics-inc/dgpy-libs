@@ -2,8 +2,6 @@
 # type: ignore
 from __future__ import annotations
 
-from typing import Union
-
 import pytest
 
 from jsonbourne import JsonObj
@@ -20,7 +18,7 @@ except ModuleNotFoundError:
 
 def test_jsonobj_property_attrs() -> None:
     @attrs(auto_attribs=True)
-    class ThingyWithPropertyAndAttrs(JsonObj[Union[int, str, dict[str, str]]]):
+    class ThingyWithPropertyAndAttrs(JsonObj[int | str | dict[str, str]]):
         a: int
         b: int
         c: str

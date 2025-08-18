@@ -18,7 +18,6 @@ from typing import (
     TypeAlias,
     TypedDict,
     TypeVar,
-    Union,
 )
 
 from typing_extensions import ParamSpec
@@ -62,14 +61,14 @@ class RequirementDict(TypedDict):
     _import: str
     _from: Optional[str]
     _as: Optional[str]
-    pip: Optional[Union[str, bool]]
-    conda: Optional[Union[str, bool]]
-    conda_forge: Optional[Union[str, bool]]
-    details: Optional[Union[str, list[str]]]
+    pip: Optional[str | bool]
+    conda: Optional[str | bool]
+    conda_forge: Optional[str | bool]
+    details: Optional[str | list[str]]
     lazy: Optional[bool]  # default true
 
 
-TRequirementDict: TypeAlias = Union[RequirementDict, dict[str, Any]]
+TRequirementDict: TypeAlias = RequirementDict | dict[str, Any]
 
 
 @dataclass(frozen=True, unsafe_hash=True)
@@ -79,10 +78,10 @@ class Requirement:
     _import: str
     _from: Optional[str] = None
     _as: Optional[str] = None
-    pip: Optional[Union[str, bool]] = None
-    conda: Optional[Union[str, bool]] = None
-    conda_forge: Optional[Union[str, bool]] = None
-    details: Optional[Union[str, list[str]]] = None
+    pip: Optional[str | bool] = None
+    conda: Optional[str | bool] = None
+    conda_forge: Optional[str | bool] = None
+    details: Optional[str | list[str]] = None
     lazy: bool = field(default=True)
 
     def __post_init__(self) -> None: ...
@@ -435,7 +434,7 @@ def string2requirement(string: str) -> Requirement:
 
 
 def make_requirement(
-    requirement: Union[str, Requirement, TRequirementDict],
+    requirement: str | Requirement | TRequirementDict,
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
@@ -458,13 +457,11 @@ def make_requirement(
 
 
 def make_requirements(
-    requirements: Union[
-        list[Union[str, Requirement, TRequirementDict]],
-        tuple[Union[str, Requirement, TRequirementDict]],
-        str,
-        Requirement,
-        TRequirementDict,
-    ],
+    requirements: list[str | Requirement | TRequirementDict]
+    | tuple[str | Requirement | TRequirementDict]
+    | str
+    | Requirement
+    | TRequirementDict,
 ) -> list[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]
@@ -476,13 +473,13 @@ def require(*args: Any, **kwargs: Any) -> Requirement:
 
 
 def requires(
-    *requirements: Union[str, TRequirementDict, Requirement],
+    *requirements: str | TRequirementDict | Requirement,
     _import: Optional[str] = None,
     _as: Optional[str] = None,
     _from: Optional[str] = None,
-    pip: Optional[Union[str, bool]] = None,
-    conda: Optional[Union[str, bool]] = None,
-    conda_forge: Optional[Union[str, bool]] = None,
+    pip: Optional[str | bool] = None,
+    conda: Optional[str | bool] = None,
+    conda_forge: Optional[str | bool] = None,
     details: Optional[str] = None,
     lazy: Optional[bool] = None,
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:

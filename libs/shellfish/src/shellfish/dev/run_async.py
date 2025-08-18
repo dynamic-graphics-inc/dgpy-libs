@@ -20,14 +20,14 @@ from shellfish.sp import PopenArgs, ProcessDt
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Mapping
-    from typing import IO, Any, Union
+    from typing import IO, Any
 
     from shellfish._types import FsPath
 
 __all__ = ("run_async",)
 
 
-def utf8_string(val: Union[str, bytes, bytearray]) -> str:
+def utf8_string(val: str | bytes | bytearray) -> str:
     if not isinstance(val, str):
         return val.decode("utf-8")
     return val
@@ -47,11 +47,11 @@ async def _read_stream(
 async def run_dtee_async(
     *popenargs: PopenArgs,
     executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    stdin: Optional[IO[Any] | int] = None,
     text: bool = False,
-    input: Optional[Union[str, bytes]] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    input: Optional[str | bytes] = None,
+    stdout: Optional[IO[Any] | int] = None,
+    stderr: Optional[IO[Any] | int] = None,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
     timeout: Optional[float] = None,
@@ -59,7 +59,7 @@ async def run_dtee_async(
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
     tee: bool = False,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
 ) -> tuple[CompletedProcess[bytes], ProcessDt]:
@@ -230,18 +230,18 @@ async def run_dtee_async(
 async def run_async(
     *popenargs: PopenArgs,
     executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    stdin: Optional[IO[Any] | int] = None,
     text: bool = False,
     input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    stdout: Optional[IO[Any] | int] = None,
+    stderr: Optional[IO[Any] | int] = None,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
     timeout: Optional[float] = None,
     capture_output: bool = True,
     check: bool = False,
     env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     tee: bool = False,
     universal_newlines: bool = True,
     **other_popen_kwargs: Any,

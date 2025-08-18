@@ -6,7 +6,7 @@ import pathlib
 import uuid
 
 from decimal import Decimal
-from typing import NamedTuple, Union, cast
+from typing import NamedTuple, cast
 
 import pytest
 
@@ -103,13 +103,13 @@ def test_jsoncp() -> None:
         for jsonlib in JSONLIBS
     ]
 )
-def jsonlib(request: pytest.FixtureRequest) -> Union[ORJSON, RAPIDJSON]:
+def jsonlib(request: pytest.FixtureRequest) -> ORJSON | RAPIDJSON:
     """Fixture that provides a json library."""
     # skip if the library is not usable
     if not request.param.usable():
         pytest.skip(f"{request.param.__name__} not installed")
     # return the library
-    return cast("Union[ORJSON, RAPIDJSON]", request.param)
+    return cast("ORJSON | RAPIDJSON", request.param)
 
 
 # dumps tests

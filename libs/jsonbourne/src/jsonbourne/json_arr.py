@@ -10,8 +10,8 @@ from typing import (
     Optional,
     Protocol,
     SupportsIndex,
+    TypeAlias,
     TypeVar,
-    Union,
     cast,
     overload,
 )
@@ -35,7 +35,7 @@ class SupportsDunderGT(Protocol):
     def __gt__(self, __other: Any) -> bool: ...
 
 
-SupportsRichComparison = Union[SupportsDunderLT, SupportsDunderGT]
+SupportsRichComparison: TypeAlias = SupportsDunderLT | SupportsDunderGT
 SupportsRichComparisonT = TypeVar(
     "SupportsRichComparisonT", bound=SupportsRichComparison
 )
@@ -144,7 +144,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def __getitem__(self, __s: slice) -> JsonArr[_T]: ...
 
-    def __getitem__(self, __i: Union[SupportsIndex, slice]) -> Union[_T, JsonArr[_T]]:
+    def __getitem__(self, __i: SupportsIndex | slice) -> _T | JsonArr[_T]:
         if isinstance(__i, slice):
             return JsonArr(self.__arr[__i])
         return self.__arr[__i]
@@ -158,10 +158,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def __setitem__(self, __i: Any, __o: Any) -> None:
         return self.__arr.__setitem__(__i, __o)
 
-    def __delitem__(self, __i: Union[SupportsIndex, slice]) -> None:
+    def __delitem__(self, __i: SupportsIndex | slice) -> None:
         self.__arr.__delitem__(__i)
 
-    def __add__(self, __x: Union[Iterable[_T], JsonArr[_T]]) -> JsonArr[_T]:
+    def __add__(self, __x: Iterable[_T] | JsonArr[_T]) -> JsonArr[_T]:
         if isinstance(__x, JsonArr):
             return JsonArr(self.__arr + __x.__arr)
         return JsonArr(self.__arr + list(__x))
@@ -232,11 +232,11 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]: ...
+    ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]: ...
 
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]:
+    ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]:
         if flip:
             return zip(self.__arr, range(start, len(self.__arr) + start), strict=False)
         return enumerate(self.__arr, start=start)
@@ -265,12 +265,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     def filter(
         self,
-        func: Union[
-            Callable[[_T], bool],
-            Callable[[_T, int], bool],
-            Callable[[_T, int, JsonArr[_T]], bool],
-        ],
-        nargs: Optional[Union[Literal[1], Literal[2], Literal[3]]] = None,
+        func: Callable[[_T], bool]
+        | Callable[[_T, int], bool]
+        | Callable[[_T, int, JsonArr[_T]], bool],
+        nargs: Optional[Literal[1] | Literal[2] | Literal[3]] = None,
     ) -> JsonArr[_T]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -297,12 +295,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     def map(
         self,
-        func: Union[
-            Callable[[_T], _R],
-            Callable[[_T, int], _R],
-            Callable[[_T, int, JsonArr[_T]], _R],
-        ],
-        nargs: Optional[Union[Literal[1], Literal[2], Literal[3]]] = None,
+        func: Callable[[_T], _R]
+        | Callable[[_T, int], _R]
+        | Callable[[_T, int, JsonArr[_T]], _R],
+        nargs: Optional[Literal[1] | Literal[2] | Literal[3]] = None,
     ) -> JsonArr[_R]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:

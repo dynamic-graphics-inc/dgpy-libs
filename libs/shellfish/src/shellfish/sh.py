@@ -27,7 +27,6 @@ from typing import (
     Any,
     AnyStr,
     Optional,
-    Union,
 )
 
 from asyncify import asyncify
@@ -424,7 +423,7 @@ def mkenv(env: dict[str, str], extenv: bool = True) -> dict[str, str]:
     return env
 
 
-def decode_stdio_bytes(stdio_bytes: Union[str, bytes], lf: bool = True) -> str:
+def decode_stdio_bytes(stdio_bytes: str | bytes, lf: bool = True) -> str:
     r"""Return Stdio bytes from stdout/stderr as a string
 
     Args:
@@ -506,13 +505,13 @@ def validate_stdin(stdin: STDIN) -> STDIN:
     raise ValueError(f"Invalid stdin: (type={str(type(stdin))}) {str(stdin)}")
 
 
-def utf8_string(val: Union[str, bytes, bytearray]) -> str:
+def utf8_string(val: str | bytes | bytearray) -> str:
     if not isinstance(val, str):
         return val.decode("utf-8")
     return val
 
 
-def flatten_args(*args: Union[Any, list[Any]]) -> list[str]:
+def flatten_args(*args: Any | list[Any]) -> list[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
     Examples:
@@ -525,7 +524,7 @@ def flatten_args(*args: Union[Any, list[Any]]) -> list[str]:
     return list(_flatten_strings(*args))
 
 
-def validate_popen_args(args: Union[PopenArgs, tuple[PopenArgs, ...]]) -> list[str]:
+def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
     if len(args) == 0:
         raise ValueError("args must be a non-empty sequence")
     if len(args) == 1:
@@ -536,7 +535,7 @@ def validate_popen_args(args: Union[PopenArgs, tuple[PopenArgs, ...]]) -> list[s
     return flatten_args(args)
 
 
-def popen_has_pipe_character(args: Union[list[PopenArg], tuple[PopenArg, ...]]) -> bool:
+def popen_has_pipe_character(args: list[PopenArg] | tuple[PopenArg, ...]) -> bool:
     return any(arg == "|" for arg in args)
 
 
@@ -588,7 +587,7 @@ def _do(
     timeout: Optional[float] = None,
     text: bool = False,
     tee: bool = False,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -700,8 +699,8 @@ def do(
     tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    timeout: Optional[float | int] = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously
@@ -761,8 +760,8 @@ def shell(
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    timeout: Optional[float | int] = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess synchronously in current shell
@@ -812,14 +811,14 @@ _do_asyncify = asyncify(do)
 async def run_async(
     args: PopenArgs,
     *,
-    stdin: Optional[Union[IO[AnyStr], int]] = None,
+    stdin: Optional[IO[AnyStr] | int] = None,
     input: Optional[str] = None,
-    stdout: Optional[Union[IO[AnyStr], int]] = None,
-    stderr: Optional[Union[IO[AnyStr], int]] = None,
+    stdout: Optional[IO[AnyStr] | int] = None,
+    stderr: Optional[IO[AnyStr] | int] = None,
     capture_output: bool = False,
     shell: bool = False,
     cwd: Optional[FsPath] = None,
-    timeout: Optional[Union[float, int]] = None,
+    timeout: Optional[float | int] = None,
     check: bool = False,
     encoding: Optional[str] = None,
     errors: Optional[str] = None,
@@ -858,8 +857,8 @@ async def do_asyncify(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    timeout: Optional[float | int] = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess asynchronously using asyncified version of do"""
@@ -891,8 +890,8 @@ async def _do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[Union[float, int]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    timeout: Optional[float | int] = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await completion
@@ -1024,7 +1023,7 @@ async def do_async(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[float] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1101,7 +1100,7 @@ async def doa(
     input: STDIN = None,
     check: bool = False,
     timeout: Optional[float] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
     """Run a subprocess and await its completion
@@ -1215,7 +1214,7 @@ class LIN(_LIN):
             dest = f"{dest}/"
         if not src.endswith("/"):
             src = f"{src}/"
-        _args: list[Union[str, None]] = [
+        _args: list[str | None] = [
             "rsync",
             "-a",
             "-O",
@@ -1493,7 +1492,7 @@ class WIN(_WIN):
 # =============================================================================
 
 # OS DEPENDENT
-_OS: Union[type[LIN], type[WIN]] = (
+_OS: type[LIN] | type[WIN] = (
     WIN if "windows" in system().lower() else LIN
 )  # Use LIN/WIN as _OS
 sync = _OS.sync

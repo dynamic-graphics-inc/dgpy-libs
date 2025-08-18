@@ -61,7 +61,7 @@ def true(string: str) -> bool:
 def make_globster(
     include: Optional[tuple[str, ...]] = ("**/*",),
     exclude: Optional[tuple[str, ...]] = None,
-) -> Union[Callable[[str], bool], ry.Globster]:
+) -> Callable[[str], bool] | ry.Globster:
     patterns: list[str] = []
     if include:
         patterns.extend(include)
