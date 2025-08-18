@@ -24,7 +24,6 @@ from typing import (
     Any,
     AnyStr,
     Generic,
-    Optional,
     TypeVar,
     Union,
     cast,
@@ -61,7 +60,7 @@ def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
 class AsyncBase(Generic[AnyStr]):  # pragma: no cover
     _file: BufferedWriter | TextIOWrapper | FileIO | BufferedRandom | BufferedReader
     _loop: AbstractEventLoop
-    _executor: Optional[BaseEventLoop] = None
+    _executor: BaseEventLoop | None = None
 
     def __init__(
         self,
@@ -263,9 +262,13 @@ class AiopenContextManager(
 
     def __init__(self, coro: Any) -> None:
         self._coro: Coroutine[Any, Any, Any] = coro
-        self._obj: Optional[
-            BufferedIOAsyncBase | BufferedReaderAsync | TextIOWrapperAsync | FileIOAsync
-        ] = None
+        self._obj: (
+            BufferedIOAsyncBase
+            | BufferedReaderAsync
+            | TextIOWrapperAsync
+            | FileIOAsync
+            | None
+        ) = None
 
     def send(self, value: Any) -> Any:
         return self._coro.send(value)
@@ -274,7 +277,7 @@ class AiopenContextManager(
         self,
         typ: type[BaseException],
         val: Any = None,
-        tb: Optional[TracebackType] = None,
+        tb: TracebackType | None = None,
     ) -> Any:
         if val is None:
             return self._coro.throw(typ)
@@ -326,9 +329,9 @@ class AiopenContextManager(
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc: Optional[BaseException],
-        tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
     ) -> None:
         if self._obj:
             await self._obj.close()
@@ -339,13 +342,13 @@ async def _aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[AbstractEventLoop] = None,
+    loop: AbstractEventLoop | None = None,
     executor: Any = None,
 ) -> FileIOAsync | BufferedIOAsyncBase | TextIOWrapperAsync | BufferedReaderAsync:
     """Open an asyncio file."""
@@ -369,13 +372,13 @@ def aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[AbstractEventLoop] = None,
+    loop: AbstractEventLoop | None = None,
     executor: Any = None,
 ) -> AiopenContextManager:
     """Async version of the `open` builtin

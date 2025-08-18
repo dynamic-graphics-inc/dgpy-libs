@@ -11,7 +11,6 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
-    Optional,
     TypeGuard,
     TypeVar,
 )
@@ -124,7 +123,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
     def to_str(
         self,
         minify: bool = False,
-        width: Optional[int] = None,
+        width: int | None = None,
         fmt_kwargs: bool = False,
     ) -> str:
         if fmt_kwargs:
@@ -260,7 +259,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return JSON.dumps(

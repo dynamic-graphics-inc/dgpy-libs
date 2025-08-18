@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import IO, Any, Optional
+from typing import IO, Any
 
 __all__ = ("echo",)
 
@@ -12,7 +12,7 @@ def echo(
     *objects: Any,
     sep: str = " ",
     end: str = "\n",
-    file: Optional[IO[str]] = None,
+    file: IO[str] | None = None,
     flush: bool = False,
 ) -> None:
     r"""Print/echo function

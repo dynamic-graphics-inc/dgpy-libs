@@ -23,7 +23,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Generic,
-    Optional,
     TypeVar,
     cast,
     overload,
@@ -435,7 +434,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Return the keys view of the JsonObj object"""
         return self._data.keys()
 
-    def setdefault(self, key: _KT, default: Optional[_VT] = None) -> _VT:
+    def setdefault(self, key: _KT, default: _VT | None = None) -> _VT:
         if default:
             return self._data.setdefault(key, default)
         return self._data.setdefault(key)  # type: ignore[call-arg]
@@ -443,12 +442,12 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def clear(self) -> None:
         self._data.clear()
 
-    def pop(self, key: _KT, default: Optional[Any] = None) -> Any:
+    def pop(self, key: _KT, default: Any | None = None) -> Any:
         if default:
             return self._data.pop(key, default)
         return self._data.pop(key)
 
-    def get(self, key: _KT, default: Optional[Any] = None) -> Any:
+    def get(self, key: _KT, default: Any | None = None) -> Any:
         try:
             return self._data.get(key)
         except KeyError as ke:
@@ -765,7 +764,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _is_empty(self) -> bool:
         return not bool(self._data)
 
-    def to_str(self, minify: bool = False, width: Optional[int] = None) -> str:
+    def to_str(self, minify: bool = False, width: int | None = None) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
@@ -926,7 +925,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         r"""Return JSON string of the JsonObj object (and children)
@@ -959,7 +958,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         r"""Return JSON string of the JsonObj object (and children)
@@ -991,7 +990,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         r"""Return JSON string of the JsonObj object (and children)
@@ -1023,7 +1022,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         r"""Return JSON string of the JsonObj object (and children)
@@ -1138,7 +1137,7 @@ class JSONMeta(type):
     def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]: ...
 
     @staticmethod
-    def __call__(value: Optional[Any] = None) -> Any:
+    def __call__(value: Any | None = None) -> Any:
         if value is None:
             value = {}
         return jsonify(value)
@@ -1164,7 +1163,7 @@ class JsonModule:
     def __call__(value: Mapping[_KT, _VT]) -> JsonObj[_VT]: ...
 
     @staticmethod
-    def __call__(value: Optional[Any] = None) -> Any:
+    def __call__(value: Any | None = None) -> Any:
         if value is None:
             value = {}
         return jsonify(value)
@@ -1176,7 +1175,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         """Return JSON stringified/dumps-ed data"""
@@ -1199,7 +1198,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         """Return JSON stringified/dumps-ed data"""
@@ -1222,7 +1221,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         """Return JSON string bytes for given data"""
@@ -1245,7 +1244,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         """Return JSON string bytes for given data"""
@@ -1268,7 +1267,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return jsonlib.jsoncp(
@@ -1316,7 +1315,7 @@ class JsonModule:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> int:
         """Write JSON file"""

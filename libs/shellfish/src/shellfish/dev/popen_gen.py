@@ -11,7 +11,7 @@ from shellfish.fs import Stdio
 
 if TYPE_CHECKING:
     from collections.abc import Iterable
-    from typing import IO, Any, AnyStr, Optional
+    from typing import IO, Any, AnyStr
 
 __all__ = ("popen_gen", "popen_pipes_gen")
 
@@ -38,7 +38,7 @@ def _enqueue_output_iter_readline(
 
 
 def popen_pipes_gen(
-    proc: Popen[AnyStr], timeout: Optional[float] = None
+    proc: Popen[AnyStr], timeout: float | None = None
 ) -> Iterable[tuple[Stdio, str | bytes]]:
     """Yield stdout and stderr lines from a subprocess
 

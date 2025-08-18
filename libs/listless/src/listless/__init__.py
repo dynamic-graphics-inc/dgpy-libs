@@ -21,7 +21,6 @@ from itertools import chain, count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
-    Optional,
     TypeAlias,
     TypeVar,
     cast,
@@ -338,7 +337,7 @@ def chunk(
     return chunks(it, n)
 
 
-def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
+def exhaust(it: Iterable[_T], *, maxlen: int | None = 0) -> deque[_T]:
     """Exhaust an iterable; useful for evaluating a map object.
 
     Args:
@@ -369,7 +368,7 @@ def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
 
 
 def xmap(
-    func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: Optional[int] = 0
+    func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: int | None = 0
 ) -> deque[_R]:
     """Apply a function to each element of an iterable immediately
 
@@ -613,9 +612,7 @@ def spliterable(
     return (i for p, i in _true_gen if p), (i for p, i in _false_gen if not p)
 
 
-def unique_gen(
-    it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None
-) -> Iterable[_T]:
+def unique_gen(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Iterable[_T]:
     """Yield unique values (ordered) from an iterable
 
     Args:
@@ -648,7 +645,7 @@ def unique_gen(
         )
 
 
-def unique(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterable[_T]:
+def unique(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Iterable[_T]:
     """Alias for unique_gen
 
     Examples:

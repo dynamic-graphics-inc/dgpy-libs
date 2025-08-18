@@ -11,7 +11,6 @@ from typing import (
     Any,
     AnyStr,
     Generic,
-    Optional,
     cast,
     overload,
 )
@@ -31,7 +30,7 @@ else:
 class AsyncFileContextManager(Generic[AnyStr]):
     __slots__ = ("_coro", "_obj")
     _coro: Awaitable[AsyncFile[AnyStr]]
-    _obj: Optional[AsyncFile[AnyStr]]
+    _obj: AsyncFile[AnyStr] | None
 
     def __init__(self, coro: Awaitable[AsyncFile[AnyStr]]) -> None:
         self._coro = coro
@@ -56,9 +55,9 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
     ) -> None:
         obj = self.obj
         await obj.__aexit__(exc_type=exc_type, exc_val=exc_val, exc_tb=exc_tb)
@@ -69,11 +68,11 @@ def aiopen(
     file: str | PathLike[str] | int,
     mode: OpenBinaryMode = ...,
     buffering: int = ...,
-    encoding: Optional[str] = ...,
-    errors: Optional[str] = ...,
-    newline: Optional[str] = ...,
+    encoding: str | None = ...,
+    errors: str | None = ...,
+    newline: str | None = ...,
     closefd: bool = ...,
-    opener: Optional[Callable[[str, int], int]] = ...,
+    opener: Callable[[str, int], int] | None = ...,
 ) -> AsyncFileContextManager[bytes]: ...
 
 
@@ -82,11 +81,11 @@ def aiopen(
     file: str | PathLike[str] | int,
     mode: OpenTextMode = ...,
     buffering: int = ...,
-    encoding: Optional[str] = ...,
-    errors: Optional[str] = ...,
-    newline: Optional[str] = ...,
+    encoding: str | None = ...,
+    errors: str | None = ...,
+    newline: str | None = ...,
     closefd: bool = ...,
-    opener: Optional[Callable[[str, int], int]] = ...,
+    opener: Callable[[str, int], int] | None = ...,
 ) -> AsyncFileContextManager[str]: ...
 
 
@@ -94,11 +93,11 @@ def aiopen(
     file: str | PathLike[str] | int,
     mode: str | OpenBinaryMode | OpenTextMode = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
-    errors: Optional[str] = None,
-    newline: Optional[str] = None,
+    encoding: str | None = None,
+    errors: str | None = None,
+    newline: str | None = None,
     closefd: bool = True,
-    opener: Optional[Callable[[str, int], int]] = None,
+    opener: Callable[[str, int], int] | None = None,
 ) -> AsyncFileContextManager[Any]:
     return AsyncFileContextManager(
         coro=open_file(

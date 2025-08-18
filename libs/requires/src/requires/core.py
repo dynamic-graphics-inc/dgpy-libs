@@ -14,7 +14,6 @@ from importlib import import_module
 from typing import (
     TYPE_CHECKING,
     Any,
-    Optional,
     TypeAlias,
     TypedDict,
     TypeVar,
@@ -59,13 +58,13 @@ class RequirementDict(TypedDict):
     """Requirement dict"""
 
     _import: str
-    _from: Optional[str]
-    _as: Optional[str]
-    pip: Optional[str | bool]
-    conda: Optional[str | bool]
-    conda_forge: Optional[str | bool]
-    details: Optional[str | list[str]]
-    lazy: Optional[bool]  # default true
+    _from: str | None
+    _as: str | None
+    pip: str | bool | None
+    conda: str | bool | None
+    conda_forge: str | bool | None
+    details: str | list[str] | None
+    lazy: bool | None  # default true
 
 
 TRequirementDict: TypeAlias = RequirementDict | dict[str, Any]
@@ -76,12 +75,12 @@ class Requirement:
     """Requirement class to specify a package or module requirement"""
 
     _import: str
-    _from: Optional[str] = None
-    _as: Optional[str] = None
-    pip: Optional[str | bool] = None
-    conda: Optional[str | bool] = None
-    conda_forge: Optional[str | bool] = None
-    details: Optional[str | list[str]] = None
+    _from: str | None = None
+    _as: str | None = None
+    pip: str | bool | None = None
+    conda: str | bool | None = None
+    conda_forge: str | bool | None = None
+    details: str | list[str] | None = None
     lazy: bool = field(default=True)
 
     def __post_init__(self) -> None: ...
@@ -324,7 +323,7 @@ class RequirementsMeta:
         self,
         *,
         warn: bool = False,
-        on_missing: Optional[Callable[[set[Requirement]], None]],
+        on_missing: Callable[[set[Requirement]], None] | None,
     ) -> set[Requirement]:
         """Check if requirements are met
 
@@ -474,14 +473,14 @@ def require(*args: Any, **kwargs: Any) -> Requirement:
 
 def requires(
     *requirements: str | TRequirementDict | Requirement,
-    _import: Optional[str] = None,
-    _as: Optional[str] = None,
-    _from: Optional[str] = None,
-    pip: Optional[str | bool] = None,
-    conda: Optional[str | bool] = None,
-    conda_forge: Optional[str | bool] = None,
-    details: Optional[str] = None,
-    lazy: Optional[bool] = None,
+    _import: str | None = None,
+    _as: str | None = None,
+    _from: str | None = None,
+    pip: str | bool | None = None,
+    conda: str | bool | None = None,
+    conda_forge: str | bool | None = None,
+    details: str | None = None,
+    lazy: bool | None = None,
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """Decorator to specify the packages a function or class requires
 
@@ -576,7 +575,7 @@ def scope_requirements(debug: bool = False) -> RequirementsMeta:
 def preflight_check(
     *,
     warn: bool = False,
-    on_missing: Optional[Callable[[set[Requirement]], None]] = None,
+    on_missing: Callable[[set[Requirement]], None] | None = None,
 ) -> RequirementsMeta:
     """Scan and check calling module scope for objs/fns wrapped with requirements.
 

@@ -29,7 +29,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Optional,
     cast,
 )
 
@@ -408,7 +407,7 @@ def files_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -511,7 +510,7 @@ def dirs_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -632,7 +631,7 @@ def files_dirs_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> tuple[Iterator[str], Iterator[str]]:
@@ -756,7 +755,7 @@ def walk_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -880,7 +879,7 @@ def filepath_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -903,7 +902,7 @@ def dirpath_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -926,7 +925,7 @@ def path_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -949,7 +948,7 @@ def write_bytes(
     bites: bytes,
     *,
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -1078,7 +1077,7 @@ def write_bytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -1150,7 +1149,7 @@ def write_str(
     *,
     encoding: str = "utf-8",
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Save/Write a string to fspath
 
@@ -1190,8 +1189,8 @@ def write_json(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
-    chmod: Optional[int] = None,
+    default: Callable[[Any], Any] | None = None,
+    chmod: int | None = None,
     append: bool = False,
     **kwargs: Any,
 ) -> int:

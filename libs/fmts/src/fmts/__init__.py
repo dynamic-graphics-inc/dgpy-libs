@@ -19,7 +19,6 @@ from typing import (
     Any,
     AnyStr,
     Callable,
-    Optional,
     TypeVar,
 )
 
@@ -1312,7 +1311,7 @@ class pstr(str):
 def indent(
     string: AnyStr,
     prefix: str = "    ",
-    predicate: Optional[Callable[[str], bool]] = None,
+    predicate: Callable[[str], bool] | None = None,
 ) -> AnyStr:
     r"""Indent a string a given number of spaces
 
@@ -1375,7 +1374,7 @@ def dedent(string: str) -> str:
     )
 
 
-def timestamp(ts: Optional[float | datetime] = None) -> str:
+def timestamp(ts: float | datetime | None = None) -> str:
     """Time stamp string w/ format yyyymmdd-HHMMSS
 
     Args:

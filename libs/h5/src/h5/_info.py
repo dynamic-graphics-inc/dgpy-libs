@@ -12,7 +12,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
-    Optional,
     TypedDict,
     TypeVar,
     Union,
@@ -57,10 +56,10 @@ class DatasetInfoDict(TypedDict):
     dtype_str: str
     size: int
     nbytes: int
-    compression: Optional[H5pyCompression]
-    compression_opts: Optional[tuple[int, int] | int]
-    maxshape: Optional[tuple[int, ...]]
-    chunks: Optional[tuple[int, ...]]
+    compression: H5pyCompression | None
+    compression_opts: tuple[int, int] | int | None
+    maxshape: tuple[int, ...] | None
+    chunks: tuple[int, ...] | None
 
 
 class GroupInfoDict(TypedDict):
@@ -156,10 +155,10 @@ class DatasetInfo(H5Mixin):
     size: int
     nbytes: int
     h5type: Literal["dataset"] = "dataset"
-    compression: Optional[H5pyCompression] = None
-    compression_opts: Optional[tuple[int, int] | int] = None
-    maxshape: Optional[tuple[int, ...]] = None
-    chunks: Optional[tuple[int, ...]] = None
+    compression: H5pyCompression | None = None
+    compression_opts: tuple[int, int] | int | None = None
+    maxshape: tuple[int, ...] | None = None
+    chunks: tuple[int, ...] | None = None
 
     def dict(self, *, attributes: bool = True) -> DatasetInfoDict:
         return {
@@ -222,7 +221,7 @@ class GroupLikeInfo(H5Mixin):
         raise KeyError(f"{item} not found in {self.key}")
 
     def get(
-        self, item: str, default: Optional[GroupInfo | DatasetInfo] = None
+        self, item: str, default: GroupInfo | DatasetInfo | None = None
     ) -> GroupInfo | DatasetInfo:
         if not default:
             return self[item]

@@ -12,7 +12,7 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
 if TYPE_CHECKING:
@@ -119,7 +119,7 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str: ...
 
@@ -131,7 +131,7 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes: ...
 
@@ -170,7 +170,7 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any: ...
 
@@ -188,7 +188,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         _pretty = fmt or pretty
@@ -212,7 +212,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return JSON_STDLIB.dumps(
@@ -254,7 +254,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return JSON_STDLIB.loads(
@@ -280,7 +280,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return ORJSON.dumpb(
@@ -299,7 +299,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         option = 0
@@ -342,7 +342,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return ORJSON.loads(
@@ -372,7 +372,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         dump_str = str(
@@ -398,7 +398,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return RAPIDJSON.dumps(
@@ -440,7 +440,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return RAPIDJSON.loads(
@@ -481,7 +481,7 @@ def _import_json_stdlib() -> type[JSON_STDLIB]:
 
 
 def import_json(
-    jsonlibs: Optional[tuple[str, ...] | list[str]] = None,
+    jsonlibs: tuple[str, ...] | list[str] | None = None,
 ) -> type[JsonLibABC]:
     lib2funk = {
         "rapidjson": _import_rapidjson,
@@ -501,10 +501,10 @@ def import_json(
 
 class JsonLib:
     _jsonlib: type[JsonLibABC]
-    _oj: Optional[type[ORJSON]] = None
-    _rj: Optional[type[RAPIDJSON]] = None
+    _oj: type[ORJSON] | None = None
+    _rj: type[RAPIDJSON] | None = None
 
-    def __init__(self, jsonlib: Optional[type[JsonLibABC]] = None) -> None:
+    def __init__(self, jsonlib: type[JsonLibABC] | None = None) -> None:
         if jsonlib:
             self._jsonlib = jsonlib
         else:
@@ -521,7 +521,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return self._jsonlib.dumps(
@@ -541,7 +541,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return self._jsonlib.dumpb(
@@ -587,7 +587,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return self._jsonlib.jsoncp(
@@ -611,7 +611,7 @@ def dumps(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> str:
     return JSONLIB.dumps(
@@ -631,7 +631,7 @@ def dumpb(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> bytes:
     return JSONLIB.dumpb(
@@ -671,7 +671,7 @@ def wjson(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> int:
     with open(fspath, "wb") as f:
@@ -701,7 +701,7 @@ def jsoncp(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> Any:
     return JSONLIB.jsoncp(

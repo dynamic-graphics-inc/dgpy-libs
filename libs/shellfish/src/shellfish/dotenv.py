@@ -7,7 +7,7 @@ import re
 
 from os import getcwd, path
 from shlex import split as shplit
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from shellfish.fs import read_str as _rstring
 
@@ -101,7 +101,7 @@ def parse_env(string: str) -> dict[str, str]:
     return parse_dotenv(string)
 
 
-def ldotenv(fspath: Optional[FsPath] = None) -> dict[str, str]:
+def ldotenv(fspath: FsPath | None = None) -> dict[str, str]:
     r"""Load a dotenv file from a fspath and return the keyvalues as a dict
 
     Examples:

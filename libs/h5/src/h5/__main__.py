@@ -7,11 +7,10 @@ import json
 import sys
 
 from importlib import metadata as importlib_metadata
-from typing import Optional
 
 from h5.__about__ import __pkgroot__, __title__, __version__
 
-__click_version__: Optional[str] = None
+__click_version__: str | None = None
 try:
     __click_version__ = importlib_metadata.version("click")
 except importlib_metadata.PackageNotFoundError:

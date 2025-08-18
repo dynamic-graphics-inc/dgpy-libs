@@ -63,7 +63,7 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Literal, Optional, TypeAlias
+from typing import Any, Literal, TypeAlias
 
 from typing_extensions import Self
 
@@ -203,9 +203,9 @@ class Logger(_Logger):
         msg: object,
         args: _ArgsType,
         exc_info: _SysExcInfoType | None,
-        func: Optional[str] = None,
+        func: str | None = None,
         extra: Mapping[str, object] | None = None,
-        sinfo: Optional[str] = None,
+        sinfo: str | None = None,
     ) -> LogRecord:
         return self.makeRecord(
             name, level, fn, lno, msg, args, exc_info, func, extra, sinfo

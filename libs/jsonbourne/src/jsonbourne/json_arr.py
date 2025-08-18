@@ -7,7 +7,6 @@ from typing import (
     Any,
     Generic,
     Literal,
-    Optional,
     Protocol,
     SupportsIndex,
     TypeAlias,
@@ -60,7 +59,7 @@ def n_args(fn: Callable[..., _R]) -> int:
 class JsonArr(MutableSequence[_T], Generic[_T]):
     __arr: list[_T]
 
-    def __init__(self, iterable: Optional[Iterable[_T]] = None) -> None:
+    def __init__(self, iterable: Iterable[_T] | None = None) -> None:
         self.__arr = list(iterable or [])
 
     def __post_init__(self) -> Any:
@@ -125,7 +124,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def sort(
         self,
         *,
-        key: Optional[Callable[[_T], SupportsRichComparison]] = None,
+        key: Callable[[_T], SupportsRichComparison] | None = None,
         reverse: bool = False,
     ) -> None:
         return self.__arr.sort(key=key, reverse=reverse)
@@ -268,7 +267,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         func: Callable[[_T], bool]
         | Callable[[_T, int], bool]
         | Callable[[_T, int, JsonArr[_T]], bool],
-        nargs: Optional[Literal[1] | Literal[2] | Literal[3]] = None,
+        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
     ) -> JsonArr[_T]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -298,7 +297,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         func: Callable[[_T], _R]
         | Callable[[_T, int], _R]
         | Callable[[_T, int, JsonArr[_T]], _R],
-        nargs: Optional[Literal[1] | Literal[2] | Literal[3]] = None,
+        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
     ) -> JsonArr[_R]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -312,9 +311,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
             return self._map_el(_fn1)
         raise TypeError("Could not determine number of arguments for map function")
 
-    def slice(
-        self, start: Optional[int] = None, end: Optional[int] = None
-    ) -> JsonArr[_T]:
+    def slice(self, start: int | None = None, end: int | None = None) -> JsonArr[_T]:
         """Return a slice as new jsonarray
 
         Args:

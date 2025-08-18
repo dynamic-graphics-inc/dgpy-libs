@@ -5,7 +5,7 @@ import itertools as it
 
 from functools import lru_cache
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import click
 import tomli
@@ -305,7 +305,7 @@ def publish() -> None:
 )
 def version(
     lib: str,
-    version: Optional[str] = None,
+    version: str | None = None,
     dry_run: bool = False,
 ) -> None:
     """Bump version of lib (TODO)"""
@@ -404,7 +404,7 @@ class Changelog(JsonBaseModel):
 @click.option("--lib", "-l", type=click.Choice(DGPY_LIBS), required=False)
 def change(
     msg: str,
-    lib: Optional[str] = None,
+    lib: str | None = None,
 ) -> None:
     """Make changelog message"""
     # ask which lib if not provided blah blah blah

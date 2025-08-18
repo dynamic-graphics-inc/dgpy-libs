@@ -26,7 +26,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Optional,
 )
 
 from asyncify import asyncify
@@ -540,7 +539,7 @@ def popen_has_pipe_character(args: list[PopenArg] | tuple[PopenArg, ...]) -> boo
 
 
 def validate_popen_args_windows(
-    args: PopenArgs, env: Optional[dict[str, str]] = None
+    args: PopenArgs, env: dict[str, str] | None = None
 ) -> PopenArgs:
     args = validate_popen_args(args)
     _path = None
@@ -554,10 +553,10 @@ def validate_popen_args_windows(
 
 def _do_tee(
     args: PopenArgs,
-    input: Optional[STDIN],
-    cwd: Optional[FsPath],
-    env: Optional[dict[str, str]],
-    timeout: Optional[float],
+    input: STDIN | None,
+    cwd: FsPath | None,
+    env: dict[str, str] | None,
+    timeout: float | None,
     shell: bool = False,
 ) -> Done:
     completed, pdt = sp.run_dtee(
@@ -577,14 +576,14 @@ def _do_tee(
 def _do(
     args: PopenArgs,
     *,
-    env: Optional[dict[str, str]] = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[FsPath] = None,
+    cwd: FsPath | None = None,
     shell: bool = False,
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[float] = None,
+    timeout: float | None = None,
     text: bool = False,
     tee: bool = False,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
@@ -690,16 +689,16 @@ def _do(
 
 def do(
     *popenargs: PopenArgs,
-    args: Optional[PopenArgs] = None,
-    env: Optional[dict[str, str]] = None,
+    args: PopenArgs | None = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[FsPath] = None,
+    cwd: FsPath | None = None,
     shell: bool = False,
     check: bool = False,
     tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[float | int] = None,
+    timeout: float | int | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -752,15 +751,15 @@ def do(
 
 def shell(
     *popenargs: PopenArgs,
-    args: Optional[PopenArgs] = None,
-    env: Optional[dict[str, str]] = None,
+    args: PopenArgs | None = None,
+    env: dict[str, str] | None = None,
     shell: bool = True,
     extenv: bool = True,
-    cwd: Optional[FsPath] = None,
+    cwd: FsPath | None = None,
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: Optional[float | int] = None,
+    timeout: float | int | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -811,19 +810,19 @@ _do_asyncify = asyncify(do)
 async def run_async(
     args: PopenArgs,
     *,
-    stdin: Optional[IO[AnyStr] | int] = None,
-    input: Optional[str] = None,
-    stdout: Optional[IO[AnyStr] | int] = None,
-    stderr: Optional[IO[AnyStr] | int] = None,
+    stdin: IO[AnyStr] | int | None = None,
+    input: str | None = None,
+    stdout: IO[AnyStr] | int | None = None,
+    stderr: IO[AnyStr] | int | None = None,
     capture_output: bool = False,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float | int] = None,
+    cwd: FsPath | None = None,
+    timeout: float | int | None = None,
     check: bool = False,
-    encoding: Optional[str] = None,
-    errors: Optional[str] = None,
+    encoding: str | None = None,
+    errors: str | None = None,
     text: bool = False,
-    env: Optional[dict[str, str]] = None,
+    env: dict[str, str] | None = None,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[Any]:
@@ -849,15 +848,15 @@ async def run_async(
 
 async def do_asyncify(
     *popenargs: PopenArgs,
-    args: Optional[PopenArgs] = None,
-    env: Optional[dict[str, str]] = None,
+    args: PopenArgs | None = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[str] = None,
+    cwd: str | None = None,
     shell: bool = False,
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[float | int] = None,
+    timeout: float | int | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -883,14 +882,14 @@ async def do_asyncify(
 async def _do_async(
     args: PopenArgs,
     *,
-    env: Optional[dict[str, str]] = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[str] = None,
+    cwd: str | None = None,
     shell: bool = False,
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[float | int] = None,
+    timeout: float | int | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1014,15 +1013,15 @@ async def _do_async(
 
 async def do_async(
     *popenargs: PopenArgs,
-    args: Optional[PopenArgs] = None,
-    env: Optional[dict[str, str]] = None,
+    args: PopenArgs | None = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[str] = None,
+    cwd: str | None = None,
     shell: bool = False,
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[float] = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1091,15 +1090,15 @@ do_ = do_async
 
 async def doa(
     *popenargs: PopenArgs,
-    args: Optional[PopenArgs] = None,
-    env: Optional[dict[str, str]] = None,
+    args: PopenArgs | None = None,
+    env: dict[str, str] | None = None,
     extenv: bool = True,
-    cwd: Optional[str] = None,
+    cwd: str | None = None,
     shell: bool = False,
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: Optional[float] = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1161,8 +1160,8 @@ class LIN(_LIN):
         dest: str,
         delete: bool = False,
         dry_run: bool = False,
-        exclude: Optional[Iterable[str]] = None,
-        include: Optional[Iterable[str]] = None,
+        exclude: Iterable[str] | None = None,
+        include: Iterable[str] | None = None,
     ) -> list[str]:
         """Return args for rsync command on linux/mac
 
@@ -1237,8 +1236,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[Iterable[str]] = None,
-        include: Optional[Iterable[str]] = None,
+        exclude: Iterable[str] | None = None,
+        include: Iterable[str] | None = None,
     ) -> Done:
         """Run an `rsync` subprocess
 
@@ -1303,8 +1302,8 @@ class LIN(_LIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[Iterable[str]] = None,
-        include: Optional[Iterable[str]] = None,
+        exclude: Iterable[str] | None = None,
+        include: Iterable[str] | None = None,
     ) -> Done:
         return LIN.rsync(
             src,
@@ -1338,8 +1337,8 @@ class WIN(_WIN):
         dest: str,
         *,
         delete: bool = False,
-        exclude_files: Optional[list[str]] = None,
-        exclude_dirs: Optional[list[str]] = None,
+        exclude_files: list[str] | None = None,
+        exclude_dirs: list[str] | None = None,
         dry_run: bool = False,
     ) -> list[str]:
         """Return list of robocopy command args
@@ -1405,8 +1404,8 @@ class WIN(_WIN):
         *,
         mkdirs: bool = True,
         delete: bool = False,
-        exclude_files: Optional[Iterable[str]] = None,
-        exclude_dirs: Optional[Iterable[str]] = None,
+        exclude_files: Iterable[str] | None = None,
+        exclude_dirs: Iterable[str] | None = None,
         dry_run: bool = False,
     ) -> Done:  # pragma: nocov
         """Robocopy wrapper function (crude in that it opens a subprocess)
@@ -1468,8 +1467,8 @@ class WIN(_WIN):
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
-        exclude: Optional[Iterable[str]] = None,
-        include: Optional[Iterable[str]] = None,
+        exclude: Iterable[str] | None = None,
+        include: Iterable[str] | None = None,
     ) -> Done:  # pragma: nocov
         return WIN.robocopy(
             src=src,
@@ -1567,7 +1566,7 @@ def cd(dirpath: FsPath) -> None:
     chdir(str(dirpath))
 
 
-def export(key: str, val: Optional[str] = None) -> tuple[str, str]:
+def export(key: str, val: str | None = None) -> tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
@@ -1589,7 +1588,7 @@ def export(key: str, val: Optional[str] = None) -> tuple[str, str]:
     )
 
 
-def setenv(key: str, val: Optional[str] = None) -> tuple[str, str]:
+def setenv(key: str, val: str | None = None) -> tuple[str, str]:
     """Export/Set an environment variable
 
     Args:
@@ -1646,7 +1645,7 @@ def q(string: str) -> str:
     return _quote(string)
 
 
-def which(cmd: str, path: Optional[str] = None) -> Optional[str]:
+def which(cmd: str, path: str | None = None) -> str | None:
     """Return the result of `shutil.which`
 
     Args:
@@ -1660,7 +1659,7 @@ def which(cmd: str, path: Optional[str] = None) -> Optional[str]:
     return _which(cmd, path=path)
 
 
-def where(cmd: str, path: Optional[str] = None) -> Optional[str]:
+def where(cmd: str, path: str | None = None) -> str | None:
     """Return the result of `shutil.which`; alias of shellfish.sh.which
 
     Args:
@@ -1675,7 +1674,7 @@ def where(cmd: str, path: Optional[str] = None) -> Optional[str]:
 
 
 @lru_cache(maxsize=128)
-def which_lru(cmd: str, path: Optional[str] = None) -> Optional[str]:
+def which_lru(cmd: str, path: str | None = None) -> str | None:
     """Return the result of `shutil.which` and cache the results
 
     Args:
@@ -1689,7 +1688,7 @@ def which_lru(cmd: str, path: Optional[str] = None) -> Optional[str]:
     return which(cmd, path=path)
 
 
-def tree(dirpath: FsPath, filterfn: Optional[Callable[[str], bool]] = None) -> str:
+def tree(dirpath: FsPath, filterfn: Callable[[str], bool] | None = None) -> str:
     """Create a directory tree string given a directory path
 
     Args:

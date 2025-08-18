@@ -8,7 +8,7 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import TYPE_CHECKING, Any, Optional, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from loguru import logger as logger
 from loguru._handler import Handler
@@ -102,7 +102,7 @@ def loglevel(level: str | int) -> str:
 
 
 def flog(
-    funk: Optional[Callable[..., T]] = None,
+    funk: Callable[..., T] | None = None,
     level: str | int = "debug",
     enter: bool = True,
     exit: bool = True,
@@ -197,7 +197,7 @@ def handlers() -> dict[int, Handler]:
     return logger._core.handlers  # type: ignore[no-any-return]
 
 
-def reset(level: Optional[str | int] = None) -> None:
+def reset(level: str | int | None = None) -> None:
     logger.remove()
     logger.add(_sys.stderr, level=loglevel(level or "debug"))
 

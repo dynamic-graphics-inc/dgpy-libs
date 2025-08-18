@@ -13,7 +13,7 @@ from subprocess import (
     TimeoutExpired,
 )
 from time import time
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
 from shellfish.sp import PopenArgs, ProcessDt
@@ -46,18 +46,18 @@ async def _read_stream(
 
 async def run_dtee_async(
     *popenargs: PopenArgs,
-    executable: Optional[str] = None,
-    stdin: Optional[IO[Any] | int] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
     text: bool = False,
-    input: Optional[str | bytes] = None,
-    stdout: Optional[IO[Any] | int] = None,
-    stderr: Optional[IO[Any] | int] = None,
+    input: str | bytes | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = False,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
+    env: Mapping[str, str] | None = None,
     tee: bool = False,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     universal_newlines: bool = False,
@@ -229,18 +229,18 @@ async def run_dtee_async(
 
 async def run_async(
     *popenargs: PopenArgs,
-    executable: Optional[str] = None,
-    stdin: Optional[IO[Any] | int] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
     text: bool = False,
-    input: Optional[str] = None,
-    stdout: Optional[IO[Any] | int] = None,
-    stderr: Optional[IO[Any] | int] = None,
+    input: str | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = True,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
+    env: Mapping[str, str] | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     tee: bool = False,
     universal_newlines: bool = True,

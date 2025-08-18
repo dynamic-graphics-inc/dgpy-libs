@@ -19,7 +19,6 @@ from inspect import isawaitable
 from typing import (
     TYPE_CHECKING,
     Any,
-    Optional,
     TypeGuard,
     TypeVar,
     cast,
@@ -59,7 +58,7 @@ except ImportError:  # pragma: no cover
         funk: Callable[P, T],
         *,
         abandon_on_cancel: bool = False,
-        limiter: Optional[CapacityLimiter] = None,
+        limiter: CapacityLimiter | None = None,
     ) -> Callable[P, Awaitable[T]]:
         raise ImportError("install anyio; `pip install anyio`")
 
@@ -67,7 +66,7 @@ except ImportError:  # pragma: no cover
         func: Callable[..., Coroutine[Any, Any, T_Retval]],
         *args: object,
         backend: str = "asyncio",
-        backend_options: Optional[dict[str, Any]] = None,
+        backend_options: dict[str, Any] | None = None,
     ) -> T_Retval:
         raise ImportError("install anyio; `pip install anyio`")
 
@@ -114,8 +113,8 @@ def aiterable(it: Iterable[T] | AsyncIterable[T]) -> AsyncIterator[T]:
 def asyncify(
     funk: Callable[P, T],
     *,
-    loop: Optional[AbstractEventLoop] = None,
-    executor: Optional[Any] = None,
+    loop: AbstractEventLoop | None = None,
+    executor: Any | None = None,
 ) -> Callable[P, Awaitable[T]]:
     """Makes a sync function async
 
@@ -168,7 +167,7 @@ def asyncify(
     return cast("Callable[P, Awaitable[T]]", _async_funk)
 
 
-def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
+def _run(aw: Awaitable[T], *, debug: bool | None = None) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -201,9 +200,7 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
         asyncio.set_event_loop(None)
 
 
-def run(
-    aw: Coroutine[Any, Any, T], *, debug: Optional[bool] = None, **kwargs: Any
-) -> T:
+def run(aw: Coroutine[Any, Any, T], *, debug: bool | None = None, **kwargs: Any) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -276,7 +273,7 @@ def aiorun_anyio(
     | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     """Run an async function or awaitable using anyio
 
@@ -311,7 +308,7 @@ def aiorun_asyncio(
     | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     if backend != "asyncio":
         raise ValueError(
@@ -337,7 +334,7 @@ def aiorun(
     | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     return (
         aiorun_asyncio(

@@ -7,7 +7,7 @@ import os
 
 from collections.abc import AsyncIterable, AsyncIterator, Callable, Iterable
 from os import fspath as _fspath
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from aiopen import aiopen
 from jsonbourne import JSON
@@ -179,7 +179,7 @@ async def write_bytes_async(
     bites: bytes,
     *,
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """(ASYNC) Write/Save bytes to a fspath
 
@@ -328,7 +328,7 @@ async def write_bytes_gen_async(
     bytes_gen: Iterable[bytes] | AsyncIterable[bytes],
     *,
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Write/save bytes to a filepath from an (async)iterable/iterator of bytes
 
@@ -436,7 +436,7 @@ async def write_str_async(
     *,
     encoding: str = "utf-8",
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """(ASYNC) Save/Write a string to fspath
 
@@ -511,9 +511,9 @@ async def write_json_async(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
     **kwargs: Any,
 ) -> int:
     """Save/Write json-serial-ize-able data to a fspath

@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 from jsonbourne.pydantic import JsonBaseModel
 
@@ -34,14 +34,14 @@ class RecordProcess(JsonBaseModel):
 
 
 class RecordException(JsonBaseModel):
-    type: Optional[type[BaseException]]
-    value: Optional[BaseException]
-    traceback: Optional[TracebackType]
+    type: type[BaseException] | None
+    value: BaseException | None
+    traceback: TracebackType | None
 
 
 class Record(JsonBaseModel):
     elapsed: timedelta
-    exception: Optional[RecordException]
+    exception: RecordException | None
     extra: dict[Any, Any]
     file: RecordFile
     function: str
