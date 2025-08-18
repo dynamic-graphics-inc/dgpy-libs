@@ -12,9 +12,9 @@ from typing import (
     TYPE_CHECKING,
     Any,
     Literal,
+    TypeAlias,
     TypedDict,
     TypeVar,
-    Union,
 )
 
 import h5py
@@ -98,7 +98,7 @@ class FileInfoDumpDict(TypedDict):
     datasets: list[str]
 
 
-H5TypedDict = Union[DatasetInfoDict, GroupInfoDict, FileInfoDict]
+H5TypedDict: TypeAlias = DatasetInfoDict | GroupInfoDict | FileInfoDict
 TTypedDict = TypeVar("TTypedDict", bound=H5TypedDict)
 
 

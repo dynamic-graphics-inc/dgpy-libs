@@ -56,7 +56,6 @@ include = [
 
 [tool.ruff]
 extend = "../../pyproject.toml"
-target-version = "py39"
 
 [tool.pytest.ini_options]
 markers = [ "version" ]

@@ -3,16 +3,16 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any, Callable, Union
+from typing import Any, TypeAlias, TypeGuard
 
 import click
 import numpy as np
 import ry
 
 from rich.console import Console
-from typing_extensions import TypeGuard
 
 import h5
 
@@ -23,7 +23,7 @@ __all__ = (
     "cli",
 )
 
-Matcher = Union[Callable[[str], bool], ry.Globster]
+Matcher: TypeAlias = Callable[[str], bool] | ry.Globster
 
 
 def is_np_integer(obj: Any) -> TypeGuard[np.integer]:

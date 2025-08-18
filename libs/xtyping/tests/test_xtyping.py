@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from os import path
 from pprint import pformat
-from typing import Tuple
 
 import pytest
 import typing_extensions
@@ -74,7 +73,7 @@ def test_xtyping_imports_typing() -> None:
 
 def _test_module_all_tuple(
     mod_name: str,
-    mod_all: Tuple[str, ...],
+    mod_all: tuple[str, ...],
     check_sorted: bool = False,  # now handled by RUF022
 ) -> None:
     assert isinstance(mod_all, tuple), "__all__ should be tuple"

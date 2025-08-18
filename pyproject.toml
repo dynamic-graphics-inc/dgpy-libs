@@ -99,8 +99,6 @@ lint.select = [
   "W",
 ]
 lint.ignore = [
-  # "B004",
-  # "B904",
   "ANN401", # use of Any
   "C417",   # super annoying
   "C901",   # too complex
@@ -115,7 +113,6 @@ lint.ignore = [
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
   "E501", # line too long,
-  # "E266", # too many leading '#' for block comment
 
   "FA",
   # PIE
@@ -123,7 +120,7 @@ lint.ignore = [
   "SIM105", # suppressible-exception
   # flake8-simplify (SIM)
   "SIM115", # open-file-with-context-handler
-  "UP006",
+  # "UP006",
 
   # PYUPGRADE
   # keep runtime typing

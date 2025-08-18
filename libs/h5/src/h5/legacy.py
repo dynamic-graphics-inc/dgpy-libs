@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar
 from warnings import warn
 
 from typing_extensions import ParamSpec
@@ -19,7 +19,7 @@ from h5.core import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable
 
     import numpy as np
     import numpy.typing as npt

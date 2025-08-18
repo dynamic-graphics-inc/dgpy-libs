@@ -7,7 +7,7 @@ from functools import lru_cache
 from itertools import chain
 from os import PathLike
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeAlias, TypeGuard, TypeVar, cast
 
 from h5py import (
     AttributeManager,
@@ -17,7 +17,7 @@ from h5py import (
     __version__ as __h5py_version__,
     is_hdf5 as _is_hdf5,
 )
-from typing_extensions import ParamSpec, TypeGuard
+from typing_extensions import ParamSpec
 
 from h5._types import FsPath, H5pyAttributesDict
 
@@ -30,9 +30,9 @@ if TYPE_CHECKING:
 _P = ParamSpec("_P")
 _R = TypeVar("_R")
 
-T_GroupLike = Union[Group, File]
-T_DatasetOrGroup = Union[Dataset, Group]
-T_FsPathOrGroupLike = Union[FsPath, T_GroupLike]
+T_GroupLike: TypeAlias = Group | File
+T_DatasetOrGroup: TypeAlias = Dataset | Group
+T_FsPathOrGroupLike: TypeAlias = FsPath | T_GroupLike
 h5py_obj_types = {
     "d": "dataset",
     "f": "file",
