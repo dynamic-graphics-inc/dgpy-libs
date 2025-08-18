@@ -7,7 +7,7 @@ name = "dgpydev"
 version = "0.1.0"
 description = "dgpy-libs development"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 classifiers = [
   "Private :: Do Not Upload",
   "Programming Language :: Python :: 3 :: Only",
