@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "dgpytest"
-version = "0.0.5"
+version = "0.0.6"
 description = "dgpytest = dgpy + pytest"
 readme = "README.md"
 keywords = [ "dgpy", "plugin", "pytest", "typed" ]

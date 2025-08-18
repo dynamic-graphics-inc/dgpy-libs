@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "dgpylibs"
-version = "0.0.8"
+version = "0.1.0"
 description = "Dynamic Graphics Python libraries"
 keywords = [ "dgi", "dgpy", "python3", "typed" ]
 authors = [ { name = "jessekrubin", email = "jesse@dgi.com" } ]

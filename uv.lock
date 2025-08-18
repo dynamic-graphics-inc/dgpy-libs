@@ -26,7 +26,7 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.7.2"
+version = "0.8.0"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
@@ -117,7 +117,7 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.11.2"
+version = "0.12.0"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
@@ -630,7 +630,7 @@ dev = [
 
 [[package]]
 name = "dgpylibs"
-version = "0.0.8"
+version = "0.1.0"
 source = { editable = "libs/dgpylibs" }
 dependencies = [
     { name = "aiopen" },
@@ -663,7 +663,7 @@ requires-dist = [
 
 [[package]]
 name = "dgpytest"
-version = "0.0.5"
+version = "0.0.6"
 source = { editable = "libs/dgpytest" }
 dependencies = [
     { name = "pytest" },
@@ -690,7 +690,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -726,12 +726,12 @@ wheels = [
 
 [[package]]
 name = "fmts"
-version = "0.3.1"
+version = "0.4.0"
 source = { editable = "libs/fmts" }
 
 [[package]]
 name = "funkify"
-version = "0.6.1"
+version = "0.7.0"
 source = { editable = "libs/funkify" }
 
 [[package]]
@@ -769,7 +769,7 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.11.1"
+version = "0.12.0"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "click" },
@@ -994,7 +994,7 @@ wheels = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.31.2"
+version = "0.32.0"
 source = { editable = "libs/jsonbourne" }
 dependencies = [
     { name = "typing-extensions" },
@@ -1125,7 +1125,7 @@ wheels = [
 
 [[package]]
 name = "lager"
-version = "0.19.1"
+version = "0.20.0"
 source = { editable = "libs/lager" }
 dependencies = [
     { name = "loguru" },
@@ -1148,7 +1148,7 @@ dev = [{ name = "typing-extensions", specifier = ">=4.5,<5" }]
 
 [[package]]
 name = "listless"
-version = "0.3.1"
+version = "0.4.0"
 source = { editable = "libs/listless" }
 
 [package.dev-dependencies]
@@ -2305,7 +2305,7 @@ wheels = [
 
 [[package]]
 name = "requires"
-version = "0.11.2"
+version = "0.12.0"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
@@ -2594,7 +2594,7 @@ wheels = [
 
 [[package]]
 name = "shellfish"
-version = "0.6.4"
+version = "0.7.0"
 source = { editable = "libs/shellfish" }
 dependencies = [
     { name = "aiopen" },
@@ -2857,7 +2857,7 @@ wheels = [
 
 [[package]]
 name = "xtyping"
-version = "0.10.1"
+version = "0.11.0"
 source = { editable = "libs/xtyping" }
 dependencies = [
     { name = "annotated-types" },

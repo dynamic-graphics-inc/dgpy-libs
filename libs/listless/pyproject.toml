@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "listless"
-version = "0.3.1"
+version = "0.4.0"
 description = "generator utils; aka listless"
 readme = "README.md"
 keywords = [
