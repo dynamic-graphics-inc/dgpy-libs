@@ -10,7 +10,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: "3.11"
       - name: ruff-check
         run: |
           python -m pip install --upgrade pip
@@ -26,7 +26,7 @@ jobs:
       - name: install-uv
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.9
+          python-version: "3.11"
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: ruff-check
@@ -41,7 +41,7 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.11
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -57,7 +57,7 @@ jobs:
     # matrix of python versions to test against
     strategy:
       matrix:
-        python-version: [3.9, "3.10", "3.11", "3.12", "3.13"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     # set uv environment variables
     steps:
@@ -67,12 +67,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: Install uv and set the python version
         uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
-      
+
       - name: uv-sync
         run: uv sync --all-extras --dev
 
@@ -146,7 +146,7 @@ jobs:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.11
+          python-version: "3.10"
       - name: install-uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: uv-sync
