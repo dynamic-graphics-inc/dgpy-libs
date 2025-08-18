@@ -12,10 +12,12 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 from uuid import UUID
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:

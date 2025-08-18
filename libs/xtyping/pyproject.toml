@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8.0,<0.9" ]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "xtyping"
@@ -9,7 +9,7 @@ description = "xtyping = typing + typing_extensions"
 readme = "README.md"
 keywords = [ "dgpy", "typed", "types", "typing" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",

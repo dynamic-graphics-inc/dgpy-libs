@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import logging
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from logging import (
     BASIC_FORMAT as BASIC_FORMAT,
     CRITICAL as CRITICAL,
@@ -63,9 +63,9 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Callable, Optional, Union
+from typing import Any, Literal, Optional, TypeAlias, Union
 
-from typing_extensions import Literal, Self, TypeAlias
+from typing_extensions import Self
 
 from lager.core import LOG, loglevel
 

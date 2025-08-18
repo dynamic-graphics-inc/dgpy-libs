@@ -13,13 +13,13 @@ from subprocess import (
     TimeoutExpired,
 )
 from time import time
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import TYPE_CHECKING, Optional
 
 from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
 from shellfish.sp import PopenArgs, ProcessDt
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping
+    from collections.abc import Callable, Mapping
     from typing import IO, Any, Union
 
     from shellfish._types import FsPath

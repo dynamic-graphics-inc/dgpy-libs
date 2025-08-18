@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8.0,<0.9" ]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "requires"
@@ -9,7 +9,7 @@ description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = [ "decorator", "dgpy", "funkify", "import", "requires" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -28,7 +27,7 @@ dependencies = [ "funkify>=0.4", "typing-extensions>=4.12.2" ]
 
 [dependency-groups]
 dev = [
- "orjson>=3.11.0",
+  "orjson>=3.11",
 ]
 
 [tool.hatch]

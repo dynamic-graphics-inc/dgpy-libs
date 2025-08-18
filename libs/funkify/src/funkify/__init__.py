@@ -6,10 +6,13 @@ from __future__ import annotations
 import sys
 
 from types import ModuleType
-from typing import Any, Callable, Optional, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Optional, TypeVar, cast
 
 from funkify import __about__
 from funkify.__about__ import __version__
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 T = TypeVar("T")
 

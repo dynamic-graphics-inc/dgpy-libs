@@ -23,7 +23,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Generic,
     Optional,
     TypeVar,
@@ -34,7 +33,7 @@ from typing import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Coroutine
+    from collections.abc import Awaitable, Callable, Coroutine
     from os import PathLike
     from types import TracebackType
 

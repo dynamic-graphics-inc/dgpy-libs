@@ -10,7 +10,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Generic,
     Optional,
     Union,
@@ -21,7 +20,7 @@ from typing import (
 from anyio import AsyncFile, open_file
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable
+    from collections.abc import Awaitable, Callable
     from os import PathLike
     from types import TracebackType
 

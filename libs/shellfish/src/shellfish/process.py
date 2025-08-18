@@ -11,14 +11,20 @@ from os import environ, name as os_name, pathsep
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Optional,
     Union,
     cast,
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Generator, ItemsView, Iterator, KeysView, ValuesView
+    from collections.abc import (
+        Callable,
+        Generator,
+        ItemsView,
+        Iterator,
+        KeysView,
+        ValuesView,
+    )
 
 IS_WIN = os_name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()

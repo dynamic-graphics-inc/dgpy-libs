@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Generator, MutableMapping
+from collections.abc import Callable, Generator, MutableMapping
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
@@ -11,8 +11,8 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
-    Callable,
     Optional,
+    TypeGuard,
     TypeVar,
     Union,
 )
@@ -25,7 +25,6 @@ from pydantic import (
     ValidationError,
 )
 from pydantic.functional_validators import BeforeValidator
-from typing_extensions import TypeGuard
 
 from jsonbourne.core import JSON, JsonObj
 

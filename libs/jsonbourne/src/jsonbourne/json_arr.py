@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from collections.abc import Iterable, Iterator, MutableSequence
+from collections.abc import Callable, Iterable, Iterator, MutableSequence
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Generic,
     Literal,
     Optional,
@@ -239,7 +238,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         self, start: int = 0, flip: bool = False
     ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]:
         if flip:
-            return zip(self.__arr, range(start, len(self.__arr) + start))
+            return zip(self.__arr, range(start, len(self.__arr) + start), strict=False)
         return enumerate(self.__arr, start=start)
 
     def _iter_el(self) -> Iterator[_T]:

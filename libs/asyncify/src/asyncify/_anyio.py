@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from functools import partial, wraps
-from typing import TYPE_CHECKING, Callable, Optional, TypeVar
+from typing import TYPE_CHECKING, Optional, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,
@@ -12,7 +12,7 @@ from anyio import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable
+    from collections.abc import Awaitable, Callable
 
 __all__ = (
     "anyio_run",

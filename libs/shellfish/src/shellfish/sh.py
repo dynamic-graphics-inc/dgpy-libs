@@ -26,7 +26,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Optional,
     Union,
 )
@@ -183,7 +182,7 @@ from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable
 
     from shellfish._types import (
         STDIN as STDIN,

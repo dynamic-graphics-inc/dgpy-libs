@@ -29,7 +29,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Optional,
     Union,
     cast,
@@ -93,7 +92,7 @@ from shellfish.process import is_win as _is_win
 from shellfish.stdio import Stdio as Stdio
 
 if TYPE_CHECKING:
-    from collections.abc import Generator, Iterable, Iterator
+    from collections.abc import Callable, Generator, Iterable, Iterator
 
 # END-IMPORTS
 
@@ -1378,6 +1377,7 @@ def filecmp(
         for left_chunk, right_chunk in zip(
             read_bytes_gen(left, blocksize=blocksize),
             read_bytes_gen(right, blocksize=blocksize),
+            strict=False,
         )
     )
 

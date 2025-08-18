@@ -3,9 +3,7 @@
 
 from __future__ import annotations
 
-from typing import Final
-
-from typing_extensions import Literal
+from typing import Final, Literal
 
 a: Final[Literal["a"]] = "a"
 r: Final[Literal["r"]] = "r"

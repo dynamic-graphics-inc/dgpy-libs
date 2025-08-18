@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from hashlib import blake2b, blake2s, md5, sha1, sha224, sha256, sha384, sha512
-from typing import TYPE_CHECKING, Callable, Union
+from typing import TYPE_CHECKING, Union
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
     from hashlib import _Hash
 
 __all__ = ("hash_bytes_gen", "string2hasher")

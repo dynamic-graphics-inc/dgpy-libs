@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8.0,<0.9" ]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "jsonbourne"
@@ -9,7 +9,7 @@ description = "EZPZ JSON"
 readme = "README.md"
 keywords = [ "dgpy", "json", "orjson", "pydantic", "rapidjson" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,7 +17,6 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -49,8 +48,6 @@ dev = [
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
 ]
-[tool.uv.build-backend]
-module-name = "jsonbourne"
 
 [tool.hatch]
 [tool.hatch.metadata]
@@ -124,3 +121,6 @@ exclude_lines = [
   'if 0:',
   'if False:',
 ]
+
+[tool.uv.build-backend]
+module-name = "jsonbourne"

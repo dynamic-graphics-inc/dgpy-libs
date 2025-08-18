@@ -5,9 +5,9 @@ from __future__ import annotations
 
 import os
 
-from collections.abc import AsyncIterable, AsyncIterator, Iterable
+from collections.abc import AsyncIterable, AsyncIterator, Callable, Iterable
 from os import fspath as _fspath
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 from aiopen import aiopen
 from jsonbourne import JSON

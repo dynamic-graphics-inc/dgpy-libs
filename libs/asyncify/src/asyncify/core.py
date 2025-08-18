@@ -6,20 +6,27 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
-from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Coroutine, Iterable
+from collections.abc import (
+    AsyncIterable,
+    AsyncIterator,
+    Awaitable,
+    Callable,
+    Coroutine,
+    Iterable,
+)
 from functools import partial, wraps
 from inspect import isawaitable
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Optional,
+    TypeGuard,
     TypeVar,
     Union,
     cast,
 )
 
-from typing_extensions import ParamSpec, TypeGuard
+from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:  # pragma: no cover
     from anyio import CapacityLimiter

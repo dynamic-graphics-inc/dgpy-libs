@@ -8,12 +8,15 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import TYPE_CHECKING, Any, Optional, TypeVar, Union
 
 from loguru import logger as logger
 from loguru._handler import Handler
 
 from lager.const import LOG_LEVELS
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 T = TypeVar("T")
 

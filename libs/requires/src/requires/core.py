@@ -14,17 +14,17 @@ from importlib import import_module
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Optional,
+    TypeAlias,
     TypedDict,
     TypeVar,
     Union,
 )
 
-from typing_extensions import ParamSpec, TypeAlias
+from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable
 
 T = TypeVar("T")
 R = TypeVar("R")

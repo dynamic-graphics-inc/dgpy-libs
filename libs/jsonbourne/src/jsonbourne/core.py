@@ -6,6 +6,7 @@ from __future__ import annotations
 import keyword
 
 from collections.abc import (
+    Callable,
     ItemsView,
     Iterable,
     Iterator,
@@ -21,7 +22,6 @@ from types import ModuleType
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Generic,
     Optional,
     TypeVar,

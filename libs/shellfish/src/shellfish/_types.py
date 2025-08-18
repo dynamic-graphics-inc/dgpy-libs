@@ -4,9 +4,7 @@ from __future__ import annotations
 from collections.abc import Mapping, Sequence
 from os import PathLike
 from pathlib import Path
-from typing import IO, TYPE_CHECKING, Any, Union
-
-from typing_extensions import Literal, TypeAlias
+from typing import IO, TYPE_CHECKING, Any, Literal, TypeAlias, Union
 
 if TYPE_CHECKING:
     PathLikeAny = PathLike[Any]
