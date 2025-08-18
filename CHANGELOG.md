@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## unreleased
+
+---
+
+## 2025-08-18
+
+- ALL
+  - Bump min python version to 3.10
+  - Ruff lints updated for python-v3.10
+  - CICD updates for min python version 3.10
+
 ---
 
 ## 2025-07-22
