@@ -4,10 +4,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Optional, Union
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from collections.abc import Iterator
+    from collections.abc import Callable, Iterator
 
 
 class _DirTree:
@@ -21,12 +21,12 @@ class _DirTree:
     path: Path
     is_last: bool
     depth: int
-    parent: Optional[_DirTree]
+    parent: _DirTree | None
 
     def __init__(
         self,
-        path: Union[str, Path],
-        parent_path: Optional[_DirTree],
+        path: str | Path,
+        parent_path: _DirTree | None,
         is_last: bool,
     ) -> None:
         """Construct a DirTree object
@@ -46,9 +46,9 @@ class _DirTree:
     def make_tree(
         cls,
         root: Path,
-        parent: Optional[_DirTree] = None,
+        parent: _DirTree | None = None,
         is_last: bool = False,
-        filterfn: Optional[Callable[..., bool]] = None,
+        filterfn: Callable[..., bool] | None = None,
     ) -> Iterator[_DirTree]:
         """Make a DirTree object
 

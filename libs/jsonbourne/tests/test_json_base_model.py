@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import Any, Union
+from typing import Any
 
 import pytest
 
@@ -22,7 +22,7 @@ try:
             return self.json()
 
         @classmethod
-        def from_json(cls, json_string: Union[str, bytes]) -> JsonSubObj:
+        def from_json(cls, json_string: str | bytes) -> JsonSubObj:
             d = JSON.loads(json_string)
             return cls(**d)
 
@@ -41,7 +41,7 @@ try:
             return self.json()
 
         @classmethod
-        def from_json(cls, json_string: Union[str, bytes]) -> JsonObjModel:
+        def from_json(cls, json_string: str | bytes) -> JsonObjModel:
             return cls(**JSON.loads(json_string))
 
     def test_json_base_model_w_prop() -> None:

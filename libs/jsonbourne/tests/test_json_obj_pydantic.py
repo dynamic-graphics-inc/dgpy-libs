@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import sys
 
-from typing import Union, cast
+from typing import cast
 
 import pytest
 
@@ -18,7 +18,7 @@ try:
     _extra = "allow" if "pytest" in sys.modules else "ignore"
     _model_config = cast("ConfigDict", {"extra": _extra})
 
-    class PydanticJsonObj(BaseModel, JsonObj[Union[str, int]]):  # type: ignore[misc]
+    class PydanticJsonObj(BaseModel, JsonObj[str | int]):  # type: ignore[misc]
         a: int
         b: int
         c: str

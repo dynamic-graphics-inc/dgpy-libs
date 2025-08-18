@@ -6,10 +6,13 @@ from __future__ import annotations
 import sys
 
 from types import ModuleType
-from typing import Any, Callable, Optional, TypeVar, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from funkify import __about__
 from funkify.__about__ import __version__
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 T = TypeVar("T")
 
@@ -24,7 +27,7 @@ __all__ = (
 def default_export(
     funk: T,
     *,
-    key: Optional[str] = None,
+    key: str | None = None,
 ) -> T:
     """Assign a function to a module's __call__ attr
 
@@ -65,7 +68,7 @@ def default_export(
 
 
 @default_export
-def funkify(funk: Callable[..., T], *, key: Optional[str] = None) -> Callable[..., T]:
+def funkify(funk: Callable[..., T], *, key: str | None = None) -> Callable[..., T]:
     """Assign a function to a module's __call__ attr
 
     Args:

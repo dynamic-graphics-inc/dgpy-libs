@@ -12,10 +12,12 @@ from datetime import date as dtdate, datetime, time as dttime, timedelta
 from decimal import Decimal
 from pathlib import Path
 from sys import modules as _sys_modules
-from typing import TYPE_CHECKING, Any, Callable, Optional, Union
+from typing import TYPE_CHECKING, Any
 from uuid import UUID
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from jsonbourne.protocols import Dumpable, JsonInterfaceProtocol
 
 try:
@@ -117,7 +119,7 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str: ...
 
@@ -129,14 +131,14 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes: ...
 
     @staticmethod
     @abstractmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -168,7 +170,7 @@ class JsonLibABC(ABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any: ...
 
@@ -186,7 +188,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         _pretty = fmt or pretty
@@ -210,7 +212,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return JSON_STDLIB.dumps(
@@ -225,7 +227,7 @@ class JSON_STDLIB(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -252,7 +254,7 @@ class JSON_STDLIB(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return JSON_STDLIB.loads(
@@ -278,7 +280,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return ORJSON.dumpb(
@@ -297,7 +299,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         option = 0
@@ -316,7 +318,7 @@ class ORJSON(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -340,7 +342,7 @@ class ORJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return ORJSON.loads(
@@ -370,7 +372,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         dump_str = str(
@@ -396,7 +398,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return RAPIDJSON.dumps(
@@ -411,7 +413,7 @@ class RAPIDJSON(JsonLibABC):
 
     @staticmethod
     def loads(
-        string: Union[bytes, str],
+        string: bytes | str,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -438,7 +440,7 @@ class RAPIDJSON(JsonLibABC):
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return RAPIDJSON.loads(
@@ -479,7 +481,7 @@ def _import_json_stdlib() -> type[JSON_STDLIB]:
 
 
 def import_json(
-    jsonlibs: Optional[Union[tuple[str, ...], list[str]]] = None,
+    jsonlibs: tuple[str, ...] | list[str] | None = None,
 ) -> type[JsonLibABC]:
     lib2funk = {
         "rapidjson": _import_rapidjson,
@@ -499,10 +501,10 @@ def import_json(
 
 class JsonLib:
     _jsonlib: type[JsonLibABC]
-    _oj: Optional[type[ORJSON]] = None
-    _rj: Optional[type[RAPIDJSON]] = None
+    _oj: type[ORJSON] | None = None
+    _rj: type[RAPIDJSON] | None = None
 
-    def __init__(self, jsonlib: Optional[type[JsonLibABC]] = None) -> None:
+    def __init__(self, jsonlib: type[JsonLibABC] | None = None) -> None:
         if jsonlib:
             self._jsonlib = jsonlib
         else:
@@ -519,7 +521,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return self._jsonlib.dumps(
@@ -539,7 +541,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> bytes:
         return self._jsonlib.dumpb(
@@ -552,9 +554,7 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(
-        self, string: Union[bytes, str], jsonc: bool = False, **kwargs: Any
-    ) -> Any:
+    def loads(self, string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
         if jsonc and self._rj:
             return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
@@ -587,7 +587,7 @@ class JsonLib:
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> Any:
         return self._jsonlib.jsoncp(
@@ -611,7 +611,7 @@ def dumps(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> str:
     return JSONLIB.dumps(
@@ -631,7 +631,7 @@ def dumpb(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> bytes:
     return JSONLIB.dumpb(
@@ -646,7 +646,7 @@ def dumpb(
 
 
 def loads(
-    string: Union[bytes, str],
+    string: bytes | str,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,
@@ -660,18 +660,18 @@ def loads(
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
-def parse(string: Union[bytes, str], jsonc: bool = False, **kwargs: Any) -> Any:
+def parse(string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
     return loads(string, jsonc=jsonc, **kwargs)
 
 
 def wjson(
-    fspath: Union[str, Path],
+    fspath: str | Path,
     data: Any,
     fmt: bool = False,
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> int:
     with open(fspath, "wb") as f:
@@ -684,7 +684,7 @@ def wjson(
 
 
 def rjson(
-    fspath: Union[str, Path],
+    fspath: str | Path,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,
@@ -701,7 +701,7 @@ def jsoncp(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
+    default: Callable[[Any], Any] | None = None,
     **kwargs: Any,
 ) -> Any:
     return JSONLIB.jsoncp(

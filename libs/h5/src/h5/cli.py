@@ -3,16 +3,16 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Any, Callable, Optional, Union
+from typing import Any, TypeAlias, TypeGuard
 
 import click
 import numpy as np
 import ry
 
 from rich.console import Console
-from typing_extensions import TypeGuard
 
 import h5
 
@@ -23,7 +23,7 @@ __all__ = (
     "cli",
 )
 
-Matcher = Union[Callable[[str], bool], ry.Globster]
+Matcher: TypeAlias = Callable[[str], bool] | ry.Globster
 
 
 def is_np_integer(obj: Any) -> TypeGuard[np.integer]:
@@ -59,9 +59,9 @@ def true(string: str) -> bool:
 
 @lru_cache(maxsize=16)
 def make_globster(
-    include: Optional[tuple[str, ...]] = ("**/*",),
-    exclude: Optional[tuple[str, ...]] = None,
-) -> Union[Callable[[str], bool], ry.Globster]:
+    include: tuple[str, ...] | None = ("**/*",),
+    exclude: tuple[str, ...] | None = None,
+) -> Callable[[str], bool] | ry.Globster:
     patterns: list[str] = []
     if include:
         patterns.extend(include)
@@ -75,8 +75,8 @@ class H5CliConfig:
     datasets: bool
     attributes: bool
     groups: bool
-    include: Optional[tuple[str, ...]] = None
-    exclude: Optional[tuple[str, ...]] = None
+    include: tuple[str, ...] | None = None
+    exclude: tuple[str, ...] | None = None
 
     def filter_is_none(self) -> bool:
         """Check if filter is None"""
@@ -89,7 +89,7 @@ class H5CliConfig:
             return true
         return make_globster(self.include or ("**/*",), self.exclude)
 
-    def matcher(self) -> Optional[Matcher]:
+    def matcher(self) -> Matcher | None:
         if self.filter_is_none():
             return None
         return self.globster()
@@ -100,8 +100,8 @@ class H5CliConfig:
         datasets: bool,
         attributes: bool,
         groups: bool,
-        include: Optional[tuple[str, ...]] = ("**/*",),
-        exclude: Optional[tuple[str, ...]] = None,
+        include: tuple[str, ...] | None = ("**/*",),
+        exclude: tuple[str, ...] | None = None,
     ) -> H5CliConfig:
         return (
             cls(
@@ -217,7 +217,7 @@ def dump(
     attributes: bool = False,
     groups: bool = False,
     include: tuple[str, ...] = ("**/*",),
-    exclude: Optional[tuple[str, ...]] = None,
+    exclude: tuple[str, ...] | None = None,
 ) -> None:
     config = H5CliConfig.from_cli(
         datasets=datasets,
@@ -381,7 +381,7 @@ def ls(
     groups: bool = False,
     json_: bool = False,
     include: tuple[str, ...] = ("**/*",),
-    exclude: Optional[tuple[str, ...]] = None,
+    exclude: tuple[str, ...] | None = None,
 ) -> None:
     cfg = H5CliConfig.from_cli(
         datasets=datasets,
@@ -430,7 +430,7 @@ def lsd(
     fspath: str,
     json_: bool = False,
     include: tuple[str, ...] = ("**/*",),
-    exclude: Optional[tuple[str, ...]] = None,
+    exclude: tuple[str, ...] | None = None,
 ) -> None:
     """List datasets"""
     cfg = H5CliConfig.from_cli(
@@ -476,7 +476,7 @@ def lsg(
     fspath: str,
     json_: bool = False,
     include: tuple[str, ...] = ("**/*",),
-    exclude: Optional[tuple[str, ...]] = None,
+    exclude: tuple[str, ...] | None = None,
 ) -> None:
     """List groups"""
     cfg = H5CliConfig.from_cli(

@@ -2,10 +2,13 @@ from __future__ import annotations
 
 from functools import wraps
 from inspect import signature
-from typing import Callable, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 from warnings import warn
 
 from typing_extensions import ParamSpec
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 P = ParamSpec("P")
 R = TypeVar("R")

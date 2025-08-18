@@ -10,6 +10,7 @@ from collections import deque
 from collections.abc import (
     AsyncIterable,
     AsyncIterator,
+    Callable,
     Collection,
     Iterable,
     Iterator,
@@ -20,10 +21,8 @@ from itertools import chain, count, islice, tee, zip_longest
 from operator import iconcat, mul
 from typing import (
     Any,
-    Callable,
-    Optional,
+    TypeAlias,
     TypeVar,
-    Union,
     cast,
     overload,
 )
@@ -63,11 +62,11 @@ __all__ = (
 _K = TypeVar("_K")
 _T = TypeVar("_T")
 _R = TypeVar("_R")
-AnyIterable = Union[Iterable[_T], AsyncIterable[_T]]
-AnyIterator = Union[Iterator[_T], AsyncIterator[_T]]
+AnyIterable: TypeAlias = Iterable[_T] | AsyncIterable[_T]
+AnyIterator: TypeAlias = Iterator[_T] | AsyncIterator[_T]
 
 
-def aiterable(it: Union[Iterable[_T], AsyncIterable[_T]]) -> AsyncIterator[_T]:
+def aiterable(it: Iterable[_T] | AsyncIterable[_T]) -> AsyncIterator[_T]:
     """Convert any-iterable to an async iterator
 
     Examples:
@@ -122,7 +121,7 @@ def pairs(it: Iterable[_T]) -> Iterable[tuple[_T, _T]]:
     """
     a, b = tee(it)
     next(b, None)
-    return zip(a, b)
+    return zip(a, b, strict=False)
 
 
 def partition(
@@ -192,7 +191,7 @@ def partition(
     if pad:
         return zip_longest(*args, fillvalue=padval)
     else:
-        return zip(*args)
+        return zip(*args, strict=False)
 
 
 def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
@@ -285,8 +284,8 @@ def chunks(it: Collection[_T], chunk_size: int) -> Iterable[Collection[_T]]: ...
 
 
 def chunks(
-    it: Union[Sequence[_T], Collection[_T]], chunk_size: int
-) -> Iterable[Union[Sequence[_T], Collection[_T], str]]:
+    it: Sequence[_T] | Collection[_T], chunk_size: int
+) -> Iterable[Sequence[_T] | Collection[_T] | str]:
     """Yield chunks of something slice-able with length <= chunk_size
 
     Args:
@@ -326,8 +325,8 @@ def chunks(
 
 
 def chunk(
-    it: Union[Sequence[_T], Collection[_T]], n: int
-) -> Iterable[Union[Sequence[_T], Collection[_T], str]]:
+    it: Sequence[_T] | Collection[_T], n: int
+) -> Iterable[Sequence[_T] | Collection[_T] | str]:
     """Yield chunks of size n from an iterable/sequence/collection
 
     Examples:
@@ -338,7 +337,7 @@ def chunk(
     return chunks(it, n)
 
 
-def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
+def exhaust(it: Iterable[_T], *, maxlen: int | None = 0) -> deque[_T]:
     """Exhaust an iterable; useful for evaluating a map object.
 
     Args:
@@ -369,7 +368,7 @@ def exhaust(it: Iterable[_T], *, maxlen: Optional[int] = 0) -> deque[_T]:
 
 
 def xmap(
-    func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: Optional[int] = 0
+    func: Callable[[_T], _R], it: Iterable[_T], *, maxlen: int | None = 0
 ) -> deque[_R]:
     """Apply a function to each element of an iterable immediately
 
@@ -393,7 +392,7 @@ def xmap(
     return exhaust(map(func, it), maxlen=maxlen)
 
 
-def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
+def filter_none(it: Iterable[_T | None]) -> Iterable[_T]:
     """Filter `None` values from an iterable
 
     Args:
@@ -455,7 +454,7 @@ def filter_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     return filter(None, it)
 
 
-def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
+def filter_is_none(it: Iterable[_T | None]) -> Iterable[_T]:
     """Filter values that `is None`; checkout filter_none for false-y filtering
 
     Args:
@@ -475,7 +474,7 @@ def filter_is_none(it: Iterable[Union[_T, None]]) -> Iterable[_T]:
     return filter(lambda x: x is not None, it)  # type: ignore[arg-type]
 
 
-def flatten(*args: Union[_T, Iterable[_T]]) -> Iterable[_T]:
+def flatten(*args: _T | Iterable[_T]) -> Iterable[_T]:
     """Flatten possibly nested iterables of sequences to a flat list
 
     Examples:
@@ -498,7 +497,7 @@ def flatten(*args: Union[_T, Iterable[_T]]) -> Iterable[_T]:
     )
 
 
-def flatten_seq(*args: Union[_T, Sequence[_T]], anystr: bool = False) -> Iterable[_T]:
+def flatten_seq(*args: _T | Sequence[_T], anystr: bool = False) -> Iterable[_T]:
     """Flatten possibly nested iterables of sequences to a flat list
 
     Examples:
@@ -521,10 +520,7 @@ def flatten_seq(*args: Union[_T, Sequence[_T]], anystr: bool = False) -> Iterabl
 
 
 def flatten_strings(
-    *args: Union[
-        Any,
-        Iterable[Any],
-    ],
+    *args: Any | Iterable[Any],
 ) -> Iterable[str]:
     """Flatten possibly nested iterables of sequences to a list of strings
 
@@ -564,11 +560,11 @@ def itlen(iterable: Iterable[Any], unique: bool = False) -> int:
     if unique:
         return len(set(iterable))
     counter = count()
-    deque(zip(iterable, counter), maxlen=0)
+    deque(zip(iterable, counter, strict=False), maxlen=0)
     return next(counter)
 
 
-def it_product(it: Iterable[Union[int, float]]) -> Union[int, float]:
+def it_product(it: Iterable[int | float]) -> int | float:
     """Product of all the elements in an iterable of numbers
 
     Args:
@@ -616,9 +612,7 @@ def spliterable(
     return (i for p, i in _true_gen if p), (i for p, i in _false_gen if not p)
 
 
-def unique_gen(
-    it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None
-) -> Iterable[_T]:
+def unique_gen(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Iterable[_T]:
     """Yield unique values (ordered) from an iterable
 
     Args:
@@ -651,7 +645,7 @@ def unique_gen(
         )
 
 
-def unique(it: Iterable[_T], key: Optional[Callable[[_T], _K]] = None) -> Iterable[_T]:
+def unique(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Iterable[_T]:
     """Alias for unique_gen
 
     Examples:

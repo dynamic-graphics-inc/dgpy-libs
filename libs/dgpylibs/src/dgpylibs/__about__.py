@@ -7,4 +7,4 @@ __all__ = ("__description__", "__pkgroot__", "__title__", "__version__")
 __title__ = "dgpylibs"
 __description__ = "Dynamic Graphics Python libraries"
 __pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\")
-__version__ = "0.0.8"
+__version__ = "0.1.0"

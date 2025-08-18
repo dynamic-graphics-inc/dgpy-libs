@@ -19,9 +19,7 @@ from typing import (
     Any,
     AnyStr,
     Callable,
-    Optional,
     TypeVar,
-    Union,
 )
 
 from fmts.__about__ import __version__
@@ -445,7 +443,7 @@ def ensure_trailing_newline(string: AnyStr) -> AnyStr:
     return "{}\n".format(string.strip("\n"))
 
 
-def nbytes_str(nbytes: Union[int, float]) -> str:
+def nbytes_str(nbytes: int | float) -> str:
     """Format nbytesber of bytes to human readable form
 
     Args:
@@ -498,7 +496,7 @@ def nbytes_str(nbytes: Union[int, float]) -> str:
     raise ValueError(f"Invalid number of bytes: {nbytes}")  # pragma: no cover
 
 
-def nbytes(nbytes: Union[int, float]) -> str:
+def nbytes(nbytes: int | float) -> str:
     """Alias for nbytes_str (for backward compatibility)
 
     Examples:
@@ -625,7 +623,7 @@ def nseconds(nsec: float) -> str:
         return f"{hours:02d}:{minutes:02d}:{nsec:02d} (hh:mm:ss)"
 
 
-def dseconds(ti: Union[float, int], tf: Union[float, int]) -> str:
+def dseconds(ti: float | int, tf: float | int) -> str:
     """Format time duration given initial and final timestamps in seconds
 
     Args:
@@ -827,9 +825,10 @@ def strip_comments(string: str) -> str:
 
 def multi_replace(
     string: str,
-    replacements: Union[
-        list[tuple[str, str]], list[list[str]], dict[str, str], ItemsView[str, str]
-    ],
+    replacements: list[tuple[str, str]]
+    | list[list[str]]
+    | dict[str, str]
+    | ItemsView[str, str],
 ) -> str:
     """Replace multiple patterns in a string
 
@@ -1181,7 +1180,7 @@ def string_sanitize(string: str) -> str:
     return strip_non_ascii(re.sub(r"[()\"/;:<>{}`=~|!?,]", "", string).strip("."))
 
 
-def longest_line(string: Union[str, bytes]) -> int:
+def longest_line(string: str | bytes) -> int:
     r"""Return the length of the longest line in a string
 
     Args:
@@ -1230,7 +1229,7 @@ def rm_multilines(string: str) -> str:
     )
 
 
-def ensure_utf8(string: Union[str, bytes]) -> str:
+def ensure_utf8(string: str | bytes) -> str:
     r"""Return a string that ensured to be utf-8.
 
     This is often needed for those rare cases where some weird non-unicode
@@ -1312,7 +1311,7 @@ class pstr(str):
 def indent(
     string: AnyStr,
     prefix: str = "    ",
-    predicate: Optional[Callable[[str], bool]] = None,
+    predicate: Callable[[str], bool] | None = None,
 ) -> AnyStr:
     r"""Indent a string a given number of spaces
 
@@ -1375,7 +1374,7 @@ def dedent(string: str) -> str:
     )
 
 
-def timestamp(ts: Optional[Union[float, datetime]] = None) -> str:
+def timestamp(ts: float | datetime | None = None) -> str:
     """Time stamp string w/ format yyyymmdd-HHMMSS
 
     Args:
@@ -1596,7 +1595,7 @@ def overscore(string: str) -> str:
     return "\n".join(["_" * longest_line(string), string])
 
 
-def b64_html_img(b64_string: Union[str, bytes], img_format: str) -> str:
+def b64_html_img(b64_string: str | bytes, img_format: str) -> str:
     """Return an img tag given a base64-jpeg-image-string"""
     try:
         if isinstance(b64_string, bytes):
@@ -1660,7 +1659,7 @@ def b64_html_gif(b64_string: str) -> str:
     return b64_html_img(b64_string, "gif")
 
 
-def base64_jpg_html(b64_string: Union[str, bytes]) -> str:
+def base64_jpg_html(b64_string: str | bytes) -> str:
     """Return an img tag given a base64-jpeg-image-string"""
     try:
         if isinstance(b64_string, bytes):

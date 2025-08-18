@@ -14,17 +14,15 @@ from importlib import import_module
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
-    Optional,
+    TypeAlias,
     TypedDict,
     TypeVar,
-    Union,
 )
 
-from typing_extensions import ParamSpec, TypeAlias
+from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable
 
 T = TypeVar("T")
 R = TypeVar("R")
@@ -60,16 +58,16 @@ class RequirementDict(TypedDict):
     """Requirement dict"""
 
     _import: str
-    _from: Optional[str]
-    _as: Optional[str]
-    pip: Optional[Union[str, bool]]
-    conda: Optional[Union[str, bool]]
-    conda_forge: Optional[Union[str, bool]]
-    details: Optional[Union[str, list[str]]]
-    lazy: Optional[bool]  # default true
+    _from: str | None
+    _as: str | None
+    pip: str | bool | None
+    conda: str | bool | None
+    conda_forge: str | bool | None
+    details: str | list[str] | None
+    lazy: bool | None  # default true
 
 
-TRequirementDict: TypeAlias = Union[RequirementDict, dict[str, Any]]
+TRequirementDict: TypeAlias = RequirementDict | dict[str, Any]
 
 
 @dataclass(frozen=True, unsafe_hash=True)
@@ -77,12 +75,12 @@ class Requirement:
     """Requirement class to specify a package or module requirement"""
 
     _import: str
-    _from: Optional[str] = None
-    _as: Optional[str] = None
-    pip: Optional[Union[str, bool]] = None
-    conda: Optional[Union[str, bool]] = None
-    conda_forge: Optional[Union[str, bool]] = None
-    details: Optional[Union[str, list[str]]] = None
+    _from: str | None = None
+    _as: str | None = None
+    pip: str | bool | None = None
+    conda: str | bool | None = None
+    conda_forge: str | bool | None = None
+    details: str | list[str] | None = None
     lazy: bool = field(default=True)
 
     def __post_init__(self) -> None: ...
@@ -325,7 +323,7 @@ class RequirementsMeta:
         self,
         *,
         warn: bool = False,
-        on_missing: Optional[Callable[[set[Requirement]], None]],
+        on_missing: Callable[[set[Requirement]], None] | None,
     ) -> set[Requirement]:
         """Check if requirements are met
 
@@ -435,7 +433,7 @@ def string2requirement(string: str) -> Requirement:
 
 
 def make_requirement(
-    requirement: Union[str, Requirement, TRequirementDict],
+    requirement: str | Requirement | TRequirementDict,
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
@@ -458,13 +456,11 @@ def make_requirement(
 
 
 def make_requirements(
-    requirements: Union[
-        list[Union[str, Requirement, TRequirementDict]],
-        tuple[Union[str, Requirement, TRequirementDict]],
-        str,
-        Requirement,
-        TRequirementDict,
-    ],
+    requirements: list[str | Requirement | TRequirementDict]
+    | tuple[str | Requirement | TRequirementDict]
+    | str
+    | Requirement
+    | TRequirementDict,
 ) -> list[Requirement]:
     if isinstance(requirements, (list, tuple)):
         return [make_requirement(req) for req in requirements]
@@ -476,15 +472,15 @@ def require(*args: Any, **kwargs: Any) -> Requirement:
 
 
 def requires(
-    *requirements: Union[str, TRequirementDict, Requirement],
-    _import: Optional[str] = None,
-    _as: Optional[str] = None,
-    _from: Optional[str] = None,
-    pip: Optional[Union[str, bool]] = None,
-    conda: Optional[Union[str, bool]] = None,
-    conda_forge: Optional[Union[str, bool]] = None,
-    details: Optional[str] = None,
-    lazy: Optional[bool] = None,
+    *requirements: str | TRequirementDict | Requirement,
+    _import: str | None = None,
+    _as: str | None = None,
+    _from: str | None = None,
+    pip: str | bool | None = None,
+    conda: str | bool | None = None,
+    conda_forge: str | bool | None = None,
+    details: str | None = None,
+    lazy: bool | None = None,
 ) -> Callable[[Callable[P, R]], Callable[P, R]]:
     """Decorator to specify the packages a function or class requires
 
@@ -579,7 +575,7 @@ def scope_requirements(debug: bool = False) -> RequirementsMeta:
 def preflight_check(
     *,
     warn: bool = False,
-    on_missing: Optional[Callable[[set[Requirement]], None]] = None,
+    on_missing: Callable[[set[Requirement]], None] | None = None,
 ) -> RequirementsMeta:
     """Scan and check calling module scope for objs/fns wrapped with requirements.
 

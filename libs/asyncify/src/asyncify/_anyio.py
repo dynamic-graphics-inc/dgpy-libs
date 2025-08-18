@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from functools import partial, wraps
-from typing import TYPE_CHECKING, Callable, Optional, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,
@@ -12,7 +12,7 @@ from anyio import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable
+    from collections.abc import Awaitable, Callable
 
 __all__ = (
     "anyio_run",
@@ -27,7 +27,7 @@ def asyncify(
     funk: Callable[P, T],
     *,
     abandon_on_cancel: bool = False,
-    limiter: Optional[CapacityLimiter] = None,
+    limiter: CapacityLimiter | None = None,
 ) -> Callable[P, Awaitable[T]]:
     """asyncify decorator/wrapper that for use w/ anyio"""
 

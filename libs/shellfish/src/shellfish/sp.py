@@ -19,9 +19,7 @@ from typing import (
     IO,
     TYPE_CHECKING,
     Any,
-    Optional,
     TypedDict,
-    Union,
 )
 
 from shellfish._types import (
@@ -134,7 +132,7 @@ def completed_process_dict(
 
 def pcheck(
     process: CompletedProcess[Any],
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
 ) -> None:
     """Check process return code
 
@@ -170,18 +168,18 @@ def pcheck(
 def runb(
     args: PopenArgs,
     *,
-    executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
-    input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
+    input: str | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = False,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    env: Mapping[str, str] | None = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
     process = run(
@@ -207,18 +205,18 @@ def runb(
 def runs(
     args: PopenArgs,
     *,
-    executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
-    input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
+    input: str | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = False,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    env: Mapping[str, str] | None = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[str]:
     """Run command with txt output"""
@@ -244,11 +242,11 @@ def runs(
 
 def run_dtee(
     args: PopenArgs,
-    cwd: Optional[FsPath] = None,
-    env: Optional[dict[str, str]] = None,
-    input: Optional[STDIN] = None,
+    cwd: FsPath | None = None,
+    env: dict[str, str] | None = None,
+    input: STDIN | None = None,
     shell: bool = False,
-    timeout: Optional[float] = None,
+    timeout: float | None = None,
 ) -> tuple[CompletedProcess[bytes], ProcessDt]:
     stdout_bio = BytesIO()
     stderr_bio = BytesIO()
@@ -313,11 +311,11 @@ def run_dtee(
 
 def run_tee(
     args: PopenArgs,
-    cwd: Optional[str] = None,
-    env: Optional[dict[str, str]] = None,
-    input: Optional[STDIN] = None,
+    cwd: str | None = None,
+    env: dict[str, str] | None = None,
+    input: STDIN | None = None,
     shell: bool = False,
-    timeout: Optional[float] = None,
+    timeout: float | None = None,
 ) -> CompletedProcess[bytes]:
     completed_process, _pdt = run_dtee(
         args=args,

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any
 
 import h5
 import h5._info as h5info
@@ -19,7 +19,7 @@ def is_dunder(string: str) -> bool:
     return string.startswith("__") and string.endswith("__")
 
 
-def obj_module_name(obj: Any) -> Optional[str]:
+def obj_module_name(obj: Any) -> str | None:
     return getattr(obj, "__module__", None)
 
 

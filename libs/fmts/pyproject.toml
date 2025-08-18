@@ -1,10 +1,10 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8.0,<0.9" ]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "fmts"
-version = "0.3.1"
+version = "0.4.0"
 description = "str transformation utils"
 readme = "README.md"
 keywords = [ "dgpy", "str", "typed", "utils", "vanilla" ]

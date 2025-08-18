@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING
 
 import numpy as np
 
@@ -61,7 +61,7 @@ EXPECTED_GROUPS_KEYS = [
 ]
 
 
-def make_test_hdf5_file(filepath: Union[str, Path]) -> str:
+def make_test_hdf5_file(filepath: str | Path) -> str:
     """Make test hdf5 file and return filepath"""
     root_data = np.arange(10, dtype="i8").reshape(2, 5)
     a_data = np.arange(10, dtype="i8").reshape(2, 5)

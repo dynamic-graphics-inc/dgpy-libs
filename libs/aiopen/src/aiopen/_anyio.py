@@ -10,10 +10,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Generic,
-    Optional,
-    Union,
     cast,
     overload,
 )
@@ -21,7 +18,7 @@ from typing import (
 from anyio import AsyncFile, open_file
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable
+    from collections.abc import Awaitable, Callable
     from os import PathLike
     from types import TracebackType
 
@@ -33,7 +30,7 @@ else:
 class AsyncFileContextManager(Generic[AnyStr]):
     __slots__ = ("_coro", "_obj")
     _coro: Awaitable[AsyncFile[AnyStr]]
-    _obj: Optional[AsyncFile[AnyStr]]
+    _obj: AsyncFile[AnyStr] | None
 
     def __init__(self, coro: Awaitable[AsyncFile[AnyStr]]) -> None:
         self._coro = coro
@@ -58,9 +55,9 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
     ) -> None:
         obj = self.obj
         await obj.__aexit__(exc_type=exc_type, exc_val=exc_val, exc_tb=exc_tb)
@@ -68,44 +65,44 @@ class AsyncFileContextManager(Generic[AnyStr]):
 
 @overload
 def aiopen(
-    file: Union[str, PathLike[str], int],
+    file: str | PathLike[str] | int,
     mode: OpenBinaryMode = ...,
     buffering: int = ...,
-    encoding: Optional[str] = ...,
-    errors: Optional[str] = ...,
-    newline: Optional[str] = ...,
+    encoding: str | None = ...,
+    errors: str | None = ...,
+    newline: str | None = ...,
     closefd: bool = ...,
-    opener: Optional[Callable[[str, int], int]] = ...,
+    opener: Callable[[str, int], int] | None = ...,
 ) -> AsyncFileContextManager[bytes]: ...
 
 
 @overload
 def aiopen(
-    file: Union[str, PathLike[str], int],
+    file: str | PathLike[str] | int,
     mode: OpenTextMode = ...,
     buffering: int = ...,
-    encoding: Optional[str] = ...,
-    errors: Optional[str] = ...,
-    newline: Optional[str] = ...,
+    encoding: str | None = ...,
+    errors: str | None = ...,
+    newline: str | None = ...,
     closefd: bool = ...,
-    opener: Optional[Callable[[str, int], int]] = ...,
+    opener: Callable[[str, int], int] | None = ...,
 ) -> AsyncFileContextManager[str]: ...
 
 
 def aiopen(
-    file: Union[str, PathLike[str], int],
-    mode: Union[str, OpenBinaryMode, OpenTextMode] = "r",
+    file: str | PathLike[str] | int,
+    mode: str | OpenBinaryMode | OpenTextMode = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
-    errors: Optional[str] = None,
-    newline: Optional[str] = None,
+    encoding: str | None = None,
+    errors: str | None = None,
+    newline: str | None = None,
     closefd: bool = True,
-    opener: Optional[Callable[[str, int], int]] = None,
+    opener: Callable[[str, int], int] | None = None,
 ) -> AsyncFileContextManager[Any]:
     return AsyncFileContextManager(
         coro=open_file(
             file=file,
-            mode=cast("Union[OpenBinaryMode, OpenTextMode]", mode),  # pyright: ignore[reportGeneralTypeIssues]
+            mode=cast("OpenBinaryMode | OpenTextMode", mode),  # pyright: ignore[reportGeneralTypeIssues]
             buffering=buffering,
             encoding=encoding,
             errors=errors,

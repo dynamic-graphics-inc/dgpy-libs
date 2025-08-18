@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from collections.abc import Iterable, Iterator, MutableSequence
+from collections.abc import Callable, Iterable, Iterator, MutableSequence
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Generic,
     Literal,
-    Optional,
     Protocol,
     SupportsIndex,
+    TypeAlias,
     TypeVar,
-    Union,
     cast,
     overload,
 )
@@ -36,7 +34,7 @@ class SupportsDunderGT(Protocol):
     def __gt__(self, __other: Any) -> bool: ...
 
 
-SupportsRichComparison = Union[SupportsDunderLT, SupportsDunderGT]
+SupportsRichComparison: TypeAlias = SupportsDunderLT | SupportsDunderGT
 SupportsRichComparisonT = TypeVar(
     "SupportsRichComparisonT", bound=SupportsRichComparison
 )
@@ -61,7 +59,7 @@ def n_args(fn: Callable[..., _R]) -> int:
 class JsonArr(MutableSequence[_T], Generic[_T]):
     __arr: list[_T]
 
-    def __init__(self, iterable: Optional[Iterable[_T]] = None) -> None:
+    def __init__(self, iterable: Iterable[_T] | None = None) -> None:
         self.__arr = list(iterable or [])
 
     def __post_init__(self) -> Any:
@@ -126,7 +124,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def sort(
         self,
         *,
-        key: Optional[Callable[[_T], SupportsRichComparison]] = None,
+        key: Callable[[_T], SupportsRichComparison] | None = None,
         reverse: bool = False,
     ) -> None:
         return self.__arr.sort(key=key, reverse=reverse)
@@ -145,7 +143,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def __getitem__(self, __s: slice) -> JsonArr[_T]: ...
 
-    def __getitem__(self, __i: Union[SupportsIndex, slice]) -> Union[_T, JsonArr[_T]]:
+    def __getitem__(self, __i: SupportsIndex | slice) -> _T | JsonArr[_T]:
         if isinstance(__i, slice):
             return JsonArr(self.__arr[__i])
         return self.__arr[__i]
@@ -159,10 +157,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def __setitem__(self, __i: Any, __o: Any) -> None:
         return self.__arr.__setitem__(__i, __o)
 
-    def __delitem__(self, __i: Union[SupportsIndex, slice]) -> None:
+    def __delitem__(self, __i: SupportsIndex | slice) -> None:
         self.__arr.__delitem__(__i)
 
-    def __add__(self, __x: Union[Iterable[_T], JsonArr[_T]]) -> JsonArr[_T]:
+    def __add__(self, __x: Iterable[_T] | JsonArr[_T]) -> JsonArr[_T]:
         if isinstance(__x, JsonArr):
             return JsonArr(self.__arr + __x.__arr)
         return JsonArr(self.__arr + list(__x))
@@ -233,13 +231,13 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     @overload
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]: ...
+    ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]: ...
 
     def enumerate(
         self, start: int = 0, flip: bool = False
-    ) -> Union[Iterator[tuple[int, _T]], Iterator[tuple[_T, int]]]:
+    ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]:
         if flip:
-            return zip(self.__arr, range(start, len(self.__arr) + start))
+            return zip(self.__arr, range(start, len(self.__arr) + start), strict=False)
         return enumerate(self.__arr, start=start)
 
     def _iter_el(self) -> Iterator[_T]:
@@ -266,12 +264,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     def filter(
         self,
-        func: Union[
-            Callable[[_T], bool],
-            Callable[[_T, int], bool],
-            Callable[[_T, int, JsonArr[_T]], bool],
-        ],
-        nargs: Optional[Union[Literal[1], Literal[2], Literal[3]]] = None,
+        func: Callable[[_T], bool]
+        | Callable[[_T, int], bool]
+        | Callable[[_T, int, JsonArr[_T]], bool],
+        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
     ) -> JsonArr[_T]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -298,12 +294,10 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     def map(
         self,
-        func: Union[
-            Callable[[_T], _R],
-            Callable[[_T, int], _R],
-            Callable[[_T, int, JsonArr[_T]], _R],
-        ],
-        nargs: Optional[Union[Literal[1], Literal[2], Literal[3]]] = None,
+        func: Callable[[_T], _R]
+        | Callable[[_T, int], _R]
+        | Callable[[_T, int, JsonArr[_T]], _R],
+        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
     ) -> JsonArr[_R]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -317,9 +311,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
             return self._map_el(_fn1)
         raise TypeError("Could not determine number of arguments for map function")
 
-    def slice(
-        self, start: Optional[int] = None, end: Optional[int] = None
-    ) -> JsonArr[_T]:
+    def slice(self, start: int | None = None, end: int | None = None) -> JsonArr[_T]:
         """Return a slice as new jsonarray
 
         Args:

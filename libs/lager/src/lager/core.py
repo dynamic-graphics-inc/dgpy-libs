@@ -8,12 +8,15 @@ import sys as _sys
 
 from functools import wraps
 from time import time
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from loguru import logger as logger
 from loguru._handler import Handler
 
 from lager.const import LOG_LEVELS
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 T = TypeVar("T")
 
@@ -93,14 +96,14 @@ lager = LAGER = logger
 ln = LN = logger  # ln => natural log
 
 
-def loglevel(level: Union[str, int]) -> str:
+def loglevel(level: str | int) -> str:
     """Convert log-level abrev to a valid loguru log level"""
     return str(LOG_LEVELS[str(level).strip("'").strip('"').lower()])
 
 
 def flog(
-    funk: Optional[Callable[..., T]] = None,
-    level: Union[str, int] = "debug",
+    funk: Callable[..., T] | None = None,
+    level: str | int = "debug",
     enter: bool = True,
     exit: bool = True,
 ) -> T:
@@ -194,7 +197,7 @@ def handlers() -> dict[int, Handler]:
     return logger._core.handlers  # type: ignore[no-any-return]
 
 
-def reset(level: Optional[Union[str, int]] = None) -> None:
+def reset(level: str | int | None = None) -> None:
     logger.remove()
     logger.add(_sys.stderr, level=loglevel(level or "debug"))
 

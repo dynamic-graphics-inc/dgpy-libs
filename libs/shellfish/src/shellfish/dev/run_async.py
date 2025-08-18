@@ -13,21 +13,21 @@ from subprocess import (
     TimeoutExpired,
 )
 from time import time
-from typing import TYPE_CHECKING, Callable, Optional
+from typing import TYPE_CHECKING
 
 from shellfish.libsh.args import args2cmd as _args2cmd, flatten_args as _flatten_args
 from shellfish.sp import PopenArgs, ProcessDt
 
 if TYPE_CHECKING:
-    from collections.abc import Mapping
-    from typing import IO, Any, Union
+    from collections.abc import Callable, Mapping
+    from typing import IO, Any
 
     from shellfish._types import FsPath
 
 __all__ = ("run_async",)
 
 
-def utf8_string(val: Union[str, bytes, bytearray]) -> str:
+def utf8_string(val: str | bytes | bytearray) -> str:
     if not isinstance(val, str):
         return val.decode("utf-8")
     return val
@@ -46,20 +46,20 @@ async def _read_stream(
 
 async def run_dtee_async(
     *popenargs: PopenArgs,
-    executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
     text: bool = False,
-    input: Optional[Union[str, bytes]] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    input: str | bytes | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = False,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
+    env: Mapping[str, str] | None = None,
     tee: bool = False,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     universal_newlines: bool = False,
     **other_popen_kwargs: Any,
 ) -> tuple[CompletedProcess[bytes], ProcessDt]:
@@ -229,19 +229,19 @@ async def run_dtee_async(
 
 async def run_async(
     *popenargs: PopenArgs,
-    executable: Optional[str] = None,
-    stdin: Optional[Union[IO[Any], int]] = None,
+    executable: str | None = None,
+    stdin: IO[Any] | int | None = None,
     text: bool = False,
-    input: Optional[str] = None,
-    stdout: Optional[Union[IO[Any], int]] = None,
-    stderr: Optional[Union[IO[Any], int]] = None,
+    input: str | None = None,
+    stdout: IO[Any] | int | None = None,
+    stderr: IO[Any] | int | None = None,
     shell: bool = False,
-    cwd: Optional[FsPath] = None,
-    timeout: Optional[float] = None,
+    cwd: FsPath | None = None,
+    timeout: float | None = None,
     capture_output: bool = True,
     check: bool = False,
-    env: Optional[Mapping[str, str]] = None,
-    ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+    env: Mapping[str, str] | None = None,
+    ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     tee: bool = False,
     universal_newlines: bool = True,
     **other_popen_kwargs: Any,

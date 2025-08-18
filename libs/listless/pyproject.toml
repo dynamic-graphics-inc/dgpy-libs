@@ -1,10 +1,10 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8.0,<0.9" ]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "listless"
-version = "0.3.1"
+version = "0.4.0"
 description = "generator utils; aka listless"
 readme = "README.md"
 keywords = [
@@ -18,14 +18,13 @@ license = { text = "MIT" }
 authors = [
   { name = "jesse", email = "jesse@dgi.com" },
 ]
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.10,<4.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",

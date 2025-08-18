@@ -8,9 +8,7 @@ from shlex import split as _shplit
 from typing import (
     TYPE_CHECKING,
     Any,
-    Optional,
     TypeVar,
-    Union,
 )
 
 from shellfish import sh
@@ -30,41 +28,41 @@ TExe = TypeVar("TExe", bound="ExeABC")
 @dataclass
 class ExeConfig:
     cmd: str
-    subcmd: Optional[tuple[str, ...]] = None
-    abspath: Optional[str] = None
-    env: Optional[dict[str, str]] = None
-    cwd: Optional[str] = None
+    subcmd: tuple[str, ...] | None = None
+    abspath: str | None = None
+    env: dict[str, str] | None = None
+    cwd: str | None = None
     shell: bool = False
     verbose: bool = False
-    timeout: Optional[Union[float, int]] = None
-    ok_code: Union[int, set[int]] = field(default_factory=lambda: {0})
+    timeout: float | int | None = None
+    ok_code: int | set[int] = field(default_factory=lambda: {0})
     check: bool = False
 
 
 class ExeABC:
     cmd: str
-    subcmd: Optional[tuple[str, ...]] = None
+    subcmd: tuple[str, ...] | None = None
 
-    abspath: Optional[str] = None
-    env: Optional[dict[str, str]] = None
-    cwd: Optional[FsPath] = None
+    abspath: str | None = None
+    env: dict[str, str] | None = None
+    cwd: FsPath | None = None
     shell: bool = False
     verbose: bool = False
-    timeout: Optional[Union[float, int]] = None
-    ok_code: Union[int, set[int]] = 0
+    timeout: float | int | None = None
+    ok_code: int | set[int] = 0
     check: bool = False
 
     def __init__(
         self,
         cmd: str,
-        subcmd: Optional[Union[tuple[str, ...], list[str], str]] = None,
-        abspath: Optional[str] = None,
+        subcmd: tuple[str, ...] | list[str] | str | None = None,
+        abspath: str | None = None,
         check: bool = False,
-        cwd: Optional[FsPath] = None,
-        env: Optional[dict[str, str]] = None,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        cwd: FsPath | None = None,
+        env: dict[str, str] | None = None,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: Optional[Union[float, int]] = None,
+        timeout: float | int | None = None,
         verbose: bool = False,
     ) -> None:
         self.cmd = cmd
@@ -137,7 +135,7 @@ class ExeABC:
     def _unredundify(
         self,
         popenargs: tuple[PopenArgs, ...],
-        args: Optional[PopenArgs] = None,
+        args: PopenArgs | None = None,
     ) -> tuple[str, ...]:
         _args = popenargs if args is None else args
         if len(_args) == 1 and isinstance(_args[0], str):
@@ -151,7 +149,7 @@ class ExeABC:
     def _cmdargs(
         self,
         popenargs: tuple[PopenArgs, ...],
-        args: Optional[PopenArgs] = None,
+        args: PopenArgs | None = None,
     ) -> PopenArgv:
         argv = self._unredundify(popenargs, args)
         return (self.cmd,) + argv
@@ -159,16 +157,16 @@ class ExeABC:
     def _do(
         self,
         *popenargs: PopenArgs,
-        args: Optional[PopenArgs] = None,
-        env: Optional[dict[str, str]] = None,
+        args: PopenArgs | None = None,
+        env: dict[str, str] | None = None,
         extenv: bool = True,
-        cwd: Optional[FsPath] = None,
+        cwd: FsPath | None = None,
         shell: bool = False,
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: Optional[Union[float, int]] = None,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        timeout: float | int | None = None,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
         _args = self._cmdargs(popenargs, args)
@@ -189,17 +187,17 @@ class ExeABC:
     async def _do_async(
         self,
         *popenargs: PopenArgs,
-        args: Optional[PopenArgs] = None,
+        args: PopenArgs | None = None,
         check: bool = False,
-        cwd: Optional[str] = None,
+        cwd: str | None = None,
         dryrun: bool = False,
-        env: Optional[dict[str, str]] = None,
+        env: dict[str, str] | None = None,
         extenv: bool = True,
         input: STDIN = None,
-        loop: Optional[Any] = None,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        loop: Any | None = None,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: Optional[Union[float, int]] = None,
+        timeout: float | int | None = None,
         verbose: bool = False,
     ) -> Done:
         _args = self._cmdargs(popenargs, args)
@@ -227,16 +225,16 @@ class Exe(ExeABC):
     def __call__(
         self,
         *popenargs: PopenArgs,
-        args: Optional[PopenArgs] = None,
-        env: Optional[dict[str, str]] = None,
+        args: PopenArgs | None = None,
+        env: dict[str, str] | None = None,
         extenv: bool = True,
-        cwd: Optional[FsPath] = None,
+        cwd: FsPath | None = None,
         shell: bool = False,
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: Optional[Union[float, int]] = None,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        timeout: float | int | None = None,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
         return self._do(
@@ -259,16 +257,16 @@ class ExeAsync(ExeABC):
     async def __call__(
         self,
         *popenargs: PopenArgs,
-        args: Optional[PopenArgs] = None,
+        args: PopenArgs | None = None,
         check: bool = False,
-        cwd: Optional[str] = None,
+        cwd: str | None = None,
         dryrun: bool = False,
-        env: Optional[dict[str, str]] = None,
+        env: dict[str, str] | None = None,
         extenv: bool = True,
         input: STDIN = None,
-        loop: Optional[Any] = None,
+        loop: Any | None = None,
         shell: bool = False,
-        timeout: Optional[Union[float, int]] = None,
+        timeout: float | int | None = None,
         verbose: bool = False,
     ) -> Done:
         return await self._do_async(

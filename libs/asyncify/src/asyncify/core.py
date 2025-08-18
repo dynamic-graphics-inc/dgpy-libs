@@ -6,20 +6,25 @@ from __future__ import annotations
 import asyncio
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
-from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Coroutine, Iterable
+from collections.abc import (
+    AsyncIterable,
+    AsyncIterator,
+    Awaitable,
+    Callable,
+    Coroutine,
+    Iterable,
+)
 from functools import partial, wraps
 from inspect import isawaitable
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
-    Optional,
+    TypeGuard,
     TypeVar,
-    Union,
     cast,
 )
 
-from typing_extensions import ParamSpec, TypeGuard
+from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:  # pragma: no cover
     from anyio import CapacityLimiter
@@ -53,7 +58,7 @@ except ImportError:  # pragma: no cover
         funk: Callable[P, T],
         *,
         abandon_on_cancel: bool = False,
-        limiter: Optional[CapacityLimiter] = None,
+        limiter: CapacityLimiter | None = None,
     ) -> Callable[P, Awaitable[T]]:
         raise ImportError("install anyio; `pip install anyio`")
 
@@ -61,12 +66,12 @@ except ImportError:  # pragma: no cover
         func: Callable[..., Coroutine[Any, Any, T_Retval]],
         *args: object,
         backend: str = "asyncio",
-        backend_options: Optional[dict[str, Any]] = None,
+        backend_options: dict[str, Any] | None = None,
     ) -> T_Retval:
         raise ImportError("install anyio; `pip install anyio`")
 
 
-def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
+def aiterable(it: Iterable[T] | AsyncIterable[T]) -> AsyncIterator[T]:
     """Convert any-iterable to an async iterator
 
     Examples:
@@ -108,8 +113,8 @@ def aiterable(it: Union[Iterable[T], AsyncIterable[T]]) -> AsyncIterator[T]:
 def asyncify(
     funk: Callable[P, T],
     *,
-    loop: Optional[AbstractEventLoop] = None,
-    executor: Optional[Any] = None,
+    loop: AbstractEventLoop | None = None,
+    executor: Any | None = None,
 ) -> Callable[P, Awaitable[T]]:
     """Makes a sync function async
 
@@ -162,7 +167,7 @@ def asyncify(
     return cast("Callable[P, Awaitable[T]]", _async_funk)
 
 
-def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
+def _run(aw: Awaitable[T], *, debug: bool | None = None) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -195,9 +200,7 @@ def _run(aw: Awaitable[T], *, debug: Optional[bool] = None) -> T:
         asyncio.set_event_loop(None)
 
 
-def run(
-    aw: Coroutine[Any, Any, T], *, debug: Optional[bool] = None, **kwargs: Any
-) -> T:
+def run(aw: Coroutine[Any, Any, T], *, debug: bool | None = None, **kwargs: Any) -> T:
     """Run an async/awaitable function (Polyfill asyncio.run)
 
     Emulate `asyncio.run()` for snakes below python 3.7; `asyncio.run` was
@@ -249,7 +252,7 @@ def is_coro(obj: Any) -> TypeGuard[Awaitable[Any]]:
     return asyncio.iscoroutine(obj)
 
 
-async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
+async def await_or_return(obj: Awaitable[T] | T) -> T:
     """Return the result of an awaitable or return the object
 
     Examples:
@@ -266,12 +269,11 @@ async def await_or_return(obj: Union[Awaitable[T], T]) -> T:
 
 
 def aiorun_anyio(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     """Run an async function or awaitable using anyio
 
@@ -302,12 +304,11 @@ def aiorun_anyio(
 
 
 def aiorun_asyncio(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     if backend != "asyncio":
         raise ValueError(
@@ -329,12 +330,11 @@ def aiorun_asyncio(
 
 
 def aiorun(
-    awaitable_or_func: Union[
-        Awaitable[T_Retval], Callable[..., Coroutine[Any, Any, T_Retval]]
-    ],
+    awaitable_or_func: Awaitable[T_Retval]
+    | Callable[..., Coroutine[Any, Any, T_Retval]],
     *args: object,
     backend: str = "asyncio",
-    backend_options: Optional[dict[str, Any]] = None,
+    backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     return (
         aiorun_asyncio(

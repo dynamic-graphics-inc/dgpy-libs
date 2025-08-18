@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-from typing import Any, Protocol, Union
+from typing import Any, Protocol, TypeAlias
 
 __all__ = (
     "Dumpable",
@@ -24,4 +24,4 @@ class JsonInterfaceProperty(Protocol):
     def __json_interface__(self) -> Any: ...
 
 
-JsonInterfaceProtocol = Union[JsonInterface, JsonInterfaceProperty]
+JsonInterfaceProtocol: TypeAlias = JsonInterface | JsonInterfaceProperty

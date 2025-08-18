@@ -7,7 +7,7 @@ from os import getcwd, makedirs, path
 from os.path import sep
 from pathlib import Path
 from random import choice as rand_choice, randint
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from shellfish.fs import write_str
 
@@ -22,7 +22,7 @@ __all__ = (
 )
 
 
-def assert_symlink_exists(fspath: FsPath, *, target: Optional[FsPath] = None) -> bool:
+def assert_symlink_exists(fspath: FsPath, *, target: FsPath | None = None) -> bool:
     _path = Path(fspath)
     try:
         assert _path.exists()
@@ -63,7 +63,7 @@ def random_directory_path(depth: int = 4) -> str:
 
 
 def mk_random_dirtree(
-    dest: Optional[str] = None,
+    dest: str | None = None,
     n_subdirectories: int = 8,
     max_subdirectory_files: int = 4,
     max_file_string_len: int = 100,

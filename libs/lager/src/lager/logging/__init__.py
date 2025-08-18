@@ -5,7 +5,7 @@ from __future__ import annotations
 
 import logging
 
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from logging import (
     BASIC_FORMAT as BASIC_FORMAT,
     CRITICAL as CRITICAL,
@@ -63,9 +63,9 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Callable, Optional, Union
+from typing import Any, Literal, TypeAlias
 
-from typing_extensions import Literal, Self, TypeAlias
+from typing_extensions import Self
 
 from lager.core import LOG, loglevel
 
@@ -149,14 +149,14 @@ __aliases__ = {
     "set_logger_class": "setLoggerClass",
 }
 
-_SysExcInfoType: TypeAlias = Union[
-    tuple[type[BaseException], BaseException, Union[TracebackType, None]],
-    tuple[None, None, None],
-]
-_ExcInfoType: TypeAlias = Union[None, bool, _SysExcInfoType, BaseException]
-_ArgsType: TypeAlias = Union[tuple[object, ...], Mapping[str, object]]
-_FilterType: TypeAlias = Union[Filter, Callable[[LogRecord], bool]]
-_Level: TypeAlias = Union[int, str]
+_SysExcInfoType: TypeAlias = (
+    tuple[type[BaseException], BaseException, TracebackType | None]
+    | tuple[None, None, None]
+)
+_ExcInfoType: TypeAlias = None | bool | _SysExcInfoType | BaseException
+_ArgsType: TypeAlias = tuple[object, ...] | Mapping[str, object]
+_FilterType: TypeAlias = Filter | Callable[[LogRecord], bool]
+_Level: TypeAlias = int | str
 _FormatStyle: TypeAlias = Literal["%", "{", "$"]
 
 
@@ -182,7 +182,7 @@ class Logger(_Logger):
 
     def find_caller(
         self, stack_info: bool = False, stacklevel: int = 1
-    ) -> tuple[str, int, str, Union[str, None]]:
+    ) -> tuple[str, int, str, str | None]:
         """snake_case alias for findCaller"""
         return self.findCaller(stack_info, stacklevel)
 
@@ -202,10 +202,10 @@ class Logger(_Logger):
         lno: int,
         msg: object,
         args: _ArgsType,
-        exc_info: Union[_SysExcInfoType, None],
-        func: Optional[str] = None,
-        extra: Union[Mapping[str, object], None] = None,
-        sinfo: Optional[str] = None,
+        exc_info: _SysExcInfoType | None,
+        func: str | None = None,
+        extra: Mapping[str, object] | None = None,
+        sinfo: str | None = None,
     ) -> LogRecord:
         return self.makeRecord(
             name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
@@ -232,7 +232,7 @@ class Handler(_Handler):
         """snake_case alias for setLevel"""
         return self.setLevel(level)
 
-    def set_formatter(self, fmt: Union[Formatter, None]) -> None:
+    def set_formatter(self, fmt: Formatter | None) -> None:
         """snake_case alias for setFormatter"""
         return self.setFormatter(fmt)
 

@@ -23,9 +23,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     Generic,
-    Optional,
     TypeVar,
     Union,
     cast,
@@ -34,7 +32,7 @@ from typing import (
 from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Coroutine
+    from collections.abc import Awaitable, Callable, Coroutine
     from os import PathLike
     from types import TracebackType
 
@@ -60,19 +58,13 @@ def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
 
 
 class AsyncBase(Generic[AnyStr]):  # pragma: no cover
-    _file: Union[BufferedWriter, TextIOWrapper, FileIO, BufferedRandom, BufferedReader]
+    _file: BufferedWriter | TextIOWrapper | FileIO | BufferedRandom | BufferedReader
     _loop: AbstractEventLoop
-    _executor: Optional[BaseEventLoop] = None
+    _executor: BaseEventLoop | None = None
 
     def __init__(
         self,
-        file: Union[
-            BufferedWriter,
-            TextIOWrapper,
-            FileIO,
-            BufferedRandom,
-            BufferedReader,
-        ],
+        file: BufferedWriter | TextIOWrapper | FileIO | BufferedRandom | BufferedReader,
         loop: AbstractEventLoop,
         executor: None,
     ) -> None:
@@ -163,7 +155,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
 
 # TODO: Fix generics...
 class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
-    _file: Union[BufferedReader, BufferedRandom, BufferedWriter, TextIOWrapper]
+    _file: BufferedReader | BufferedRandom | BufferedWriter | TextIOWrapper
 
     def detach(self) -> Any:
         return self._file.detach()
@@ -198,7 +190,7 @@ class TextIOWrapperAsync(AsyncBase[str]):
 class BufferedIOAsyncBase(AsyncBaseDetachable):
     """Async version of io.BufferedWriter"""
 
-    _file: Union[BufferedReader, BufferedRandom, BufferedWriter]
+    _file: BufferedReader | BufferedRandom | BufferedWriter
 
     @property
     def raw(self) -> Any:
@@ -221,13 +213,11 @@ class FileIOAsync(AsyncBase):  # type: ignore[type-arg]
 
 @singledispatch
 def _aiopen_dispatch(
-    file: Union[
-        TextIOBase, BufferedWriter, BufferedReader, BufferedRandom, FileIO, Any
-    ],
+    file: TextIOBase | BufferedWriter | BufferedReader | BufferedRandom | FileIO | Any,
     *,
     loop: AbstractEventLoop,
     executor: Any = None,
-) -> Union[TextIOWrapperAsync, BufferedIOAsyncBase, BufferedReaderAsync, FileIOAsync]:
+) -> TextIOWrapperAsync | BufferedIOAsyncBase | BufferedReaderAsync | FileIOAsync:
     raise TypeError(f"Unsupported io type: {file}.")
 
 
@@ -248,7 +238,7 @@ def _buffered_io_base_async_dispatcher(
 @_aiopen_dispatch.register(BufferedReader)
 @_aiopen_dispatch.register(BufferedRandom)
 def _buffered_reader_async_dispatcher(
-    file: Union[BufferedReader, BufferedRandom],
+    file: BufferedReader | BufferedRandom,
     *,
     loop: AbstractEventLoop,
     executor: Any = None,
@@ -265,26 +255,20 @@ def _fileio_async_dispatcher(
 
 class AiopenContextManager(
     AbstractAsyncContextManager[
-        Union[
-            BufferedIOAsyncBase,
-            BufferedReaderAsync,
-            TextIOWrapperAsync,
-            FileIOAsync,
-        ]
+        BufferedIOAsyncBase | BufferedReaderAsync | TextIOWrapperAsync | FileIOAsync
     ]
 ):
     __slots__ = ("_coro", "_obj")
 
     def __init__(self, coro: Any) -> None:
         self._coro: Coroutine[Any, Any, Any] = coro
-        self._obj: Optional[
-            Union[
-                BufferedIOAsyncBase,
-                BufferedReaderAsync,
-                TextIOWrapperAsync,
-                FileIOAsync,
-            ]
-        ] = None
+        self._obj: (
+            BufferedIOAsyncBase
+            | BufferedReaderAsync
+            | TextIOWrapperAsync
+            | FileIOAsync
+            | None
+        ) = None
 
     def send(self, value: Any) -> Any:
         return self._coro.send(value)
@@ -293,7 +277,7 @@ class AiopenContextManager(
         self,
         typ: type[BaseException],
         val: Any = None,
-        tb: Optional[TracebackType] = None,
+        tb: TracebackType | None = None,
     ) -> Any:
         if val is None:
             return self._coro.throw(typ)
@@ -337,12 +321,7 @@ class AiopenContextManager(
 
     async def __aenter__(
         self,
-    ) -> Union[
-        BufferedIOAsyncBase,
-        BufferedReaderAsync,
-        TextIOWrapperAsync,
-        FileIOAsync,
-    ]:
+    ) -> BufferedIOAsyncBase | BufferedReaderAsync | TextIOWrapperAsync | FileIOAsync:
         self._obj = await self._coro
         if self._obj is None:
             raise ValueError("Unable to aiopen")
@@ -350,9 +329,9 @@ class AiopenContextManager(
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc: Optional[BaseException],
-        tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
     ) -> None:
         if self._obj:
             await self._obj.close()
@@ -363,15 +342,15 @@ async def _aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[AbstractEventLoop] = None,
+    loop: AbstractEventLoop | None = None,
     executor: Any = None,
-) -> Union[FileIOAsync, BufferedIOAsyncBase, TextIOWrapperAsync, BufferedReaderAsync]:
+) -> FileIOAsync | BufferedIOAsyncBase | TextIOWrapperAsync | BufferedReaderAsync:
     """Open an asyncio file."""
     _loop = loop if loop is not None else asyncio.get_event_loop()
     cb = partial(
@@ -393,13 +372,13 @@ def aiopen(
     file: PathType,
     mode: str = "r",
     buffering: int = -1,
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
     *,
-    loop: Optional[AbstractEventLoop] = None,
+    loop: AbstractEventLoop | None = None,
     executor: Any = None,
 ) -> AiopenContextManager:
     """Async version of the `open` builtin

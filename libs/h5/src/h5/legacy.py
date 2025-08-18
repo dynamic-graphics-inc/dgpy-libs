@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 from warnings import warn
 
 from typing_extensions import ParamSpec
@@ -19,7 +19,7 @@ from h5.core import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Iterable
+    from collections.abc import Callable, Iterable
 
     import numpy as np
     import numpy.typing as npt
@@ -65,14 +65,14 @@ def h5_attrs_dict(fspath: str, h5_path: str = "") -> dict[str, H5pyAttributesDic
 @_h5_deprecated
 def h5_datasets_dict(
     fspath: str, h5_path: str = ""
-) -> dict[str, Union[npt.NDArray[Any], np.int8, np.float64]]:
+) -> dict[str, npt.NDArray[Any] | np.int8 | np.float64]:
     """Alias for h5.datasets_dict"""
     return datasets_dict(h5_obj=fspath, h5_path=h5_path)
 
 
 @_h5_deprecated
 def h5_attrs_gen(
-    h5_obj: Union[FsPath, File, Group], h5_path: str = ""
+    h5_obj: FsPath | File | Group, h5_path: str = ""
 ) -> Iterable[tuple[str, AttributeManager]]:
     """Alias for h5.datasets_gen"""
     return attrs_gen(h5_obj=h5_obj, h5_path=h5_path)
@@ -114,7 +114,7 @@ def h5_datasets_gen_from_fspath(
 
 @_h5_deprecated
 def h5_datasets_gen(
-    h5_obj: Union[FsPath, File, Group], h5_path: str = ""
+    h5_obj: FsPath | File | Group, h5_path: str = ""
 ) -> Iterable[tuple[str, Dataset]]:
     """Alias for h5.datasets_gen"""
     return datasets_gen(h5_obj=h5_obj, h5_path=h5_path)

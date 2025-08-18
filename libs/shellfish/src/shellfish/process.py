@@ -11,14 +11,18 @@ from os import environ, name as os_name, pathsep
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
-    Optional,
-    Union,
     cast,
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Generator, ItemsView, Iterator, KeysView, ValuesView
+    from collections.abc import (
+        Callable,
+        Generator,
+        ItemsView,
+        Iterator,
+        KeysView,
+        ValuesView,
+    )
 
 IS_WIN = os_name == "nt"
 PYTHON_IMPLEMENTATION = platform.python_implementation()
@@ -70,7 +74,7 @@ class _EnvObjMeta(type):
     def __delitem__(cls, key: str) -> None:
         return environ.__delitem__(key)
 
-    def __getitem__(cls, key: str) -> Optional[str]:
+    def __getitem__(cls, key: str) -> str | None:
         return environ.get(key)
 
     def __len__(cls) -> int:
@@ -90,7 +94,7 @@ class _EnvObjMeta(type):
 
     def __getattr__(
         cls, item: str
-    ) -> Optional[Union[Callable[[], str], Callable[[str], None], str]]:
+    ) -> Callable[[], str] | Callable[[str], None] | str | None:
         try:
             if item in _OS_ENVIRON_ATTRS:
                 return cast("Callable[..., str]", environ.__getattribute__(item))
@@ -109,7 +113,7 @@ class _EnvObjMeta(type):
     def update_from_dict(self, d: dict[str, str]) -> None:
         return self.update(d)
 
-    def get(self, key: str, default: Optional[str] = None) -> str:
+    def get(self, key: str, default: str | None = None) -> str:
         if default is None:
             return environ[key]
         return environ.get(key, default)
@@ -301,7 +305,7 @@ def sys_path_sep() -> str:
     return pathsep
 
 
-def syspath_paths(syspath: Optional[str] = None) -> list[str]:
+def syspath_paths(syspath: str | None = None) -> list[str]:
     """Return the current sys.path as a list
 
     Examples:

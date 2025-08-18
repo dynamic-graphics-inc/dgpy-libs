@@ -6,7 +6,7 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, AnyStr, Optional, Union
+from typing import TYPE_CHECKING, Any, AnyStr
 
 from pydantic import Field
 from typing_extensions import TypedDict
@@ -136,8 +136,8 @@ class DoneDict(TypedDict):
     ti: float
     tf: float
     dt: float
-    hrdt: Optional[HrTimeDict]
-    stdin: Optional[str]
+    hrdt: HrTimeDict | None
+    stdin: str | None
     async_proc: bool
     verbose: bool
 
@@ -152,8 +152,8 @@ class DoneObj(TypedDict):
     ti: float
     tf: float
     dt: float
-    hrdt: Optional[HrTimeObj]
-    stdin: Optional[str]
+    hrdt: HrTimeObj | None
+    stdin: str | None
     async_proc: bool
     verbose: bool
 
@@ -189,8 +189,8 @@ class Done(_ShellfishBaseModel):
     ti: float
     tf: float
     dt: float
-    hrdt: Optional[HrTime] = None
-    stdin: Optional[str] = None
+    hrdt: HrTime | None = None
+    stdin: str | None = None
     async_proc: bool = False
     dryrun: bool = Field(False)
     verbose: bool = Field(False, exclude=True)
@@ -299,7 +299,7 @@ class Done(_ShellfishBaseModel):
 
     def check(
         self,
-        ok_code: Union[int, list[int], tuple[int, ...], set[int]] = 0,
+        ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     ) -> None:
         """Check returncode and stderr
 

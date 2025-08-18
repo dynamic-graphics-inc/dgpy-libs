@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Generator, MutableMapping
+from collections.abc import Callable, Generator, MutableMapping
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
@@ -11,10 +11,8 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
-    Callable,
-    Optional,
+    TypeGuard,
     TypeVar,
-    Union,
 )
 
 from pydantic import (
@@ -25,7 +23,6 @@ from pydantic import (
     ValidationError,
 )
 from pydantic.functional_validators import BeforeValidator
-from typing_extensions import TypeGuard
 
 from jsonbourne.core import JSON, JsonObj
 
@@ -73,12 +70,12 @@ class JsonBaseConfig:
 class JsonBaseModelDefaultConfig(JsonBaseConfig): ...
 
 
-def is_json_obj_like(v: Any) -> TypeGuard[Union[JsonObj[Any], dict[str, Any]]]:
+def is_json_obj_like(v: Any) -> TypeGuard[JsonObj[Any] | dict[str, Any]]:
     return isinstance(v, (JsonObj, dict))
 
 
 def json_obj_before_validator(
-    v: Union[JsonObj[T], dict[str, T], Any],
+    v: JsonObj[T] | dict[str, T] | Any,
 ) -> JsonObj[T]:
     if not is_json_obj_like(v):
         raise ValueError(f"Expected JsonObj, got {type(v)}")
@@ -126,7 +123,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
     def to_str(
         self,
         minify: bool = False,
-        width: Optional[int] = None,
+        width: int | None = None,
         fmt_kwargs: bool = False,
     ) -> str:
         if fmt_kwargs:
@@ -262,7 +259,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         pretty: bool = False,
         sort_keys: bool = False,
         append_newline: bool = False,
-        default: Optional[Callable[[Any], Any]] = None,
+        default: Callable[[Any], Any] | None = None,
         **kwargs: Any,
     ) -> str:
         return JSON.dumps(

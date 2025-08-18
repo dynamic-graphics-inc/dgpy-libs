@@ -29,9 +29,6 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
-    Optional,
-    Union,
     cast,
 )
 
@@ -93,7 +90,7 @@ from shellfish.process import is_win as _is_win
 from shellfish.stdio import Stdio as Stdio
 
 if TYPE_CHECKING:
-    from collections.abc import Generator, Iterable, Iterator
+    from collections.abc import Callable, Generator, Iterable, Iterator
 
 # END-IMPORTS
 
@@ -202,7 +199,7 @@ def scandir_list(dirpath: FsPath = ".") -> list[DirEntry[AnyStr]]:
 
 
 def scandir_gen_filter(
-    it: Union[Iterator[DirEntry[AnyStr]], Iterable[DirEntry[AnyStr]]],
+    it: Iterator[DirEntry[AnyStr]] | Iterable[DirEntry[AnyStr]],
     *,
     follow_symlinks: bool = True,
     files: bool = True,
@@ -410,7 +407,7 @@ def files_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -513,7 +510,7 @@ def dirs_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -634,7 +631,7 @@ def files_dirs_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> tuple[Iterator[str], Iterator[str]]:
@@ -758,7 +755,7 @@ def walk_gen(
     *,
     abspath: bool = True,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[str]:
@@ -882,7 +879,7 @@ def filepath_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -905,7 +902,7 @@ def dirpath_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -928,7 +925,7 @@ def path_gen(
     *,
     abspath: bool = False,
     topdown: bool = True,
-    onerror: Optional[Callable[[OSError], Any]] = None,
+    onerror: Callable[[OSError], Any] | None = None,
     followlinks: bool = False,
     check: bool = True,
 ) -> Iterator[Path]:
@@ -951,7 +948,7 @@ def write_bytes(
     bites: bytes,
     *,
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -1080,7 +1077,7 @@ def write_bytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Write/Save bytes to a fspath
 
@@ -1152,7 +1149,7 @@ def write_str(
     *,
     encoding: str = "utf-8",
     append: bool = False,
-    chmod: Optional[int] = None,
+    chmod: int | None = None,
 ) -> int:
     """Save/Write a string to fspath
 
@@ -1192,8 +1189,8 @@ def write_json(
     pretty: bool = False,
     sort_keys: bool = False,
     append_newline: bool = False,
-    default: Optional[Callable[[Any], Any]] = None,
-    chmod: Optional[int] = None,
+    default: Callable[[Any], Any] | None = None,
+    chmod: int | None = None,
     append: bool = False,
     **kwargs: Any,
 ) -> int:
@@ -1378,11 +1375,12 @@ def filecmp(
         for left_chunk, right_chunk in zip(
             read_bytes_gen(left, blocksize=blocksize),
             read_bytes_gen(right, blocksize=blocksize),
+            strict=False,
         )
     )
 
 
-def shebang(fspath: FsPath) -> Union[None, str]:
+def shebang(fspath: FsPath) -> None | str:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
     Args:
@@ -1571,7 +1569,7 @@ def rm(
     recursive: bool = False,
     dryrun: bool = False,
     verbose: bool = False,
-) -> Union[list[str], None]:
+) -> list[str] | None:
     """Remove files & directories in the style of the shell
 
     Args:
