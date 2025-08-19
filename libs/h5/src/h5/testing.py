@@ -122,7 +122,7 @@ def make_test_hdf5_file(filepath: str | Path) -> str:
     return str(filepath)
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     make_test_hdf5_file("test.h5")
 
 

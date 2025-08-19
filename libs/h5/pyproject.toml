@@ -73,6 +73,7 @@ precision = 2
 omit = [ "*/legacy.py" ]
 exclude_lines = [
   'pragma: no cover',
+  'pragma: nocov',
   'raise NotImplementedError',
   'if TYPE_CHECKING:',
   '@overload',
@@ -80,6 +81,7 @@ exclude_lines = [
   'class BaseAsync:',
   'if 0:',
   'if False:',
+  'if __name__ == "__main__":',
 ]
 
 [tool.coverage.paths]
