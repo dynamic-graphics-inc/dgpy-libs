@@ -3,8 +3,6 @@
 
 from __future__ import annotations
 
-import sys
-
 from functools import cache, lru_cache
 from os import (
     chdir,
@@ -570,6 +568,8 @@ def _do_tee(
         ti=pdt.ti,
         tf=pdt.tf,
         dt=pdt.dt,
+        dryrun=False,
+        verbose=False,
     )
 
 
@@ -917,23 +917,6 @@ async def _do_async(
         TimeoutError: If the process takes longer than timeout if given
 
     """
-    # if is windows and python is below 3.7, use the asyncified-do func
-    if is_win() and sys.version_info < (3, 8):
-        done = await do_asyncify(
-            args=args,
-            env=env,
-            cwd=cwd,
-            shell=shell,
-            verbose=verbose,
-            input=input,
-            check=check,
-            timeout=timeout,
-            ok_code=ok_code,
-            dryrun=dryrun,
-        )
-        done.async_proc = True
-        return done
-
     if input:
         input = validate_stdin(input)
     if isinstance(args, str):
@@ -1008,6 +991,7 @@ async def _do_async(
         ),
         verbose=verbose,
         async_proc=True,
+        dryrun=False,
     )
 
 
@@ -1052,22 +1036,6 @@ async def do_async(
     if args and popenargs:
         raise ValueError("Cannot give *args and args-keyword-argument")
     args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
-    if is_win() and sys.version_info < (3, 8):
-        done = await do_asyncify(
-            args=args,
-            env=env,
-            extenv=extenv,
-            cwd=cwd,
-            shell=shell,
-            verbose=verbose,
-            input=input,
-            check=check,
-            timeout=timeout,
-            ok_code=ok_code,
-            dryrun=dryrun,
-        )
-        done.async_proc = True
-        return done
     if not shell and is_win():
         args = validate_popen_args_windows(args, env)
     return await _do_async(
