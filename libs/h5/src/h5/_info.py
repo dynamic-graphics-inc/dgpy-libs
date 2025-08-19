@@ -15,6 +15,7 @@ from typing import (
     TypeAlias,
     TypedDict,
     TypeVar,
+    cast,
 )
 
 import h5py
@@ -54,7 +55,7 @@ class DatasetInfoDict(TypedDict):
     ndim: int
     dtype: str
     dtype_str: str
-    size: int
+    size: int | None
     nbytes: int
     compression: H5pyCompression | None
     compression_opts: tuple[int, int] | int | None
@@ -152,7 +153,7 @@ class DatasetInfo(H5Mixin):
     ndim: int
     dtype: str
     dtype_str: str
-    size: int
+    size: int | None
     nbytes: int
     h5type: Literal["dataset"] = "dataset"
     compression: H5pyCompression | None = None
@@ -187,7 +188,7 @@ class DatasetInfo(H5Mixin):
         return cls(
             h5type="dataset",
             attrs=dict(h5py_dataset.attrs),
-            key=h5py_dataset.name,
+            key=str(h5py_dataset.name),
             size=h5py_dataset.size,
             shape=h5py_dataset.shape,
             ndim=h5py_dataset.ndim,
@@ -196,7 +197,7 @@ class DatasetInfo(H5Mixin):
             nbytes=h5py_dataset.nbytes,
             compression=h5py_dataset.compression,
             compression_opts=h5py_dataset.compression_opts,
-            maxshape=h5py_dataset.maxshape,
+            maxshape=cast("tuple[int, ...] | None", h5py_dataset.maxshape),
             chunks=h5py_dataset.chunks,
         )
 
@@ -343,7 +344,7 @@ class GroupInfo(GroupLikeInfo):
             else:
                 raise TypeError(f"Unknown type: {type(value)}")
         attrs = dict(h5py_group.attrs)
-        key = h5py_group.name
+        key = str(h5py_group.name)
         return cls(
             h5type="group", key=key, groups=groups, attrs=attrs, datasets=datasets
         )
@@ -351,7 +352,7 @@ class GroupInfo(GroupLikeInfo):
     @classmethod
     def from_fspath(cls, fspath: str) -> GroupInfo:
         with h5py.File(fspath, "r") as f:
-            return cls.from_h5py_group(f.get("/"))
+            return cls.from_h5py_group(f)
 
     def items(
         self, datasets: bool = True, groups: bool = True
@@ -429,7 +430,7 @@ class FileInfo(GroupLikeInfo):
             else:
                 raise TypeError(f"Unknown type: {type(value)}")
         attrs = dict(h5py_group.attrs)
-        key = h5py_group.name
+        key = str(h5py_group.name)
         fssize = path.getsize(h5py_group.file.filename)
         return cls(
             h5type="file",

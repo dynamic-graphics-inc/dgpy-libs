@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import sys
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from functools import lru_cache
@@ -15,6 +17,8 @@ import ry
 from rich.console import Console
 
 import h5
+
+from h5.__about__ import __version__
 
 console = Console()
 
@@ -117,13 +121,28 @@ class H5CliConfig:
 
 
 @click.group(
-    context_settings={"help_option_names": ["-h", "--help"]},
+    context_settings={"help_option_names": ("-h", "--help")},
+    invoke_without_command=True,
 )
-@click.option("--debug", envvar="DGPYDEBUG", is_flag=True, default=False)
-def cli(debug: bool = False) -> None:
+@click.option(
+    "--debug", envvar="DGPYDEBUG", is_flag=True, default=False, help="Enable debug mode"
+)
+@click.option("-V", "--version", is_flag=True, default=False, help="Print version")
+def cli(debug: bool = False, version: bool = False) -> None:
     """h5 command line interface"""
     if debug:
         click.echo("h5-debug: on")
+    if version:
+        click.echo(__version__)
+        sys.exit(0)
+
+
+@cli.command(
+    help="Print version",
+    name="version",
+)
+def version_cmd() -> None:
+    click.echo(__version__)
 
 
 @cli.command(
