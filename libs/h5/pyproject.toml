@@ -27,7 +27,7 @@ dependencies = [
   "h5py>=3.7",
   "numpy>=1.23.2",
   "rich>=13.7.1",
-  "ry>=0.0.50",
+  "ry>=0.0.53",
   "typing-extensions>=4.5,<5",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
@@ -73,6 +73,7 @@ precision = 2
 omit = [ "*/legacy.py" ]
 exclude_lines = [
   'pragma: no cover',
+  'pragma: nocov',
   'raise NotImplementedError',
   'if TYPE_CHECKING:',
   '@overload',
@@ -80,6 +81,7 @@ exclude_lines = [
   'class BaseAsync:',
   'if 0:',
   'if False:',
+  'if __name__ == "__main__":',
 ]
 
 [tool.coverage.paths]
