@@ -7,16 +7,27 @@ from dataclasses import dataclass
 from typing import TypedDict, TypeVar
 
 import aiopen
+import aiopen.__about__
 import asyncify
+import asyncify.__about__
 import fmts
+import fmts.__about__
 import funkify
+import funkify.__about__
 import h5
+import h5.__about__
 import jsonbourne
+import jsonbourne.__about__
 import lager
+import lager.__about__
 import listless
+import listless.__about__
 import requires
+import requires.__about__
 import shellfish
+import shellfish.__about__
 import xtyping
+import xtyping.__about__
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__

@@ -90,8 +90,6 @@ exclude_lines = [
   # Scripts
   'if __name__ == .__main__.:',
   'if 0:',
-  'if sys.version_info < (3, 7):',
-  'if sys.version_info >= (3, 8):',
   'pragma: no cover',
   'pragma: nocov',
 ]

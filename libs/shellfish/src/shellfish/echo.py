@@ -17,6 +17,10 @@ def echo(
 ) -> None:
     r"""Print/echo function
 
+    This function is basically the print function, and exists so that one can
+    deliberately print without using the built-in print function which is not
+    allowed by the `dgpy-libs` ruff rules.
+
     Args:
         *objects: Item(s) to print/echo
         sep: Separator to print with

@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "dprint": "^0.50.1",
+    "prettier": "^3.6.2",
     "pyright": "^1.1.403"
   },
   "pnpm": {
