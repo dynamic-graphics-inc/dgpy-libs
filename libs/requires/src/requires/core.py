@@ -14,12 +14,11 @@ from importlib import import_module
 from typing import (
     TYPE_CHECKING,
     Any,
+    ParamSpec,
     TypeAlias,
     TypedDict,
     TypeVar,
 )
-
-from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable

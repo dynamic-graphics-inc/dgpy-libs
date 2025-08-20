@@ -34,7 +34,6 @@ classifiers = [
 ]
 dependencies = [
   "funkify",
-  "typing-extensions>=4.12.2",
 ]
 
 optional-dependencies.test = [

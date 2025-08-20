@@ -30,7 +30,6 @@ version = "0.8.0"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.optional-dependencies]
@@ -53,7 +52,6 @@ requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.2" },
     { name = "pytest-asyncio", marker = "extra == 'test'", specifier = ">=1" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 provides-extras = ["test"]
 
@@ -121,7 +119,6 @@ version = "0.12.0"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -132,10 +129,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "funkify", editable = "libs/funkify" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
-]
+requires-dist = [{ name = "funkify", editable = "libs/funkify" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -690,7 +684,7 @@ name = "exceptiongroup"
 version = "1.3.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/0b/9f/a65090624ecf468cdca03533906e7c69ed7588582240cfe7cc9e770b50eb/exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88", size = 29749, upload-time = "2025-05-10T17:42:51.123Z" }
 wheels = [
@@ -1130,7 +1124,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata]
@@ -1140,7 +1134,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "typing-extensions", specifier = ">=4.5,<5" }]
+dev = [{ name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.5,<5" }]
 
 [[package]]
 name = "listless"
@@ -2306,22 +2300,22 @@ version = "0.12.0"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "orjson" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "funkify", editable = "libs/funkify" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
-]
+requires-dist = [{ name = "funkify", editable = "libs/funkify" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "orjson", specifier = ">=3.11" }]
+dev = [
+    { name = "orjson", specifier = ">=3.11" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.5,<5" },
+]
 
 [[package]]
 name = "rich"
@@ -2600,7 +2594,6 @@ dependencies = [
     { name = "jsonbourne" },
     { name = "listless" },
     { name = "pydantic" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -2618,7 +2611,6 @@ requires-dist = [
     { name = "jsonbourne", editable = "libs/jsonbourne" },
     { name = "listless", editable = "libs/listless" },
     { name = "pydantic", specifier = ">=2.0.3" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 
 [package.metadata.requires-dev]
