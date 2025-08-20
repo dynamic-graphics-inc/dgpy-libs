@@ -28,7 +28,6 @@ dependencies = [
   "numpy>=1.23.2",
   "rich>=13.7.1",
   "ry>=0.0.53",
-  "typing-extensions>=4.5,<5",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
