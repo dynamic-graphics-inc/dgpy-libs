@@ -69,6 +69,6 @@ def args2cmd(args: PopenArgs) -> str | bytes:
     """
     return (
         args
-        if isinstance(args, (bytes, str))
+        if isinstance(args, bytes | str)
         else " ".join(map(argstr, map(str, flatten_args(args))))
     )

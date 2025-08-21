@@ -229,7 +229,7 @@ class GroupLikeInfo(H5Mixin):
         try:
             return self[item]
         except KeyError as ke:
-            if not isinstance(default, (GroupInfo, DatasetInfo)):
+            if not isinstance(default, GroupInfo | DatasetInfo):
                 raise TypeError(
                     f"default must be a H5Group or H5Dataset, not {type(default)}"
                 ) from ke
@@ -504,6 +504,6 @@ def h5py_obj_info(
 def info(
     file: str | Path | h5py.File | h5py.Group | h5py.Dataset,
 ) -> GroupInfo | DatasetInfo | FileInfo:
-    if isinstance(file, (str, Path)):
+    if isinstance(file, str | Path):
         return FileInfo.from_fspath(str(file))
     return h5py_obj_info(file)

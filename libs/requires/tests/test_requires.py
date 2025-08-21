@@ -389,7 +389,7 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
 
         assert fn() == '{"herm": 1}'
     except Exception as e:
-        assert isinstance(e, (RequirementAttributeError,))
+        assert isinstance(e, RequirementAttributeError)
         assert "AttributeError" in e.__str__()
 
 

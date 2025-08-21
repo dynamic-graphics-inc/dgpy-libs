@@ -56,7 +56,7 @@ include = [
 ]
 
 [tool.ruff]
-extend = "../../pyproject.toml"
+extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
 markers = [ "version" ]

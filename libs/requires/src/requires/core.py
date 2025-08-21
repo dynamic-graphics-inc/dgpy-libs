@@ -461,7 +461,7 @@ def make_requirements(
     | Requirement
     | TRequirementDict,
 ) -> list[Requirement]:
-    if isinstance(requirements, (list, tuple)):
+    if isinstance(requirements, list | tuple):
         return [make_requirement(req) for req in requirements]
     return make_requirements([requirements])
 

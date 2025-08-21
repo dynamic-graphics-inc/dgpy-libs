@@ -58,7 +58,7 @@ def _json_default(obj: Any) -> Any:
         return float(obj)
     if is_np_integer(obj):
         return int(obj)
-    if isinstance(obj, (np.bytes_, bytes)):
+    if isinstance(obj, np.bytes_ | bytes):
         try:
             return obj.decode("utf-8")
         except UnicodeDecodeError:

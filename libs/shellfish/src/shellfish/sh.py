@@ -497,7 +497,7 @@ def validate_stdin(stdin: STDIN) -> STDIN:
         return None
     if stdin and isinstance(stdin, str):
         return validate_stdin(str(stdin).encode())
-    if isinstance(stdin, (bytes, bytearray)):
+    if isinstance(stdin, bytes | bytearray):
         return bytes(stdin)
     raise ValueError(f"Invalid stdin: (type={str(type(stdin))}) {str(stdin)}")
 
@@ -924,7 +924,7 @@ async def _do_async(
         _args = [args]
     elif isinstance(args, bytes):
         _args = [utf8_string(args)]
-    elif isinstance(args, (list, tuple)):
+    elif isinstance(args, list | tuple):
         _args = flatten_args(args)
     else:
         _args = list(map(str, args))
@@ -968,7 +968,7 @@ async def _do_async(
         env=_env,
         cwd=_cwd,
         shell=shell,
-        ok_code=ok_code if isinstance(ok_code, (list, tuple, set)) else {ok_code},
+        ok_code=ok_code if isinstance(ok_code, list | tuple | set) else {ok_code},
         check=check,
         capture_output=True,
         timeout=timeout,
@@ -976,7 +976,7 @@ async def _do_async(
         universal_newlines=True,
     )
     _args_array = (
-        list(map(str, args)) if isinstance(args, (list, tuple)) else [str(args)]
+        list(map(str, args)) if isinstance(args, list | tuple) else [str(args)]
     )
     return Done(
         args=_args_array,

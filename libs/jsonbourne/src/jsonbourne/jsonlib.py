@@ -79,7 +79,7 @@ def _json_encode_default(obj: Any) -> Any:
             return float(obj)
         if isinstance(obj, np.integer):
             return int(obj)
-        if isinstance(obj, (np.ndarray, np.generic)):
+        if isinstance(obj, np.ndarray | np.generic):
             return obj.tolist()
     if dataclasses.is_dataclass(obj) and callable(obj):
         obj_instance = obj()
@@ -90,9 +90,9 @@ def _json_encode_default(obj: Any) -> Any:
         return str(obj, encoding="utf-8")
     if isinstance(obj, tuple):
         return tuple(obj)
-    if isinstance(obj, (Path, UUID)):
+    if isinstance(obj, Path | UUID):
         return str(obj)
-    if isinstance(obj, (datetime, dttime, dtdate)):
+    if isinstance(obj, datetime | dttime | dtdate):
         return obj.isoformat()
     if isinstance(obj, timedelta):
         return obj.total_seconds()
