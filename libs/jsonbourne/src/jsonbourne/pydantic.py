@@ -71,7 +71,7 @@ class JsonBaseModelDefaultConfig(JsonBaseConfig): ...
 
 
 def is_json_obj_like(v: Any) -> TypeGuard[JsonObj[Any] | dict[str, Any]]:
-    return isinstance(v, (JsonObj, dict))
+    return isinstance(v, JsonObj | dict)
 
 
 def json_obj_before_validator(

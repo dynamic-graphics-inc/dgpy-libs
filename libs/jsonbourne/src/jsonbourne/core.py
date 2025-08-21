@@ -535,7 +535,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                     {
                         k: (
                             v
-                            if not isinstance(v, (dict, JsonObj))
+                            if not isinstance(v, dict | JsonObj)
                             else JsonObj(v).filter_none(recursive=True)
                         )
                         for k, v in self.items()
@@ -611,7 +611,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                     {
                         k: (
                             v
-                            if not isinstance(v, (dict, JsonObj))
+                            if not isinstance(v, dict | JsonObj)
                             else JsonObj(v).filter_false(recursive=True)
                         )
                         for k, v in self.items()
@@ -689,7 +689,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             ValueError: Raised if key is not a str/Tuple[str, ...]/list[str]
 
         """
-        if not isinstance(key, (str, list, tuple)):
+        if not isinstance(key, str | list | tuple):
             raise ValueError(
                 "".join(
                     (
@@ -747,7 +747,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                             for dk, dv in as_json_obj(v).dot_items()
                         ),
                     )
-                    if isinstance(v, (JsonObj, dict))
+                    if isinstance(v, JsonObj | dict)
                     else (((str(k),), v),)
                 )
                 for k, v in self.items()
@@ -1100,7 +1100,7 @@ def jsonify(value: _VT) -> _VT: ...
 
 def jsonify(value: Any) -> Any:
     """Convert and return a value to a JsonObj if the value is a dict"""
-    if isinstance(value, (JsonObj, JsonDict)) or issubclass(value.__class__, JsonObj):
+    if isinstance(value, JsonObj | JsonDict) or issubclass(value.__class__, JsonObj):
         return value
     if isinstance(value, dict) and not isinstance(value, JsonObj):
         return JsonObj(value)
