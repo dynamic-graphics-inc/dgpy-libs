@@ -17,6 +17,7 @@ def main() -> None:
             indent=2,
         )
     )
+    sys.stdout.write("\n")
 
 
 if __name__ == "__main__":

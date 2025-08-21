@@ -23,7 +23,7 @@ dependencies = [
   "dgpytest",
   "fmts",
   "funkify",
-  "h5",
+  "h5[cli]",
   "jsonbourne",
   "lager",
   "listless",
