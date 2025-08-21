@@ -58,7 +58,7 @@ fmt:
     ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
 
 # fmt pyproject.toml files
-fmt-pyproject:
+pyproject-fmt:
     find . -type f -name pyproject.toml | xargs -n1 pyproject-fmt --keep-full-version
 
 # format-check
@@ -88,4 +88,3 @@ lint: fmt noxlint
 # format the justfile(s) (w/ just)
 fmt-justfile:
     just --fmt --unstable
-
