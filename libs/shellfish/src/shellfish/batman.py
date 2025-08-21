@@ -77,7 +77,7 @@ def run_cmds_as_bat_file(
         return bat(bat_filepath, text=text)
 
 
-def MKLINK_OPT(D: bool = False, H: bool = False, J: bool = False) -> str | None:
+def MKLINK_OPT(*, D: bool = False, H: bool = False, J: bool = False) -> str | None:
     """Return the appropriate /D, /H, or /J option for windows mklink
 
     Args:

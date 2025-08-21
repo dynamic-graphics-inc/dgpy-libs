@@ -44,7 +44,7 @@ def _h5_cli() -> None:
     h5_cli()
 
 
-def main(h5cli: bool = True) -> None:  # pragma: no cover
+def main(*, h5cli: bool = True) -> None:  # pragma: no cover
     if not h5cli or __click_version__ is None or sys.argv[-1].endswith("__main__.py"):
         _pkg_info()
     else:

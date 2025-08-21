@@ -748,7 +748,7 @@ def randhexstr(length: int = 8) -> str:
     return bytes2str(hexlify(urandom(length // 2)))
 
 
-def random_string(length: int = 8, hex: bool = False) -> str:
+def random_string(length: int = 8, *, hex: bool = False) -> str:
     """Return a random ascii string (length=str_len; default=4)
 
     Examples:
@@ -1304,7 +1304,7 @@ class pstr(str):
             string = f"{str(self.__class__.__name__)}({string})"
         return string
 
-    def _repr_pretty_(self, p: Any, cycle: Any = False) -> None:
+    def _repr_pretty_(self, p: Any, cycle: Any = False) -> None:  # noqa: FBT002
         p.text(self._repr_parts())
 
 

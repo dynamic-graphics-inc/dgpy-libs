@@ -67,6 +67,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 def aiopen(
     file: str | PathLike[str] | int,
     mode: OpenBinaryMode = ...,
+    *,
     buffering: int = ...,
     encoding: str | None = ...,
     errors: str | None = ...,
@@ -80,6 +81,7 @@ def aiopen(
 def aiopen(
     file: str | PathLike[str] | int,
     mode: OpenTextMode = ...,
+    *,
     buffering: int = ...,
     encoding: str | None = ...,
     errors: str | None = ...,
@@ -92,6 +94,7 @@ def aiopen(
 def aiopen(
     file: str | PathLike[str] | int,
     mode: str | OpenBinaryMode | OpenTextMode = "r",
+    *,
     buffering: int = -1,
     encoding: str | None = None,
     errors: str | None = None,

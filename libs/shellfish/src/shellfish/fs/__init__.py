@@ -1012,7 +1012,7 @@ def read_bytes(filepath: FsPath) -> bytes:
         return bytes(file.read())
 
 
-def file_lines_gen(filepath: FsPath, keepends: bool = True) -> Iterable[str]:
+def file_lines_gen(filepath: FsPath, *, keepends: bool = True) -> Iterable[str]:
     r"""Yield lines from a given fspath
 
     Args:
@@ -1076,6 +1076,7 @@ def read_bytes_gen(filepath: FsPath, blocksize: int = 65536) -> Iterable[bytes]:
 def write_bytes_gen(
     filepath: FsPath,
     bytes_gen: Iterable[bytes],
+    *,
     append: bool = False,
     chmod: int | None = None,
 ) -> int:

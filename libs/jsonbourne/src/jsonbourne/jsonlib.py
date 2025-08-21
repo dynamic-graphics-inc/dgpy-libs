@@ -115,6 +115,7 @@ class JsonLibABC(ABC):
     @abstractmethod
     def dumps(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -127,6 +128,7 @@ class JsonLibABC(ABC):
     @abstractmethod
     def dumpb(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -139,6 +141,7 @@ class JsonLibABC(ABC):
     @abstractmethod
     def loads(
         string: bytes | str,
+        *,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -166,6 +169,7 @@ class JsonLibABC(ABC):
     @abstractmethod
     def jsoncp(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -184,6 +188,7 @@ class JSON_STDLIB(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -208,6 +213,7 @@ class JSON_STDLIB(JsonLibABC):
     @staticmethod
     def dumpb(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -228,6 +234,7 @@ class JSON_STDLIB(JsonLibABC):
     @staticmethod
     def loads(
         string: bytes | str,
+        *,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -250,6 +257,7 @@ class JSON_STDLIB(JsonLibABC):
     @abstractmethod
     def jsoncp(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -276,6 +284,7 @@ class ORJSON(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -295,6 +304,7 @@ class ORJSON(JsonLibABC):
     @staticmethod
     def dumpb(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -319,6 +329,7 @@ class ORJSON(JsonLibABC):
     @staticmethod
     def loads(
         string: bytes | str,
+        *,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -338,6 +349,7 @@ class ORJSON(JsonLibABC):
     @abstractmethod
     def jsoncp(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -368,6 +380,7 @@ class RAPIDJSON(JsonLibABC):
     @staticmethod
     def dumps(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -394,6 +407,7 @@ class RAPIDJSON(JsonLibABC):
     @staticmethod
     def dumpb(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -414,6 +428,7 @@ class RAPIDJSON(JsonLibABC):
     @staticmethod
     def loads(
         string: bytes | str,
+        *,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -436,6 +451,7 @@ class RAPIDJSON(JsonLibABC):
     @abstractmethod
     def jsoncp(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -517,6 +533,7 @@ class JsonLib:
     def dumps(
         self,
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -537,6 +554,7 @@ class JsonLib:
     def dumpb(
         self,
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -554,7 +572,7 @@ class JsonLib:
             **kwargs,
         )
 
-    def loads(self, string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
+    def loads(self, string: bytes | str, *, jsonc: bool = False, **kwargs: Any) -> Any:
         if jsonc and self._rj:
             return self._rj.loads(string, jsonc=jsonc, **kwargs)
         return self._jsonlib.loads(string, jsonc=jsonc, **kwargs)
@@ -583,6 +601,7 @@ class JsonLib:
     def jsoncp(
         self,
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -607,6 +626,7 @@ JSONLIB = JsonLib(_JSONLIB)
 
 def dumps(
     data: Any,
+    *,
     fmt: bool = False,
     pretty: bool = False,
     sort_keys: bool = False,
@@ -627,6 +647,7 @@ def dumps(
 
 def dumpb(
     data: Any,
+    *,
     fmt: bool = False,
     pretty: bool = False,
     sort_keys: bool = False,
@@ -647,6 +668,7 @@ def dumpb(
 
 def loads(
     string: bytes | str,
+    *,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,
@@ -660,13 +682,14 @@ def loads(
     return JSONLIB.loads(string, jsonc=jsonc, **kwargs)
 
 
-def parse(string: bytes | str, jsonc: bool = False, **kwargs: Any) -> Any:
+def parse(string: bytes | str, *, jsonc: bool = False, **kwargs: Any) -> Any:
     return loads(string, jsonc=jsonc, **kwargs)
 
 
 def wjson(
     fspath: str | Path,
     data: Any,
+    *,
     fmt: bool = False,
     pretty: bool = False,
     sort_keys: bool = False,
@@ -677,7 +700,13 @@ def wjson(
     with open(fspath, "wb") as f:
         bytes_written = f.write(
             JSONLIB.dumpb(
-                data, fmt, pretty, sort_keys, append_newline, default, **kwargs
+                data,
+                fmt=fmt,
+                pretty=pretty,
+                sort_keys=sort_keys,
+                append_newline=append_newline,
+                default=default,
+                **kwargs,
             )
         )
     return bytes_written
@@ -685,6 +714,7 @@ def wjson(
 
 def rjson(
     fspath: str | Path,
+    *,
     jsonc: bool = False,
     jsonl: bool = False,
     ndjson: bool = False,
@@ -697,6 +727,7 @@ def rjson(
 
 def jsoncp(
     data: Any,
+    *,
     fmt: bool = False,
     pretty: bool = False,
     sort_keys: bool = False,

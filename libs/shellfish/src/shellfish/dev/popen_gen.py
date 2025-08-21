@@ -19,6 +19,7 @@ __all__ = ("popen_gen", "popen_pipes_gen")
 def _enqueue_output(
     fileio: IO[AnyStr],
     queue: Queue[AnyStr],
+    *,
     block: bool = True,
 ) -> None:
     while True:
@@ -30,7 +31,7 @@ def _enqueue_output(
 
 
 def _enqueue_output_iter_readline(
-    fileio: IO[AnyStr], queue: Queue[AnyStr], block: bool = True
+    fileio: IO[AnyStr], queue: Queue[AnyStr], *, block: bool = True
 ) -> None:
     for line in iter(fileio.readline, ""):
         queue.put(line, block=block)
@@ -63,10 +64,10 @@ def popen_pipes_gen(
             q_stderr: Queue[AnyStr] = Queue()
             _block = True
             stdout_future = pool.submit(
-                _enqueue_output_iter_readline, proc.stdout, q_stdout, _block
+                _enqueue_output_iter_readline, proc.stdout, q_stdout, block=_block
             )
             stderr_future = pool.submit(
-                _enqueue_output_iter_readline, proc.stderr, q_stderr, _block
+                _enqueue_output_iter_readline, proc.stderr, q_stderr, block=_block
             )
             while proc.poll() is None:
                 try:

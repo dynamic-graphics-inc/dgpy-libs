@@ -122,6 +122,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
 
     def to_str(
         self,
+        *,
         minify: bool = False,
         width: int | None = None,
         fmt_kwargs: bool = False,
@@ -255,6 +256,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
 
     def JSON(
         self,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,

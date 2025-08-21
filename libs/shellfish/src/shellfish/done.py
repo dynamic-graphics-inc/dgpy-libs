@@ -250,10 +250,10 @@ class Done(_ShellfishBaseModel):
             return self.hrdt.hrdt_obj()
         return HrTime.from_seconds(seconds=self.dt).hrdt_obj()
 
-    def stdout_lines(self, keepends: bool = False) -> list[str]:
+    def stdout_lines(self, *, keepends: bool = False) -> list[str]:
         return self.stdout.splitlines(keepends=keepends)
 
-    def stderr_lines(self, keepends: bool = False) -> list[str]:
+    def stderr_lines(self, *, keepends: bool = False) -> list[str]:
         return self.stderr.splitlines(keepends=keepends)
 
     @property
@@ -392,19 +392,20 @@ class Done(_ShellfishBaseModel):
         return self
 
     def json_parse_stdout(
-        self, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
+        self, *, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
     ) -> Any:
         """Return json parsed stdout"""
         return JSON.loads(self.stdout, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
     def json_parse_stderr(
-        self, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
+        self, *, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
     ) -> Any:
         """Return json parsed stderr"""
         return JSON.loads(self.stderr, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
     def json_parse(
         self,
+        *,
         stderr: bool = False,
         jsonc: bool = False,
         jsonl: bool = False,
@@ -419,6 +420,7 @@ class Done(_ShellfishBaseModel):
 
     def parse_json(
         self,
+        *,
         stderr: bool = False,
         jsonc: bool = False,
         jsonl: bool = False,

@@ -297,7 +297,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         return self.__setitem__(attr, value)
 
-    def __setitem(self, key: _KT, value: _VT, identifier: bool = False) -> None:
+    def __setitem(self, key: _KT, value: _VT, *, identifier: bool = False) -> None:
         if is_int(key):
             self._data[str(key)] = value
             return None
@@ -455,7 +455,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 return default
             raise ke
 
-    def filter_none(self, recursive: bool = False) -> JsonObj[_VT]:
+    def filter_none(self, *, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is `None` but not false-y
 
         Args:
@@ -545,7 +545,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         return JsonObj({k: v for k, v in self.items() if v is not None})
 
-    def filter_false(self, recursive: bool = False) -> JsonObj[_VT]:
+    def filter_false(self, *, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is false-y
 
         Args:
@@ -652,7 +652,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             )
         )
 
-    def dot_keys_list(self, sort_keys: bool = False) -> list[tuple[str, ...]]:
+    def dot_keys_list(self, *, sort_keys: bool = False) -> list[tuple[str, ...]]:
         """Return a list of the JsonObj's dot-notation friendly keys
 
         Args:
@@ -764,7 +764,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _is_empty(self) -> bool:
         return not bool(self._data)
 
-    def to_str(self, minify: bool = False, width: int | None = None) -> str:
+    def to_str(self, *, minify: bool = False, width: int | None = None) -> str:
         """Return a string representation of the JsonObj object"""
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
@@ -921,6 +921,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def JSON(
         self,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -954,6 +955,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def to_json(
         self,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -986,6 +988,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def stringify(
         self,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1018,6 +1021,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def _to_json(
         self,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1171,6 +1175,7 @@ class JsonModule:
     @staticmethod
     def stringify(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1194,6 +1199,7 @@ class JsonModule:
     @staticmethod
     def dumps(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1217,6 +1223,7 @@ class JsonModule:
     @staticmethod
     def binify(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1240,6 +1247,7 @@ class JsonModule:
     @staticmethod
     def dumpb(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1263,6 +1271,7 @@ class JsonModule:
     @staticmethod
     def jsoncp(
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1283,6 +1292,7 @@ class JsonModule:
     @staticmethod
     def loads(
         string: bytes | str,
+        *,
         obj: bool = False,
         jsonc: bool = False,
         jsonl: bool = False,
@@ -1299,6 +1309,7 @@ class JsonModule:
     @staticmethod
     def rjson(
         fspath: Path | str,
+        *,
         jsonc: bool = False,
         jsonl: bool = False,
         ndjson: bool = False,
@@ -1311,6 +1322,7 @@ class JsonModule:
     def wjson(
         fspath: Path | str,
         data: Any,
+        *,
         fmt: bool = False,
         pretty: bool = False,
         sort_keys: bool = False,
@@ -1333,6 +1345,7 @@ class JsonModule:
     @staticmethod
     def parse(
         string: bytes | str,
+        *,
         obj: bool = False,
         jsonc: bool = False,
         jsonl: bool = False,

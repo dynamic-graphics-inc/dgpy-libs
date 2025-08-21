@@ -185,10 +185,10 @@ class Logger(_Logger):
         return self.getChild(suffix)
 
     def find_caller(
-        self, stack_info: bool = False, stacklevel: int = 1
+        self, *, stack_info: bool = False, stacklevel: int = 1
     ) -> tuple[str, int, str, str | None]:
         """snake_case alias for findCaller"""
-        return self.findCaller(stack_info, stacklevel)
+        return self.findCaller(stack_info=stack_info, stacklevel=stacklevel)
 
     def add_handler(self, hdlr: Handler) -> None:
         """snake_case alias for addHandler"""

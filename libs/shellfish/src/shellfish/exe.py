@@ -55,6 +55,7 @@ class ExeABC:
     def __init__(
         self,
         cmd: str,
+        *,
         subcmd: tuple[str, ...] | list[str] | str | None = None,
         abspath: str | None = None,
         check: bool = False,

@@ -542,7 +542,7 @@ def requires(
     return _requires_dec
 
 
-def scope_requirements(debug: bool = False) -> RequirementsMeta:
+def scope_requirements(*, debug: bool = False) -> RequirementsMeta:
     """Scan and check calling module scope for objs/fns wrapped with requirements.
 
     Args:
