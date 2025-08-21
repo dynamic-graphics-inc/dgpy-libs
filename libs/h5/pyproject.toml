@@ -26,16 +26,14 @@ dependencies = [
   "h5py>=3.7",
   "numpy>=1.23.2",
 ]
+optional-dependencies.cli = [
+  "click>=8.2.1",
+  "rich>=14.1",
+  "ry>=0.0.53",
+]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 scripts.h5 = "h5.cli:main"
-
-[project.optional-dependencies]
-cli = [
-    "click>=8.2.1",
-    "rich>=14.1.0",
-    "ry>=0.0.53",
-]
 
 [dependency-groups]
 dev = [
