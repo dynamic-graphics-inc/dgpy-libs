@@ -3,6 +3,7 @@
 ## unreleased
 
 - ALL
+  - Addopted ruffs `FBT` rules
   - Minor-version bump all packages
   - Bump min python version to 3.10
   - Ruff lints updated for python-v3.10
