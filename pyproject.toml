@@ -52,14 +52,14 @@ scripts.dgpydev = "dgpydev.cli:main"
 dev = [
   "anyio>=4.6.2.post1",
   "httpx>=0.28.1",
-  "ipython>=8.18.1",
+  "ipython>=8.37.0",
   "mypy>=1.11.1",
   "nox>=2024.4.15",
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
   "pytest-cov>=6.1.1",
   "rich>=13.9.3",
-  "ruff>=0.12.9",
+  "ruff>=0.12.10",
   "tomli>=2.0.1",
 ]
 
@@ -191,11 +191,11 @@ lint.isort.known-first-party = [
   "shellfish",
   "xtyping",
 ]
+lint.isort.lines-after-imports = -1
+lint.isort.lines-between-types = 1
 lint.flake8-boolean-trap.extend-allowed-calls = [
   "pydantic.Field",
 ]
-lint.isort.lines-after-imports = -1
-lint.isort.lines-between-types = 1
 lint.mccabe.max-complexity = 20
 lint.pydocstyle.convention = "google"
 lint.preview = true
