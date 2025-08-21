@@ -414,13 +414,13 @@ class Flag(metaclass=FlagMeta):
     """
 
 
-def mkenv(env: dict[str, str], extenv: bool = True) -> dict[str, str]:
+def mkenv(env: dict[str, str], *, extenv: bool = True) -> dict[str, str]:
     if extenv:
         return {**dict(environ), **env}
     return env
 
 
-def decode_stdio_bytes(stdio_bytes: str | bytes, lf: bool = True) -> str:
+def decode_stdio_bytes(stdio_bytes: str | bytes, *, lf: bool = True) -> str:
     r"""Return Stdio bytes from stdout/stderr as a string
 
     Args:
@@ -551,6 +551,7 @@ def validate_popen_args_windows(
 
 def _do_tee(
     args: PopenArgs,
+    *,
     input: STDIN | None,
     cwd: FsPath | None,
     env: dict[str, str] | None,
@@ -1126,6 +1127,7 @@ class LIN(_LIN):
     def rsync_args(
         src: str,
         dest: str,
+        *,
         delete: bool = False,
         dry_run: bool = False,
         exclude: Iterable[str] | None = None,
@@ -1201,6 +1203,7 @@ class LIN(_LIN):
     def rsync(
         src: str,
         dest: str,
+        *,
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
@@ -1267,6 +1270,7 @@ class LIN(_LIN):
     def sync(
         src: str,
         dest: str,
+        *,
         delete: bool = False,
         mkdirs: bool = False,
         dry_run: bool = False,
@@ -1570,7 +1574,7 @@ def setenv(key: str, val: str | None = None) -> tuple[str, str]:
     return export(key=key, val=val)
 
 
-def shplit(string: str, comments: bool = False, posix: bool = True) -> list[str]:
+def shplit(string: str, *, comments: bool = False, posix: bool = True) -> list[str]:
     """Typed alias for shlex.split"""
     return _shplit(string, comments=comments, posix=posix)
 
@@ -1723,7 +1727,7 @@ def tree(dirpath: FsPath, filterfn: Callable[[str], bool] | None = None) -> str:
     )
 
 
-def ls(dirpath: FsPath = ".", abspath: bool = False) -> list[str]:
+def ls(dirpath: FsPath = ".", *, abspath: bool = False) -> list[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
     Args:
@@ -1795,7 +1799,7 @@ def ls_files_dirs(
     return [el.path for el in file_dir_entries], [el.path for el in dir_dir_entries]
 
 
-async def ls_async(dirpath: FsPath = ".", abspath: bool = False) -> list[str]:
+async def ls_async(dirpath: FsPath = ".", *, abspath: bool = False) -> list[str]:
     """List files and dirs given a dirpath (defaults to pwd)
 
     Args:
@@ -1860,7 +1864,7 @@ def mv(src: FsPath, dest: FsPath) -> None:
     fs.move(src, dest)
 
 
-def source(filepath: FsPath, _globals: bool = True) -> None:  # pragma: nocov
+def source(filepath: FsPath, *, _globals: bool = True) -> None:  # pragma: nocov
     """Execute/run a python file given a fspath and put globals in globasl
 
     Args:

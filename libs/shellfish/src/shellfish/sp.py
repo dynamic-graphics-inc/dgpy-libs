@@ -242,6 +242,7 @@ def runs(
 
 def run_dtee(
     args: PopenArgs,
+    *,
     cwd: FsPath | None = None,
     env: dict[str, str] | None = None,
     input: STDIN | None = None,
@@ -311,6 +312,7 @@ def run_dtee(
 
 def run_tee(
     args: PopenArgs,
+    *,
     cwd: str | None = None,
     env: dict[str, str] | None = None,
     input: STDIN | None = None,

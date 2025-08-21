@@ -26,8 +26,9 @@ class _DirTree:
     def __init__(
         self,
         path: str | Path,
+        *,
         parent_path: _DirTree | None,
-        is_last: bool,
+        is_last: bool = False,
     ) -> None:
         """Construct a DirTree object
 
@@ -46,6 +47,7 @@ class _DirTree:
     def make_tree(
         cls,
         root: Path,
+        *,
         parent: _DirTree | None = None,
         is_last: bool = False,
         filterfn: Callable[..., bool] | None = None,
@@ -65,7 +67,7 @@ class _DirTree:
         root = Path(str(root))
         filterfn = filterfn or _DirTree._default_filter
 
-        displayable_root = cls(str(root), parent, is_last)
+        displayable_root = cls(str(root), parent_path=parent, is_last=is_last)
         yield displayable_root
 
         children = sorted(
@@ -83,7 +85,7 @@ class _DirTree:
                     filterfn=filterfn,
                 )
             else:
-                yield cls(_path, displayable_root, is_last)
+                yield cls(_path, parent_path=displayable_root, is_last=is_last)
             count += 1
 
     @staticmethod

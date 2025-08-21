@@ -104,6 +104,7 @@ def loglevel(level: str | int) -> str:
 def flog(
     funk: Callable[..., T] | None = None,
     level: str | int = "debug",
+    *,
     enter: bool = True,
     exit: bool = True,
 ) -> T:

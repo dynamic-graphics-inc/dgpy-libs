@@ -340,13 +340,13 @@ class AiopenContextManager(
 async def _aiopen(
     file: PathType,
     mode: str = "r",
+    *,
     buffering: int = -1,
     encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
-    *,
     loop: AbstractEventLoop | None = None,
     executor: Any = None,
 ) -> FileIOAsync | BufferedIOAsyncBase | TextIOWrapperAsync | BufferedReaderAsync:
@@ -370,13 +370,13 @@ async def _aiopen(
 def aiopen(
     file: PathType,
     mode: str = "r",
+    *,
     buffering: int = -1,
     encoding: str | None = None,
     errors: None = None,
     newline: None = None,
     closefd: bool = True,
     opener: None = None,
-    *,
     loop: AbstractEventLoop | None = None,
     executor: Any = None,
 ) -> AiopenContextManager:

@@ -19,6 +19,7 @@ __all__ = ("popen_gen", "popen_pipes_gen")
 def _enqueue_output(
     fileio: IO[AnyStr],
     queue: Queue[AnyStr],
+    *,
     block: bool = True,
 ) -> None:
     while True:
@@ -30,7 +31,7 @@ def _enqueue_output(
 
 
 def _enqueue_output_iter_readline(
-    fileio: IO[AnyStr], queue: Queue[AnyStr], block: bool = True
+    fileio: IO[AnyStr], queue: Queue[AnyStr], *, block: bool = True
 ) -> None:
     for line in iter(fileio.readline, ""):
         queue.put(line, block=block)
