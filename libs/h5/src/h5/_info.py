@@ -178,7 +178,7 @@ class DatasetInfo(H5Mixin):
             "chunks": self.chunks,
         }
 
-    def dump(self, attributes: bool = True) -> DatasetInfoDict:
+    def dump(self, *, attributes: bool = True) -> DatasetInfoDict:
         return self.dict(
             attributes=attributes,
         )
@@ -263,7 +263,7 @@ class GroupLikeInfo(H5Mixin):
             )
         )
 
-    def iter(self, groups: bool = True, datasets: bool = True) -> Iterable[str]:
+    def iter(self, *, groups: bool = True, datasets: bool = True) -> Iterable[str]:
         if groups and datasets:
             return chain(self.groups.keys(), self.datasets.keys())
         elif groups and not datasets:
@@ -275,7 +275,7 @@ class GroupLikeInfo(H5Mixin):
     def __iter__(self) -> Iterator[str]:
         yield from self.iter()
 
-    def keys(self, datasets: bool = True, groups: bool = True) -> Iterable[str]:
+    def keys(self, *, datasets: bool = True, groups: bool = True) -> Iterable[str]:
         if datasets:
             yield from self.datasets.keys()
         if groups:
@@ -314,7 +314,7 @@ class GroupInfo(GroupLikeInfo):
             ),
         }
 
-    def dump(self, attributes: bool = True) -> GroupInfoDumpDict:
+    def dump(self, *, attributes: bool = True) -> GroupInfoDumpDict:
         return {
             "h5type": self.h5type,
             "key": self.key,
@@ -324,7 +324,7 @@ class GroupInfo(GroupLikeInfo):
         }
 
     def dump_gen(
-        self, attributes: bool = True, unnumpy: bool = False
+        self, *, attributes: bool = True, unnumpy: bool = False
     ) -> Iterable[GroupInfoDumpDict | DatasetInfoDict]:
         yield self.dump(attributes=attributes)
         for group in self.groups.values():
@@ -355,7 +355,7 @@ class GroupInfo(GroupLikeInfo):
             return cls.from_h5py_group(f)
 
     def items(
-        self, datasets: bool = True, groups: bool = True
+        self, *, datasets: bool = True, groups: bool = True
     ) -> Iterable[tuple[str, DatasetInfo | GroupInfo]]:
         if datasets:
             yield from self.datasets.items()
@@ -447,7 +447,7 @@ class FileInfo(GroupLikeInfo):
         with h5py.File(fspath, "r") as f:
             return cls.from_h5py_file(f)
 
-    def dump(self, attributes: bool = True) -> FileInfoDumpDict:
+    def dump(self, *, attributes: bool = True) -> FileInfoDumpDict:
         return {
             "h5type": self.h5type,
             "fspath": self.fspath,
@@ -459,7 +459,7 @@ class FileInfo(GroupLikeInfo):
         }
 
     def values(
-        self, datasets: bool = True, groups: bool = True
+        self, *, datasets: bool = True, groups: bool = True
     ) -> Iterable[DatasetInfo | GroupInfo | FileInfo]:
         yield self
         if datasets:
@@ -469,6 +469,7 @@ class FileInfo(GroupLikeInfo):
 
     def items(
         self,
+        *,
         datasets: bool = True,
         groups: bool = True,
     ) -> Iterable[tuple[str, FileInfo | DatasetInfo | GroupInfo]]:
@@ -478,7 +479,7 @@ class FileInfo(GroupLikeInfo):
             yield from ((val.key, val) for val in self.groups.values())
 
     def dump_gen(
-        self, attributes: bool = True
+        self, *, attributes: bool = True
     ) -> Iterable[FileInfoDumpDict | GroupInfoDumpDict | DatasetInfoDict]:
         yield self.dump(attributes=attributes)
         for group in self.groups.values():

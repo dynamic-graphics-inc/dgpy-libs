@@ -52,7 +52,7 @@ def lib_version(libname: str) -> str:
 
 
 def lib_pyproject_toml_2_deps(
-    libname: str, dgpylibs_only: bool = True
+    libname: str, *, dgpylibs_only: bool = True
 ) -> dict[str, str]:
     pyproject_toml_dict = lib_pyproject_toml(libname)
     deps = pyproject_toml_dict["project"]["dependencies"]
@@ -67,7 +67,7 @@ def pyproject_tomls() -> dict[str, dict[str, Any]]:
     context_settings={"help_option_names": ["-h", "--help"]},
 )
 @click.option("--debug/--no-debug", default=False, help="print/log more stuff")
-def cli(debug: bool = False) -> None:
+def cli(*, debug: bool = False) -> None:
     if debug:
         console.log("dgpydev-debug: ON")
 
@@ -306,6 +306,7 @@ def publish() -> None:
 def version(
     lib: str,
     version: str | None = None,
+    *,
     dry_run: bool = False,
 ) -> None:
     """Bump version of lib (TODO)"""

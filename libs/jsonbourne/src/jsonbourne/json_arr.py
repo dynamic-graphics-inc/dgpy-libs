@@ -220,21 +220,21 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
 
     @overload
     def enumerate(
-        self, start: int = 0, flip: Literal[False] = False
+        self, start: int = 0, *, flip: Literal[False] = False
     ) -> Iterator[tuple[int, _T]]: ...
 
     @overload
     def enumerate(
-        self, start: int = 0, flip: Literal[True] = True
+        self, start: int = 0, *, flip: Literal[True] = True
     ) -> Iterator[tuple[_T, int]]: ...
 
     @overload
     def enumerate(
-        self, start: int = 0, flip: bool = False
+        self, start: int = 0, *, flip: bool = False
     ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]: ...
 
     def enumerate(
-        self, start: int = 0, flip: bool = False
+        self, start: int = 0, *, flip: bool = False
     ) -> Iterator[tuple[int, _T]] | Iterator[tuple[_T, int]]:
         if flip:
             return zip(self.__arr, range(start, len(self.__arr) + start), strict=False)

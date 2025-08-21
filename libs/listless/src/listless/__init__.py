@@ -535,7 +535,7 @@ def flatten_strings(
     return (str(arg) for arg in flatten(*args))
 
 
-def itlen(iterable: Iterable[Any], unique: bool = False) -> int:
+def itlen(iterable: Iterable[Any], *, unique: bool = False) -> int:
     """Return the length/num-items in an iterable
 
     This consumes the iterable.

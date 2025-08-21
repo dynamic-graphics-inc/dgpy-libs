@@ -24,7 +24,7 @@ def obj_module_name(obj: Any) -> str | None:
 
 
 def module_members(
-    module: ModuleType, include_dunders: bool = False, include_private: bool = False
+    module: ModuleType, *, include_dunders: bool = False, include_private: bool = False
 ) -> list[str]:
     module_name = module.__name__
     members = dict(vars(module).items())

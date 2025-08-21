@@ -161,7 +161,7 @@ def as_h5py_obj(obj: File | Group | FsPath) -> File | Group:
 
 
 def h5py_obj_gen(
-    h5py_obj: File | Group, h5_path: str = "", root: bool = True
+    h5py_obj: File | Group, h5_path: str = "", *, root: bool = True
 ) -> Iterable[tuple[str, Dataset | Group | File]]:
     """Recursive h5 dataset/group generator.
 
@@ -189,7 +189,7 @@ def h5py_obj_gen(
 
 
 def h5py_obj_keys_gen(
-    h5py_obj: File | Group, h5_path: str = "", root: bool = True
+    h5py_obj: File | Group, h5_path: str = "", *, root: bool = True
 ) -> Iterable[str]:
     """Recursive h5 dataset generator.
 
@@ -242,7 +242,7 @@ def h5iter(
 
 
 def h5py_obj_groups_gen(
-    h5py_obj: File | Group, h5_path: str = "", root: bool = True
+    h5py_obj: File | Group, h5_path: str = "", *, root: bool = True
 ) -> Iterable[tuple[str, Group]]:
     """Recursive h5 groups generator.
 
@@ -289,7 +289,7 @@ def groups_gen_from_fspath(
 
 
 def h5py_obj_attrs_gen(
-    h5py_obj: File | Group, h5_path: str = "", root: bool = True
+    h5py_obj: File | Group, h5_path: str = "", *, root: bool = True
 ) -> Iterable[tuple[str, AttributeManager]]:
     """Recursive h5py.AttributeManager generator.
 

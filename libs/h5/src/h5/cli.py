@@ -114,6 +114,7 @@ class H5CliConfig:
     @classmethod
     def from_cli(
         cls,
+        *,
         datasets: bool,
         attributes: bool,
         groups: bool,
@@ -141,7 +142,7 @@ class H5CliConfig:
     "--debug", envvar="DGPYDEBUG", is_flag=True, default=False, help="Enable debug mode"
 )
 @click.option("-V", "--version", is_flag=True, default=False, help="Print version")
-def cli(debug: bool = False, version: bool = False) -> None:
+def cli(*, debug: bool = False, version: bool = False) -> None:
     """h5 command line interface"""
     if debug:
         click.echo("h5-debug: on")
@@ -176,6 +177,7 @@ def version_cmd() -> None:
 )
 def is_hdf5(
     fspaths: tuple[str, ...],
+    *,
     exit_: bool = False,
 ) -> None:
     data = {filepath: h5.is_hdf5(filepath) for filepath in fspaths}
@@ -244,6 +246,7 @@ def is_hdf5(
 )
 def dump(
     fspath: str,
+    *,
     json_: bool = False,
     datasets: bool = False,
     attributes: bool = False,
@@ -303,6 +306,7 @@ def dump(
 )
 def tree(
     fspath: str,
+    *,
     json_: bool = False,
     datasets: bool = False,
     attributes: bool = False,
@@ -354,6 +358,7 @@ def _keys(fspath: str, clicfg: H5CliConfig) -> list[str]:
 )
 def keys(
     fspath: str,
+    *,
     datasets: bool = False,
     groups: bool = False,
 ) -> None:
@@ -409,6 +414,7 @@ def keys(
 )
 def ls(
     fspath: str,
+    *,
     datasets: bool = False,
     groups: bool = False,
     json_: bool = False,
@@ -460,6 +466,7 @@ def ls(
 )
 def lsd(
     fspath: str,
+    *,
     json_: bool = False,
     include: tuple[str, ...] = ("**/*",),
     exclude: tuple[str, ...] | None = None,
@@ -506,6 +513,7 @@ def lsd(
 )
 def lsg(
     fspath: str,
+    *,
     json_: bool = False,
     include: tuple[str, ...] = ("**/*",),
     exclude: tuple[str, ...] | None = None,
@@ -544,6 +552,7 @@ def lsg(
 )
 def attrs(
     fspath: str,
+    *,
     datasets: bool = False,
     groups: bool = False,
 ) -> None:
