@@ -55,7 +55,7 @@ include = [
 ]
 
 [tool.ruff]
-extend = "../../pyproject.toml"
+extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

@@ -1,40 +1,36 @@
 target-version = "py310"
 line-length = 88
-lint.select = [
+preview = false # TODO: TURN ON?
+
+[lint]
+select = [
   "ANN", # annotations
-  "B",   # bugbear
-  "C4",  # comprehensions
+  "B", # bugbear
+  "C4", # comprehensions
   # pydocstyle
   "D",
-  # "D207",   # docstring is under-indented
-  # "D208",   # docstring is over-indented
-  # "D414",
-  # "D417",
   "FBT",
-  "E",      # pyflakes errors
+  "E", # pyflakes errors
   "ERA001", # erradicate
-  "F",      # pyflakes warnings
-  "FA102",  # require `from __future__ import annotations`
-  "I",      # isort
+  "F", # pyflakes warnings
+  "FA102", # require `from __future__ import annotations`
+  "I", # isort
   # pie (PIE)
   "PIE",
   "RUF022",
   "RUF100", # no unused 'noqa' comments
   # flake8-simplify (SIM)
   "SIM",
-
-  # "SIM",
-  # "PT", # pytest
   "T201", # print
   "TC",
   # pyupgrade
   "UP",
   "W",
 ]
-lint.ignore = [
+ignore = [
   "ANN401", # use of Any
-  "C417",   # super annoying
-  "C901",   # too complex
+  "C417", # super annoying
+  "C901", # too complex
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
@@ -46,40 +42,27 @@ lint.ignore = [
   "D403", # first-line-capitalized
   "D415", # first line should end with a period/exclamation point
   "E501", # line too long,
-
   "FA",
   # PIE
   "PIE804", # unnecessary-dict-kwargs -- TODO: revisit?
   "SIM105", # suppressible-exception
-  # flake8-simplify (SIM)
   "SIM115", # open-file-with-context-handler
-  # "UP006",
-
   # PYUPGRADE
-  # keep runtime typing
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
 ]
-# FBT migration
-# lint.per-file-ignores."libs/jsonbourne/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/aiopen/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/asyncify/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/lager/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/h5/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/fmts/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/shellfish/src/**/*.py" = ["FBT"]
-# lint.per-file-ignores."libs/requires/**/*.py" = ["FBT"]
 
-lint.per-file-ignores."**/conftest.py" = [ "D" ]
-lint.per-file-ignores."**/noxfile.py" = [ "D" ]
-lint.per-file-ignores."**/tests/*.py" = [
+[lint.per-file-ignores]
+"**/conftest.py" = ["D"]
+"**/noxfile.py" = ["D"]
+"**/tests/*.py" = [
   "ANN401", # use of Any
   "D1",
-  "D100",   # missing docstring in public module
+  "D100", # missing docstring in public module
   "D102",
-  "D103",   # missing docstring
+  "D103", # missing docstring
 ]
-lint.per-file-ignores."*.ipynb" = [
+"*.ipynb" = [
   "ANN",
   "E741",
   "F401",
@@ -87,19 +70,19 @@ lint.per-file-ignores."*.ipynb" = [
   "F821",
   "T201",
 ]
-lint.per-file-ignores."libs/jsonbourne/src/jsonbourne/trydantic.py" = [
+"libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
-lint.per-file-ignores."libs/requires/tests/test_requires.py" = [
+"libs/requires/tests/test_requires.py" = [
   "F821", # undefined name; not valid for this test file
 ]
-lint.per-file-ignores."libs/requires/tests/test_requires_w_json_libs.py" = [
+"libs/requires/tests/test_requires_w_json_libs.py" = [
   "F821", # undefined name; not valid for this test file
 ]
-lint.per-file-ignores."libs/shellfish/tests/*" = [
+"libs/shellfish/tests/*" = [
   "D100", # missing docstring
 ]
-lint.per-file-ignores."libs/xtyping/**/*.py" = [
+"libs/xtyping/**/*.py" = [
   "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   "UP022", # must test shellfish first...
@@ -107,8 +90,10 @@ lint.per-file-ignores."libs/xtyping/**/*.py" = [
   "UP037",
   "UP045", # union type over `Optional`
 ]
-lint.isort.combine-as-imports = true
-lint.isort.known-first-party = [
+
+[lint.isort]
+combine-as-imports = true
+known-first-party = [
   "aiopen",
   "asyncify",
   "dgpylibs",
@@ -123,11 +108,15 @@ lint.isort.known-first-party = [
   "shellfish",
   "xtyping",
 ]
-lint.isort.lines-after-imports = -1
-lint.isort.lines-between-types = 1
-lint.flake8-boolean-trap.extend-allowed-calls = [
+lines-after-imports = -1
+lines-between-types = 1
+
+[lint.flake8-boolean-trap]
+extend-allowed-calls = [
   "pydantic.Field",
 ]
-lint.mccabe.max-complexity = 20
-lint.pydocstyle.convention = "google"
-lint.preview = true
+[lint.mccabe]
+max-complexity = 20
+
+[lint.pydocstyle]
+convention = "google"

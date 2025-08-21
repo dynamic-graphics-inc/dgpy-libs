@@ -43,7 +43,7 @@ include = [
 ]
 
 [tool.ruff]
-extend = "../../pyproject.toml"
+extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
 minversion = "8.0"
