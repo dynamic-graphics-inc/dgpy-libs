@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
+import json
+
 from collections.abc import Callable
 
 import pytest
 import tomli
-
-from rich import print
 
 import dgpylibs
 
@@ -44,7 +44,6 @@ class TestDgpyLib:
     def test_project_has_requires_python_version(
         self,
         dgpy_lib_name: str,
-        dgpy_lib_dirpath: Callable[[str], str],
         dgpy_lib_pyproject_toml_string: Callable[[str], str],
     ) -> None:
         pyproject_toml_string = dgpy_lib_pyproject_toml_string(dgpy_lib_name)
@@ -53,4 +52,31 @@ class TestDgpyLib:
             "requires-python not found in project section of pyproject.toml"
         )
 
-        print(pyproject_toml["project"])
+    def test_run_module_json_output(
+        self,
+        dgpy_lib_name: str,
+    ) -> None:
+        from subprocess import run
+
+        res = run(
+            ["python", "-m", dgpy_lib_name],
+            capture_output=True,
+            text=True,
+        )
+        assert res.returncode == 0
+
+        # assert stdout is json
+        output_json = json.loads(res.stdout)
+        assert isinstance(output_json, dict)
+
+        if dgpy_lib_name == "dgpylibs":  # dgpylibs is an arr
+            assert "version" in output_json["dgpylibs"]
+            # possibly fix and get in line?
+            assert "title" in output_json["dgpylibs"]
+            assert "pkgroot" in output_json["dgpylibs"]
+        else:
+            assert "version" in output_json
+            assert "package" in output_json
+            assert "pkgroot" in output_json
+
+        assert res.stdout.endswith("}\n")

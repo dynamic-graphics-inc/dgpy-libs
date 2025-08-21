@@ -30,7 +30,6 @@ version = "0.8.0"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.optional-dependencies]
@@ -53,7 +52,6 @@ requires-dist = [
     { name = "funkify", editable = "libs/funkify" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.3.2" },
     { name = "pytest-asyncio", marker = "extra == 'test'", specifier = ">=1" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 provides-extras = ["test"]
 
@@ -121,7 +119,6 @@ version = "0.12.0"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -132,10 +129,7 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "funkify", editable = "libs/funkify" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
-]
+requires-dist = [{ name = "funkify", editable = "libs/funkify" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -544,7 +538,7 @@ dependencies = [
     { name = "dgpytest" },
     { name = "fmts" },
     { name = "funkify" },
-    { name = "h5" },
+    { name = "h5", extra = ["cli"] },
     { name = "jsonbourne" },
     { name = "lager" },
     { name = "listless" },
@@ -591,7 +585,7 @@ requires-dist = [
     { name = "dgpytest", editable = "libs/dgpytest" },
     { name = "fmts", editable = "libs/fmts" },
     { name = "funkify", editable = "libs/funkify" },
-    { name = "h5", editable = "libs/h5" },
+    { name = "h5", extras = ["cli"], editable = "libs/h5" },
     { name = "importlib-metadata", marker = "python_full_version < '3.10' and extra == 'docs'", specifier = ">=4.6" },
     { name = "jsonbourne", editable = "libs/jsonbourne" },
     { name = "lager", editable = "libs/lager" },
@@ -772,13 +766,16 @@ name = "h5"
 version = "0.12.0"
 source = { editable = "libs/h5" }
 dependencies = [
-    { name = "click" },
     { name = "h5py" },
     { name = "numpy", version = "2.2.6", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "numpy", version = "2.3.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+
+[package.optional-dependencies]
+cli = [
+    { name = "click" },
     { name = "rich" },
     { name = "ry" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -789,13 +786,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "click", specifier = ">=8.1.7" },
+    { name = "click", marker = "extra == 'cli'", specifier = ">=8.2.1" },
     { name = "h5py", specifier = ">=3.7" },
     { name = "numpy", specifier = ">=1.23.2" },
-    { name = "rich", specifier = ">=13.7.1" },
-    { name = "ry", specifier = ">=0.0.53" },
-    { name = "typing-extensions", specifier = ">=4.5,<5" },
+    { name = "rich", marker = "extra == 'cli'", specifier = ">=14.1.0" },
+    { name = "ry", marker = "extra == 'cli'", specifier = ">=0.0.53" },
 ]
+provides-extras = ["cli"]
 
 [package.metadata.requires-dev]
 dev = [
@@ -1130,7 +1127,7 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata]
@@ -1140,7 +1137,7 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "typing-extensions", specifier = ">=4.5,<5" }]
+dev = [{ name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.5,<5" }]
 
 [[package]]
 name = "listless"
@@ -2306,22 +2303,22 @@ version = "0.12.0"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
 dev = [
     { name = "orjson" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
 ]
 
 [package.metadata]
-requires-dist = [
-    { name = "funkify", editable = "libs/funkify" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
-]
+requires-dist = [{ name = "funkify", editable = "libs/funkify" }]
 
 [package.metadata.requires-dev]
-dev = [{ name = "orjson", specifier = ">=3.11" }]
+dev = [
+    { name = "orjson", specifier = ">=3.11" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11'", specifier = ">=4.5,<5" },
+]
 
 [[package]]
 name = "rich"
@@ -2600,7 +2597,6 @@ dependencies = [
     { name = "jsonbourne" },
     { name = "listless" },
     { name = "pydantic" },
-    { name = "typing-extensions" },
 ]
 
 [package.dev-dependencies]
@@ -2618,7 +2614,6 @@ requires-dist = [
     { name = "jsonbourne", editable = "libs/jsonbourne" },
     { name = "listless", editable = "libs/listless" },
     { name = "pydantic", specifier = ">=2.0.3" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
 
 [package.metadata.requires-dev]

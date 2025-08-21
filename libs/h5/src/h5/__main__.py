@@ -31,9 +31,11 @@ def _pkg_info() -> None:
                 "h5py_version": __h5py_version__,
                 "numpy_version": np.__version__,
                 "click_version": __click_version__,
-            }
+            },
+            indent=2,
         )
     )
+    sys.stdout.write("\n")
 
 
 def _h5_cli() -> None:

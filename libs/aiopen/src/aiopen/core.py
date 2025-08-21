@@ -24,12 +24,11 @@ from typing import (
     Any,
     AnyStr,
     Generic,
+    ParamSpec,
     TypeVar,
     Union,
     cast,
 )
-
-from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable, Coroutine

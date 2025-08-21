@@ -10,15 +10,28 @@ from dataclasses import dataclass
 from functools import lru_cache
 from typing import Any, TypeAlias, TypeGuard
 
-import click
 import numpy as np
-import ry
-
-from rich.console import Console
 
 import h5
 
 from h5.__about__ import __version__
+
+try:
+    import click
+    import ry
+
+    from rich.console import Console
+except ImportError as ie:
+    raise ImportError(
+        "\n".join(
+            (
+                "h5 cli requires click, rich, and ry; install with:",
+                " - pip:    `pip install h5[cli]`",
+                " - uv-pip: `uv pip install h5[cli]`",
+                " - uv:     `uv add h5[cli]`",
+            )
+        )
+    ) from ie
 
 console = Console()
 

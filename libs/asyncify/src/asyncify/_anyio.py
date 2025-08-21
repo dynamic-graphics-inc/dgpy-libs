@@ -2,14 +2,13 @@
 from __future__ import annotations
 
 from functools import partial, wraps
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, ParamSpec, TypeVar
 
 from anyio import (
     CapacityLimiter as CapacityLimiter,
     run as anyio_run,
     to_thread as to_thread,
 )
-from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:
     from collections.abc import Awaitable, Callable

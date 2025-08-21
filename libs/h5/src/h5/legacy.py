@@ -4,10 +4,8 @@
 from __future__ import annotations
 
 from functools import wraps
-from typing import TYPE_CHECKING, Any, TypeVar
+from typing import TYPE_CHECKING, Any, ParamSpec, TypeVar
 from warnings import warn
-
-from typing_extensions import ParamSpec
 
 from h5.core import (
     attrs_dict,

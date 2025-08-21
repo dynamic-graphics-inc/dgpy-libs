@@ -27,7 +27,7 @@ dependencies = [ "loguru>=0.7", "typing-extensions>=4.5,<5" ]
 
 [dependency-groups]
 dev = [
-  "typing-extensions>=4.5,<5",
+  "typing-extensions>=4.5,<5; python_version<'3.11'",
 ]
 
 [tool.hatch]

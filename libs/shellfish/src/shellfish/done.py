@@ -6,10 +6,9 @@ import sys
 from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, AnyStr
+from typing import TYPE_CHECKING, Any, AnyStr, TypedDict
 
 from pydantic import Field
-from typing_extensions import TypedDict
 
 from jsonbourne import JSON
 from shellfish import fs

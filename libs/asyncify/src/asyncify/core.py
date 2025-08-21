@@ -19,12 +19,11 @@ from inspect import isawaitable
 from typing import (
     TYPE_CHECKING,
     Any,
+    ParamSpec,
     TypeGuard,
     TypeVar,
     cast,
 )
-
-from typing_extensions import ParamSpec
 
 if TYPE_CHECKING:  # pragma: no cover
     from anyio import CapacityLimiter

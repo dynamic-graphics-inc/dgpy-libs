@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
+    ParamSpec,
     TypeAlias,
     TypeGuard,
     TypeVar,
@@ -24,7 +25,6 @@ from h5py import (
     __version__ as __h5py_version__,
     is_hdf5 as _is_hdf5,
 )
-from typing_extensions import ParamSpec
 
 from h5._types import FsPath, H5pyAttributesDict
 
