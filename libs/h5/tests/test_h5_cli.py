@@ -62,22 +62,20 @@ def test_keys(tmp_path: Path, runner: CliRunner) -> None:
     assert result.exit_code == 0
     data = json.loads(result.output)
     assert isinstance(data, list)
-    expected_keys = sorted(
-        [
-            "/",
-            "/a_subgroup",
-            "/b_subgroup",
-            "/chunked",
-            "/filter-gzip",
-            "/filter-lzf",
-            "/root_dataset",
-            "/vanilla",
-            "/a_subgroup/a_dataset",
-            "/a_subgroup/aa_subsubgroup",
-            "/a_subgroup/aa_subsubgroup/aa_subsubgroup_dataset",
-            "/b_subgroup/b_dataset",
-        ]
-    )
+    expected_keys = sorted([
+        "/",
+        "/a_subgroup",
+        "/b_subgroup",
+        "/chunked",
+        "/filter-gzip",
+        "/filter-lzf",
+        "/root_dataset",
+        "/vanilla",
+        "/a_subgroup/a_dataset",
+        "/a_subgroup/aa_subsubgroup",
+        "/a_subgroup/aa_subsubgroup/aa_subsubgroup_dataset",
+        "/b_subgroup/b_dataset",
+    ])
     assert sorted(data) == expected_keys
 
     ls_result = runner.invoke(cli, ["ls", filepath])

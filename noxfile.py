@@ -156,20 +156,18 @@ def dev(session: nox.Session) -> None:
 
 
 def _pkg_entry_point(pkg_name: str) -> str:
-    return "\n".join(
-        [
-            "# -*- coding: utf-8 -*-",
-            f'"""pkg entry ~ `python -m {pkg_name}`"""',
-            "import sys",
-            "",
-            f"from {pkg_name}._meta import __pkgroot__, __title__, __version__",
-            "",
-            "sys.stdout.write(",
-            '    f"package: {__title__}\\nversion: {__version__}\\npkgroot: {__pkgroot__}\\n"',
-            ")",
-            "",
-        ]
-    )
+    return "\n".join([
+        "# -*- coding: utf-8 -*-",
+        f'"""pkg entry ~ `python -m {pkg_name}`"""',
+        "import sys",
+        "",
+        f"from {pkg_name}._meta import __pkgroot__, __title__, __version__",
+        "",
+        "sys.stdout.write(",
+        '    f"package: {__title__}\\nversion: {__version__}\\npkgroot: {__pkgroot__}\\n"',
+        ")",
+        "",
+    ])
 
 
 echo = print

@@ -1028,24 +1028,20 @@ def truncate_string(
         total_characters = sum(line_lengths)
         if total_characters < max_characters:
             trunc_msg = f"... Truncated @ {maxlines} lines... "
-            string_lines.extend(
-                [
-                    "-" * len(trunc_msg),
-                    trunc_msg,
-                    "-" * len(trunc_msg),
-                ]
-            )
+            string_lines.extend([
+                "-" * len(trunc_msg),
+                trunc_msg,
+                "-" * len(trunc_msg),
+            ])
             truncated_string = "\n".join(string_lines)
         else:
             truncated_string = "\n".join(string_lines)[:4096]
             trunc_msg = f"... Truncated @ {max_characters} characters ..."
-            truncated_string += "\n".join(
-                [
-                    "-" * len(trunc_msg),
-                    truncated_string,
-                    "-" * len(trunc_msg),
-                ]
-            )
+            truncated_string += "\n".join([
+                "-" * len(trunc_msg),
+                truncated_string,
+                "-" * len(trunc_msg),
+            ])
     else:
         truncated_string = "\n".join(string_lines)
 

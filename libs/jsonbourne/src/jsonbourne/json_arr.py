@@ -258,9 +258,9 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def _filter_el_ix_arr(
         self, func: Callable[[_T, int, JsonArr[_T]], bool]
     ) -> JsonArr[_T]:
-        return JsonArr(
-            [el for el, ix, arr in self._iter_el_ix_arr() if func(el, ix, arr)]
-        )
+        return JsonArr([
+            el for el, ix, arr in self._iter_el_ix_arr() if func(el, ix, arr)
+        ])
 
     def filter(
         self,

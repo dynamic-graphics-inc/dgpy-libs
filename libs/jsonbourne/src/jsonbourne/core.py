@@ -691,12 +691,10 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         if not isinstance(key, str | list | tuple):
             raise ValueError(
-                "".join(
-                    (
-                        "dot_key arg must be string or sequence of strings; ",
-                        "strings will be split on '.'",
-                    )
-                )
+                "".join((
+                    "dot_key arg must be string or sequence of strings; ",
+                    "strings will be split on '.'",
+                ))
             )
         parts = key.split(".") if isinstance(key, str) else list(key)
         root_val: Any = self._data[parts[0]]
@@ -708,12 +706,10 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 reached = ".".join(parts[:ix])
                 err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
                 if isinstance(key, str):
-                    err_msg += "".join(
-                        (
-                            f"\nNOTE!!! lookup performed with string ('{key}') ",
-                            "PREFER lookup using list[str] or Tuple[str, ...]",
-                        )
-                    )
+                    err_msg += "".join((
+                        f"\nNOTE!!! lookup performed with string ('{key}') ",
+                        "PREFER lookup using list[str] or Tuple[str, ...]",
+                    ))
                 raise KeyError(err_msg) from e
         return cur_val
 
@@ -770,14 +766,12 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             return type(self).__name__ + "(**" + str(self.to_dict()) + ")"
         if not bool(self._data):
             return f"{type(self).__name__}(**{{}})"
-        return "".join(
-            [
-                type(self).__name__,
-                "(**{\n    ",
-                pformat(self.eject(), width=79)[1:-1].replace("\n", "\n   "),
-                "\n})",
-            ]
-        ).replace("JsonObj(**{}),", "{},")
+        return "".join([
+            type(self).__name__,
+            "(**{\n    ",
+            pformat(self.eject(), width=79)[1:-1].replace("\n", "\n   "),
+            "\n})",
+        ]).replace("JsonObj(**{}),", "{},")
 
     def __repr__(self) -> str:
         """Return the string representation of the object"""

@@ -255,12 +255,10 @@ class GroupLikeInfo(H5Mixin):
             DatasetInfo.__class__.__name__,
         )
         raise TypeError(
-            " ".join(
-                (
-                    f"Can't set {key} to {value} of type {type(value)};",
-                    f"must be one of {valid_class_names}",
-                )
-            )
+            " ".join((
+                f"Can't set {key} to {value} of type {type(value)};",
+                f"must be one of {valid_class_names}",
+            ))
         )
 
     def iter(self, *, groups: bool = True, datasets: bool = True) -> Iterable[str]:

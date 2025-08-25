@@ -47,9 +47,10 @@ __DEPRECATED_TYPES__: Tuple[str, ...] = ("ByteString",)
 __all_typing__: Tuple[str, ...] = tuple(
     e for e in __all_typing if e not in __DEPRECATED_TYPES__
 )
-__all_typing_extensions__: Tuple[str, ...] = tuple(
-    {*__all_typing_extensions, *__all_typing__}
-)
+__all_typing_extensions__: Tuple[str, ...] = tuple({
+    *__all_typing_extensions,
+    *__all_typing__,
+})
 __all_typing_extensions_future__: Tuple[str, ...] = ()
 __all_annotated_types__: Tuple[str, ...] = tuple(
     e for e in __all_annotated_types if e != "__version__"

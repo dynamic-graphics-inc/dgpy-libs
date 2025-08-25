@@ -5,28 +5,24 @@ from __future__ import annotations
 
 LAGER_PORT = 52437
 
-TORNADO_FMT = "".join(
-    [
-        "<level>",
-        "[{level.name[0]} ",
-        "{time:YYMMDDTHH:mm:ss} ",
-        "{name}:{module}:{line}]",
-        "</level> ",
-        "{message}",
-    ]
-)
+TORNADO_FMT = "".join([
+    "<level>",
+    "[{level.name[0]} ",
+    "{time:YYMMDDTHH:mm:ss} ",
+    "{name}:{module}:{line}]",
+    "</level> ",
+    "{message}",
+])
 
-LOGURU_DEFAULT_FMT = "".join(
-    [
-        "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green>",
-        " | ",
-        "<level>{level: <8}</level>",
-        " | ",
-        "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan>",
-        " - ",
-        "<level>{message}</level>",
-    ]
-)
+LOGURU_DEFAULT_FMT = "".join([
+    "<green>{time:YYYY-MM-DD HH:mm:ss.SSS}</green>",
+    " | ",
+    "<level>{level: <8}</level>",
+    " | ",
+    "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan>",
+    " - ",
+    "<level>{message}</level>",
+])
 
 LOG_LEVELS: dict[str, str] = {
     "notset": "NOTSET",
