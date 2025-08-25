@@ -105,9 +105,12 @@ class ThingyWithProperty(JsonObj):
 
 
 def test_json_obj_property() -> None:
-    thing_w_prop = ThingyWithProperty(
-        **{"a": 1, "b": 2, "c": {"herm": 23}, "d": {"nested": "nestedval"}}
-    )
+    thing_w_prop = ThingyWithProperty(**{
+        "a": 1,
+        "b": 2,
+        "c": {"herm": 23},
+        "d": {"nested": "nestedval"},
+    })
     assert thing_w_prop.c.herm == thing_w_prop["c"]["herm"]
     assert thing_w_prop.a_property == "prop_value"
     assert thing_w_prop["a_property"] == "prop_value"
@@ -190,13 +193,11 @@ def test_dot_items() -> None:
         (
             ("complex",),
             [
-                JsonObj(
-                    **{
-                        "id": 83865,
-                        "goal": Decimal("2.000000"),
-                        "state": "active",
-                    }
-                )
+                JsonObj(**{
+                    "id": 83865,
+                    "goal": Decimal("2.000000"),
+                    "state": "active",
+                })
             ],
         ),
         (("profile_id",), None),
@@ -228,13 +229,11 @@ def test_dot_items() -> None:
         (
             "complex",
             [
-                JsonObj(
-                    **{
-                        "id": 83865,
-                        "goal": Decimal("2.000000"),
-                        "state": "active",
-                    }
-                )
+                JsonObj(**{
+                    "id": 83865,
+                    "goal": Decimal("2.000000"),
+                    "state": "active",
+                })
             ],
         ),
         ("profile_id", None),
@@ -402,23 +401,21 @@ def test_filter_none() -> None:
         },
     }
     result: JsonObj = JsonObj(t1).filter_none()
-    assert result == JsonObj(
-        **{
+    assert result == JsonObj(**{
+        "falsey_dict": {},
+        "falsey_list": [],
+        "falsey_string": "",
+        "is_false": False,
+        "b": 2,
+        "c": {
+            "d": "herm",
+            "e": None,
             "falsey_dict": {},
             "falsey_list": [],
             "falsey_string": "",
             "is_false": False,
-            "b": 2,
-            "c": {
-                "d": "herm",
-                "e": None,
-                "falsey_dict": {},
-                "falsey_list": [],
-                "falsey_string": "",
-                "is_false": False,
-            },
-        }
-    )
+        },
+    })
 
 
 def test_filter_none_recursive() -> None:
@@ -439,22 +436,20 @@ def test_filter_none_recursive() -> None:
         },
     }
     result = JsonObj(t1).filter_none(recursive=True)
-    assert result == JsonObj(
-        **{
+    assert result == JsonObj(**{
+        "falsey_dict": {},
+        "falsey_list": [],
+        "falsey_string": "",
+        "is_false": False,
+        "b": 2,
+        "c": {
+            "d": "herm",
             "falsey_dict": {},
             "falsey_list": [],
             "falsey_string": "",
             "is_false": False,
-            "b": 2,
-            "c": {
-                "d": "herm",
-                "falsey_dict": {},
-                "falsey_list": [],
-                "falsey_string": "",
-                "is_false": False,
-            },
-        }
-    )
+        },
+    })
 
 
 def test_filter_false() -> None:
@@ -475,19 +470,17 @@ def test_filter_false() -> None:
         },
     }
     result = JsonObj(t1).filter_false()
-    assert result == JsonObj(
-        **{
-            "b": 2,
-            "c": {
-                "d": "herm",
-                "e": None,
-                "falsey_dict": {},
-                "falsey_list": [],
-                "falsey_string": "",
-                "is_false": False,
-            },
-        }
-    )
+    assert result == JsonObj(**{
+        "b": 2,
+        "c": {
+            "d": "herm",
+            "e": None,
+            "falsey_dict": {},
+            "falsey_list": [],
+            "falsey_string": "",
+            "is_false": False,
+        },
+    })
 
 
 def test_filter_falsey_recursive() -> None:

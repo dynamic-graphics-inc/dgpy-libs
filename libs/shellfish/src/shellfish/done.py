@@ -203,42 +203,38 @@ class Done(_ShellfishBaseModel):
         self.__post_init__()
 
     def __str__(self) -> str:
-        return "\n".join(
-            (
-                "Done(",
-                f"    args={self.args},",
-                f"    returncode={self.returncode},",
-                f"    stdout={self.stdout!r},",
-                f"    stderr={self.stderr!r},",
-                f"    ti={self.ti},",
-                f"    tf={self.tf},",
-                f"    dt={self.dt},",
-                f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
-                f"    stdin={self.stdin!r},",
-                f"    async_proc={self.async_proc},",
-                f"    verbose={self.verbose},",
-                f"    dryrun={self.dryrun},",
-                ")",
-            )
-        )
+        return "\n".join((
+            "Done(",
+            f"    args={self.args},",
+            f"    returncode={self.returncode},",
+            f"    stdout={self.stdout!r},",
+            f"    stderr={self.stderr!r},",
+            f"    ti={self.ti},",
+            f"    tf={self.tf},",
+            f"    dt={self.dt},",
+            f"    hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+            f"    stdin={self.stdin!r},",
+            f"    async_proc={self.async_proc},",
+            f"    verbose={self.verbose},",
+            f"    dryrun={self.dryrun},",
+            ")",
+        ))
 
     def __repr__(self) -> str:
-        return " ".join(
-            (
-                f"Done(args={self.args},",
-                f"returncode={self.returncode},",
-                f"stdout={self.stdout!r},",
-                f"stderr={self.stderr!r},",
-                f"ti={self.ti},",
-                f"tf={self.tf},",
-                f"dt={self.dt},",
-                f"hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
-                f"stdin={self.stdin!r},",
-                f"async_proc={self.async_proc},",
-                f"verbose={self.verbose},",
-                f"dryrun={self.dryrun})",
-            )
-        )
+        return " ".join((
+            f"Done(args={self.args},",
+            f"returncode={self.returncode},",
+            f"stdout={self.stdout!r},",
+            f"stderr={self.stderr!r},",
+            f"ti={self.ti},",
+            f"tf={self.tf},",
+            f"dt={self.dt},",
+            f"hrdt={self.hrdt_dict() if self.hrdt else HrTime.from_seconds(seconds=self.dt).hrdt_dict()},",
+            f"stdin={self.stdin!r},",
+            f"async_proc={self.async_proc},",
+            f"verbose={self.verbose},",
+            f"dryrun={self.dryrun})",
+        ))
 
     def hrdt_dict(self) -> HrTimeDict:
         if self.hrdt:

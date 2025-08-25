@@ -46,15 +46,13 @@ try:
 
     def test_json_base_model_w_prop() -> None:
         try:
-            thing_w_prop = JsonObjModel(
-                **{
-                    "a": 1,
-                    "b": 2,
-                    "c": "string",
-                    "d": {"nested": "nestedval"},
-                    "e": {"integer": 2},
-                }
-            )
+            thing_w_prop = JsonObjModel(**{
+                "a": 1,
+                "b": 2,
+                "c": "string",
+                "d": {"nested": "nestedval"},
+                "e": {"integer": 2},
+            })
         except Exception as e:
             raise e
 

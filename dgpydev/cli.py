@@ -167,9 +167,9 @@ class DgpyLibInfo:
 def topo_sort(dgpylibs_deptree: dict[str, DgpyLibInfo]) -> list[str]:
     import graphlib
 
-    ts = graphlib.TopologicalSorter(
-        {v.name: v.dependencies for v in dgpylibs_deptree.values()}
-    )
+    ts = graphlib.TopologicalSorter({
+        v.name: v.dependencies for v in dgpylibs_deptree.values()
+    })
     return list(ts.static_order())
 
 
@@ -256,9 +256,9 @@ def tree() -> None:
     console.print(Rule("topo_sorted"))
     console.print(topo_sort(dgpylibs_deptree))
     console.print(Rule("deptree"))
-    console.print(
-        {lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()}
-    )
+    console.print({
+        lib: lib_info.__json__() for lib, lib_info in dgpylibs_deptree.items()
+    })
 
     rich_tree = deps_tree_rich(dgpylibs_deptree)
     console.print(rich_tree)

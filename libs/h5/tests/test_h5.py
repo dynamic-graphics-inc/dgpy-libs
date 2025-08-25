@@ -71,14 +71,16 @@ def test_h5_iter(tmp_path: Path) -> None:
     with h5py.File(filepath, mode="r") as f:
         iter_result = list(h5.h5iter(f))
         iter_result_keys = [k for k, v in iter_result]
-        assert sorted(iter_result_keys) == sorted(
-            [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
-        )
+        assert sorted(iter_result_keys) == sorted([
+            *EXPECTED_DATASETS.keys(),
+            *EXPECTED_GROUPS_KEYS,
+        ])
 
         list_o_keys = h5.keys_list(f)
-        assert sorted(list_o_keys) == sorted(
-            [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
-        )
+        assert sorted(list_o_keys) == sorted([
+            *EXPECTED_DATASETS.keys(),
+            *EXPECTED_GROUPS_KEYS,
+        ])
 
         list_o_group_keys = h5.groups_keys_list(f)
         assert sorted(list_o_group_keys) == sorted(EXPECTED_GROUPS_KEYS)
@@ -94,14 +96,16 @@ def test_h5_iter_filepath(tmp_path: Path) -> None:
     make_test_hdf5_file(filepath)
     iter_result = list(h5.h5iter(filepath))
     iter_result_keys = [k for k, v in iter_result]
-    assert sorted(iter_result_keys) == sorted(
-        [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
-    )
+    assert sorted(iter_result_keys) == sorted([
+        *EXPECTED_DATASETS.keys(),
+        *EXPECTED_GROUPS_KEYS,
+    ])
 
     list_o_keys = h5.keys_list(filepath)
-    assert sorted(list_o_keys) == sorted(
-        [*EXPECTED_DATASETS.keys(), *EXPECTED_GROUPS_KEYS]
-    )
+    assert sorted(list_o_keys) == sorted([
+        *EXPECTED_DATASETS.keys(),
+        *EXPECTED_GROUPS_KEYS,
+    ])
 
     list_o_group_keys = h5.groups_keys_list(filepath)
     assert sorted(list_o_group_keys) == sorted(EXPECTED_GROUPS_KEYS)

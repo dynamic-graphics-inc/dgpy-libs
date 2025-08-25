@@ -68,23 +68,21 @@ def main() -> None:
 
     import_from_shed = {el for el in __all_shed__ if el not in DEPRECATED_TYPES}
 
-    all_sorted = sorted(
-        {
-            el
-            for el in [
-                *[
-                    "annotated_types",  # re-exported module
-                    "typing",  # re-exported module
-                    "typing_extensions",  # re-exported module
-                    "__version__",  # xtyping version
-                ],
-                *import_from_typing_extensions,
-                *import_from_annotated_types,
-                *import_from_shed,
-            ]
-            if el not in DEPRECATED_TYPES
-        }
-    )
+    all_sorted = sorted({
+        el
+        for el in [
+            *[
+                "annotated_types",  # re-exported module
+                "typing",  # re-exported module
+                "typing_extensions",  # re-exported module
+                "__version__",  # xtyping version
+            ],
+            *import_from_typing_extensions,
+            *import_from_annotated_types,
+            *import_from_shed,
+        ]
+        if el not in DEPRECATED_TYPES
+    })
 
     from collections import Counter
 
@@ -97,14 +95,12 @@ def main() -> None:
         "__all__ = (",
         *(
             f"    '{el}',"
-            for el in sorted(
-                [
-                    "__version__",
-                    "typing",
-                    "typing_extensions",
-                    "annotated_types",
-                ]
-            )
+            for el in sorted([
+                "__version__",
+                "typing",
+                "typing_extensions",
+                "annotated_types",
+            ])
         ),
         # typing + typing_extensions
         *(f"    '{el}'," for el in sorted(import_from_typing_extensions)),

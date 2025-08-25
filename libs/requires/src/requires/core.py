@@ -205,12 +205,10 @@ class Requirement:
                 return getattr(req, self._import)
             except AttributeError as ae:
                 raise RequirementAttributeError(
-                    "\n".join(
-                        [
-                            f"Module/Package(s) import AttributeError: `{self.import_string}`",
-                            f"    AttributeError: {str(ae)}",
-                        ]
-                    )
+                    "\n".join([
+                        f"Module/Package(s) import AttributeError: `{self.import_string}`",
+                        f"    AttributeError: {str(ae)}",
+                    ])
                 ) from ae
         except ModuleNotFoundError:
             return RequirementProxy(req=self)

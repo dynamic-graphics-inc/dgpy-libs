@@ -132,16 +132,14 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         if minify:
             return type(self).__name__ + "(**" + str(self.to_dict_filter_none()) + ")"
         _width = width or get_terminal_size((88, 24)).columns - 12
-        return "".join(
-            [
-                type(self).__name__,
-                "(**{\n     ",
-                pformat(self.to_dict_filter_none(), width=_width)[1:-1].replace(
-                    "\n", "\n    "
-                ),
-                "\n})",
-            ]
-        )
+        return "".join([
+            type(self).__name__,
+            "(**{\n     ",
+            pformat(self.to_dict_filter_none(), width=_width)[1:-1].replace(
+                "\n", "\n    "
+            ),
+            "\n})",
+        ])
 
     def __repr__(self) -> str:
         return self.to_str(fmt_kwargs=True)
@@ -227,12 +225,10 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
             <class 'dict'>
 
         """
-        return JsonObj(
-            {
-                k: v if not isinstance(v, JsonBaseModel) else v.to_json_dict()
-                for k, v in self.__dict__.items()
-            }
-        )
+        return JsonObj({
+            k: v if not isinstance(v, JsonBaseModel) else v.to_json_dict()
+            for k, v in self.__dict__.items()
+        })
 
     def to_json_dict(self) -> JsonObj[Any]:
         """Eject object and sub-objects to `jsonbourne.JsonObj`
