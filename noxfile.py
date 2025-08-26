@@ -8,6 +8,7 @@ from shutil import which
 
 import nox
 
+echo = print
 LIBS = (
     "aiopen",
     "asyncify",
@@ -168,65 +169,6 @@ def _pkg_entry_point(pkg_name: str) -> str:
         ")",
         "",
     ])
-
-
-echo = print
-
-
-@nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def update_metadata(session: nox.Session) -> None:
-    import tomllib
-
-    libs2update = {k: v for k, v in LIB_DIRS.items() if k not in {"dgpylibs"}}
-    for libname, dirpath in libs2update.items():
-        echo(libname, dirpath)
-        with open(path.join(dirpath, "pyproject.toml")) as f:
-            pyproject_toml_str = f.read()
-        data = tomllib.loads(pyproject_toml_str)
-        echo("____________________________")
-        poetry_metadata = data["tool"]["poetry"]
-        assert "name" in poetry_metadata and poetry_metadata["name"] == libname
-        assert "version" in poetry_metadata
-        assert "description" in poetry_metadata and poetry_metadata["description"] != ""
-        metadata_file_lines = [
-            "# -*- coding: utf-8 -*-",
-            '"""Package metadata/info"""\n',
-            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
-            '__title__ = "{}"'.format(poetry_metadata["name"]),
-            '__description__ = "{}"'.format(poetry_metadata["description"]),
-            '__pkgroot__ = __file__.replace("_meta.py", "").rstrip("/\\\\")',
-            '__version__ = "{}"'.format(poetry_metadata["version"]),
-        ]
-        metadata_file_string = "\n".join(metadata_file_lines).strip("\n") + "\n"
-
-        deprecated_meta_file_lines = [
-            "# -*- coding: utf-8 -*-",
-            '"""Package metadata/info"""',
-            "import warnings",
-            "",
-            f"from {libname}.__about__ import __description__, __pkgroot__, __title__, __version__",
-            "",
-            "warnings.warn(",
-            f'    "{libname}._meta is deprecated, use {libname}.__about__ instead",',
-            "    DeprecationWarning,",
-            "    stacklevel=2,",
-            ")",
-            "",
-            '__all__ = ("__title__", "__description__", "__pkgroot__", "__version__")',
-            "",
-        ]
-        # check that is valid python...
-        exec(metadata_file_string)
-        echo("~~~")
-        echo(metadata_file_string)
-        echo("~~~")
-        meta_filepath = path.join(dirpath, libname, "_meta.py")
-        metadata_filepath = path.join(dirpath, libname, "__about__.py")
-        with open(metadata_filepath, "w", encoding="utf-8", newline="\n") as f:
-            f.write(metadata_file_string)
-
-        with open(meta_filepath, "w", encoding="utf-8", newline="\n") as f:
-            f.write("\n".join(deprecated_meta_file_lines))
 
 
 def _install_mkdocs_deps(session: nox.Session) -> None:

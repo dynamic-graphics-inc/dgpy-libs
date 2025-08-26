@@ -1,9 +1,5 @@
 #!/bin/bash
 
-jupyter nbconvert --to markdown --execute "./README.ipynb"
-#rm docs/index.md
-cp -f README.md docs/index.md
-
 while read -d '' filename; do
     echo "${filename}"
     jupyter nbconvert --to markdown --execute "${filename}"

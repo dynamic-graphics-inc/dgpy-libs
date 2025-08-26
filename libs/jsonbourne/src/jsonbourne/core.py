@@ -34,6 +34,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
     from pydantic import GetCoreSchemaHandler
+    from pydantic_core import CoreSchema
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)
 JsonObjT = TypeVar("JsonObjT", bound="JsonObj[Any]")
@@ -1053,11 +1054,12 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         return cls(val)
 
     @classmethod
-    def __get_type_validator__(
+    def __get_pydantic_core_schema__(
         cls, source_type: Any, handler: GetCoreSchemaHandler
-    ) -> Iterator[Callable[[Any], Any]]:
-        """Return the JsonObj validator functions"""
-        yield cls.validate_type
+    ) -> CoreSchema:
+        from pydantic_core import core_schema
+
+        return core_schema.no_info_plain_validator_function(cls.validate_type)
 
 
 class JsonDict(JsonObj[_VT], Generic[_VT]):

@@ -96,33 +96,6 @@ def update_abouts() -> None:
                 )
 
 
-def _relock() -> None:
-    """relock all dgpy-libs"""
-    for libname, _pyproject_toml_dict in pyproject_tomls().items():
-        dirpath = lib_dirpath(libname)
-        console.log(f"Relocking {libname}")
-        console.log(f"cd {dirpath}")
-        sh.cd(dirpath)
-        console.log("poetry lock")
-        sh.do("poetry", "lock", "--no-cache", verbose=True, check=True)
-    sh.cd(repo_root())
-    sh.do("poetry", "lock", "--no-cache", verbose=True, check=True)
-
-
-@cli.command()
-def depsup() -> None:
-    """Update dependencies with `poetry update`"""
-    for libname, _pyproject_toml_dict in pyproject_tomls().items():
-        dirpath = lib_dirpath(libname)
-        console.log(f"Relocking {libname}")
-        console.log(f"cd {dirpath}")
-        sh.cd(dirpath)
-        console.log("poetry update --no-cache")
-        sh.do("poetry", "update", "--no-cache", verbose=True, check=True)
-    sh.cd(repo_root())
-    sh.do("poetry", "update", "--no-cache", verbose=True, check=True)
-
-
 @cli.command()
 def update() -> None:
     """Update all dgpy-libs metadata files."""
@@ -137,15 +110,8 @@ def patchall() -> None:
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")
         sh.cd(dirpath)
-        console.log("poetry version patch")
-        sh.do("poetry", "version", "patch", verbose=True, check=True)
+        sh.do("uv", "version", "--bump", "patch", verbose=True, check=True)
     update_abouts()
-
-
-@cli.command()
-def relock() -> None:
-    """relock all dgpy-libs"""
-    _relock()
 
 
 @dataclass
@@ -248,9 +214,6 @@ def tree() -> None:
 
     possible grep???
 
-    ```
-    poetry show -t | rg "(aiopen|asyncify|dgpylibs|ETC)"
-    ```
     """
     dgpylibs_deptree = deps_tree()
     console.print(Rule("topo_sorted"))
@@ -267,15 +230,7 @@ def tree() -> None:
 @cli.command()
 def publish() -> None:
     """Publish all dgpy-libs to PyPI."""
-    import subprocess
-
-    for libname in DGPY_LIBS:
-        console.print(f"Publishing {libname}...")
-        subprocess.run(
-            ["poetry", "publish", "--build", "-vvv"],
-            cwd=lib_dirpath(libname),
-            check=True,
-        )
+    raise NotImplementedError("not implemented with uv")
 
 
 @cli.command()
