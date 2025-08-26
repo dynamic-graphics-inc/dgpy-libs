@@ -7,8 +7,8 @@
 [![Wheel](https://img.shields.io/pypi/wheel/dgpytest.svg)](https://img.shields.io/pypi/wheel/dgpytest.svg)
 [![Version](https://img.shields.io/pypi/v/dgpytest.svg)](https://img.shields.io/pypi/v/dgpytest.svg)
 [![py_versions](https://img.shields.io/pypi/pyversions/dgpytest.svg)](https://img.shields.io/pypi/pyversions/dgpytest.svg)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-**Install:** `pip install dgpytest` OR `poetry add dgpytest`
+**Install:** `pip install dgpytest` OR `uv add dgpytest`
 
 **What:** pytest lib with pytest plugins (as deps) used by dgpy
