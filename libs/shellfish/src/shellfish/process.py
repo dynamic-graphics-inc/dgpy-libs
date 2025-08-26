@@ -47,6 +47,7 @@ __all__ = (
     "iswsl",
     "linux_version",
     "opsys",
+    "rhel_version",
     "sys_path_sep",
     "syspath_paths",
     "tmpenv",
@@ -260,8 +261,22 @@ def opsys() -> str:
     return linux_version()
 
 
-def linux_version() -> str:
-    """Return rhel7 or rhel8 based on the current linux version"""
+def _rhel_version_platform() -> str:
+    """Return 'rhelX' based on the current linux version"""
+    _d = platform.freedesktop_os_release()
+    if _d.get("ID", "").lower() == "rhel":
+        rhel_major_version = _d.get("VERSION_ID", "?").split(".")[0]
+        return f"rhel{rhel_major_version}"
+    raise RuntimeError("Not an RHEL system")
+
+
+def rhel_version() -> str:
+    """Return 'rhelX' based on the current linux version"""
+    try:
+        return _rhel_version_platform()
+    except RuntimeError:
+        ...
+
     try:
         with open("/etc/redhat-release") as file:
             release_info = file.read()
@@ -271,6 +286,15 @@ def linux_version() -> str:
                 return "rhel8"
             else:
                 return "other"
+    except FileNotFoundError:
+        return "linux"
+
+
+def linux_version() -> str:
+    """Return rhel7 or rhel8 based on the current linux version"""
+    try:
+        return rhel_version()
+
     except FileNotFoundError:
         return "linux"
 
