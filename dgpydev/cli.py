@@ -96,8 +96,6 @@ def update_abouts() -> None:
                 )
 
 
-
-
 @cli.command()
 def update() -> None:
     """Update all dgpy-libs metadata files."""
@@ -112,8 +110,7 @@ def patchall() -> None:
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")
         sh.cd(dirpath)
-        console.log("poetry version patch")
-        sh.do("poetry", "version", "patch", verbose=True, check=True)
+        sh.do("uv", "version", "--bump", "patch", verbose=True, check=True)
     update_abouts()
 
 
@@ -234,6 +231,7 @@ def tree() -> None:
 def publish() -> None:
     """Publish all dgpy-libs to PyPI."""
     raise NotImplementedError("not implemented with uv")
+
 
 @cli.command()
 @click.argument(
