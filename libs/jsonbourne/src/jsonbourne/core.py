@@ -33,7 +33,8 @@ from jsonbourne import jsonlib
 if TYPE_CHECKING:
     from pathlib import Path
 
-    from pydantic import CoreSchema, GetCoreSchemaHandler
+    from pydantic import GetCoreSchemaHandler
+    from pydantic_core import CoreSchema
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)
 JsonObjT = TypeVar("JsonObjT", bound="JsonObj[Any]")
