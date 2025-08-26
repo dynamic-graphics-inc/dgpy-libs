@@ -264,7 +264,7 @@ def opsys() -> str:
 def _rhel_version_platform() -> str:
     """Return 'rhelX' based on the current linux version"""
     _d = platform.freedesktop_os_release()
-    if _d.get("ID", '').lower() == "rhel":
+    if _d.get("ID", "").lower() == "rhel":
         rhel_major_version = _d.get("VERSION_ID", "?").split(".")[0]
         return f"rhel{rhel_major_version}"
     raise RuntimeError("Not an RHEL system")
