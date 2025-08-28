@@ -36,8 +36,12 @@ ignore = [
   "C417",   # super annoying
   "C901",   # too complex
   # RUF
-  "RUF052", # maybe turn on
-  "RUF029", # async but does not use await? revisit
+  "RUF052", # used-dummy-variable
+  "RUF010", # explicit-f-string-type-conversion
+  "RUF029", # unused-async
+  "RUF039", # unraw-re-pattern
+  "RUF023", # unsorted-dunder-slots
+  "RUF031", # incorrectly-parenthesized-tuple-in-subscript
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class

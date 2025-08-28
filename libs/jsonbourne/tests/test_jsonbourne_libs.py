@@ -62,7 +62,7 @@ D = {
         "a": 1,
     },
     "apath": pathlib.Path.home(),
-    "Decimal": Decimal(1.4),
+    "Decimal": Decimal("1.4"),
     "timedelta": datetime.timedelta(days=2),
     "point": Point3d(1, 2, 3),
     "point_dumpable": Point3dDumpable(1, 2, 3),
