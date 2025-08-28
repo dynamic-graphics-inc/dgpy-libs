@@ -17,7 +17,7 @@ select = [
   "I",      # isort
   # pie (PIE)
   "PIE",
-  # "RUF",
+  "RUF",
   "RUF002", # ambiguous-unicode-character-docstring
   "RUF015",
   "RUF022",

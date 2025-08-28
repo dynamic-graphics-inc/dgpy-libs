@@ -153,7 +153,7 @@ class ExeABC:
         args: PopenArgs | None = None,
     ) -> PopenArgv:
         argv = self._unredundify(popenargs, args)
-        return (self.cmd,) + argv
+        return (self.cmd, *argv)
 
     def _do(
         self,
