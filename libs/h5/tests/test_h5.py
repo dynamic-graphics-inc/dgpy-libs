@@ -13,6 +13,7 @@ from h5.testing import (
     EXPECTED_ATTRS,
     EXPECTED_DATASETS,
     EXPECTED_GROUPS_KEYS,
+    h5py_test_files,
     make_test_hdf5_file,
 )
 
@@ -218,3 +219,19 @@ def test_no_repeated_keys(tmp_path: Path) -> None:
                 raise ValueError(f"Repeated key {k}")
             else:
                 keys.add(k)
+
+
+def test_h5_test_files() -> None:
+    r = h5py_test_files()
+    assert len(r) > 0
+    h5py_test_files.cache_clear()
+
+
+class TestH5pyData:
+    def test_attrs(self, h5py_test_file: Path) -> None:
+        attrs_dict = h5.attrs_dict(h5py_test_file)
+        assert attrs_dict is not None
+
+    def test_info(self, h5py_test_file: Path) -> None:
+        h5info = h5.info(h5py_test_file)
+        assert h5info is not None
