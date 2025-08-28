@@ -690,9 +690,9 @@ def strip_ascii(string: str) -> str:
         string of only the non-ascii characters
 
     Examples:
-        >>> string_w_non_ascii_chars = 'Three fourths: Ã‚Â¾'
+        >>> string_w_non_ascii_chars = 'Three fourths: ¾'
         >>> strip_ascii(string_w_non_ascii_chars)
-        'Ã‚Â¾'
+        '¾'
 
     """
     return "".join(filter(lambda x: ord(x) > 128, string))
@@ -709,7 +709,7 @@ def strip_non_ascii(s: str) -> str:
         string of only the non-ascii characters
 
     Examples:
-        >>> string_w_non_ascii_chars = 'Three fourths: Ã‚Â¾'
+        >>> string_w_non_ascii_chars = 'Three fourths: ¾'
         >>> strip_non_ascii(string_w_non_ascii_chars)
         'Three fourths: '
 

@@ -5,19 +5,20 @@ preview = true
 [lint]
 select = [
   "ANN", # annotations
-  "B", # bugbear
-  "C4", # comprehensions
+  "B",   # bugbear
+  "C4",  # comprehensions
   # pydocstyle
   "D",
   "FBT",
-  "E", # pyflakes errors
+  "E",      # pyflakes errors
   "ERA001", # erradicate
-  "F", # pyflakes warnings
-  "FA102", # require `from __future__ import annotations`
-  "I", # isort
+  "F",      # pyflakes warnings
+  "FA102",  # require `from __future__ import annotations`
+  "I",      # isort
   # pie (PIE)
   "PIE",
   # "RUF",
+  "RUF002", # ambiguous-unicode-character-docstring
   "RUF015",
   "RUF022",
   "RUF100", # no unused 'noqa' comments
@@ -32,11 +33,11 @@ select = [
 ]
 ignore = [
   "ANN401", # use of Any
-  "C417", # super annoying
-  "C901", # too complex
+  "C417",   # super annoying
+  "C901",   # too complex
   # RUF
   "RUF052", # maybe turn on
-"RUF029", # async but does not use await? revisit
+  "RUF029", # async but does not use await? revisit
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
@@ -64,18 +65,11 @@ ignore = [
 "**/tests/*.py" = [
   "ANN401", # use of Any
   "D1",
-  "D100", # missing docstring in public module
+  "D100",   # missing docstring in public module
   "D102",
-  "D103", # missing docstring
+  "D103",   # missing docstring
 ]
-"*.ipynb" = [
-  "ANN",
-  "E741",
-  "F401",
-  "F811",
-  "F821",
-  "T201",
-]
+"*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "T201"]
 "libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
@@ -118,9 +112,7 @@ lines-after-imports = -1
 lines-between-types = 1
 
 [lint.flake8-boolean-trap]
-extend-allowed-calls = [
-  "pydantic.Field",
-]
+extend-allowed-calls = ["pydantic.Field"]
 [lint.mccabe]
 max-complexity = 20
 
