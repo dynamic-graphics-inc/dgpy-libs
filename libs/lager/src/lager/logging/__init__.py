@@ -157,7 +157,7 @@ _SysExcInfoType: TypeAlias = (
     tuple[type[BaseException], BaseException, TracebackType | None]
     | tuple[None, None, None]
 )
-_ExcInfoType: TypeAlias = None | bool | _SysExcInfoType | BaseException
+_ExcInfoType: TypeAlias = bool | _SysExcInfoType | BaseException | None
 _ArgsType: TypeAlias = tuple[object, ...] | Mapping[str, object]
 _FilterType: TypeAlias = Filter | Callable[[LogRecord], bool]
 _Level: TypeAlias = int | str

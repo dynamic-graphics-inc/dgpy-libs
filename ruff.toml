@@ -17,8 +17,11 @@ select = [
   "I", # isort
   # pie (PIE)
   "PIE",
+  # "RUF",
+  "RUF015",
   "RUF022",
   "RUF100", # no unused 'noqa' comments
+  "RUF036",
   # flake8-simplify (SIM)
   "SIM",
   "T201", # print
@@ -31,6 +34,9 @@ ignore = [
   "ANN401", # use of Any
   "C417", # super annoying
   "C901", # too complex
+  # RUF
+  "RUF052", # maybe turn on
+"RUF029", # async but does not use await? revisit
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
