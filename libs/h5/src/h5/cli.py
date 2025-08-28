@@ -21,7 +21,7 @@ try:
     import ry
 
     from rich.console import Console
-except ImportError as ie:
+except ImportError as ie:  # pragma: no cover
     raise ImportError(
         "\n".join((
             "h5 cli requires click, rich, and ry; install with:",
@@ -38,7 +38,7 @@ __all__ = (
     "cli",
 )
 
-Matcher: TypeAlias = Callable[[str], bool] | ry.Globster
+Matcher: TypeAlias = Callable[[str], bool]
 
 
 def is_np_integer(obj: Any) -> TypeGuard[np.integer]:
@@ -140,13 +140,19 @@ class H5CliConfig:
     "--debug", envvar="DGPYDEBUG", is_flag=True, default=False, help="Enable debug mode"
 )
 @click.option("-V", "--version", is_flag=True, default=False, help="Print version")
-def cli(*, debug: bool = False, version: bool = False) -> None:
+@click.pass_context
+def cli(ctx: click.Context, *, debug: bool = False, version: bool = False) -> None:
     """h5 command line interface"""
     if debug:
         click.echo("h5-debug: on")
     if version:
         click.echo(__version__)
         sys.exit(0)
+
+    # if no args are passed, show help
+    if not ctx.invoked_subcommand:
+        click.echo(cli.get_help(click.get_current_context()))
+        ctx.exit()
 
 
 @cli.command(

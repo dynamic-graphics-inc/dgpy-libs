@@ -1,20 +1,30 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from functools import lru_cache
+from pathlib import Path
 
+import h5py
 import numpy as np
 
 import h5
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 __all__ = (
     "EXPECTED_ATTRS",
     "EXPECTED_DATASETS",
     "EXPECTED_GROUPS_KEYS",
+    "H5PY_PKG_ROOT",
+    "h5py_test_files",
     "make_test_hdf5_file",
 )
+
+H5PY_PKG_ROOT = Path(h5py.__file__).parent
+
+
+@lru_cache(maxsize=1)
+def h5py_test_files() -> list[Path]:
+    """Return a list of test HDF5 files."""
+    return list(H5PY_PKG_ROOT.glob("tests/data_files/*.h5"))
+
 
 EXPECTED_DATASETS = {
     "/root_dataset": np.array([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]]),
