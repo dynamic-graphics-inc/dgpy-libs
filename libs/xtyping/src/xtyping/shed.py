@@ -174,7 +174,7 @@ AsyncFn = TypeVar("AsyncFn", bound=Awaitable[Any])
 # =============================================================================
 # STDIO/STDIN
 # =============================================================================
-STDIO = Union[None, int, bytes, IO[Any]]
+STDIO = Union[int, bytes, IO[Any], None]
 STDIN = Union[bytes, str, None]
 
 # =============================================================================
@@ -277,7 +277,7 @@ OptFloat = Optional[float]
 # =============================================================================
 # JSON
 # =============================================================================
-JsonPrimitive = Union[None, bool, int, float, str]
+JsonPrimitive = Union[bool, int, float, str, None]
 Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]
 JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]
 JsonDictT = Dict[str, Any]

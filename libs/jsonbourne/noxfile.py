@@ -41,7 +41,7 @@ def latest_wheel() -> str:
 def _get_jsonbourne_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        [line for line in open(_filepath).read().split("\n") if "version" in line][0]
+        next(line for line in open(_filepath).read().split("\n") if "version" in line)
         .replace("version = ", "")
         .strip('"')
     )

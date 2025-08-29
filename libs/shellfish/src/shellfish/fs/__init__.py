@@ -1381,7 +1381,7 @@ def filecmp(
     )
 
 
-def shebang(fspath: FsPath) -> None | str:
+def shebang(fspath: FsPath) -> str | None:
     r"""Get the shebang string given a fspath; Returns None if no shebang
 
     Args:

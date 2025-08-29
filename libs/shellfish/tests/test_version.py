@@ -17,7 +17,7 @@ def _get_version() -> str:
         if path.exists(_filepath):
             with open(_filepath, encoding="utf8") as f:
                 version = (
-                    [ln for ln in f.read().split("\n") if "version" in ln][0]
+                    next(ln for ln in f.read().split("\n") if "version" in ln)
                     .replace("version = ", "")
                     .strip('"')
                 )

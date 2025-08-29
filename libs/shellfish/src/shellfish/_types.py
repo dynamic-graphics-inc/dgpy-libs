@@ -23,7 +23,7 @@ PopenArgs: TypeAlias = bytes | str | PopenArgv
 PopenEnv: TypeAlias = Mapping[str, str]
 SymlinkType: TypeAlias = Literal["dir"] | Literal["file"] | Literal["junction"] | str
 STDIN: TypeAlias = bytes | str | None
-STDIO: TypeAlias = None | int | bytes | IO[Any]
+STDIO: TypeAlias = int | bytes | IO[Any] | None
 
 __all__ = (
     "STDIN",
