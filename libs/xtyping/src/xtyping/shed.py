@@ -40,7 +40,17 @@ from typing_extensions import (
 # =============================================================================
 # DEPRECATED TYPES
 # =============================================================================
-__DEPRECATED_TYPES__: tuple[str, ...] = ("ByteString",)
+__DEPRECATED_TYPES__: tuple[str, ...] = (
+    "AbstractSet",
+    "ByteString",
+    "DefaultDict",
+    "Deque",
+)
+__DEPRECATED_TYPING_EXTENSIONS__: tuple[str, ...] = ("doc",)
+__DEPRECATED_ANNOTATED_TYPES__: tuple[str, ...] = (
+    "doc",
+    "DocInfo",
+)
 
 # =============================================================================
 # __all__
@@ -49,12 +59,14 @@ __all_typing__: tuple[str, ...] = tuple(
     e for e in __all_typing if e not in __DEPRECATED_TYPES__
 )
 __all_typing_extensions__: tuple[str, ...] = tuple({
-    *__all_typing_extensions,
+    *(e for e in __all_typing_extensions),
     *__all_typing__,
 })
 __all_typing_extensions_future__: tuple[str, ...] = ()
 __all_annotated_types__: tuple[str, ...] = tuple(
-    e for e in __all_annotated_types if e != "__version__"
+    e
+    for e in __all_annotated_types
+    if e != "__version__" and e not in __DEPRECATED_ANNOTATED_TYPES__
 )
 
 # =============================================================================
