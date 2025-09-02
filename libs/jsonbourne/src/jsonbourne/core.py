@@ -245,7 +245,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         super().__setattr__("_data", _data)
         if not all(isinstance(k, str) for k in self._data):
             d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
-            raise ValueError(f"JsonObj keys MUST be strings! Bad key values: {str(d)}")
+            raise ValueError(f"JsonObj keys MUST be strings! Bad key values: {d!s}")
         self.recurse()
         self.__post_init__()
 
@@ -293,8 +293,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def __setattr__(self, attr: _KT, value: _VT) -> None:
         if attr in self._cls_protected_attrs():
             raise ValueError(
-                f"Cannot set protected attribute ('{str(attr)}'),"
-                f" must use brackets/setitem syntax: json_obj['{str(attr)}']"
+                f"Cannot set protected attribute ('{attr!s}'),"
+                f" must use brackets/setitem syntax: json_obj['{attr!s}']"
             )
         return self.__setitem__(attr, value)
 
@@ -705,7 +705,9 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
                 cur_val = cur_val[part]
             except TypeError as e:
                 reached = ".".join(parts[:ix])
-                err_msg = f"Invalid DotKey: {key} -- Lookup reached: {reached} => {str(cur_val)}"
+                err_msg = (
+                    f"Invalid DotKey: {key} -- Lookup reached: {reached} => {cur_val!s}"
+                )
                 if isinstance(key, str):
                     err_msg += "".join((
                         f"\nNOTE!!! lookup performed with string ('{key}') ",

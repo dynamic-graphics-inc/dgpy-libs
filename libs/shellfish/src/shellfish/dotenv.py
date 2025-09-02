@@ -133,7 +133,7 @@ def ldotenv(fspath: FsPath | None = None) -> dict[str, str]:
             dotenv_filepath = path.join(str(fspath), ".env")
             if path.exists(dotenv_filepath):
                 return ldotenv(dotenv_filepath)
-        raise ValueError(f"Given fspath/dirpath does not exist: {str(fspath)}")
+        raise ValueError(f"Given fspath/dirpath does not exist: {fspath!s}")
     return ldotenv(getcwd())
 
 

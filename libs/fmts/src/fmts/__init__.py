@@ -1297,7 +1297,7 @@ class pstr(str):
     def _repr_parts(self) -> str:
         string = f'"""{self}"""' if "\n" in self else f"'{self}'"
         if self.__class__.__name__ != "pstr":
-            string = f"{str(self.__class__.__name__)}({string})"
+            string = f"{self.__class__.__name__!s}({string})"
         return string
 
     def _repr_pretty_(self, p: Any, cycle: Any = False) -> None:  # noqa: FBT002
@@ -1599,7 +1599,7 @@ def b64_html_img(b64_string: str | bytes, img_format: str) -> str:
     except UnicodeDecodeError as ude:
         raise ValueError(
             "bytes given instead of string;\n"
-            f"tried to decode but got UnicodeDecodeError:\n{str(ude)}"
+            f"tried to decode but got UnicodeDecodeError:\n{ude!s}"
         ) from ude
     return f'<img src="data:image/{img_format};base64,{b64_string}">'
 
@@ -1663,9 +1663,9 @@ def base64_jpg_html(b64_string: str | bytes) -> str:
     except UnicodeDecodeError as ude:
         raise ValueError(
             "bytes given instead of string;\n"
-            f"tried to decode but got UnicodeDecodeError:\n{str(ude)}"
+            f"tried to decode but got UnicodeDecodeError:\n{ude!s}"
         ) from ude
-    return f'<img src="data:image/jpeg;base64,{str(b64_string)}">'
+    return f'<img src="data:image/jpeg;base64,{b64_string!s}">'
 
 
 def enum_strings(strings: list[str], numsep: str = ")") -> Iterable[str]:

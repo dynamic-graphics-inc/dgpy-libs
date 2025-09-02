@@ -37,7 +37,7 @@ ignore = [
   "C901",   # too complex
   # RUF
   "RUF052", # used-dummy-variable
-  "RUF010", # explicit-f-string-type-conversion
+  # "RUF010", # explicit-f-string-type-conversion
   "RUF029", # unused-async
   "RUF039", # unraw-re-pattern
   "RUF031", # incorrectly-parenthesized-tuple-in-subscript

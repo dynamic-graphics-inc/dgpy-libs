@@ -207,7 +207,7 @@ class Requirement:
                 raise RequirementAttributeError(
                     "\n".join([
                         f"Module/Package(s) import AttributeError: `{self.import_string}`",
-                        f"    AttributeError: {str(ae)}",
+                        f"    AttributeError: {ae!s}",
                     ])
                 ) from ae
         except ModuleNotFoundError:
