@@ -110,7 +110,7 @@ class DirEntryAsync(Generic[AnyStr]):
         return self._dir_entry.__fspath__()
 
 
-async def scandir(path: AnyStr) -> AsyncIterator[DirEntryAsync[AnyStr]]:
+async def scandir(path: AnyStr) -> AsyncIterator[DirEntryAsync[AnyStr]]:  # noqa: RUF029
     """Async version of os.scandir
 
     Signature of os.scandir:

@@ -35,12 +35,7 @@ ignore = [
   "ANN401", # use of Any
   "C417",   # super annoying
   "C901",   # too complex
-  # RUF
   "RUF052", # used-dummy-variable
-  # "RUF010", # explicit-f-string-type-conversion
-  "RUF029", # unused-async
-  # "RUF039", # unraw-re-pattern
-  "RUF031", # incorrectly-parenthesized-tuple-in-subscript
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
@@ -72,7 +67,7 @@ ignore = [
   "D102",
   "D103",   # missing docstring
 ]
-"*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "T201"]
+"*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "RUF031", "T201"]
 "libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]

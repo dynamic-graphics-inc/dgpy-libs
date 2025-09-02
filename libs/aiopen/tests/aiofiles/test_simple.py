@@ -28,7 +28,7 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     file = tmp_path.joinpath(filename)
     file.write_bytes(file_content)
 
-    async def serve_file(reader: Any, writer: Any) -> None:
+    async def serve_file(reader: Any, writer: Any) -> None:  # noqa: RUF029
         full_filename = str(file)
         with open(full_filename, "rb") as f:
             writer.write(f.read())
