@@ -37,8 +37,8 @@ KEBAB_CHARACTERS: str = ascii_lowercase + digits + "-"
 SNAKE_CHARACTERS: str = ascii_lowercase + digits + "_"
 
 # regular expressions
-FIRST_CAP_RE = re.compile("(.)([A-Z][a-z]+)")
-ALL_CAP_RE = re.compile("([a-z0-9])([A-Z])")
+FIRST_CAP_RE = re.compile(r"(.)([A-Z][a-z]+)")
+ALL_CAP_RE = re.compile(r"([a-z0-9])([A-Z])")
 
 
 def anystr2anystr(fn: Callable[[str], str]) -> Callable[[AnyStr], AnyStr]:
@@ -948,7 +948,7 @@ def rm_b(string: str) -> str:
         'a_string'
 
     """
-    return re.sub("b'([^']*)'", r"\1", string)
+    return re.sub(r"b'([^']*)'", r"\1", string)
 
 
 @anystr2anystr
@@ -967,7 +967,7 @@ def rm_u(string: str) -> str:
         'a_string'
 
     """
-    return re.sub("u'([^']*)'", r"\1", string)
+    return re.sub(r"u'([^']*)'", r"\1", string)
 
 
 @anystr2anystr
@@ -1282,7 +1282,7 @@ def body_contents(html_string: str) -> list[str]:
         ['hello']
 
     """
-    return re.findall("<body>(.*?)</body>", html_string, re.DOTALL)
+    return re.findall(r"<body>(.*?)</body>", html_string, re.DOTALL)
 
 
 class pstr(str):
