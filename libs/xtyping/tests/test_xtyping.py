@@ -62,13 +62,13 @@ def test_xtyping_imports_shed() -> None:
         raise ValueError(f"MISSING from __all__: {str(tuple(missing))}")
 
 
-def test_xtyping_imports_typing() -> None:
-    missing = set()
-    for el in xtyping.__all_typing__:
-        if not hasattr(xtyping, el):
-            missing.add(el)
-    if missing:
-        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
+_TYPING_DEPRECATED = {"AbstractSet", "Deque", "DefaultDict"}
+
+
+@pytest.mark.parametrize("el", xtyping.__all_typing__)
+def test_xtyping_imports_typing(el: str) -> None:
+    if not hasattr(xtyping, el):
+        raise ValueError(f"MISSING from __all__: {el}")
 
 
 def _test_module_all_tuple(

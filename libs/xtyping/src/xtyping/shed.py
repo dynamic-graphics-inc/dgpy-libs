@@ -3,66 +3,79 @@
 
 from __future__ import annotations
 
+from collections.abc import (
+    AsyncIterable,
+    AsyncIterator,
+    Awaitable,
+    Callable,
+    Iterable,
+    Iterator,
+    Mapping,
+    Sequence,
+)
 from enum import Enum
 from os import PathLike
 from pathlib import Path
-from typing import __all__ as __all_typing
+from typing import (
+    IO,
+    TYPE_CHECKING,
+    Literal,
+    Optional,
+    TypeAlias,
+    Union,
+    __all__ as __all_typing,
+)
 
 from annotated_types import (
     __all__ as __all_annotated_types,
     __version__ as __version_annotated_types__,
 )
 from typing_extensions import (
-    IO,
-    TYPE_CHECKING,
     Any,
-    AsyncIterable,
-    AsyncIterator,
-    Awaitable,
-    Callable,
-    Dict,
-    Iterable,
-    Iterator,
-    List,
-    Literal,
-    Mapping,
-    Optional,
     ParamSpec,
-    Sequence,
-    Set,
-    Tuple,
     TypeVar,
-    Union,
     __all__ as __all_typing_extensions,
 )
 
 # =============================================================================
 # DEPRECATED TYPES
 # =============================================================================
-__DEPRECATED_TYPES__: Tuple[str, ...] = ("ByteString",)
+__DEPRECATED_TYPES__: tuple[str, ...] = (
+    "AbstractSet",
+    "ByteString",
+    "DefaultDict",
+    "Deque",
+)
+__DEPRECATED_TYPING_EXTENSIONS__: tuple[str, ...] = ("doc",)
+__DEPRECATED_ANNOTATED_TYPES__: tuple[str, ...] = (
+    "doc",
+    "DocInfo",
+)
 
 # =============================================================================
 # __all__
 # =============================================================================
-__all_typing__: Tuple[str, ...] = tuple(
+__all_typing__: tuple[str, ...] = tuple(
     e for e in __all_typing if e not in __DEPRECATED_TYPES__
 )
-__all_typing_extensions__: Tuple[str, ...] = tuple({
-    *__all_typing_extensions,
+__all_typing_extensions__: tuple[str, ...] = tuple({
+    *(e for e in __all_typing_extensions),
     *__all_typing__,
 })
-__all_typing_extensions_future__: Tuple[str, ...] = ()
-__all_annotated_types__: Tuple[str, ...] = tuple(
-    e for e in __all_annotated_types if e != "__version__"
+__all_typing_extensions_future__: tuple[str, ...] = ()
+__all_annotated_types__: tuple[str, ...] = tuple(
+    e
+    for e in __all_annotated_types
+    if e != "__version__" and e not in __DEPRECATED_ANNOTATED_TYPES__
 )
 
 # =============================================================================
 # Aliases
 # =============================================================================
-D = Dict
+D = dict
 Lit = Literal
 L = Literal
-Ls = List
+Ls = list
 Opt = Optional
 U = Union
 Seq = Sequence
@@ -79,17 +92,16 @@ ONE = Literal[1]
 # NONE
 # =============================================================================
 null = Null = None.__class__
-NoneType = None.__class__
-NoneStr = Optional[str]
-NoneBytes = Optional[bytes]
-StrBytes = Union[str, bytes]
-NoneStrBytes = Optional[StrBytes]
+NoneStr: TypeAlias = str | None
+NoneBytes: TypeAlias = bytes | None
+StrBytes: TypeAlias = str | bytes
+NoneStrBytes: TypeAlias = str | bytes | None
 
 # =============================================================================
 # NUMBER
 # =============================================================================
-Number = Union[float, int]  # float or int
-Flint = Union[float, int]  # float or int
+Number: TypeAlias = float | int  # float or int
+Flint: TypeAlias = float | int  # float or int
 
 # =============================================================================
 # TypeVars
@@ -161,9 +173,9 @@ class StrEnum(StringEnum):
 # Function-y
 # =============================================================================
 AnyCallable = Callable[..., Any]
-AnyAsyncCallable = Callable[..., Awaitable[Any]]
-FuncType = Callable[..., Any]
-AsyncFuncType = Callable[..., Awaitable[Any]]
+AnyAsyncCallable: TypeAlias = Callable[..., Awaitable[Any]]
+FuncType: TypeAlias = Callable[..., Any]
+AsyncFuncType: TypeAlias = Callable[..., Awaitable[Any]]
 F = TypeVar("F", bound=AnyCallable)
 FN = TypeVar("FN", bound=AnyCallable)
 Fn = TypeVar("Fn", bound=AnyCallable)
@@ -174,125 +186,126 @@ AsyncFn = TypeVar("AsyncFn", bound=Awaitable[Any])
 # =============================================================================
 # STDIO/STDIN
 # =============================================================================
-STDIO = Union[int, bytes, IO[Any], None]
-STDIN = Union[bytes, str, None]
+STDIO: TypeAlias = int | bytes | IO[Any] | None
+STDIN: TypeAlias = bytes | str | None
 
 # =============================================================================
 # LISTS
 # =============================================================================
-ListAny = List[Any]
-ListT = List[T]
-ListStr = List[str]
-ListInt = List[int]
-ListFloat = List[float]
-ListNumber = List[Number]
+ListAny: TypeAlias = list[Any]
+ListT: TypeAlias = list[T]
+ListStr: TypeAlias = list[str]
+ListInt: TypeAlias = list[int]
+ListFloat: TypeAlias = list[float]
+ListNumber: TypeAlias = list[Number]
 
 # =============================================================================
 # LISTLESS AKA iterables
 # =============================================================================
-IterableAny = Iterable[Any]
-IterableT = Iterable[T]
-IterableStr = Iterable[str]
-IterableInt = Iterable[int]
-IterableFloat = Iterable[float]
-IterableNumber = Iterable[Number]
+IterableAny: TypeAlias = Iterable[Any]
+IterableT: TypeAlias = Iterable[T]
+IterableStr: TypeAlias = Iterable[str]
+IterableInt: TypeAlias = Iterable[int]
+IterableFloat: TypeAlias = Iterable[float]
+IterableNumber: TypeAlias = Iterable[Number]
 
 # =============================================================================
 # DICT
 # =============================================================================
-DictAny = Dict[Any, Any]
-DictStr = Dict[str, str]
-DictInt = Dict[int, int]
-DictFloat = Dict[float, float]
-DictNumber = Dict[Number, Number]
-DictAnyAny = Dict[Any, Any]
-DictStrStr = Dict[str, str]
-DictIntInt = Dict[int, int]
-DictFloatFloat = Dict[float, float]
-DictNumberNumber = Dict[Number, Number]
-DictStrAny = Dict[str, Any]
-DictStrInt = Dict[str, int]
+DictAny: TypeAlias = dict[Any, Any]
+DictStr: TypeAlias = dict[str, str]
+DictInt: TypeAlias = dict[int, int]
+DictFloat: TypeAlias = dict[float, float]
+DictNumber: TypeAlias = dict[Number, Number]
+DictAnyAny: TypeAlias = dict[Any, Any]
+DictStrStr: TypeAlias = dict[str, str]
+DictIntInt: TypeAlias = dict[int, int]
+DictFloatFloat: TypeAlias = dict[float, float]
+DictNumberNumber: TypeAlias = dict[Number, Number]
+DictStrAny: TypeAlias = dict[str, Any]
+DictStrInt: TypeAlias = dict[str, int]
 
 # =============================================================================
 # SET
 # =============================================================================
-SetAny = Set[Any]
-SetT = Set[T]
-SetStr = Set[str]
-SetInt = Set[int]
-SetFloat = Set[float]
-SetNumber = Set[Number]
+SetAny = set[Any]
+SetT = set[T]
+SetStr = set[str]
+SetInt = set[int]
+SetFloat = set[float]
+SetNumber = set[Number]
 
 # =============================================================================
 # MISC
 # =============================================================================
-IntStr = Union[int, str]
-Bytes = Union[bytes, bytearray]
-Txt = Union[bytes, str]
-EnvMap = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
-AnyIterable = Union[Iterable[T], AsyncIterable[T]]
-AnyIterator = Union[Iterator[T], AsyncIterator[T]]
-AnyFunction = Union[Callable[..., R], Callable[..., Awaitable[R]]]
-StrIntFloat = Union[str, float, int]
-HrTime = Tuple[int, int]  # node/js hrtime type annotation
+IntStr: TypeAlias = int | str
+Bytes: TypeAlias = bytes | bytearray
+Txt: TypeAlias = bytes | str
+EnvMap: TypeAlias = Mapping[bytes, Txt] | Mapping[str, Txt]
+AnyIterable: TypeAlias = Iterable[T] | AsyncIterable[T]
+AnyIterator: TypeAlias = Iterator[T] | AsyncIterator[T]
+AnyFunction: TypeAlias = Callable[..., R] | Callable[..., Awaitable[R]]
+StrIntFloat: TypeAlias = str | float | int
+HrTime: TypeAlias = tuple[int, int]  # node/js hrtime type annotation
 
 # =============================================================================
 # Function type annotations
 # =============================================================================
 if TYPE_CHECKING:
-    PathLikeAny = PathLike[Any]
-    PathLikeStr = PathLike[str]
-    PathLikeBytes = PathLike[bytes]
-    PathLikeStrBytes = Union[PathLikeStr, PathLikeBytes]
+    PathLikeAny: TypeAlias = PathLike[Any]
+    PathLikeStr: TypeAlias = PathLike[str]
+    PathLikeBytes: TypeAlias = PathLike[bytes]
+    PathLikeStrBytes: TypeAlias = PathLikeStr | PathLikeBytes
 else:
-    PathLikeAny = PathLike
-    PathLikeStr = PathLike
-    PathLikeBytes = PathLike
-    PathLikeStrBytes = PathLike
-FsPath = Union[str, Path, PathLikeAny]
-FsPathLike = "PathLike[Any]"
-EnvType = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
-CmdArgs = CmdArgsType = Union[bytes, str, Sequence[str], Sequence[FsPath]]
+    PathLikeAny: TypeAlias = PathLike
+    PathLikeStr: TypeAlias = PathLike
+    PathLikeBytes: TypeAlias = PathLike
+    PathLikeStrBytes: TypeAlias = PathLike
+FsPath: TypeAlias = str | Path | PathLikeAny
+FsPathLike: TypeAlias = "PathLike[Any]"
+EnvType: TypeAlias = Mapping[bytes, Txt] | Mapping[str, Txt]
+CmdArgs: TypeAlias = bytes | str | Sequence[str] | Sequence[FsPath]
+CmdArgsType: TypeAlias = bytes | str | Sequence[str] | Sequence[FsPath]
 
 # =============================================================================
 # LISTLESS
 # =============================================================================
-ArrShape = Tuple[int, ...]
-ArrayShape = Tuple[int, ...]
-ShapeType = Tuple[int, ...]
-TupleStrs = Tuple[str, ...]
-ListListStr = List[List[str]]
-TupleStrStr = Tuple[str, str]
+ArrShape: TypeAlias = tuple[int, ...]
+ArrayShape: TypeAlias = tuple[int, ...]
+ShapeType: TypeAlias = tuple[int, ...]
+TupleStrs: TypeAlias = tuple[str, ...]
+ListListStr: TypeAlias = list[list[str]]
+TupleStrStr: TypeAlias = tuple[str, str]
 
 # =============================================================================
 # OPT
 # =============================================================================
-OptionalInt = Optional[int]
-OptInt = Optional[int]
-OptionalStr = Optional[str]
-OptStr = Optional[str]
-OptionalFloat = Optional[float]
-OptFloat = Optional[float]
+OptionalInt: TypeAlias = int | None
+OptInt: TypeAlias = int | None
+OptionalStr: TypeAlias = str | None
+OptStr: TypeAlias = str | None
+OptionalFloat: TypeAlias = float | None
+OptFloat: TypeAlias = float | None
 
 # =============================================================================
 # JSON
 # =============================================================================
-JsonPrimitive = Union[bool, int, float, str, None]
-Json = Union[Dict[str, "Json"], List["Json"], str, int, float, bool, None]
-JsonT = Union[Dict[str, "JsonT"], List["JsonT"], str, int, float, bool, None]
-JsonDictT = Dict[str, Any]
-JsonListT = List[Any]
-JsonObjT = Dict[str, Any]
-JsonArrT = List[Any]
+JsonPrimitive: TypeAlias = bool | int | float | str | None
+Json: TypeAlias = dict[str, "Json"] | list["Json"] | str | int | float | bool | None
+JsonT: TypeAlias = dict[str, "JsonT"] | list["JsonT"] | str | int | float | bool | None
+JsonDictT: TypeAlias = dict[str, Any]
+JsonListT: TypeAlias = list[Any]
+JsonObjT: TypeAlias = dict[str, Any]
+JsonArrT: TypeAlias = list[Any]
 
 # =============================================================================
 # FROM TYPESHED
 # =============================================================================
-StrPath = Union[str, "PathLike[str]"]  # stable
-BytesPath = Union[bytes, "PathLike[bytes]"]  # stable
-StrOrBytesPath = Union[str, bytes, "PathLike[Any]"]
+StrPath: TypeAlias = Union[str, "PathLike[str]"]  # stable
+BytesPath: TypeAlias = Union[bytes, "PathLike[bytes]"]  # stable
+StrOrBytesPath: TypeAlias = Union[str, bytes, "PathLike[Any]"]
 
-OpenTextModeUpdating = Literal[
+OpenTextModeUpdating: TypeAlias = Literal[
     "r+",
     "+r",
     "rt+",
@@ -326,12 +339,16 @@ OpenTextModeUpdating = Literal[
     "t+x",
     "+tx",
 ]
-OpenTextModeWriting = Literal["w", "wt", "tw", "a", "at", "ta", "x", "xt", "tx"]
-OpenTextModeReading = Literal[
+OpenTextModeWriting: TypeAlias = Literal[
+    "w", "wt", "tw", "a", "at", "ta", "x", "xt", "tx"
+]
+OpenTextModeReading: TypeAlias = Literal[
     "r", "rt", "tr", "U", "rU", "Ur", "rtU", "rUt", "Urt", "trU", "tUr", "Utr"
 ]
-OpenTextMode = Union[OpenTextModeUpdating, OpenTextModeWriting, OpenTextModeReading]
-OpenBinaryModeUpdating = Literal[
+OpenTextMode: TypeAlias = (
+    OpenTextModeUpdating | OpenTextModeWriting | OpenTextModeReading
+)
+OpenBinaryModeUpdating: TypeAlias = Literal[
     "rb+",
     "r+b",
     "+rb",
@@ -357,11 +374,13 @@ OpenBinaryModeUpdating = Literal[
     "b+x",
     "+bx",
 ]
-OpenBinaryModeWriting = Literal["wb", "bw", "ab", "ba", "xb", "bx"]
-OpenBinaryModeReading = Literal["rb", "br", "rbU", "rUb", "Urb", "brU", "bUr", "Ubr"]
-OpenBinaryMode = Union[
-    OpenBinaryModeUpdating, OpenBinaryModeReading, OpenBinaryModeWriting
+OpenBinaryModeWriting: TypeAlias = Literal["wb", "bw", "ab", "ba", "xb", "bx"]
+OpenBinaryModeReading: TypeAlias = Literal[
+    "rb", "br", "rbU", "rUb", "Urb", "brU", "bUr", "Ubr"
 ]
+OpenBinaryMode: TypeAlias = (
+    OpenBinaryModeUpdating | OpenBinaryModeReading | OpenBinaryModeWriting
+)
 
 # =============================================================================
 # __all__
@@ -458,7 +477,6 @@ __all__ = (
     "NoneBytes",
     "NoneStr",
     "NoneStrBytes",
-    "NoneType",
     "Null",
     "Number",
     "OpenBinaryMode",
