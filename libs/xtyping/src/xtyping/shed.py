@@ -92,7 +92,6 @@ ONE = Literal[1]
 # NONE
 # =============================================================================
 null = Null = None.__class__
-NoneType: TypeAlias = None.__class__
 NoneStr: TypeAlias = str | None
 NoneBytes: TypeAlias = bytes | None
 StrBytes: TypeAlias = str | bytes
@@ -478,7 +477,6 @@ __all__ = (
     "NoneBytes",
     "NoneStr",
     "NoneStrBytes",
-    "NoneType",
     "Null",
     "Number",
     "OpenBinaryMode",
