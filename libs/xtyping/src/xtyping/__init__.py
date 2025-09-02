@@ -31,7 +31,7 @@ from collections.abc import (
     ValuesView,
 )
 from re import Match, Pattern
-from typing import (
+from typing import (  # noqa: UP035
     IO,
     TYPE_CHECKING,
     Annotated,

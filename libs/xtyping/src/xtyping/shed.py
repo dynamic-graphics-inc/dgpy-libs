@@ -101,8 +101,8 @@ NoneStrBytes: TypeAlias = str | bytes | None
 # =============================================================================
 # NUMBER
 # =============================================================================
-Number: TypeAlias = Union[float, int]  # float or int
-Flint: TypeAlias = Union[float, int]  # float or int
+Number: TypeAlias = float | int  # float or int
+Flint: TypeAlias = float | int  # float or int
 
 # =============================================================================
 # TypeVars
@@ -187,8 +187,8 @@ AsyncFn = TypeVar("AsyncFn", bound=Awaitable[Any])
 # =============================================================================
 # STDIO/STDIN
 # =============================================================================
-STDIO: TypeAlias = Union[int, bytes, IO[Any], None]
-STDIN: TypeAlias = Union[bytes, str, None]
+STDIO: TypeAlias = int | bytes | IO[Any] | None
+STDIN: TypeAlias = bytes | str | None
 
 # =============================================================================
 # LISTS
@@ -239,14 +239,14 @@ SetNumber = set[Number]
 # =============================================================================
 # MISC
 # =============================================================================
-IntStr: TypeAlias = Union[int, str]
-Bytes: TypeAlias = Union[bytes, bytearray]
-Txt: TypeAlias = Union[bytes, str]
-EnvMap: TypeAlias = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
-AnyIterable: TypeAlias = Union[Iterable[T], AsyncIterable[T]]
-AnyIterator: TypeAlias = Union[Iterator[T], AsyncIterator[T]]
-AnyFunction: TypeAlias = Union[Callable[..., R], Callable[..., Awaitable[R]]]
-StrIntFloat: TypeAlias = Union[str, float, int]
+IntStr: TypeAlias = int | str
+Bytes: TypeAlias = bytes | bytearray
+Txt: TypeAlias = bytes | str
+EnvMap: TypeAlias = Mapping[bytes, Txt] | Mapping[str, Txt]
+AnyIterable: TypeAlias = Iterable[T] | AsyncIterable[T]
+AnyIterator: TypeAlias = Iterator[T] | AsyncIterator[T]
+AnyFunction: TypeAlias = Callable[..., R] | Callable[..., Awaitable[R]]
+StrIntFloat: TypeAlias = str | float | int
 HrTime: TypeAlias = tuple[int, int]  # node/js hrtime type annotation
 
 # =============================================================================
@@ -256,17 +256,17 @@ if TYPE_CHECKING:
     PathLikeAny: TypeAlias = PathLike[Any]
     PathLikeStr: TypeAlias = PathLike[str]
     PathLikeBytes: TypeAlias = PathLike[bytes]
-    PathLikeStrBytes: TypeAlias = Union[PathLikeStr, PathLikeBytes]
+    PathLikeStrBytes: TypeAlias = PathLikeStr | PathLikeBytes
 else:
     PathLikeAny: TypeAlias = PathLike
     PathLikeStr: TypeAlias = PathLike
     PathLikeBytes: TypeAlias = PathLike
     PathLikeStrBytes: TypeAlias = PathLike
-FsPath: TypeAlias = Union[str, Path, PathLikeAny]
+FsPath: TypeAlias = str | Path | PathLikeAny
 FsPathLike: TypeAlias = "PathLike[Any]"
-EnvType: TypeAlias = Union[Mapping[bytes, Txt], Mapping[str, Txt]]
-CmdArgs: TypeAlias = Union[bytes, str, Sequence[str], Sequence[FsPath]]
-CmdArgsType: TypeAlias = Union[bytes, str, Sequence[str], Sequence[FsPath]]
+EnvType: TypeAlias = Mapping[bytes, Txt] | Mapping[str, Txt]
+CmdArgs: TypeAlias = bytes | str | Sequence[str] | Sequence[FsPath]
+CmdArgsType: TypeAlias = bytes | str | Sequence[str] | Sequence[FsPath]
 
 # =============================================================================
 # LISTLESS
@@ -291,9 +291,9 @@ OptFloat: TypeAlias = float | None
 # =============================================================================
 # JSON
 # =============================================================================
-JsonPrimitive: TypeAlias = Union[bool, int, float, str, None]
-Json: TypeAlias = Union[dict[str, "Json"], list["Json"], str, int, float, bool, None]
-JsonT: TypeAlias = Union[dict[str, "JsonT"], list["JsonT"], str, int, float, bool, None]
+JsonPrimitive: TypeAlias = bool | int | float | str | None
+Json: TypeAlias = dict[str, "Json"] | list["Json"] | str | int | float | bool | None
+JsonT: TypeAlias = dict[str, "JsonT"] | list["JsonT"] | str | int | float | bool | None
 JsonDictT: TypeAlias = dict[str, Any]
 JsonListT: TypeAlias = list[Any]
 JsonObjT: TypeAlias = dict[str, Any]
@@ -346,9 +346,9 @@ OpenTextModeWriting: TypeAlias = Literal[
 OpenTextModeReading: TypeAlias = Literal[
     "r", "rt", "tr", "U", "rU", "Ur", "rtU", "rUt", "Urt", "trU", "tUr", "Utr"
 ]
-OpenTextMode: TypeAlias = Union[
-    OpenTextModeUpdating, OpenTextModeWriting, OpenTextModeReading
-]
+OpenTextMode: TypeAlias = (
+    OpenTextModeUpdating | OpenTextModeWriting | OpenTextModeReading
+)
 OpenBinaryModeUpdating: TypeAlias = Literal[
     "rb+",
     "r+b",
@@ -379,9 +379,9 @@ OpenBinaryModeWriting: TypeAlias = Literal["wb", "bw", "ab", "ba", "xb", "bx"]
 OpenBinaryModeReading: TypeAlias = Literal[
     "rb", "br", "rbU", "rUb", "Urb", "brU", "bUr", "Ubr"
 ]
-OpenBinaryMode: TypeAlias = Union[
-    OpenBinaryModeUpdating, OpenBinaryModeReading, OpenBinaryModeWriting
-]
+OpenBinaryMode: TypeAlias = (
+    OpenBinaryModeUpdating | OpenBinaryModeReading | OpenBinaryModeWriting
+)
 
 # =============================================================================
 # __all__

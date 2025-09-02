@@ -87,10 +87,10 @@ ignore = [
   "D100", # missing docstring
 ]
 "libs/xtyping/**/*.py" = [
-  "UP007",
+  # "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
   # "UP022", # must test shellfish first...
-  "UP035",
+  # "UP035",
 ]
 
 [lint.isort]
