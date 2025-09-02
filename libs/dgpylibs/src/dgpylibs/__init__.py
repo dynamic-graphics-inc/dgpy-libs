@@ -111,7 +111,7 @@ class DgpyLibsMetadataDict(TypedDict):
 
 @dataclass(frozen=True)
 class DgpyLibMetadata:
-    __slots__ = ("title", "description", "pkgroot", "version")
+    __slots__ = ("description", "pkgroot", "title", "version")
     title: str
     description: str
     pkgroot: str
@@ -147,9 +147,9 @@ class DgpyLibsMetadata:
     """dgpy-libs env info"""
 
     __slots__ = (
-        "dgpylibs",
         "aiopen",
         "asyncify",
+        "dgpylibs",
         "fmts",
         "funkify",
         "h5",
@@ -211,9 +211,9 @@ class DgpyLibsVersions:
     """dgpy-libs env info"""
 
     __slots__ = (
-        "dgpylibs",
         "aiopen",
         "asyncify",
+        "dgpylibs",
         "fmts",
         "funkify",
         "h5",
