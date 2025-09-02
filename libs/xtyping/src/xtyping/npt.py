@@ -3,11 +3,9 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, TypeAlias
 
 import numpy as np
-
-from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     import numpy.typing as npt

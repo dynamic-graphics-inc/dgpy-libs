@@ -89,10 +89,8 @@ ignore = [
 "libs/xtyping/**/*.py" = [
   "UP007",
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
-  "UP022", # must test shellfish first...
+  # "UP022", # must test shellfish first...
   "UP035",
-  "UP037",
-  "UP045", # union type over `Optional`
 ]
 
 [lint.isort]
