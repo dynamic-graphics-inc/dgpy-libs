@@ -5,5 +5,5 @@ import funkify
 
 
 @funkify  # type: ignore[operator]
-async def main() -> int:
+async def main() -> int:  # noqa: RUF029
     return 123

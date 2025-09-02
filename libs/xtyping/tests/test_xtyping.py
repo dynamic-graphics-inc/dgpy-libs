@@ -59,7 +59,7 @@ def test_xtyping_imports_shed() -> None:
         ):
             missing.add(el)
     if missing:
-        raise ValueError(f"MISSING from __all__: {str(tuple(missing))}")
+        raise ValueError(f"MISSING from __all__: {tuple(missing)!s}")
 
 
 _TYPING_DEPRECATED = {"AbstractSet", "Deque", "DefaultDict"}

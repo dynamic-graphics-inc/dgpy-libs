@@ -5,7 +5,7 @@ import pytest
 from asyncify import aiorun, aiorun_anyio, aiorun_asyncio
 
 
-async def add_async(x: int, y: int) -> int:
+async def add_async(x: int, y: int) -> int:  # noqa: RUF029
     return x + y
 
 

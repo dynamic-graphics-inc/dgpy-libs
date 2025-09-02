@@ -60,7 +60,7 @@ def test_jsonobj_property_attrs_str() -> None:
         "stuff": {"herm_" + str(i): i for i in range(10)},
         "d": {
             "nested": "nestedval",
-            **{f"ok_{str(i)}": i for i in range(20)},
+            **{f"ok_{i!s}": i for i in range(20)},
         },
     })
     evaluated_version = eval(thing_w_prop.__str__())

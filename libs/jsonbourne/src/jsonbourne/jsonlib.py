@@ -105,7 +105,7 @@ def _json_encode_default(obj: Any) -> Any:
     if hasattr(obj, "dict"):
         return obj.dict()
 
-    raise TypeError(f"Cannot encode obj as JSON: {str(obj)}")
+    raise TypeError(f"Cannot encode obj as JSON: {obj!s}")
 
 
 class JsonLibABC(ABC):

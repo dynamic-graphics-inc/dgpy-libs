@@ -523,7 +523,7 @@ def test_lookup_ops() -> None:
     assert d.dot_lookup(("sub", "key")) == "val"
     assert d["sub.key"] == "val"
     assert d["sub", "key"] == "val"
-    assert d[("sub", "key")] == "val"
+    assert d[("sub", "key")] == "val"  # noqa: RUF031
 
 
 def test_cycle_eject() -> None:

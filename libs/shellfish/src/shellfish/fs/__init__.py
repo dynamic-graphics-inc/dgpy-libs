@@ -1546,7 +1546,7 @@ def rm_gen(
                     rmdir(_path_str, recursive=True, force=force)
                 else:
                     raise ValueError(
-                        f"{str(_path_str)} (under {str(fspath)}) is a directory -- use r=True or recursive=True"
+                        f"{_path_str!s} (under {fspath!s}) is a directory -- use r=True or recursive=True"
                     )
     else:
         if isfile(fspath):
@@ -1559,7 +1559,7 @@ def rm_gen(
             yield _fspath(fspath)
         else:
             raise ValueError(
-                f"{str(fspath)} is a directory -- use r=True or recursive=True"
+                f"{fspath!s} is a directory -- use r=True or recursive=True"
             )
 
 

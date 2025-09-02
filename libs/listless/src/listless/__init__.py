@@ -97,7 +97,7 @@ def aiterable(it: Iterable[_T] | AsyncIterable[_T]) -> AsyncIterator[_T]:
     if isinstance(it, AsyncIterable):
         return it.__aiter__()
 
-    async def gen() -> AsyncIterator[_T]:
+    async def gen() -> AsyncIterator[_T]:  # noqa: RUF029
         for item in it:
             yield item
 

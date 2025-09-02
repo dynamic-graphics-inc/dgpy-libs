@@ -75,7 +75,7 @@ class ProcessDt:
     ti: float
     tf: float
     dt: float
-    __slots__ = ("ti", "tf", "dt")
+    __slots__ = ("dt", "tf", "ti")
 
     @classmethod
     def from_titf(cls, ti: float, tf: float) -> ProcessDt:

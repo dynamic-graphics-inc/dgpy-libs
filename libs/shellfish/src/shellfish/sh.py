@@ -499,7 +499,7 @@ def validate_stdin(stdin: STDIN) -> STDIN:
         return validate_stdin(str(stdin).encode())
     if isinstance(stdin, bytes | bytearray):
         return bytes(stdin)
-    raise ValueError(f"Invalid stdin: (type={str(type(stdin))}) {str(stdin)}")
+    raise ValueError(f"Invalid stdin: (type={type(stdin)!s}) {stdin!s}")
 
 
 def utf8_string(val: str | bytes | bytearray) -> str:
@@ -1555,9 +1555,7 @@ def export(key: str, val: str | None = None) -> tuple[str, str]:
     if "=" in key:
         _key = key.split("=")[0]
         return export(_key, key[len(_key) + 1 :])
-    raise ValueError(
-        f"Unable to parse env variable - key: {str(key)}, value: {str(val)}"
-    )
+    raise ValueError(f"Unable to parse env variable - key: {key!s}, value: {val!s}")
 
 
 def setenv(key: str, val: str | None = None) -> tuple[str, str]:

@@ -205,7 +205,7 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
     with pytest.raises(NameError) as re:
         assert re  # type: ignore[truthy-bool]
 
-        async def fn2() -> tuple[str, Any]:
+        async def fn2() -> tuple[str, Any]:  # noqa: RUF029
             _f = somefunction(s)  # type: ignore[name-defined]
             return s, _f
 
@@ -223,7 +223,7 @@ def test_requirement_as_decorator_multiple_async() -> None:
 
     @json_dumps_req
     @json_loads_req
-    async def fn() -> tuple[str, Any]:
+    async def fn() -> tuple[str, Any]:  # noqa: RUF029
         d = {"herm": 1}
         s = dumps(d)  # type: ignore[name-defined]
         f = loads(s)  # type: ignore[name-defined]
@@ -270,7 +270,7 @@ def test_from_json_import_dumps_module_alias() -> None:
 @pytest.mark.asyncio()
 async def test_from_json_import_dumps_async() -> None:
     @requires("from json import dumps")
-    async def fn() -> str:
+    async def fn() -> str:  # noqa: RUF029
         d = {"herm": 1}
         s = dumps(d)  # type: ignore[name-defined]
         return s  # type: ignore[no-any-return]
@@ -419,7 +419,7 @@ async def test_requires_name_error_async() -> None:
         assert re  # type: ignore[truthy-bool]
 
         @requires("a_fake_module")
-        async def fn() -> Any:
+        async def fn() -> Any:  # noqa: RUF029
             _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
             return _some_value
 
