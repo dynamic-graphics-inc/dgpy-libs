@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
       - name: ruff-check
@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - name: Set up Python 3
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.11
       - name: Install dependencies
@@ -64,7 +64,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Set up Python 3
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 
@@ -144,7 +144,7 @@ jobs:
     # if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.10"
       - name: install-uv
