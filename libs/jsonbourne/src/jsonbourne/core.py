@@ -110,7 +110,7 @@ def is_float(value: Any) -> bool:
         float(value)
         return True
     except ValueError:
-        pass
+        ...
     return False
 
 
@@ -375,7 +375,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         try:
             return jsonify(self.__getitem__(str(item)))
         except KeyError:
-            pass
+            ...
         return object.__getattribute__(self, item)
 
     def __object_getattribute__(self, item: str) -> Any:
@@ -400,11 +400,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             try:
                 return jsonify(self._data[key])
             except KeyError:
-                pass
+                ...
             try:
                 return jsonify(self.__object_getattribute__(key))
             except AttributeError:
-                pass
+                ...
         try:
             return self.dot_lookup(key)
         except KeyError:
@@ -1111,7 +1111,7 @@ def jsonify(value: Any) -> Any:
             data = jsonlib.loads(value)
             return jsonify(data)
         except Exception:
-            pass
+            ...
 
     return value
 

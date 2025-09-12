@@ -46,7 +46,7 @@ try:
         model_config = _model_config
 
 except Exception:
-    pass
+    ...
 
 
 def test_jsonobj_property_pydantic() -> None:

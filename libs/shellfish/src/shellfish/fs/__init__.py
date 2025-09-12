@@ -1140,7 +1140,7 @@ def read_str(filepath: FsPath, *, encoding: str = "utf-8") -> str:
     try:
         return _bytes.decode(encoding=encoding)
     except UnicodeDecodeError:  # Catch the unicode decode error
-        pass
+        ...
     return _bytes.decode(encoding="latin2")
 
 

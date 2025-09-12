@@ -1263,7 +1263,7 @@ def ensure_utf8(string: str | bytes) -> str:
         except UnicodeDecodeError:
             return str(string, encoding="utf-8", errors="ignore")
         except TypeError:
-            pass
+            ...
     return str(string)
 
 

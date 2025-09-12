@@ -25,4 +25,4 @@ try:
             await self.client.aclose()
 
 except ImportError:
-    pass
+    ...

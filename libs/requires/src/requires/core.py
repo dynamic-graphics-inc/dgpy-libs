@@ -243,7 +243,7 @@ class Requirement:
                         if self.alias not in parse_name_error(ne):
                             raise ne
                     except TypeError:
-                        pass
+                        ...
                     try:
                         if self.alias not in _f_globals:
                             _f_globals[self.alias] = self.import_requirement()
@@ -271,7 +271,7 @@ class Requirement:
                     if self.alias not in parse_name_error(ne):
                         raise ne from ne
                 except TypeError:
-                    pass
+                    ...
                 try:
                     if self.alias not in _f_globals:
                         _f_globals[self.alias] = self.import_requirement()

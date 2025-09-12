@@ -510,7 +510,7 @@ def import_json(
         try:
             return lib2funk[mod]()
         except (ImportError, ModuleNotFoundError):
-            pass
+            ...
 
     return _import_json_stdlib()
 

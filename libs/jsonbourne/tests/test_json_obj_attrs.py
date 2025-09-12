@@ -13,7 +13,7 @@ try:
 
 
 except ModuleNotFoundError:
-    pass
+    ...
 
 
 def test_jsonobj_property_attrs() -> None:
