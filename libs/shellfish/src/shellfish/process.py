@@ -216,7 +216,7 @@ def is_wsl() -> bool:  # pragma: nocov
             if "microsoft" in f.read().lower():
                 return True
     except FileNotFoundError:
-        pass
+        ...
 
     return False
 

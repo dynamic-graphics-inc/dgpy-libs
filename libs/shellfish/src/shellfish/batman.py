@@ -140,7 +140,7 @@ def MKLINK(
     """Creates a symbolic link.
 
     Returns:
-        pass
+        ...
 
     Output of `MKLINK /?`:
         ```
@@ -214,7 +214,7 @@ def RD(
     """Removes a directory.
 
     Returns:
-        pass
+        ...
 
 
     Output of `RD /?`:

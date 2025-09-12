@@ -73,11 +73,11 @@ def popen_pipes_gen(
                 try:
                     yield Stdio.stdout, q_stdout.get_nowait()
                 except Empty:
-                    pass
+                    ...
                 try:
                     yield Stdio.stderr, q_stderr.get_nowait()
                 except Empty:
-                    pass
+                    ...
                 if timeout is not None and time() - ti > timeout:
                     _raise_err = True
                     stdout_future.cancel()

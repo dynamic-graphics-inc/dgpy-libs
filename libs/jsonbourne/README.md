@@ -269,7 +269,7 @@ j.key = "value"
 try:  # CANNOT set 'items' using dot-access
     j.items = [1, 2, 3, 4]
 except ValueError:
-    pass
+    ...
 # CAN set 'items' through key/item access
 j["items"] = [1, 2, 3, 4]
 print(j.__dict__)

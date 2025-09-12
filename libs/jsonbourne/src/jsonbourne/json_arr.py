@@ -46,7 +46,7 @@ def n_args(fn: Callable[..., _R]) -> int:
     try:
         return fn.__code__.co_argcount
     except AttributeError:
-        pass
+        ...
     if hasattr(fn, "__call__"):  # noqa: B004
         _nargs = n_args(fn.__call__)
         co_varnames = fn.__call__.__code__.co_varnames

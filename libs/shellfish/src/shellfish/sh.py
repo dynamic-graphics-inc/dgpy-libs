@@ -440,12 +440,12 @@ def decode_stdio_bytes(stdio_bytes: str | bytes, *, lf: bool = True) -> str:
     except AttributeError:
         return ""
     except Exception:
-        pass
+        ...
 
     try:
         return str(stdio_bytes.decode("utf-8"))
     except UnicodeDecodeError:
-        pass
+        ...
     return str(stdio_bytes.decode("latin-1"))
 
 

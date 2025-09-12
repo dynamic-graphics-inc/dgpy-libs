@@ -88,7 +88,7 @@ try:
 
     Handler._serialize_record = staticmethod(_serialize_record)
 except ModuleNotFoundError:
-    pass
+    ...
 
 # lager/logger aliases
 log = LOG = logger
