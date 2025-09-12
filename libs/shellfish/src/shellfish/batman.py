@@ -140,7 +140,7 @@ def MKLINK(
     """Creates a symbolic link.
 
     Returns:
-        ...
+        CompletedProcess[str]: The result of the MKLINK command.
 
     Output of `MKLINK /?`:
         ```
@@ -214,7 +214,7 @@ def RD(
     """Removes a directory.
 
     Returns:
-        ...
+        CompletedProcess[str]: The result of the RD command.
 
 
     Output of `RD /?`:
