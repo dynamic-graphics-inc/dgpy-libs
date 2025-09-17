@@ -9,14 +9,13 @@ description = "H5py utils"
 readme = "README.md"
 keywords = [ "h5", "h5py", "hdf5", "numpy" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.11,<4.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",

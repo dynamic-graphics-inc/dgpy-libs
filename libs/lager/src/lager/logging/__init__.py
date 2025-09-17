@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import logging
-import sys
 
 from collections.abc import Callable, Mapping
 from logging import (
@@ -64,12 +63,7 @@ from logging import (
     warning as warning,
 )
 from types import TracebackType
-from typing import Any, Literal, TypeAlias
-
-if sys.version_info >= (3, 11):
-    from typing import Self
-else:
-    from typing_extensions import Self
+from typing import Any, Literal, Self, TypeAlias
 
 from lager.core import LOG, loglevel
 
