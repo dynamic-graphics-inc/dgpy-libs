@@ -24,11 +24,11 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = [
-  "aiopen>=0.5",
-  "asyncify>=0.9.1",
-  "funkify>=0.4",
-  "jsonbourne>=0.29",
-  "listless>=0.1",
+  "aiopen>=0.8",
+  "asyncify>=0.12",
+  "funkify>=0.7",
+  "jsonbourne>=0.32",
+  "listless>=0.4",
   "pydantic>=2.0.3",
 ]
 

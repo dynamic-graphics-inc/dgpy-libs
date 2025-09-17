@@ -29,7 +29,7 @@ dependencies = [
 optional-dependencies.cli = [
   "click>=8.2.1",
   "rich>=14.1",
-  "ry>=0.0.53",
+  "ry>=0.0.57",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/h5"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"

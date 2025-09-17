@@ -1,24 +1,16 @@
 [build-system]
 build-backend = "uv_build"
-requires = [ "uv-build>=0.8,<0.9" ]
+requires = ["uv-build>=0.8,<0.9"]
 
 [project]
 name = "aiopen"
 version = "0.8.0"
 description = "Async file io"
 readme = "README.md"
-keywords = [
-  "aiopen",
-  "anyio",
-  "async",
-  "dgpy",
-  "fs",
-]
+keywords = ["aiopen", "anyio", "async", "dgpy", "fs"]
 
 license = "MIT"
-authors = [
-  { name = "jesse", email = "jessekrubin@gmail.com" },
-]
+authors = [{ name = "jesse", email = "jessekrubin@gmail.com" }]
 requires-python = ">=3.10,<4.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -32,9 +24,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [
-  "funkify",
-]
+dependencies = ["funkify>=0.7"]
 
 optional-dependencies.test = [
   "anyio>=4.4",
@@ -43,31 +33,20 @@ optional-dependencies.test = [
 ]
 repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs/tree/main/libs/aiopen"
-packages = [
-  { include = "aiopen", from = "." },
-]
+packages = [{ include = "aiopen", from = "." }]
 
 [dependency-groups]
-dev = [
-  "anyio>=4.4",
-  "pytest-asyncio>=1",
-  "pytest-cov>=6.1.1",
-]
+dev = ["anyio>=4.4", "pytest-asyncio>=1", "pytest-cov>=6.1.1"]
 
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = [ "src/aiopen" ]
+packages = ["src/aiopen"]
 
 [tool.hatch.build.targets.sdist]
-include = [
-  "src",
-  "pyproject.toml",
-  "README.md",
-  "LICENSE",
-]
+include = ["src", "pyproject.toml", "README.md", "LICENSE"]
 
 [tool.ruff]
 # COVERAGE
@@ -85,17 +64,15 @@ addopts = [
   "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
-filterwarnings = [
-  "ignore::pytest.PytestUnraisableExceptionWarning",
-]
-markers = [ "asyncio", "anyio", "version" ]
-testpaths = [ "aiopen", "tests" ]
+filterwarnings = ["ignore::pytest.PytestUnraisableExceptionWarning"]
+markers = ["asyncio", "anyio", "version"]
+testpaths = ["aiopen", "tests"]
 
 [tool.coverage.run]
-source = [ 'aiopen' ]
+source = ['aiopen']
 branch = true
 context = '${CONTEXT}'
-omit = [ "**/__main__.py" ]
+omit = ["**/__main__.py"]
 
 [tool.coverage.report]
 precision = 2
@@ -112,7 +89,7 @@ exclude_lines = [
 ]
 
 [tool.coverage.paths]
-source = [ 'aiopen/' ]
+source = ['aiopen/']
 
 [tool.mypy]
 # --strict
