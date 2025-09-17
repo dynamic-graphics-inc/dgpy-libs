@@ -9,7 +9,7 @@ description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = [ "decorator", "dgpy", "funkify", "import", "requires" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.11,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,21 +17,19 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
 dependencies = [
-  "funkify>=0.4",
+  "funkify>=0.7",
 ]
 
 [dependency-groups]
 dev = [
   "orjson>=3.11",
   "typing-extensions>=4.5,<5; python_version<'3.11'",
-
 ]
 
 [tool.hatch]

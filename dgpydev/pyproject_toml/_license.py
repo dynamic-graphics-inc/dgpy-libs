@@ -23,7 +23,7 @@ LICENSES = (
 )
 
 
-class License(str, Enum):
+class License(Enum):
     Apache_2_0 = "Apache-2.0"
     BSD_2_Clause = "BSD-2-Clause"
     BSD_3_Clause = "BSD-3-Clause"

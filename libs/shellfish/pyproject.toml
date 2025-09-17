@@ -9,7 +9,7 @@ description = "shellfish ~ shell & file-system utils"
 readme = "README.md"
 keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.11,<4.0"
 
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -17,18 +17,17 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
 dependencies = [
-  "aiopen>=0.5",
-  "asyncify>=0.9.1",
-  "funkify>=0.4",
-  "jsonbourne>=0.29",
-  "listless>=0.1",
+  "aiopen>=0.8",
+  "asyncify>=0.12",
+  "funkify>=0.7",
+  "jsonbourne>=0.32",
+  "listless>=0.4",
   "pydantic>=2.0.3",
 ]
 

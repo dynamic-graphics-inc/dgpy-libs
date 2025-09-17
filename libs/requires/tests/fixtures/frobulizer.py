@@ -18,12 +18,7 @@ def frobulize_multiple_requirements(inputs: list[str]) -> tuple[Any, ...]:
 
 
 if TYPE_CHECKING:
-    import sys
-
-    if sys.version_info >= (3, 11):
-        from typing import reveal_type
-    else:
-        from typing_extensions import reveal_type
+    from typing import reveal_type
 
     r1 = requires.Requirement(_import="somelibrary", _as="sl")
     r2 = requires.Requirement(_import="some_other_lib", _as="sol")

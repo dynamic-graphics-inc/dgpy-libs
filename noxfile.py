@@ -142,9 +142,9 @@ extend = "../../pyproject.toml"
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def dev(session: nox.Session) -> None:
-    from pprint import pprint
-
     import tomllib
+
+    from pprint import pprint
 
     for libname, dirpath in LIB_DIRS.items():
         echo(libname, dirpath)
