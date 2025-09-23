@@ -15,7 +15,18 @@ sync:
 
 # build packages
 build:
-    uv build --no-sources --all-packages -v
+    rm -rfv dist
+    uv build -v --package aiopen
+    uv build -v --package asyncify
+    uv build -v --package fmts
+    uv build -v --package funkify
+    uv build -v --package h5
+    uv build -v --package jsonbourne
+    uv build -v --package lager
+    uv build -v --package listless
+    uv build -v --package requires
+    uv build -v --package shellfish
+    uv build -v --package xtyping
 
 # test root + all libraries
 test: sync
