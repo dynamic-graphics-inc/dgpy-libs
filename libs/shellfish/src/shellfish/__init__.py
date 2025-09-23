@@ -27,7 +27,6 @@ from shellfish.done import (
     Done as Done,
     DoneDict as DoneDict,
     DoneError as DoneError,
-    DoneObj as DoneObj,
     HrTime as HrTime,
 )
 from shellfish.echo import echo as echo
@@ -220,7 +219,6 @@ __all__ = (
     "Done",
     "DoneDict",
     "DoneError",
-    "DoneObj",
     "Flag",
     "FlagMeta",
     "FsPath",

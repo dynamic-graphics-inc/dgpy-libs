@@ -13,7 +13,7 @@ class TestDoneReprStr:
             ti=1753910725.1278882,
             tf=1753910725.167228,
             dt=0.03933978080749512,
-            hrdt=HrTime(sec=0, ns=39339780),
+            hrdt=HrTime(secs=0, nanos=39339780),
             stdin=None,
             async_proc=False,
             verbose=False,
@@ -28,7 +28,7 @@ class TestDoneReprStr:
             ti=1753910725.1278882,
             tf=1753910725.167228,
             dt=0.03933978080749512,
-            hrdt={'sec': 0, 'ns': 39339780},
+            hrdt={'secs': 0, 'nanos': 39339780},
             stdin=None,
             async_proc=False,
             verbose=False,
@@ -49,14 +49,14 @@ class TestDoneReprStr:
             ti=1753910725.1278882,
             tf=1753910725.167228,
             dt=0.03933978080749512,
-            hrdt=HrTime(sec=0, ns=39339780),
+            hrdt=HrTime(secs=0, nanos=39339780),
             stdin=None,
             async_proc=False,
             verbose=False,
             dryrun=False,
         )
         expected_repr = dedent(r"""
-        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt={'sec': 0, 'ns': 39339780}, stdin=None, async_proc=False, verbose=False, dryrun=False)
+        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt={'secs': 0, 'nanos': 39339780}, stdin=None, async_proc=False, verbose=False, dryrun=False)
         """)
         assert repr(d) == expected_repr.strip()
 
@@ -73,14 +73,14 @@ class TestDoneReprStr:
             ti=1753910725.1278882,
             tf=1753910725.167228,
             dt=0.03933978080749512,
-            hrdt=HrTime(sec=0, ns=39339780),
+            hrdt=HrTime(secs=0, nanos=39339780),
             stdin=None,
             async_proc=False,
             verbose=False,
             dryrun=False,
         )
         expected_repr = dedent(r"""
-        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt={'sec': 0, 'ns': 39339780}, stdin=None, async_proc=False, verbose=False, dryrun=False)
+        Done(args=['python', '--version'], returncode=0, stdout='Python 3.13.5\n', stderr='', ti=1753910725.1278882, tf=1753910725.167228, dt=0.03933978080749512, hrdt={'secs': 0, 'nanos': 39339780}, stdin=None, async_proc=False, verbose=False, dryrun=False)
         """)
         assert repr(d) == expected_repr.strip()
 

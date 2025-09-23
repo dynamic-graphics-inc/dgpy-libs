@@ -35,10 +35,8 @@ from shellfish.done import (
     Done as Done,
     DoneDict as DoneDict,
     DoneError as DoneError,
-    DoneObj as DoneObj,
     HrTime as HrTime,
     HrTimeDict as HrTimeDict,
-    HrTimeObj as HrTimeObj,
 )
 from shellfish.echo import echo as echo
 from shellfish.fs import (
@@ -193,12 +191,10 @@ __all__ = (
     "Done",
     "DoneDict",
     "DoneError",
-    "DoneObj",
     "Flag",
     "FlagMeta",
     "HrTime",
     "HrTimeDict",
-    "HrTimeObj",
     # fs exports
     "Stdio",
     "SymlinkType",

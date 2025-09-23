@@ -8,7 +8,7 @@ from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
 from typing import TYPE_CHECKING, Any, AnyStr, TypedDict
 
-from pydantic import Field
+from pydantic import AliasChoices, Field
 
 from jsonbourne import JSON
 from shellfish import fs
@@ -26,32 +26,23 @@ __all__ = (
     "Done",
     "DoneDict",
     "DoneError",
-    "DoneObj",
     "HrTime",
     "HrTimeDict",
-    "HrTimeObj",
 )
 
 
 class HrTimeDict(TypedDict):
     """High resolution time"""
 
-    sec: int
-    ns: int
-
-
-class HrTimeObj(TypedDict):
-    """TODO: deprecate this in favor of HrTimeDict"""
-
-    sec: int
-    ns: int
+    secs: int
+    nanos: int
 
 
 class HrTime(_ShellfishBaseModel):
     """High resolution time"""
 
-    sec: int
-    ns: int
+    secs: int = Field(validation_alias=AliasChoices("sec", "secs", "s"))
+    nanos: int = Field(validation_alias=AliasChoices("ns", "nsecs", "nanos"))
 
     @classmethod
     def from_seconds(cls, seconds: float) -> HrTime:
@@ -65,19 +56,21 @@ class HrTime(_ShellfishBaseModel):
 
         """
         _sec, _ns = divmod(int(seconds * 1_000_000_000), 1_000_000_000)
-        return cls(sec=_sec, ns=_ns)
+        return cls(secs=_sec, nanos=_ns)
 
     def hrdt_dict(self) -> HrTimeDict:
         return {
-            "sec": self.sec,
-            "ns": self.ns,
+            "secs": self.secs,
+            "nanos": self.nanos,
         }
 
-    def hrdt_obj(self) -> HrTimeObj:
-        return {
-            "sec": self.sec,
-            "ns": self.ns,
-        }
+    @property
+    def sec(self) -> int:  # deprecated alias
+        return self.secs
+
+    @property
+    def ns(self) -> int:  # deprecated alias
+        return self.nanos
 
 
 class DoneError(SubprocessError):
@@ -136,22 +129,6 @@ class DoneDict(TypedDict):
     tf: float
     dt: float
     hrdt: HrTimeDict | None
-    stdin: str | None
-    async_proc: bool
-    verbose: bool
-
-
-class DoneObj(TypedDict):
-    """TODO: deprecate this in favor of DoneDict"""
-
-    args: list[str]
-    returncode: int
-    stdout: str
-    stderr: str
-    ti: float
-    tf: float
-    dt: float
-    hrdt: HrTimeObj | None
     stdin: str | None
     async_proc: bool
     verbose: bool
@@ -241,11 +218,6 @@ class Done(_ShellfishBaseModel):
             return self.hrdt.hrdt_dict()
         return HrTime.from_seconds(seconds=self.dt).hrdt_dict()
 
-    def hrdt_obj(self) -> HrTimeObj:
-        if self.hrdt:
-            return self.hrdt.hrdt_obj()
-        return HrTime.from_seconds(seconds=self.dt).hrdt_obj()
-
     def stdout_lines(self, *, keepends: bool = False) -> list[str]:
         return self.stdout.splitlines(keepends=keepends)
 
@@ -267,22 +239,6 @@ class Done(_ShellfishBaseModel):
             tf=self.tf,
             dt=self.dt,
             hrdt=self.hrdt_dict(),
-            stdin=self.stdin,
-            async_proc=self.async_proc,
-            verbose=self.verbose,
-        )
-
-    def done_obj(self) -> DoneObj:
-        """Return Done object typed dict"""
-        return DoneObj(
-            args=self.args,
-            returncode=self.returncode,
-            stdout=self.stdout,
-            stderr=self.stderr,
-            ti=self.ti,
-            tf=self.tf,
-            dt=self.dt,
-            hrdt=self.hrdt_obj(),
             stdin=self.stdin,
             async_proc=self.async_proc,
             verbose=self.verbose,
