@@ -18,14 +18,13 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
-    Callable,
     TypeVar,
 )
 
 from fmts.__about__ import __version__
 
 if TYPE_CHECKING:
-    from collections.abc import ItemsView, Iterable, Sequence
+    from collections.abc import Callable, ItemsView, Iterable, Sequence
 
 # END IMPORTS
 
