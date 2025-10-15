@@ -22,7 +22,7 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.8.0"
+version = "0.8.1"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
@@ -110,7 +110,7 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.12.0"
+version = "0.12.1"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
@@ -716,12 +716,12 @@ wheels = [
 
 [[package]]
 name = "fmts"
-version = "0.4.0"
+version = "0.4.1"
 source = { editable = "libs/fmts" }
 
 [[package]]
 name = "funkify"
-version = "0.7.0"
+version = "0.7.1"
 source = { editable = "libs/funkify" }
 
 [[package]]
@@ -759,7 +759,7 @@ wheels = [
 
 [[package]]
 name = "h5"
-version = "0.12.0"
+version = "0.12.1"
 source = { editable = "libs/h5" }
 dependencies = [
     { name = "h5py" },
@@ -968,7 +968,7 @@ wheels = [
 
 [[package]]
 name = "jsonbourne"
-version = "0.32.0"
+version = "0.32.1"
 source = { editable = "libs/jsonbourne" }
 
 [package.optional-dependencies]
@@ -1094,7 +1094,7 @@ wheels = [
 
 [[package]]
 name = "lager"
-version = "0.20.0"
+version = "0.20.1"
 source = { editable = "libs/lager" }
 dependencies = [
     { name = "loguru" },
@@ -1111,7 +1111,7 @@ dev = [{ name = "typing-extensions", marker = "python_full_version < '3.11'", sp
 
 [[package]]
 name = "listless"
-version = "0.4.0"
+version = "0.4.1"
 source = { editable = "libs/listless" }
 
 [package.dev-dependencies]
@@ -2205,7 +2205,7 @@ wheels = [
 
 [[package]]
 name = "requires"
-version = "0.12.0"
+version = "0.12.1"
 source = { editable = "libs/requires" }
 dependencies = [
     { name = "funkify" },
@@ -2470,7 +2470,7 @@ wheels = [
 
 [[package]]
 name = "shellfish"
-version = "0.7.0"
+version = "0.7.1"
 source = { editable = "libs/shellfish" }
 dependencies = [
     { name = "aiopen" },
@@ -2735,7 +2735,7 @@ wheels = [
 
 [[package]]
 name = "xtyping"
-version = "0.11.0"
+version = "0.11.1"
 source = { editable = "libs/xtyping" }
 dependencies = [
     { name = "annotated-types" },

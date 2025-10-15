@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "shellfish"
-version = "0.7.0"
+version = "0.7.1"
 description = "shellfish ~ shell & file-system utils"
 readme = "README.md"
 keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]

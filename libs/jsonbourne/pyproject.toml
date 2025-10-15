@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.10" ]
 
 [project]
 name = "jsonbourne"
-version = "0.32.0"
+version = "0.32.1"
 description = "EZPZ JSON"
 readme = "README.md"
 keywords = [ "dgpy", "json", "orjson", "pydantic", "rapidjson" ]
