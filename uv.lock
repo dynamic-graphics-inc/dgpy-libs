@@ -22,7 +22,7 @@ members = [
 
 [[package]]
 name = "aiopen"
-version = "0.8.0"
+version = "0.8.1"
 source = { editable = "libs/aiopen" }
 dependencies = [
     { name = "funkify" },
@@ -110,7 +110,7 @@ wheels = [
 
 [[package]]
 name = "asyncify"
-version = "0.12.0"
+version = "0.12.2"
 source = { editable = "libs/asyncify" }
 dependencies = [
     { name = "funkify" },
