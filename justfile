@@ -67,6 +67,7 @@ codespell:
 fmt:
     ruff format
     ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
+    pnpx prettier@latest -w --prose-wrap=always CHANGELOG.md
 
 # fmt pyproject.toml files
 pyproject-fmt:

@@ -101,6 +101,8 @@ def _test_module_all_tuple(
 def test_root_has_everything() -> None:
     xtyping_all_set = set(xtyping.__all__) - {
         "ByteString",
+        # new in 3.14
+        "evaluate_forward_ref",
     }
     for el in xtyping.__all_typing__:
         assert el in xtyping_all_set

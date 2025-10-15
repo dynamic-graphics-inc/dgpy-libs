@@ -1,14 +1,14 @@
 [build-system]
 build-backend = "uv_build"
-requires = ["uv-build>=0.8,<0.9"]
+requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "lager"
-version = "0.20.0"
+version = "0.20.1"
 description = "EZ-PZ logging based on loguru"
 readme = "README.md"
-keywords = ["beer", "dgi", "dgpy", "logging", "loguru"]
-authors = [{ name = "jesse rubin", email = "jesse@dgi.com" }]
+keywords = [ "beer", "dgi", "dgpy", "logging", "loguru" ]
+authors = [ { name = "jesse rubin", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
 
 classifiers = [
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dependencies = [
@@ -28,26 +29,26 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["typing-extensions>=4.5,<5; python_version<'3.11'"]
+dev = [ "typing-extensions>=4.5,<5; python_version<'3.11'" ]
 
 [tool.hatch]
 [tool.hatch.metadata]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/lager"]
+packages = [ "src/lager" ]
 
 [tool.hatch.build.targets.sdist]
-include = ["src", "pyproject.toml", "README.md", "LICENSE"]
+include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
 
 [tool.ruff]
 extend = "../../ruff.toml"
 
 [tool.coverage.run]
-source = ['lager']
+source = [ 'lager' ]
 branch = true
 context = '${CONTEXT}'
-omit = ["**/__main__.py"]
+omit = [ "**/__main__.py" ]
 
 [tool.coverage.report]
 precision = 2

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2025-10-15
+
+- ALL
+  - python3.14 & patch version
+
+---
+
 ## 2025-09-17
 
 - ALL
@@ -11,7 +18,6 @@
   - Remove `_meta.py` files
 - `shellfish`
   - Remove old python blocks (pre python3.11)
-
 
 ---
 

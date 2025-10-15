@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.10" ]
 
 [project]
 name = "requires"
-version = "0.12.0"
+version = "0.12.1"
 description = "Runtime imports and dependency utils"
 readme = "README.md"
 keywords = [ "decorator", "dgpy", "funkify", "import", "requires" ]
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dependencies = [

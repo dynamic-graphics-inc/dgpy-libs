@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.10" ]
 
 [project]
 name = "jsonbourne"
-version = "0.32.0"
+version = "0.32.1"
 description = "EZPZ JSON"
 readme = "README.md"
 keywords = [ "dgpy", "json", "orjson", "pydantic", "rapidjson" ]
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dependencies = [
@@ -61,6 +62,9 @@ include = [
   "README.md",
   "LICENSE",
 ]
+
+[tool.uv.build-backend]
+module-name = "jsonbourne"
 
 [tool.ruff]
 extend = "../../ruff.toml"
@@ -119,6 +123,3 @@ exclude_lines = [
   'if 0:',
   'if False:',
 ]
-
-[tool.uv.build-backend]
-module-name = "jsonbourne"

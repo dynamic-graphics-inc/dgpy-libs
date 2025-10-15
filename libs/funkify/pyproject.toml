@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "funkify"
-version = "0.7.0"
+version = "0.7.1"
 description = "Funkify modules so that they are callable"
 readme = "README.md"
 keywords = [ "dgpy", "funk", "funky", "modules", "python" ]
@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dependencies = [  ]

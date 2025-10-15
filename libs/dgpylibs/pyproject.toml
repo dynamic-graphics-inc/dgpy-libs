@@ -20,6 +20,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
 dependencies = [
@@ -52,11 +53,6 @@ include = [
   "README.md",
 ]
 
-[tool.ruff]
-extend = "../../ruff.toml"
-
-[tool]
-
 [tool.uv.sources]
 asyncify = { workspace = true }
 aiopen = { workspace = true }
@@ -69,3 +65,8 @@ listless = { workspace = true }
 requires = { workspace = true }
 shellfish = { workspace = true }
 xtyping = { workspace = true }
+
+[tool.ruff]
+extend = "../../ruff.toml"
+
+[tool]

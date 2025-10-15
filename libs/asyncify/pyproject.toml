@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.9" ]
 
 [project]
 name = "asyncify"
-version = "0.12.0"
+version = "0.12.1"
 description = "sync 2 async"
 readme = "README.md"
 keywords = [ "async", "asyncify", "asyncio", "dgpy" ]
