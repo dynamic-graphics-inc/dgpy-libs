@@ -52,11 +52,20 @@ __DEPRECATED_ANNOTATED_TYPES__: tuple[str, ...] = (
     "DocInfo",
 )
 
+# ============================================================================
+# FUTURE IMPORTS
+# ============================================================================
+__FUTURE_TYPING__: tuple[str, ...] = (
+    "evaluate_forward_ref",  # Python 3.14
+)
+
 # =============================================================================
 # __all__
 # =============================================================================
 __all_typing__: tuple[str, ...] = tuple(
-    e for e in __all_typing if e not in __DEPRECATED_TYPES__
+    e
+    for e in __all_typing
+    if e not in __DEPRECATED_TYPES__ and e not in __FUTURE_TYPING__
 )
 __all_typing_extensions__: tuple[str, ...] = tuple({
     *(e for e in __all_typing_extensions),
