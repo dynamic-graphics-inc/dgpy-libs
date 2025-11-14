@@ -74,9 +74,9 @@ class _DirTree:
             (fspath for fspath in root.iterdir() if filterfn(str(fspath))),
             key=lambda s: str(s).lower(),
         )
-        count = 1
-        for _path in children:
-            is_last = count == len(children)
+
+        for index, _path in enumerate(children):
+            is_last = index == len(children) - 1
             if _path.is_dir():
                 yield from cls.make_tree(
                     _path,
@@ -86,7 +86,6 @@ class _DirTree:
                 )
             else:
                 yield cls(_path, parent_path=displayable_root, is_last=is_last)
-            count += 1
 
     @staticmethod
     def _default_filter(path_string: str) -> bool:
