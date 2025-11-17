@@ -678,7 +678,7 @@ def _do(
         hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
         stdin=_input if not isinstance(_input, bytes) else _input.decode(),
-        dryrun= False,
+        dryrun=False,
     )
     if check or ok_code != 0:
         done.check(ok_code=ok_code)
