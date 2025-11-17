@@ -636,7 +636,7 @@ def _do(
             ti=0,
             tf=0,
             dt=0,
-            hrdt=HrTime(sec=0, ns=0),
+            hrdt=HrTime(secs=0, nanos=0),
             verbose=verbose,
             stdin=_input if not isinstance(_input, bytes) else _input.decode(),
             dryrun=True,
@@ -678,6 +678,7 @@ def _do(
         hrdt=HrTime.from_seconds(tf - ti),
         verbose=verbose,
         stdin=_input if not isinstance(_input, bytes) else _input.decode(),
+        dryrun= False,
     )
     if check or ok_code != 0:
         done.check(ok_code=ok_code)
@@ -951,8 +952,8 @@ async def _do_async(
             tf=0,
             dt=0,
             hrdt=HrTime(
-                sec=0,
-                ns=0,
+                secs=0,
+                nanos=0,
             ),
             verbose=verbose,
             stdin=_input if not isinstance(_input, bytes) else _input.decode(),
@@ -1032,7 +1033,7 @@ async def do_async(
     """
     if args and popenargs:
         raise ValueError("Cannot give *args and args-keyword-argument")
-    args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
+    args = validate_popen_args(args) if args else validate_popen_args(popenargs)
     if not shell and is_win():
         args = validate_popen_args_windows(args, env)
     return await _do_async(
