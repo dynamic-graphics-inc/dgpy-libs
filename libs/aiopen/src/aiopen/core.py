@@ -305,7 +305,7 @@ class AiopenContextManager(
 
     def __iter__(self) -> Any:
         resp = yield self._coro
-        return resp
+        return resp  # noqa: B901
 
     async def __aiter__(self) -> Any:
         resp = await self._coro
