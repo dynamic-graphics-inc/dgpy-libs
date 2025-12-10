@@ -45,7 +45,7 @@ jobs:
           fi
 
       - name: Create pull request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         if: steps.check-uv-lock.outputs.changed == 'true'
         with:
           token: ${{ secrets.SHELDON_GITHUB_ACTIONS_TOKEN }}
