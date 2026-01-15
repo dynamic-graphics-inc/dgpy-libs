@@ -19,7 +19,7 @@ from asyncify.core import (
 )
 from funkify import funkify
 
-funkify(asyncify, key="asyncify")
+funkify(asyncify, key="asyncify")  # noqa: RUF067
 
 __all__ = (
     "ANYIO",

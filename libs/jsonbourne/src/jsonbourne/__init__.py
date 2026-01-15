@@ -21,9 +21,9 @@ from jsonbourne.core import (
 from jsonbourne.helpers import rm_js_comments
 from jsonbourne.jsonlib import import_json
 
-json = jsonlib
+json = jsonlib  # noqa: RUF067
 
-JSONLIB = jsonlib.__name__
+JSONLIB = jsonlib.__name__  # noqa: RUF067
 
 __all__ = (
     "JSON",  # js/ts JSON (THE ONE TO USE)

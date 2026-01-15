@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """JSON callable module ~ jsonbourne"""
+# ruff: noqa: RUF067
 
 from __future__ import annotations
 

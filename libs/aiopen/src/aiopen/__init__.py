@@ -7,7 +7,7 @@ from aiopen.__about__ import __version__
 from aiopen.core import aiopen
 from funkify import funkify
 
-funkify(aiopen, key="aiopen")
+funkify(aiopen, key="aiopen")  # noqa: RUF067
 
 __all__ = (
     "__version__",

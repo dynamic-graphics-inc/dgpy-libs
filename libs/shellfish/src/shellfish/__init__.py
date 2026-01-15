@@ -208,10 +208,10 @@ from shellfish.sh import (
 )
 from shellfish.stdio import Stdio as Stdio
 
-_funkify(sh.do, key="shellfish.sh")
-_funkify(sh.do, key="shellfish")
+_funkify(sh.do, key="shellfish.sh")  # noqa: RUF067
+_funkify(sh.do, key="shellfish")  # noqa: RUF067
 
-ps = process
+ps = process  # noqa: RUF067
 
 __all__ = (
     "LIN",

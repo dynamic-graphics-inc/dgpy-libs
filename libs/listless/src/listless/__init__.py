@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # pyright: reportInvalidTypeVarUse=false
 """Listless = generators, iterators, and async iterators, Oh My!"""
+# ruff: noqa: RUF067
 
 from __future__ import annotations
 
