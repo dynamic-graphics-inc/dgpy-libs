@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """aios = asyncio + os"""
+# ruff: noqa: RUF067
 
 from __future__ import annotations
 

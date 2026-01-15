@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-# pyright: reportInvalidTypeVarUse=false
 """dgpytest = dgpy + pytest"""
+# ruff: noqa: RUF067
+# pyright: reportInvalidTypeVarUse=false
 
 from __future__ import annotations
 

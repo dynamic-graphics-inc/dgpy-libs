@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """`funkify` ~ make modules callable"""
+# ruff: noqa: RUF067
 
 from __future__ import annotations
 

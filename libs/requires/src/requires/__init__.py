@@ -20,7 +20,7 @@ from requires.core import (
     scope_requirements,
 )
 
-funkify(requires, key="requires")
+funkify(requires, key="requires")  # noqa: RUF067
 
 __all__ = (
     "Requirement",
