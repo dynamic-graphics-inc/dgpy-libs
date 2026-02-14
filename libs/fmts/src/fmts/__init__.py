@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 from difflib import unified_diff
 from functools import lru_cache
 from keyword import iskeyword
+from math import isclose
 from os import path, stat, urandom
 from random import choice
 from string import ascii_letters, ascii_lowercase, ascii_uppercase, digits, printable
@@ -601,7 +602,7 @@ def nseconds(nsec: float) -> str:
     """
     if nsec < 0:
         return nseconds(abs(nsec))
-    elif nsec == 0.0:
+    elif isclose(nsec, 0):
         return "0 sec"
     elif 0.000001 > nsec >= 0.000000001:
         return f"{(10**9) * nsec:.3f} ns"
