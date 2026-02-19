@@ -1,0 +1,3758 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>">
+      
+      
+      
+        <link rel="prev" href="../../funkify/funkify.api/">
+      
+      
+        <link rel="next" href="../../requires/requires.api/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>h5 - dgpy-libs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="teal">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#h5" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="dgpy-libs" class="md-header__button md-logo" aria-label="dgpy-libs" data-md-component="logo">
+      
+  <img src="../../../images/dgpy_white_edge_small.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            dgpy-libs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              h5
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="teal"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="deep-purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dynamic-graphics-inc/dgpy-libs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+    
+  
+  Libs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../aiopen/aiopen.api/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="dgpy-libs" class="md-nav__button md-logo" aria-label="dgpy-libs" data-md-component="logo">
+      
+  <img src="../../../images/dgpy_white_edge_small.png" alt="logo">
+
+    </a>
+    dgpy-libs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dynamic-graphics-inc/dgpy-libs/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1M496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2m-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3m-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Libs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Libs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aiopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aiopen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asyncify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    asyncify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../funkify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    funkify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    h5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsonbourne/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    jsonbourne
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    requires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../xtyping/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    xtyping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../aiopen/aiopen.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aiopen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asyncify/asyncify.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    asyncify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../fmts/fmts.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    fmts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../funkify/funkify.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    funkify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    h5
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    h5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#h5.H5pyCompression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-attribute"></code>&nbsp;H5pyCompression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.FileInfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-class"></code>&nbsp;FileInfo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" FileInfo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.FileInfo.from_h5py_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;from_h5py_file
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.as_h5py_obj" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;as_h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.attrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;attrs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.attrs_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;attrs_dict
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" attrs_dict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.attrs_dict(h5_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.attrs_dict(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.attrs_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;attrs_gen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.attrs_gen_from_fspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;attrs_gen_from_fspath
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" attrs_gen_from_fspath">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.attrs_gen_from_fspath(fspath)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;fspath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.attrs_gen_from_fspath(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.datasets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;datasets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.datasets_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;datasets_dict
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" datasets_dict">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.datasets_dict(h5_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.datasets_dict(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.datasets_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;datasets_gen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.datasets_gen_from_fspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;datasets_gen_from_fspath
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" datasets_gen_from_fspath">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.datasets_gen_from_fspath(fspath)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;fspath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.datasets_gen_from_fspath(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.datasets_keys_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;datasets_keys_list
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" datasets_keys_list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.datasets_keys_list(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.fmt_h5_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;fmt_h5_path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.groups_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;groups_gen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.groups_gen_from_fspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;groups_gen_from_fspath
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" groups_gen_from_fspath">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.groups_gen_from_fspath(fspath)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;fspath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.groups_gen_from_fspath(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_attrs_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_attrs_dict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_attrs_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_attrs_gen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_attrs_gen_from_fspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_attrs_gen_from_fspath
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5_attrs_gen_from_fspath">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5_attrs_gen_from_fspath(fspath)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;fspath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5_attrs_gen_from_fspath(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_datasets_dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_datasets_dict
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_datasets_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_datasets_gen
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5_datasets_gen_from_fspath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5_datasets_gen_from_fspath
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5_datasets_gen_from_fspath">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5_datasets_gen_from_fspath(fspath)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;fspath
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5_datasets_gen_from_fspath(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5py_obj_attrs_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5py_obj_attrs_gen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5py_obj_attrs_gen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_attrs_gen(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_attrs_gen(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_attrs_gen(root)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5py_obj_dataset_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5py_obj_dataset_gen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5py_obj_dataset_gen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_dataset_gen(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_dataset_gen(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5py_obj_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5py_obj_gen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5py_obj_gen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_gen(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_gen(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_gen(root)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5py_obj_groups_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5py_obj_groups_gen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5py_obj_groups_gen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_groups_gen(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_groups_gen(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_groups_gen(root)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.h5py_obj_keys_gen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;h5py_obj_keys_gen
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" h5py_obj_keys_gen">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_keys_gen(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_keys_gen(h5_path)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#h5.h5py_obj_keys_gen(root)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_h5py_dataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_h5py_dataset
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_h5py_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_h5py_file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_h5py_group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_h5py_group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.is_hdf5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;is_hdf5
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#h5.keys_list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;keys_list
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label=" keys_list">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#h5.keys_list(h5py_obj)" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-parameter"></code>&nbsp;h5py_obj
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../requires/requires.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    requires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../listless/listless.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    listless
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jsonbourne/jsonbourne.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    jsonbourne
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../shellfish/shellfish.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    shellfish
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../xtyping/xtyping.api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    xtyping
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dynamic-graphics-inc/dgpy-libs/edit/master/docs/libs/h5/h5.api.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/dynamic-graphics-inc/dgpy-libs/raw/master/docs/libs/h5/h5.api.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<h1 id="h5" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-module"></code>            <span class="doc doc-object-name doc-module-name">h5</span>
+
+
+<a href="#h5" class="headerlink" title="Permanent link">⚓︎</a></h1>
+
+    <div class="doc doc-contents first">
+
+        <p>HDF5 functions, and utils, and generators, OH MY!</p>
+
+
+
+
+
+
+<p><span class="doc-section-title">Modules:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code><span title="h5.cli">cli</span></code></b>
+          –
+          <div class="doc-md-description">
+            <p>h5.cli</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code><span title="h5.core">core</span></code></b>
+          –
+          <div class="doc-md-description">
+            <p>HDF5 functions, and utils, and generators, OH MY!</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code><span title="h5.dev">dev</span></code></b>
+          –
+          <div class="doc-md-description">
+            <p>h5.dev ~ Under construction!</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code><span title="h5.legacy">legacy</span></code></b>
+          –
+          <div class="doc-md-description">
+            <p>Legacy; to be deprecated</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+          <b><code><span title="h5.testing">testing</span></code></b>
+          –
+          <div class="doc-md-description">
+            
+          </div>
+        </li>
+    </ul>
+
+
+
+
+
+
+<p><span class="doc-section-title">Classes:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FileInfo&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt; (&lt;code&gt;h5.FileInfo&lt;/code&gt;)" href="#h5.FileInfo">FileInfo</a></code></b>
+          –
+          <div class="doc-md-description">
+            
+          </div>
+        </li>
+    </ul>
+
+
+
+
+<p><span class="doc-section-title">Functions:</span></p>
+    <ul>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;as_h5py_obj&lt;/span&gt; (&lt;code&gt;h5.as_h5py_obj&lt;/code&gt;)" href="#h5.as_h5py_obj">as_h5py_obj</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Convert a path or h5py object to an h5py object</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;attrs&lt;/span&gt; (&lt;code&gt;h5.attrs&lt;/code&gt;)" href="#h5.attrs">attrs</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, HDF5-attr)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;attrs_dict&lt;/span&gt; (&lt;code&gt;h5.attrs_dict&lt;/code&gt;)" href="#h5.attrs_dict">attrs_dict</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Load an HDF5 file from a fspath into a dictionary</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;attrs_gen&lt;/span&gt; (&lt;code&gt;h5.attrs_gen&lt;/code&gt;)" href="#h5.attrs_gen">attrs_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, HDF5-attr)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;attrs_gen_from_fspath&lt;/span&gt; (&lt;code&gt;h5.attrs_gen_from_fspath&lt;/code&gt;)" href="#h5.attrs_gen_from_fspath">attrs_gen_from_fspath</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;datasets&lt;/span&gt; (&lt;code&gt;h5.datasets&lt;/code&gt;)" href="#h5.datasets">datasets</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, Dataset)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;datasets_dict&lt;/span&gt; (&lt;code&gt;h5.datasets_dict&lt;/code&gt;)" href="#h5.datasets_dict">datasets_dict</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Load an HDF5 file from a fspath into a dictionary</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;datasets_gen&lt;/span&gt; (&lt;code&gt;h5.datasets_gen&lt;/code&gt;)" href="#h5.datasets_gen">datasets_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, Dataset)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;datasets_gen_from_fspath&lt;/span&gt; (&lt;code&gt;h5.datasets_gen_from_fspath&lt;/code&gt;)" href="#h5.datasets_gen_from_fspath">datasets_gen_from_fspath</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;datasets_keys_list&lt;/span&gt; (&lt;code&gt;h5.datasets_keys_list&lt;/code&gt;)" href="#h5.datasets_keys_list">datasets_keys_list</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a list of all keys/paths for an h5py object.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;fmt_h5_path&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-cached&quot;&gt;&lt;code&gt;cached&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt; (&lt;code&gt;h5.fmt_h5_path&lt;/code&gt;)" href="#h5.fmt_h5_path">fmt_h5_path</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Format function for HDF5-path-strings</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;groups&lt;/span&gt; (&lt;code&gt;h5.groups&lt;/code&gt;)" href="#h5.groups">groups</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, h5py.Group)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;groups_gen&lt;/span&gt; (&lt;code&gt;h5.groups_gen&lt;/code&gt;)" href="#h5.groups_gen">groups_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a generator that yields tuples with: (HDF5-path, h5py.Group)</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;groups_gen_from_fspath&lt;/span&gt; (&lt;code&gt;h5.groups_gen_from_fspath&lt;/code&gt;)" href="#h5.groups_gen_from_fspath">groups_gen_from_fspath</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_attrs_dict&lt;/span&gt; (&lt;code&gt;h5.h5_attrs_dict&lt;/code&gt;)" href="#h5.h5_attrs_dict">h5_attrs_dict</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Alias for h5.attrs_dict</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_attrs_gen&lt;/span&gt; (&lt;code&gt;h5.h5_attrs_gen&lt;/code&gt;)" href="#h5.h5_attrs_gen">h5_attrs_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Alias for h5.datasets_gen</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_attrs_gen_from_fspath&lt;/span&gt; (&lt;code&gt;h5.h5_attrs_gen_from_fspath&lt;/code&gt;)" href="#h5.h5_attrs_gen_from_fspath">h5_attrs_gen_from_fspath</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_datasets_dict&lt;/span&gt; (&lt;code&gt;h5.h5_datasets_dict&lt;/code&gt;)" href="#h5.h5_datasets_dict">h5_datasets_dict</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Alias for h5.datasets_dict</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_datasets_gen&lt;/span&gt; (&lt;code&gt;h5.h5_datasets_gen&lt;/code&gt;)" href="#h5.h5_datasets_gen">h5_datasets_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Alias for h5.datasets_gen</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5_datasets_gen_from_fspath&lt;/span&gt; (&lt;code&gt;h5.h5_datasets_gen_from_fspath&lt;/code&gt;)" href="#h5.h5_datasets_gen_from_fspath">h5_datasets_gen_from_fspath</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5py_obj_attrs_gen&lt;/span&gt; (&lt;code&gt;h5.h5py_obj_attrs_gen&lt;/code&gt;)" href="#h5.h5py_obj_attrs_gen">h5py_obj_attrs_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Recursive h5py.AttributeManager generator.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5py_obj_dataset_gen&lt;/span&gt; (&lt;code&gt;h5.h5py_obj_dataset_gen&lt;/code&gt;)" href="#h5.h5py_obj_dataset_gen">h5py_obj_dataset_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Recursive h5 dataset generator.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5py_obj_gen&lt;/span&gt; (&lt;code&gt;h5.h5py_obj_gen&lt;/code&gt;)" href="#h5.h5py_obj_gen">h5py_obj_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Recursive h5 dataset/group generator.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5py_obj_groups_gen&lt;/span&gt; (&lt;code&gt;h5.h5py_obj_groups_gen&lt;/code&gt;)" href="#h5.h5py_obj_groups_gen">h5py_obj_groups_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Recursive h5 groups generator.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;h5py_obj_keys_gen&lt;/span&gt; (&lt;code&gt;h5.h5py_obj_keys_gen&lt;/code&gt;)" href="#h5.h5py_obj_keys_gen">h5py_obj_keys_gen</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Recursive h5 dataset generator.</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_dataset&lt;/span&gt; (&lt;code&gt;h5.is_dataset&lt;/code&gt;)" href="#h5.is_dataset">is_dataset</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.Dataset type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_file&lt;/span&gt; (&lt;code&gt;h5.is_file&lt;/code&gt;)" href="#h5.is_file">is_file</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.File type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_group&lt;/span&gt; (&lt;code&gt;h5.is_group&lt;/code&gt;)" href="#h5.is_group">is_group</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.Group type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_h5py_dataset&lt;/span&gt; (&lt;code&gt;h5.is_h5py_dataset&lt;/code&gt;)" href="#h5.is_h5py_dataset">is_h5py_dataset</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.Dataset type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_h5py_file&lt;/span&gt; (&lt;code&gt;h5.is_h5py_file&lt;/code&gt;)" href="#h5.is_h5py_file">is_h5py_file</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.File type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_h5py_group&lt;/span&gt; (&lt;code&gt;h5.is_h5py_group&lt;/code&gt;)" href="#h5.is_h5py_group">is_h5py_group</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>h5py.Group type guard</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;is_hdf5&lt;/span&gt; (&lt;code&gt;h5.is_hdf5&lt;/code&gt;)" href="#h5.is_hdf5">is_hdf5</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Check if a file is an HDF5 file</p>
+            </div>
+          </li>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-function&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;keys_list&lt;/span&gt; (&lt;code&gt;h5.keys_list&lt;/code&gt;)" href="#h5.keys_list">keys_list</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return a list of all keys/paths for an h5py object.</p>
+            </div>
+          </li>
+    </ul>
+
+
+
+
+<p><span class="doc-section-title">Attributes:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+          <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-attribute&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-attribute-name&quot;&gt;H5pyCompression&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-module-attribute&quot;&gt;&lt;code&gt;module-attribute&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt; (&lt;code&gt;h5.H5pyCompression&lt;/code&gt;)" href="#h5.H5pyCompression">H5pyCompression</a></code></b>
+              (<code><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeAlias&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeAlias">TypeAlias</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5py mode strings (taken from h5py docstrings)):</p>
+          </div>
+        </li>
+    </ul>
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<h2 id="h5.H5pyCompression" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-attribute"></code>            <span class="doc doc-object-name doc-attribute-name">H5pyCompression</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+<a href="#h5.H5pyCompression" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="n">H5pyCompression</span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeAlias&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeAlias">TypeAlias</a></span> <span class="o">=</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Literal&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Literal">Literal</a></span><span class="p">[</span><span class="s1">&#39;gzip&#39;</span><span class="p">,</span> <span class="s1">&#39;lzf&#39;</span><span class="p">,</span> <span class="s1">&#39;szip&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py mode strings (taken from h5py docstrings)):
+<div class="highlight"><pre><span></span><code>r        Readonly, file must exist (default)
+r+       Read/write, file must exist
+w        Create file, truncate if exists
+w- or x  Create file, fail if exists
+a        Read/write if exists, create otherwise
+</code></pre></div></p>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="h5.FileInfo" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>            <span class="doc doc-object-name doc-class-name">FileInfo</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+<a href="#h5.FileInfo" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">FileInfo</span><span class="p">(</span>
+    <span class="n"><span title="h5.FileInfo(groups)">groups</span></span><span class="p">:</span> <span class="n"><span title="h5._info.FileInfo.dict">dict</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5._info.GroupInfo">GroupInfo</span></span><span class="p">],</span>
+    <span class="n"><span title="h5.FileInfo(attrs)">attrs</span></span><span class="p">:</span> <span class="n"><span title="h5._info.FileInfo.dict">dict</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">],</span>
+    <span class="n"><span title="h5.FileInfo(datasets)">datasets</span></span><span class="p">:</span> <span class="n"><span title="h5._info.FileInfo.dict">dict</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5._info.DatasetInfo">DatasetInfo</span></span><span class="p">],</span>
+    <span class="n"><span title="h5.FileInfo(fspath)">fspath</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span>
+    <span class="n"><span title="h5.FileInfo(fssize)">fssize</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span><span class="p">,</span>
+    <span class="n"><span title="h5.FileInfo(key)">key</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span>
+    <span class="n"><span title="h5.FileInfo(h5type)">h5type</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Literal&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Literal">Literal</a></span><span class="p">[</span><span class="s2">&quot;file&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+            <p class="doc doc-class-bases">
+              Bases: <code><span title="h5._info.GroupLikeInfo">GroupLikeInfo</span></code></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><span class="doc-section-title">Methods:</span></p>
+    <ul>
+          <li class="doc-section-item field-body">
+            <b><code><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-method&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-function-name&quot;&gt;from_h5py_file&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-classmethod&quot;&gt;&lt;code&gt;classmethod&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt; (&lt;code&gt;h5.FileInfo.from_h5py_file&lt;/code&gt;)" href="#h5.FileInfo.from_h5py_file">from_h5py_file</a></code></b>
+            –
+            <div class="doc-md-description">
+              <p>Return <code>FileInfo</code> from <code>h5py.File</code> object</p>
+            </div>
+          </li>
+    </ul>
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="h5.FileInfo.from_h5py_file" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <span class="doc doc-object-name doc-function-name">from_h5py_file</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
+  </span>
+
+<a href="#h5.FileInfo.from_h5py_file" class="headerlink" title="Permanent link">⚓︎</a></h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">from_h5py_file</span><span class="p">(</span><span class="n"><span title="h5.FileInfo.from_h5py_file(h5py_group)">h5py_group</span></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;code class=&quot;doc-symbol doc-symbol-heading doc-symbol-class&quot;&gt;&lt;/code&gt;            &lt;span class=&quot;doc doc-object-name doc-class-name&quot;&gt;FileInfo&lt;/span&gt;
+
+
+  &lt;span class=&quot;doc doc-labels&quot;&gt;
+      &lt;small class=&quot;doc doc-label doc-label-dataclass&quot;&gt;&lt;code&gt;dataclass&lt;/code&gt;&lt;/small&gt;
+  &lt;/span&gt; (&lt;code&gt;h5._info.FileInfo&lt;/code&gt;)" href="#h5.FileInfo">FileInfo</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return <code>FileInfo</code> from <code>h5py.File</code> object</p>
+<p>could do with dict-comprehension, but  not readable (imo)</p>
+<div class="highlight"><pre><span></span><code>datasets_and_groups = {
+    obj.name: H5Group.from_h5py_group(obj)
+    if isinstance(obj, Group)
+    else H5Dataset.from_h5py_dataset(obj)
+    for obj in h5py_group.values()
+}
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.as_h5py_obj" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">as_h5py_obj</span>
+
+
+<a href="#h5.as_h5py_obj" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">as_h5py_obj</span><span class="p">(</span><span class="n"><span title="h5.as_h5py_obj(obj)">obj</span></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span> <span class="o">|</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Convert a path or h5py object to an h5py object</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.attrs" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">attrs</span>
+
+
+<a href="#h5.attrs" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">attrs</span><span class="p">(</span>
+    <span class="n"><span title="h5.attrs(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.attrs(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, HDF5-attr)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.attrs_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">attrs_dict</span>
+
+
+<a href="#h5.attrs_dict" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">attrs_dict</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.attrs_dict(h5_obj)&lt;/code&gt;)" href="#h5.attrs_dict(h5_obj)">h5_obj</a></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.attrs_dict(h5_path)&lt;/code&gt;)" href="#h5.attrs_dict(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">|</span> <span class="n"><span title="numpy.typing.NDArray">NDArray</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]</span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a></span> <span class="o">|</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Load an HDF5 file from a fspath into a dictionary</p>
+<p>Given a fspath this method loads an HDF5 file into a dictionary where the
+key =&gt; value pairs are the HDF5-path =&gt; HDF5-dataset for the file. This
+method relies on the h5_dataset_gen that is in this very module to
+generate tuples of the form (HDF5-path, HDF5-dataset).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.attrs_dict(h5_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_obj</code></b>
+<a href="#h5.attrs_dict(h5_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>Filepath to an HDF5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.attrs_dict(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.attrs_dict(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>HDF5 path to recurse down from</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a> | <span title="numpy.typing.NDArray">NDArray</span>[<a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>] | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#int">int</a> | <a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#float">float</a>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Dictionary with key =&gt; value paris of HDF5-path =&gt; HDF5-dataset</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.attrs_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">attrs_gen</span>
+
+
+<a href="#h5.attrs_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">attrs_gen</span><span class="p">(</span>
+    <span class="n"><span title="h5.attrs_gen(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.attrs_gen(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, HDF5-attr)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.attrs_gen_from_fspath" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">attrs_gen_from_fspath</span>
+
+
+<a href="#h5.attrs_gen_from_fspath" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">attrs_gen_from_fspath</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;fspath&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.attrs_gen_from_fspath(fspath)&lt;/code&gt;)" href="#h5.attrs_gen_from_fspath(fspath)">fspath</a></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.attrs_gen_from_fspath(h5_path)&lt;/code&gt;)" href="#h5.attrs_gen_from_fspath(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.attrs_gen_from_fspath(fspath)" class="doc doc-heading doc-heading-parameter">              <b><code>fspath</code></b>
+<a href="#h5.attrs_gen_from_fspath(fspath)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5._types.FsPath">FsPath</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>fspath to h5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.attrs_gen_from_fspath(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.attrs_gen_from_fspath(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>h5 path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.AttributeManager">AttributeManager</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.datasets" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">datasets</span>
+
+
+<a href="#h5.datasets" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">datasets</span><span class="p">(</span>
+    <span class="n"><span title="h5.datasets(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.datasets(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, Dataset)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.datasets_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">datasets_dict</span>
+
+
+<a href="#h5.datasets_dict" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">datasets_dict</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.datasets_dict(h5_obj)&lt;/code&gt;)" href="#h5.datasets_dict(h5_obj)">h5_obj</a></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.datasets_dict(h5_path)&lt;/code&gt;)" href="#h5.datasets_dict(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="numpy.typing.NDArray">NDArray</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]</span> <span class="o">|</span> <span class="n"><span title="numpy.int8">int8</span></span> <span class="o">|</span> <span class="n"><span title="numpy.float64">float64</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Load an HDF5 file from a fspath into a dictionary</p>
+<p>Given a fspath this method loads an HDF5 file into a dictionary where the
+key =&gt; value pairs are the HDF5-path =&gt; HDF5-dataset for the file. This
+method relies on the h5_dataset_gen that is in this very module to
+generate tuples of the form (HDF5-path, HDF5-dataset).</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.datasets_dict(h5_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_obj</code></b>
+<a href="#h5.datasets_dict(h5_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>Filepath to an HDF5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.datasets_dict(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.datasets_dict(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>Path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="numpy.typing.NDArray">NDArray</span>[<a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a>] | <span title="numpy.int8">int8</span> | <span title="numpy.float64">float64</span>]</code>
+          –
+          <div class="doc-md-description">
+            <p>Dictionary with key =&gt; value paris of HDF5-path =&gt; HDF5-dataset</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.datasets_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">datasets_gen</span>
+
+
+<a href="#h5.datasets_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">datasets_gen</span><span class="p">(</span>
+    <span class="n"><span title="h5.datasets_gen(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.datasets_gen(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, Dataset)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.datasets_gen_from_fspath" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">datasets_gen_from_fspath</span>
+
+
+<a href="#h5.datasets_gen_from_fspath" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">datasets_gen_from_fspath</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;fspath&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.datasets_gen_from_fspath(fspath)&lt;/code&gt;)" href="#h5.datasets_gen_from_fspath(fspath)">fspath</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.datasets_gen_from_fspath(h5_path)&lt;/code&gt;)" href="#h5.datasets_gen_from_fspath(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.datasets_gen_from_fspath(fspath)" class="doc doc-heading doc-heading-parameter">              <b><code>fspath</code></b>
+<a href="#h5.datasets_gen_from_fspath(fspath)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>fspath to h5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.datasets_gen_from_fspath(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.datasets_gen_from_fspath(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>h5 path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Dataset">Dataset</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.datasets_keys_list" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">datasets_keys_list</span>
+
+
+<a href="#h5.datasets_keys_list" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">datasets_keys_list</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.datasets_keys_list(h5py_obj)&lt;/code&gt;)" href="#h5.datasets_keys_list(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span> <span class="o">|</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a list of all keys/paths for an h5py object.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.datasets_keys_list(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.datasets_keys_list(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span> | <span title="h5._types.FsPath">FsPath</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.Dataset)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.fmt_h5_path" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">fmt_h5_path</span>
+
+
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-cached"><code>cached</code></small>
+  </span>
+
+<a href="#h5.fmt_h5_path" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">fmt_h5_path</span><span class="p">(</span><span class="n"><span title="h5.fmt_h5_path(head)">head</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5.fmt_h5_path(tail)">tail</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Format function for HDF5-path-strings</p>
+
+
+<p><span class="doc-section-title">Examples:</span></p>
+    <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="n">fmt_h5_path</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<span class="go">&#39;/foo/bar&#39;</span>
+</code></pre></div>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.groups" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">groups</span>
+
+
+<a href="#h5.groups" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">groups</span><span class="p">(</span>
+    <span class="n"><span title="h5.groups(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.groups(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, h5py.Group)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.groups_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">groups_gen</span>
+
+
+<a href="#h5.groups_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">groups_gen</span><span class="p">(</span>
+    <span class="n"><span title="h5.groups_gen(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.groups_gen(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a generator that yields tuples with: (HDF5-path, h5py.Group)</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.groups_gen_from_fspath" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">groups_gen_from_fspath</span>
+
+
+<a href="#h5.groups_gen_from_fspath" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">groups_gen_from_fspath</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;fspath&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.groups_gen_from_fspath(fspath)&lt;/code&gt;)" href="#h5.groups_gen_from_fspath(fspath)">fspath</a></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.groups_gen_from_fspath(h5_path)&lt;/code&gt;)" href="#h5.groups_gen_from_fspath(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.groups_gen_from_fspath(fspath)" class="doc doc-heading doc-heading-parameter">              <b><code>fspath</code></b>
+<a href="#h5.groups_gen_from_fspath(fspath)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5._types.FsPath">FsPath</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>fspath to h5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.groups_gen_from_fspath(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.groups_gen_from_fspath(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>h5 path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Group">Group</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_attrs_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_attrs_dict</span>
+
+
+<a href="#h5.h5_attrs_dict" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_attrs_dict</span><span class="p">(</span>
+    <span class="n"><span title="h5.h5_attrs_dict(fspath)">fspath</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5.h5_attrs_dict(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5._types.H5pyAttributesDict">H5pyAttributesDict</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Alias for h5.attrs_dict</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_attrs_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_attrs_gen</span>
+
+
+<a href="#h5.h5_attrs_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_attrs_gen</span><span class="p">(</span>
+    <span class="n"><span title="h5.h5_attrs_gen(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.h5_attrs_gen(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Alias for h5.datasets_gen</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_attrs_gen_from_fspath" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_attrs_gen_from_fspath</span>
+
+
+<a href="#h5.h5_attrs_gen_from_fspath" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_attrs_gen_from_fspath</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;fspath&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5_attrs_gen_from_fspath(fspath)&lt;/code&gt;)" href="#h5.h5_attrs_gen_from_fspath(fspath)">fspath</a></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5_attrs_gen_from_fspath(h5_path)&lt;/code&gt;)" href="#h5.h5_attrs_gen_from_fspath(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5_attrs_gen_from_fspath(fspath)" class="doc doc-heading doc-heading-parameter">              <b><code>fspath</code></b>
+<a href="#h5.h5_attrs_gen_from_fspath(fspath)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5._types.FsPath">FsPath</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>fspath to h5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5_attrs_gen_from_fspath(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5_attrs_gen_from_fspath(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>h5 path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.AttributeManager">AttributeManager</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples of the form (h5-path, h5py.AttributeManager) tuples</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_datasets_dict" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_datasets_dict</span>
+
+
+<a href="#h5.h5_datasets_dict" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_datasets_dict</span><span class="p">(</span>
+    <span class="n"><span title="h5.h5_datasets_dict(fspath)">fspath</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5.h5_datasets_dict(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#dict">dict</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="numpy.typing.NDArray">NDArray</span></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">]</span> <span class="o">|</span> <span class="n"><span title="numpy.int8">int8</span></span> <span class="o">|</span> <span class="n"><span title="numpy.float64">float64</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Alias for h5.datasets_dict</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_datasets_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_datasets_gen</span>
+
+
+<a href="#h5.h5_datasets_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_datasets_gen</span><span class="p">(</span>
+    <span class="n"><span title="h5.h5_datasets_gen(h5_obj)">h5_obj</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><span title="h5.h5_datasets_gen(h5_path)">h5_path</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Alias for h5.datasets_gen</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5_datasets_gen_from_fspath" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5_datasets_gen_from_fspath</span>
+
+
+<a href="#h5.h5_datasets_gen_from_fspath" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5_datasets_gen_from_fspath</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;fspath&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5_datasets_gen_from_fspath(fspath)&lt;/code&gt;)" href="#h5.h5_datasets_gen_from_fspath(fspath)">fspath</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5_datasets_gen_from_fspath(h5_path)&lt;/code&gt;)" href="#h5.h5_datasets_gen_from_fspath(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Given a fspath to an h5, yield (h5-path, h5py.Dataset) tuples</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5_datasets_gen_from_fspath(fspath)" class="doc doc-heading doc-heading-parameter">              <b><code>fspath</code></b>
+<a href="#h5.h5_datasets_gen_from_fspath(fspath)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>)
+          –
+          <div class="doc-md-description">
+            <p>fspath to h5 format file</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5_datasets_gen_from_fspath(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5_datasets_gen_from_fspath(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>h5 path to start from. Defaults to "".</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Dataset">Dataset</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples of the form (h5-path, h5py.Dataset) tuples</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5py_obj_attrs_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5py_obj_attrs_gen</span>
+
+
+<a href="#h5.h5py_obj_attrs_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5py_obj_attrs_gen</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_attrs_gen(h5py_obj)&lt;/code&gt;)" href="#h5.h5py_obj_attrs_gen(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_attrs_gen(h5_path)&lt;/code&gt;)" href="#h5.h5py_obj_attrs_gen(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;root&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_attrs_gen(root)&lt;/code&gt;)" href="#h5.h5py_obj_attrs_gen(root)">root</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.AttributeManager">AttributeManager</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Recursive h5py.AttributeManager generator.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_attrs_gen(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.h5py_obj_attrs_gen(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_attrs_gen(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5py_obj_attrs_gen(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>path so far (Default value = "")</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_attrs_gen(root)" class="doc doc-heading doc-heading-parameter">              <b><code>root</code></b>
+<a href="#h5.h5py_obj_attrs_gen(root)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>True</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if True, yield the root path (Default value = True)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.AttributeManager">AttributeManager</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.AttributeManager)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5py_obj_dataset_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5py_obj_dataset_gen</span>
+
+
+<a href="#h5.h5py_obj_dataset_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5py_obj_dataset_gen</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_dataset_gen(h5py_obj)&lt;/code&gt;)" href="#h5.h5py_obj_dataset_gen(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span> <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_dataset_gen(h5_path)&lt;/code&gt;)" href="#h5.h5py_obj_dataset_gen(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Recursive h5 dataset generator.</p>
+<p>Given an h5 group, which is what one gets after loading an h5 file
+via h5py, this function yields tuples containing (1.) a path (h5_path) to
+a dataset in the group, and (2.) the dataset itself as a numpy array.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_dataset_gen(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.h5py_obj_dataset_gen(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_dataset_gen(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5py_obj_dataset_gen(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>path so far (Default value = "")</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Dataset">Dataset</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.Dataset)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5py_obj_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5py_obj_gen</span>
+
+
+<a href="#h5.h5py_obj_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5py_obj_gen</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_gen(h5py_obj)&lt;/code&gt;)" href="#h5.h5py_obj_gen(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_gen(h5_path)&lt;/code&gt;)" href="#h5.h5py_obj_gen(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;root&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_gen(root)&lt;/code&gt;)" href="#h5.h5py_obj_gen(root)">root</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Dataset">Dataset</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span> <span class="o">|</span> <span class="n"><span title="h5py.File">File</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Recursive h5 dataset/group generator.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_gen(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.h5py_obj_gen(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_gen(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5py_obj_gen(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>path so far (Default value = "")</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_gen(root)" class="doc doc-heading doc-heading-parameter">              <b><code>root</code></b>
+<a href="#h5.h5py_obj_gen(root)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>True</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if True, yield the root path (Default value = True)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Dataset">Dataset</span> | <span title="h5py.Group">Group</span> | <span title="h5py.File">File</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.AttributeManager)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5py_obj_groups_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5py_obj_groups_gen</span>
+
+
+<a href="#h5.h5py_obj_groups_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5py_obj_groups_gen</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_groups_gen(h5py_obj)&lt;/code&gt;)" href="#h5.h5py_obj_groups_gen(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_groups_gen(h5_path)&lt;/code&gt;)" href="#h5.h5py_obj_groups_gen(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;root&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_groups_gen(root)&lt;/code&gt;)" href="#h5.h5py_obj_groups_gen(root)">root</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">,</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">]]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Recursive h5 groups generator.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_groups_gen(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.h5py_obj_groups_gen(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_groups_gen(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5py_obj_groups_gen(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>path so far (Default value = "")</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_groups_gen(root)" class="doc doc-heading doc-heading-parameter">              <b><code>root</code></b>
+<a href="#h5.h5py_obj_groups_gen(root)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>True</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if True, yield the root path (Default value = True)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#tuple">tuple</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>, <span title="h5py.Group">Group</span>]]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.AttributeManager)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.h5py_obj_keys_gen" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">h5py_obj_keys_gen</span>
+
+
+<a href="#h5.h5py_obj_keys_gen" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">h5py_obj_keys_gen</span><span class="p">(</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_keys_gen(h5py_obj)&lt;/code&gt;)" href="#h5.h5py_obj_keys_gen(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5_path&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_keys_gen(h5_path)&lt;/code&gt;)" href="#h5.h5py_obj_keys_gen(h5_path)">h5_path</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;root&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.h5py_obj_keys_gen(root)&lt;/code&gt;)" href="#h5.h5py_obj_keys_gen(root)">root</a></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Recursive h5 dataset generator.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_keys_gen(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.h5py_obj_keys_gen(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_keys_gen(h5_path)" class="doc doc-heading doc-heading-parameter">              <b><code>h5_path</code></b>
+<a href="#h5.h5py_obj_keys_gen(h5_path)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></code>, default:
+                  <code>&#39;&#39;</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>path so far (Default value = "")</p>
+          </div>
+        </li>
+        <li class="doc-section-item field-body">
+<h3 id="h5.h5py_obj_keys_gen(root)" class="doc doc-heading doc-heading-parameter">              <b><code>root</code></b>
+<a href="#h5.h5py_obj_keys_gen(root)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></code>, default:
+                  <code>True</code>
+)
+          –
+          <div class="doc-md-description">
+            <p>if True, yield the root path (Default value = True)</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" title="&lt;code&gt;collections.abc.Iterable&lt;/code&gt;" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable">Iterable</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.AttributeManager)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_dataset" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_dataset</span>
+
+
+<a href="#h5.is_dataset" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_dataset</span><span class="p">(</span><span class="n"><span title="h5.is_dataset(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.Dataset type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_file" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_file</span>
+
+
+<a href="#h5.is_file" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_file</span><span class="p">(</span><span class="n"><span title="h5.is_file(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.File">File</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.File type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_group" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_group</span>
+
+
+<a href="#h5.is_group" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_group</span><span class="p">(</span><span class="n"><span title="h5.is_group(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.Group">Group</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.Group type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_h5py_dataset" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_h5py_dataset</span>
+
+
+<a href="#h5.is_h5py_dataset" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_h5py_dataset</span><span class="p">(</span><span class="n"><span title="h5.is_h5py_dataset(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.Dataset">Dataset</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.Dataset type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_h5py_file" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_h5py_file</span>
+
+
+<a href="#h5.is_h5py_file" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_h5py_file</span><span class="p">(</span><span class="n"><span title="h5.is_h5py_file(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.File">File</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.File type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_h5py_group" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_h5py_group</span>
+
+
+<a href="#h5.is_h5py_group" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_h5py_group</span><span class="p">(</span><span class="n"><span title="h5.is_h5py_group(obj)">obj</span></span><span class="p">:</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.Any&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.Any">Any</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" title="&lt;code&gt;typing.TypeGuard&lt;/code&gt;" href="https://docs.python.org/3/library/typing.html#typing.TypeGuard">TypeGuard</a></span><span class="p">[</span><span class="n"><span title="h5py.Group">Group</span></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>h5py.Group type guard</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.is_hdf5" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">is_hdf5</span>
+
+
+<a href="#h5.is_hdf5" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">is_hdf5</span><span class="p">(</span><span class="n"><span title="h5.is_hdf5(path)">path</span></span><span class="p">:</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/functions.html#bool">bool</a></span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Check if a file is an HDF5 file</p>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h2 id="h5.keys_list" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <span class="doc doc-object-name doc-function-name">keys_list</span>
+
+
+<a href="#h5.keys_list" class="headerlink" title="Permanent link">⚓︎</a></h2>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">keys_list</span><span class="p">(</span><span class="n"><a class="autorefs autorefs-internal" title="&lt;b&gt;&lt;code&gt;h5py_obj&lt;/code&gt;&lt;/b&gt; (&lt;code&gt;h5.keys_list(h5py_obj)&lt;/code&gt;)" href="#h5.keys_list(h5py_obj)">h5py_obj</a></span><span class="p">:</span> <span class="n"><span title="h5py.File">File</span></span> <span class="o">|</span> <span class="n"><span title="h5py.Group">Group</span></span> <span class="o">|</span> <span class="n"><span title="h5._types.FsPath">FsPath</span></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a></span><span class="p">[</span><span class="n"><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a></span><span class="p">]</span>
+</code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Return a list of all keys/paths for an h5py object.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+<h3 id="h5.keys_list(h5py_obj)" class="doc doc-heading doc-heading-parameter">              <b><code>h5py_obj</code></b>
+<a href="#h5.keys_list(h5py_obj)" class="headerlink" title="Permanent link">⚓︎</a></h3>              (<code><span title="h5py.File">File</span> | <span title="h5py.Group">Group</span> | <span title="h5._types.FsPath">FsPath</span></code>)
+          –
+          <div class="doc-md-description">
+            <p>h5-h5py group object</p>
+          </div>
+        </li>
+    </ul>
+
+
+<p><span class="doc-section-title">Returns:</span></p>
+    <ul>
+        <li class="doc-section-item field-body">
+              <code><a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#list">list</a>[<a class="autorefs autorefs-external" href="https://docs.python.org/3/library/stdtypes.html#str">str</a>]</code>
+          –
+          <div class="doc-md-description">
+            <p>Generator that yields tuples; (h5-path, h5py.Dataset)</p>
+          </div>
+        </li>
+    </ul>
+
+
+    </div>
+
+</div>
+
+
+
+  </div>
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../funkify/funkify.api/" class="md-footer__link md-footer__link--prev" aria-label="Previous: funkify">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                funkify
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../requires/requires.api/" class="md-footer__link md-footer__link--next" aria-label="Next: requires">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                requires
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Dynamic Graphics Inc
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search", "search.highlight", "search.suggest", "toc.follow", "toc.integrate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
