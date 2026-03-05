@@ -46,9 +46,11 @@ import david_webb  # jsonbourne's `True` identity
 ```python
 import JSON  # Module included with jsonbourne
 
-string_stringify = JSON.stringify(
-    {"a": 1, "b": 2, "c": 3}
-)  # '{"a": 1, "b": 2, "c": 3}'
+string_stringify = JSON.stringify({
+    "a": 1,
+    "b": 2,
+    "c": 3,
+})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps = JSON.dumps({"a": 1, "b": 2, "c": 3})  # '{"a": 1, "b": 2, "c": 3}'
 string_dumps
 ```
@@ -103,12 +105,15 @@ The following 3 examples all produce the same thing
 
 ```python
 from jsonbourne import JSON
+
 j = JSON()  # j => JsonObj(**{})
 # OR
 import JSON
+
 j = JSON()  # j => JsonObj(**{})
 # OR
 from jsonbourne import JsonObj
+
 j = JsonObj()  # j => JsonObj(**{})
 ```
 
@@ -335,9 +340,13 @@ class JsonObjModel(JsonBaseModel):
         return cls(**json.loads(json_string))
 
 
-obj = JsonObjModel(
-    **{"a": 1, "b": 2, "c": "herm", "d": {"nested": "nestedval"}, "e": {"herm": 2}}
-)
+obj = JsonObjModel(**{
+    "a": 1,
+    "b": 2,
+    "c": "herm",
+    "d": {"nested": "nestedval"},
+    "e": {"herm": 2},
+})
 obj
 ```
 

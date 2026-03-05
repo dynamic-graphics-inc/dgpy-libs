@@ -167,10 +167,10 @@ try:
     import alibrary
 except ModuleNotFoundError:
     requires.Requirement(
-        _import='alibrary',
+        _import="alibrary",
         pip=True,
-        conda_forge='alibrary-conda-listing',
-        details="Install details"
+        conda_forge="alibrary-conda-listing",
+        details="Install details",
     ).raise_error()
 ```
 

@@ -20,15 +20,17 @@ Make a module/package/script callable.
 ```python
 import funkify
 
+
 @funkify
 def some_funk_name_doesnt_matter():
-	return 'howdy'
+    return "howdy"
 ```
 
 ### 2) Import a_module and call it like you would a function!
 
 ```python
 import a_module
+
 a_module.some_funk_name_doesnt_matter_what_it_is()  # returns 'howdy'
 a_module()  # ALSO returns 'howdy'
 ```
