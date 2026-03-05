@@ -57,25 +57,23 @@ from_xtyping_shed = [
     for el in xt.__all_shed__
 ]
 print(
-    "\n".join(
-        [
-            "-------------",
-            "from `typing`",
-            "-------------",
-            *from_typing,
-            "\n",
-            "------------------------",
-            "from `typing_extensions`",
-            "------------------------",
-            *from_typing_extensions,
-            "\n",
-            "-------------------",
-            "from `xtyping.shed`",
-            "-------------------",
-            *from_xtyping_shed,
-            "\n",
-        ]
-    )
+    "\n".join([
+        "-------------",
+        "from `typing`",
+        "-------------",
+        *from_typing,
+        "\n",
+        "------------------------",
+        "from `typing_extensions`",
+        "------------------------",
+        *from_typing_extensions,
+        "\n",
+        "-------------------",
+        "from `xtyping.shed`",
+        "-------------------",
+        *from_xtyping_shed,
+        "\n",
+    ])
 )
 ```
 
