@@ -49,18 +49,26 @@ def is_np_floating(obj: Any) -> TypeGuard[np.floating]:
     return isinstance(obj, np.floating)
 
 
+def _json_scalar(value: Any) -> Any:
+    if isinstance(value, np.bytes_ | bytes):
+        try:
+            return value.decode("utf-8")
+        except UnicodeDecodeError:
+            return str(value)
+    return value
+
+
 def _json_default(obj: Any) -> Any:
     if isinstance(obj, np.ndarray):
         return obj.tolist()
+    if isinstance(obj, np.generic):
+        return _json_scalar(obj.item())
     if is_np_floating(obj):
         return float(obj)
     if is_np_integer(obj):
         return int(obj)
-    if isinstance(obj, np.bytes_ | bytes):
-        try:
-            return obj.decode("utf-8")
-        except UnicodeDecodeError:
-            return str(obj)
+    if isinstance(obj, bytes):
+        return _json_scalar(obj)
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
 
 

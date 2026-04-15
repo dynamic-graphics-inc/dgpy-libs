@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-04-15
+
+- `h5`
+  - add support for bool-json-serialization in `h5 tree` command
+
+---
+
 ## 2025-10-15
 
 - ALL

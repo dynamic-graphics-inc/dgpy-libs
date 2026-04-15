@@ -4,9 +4,12 @@ import json
 
 from typing import TYPE_CHECKING
 
+import numpy as np
 import pytest
 
 from click.testing import CliRunner
+
+import h5
 
 from h5 import testing as h5testing
 from h5.cli import cli
@@ -89,3 +92,18 @@ def test_keys(tmp_path: Path, runner: CliRunner) -> None:
     list_of_keys_json_array = json.loads(ls_json_result.output)
 
     assert sorted(list_of_keys_json_array) == expected_keys
+
+
+def test_tree_json_serializes_numpy_bool_attr(
+    tmp_path: Path, runner: CliRunner
+) -> None:
+    filepath = tmp_path / "bool-attr.h5"
+
+    with h5.File(filepath, mode="w") as f:
+        f.attrs["flag"] = np.bool_(True)  # noqa: FBT003
+
+    result = runner.invoke(cli, ["tree", str(filepath)])
+
+    assert result.exit_code == 0
+    data = json.loads(result.output)
+    assert data["attrs"] == {"flag": True}

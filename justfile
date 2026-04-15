@@ -54,7 +54,7 @@ test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-
 
 # fix imports
 rsort:
-    ruff check --select "I" --show-fixes --fix .
+    uv run ruff check --select "I" --show-fixes --fix .
 
 # sort imports
 isort: rsort
@@ -65,8 +65,8 @@ codespell:
 
 # format python
 fmt:
-    ruff format
-    ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
+    uv run ruff format
+    uv run ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
     pnpx prettier@latest -w --prose-wrap=always CHANGELOG.md
 
 # fmt pyproject.toml files
@@ -75,16 +75,16 @@ pyproject-fmt:
 
 # format-check
 fmtc:
-    ruff format --check
-    ruff check --select "I" --show-fixes .
+    uv run ruff format --check
+    uv run ruff check --select "I" --show-fixes .
 
 # ruff lint
 ruff:
-    ruff check .
+    uv run ruff check .
 
 # ruff lint & fix
 ruffix:
-    ruff check . --fix
+    uv run ruff check . --fix
 
 # nox lint
 noxlint:
