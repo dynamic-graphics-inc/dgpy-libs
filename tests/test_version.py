@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
+import subprocess as sp
+import sys
 
 from collections.abc import Callable
 
@@ -56,10 +58,9 @@ class TestDgpyLib:
         self,
         dgpy_lib_name: str,
     ) -> None:
-        from subprocess import run
-
-        res = run(
-            ["python", "-m", dgpy_lib_name],
+        python_executable = sys.executable
+        res = sp.run(
+            [python_executable, "-m", dgpy_lib_name],
             capture_output=True,
             text=True,
         )
