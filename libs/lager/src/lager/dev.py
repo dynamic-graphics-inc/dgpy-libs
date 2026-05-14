@@ -7,7 +7,7 @@ from typing import Any
 try:
     import httpx
 
-    _SINKS = []
+    _SINKS: list[HttpxSink] = []
 
     class HttpxSink:
         def __init__(self, url: str, *args: Any, **kwargs: Any) -> None:
