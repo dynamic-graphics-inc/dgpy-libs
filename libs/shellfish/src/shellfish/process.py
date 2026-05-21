@@ -284,6 +284,10 @@ def rhel_version() -> str:
                 return "rhel7"
             elif "release 8" in release_info:
                 return "rhel8"
+            elif "release 9" in release_info:
+                return "rhel9"
+            elif "release 10" in release_info:
+                return "rhel10"
             else:
                 return "other"
     except FileNotFoundError:
