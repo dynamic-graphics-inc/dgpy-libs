@@ -201,6 +201,7 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
     import asyncio
 
     async def fn2() -> tuple[str, Any]:  # noqa: RUF029
+        s = "asdf"
         _f = somefunction(s)  # type: ignore[name-defined]
         return s, _f
 

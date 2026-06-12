@@ -306,7 +306,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
         await detach_file()
 
     assert raw_file
-    assert raw_file.read(10) == b"0123456789"  # type: ignore[union-attr]
+    assert raw_file.read(10) == b"0123456789"
 
 
 @pytest.mark.asyncio
