@@ -28,6 +28,14 @@ build:
     uv build -v --package shellfish
     uv build -v --package xtyping
 
+# preview which libs would publish (versions not yet on PyPI)
+publish-check:
+    uv run python scripts/pypi_publish_detect.py
+
+# bump one lib's version, e.g. `just bump shellfish patch`
+bump pkg level="patch":
+    uv version --bump {{ level }} --package {{ pkg }}
+
 # test root + all libraries
 test: sync
     uv run pytest tests dgpydev
