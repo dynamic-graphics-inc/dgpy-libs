@@ -128,7 +128,9 @@ def main() -> None:
         *xtyping_all_dunder,
     ]
 
-    with open(os.path.join(PWD, "src", "xtyping", "__init__.py"), "w") as f:
+    with open(
+        os.path.join(PWD, "src", "xtyping", "__init__.py"), "w", encoding="utf-8"
+    ) as f:
         f.write("\n".join(init_parts))
 
     run(args=["just", "fmt"])

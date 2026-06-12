@@ -7,64 +7,34 @@ select = [
   "ANN", # annotations
   "B",   # bugbear
   "C4",  # comprehensions
-  # pydocstyle
-  "D",
-  "FBT",
+  "D", # pydocstyle
   "E",      # pyflakes errors
   "ERA001", # erradicate
   "F",      # pyflakes warnings
   "FA102",  # require `from __future__ import annotations`
+  "FBT",
   "I",      # isort
-  # pie (PIE)
+  "ICN",
   "PIE",
+  "PT", # pytest
+  "Q",
   "RUF",
-  "RUF002", # ambiguous-unicode-character-docstring
-  "RUF015",
-  "RUF022",
-  "RUF100", # no unused 'noqa' comments
-  "RUF036",
-  # flake8-simplify (SIM)
+  "RUF",
   "SIM",
   "T201", # print
   "TC",
-  # pyupgrade
+  "TID",
   "UP",
   "W",
+  "YTT",
 
-  "PT",
-  # "A",
-  # "ARG",
-  # "B",
-  # "C",
-  # "DTZ",
-  # "E",
-  # "ERA001",
-  # "PT",      # pytest
-  # "PYI",
-  # "EM",
-  # "F",
-  # "FA",
-  # "FBT",
-  # "I",
-  # "ICN",
+  # -- TODO --
   # "N",
-  # "PIE",
-  # "PLC",
-  # "PLC2801",
+  # "RET",
+  # "EM",
+  # "PLW",
   # "PLE",
   # "PLR",
-  # "PLW",
-  # "Q",
-  # "RUF",
-  # "S",
-  # "SIM",
-  # "T",
-  # "TC",
-  # "TID",
-  # "RET",
-  # "UP",
-  # "W",
-  # "YTT",
 ]
 ignore = [
   "ANN401", # use of Any
@@ -89,7 +59,7 @@ ignore = [
   "SIM115", # open-file-with-context-handler
   # PYUPGRADE
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
-  # "UP022", # must test shellfish first...
+  "UP022", # must test shellfish first...
 ]
 
 [lint.per-file-ignores]

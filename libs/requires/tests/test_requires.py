@@ -451,7 +451,7 @@ def test_module_wrap() -> None:
         _v = mkvec([12, 3])
         assert _v is not None
 
-    except ModuleNotFoundError as e:
+    except ModuleNotFoundError:
         with pytest.raises(
             RequirementError, match=re_escape("could not import: `import numpy as np`")
         ) as re:
