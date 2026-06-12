@@ -44,5 +44,5 @@ def test_popen_gen(tmp_path: Path) -> None:
 
 
 def test_popen_gen_not_popen_obj(tmp_path: Path) -> None:
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="proc must be a Popen object"):
         list(popen_pipes_gen({"not": "a Popen object"}))  # type: ignore[arg-type]

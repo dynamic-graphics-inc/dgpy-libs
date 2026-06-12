@@ -57,7 +57,7 @@ def test_pipe_in_command(tmp_path: Path) -> None:
 def test_pipe_in_command_shell_is_false(tmp_path: Path) -> None:
     fizzbuzz = 'for i in range(1, 101): print("Fizz" * (i % 3 == 0) + "Buzz" * (i % 5 == 0) or str(i))'
     args = ["python", "-c", fizzbuzz, "|", "grep", "Fizz", "|", "grep", "-v", "Buzz"]
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="has a pipe character, but shell=False"):
         sh.do(args, shell=False)
 
 

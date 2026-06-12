@@ -7,6 +7,7 @@ import datetime
 import json
 
 from decimal import Decimal
+from re import escape as re_escape
 
 import pytest
 
@@ -20,8 +21,6 @@ def test_dot_access_attr_vs_item() -> None:
     assert jd["socket.io"] == "data"
     with pytest.raises(AttributeError):
         _data = jd.socket.io
-        if _data:
-            raise AssertionError("should not get here")
 
 
 def test_dot_access_nested() -> None:
@@ -34,8 +33,6 @@ def test_dot_access_nested() -> None:
     ]
     with pytest.raises(AttributeError):
         _data = jd.socket.io
-        if _data:
-            raise AssertionError("should not get here")
 
 
 class Thingy(JsonObj):
@@ -64,15 +61,6 @@ def test_jsonobj_basic_unpacking() -> None:
     assert merged["a"] == 234
     merged_jsonobj = JsonObj({**thing, **thing2})
     assert merged == {**merged_jsonobj}
-
-
-@pytest.mark.skip(reason="no longer the impl")
-def test_jsonobj_breaks() -> None:
-    thing2 = Thingy({"a": 1, "b": 2, "c": {"herm": 23}})
-    assert thing2.c.herm == thing2["c"]["herm"]
-    with pytest.raises(ValueError) as err:
-        thing2["herm herm herm import"] = "should break"
-        assert err  # type: ignore[truthy-bool]
 
 
 class ThingyWithMethod(JsonObj):
@@ -121,7 +109,12 @@ def test_protected_attrs_slash_members() -> None:
     j: JsonObj = JsonObj()
     j.key = "value"
     j["12"] = "twelve"
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match=re_escape(
+            "Cannot set protected attribute ('items'), must use brackets/setitem syntax: json_obj['items']"
+        ),
+    ):
         j.items = [1, 2, 3, 4]  # type: ignore[assignment]
     j["items"] = [1, 2, 3, 4]
     assert j.items != [1, 2, 3, 4]  # type: ignore[comparison-overlap]
@@ -379,7 +372,12 @@ def test_dot_list_keys_sorted() -> None:
 
 def test_json_dict_reject_non_string_key() -> None:
     t1 = {1: None, 2: 2}
-    with pytest.raises(ValueError):
+    with pytest.raises(
+        ValueError,
+        match=re_escape(
+            "JsonObj keys MUST be strings! Bad key values: {1: None, 2: 2}"
+        ),
+    ):
         JsonObj(t1)  # type: ignore[arg-type]
 
 
@@ -539,8 +537,7 @@ def test_cycle_stringify() -> None:
     b = JsonObj(**{"c": "c", "d": a})
     a.circle = b
     with pytest.raises((TypeError, ValueError, RecursionError)):
-        json_str = a.to_json()
-        assert isinstance(json_str, str)
+        _json_str = a.to_json()
 
 
 def test_dataclass_stringify() -> None:

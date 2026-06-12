@@ -113,10 +113,11 @@ async def test_simple_read_fail(mode: str, tmp_path: Path) -> None:
 
     full_file = tmp_path.joinpath(filename)
     full_file.write_text(content)
-    with pytest.raises(ValueError):
-        async with aiopen(str(full_file), mode=mode) as file:
-            await file.seek(0)  # Needed for the append mode.
 
+    async with aiopen(str(full_file), mode=mode) as file:
+        await file.seek(0)  # Needed for the append mode.
+
+        with pytest.raises(ValueError, match="not readable"):
             await file.read()
 
     assert file.closed  # pyright: ignore[reportUnboundVariable]
@@ -240,16 +241,22 @@ async def test_simple_detach(tmp_path: Path) -> None:
     full_file = tmp_path.joinpath(filename)
     full_file.write_text("0123456789")
 
-    with pytest.raises(ValueError):  # Close will error out.
+    raw_file = None
+
+    async def detach_file() -> None:
+        nonlocal raw_file
         async with aiopen(str(full_file), mode="r") as file:
             raw_file = file.detach()
 
             assert raw_file
 
-            with pytest.raises(ValueError):
+            with pytest.raises(ValueError, match="underlying buffer has been detached"):
                 await file.read()
 
             assert raw_file.read(10) == b"0123456789"
+
+    with pytest.raises(ValueError, match="underlying buffer has been detached"):
+        await detach_file()
 
 
 @pytest.mark.anyio

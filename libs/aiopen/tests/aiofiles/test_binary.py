@@ -290,15 +290,22 @@ async def test_simple_detach(tmp_path: Path) -> None:
     full_file = tmp_path.joinpath(filename)
     full_file.write_bytes(b"0123456789")
 
-    with pytest.raises(ValueError):
+    raw_file = None
+
+    async def detach_file() -> None:
+        nonlocal raw_file
         async with aiopen(str(full_file), mode="rb") as file:
             raw_file = file.detach()
 
             assert raw_file
 
-            with pytest.raises(ValueError):
+            with pytest.raises(ValueError, match="raw stream has been detached"):
                 await file.read()
 
+    with pytest.raises(ValueError, match="raw stream has been detached"):
+        await detach_file()
+
+    assert raw_file
     assert raw_file.read(10) == b"0123456789"  # type: ignore[union-attr]
 
 
