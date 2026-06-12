@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from os import path
+from pathlib import Path
 
 import dgpytest
 
@@ -13,7 +14,11 @@ def _get_version() -> str:
         _filepath = path.join(_dirpath, "pyproject.toml")
         if path.exists(_filepath):
             version = (
-                next(ln for ln in open(_filepath).read().split("\n") if "version" in ln)
+                next(
+                    ln
+                    for ln in Path(_filepath).read_text(encoding="utf8").split("\n")
+                    if "version" in ln
+                )
                 .replace("version = ", "")
                 .strip('"')
             )

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from os import path
+from pathlib import Path
 
 from lager import __version__
 
@@ -17,7 +18,7 @@ def _get_version() -> str:
             version = (
                 next(
                     line
-                    for line in open(_filepath).read().split("\n")
+                    for line in Path(_filepath).read_text(encoding="utf8").split("\n")
                     if "version" in line
                 )
                 .replace("version = ", "")

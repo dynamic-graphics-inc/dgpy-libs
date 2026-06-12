@@ -4,6 +4,7 @@ from __future__ import annotations
 import os
 
 from os import path
+from pathlib import Path
 from shutil import which
 
 import nox
@@ -41,7 +42,11 @@ def latest_wheel() -> str:
 def _get_jsonbourne_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
     version = (
-        next(line for line in open(_filepath).read().split("\n") if "version" in line)
+        next(
+            line
+            for line in Path(_filepath).read_text(encoding="utf8").split("\n")
+            if "version" in line
+        )
         .replace("version = ", "")
         .strip('"')
     )
