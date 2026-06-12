@@ -145,7 +145,7 @@ class TestDeprecatedAliasesSync:
 
 
 class TestDeprecatedAliasesAsync:
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _WRITE_STRING_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_write_string_alias_async(
         self,
@@ -155,7 +155,7 @@ class TestDeprecatedAliasesAsync:
         with pytest.deprecated_call():
             await func(tmp_path / "test.txt", "This is a test string")
 
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _WRITE_BYTES_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_write_bytes_alias_async(
         self,
@@ -165,7 +165,7 @@ class TestDeprecatedAliasesAsync:
         with pytest.deprecated_call():
             await func(tmp_path / "test.txt", b"This is a test bytes")
 
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _READ_STRING_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_read_str_alias_async(
         self,
@@ -175,7 +175,7 @@ class TestDeprecatedAliasesAsync:
             result = await func(_FILEPATH)
             assert isinstance(result, str)
 
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _READ_BYTES_GEN_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_read_bytes_gen_alias_async(
         self,
@@ -185,7 +185,7 @@ class TestDeprecatedAliasesAsync:
             async for line in func(_FILEPATH):
                 assert isinstance(line, bytes)
 
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _WRITE_JSON_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_write_json_alias_async(
         self,
@@ -198,7 +198,7 @@ class TestDeprecatedAliasesAsync:
             text = (tmp_path / "test.json").read_text()
             assert json.loads(text) == {"key": "value"}
 
-    @pytest.mark.anyio()
+    @pytest.mark.anyio
     @pytest.mark.parametrize("func", _READ_JSON_DEPRECATED_ALIASES_ASYNC)
     async def test_deprecated_read_json_alias_async(
         self,

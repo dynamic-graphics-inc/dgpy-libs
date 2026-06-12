@@ -30,6 +30,41 @@ select = [
   # pyupgrade
   "UP",
   "W",
+
+  "PT",
+  # "A",
+  # "ARG",
+  # "B",
+  # "C",
+  # "DTZ",
+  # "E",
+  # "ERA001",
+  # "PT",      # pytest
+  # "PYI",
+  # "EM",
+  # "F",
+  # "FA",
+  # "FBT",
+  # "I",
+  # "ICN",
+  # "N",
+  # "PIE",
+  # "PLC",
+  # "PLC2801",
+  # "PLE",
+  # "PLR",
+  # "PLW",
+  # "Q",
+  # "RUF",
+  # "S",
+  # "SIM",
+  # "T",
+  # "TC",
+  # "TID",
+  # "RET",
+  # "UP",
+  # "W",
+  # "YTT",
 ]
 ignore = [
   "ANN401", # use of Any
@@ -54,7 +89,7 @@ ignore = [
   "SIM115", # open-file-with-context-handler
   # PYUPGRADE
   "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
-  "UP022", # must test shellfish first...
+  # "UP022", # must test shellfish first...
 ]
 
 [lint.per-file-ignores]
@@ -66,6 +101,7 @@ ignore = [
   "D100",   # missing docstring in public module
   "D102",
   "D103",   # missing docstring
+  "S101",   # use of assert
 ]
 "*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "RUF031", "T201"]
 "libs/jsonbourne/src/jsonbourne/trydantic.py" = [

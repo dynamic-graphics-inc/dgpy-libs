@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_scandir_async(tmp_path: Path) -> None:
     # Create a temporary directory with some files and sub-directories
     sh.cd(tmp_path)

@@ -4,7 +4,7 @@ from __future__ import annotations
 import pytest
 
 
-@pytest.mark.anyio()
+@pytest.mark.anyio
 async def test_asyncify() -> None:
     from asyncify._anyio import asyncify
 
@@ -16,7 +16,7 @@ async def test_asyncify() -> None:
     assert res == 6
 
 
-@pytest.mark.anyio()
+@pytest.mark.anyio
 async def test_asyncify_funkified() -> None:
     from asyncify._anyio import asyncify
 
