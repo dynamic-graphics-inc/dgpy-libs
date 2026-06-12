@@ -203,7 +203,7 @@ include = [
   "libs/lager/src",
   "libs/listless/src",
   "libs/requires/src",
-  "libs/shellfish",
+  "libs/shellfish/src",
   "libs/listless/src",
   "libs/xtyping/src",
 ]
@@ -229,6 +229,7 @@ exclude = [
   "**/.venv",
   "**/.nox",
   "**/.nox_win",
+  "**/.*",
 ]
 reportGeneralTypeIssues = false
 reportInvalidTypeVarUse = false

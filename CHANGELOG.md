@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-06-12
+
+- updated `__about__.py` files to slice
+- fixed codeql unclosed file warnings
+
+---
+
 ## 2026-04-15
 
 - `h5`

@@ -6,5 +6,5 @@ from __future__ import annotations
 __all__ = ("__description__", "__pkgroot__", "__title__", "__version__")
 __title__ = "dgpylibs"
 __description__ = "Dynamic Graphics Python libraries"
-__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\")
+__pkgroot__ = __file__[:-13]
 __version__ = "0.1.0"

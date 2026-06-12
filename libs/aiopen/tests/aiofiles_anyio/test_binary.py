@@ -6,14 +6,11 @@ from __future__ import annotations
 import io
 
 from os import path
-from typing import TYPE_CHECKING
+from pathlib import Path
 
 import pytest
 
 from aiopen import aiopen
-
-if TYPE_CHECKING:
-    from pathlib import Path
 
 
 @pytest.mark.anyio()
@@ -128,7 +125,7 @@ async def test_simple_read(mode: str, buffering: int) -> None:
         actual = await file.read()
 
         assert (await file.read()) == b""
-    assert actual == open(filename, mode="rb").read()
+    assert actual == Path(filename).read_bytes()
 
 
 @pytest.mark.anyio()
@@ -234,7 +231,7 @@ async def test_simple_readinto(mode: str, buffering: int) -> None:
         bytes_read = await file.readinto(array)
 
         assert bytes_read == 4
-        assert array == open(filename, mode="rb").read(4)
+        assert array == Path(filename).read_bytes()[:4]
 
 
 @pytest.mark.anyio()

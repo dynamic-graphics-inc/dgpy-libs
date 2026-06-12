@@ -83,7 +83,8 @@ def update_abouts() -> None:
             '__all__ = ("__description__", "__pkgroot__", "__title__", "__version__")',
             '__title__ = "{}"'.format(project_metadata["name"]),
             '__description__ = "{}"'.format(project_metadata["description"]),
-            '__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\\\")',
+            # previously was: '__pkgroot__ = __file__.replace("__about__.py", "").rstrip("/\\\\")',
+            "__pkgroot__ = __file__[:-13]",
             '__version__ = "{}"\n'.format(project_metadata["version"]),
         ]
         if lib_about_filepath.exists():

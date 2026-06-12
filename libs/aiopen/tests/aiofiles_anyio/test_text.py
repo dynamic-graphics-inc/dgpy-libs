@@ -99,7 +99,7 @@ async def test_simple_read(mode: str) -> None:
         actual = await file.read()
 
         assert (await file.read()) == ""
-    assert actual == open(filename).read()
+    assert actual == Path(filename).read_text(encoding="utf8")
 
     assert file.closed
 
