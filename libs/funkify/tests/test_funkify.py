@@ -56,21 +56,15 @@ def test_funkify_module_async() -> None:
 
 
 def test_funkify_no_such_module() -> None:
-    with pytest.raises(ValueError):
-        from . import no_such_module
-
-        assert no_such_module() == 123  # type: ignore[operator]
+    with pytest.raises(ValueError, match=r"no_such_module not found in sys.modules"):
+        exec("from . import no_such_module")
 
 
 def test_funkify_non_callable_static_export() -> None:
-    with pytest.raises(ValueError):
-        from . import static_export
-
-        assert static_export() == "default_export"  # type: ignore[operator]
+    with pytest.raises(ValueError, match=r"static_export not found in sys.modules"):
+        exec("from . import static_export")
 
 
 def test_funkify_non_callable_no_name() -> None:
     with pytest.raises(AttributeError):
-        from . import static_export_no_name
-
-        assert static_export_no_name() == "default_export"  # type: ignore[operator]
+        exec("from . import static_export_no_name")

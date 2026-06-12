@@ -16,36 +16,36 @@ if TYPE_CHECKING:
 PWD = path.split(path.realpath(__file__))[0]
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_subproc_async() -> None:
     prun = await sh.do_async("ls")
     assert isinstance(prun, sh.Done)
     assert prun.async_proc
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_subproc_asyncify() -> None:
     prun = await sh.do_asyncify("python", "--version", shell=True)
     assert isinstance(prun, sh.Done)
     assert prun.async_proc
 
 
-@pytest.mark.asyncio()
-@pytest.mark.aio()
+@pytest.mark.asyncio
+@pytest.mark.aio
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)
     assert res.async_proc
 
 
-@pytest.mark.asyncio()
-@pytest.mark.aio()
+@pytest.mark.asyncio
+@pytest.mark.aio
 async def test_run_async_shell_true() -> None:
     res = await sh.do_async(["ls"], shell=True)
     assert res.async_proc
 
 
-@pytest.mark.asyncio()
-@pytest.mark.timeout()
+@pytest.mark.asyncio
+@pytest.mark.timeout
 async def test_timeout_subprocess_aio(tmp_path: Path) -> None:
     sh.cd(str(tmp_path))
     script_1sec = (
@@ -97,7 +97,7 @@ async def _test_timeout_subprocess_aio_inner(tmp_path: Path) -> None:
         proc = await sh.do_async(args=["python", script_2sec_filepath], timeout=0.2)
 
 
-@pytest.mark.timeout()
+@pytest.mark.timeout
 def test_timeout_subprocess_aio_sync(tmp_path: Path) -> None:
     asyncio.run(_test_timeout_subprocess_aio_inner(tmp_path))
 
@@ -131,6 +131,6 @@ async def _test_timeout_subprocess_aio_inner_shell_true(tmp_path: Path) -> None:
         )
 
 
-@pytest.mark.timeout()
+@pytest.mark.timeout
 def test_timeout_subprocess_aio_sync_shell_true(tmp_path: Path) -> None:
     asyncio.run(_test_timeout_subprocess_aio_inner_shell_true(tmp_path))

@@ -7,29 +7,34 @@ select = [
   "ANN", # annotations
   "B",   # bugbear
   "C4",  # comprehensions
-  # pydocstyle
-  "D",
-  "FBT",
+  "D", # pydocstyle
   "E",      # pyflakes errors
   "ERA001", # erradicate
   "F",      # pyflakes warnings
   "FA102",  # require `from __future__ import annotations`
+  "FBT",
   "I",      # isort
-  # pie (PIE)
+  "ICN",
   "PIE",
+  "PT", # pytest
+  "Q",
   "RUF",
-  "RUF002", # ambiguous-unicode-character-docstring
-  "RUF015",
-  "RUF022",
-  "RUF100", # no unused 'noqa' comments
-  "RUF036",
-  # flake8-simplify (SIM)
+  "RUF",
   "SIM",
   "T201", # print
   "TC",
-  # pyupgrade
+  "TID",
   "UP",
   "W",
+  "YTT",
+
+  # -- TODO --
+  # "N",
+  # "RET",
+  # "EM",
+  # "PLW",
+  # "PLE",
+  # "PLR",
 ]
 ignore = [
   "ANN401", # use of Any
@@ -66,6 +71,7 @@ ignore = [
   "D100",   # missing docstring in public module
   "D102",
   "D103",   # missing docstring
+  "S101",   # use of assert
 ]
 "*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "RUF031", "T201"]
 "libs/jsonbourne/src/jsonbourne/trydantic.py" = [

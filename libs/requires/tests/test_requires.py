@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+from re import escape as re_escape
 from typing import Any
 
 import pytest
@@ -144,18 +145,15 @@ def test_requirement_as_decorator() -> None:
 
 
 def test_requirement_as_decorator_multiple_xfail() -> None:
+
+    def fn() -> tuple[str, Any]:
+        d = {"herm": 1}
+        s = dumps(d)  # type: ignore[name-defined]
+        f = loads(s)  # type: ignore[name-defined]
+        return s, f
+
     with pytest.raises(NameError):
-
-        def fn() -> tuple[str, Any]:
-            d = {"herm": 1}
-            s = dumps(d)  # type: ignore[name-defined]
-            f = loads(s)  # type: ignore[name-defined]
-            return s, f
-
-        s, f = fn()
-        assert s == '{"herm": 1}'
-
-        assert f == {"herm": 1}
+        _s, _f = fn()
 
 
 def test_requirement_as_decorator_multiple() -> None:
@@ -202,17 +200,13 @@ def test_requirement_as_decorator_multiple_aliases() -> None:
 def test_requirement_as_decorator_multiple_async_xfail() -> None:
     import asyncio
 
-    with pytest.raises(NameError) as re:
-        assert re  # type: ignore[truthy-bool]
+    async def fn2() -> tuple[str, Any]:  # noqa: RUF029
+        s = "asdf"
+        _f = somefunction(s)  # type: ignore[name-defined]
+        return s, _f
 
-        async def fn2() -> tuple[str, Any]:  # noqa: RUF029
-            _f = somefunction(s)  # type: ignore[name-defined]
-            return s, _f
-
-        s, f = asyncio.run(fn2())
-        assert s == '{"herm": 1}'
-
-        assert f == {"herm": 1}
+    with pytest.raises(NameError):
+        _s, _f = asyncio.run(fn2())
 
 
 def test_requirement_as_decorator_multiple_async() -> None:
@@ -267,7 +261,7 @@ def test_from_json_import_dumps_module_alias() -> None:
     assert fn() == '{"herm": 1}'
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_from_json_import_dumps_async() -> None:
     @requires("from json import dumps")
     async def fn() -> str:  # noqa: RUF029
@@ -379,18 +373,14 @@ def test_from_json_import_dumps_as_dumpit() -> None:
 
 
 def test_from_json_import_dumps_as_xxx_non_importable() -> None:
-    try:
+    @requires("from json import DUMPSNOTANATTR")
+    def fn() -> Any:
+        d = {"herm": 1}
+        s = DUMPSNOTANATTR(d)  # type: ignore[name-defined]
+        return s
 
-        @requires("from json import DUMPSNOTANATTR")
-        def fn() -> Any:
-            d = {"herm": 1}
-            s = DUMPSNOTANATTR(d)  # type: ignore[name-defined]
-            return s
-
-        assert fn() == '{"herm": 1}'
-    except Exception as e:
-        assert isinstance(e, RequirementAttributeError)
-        assert "AttributeError" in e.__str__()
+    with pytest.raises(RequirementAttributeError):
+        fn()
 
 
 def test_requires() -> None:
@@ -402,38 +392,32 @@ def test_requires() -> None:
 
 
 def test_requires_name_error() -> None:
-    with pytest.raises(RequirementError) as re:
-        assert re  # type: ignore[truthy-bool]
+    @requires("a_fake_module")
+    def fn() -> Any:
+        _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
+        return _some_value
 
-        @requires("a_fake_module")
-        def fn() -> Any:
-            _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
-            return _some_value
-
+    with pytest.raises(RequirementError):
         fn()
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_requires_name_error_async() -> None:
-    with pytest.raises(RequirementError) as re:
-        assert re  # type: ignore[truthy-bool]
+    @requires("a_fake_module")
+    async def fn() -> Any:  # noqa: RUF029
+        _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
+        return _some_value
 
-        @requires("a_fake_module")
-        async def fn() -> Any:  # noqa: RUF029
-            _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
-            return _some_value
-
+    with pytest.raises(RequirementError):
         await fn()
 
 
 def test_requires_err_msg() -> None:
-    with pytest.raises(RequirementError) as re:
-        assert re  # type: ignore[truthy-bool]
+    @requires("a_fake_module")
+    def fn() -> Any:
+        return a_fake_module.a_fake_function()  # type: ignore[name-defined]
 
-        @requires("a_fake_module")
-        def fn() -> Any:
-            return a_fake_module.a_fake_function()  # type: ignore[name-defined]
-
+    with pytest.raises(RequirementError):
         fn()
 
 
@@ -468,9 +452,10 @@ def test_module_wrap() -> None:
         _v = mkvec([12, 3])
         assert _v is not None
 
-    except ModuleNotFoundError as e:
-        with pytest.raises(RequirementError) as re:
-            raise e
+    except ModuleNotFoundError:
+        with pytest.raises(
+            RequirementError, match=re_escape("could not import: `import numpy as np`")
+        ) as re:
             mkvec([12, 3])
         assert "could not import: `import numpy as np`" in str(re.value)
 

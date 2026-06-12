@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-@pytest.mark.anyio()
+@pytest.mark.anyio
 async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -> None:
     """Fire up a small simple file server, and fetch a file.
 
@@ -52,7 +52,7 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     await server.wait_closed()
 
 
-@pytest.mark.anyio()
+@pytest.mark.anyio
 async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> None:
     """Fire up a small simple file server, and fetch a file."""
     # First we'll write a small file.

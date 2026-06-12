@@ -21,7 +21,7 @@ def test_subproc() -> None:
     assert isinstance(prun, sh.Done)
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_subproc_async() -> None:
     prun = await sh.do_async("ls")
     assert isinstance(prun, sh.Done)
@@ -57,7 +57,7 @@ def test_pipe_in_command(tmp_path: Path) -> None:
 def test_pipe_in_command_shell_is_false(tmp_path: Path) -> None:
     fizzbuzz = 'for i in range(1, 101): print("Fizz" * (i % 3 == 0) + "Buzz" * (i % 5 == 0) or str(i))'
     args = ["python", "-c", fizzbuzz, "|", "grep", "Fizz", "|", "grep", "-v", "Buzz"]
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="has a pipe character, but shell=False"):
         sh.do(args, shell=False)
 
 
@@ -86,21 +86,21 @@ def test_pipe_stderr(tmp_path: Path) -> None:
     assert stdout == proc.stderr * 2
 
 
-@pytest.mark.asyncio()
-@pytest.mark.aio()
+@pytest.mark.asyncio
+@pytest.mark.aio
 async def test_run_async_shell_false() -> None:
     res = await sh.do_async(["ls"], shell=False)
     assert res.async_proc
 
 
-@pytest.mark.asyncio()
-@pytest.mark.aio()
+@pytest.mark.asyncio
+@pytest.mark.aio
 async def test_run_async_shell_true() -> None:
     res = await sh.do_async(["ls"], shell=True)
     assert res.async_proc
 
 
-@pytest.mark.timeout()
+@pytest.mark.timeout
 def test_timeout_subprocess(tmp_path: Path) -> None:
     sh.cd(str(tmp_path))
     script_2sec = (
