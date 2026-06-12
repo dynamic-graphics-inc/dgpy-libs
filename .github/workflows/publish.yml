@@ -1,0 +1,56 @@
+name: publish
+
+# Publish dgpy-libs packages to PyPI via Trusted Publishing (OIDC).
+#
+# Flow: on merge to `main` (or manual dispatch) the `detect` job compares each
+# publishable lib's pyproject.toml version against PyPI and emits a matrix of
+# packages whose version is not yet published. The `publish` job builds and
+# uploads only those packages. No API tokens are stored -- each package is
+# configured once on PyPI to trust this repo + workflow + `pypi` environment.
+
+on:
+  push:
+    branches: [main]
+    paths: ["libs/**/pyproject.toml"]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      matrix: ${{ steps.detect.outputs.matrix }}
+      any: ${{ steps.detect.outputs.any }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - id: detect
+        name: Detect unpublished versions
+        run: python scripts/pypi_publish_detect.py
+
+  publish:
+    needs: detect
+    if: needs.detect.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write # required for PyPI Trusted Publishing (OIDC)
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.detect.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v7
+        with:
+          python-version: "3.12"
+      - name: Build ${{ matrix.package }} v${{ matrix.version }}
+        run: uv build --package ${{ matrix.package }}
+      - name: Publish ${{ matrix.package }} to PyPI
+        run: uv publish
