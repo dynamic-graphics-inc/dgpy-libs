@@ -369,7 +369,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
 
     @property
     def __property_fields__(self) -> set[str]:
-        """Returns a set of property names for the class that have a setter"""
+        """Return a set of property names for the class that have a setter"""
         return self.__class__._cls_property_fields()
 
     @classmethod
