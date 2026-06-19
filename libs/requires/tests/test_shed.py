@@ -10,7 +10,8 @@ def test_shed_exports() -> None:
         el for el in shed_requirements if el not in requires_shed_all_set
     ]
     if missing_from_all:
-        raise AssertionError(f"MISSING from __all__: {tuple(missing_from_all)!s}")
+        _emsg = f"MISSING from __all__: {tuple(missing_from_all)!s}"
+        raise AssertionError(_emsg)
 
 
 def test_all_sorted() -> None:

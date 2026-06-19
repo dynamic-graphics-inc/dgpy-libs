@@ -9,6 +9,8 @@ select = [
   "C4",     # comprehensions
   "D",      # pydocstyle
   "E",      # pyflakes errors
+  "EM102",  # f-string-in-exception
+  "EM103",  # dot-format-in-exception
   "ERA001", # erradicate
   "F",      # pyflakes warnings
   "FA102",  # require `from __future__ import annotations`
@@ -16,6 +18,7 @@ select = [
   "I",      # isort
   "ICN",
   "PIE",    # flake8-pie
+  "PLE",    # pylint errors
   "PT",     # flake8-pytest-style
   "Q",      # flake8-quotes
   "RET",    # flake8-return
@@ -27,12 +30,10 @@ select = [
   "UP",     # flake8-pyupgrade
   "W",      # pyflakes warnings
   "YTT",    # flake8-2020
-
   # -- TODO --
+  # "EM101",  # raw-string-in-exception
   # "N",
-  # "EM",
   # "PLW",
-  # "PLE",
   # "PLR",
 ]
 ignore = [
@@ -85,6 +86,9 @@ ignore = [
 "libs/shellfish/tests/*" = [
   "D100", # missing docstring
 ]
+
+[lint.flake8-errmsg]
+max-string-length = 20
 
 [lint.isort]
 combine-as-imports = true

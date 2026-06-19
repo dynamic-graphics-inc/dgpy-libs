@@ -89,7 +89,8 @@ def main() -> None:
     counts = Counter(all_sorted)
     any_duplicates = [item for item, count in counts.items() if count > 1]
     if any_duplicates:
-        raise ValueError(f"Duplicate items found in all_sorted: {any_duplicates}")
+        _emsg = f"Duplicate items found in all_sorted: {any_duplicates}"
+        raise ValueError(_emsg)
 
     xtyping_all_dunder = [
         "__all__ = (",

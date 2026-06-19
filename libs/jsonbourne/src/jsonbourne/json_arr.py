@@ -42,7 +42,8 @@ SupportsRichComparisonT = TypeVar(
 
 def n_args(fn: Callable[..., _R]) -> int:
     if not callable(fn):
-        raise TypeError(f"{fn!r} is not callable")
+        _emsg = f"{fn!r} is not callable"
+        raise TypeError(_emsg)
     try:
         return fn.__code__.co_argcount
     except AttributeError:
@@ -53,7 +54,8 @@ def n_args(fn: Callable[..., _R]) -> int:
         if co_varnames[0] == "self":
             return len(co_varnames) - 1
         return _nargs
-    raise TypeError(f"{fn!r} is not callable")
+    _emsg = f"{fn!r} is not callable"
+    raise TypeError(_emsg)
 
 
 class JsonArr(MutableSequence[_T], Generic[_T]):

@@ -231,7 +231,8 @@ def tree() -> None:
 @cli.command()
 def publish() -> None:
     """Publish all dgpy-libs to PyPI."""
-    raise NotImplementedError("not implemented with uv")
+    _errmsg = "not implemented with uv"
+    raise NotImplementedError(_errmsg)
 
 
 @cli.command()
@@ -269,7 +270,8 @@ def version(
     console.print(f"lib: {lib}")
     console.print(f"version: {version}")
     console.print(f"dry_run: {dry_run}")
-    raise NotImplementedError("TODO")
+    _errmsg = "TODO"
+    raise NotImplementedError(_errmsg)
 
 
 ######################
@@ -320,7 +322,8 @@ class Changelog(JsonBaseModel):
 
     def most_recent_change(self) -> Change:
         if len(self.changes) == 0:
-            raise ValueError("No changes in changelog")
+            _errmsg = "No changes in changelog"
+            raise ValueError(_errmsg)
         return max(self.changes, key=lambda change: change.timestamp)
 
     def new_updated_timestamp(self) -> datetime.datetime:

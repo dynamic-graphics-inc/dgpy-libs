@@ -69,7 +69,8 @@ def _json_default(obj: Any) -> Any:
         return int(obj)
     if isinstance(obj, bytes):
         return _json_scalar(obj)
-    raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+    _emsg = f"Object of type {type(obj)} is not JSON serializable"
+    raise TypeError(_emsg)
 
 
 def _print_json(data: Any) -> None:

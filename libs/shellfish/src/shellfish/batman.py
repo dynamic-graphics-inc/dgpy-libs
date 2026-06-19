@@ -104,7 +104,8 @@ def MKLINK_OPT(*, D: bool = False, H: bool = False, J: bool = False) -> str | No
     """
     # Check that only one of D, H, J is True
     if sum((D, H, J)) > 1:
-        raise ValueError(f"Only one of D, H, J can be True.  Got {D}, {H}, {J}")
+        _emsg = f"Only one of D, H, J can be True.  Got {D}, {H}, {J}"
+        raise ValueError(_emsg)
     if D:
         return "/D"
     if H:

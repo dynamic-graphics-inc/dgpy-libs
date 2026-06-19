@@ -310,9 +310,8 @@ def aiorun_asyncio(
     backend_options: dict[str, Any] | None = None,
 ) -> T_Retval:
     if backend != "asyncio":
-        raise ValueError(
-            f"anyio not installed, backend must be 'asyncio' not '{backend}'"
-        )
+        _emsg = f"anyio not installed, backend must be 'asyncio' not '{backend}'"
+        raise ValueError(_emsg)
     _backend_options = backend_options or {}
     _debug = _backend_options.get("debug", False)
     if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):

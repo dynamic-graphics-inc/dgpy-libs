@@ -105,7 +105,8 @@ class _EnvObjMeta(type):
 
     def __setattr__(cls, key: str, value: str) -> None:
         if hasattr(environ, key):
-            raise ValueError(f"Key ({key}) is protected; set with __setitem__")
+            _emsg = f"Key ({key}) is protected; set with __setitem__"
+            raise ValueError(_emsg)
         return cls.__setitem__(key, value)
 
     def update(self, d: dict[str, str]) -> None:

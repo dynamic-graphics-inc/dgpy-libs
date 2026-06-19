@@ -125,7 +125,8 @@ class ExeABC:
             return self.abspath
         _abspath = sh.which(self.cmd)
         if _abspath is None:
-            raise FileNotFoundError(f"{self.cmd} not found")
+            _emsg = f"{self.cmd} not found"
+            raise FileNotFoundError(_emsg)
         self.abspath = _abspath
         return self.abspath
 
