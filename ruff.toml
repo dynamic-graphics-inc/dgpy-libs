@@ -4,33 +4,32 @@ preview = true
 
 [lint]
 select = [
-  "ANN", # annotations
-  "B",   # bugbear
-  "C4",  # comprehensions
-  "D", # pydocstyle
+  "ANN",    # annotations
+  "B",      # bugbear
+  "C4",     # comprehensions
+  "D",      # pydocstyle
   "E",      # pyflakes errors
   "ERA001", # erradicate
   "F",      # pyflakes warnings
   "FA102",  # require `from __future__ import annotations`
-  "FBT",
+  "FBT",    # flake8-boolean-trap
   "I",      # isort
   "ICN",
-  "PIE",
-  "PT", # pytest
-  "Q",
-  "RUF",
-  "RUF",
-  "SIM",
-  "T201", # print
-  "TC",
-  "TID",
-  "UP",
-  "W",
-  "YTT",
+  "PIE",    # flake8-pie
+  "PT",     # flake8-pytest-style
+  "Q",      # flake8-quotes
+  "RET",    # flake8-return
+  "RUF",    # ruff
+  "SIM",    # flake8-simplify
+  "T201",   # print
+  "TC",     # flake8-type-checking
+  "TID",    # flake8-tidy-imports
+  "UP",     # flake8-pyupgrade
+  "W",      # pyflakes warnings
+  "YTT",    # flake8-2020
 
   # -- TODO --
   # "N",
-  "RET",
   # "EM",
   # "PLW",
   # "PLE",
