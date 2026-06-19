@@ -245,7 +245,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         super().__setattr__("_data", _data)
         if not all(isinstance(k, str) for k in self._data):
             d = {k: v for k, v in self._data.items() if not isinstance(k, str)}  # type: ignore[redundant-expr]
-            raise ValueError(f"JsonObj keys MUST be strings! Bad key values: {d!s}")
+            _emsg = f"JsonObj keys MUST be strings! Bad key values: {d!s}"
+            raise ValueError(_emsg)
         self.recurse()
         self.__post_init__()
 
@@ -292,10 +293,11 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
 
     def __setattr__(self, attr: _KT, value: _VT) -> None:
         if attr in self._cls_protected_attrs():
-            raise ValueError(
+            _emsg = (
                 f"Cannot set protected attribute ('{attr!s}'),"
                 f" must use brackets/setitem syntax: json_obj['{attr!s}']"
             )
+            raise ValueError(_emsg)
         return self.__setitem__(attr, value)
 
     def __setitem(self, key: _KT, value: _VT, *, identifier: bool = False) -> None:
@@ -303,9 +305,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             self._data[str(key)] = value
             return
         if identifier and not is_identifier(key):
-            raise ValueError(
-                f"Invalid key: ({key}).\nKey(s) is not a valid python identifier"
-            )
+            _emsg = f"Invalid key: ({key}).\nKey(s) is not a valid python identifier"
+            raise ValueError(_emsg)
         self._data[key] = value
 
     def __setitem__(self, key: _KT, value: _VT) -> None:

@@ -119,9 +119,8 @@ def completed_process_dict(
 
     """
     if not isinstance(completed_process, CompletedProcess):  # pragma: nocov
-        raise TypeError(
-            f"completed_process must be CompletedProcess object, not {type(completed_process)}"
-        )
+        _emsg = f"completed_process must be CompletedProcess object, not {type(completed_process)}"
+        raise TypeError(_emsg)
     return CompletedProcessDict(
         args=completed_process.args,
         stdout=completed_process.stdout,

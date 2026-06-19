@@ -493,7 +493,8 @@ def nbytes_str(nbytes: int | float) -> str:
         if nbytes < 1024.0 or x == "TB":
             return f"{nbytes:3.1f} {x}"
         nbytes /= 1024.0
-    raise ValueError(f"Invalid number of bytes: {nbytes}")  # pragma: no cover
+    _emsg = f"Invalid number of bytes: {nbytes}"
+    raise ValueError(_emsg)  # pragma: no cover
 
 
 def nbytes(nbytes: int | float) -> str:
@@ -1596,10 +1597,11 @@ def b64_html_img(b64_string: str | bytes, img_format: str) -> str:
         if isinstance(b64_string, bytes):
             b64_string = b64_string.decode("utf-8")
     except UnicodeDecodeError as ude:
-        raise ValueError(
+        _emsg = (
             "bytes given instead of string;\n"
             f"tried to decode but got UnicodeDecodeError:\n{ude!s}"
-        ) from ude
+        )
+        raise ValueError(_emsg) from ude
     return f'<img src="data:image/{img_format};base64,{b64_string}">'
 
 
@@ -1660,10 +1662,11 @@ def base64_jpg_html(b64_string: str | bytes) -> str:
         if isinstance(b64_string, bytes):
             b64_string = b64_string.decode("utf-8")
     except UnicodeDecodeError as ude:
-        raise ValueError(
+        _emsg = (
             "bytes given instead of string;\n"
             f"tried to decode but got UnicodeDecodeError:\n{ude!s}"
-        ) from ude
+        )
+        raise ValueError(_emsg) from ude
     return f'<img src="data:image/jpeg;base64,{b64_string!s}">'
 
 
@@ -1703,9 +1706,8 @@ def space_pad_strings(strings: list[str], justify: str = "left") -> list[str]:
     """
     _justify = justify.lower()
     if _justify not in ["left", "right"]:
-        raise ValueError(
-            f"justify must be 'left' or 'right', not {justify}; case-insensitive"
-        )
+        _emsg = f"justify must be 'left' or 'right', not {justify}; case-insensitive"
+        raise ValueError(_emsg)
     _max_len = max(len(s) for s in strings)
     if _justify == "right":
         return [s.rjust(_max_len) for s in strings]

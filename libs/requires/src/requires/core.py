@@ -446,9 +446,8 @@ def make_requirement(
 
     str_type = str(type(requirement))
     str_req = str(requirement)
-    raise RequirementError(
-        f"Unable to create requirement (type: {str_type}): {str_req})"
-    )
+    _emsg = f"Unable to create requirement (type: {str_type}): {str_req})"
+    raise RequirementError(_emsg)
 
 
 def make_requirements(
@@ -561,9 +560,8 @@ def scope_requirements(*, debug: bool = False) -> RequirementsMeta:
             log.debug(f"Found obj with requirements: {name} -> {obj}")
             requirements_meta = obj.__requires__
             if not isinstance(requirements_meta, RequirementsMeta):
-                raise RequirementError(
-                    f"Expected a RequirementsMeta instance, got {type(requirements_meta)}"
-                )
+                _emsg = f"Expected a RequirementsMeta instance, got {type(requirements_meta)}"
+                raise RequirementError(_emsg)
             scope_reqs.update(requirements_meta.requirements)
     return scope_reqs
 

@@ -46,7 +46,8 @@ def test_xtyping_all() -> None:
     xtyping_all = xtyping.__all__
     if not all(el in xtyping_all for el in non_typing_members):
         missing = sorted([el for el in non_typing_members if el not in xtyping_all])
-        raise ValueError("MISSING from __all__: {}".format("\n".join(missing)))
+        _emsg = "MISSING from __all__: {}".format("\n".join(missing))
+        raise ValueError(_emsg)
 
 
 def test_xtyping_imports() -> None:
@@ -63,7 +64,8 @@ def test_xtyping_imports_shed() -> None:
         ):
             missing.add(el)
     if missing:
-        raise ValueError(f"MISSING from __all__: {tuple(missing)!s}")
+        _emsg = f"MISSING from __all__: {tuple(missing)!s}"
+        raise ValueError(_emsg)
 
 
 _TYPING_DEPRECATED = {"AbstractSet", "Deque", "DefaultDict"}
@@ -72,7 +74,8 @@ _TYPING_DEPRECATED = {"AbstractSet", "Deque", "DefaultDict"}
 @pytest.mark.parametrize("el", xtyping.__all_typing__)
 def test_xtyping_imports_typing(el: str) -> None:
     if not hasattr(xtyping, el):
-        raise ValueError(f"MISSING from __all__: {el}")
+        _emsg = f"MISSING from __all__: {el}"
+        raise ValueError(_emsg)
 
 
 def _test_module_all_tuple(
@@ -88,7 +91,8 @@ def _test_module_all_tuple(
 
         counts = Counter(mod_all)
         any_duplicates = [item for item, count in counts.items() if count > 1]
-        raise ValueError(f"Duplicate items found in {mod_name}: {any_duplicates}")
+        _emsg = f"Duplicate items found in {mod_name}: {any_duplicates}"
+        raise ValueError(_emsg)
     if check_sorted:
         sorted_all_tuple = tuple(sorted(mod_all))
         try:

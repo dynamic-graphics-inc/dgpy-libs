@@ -495,7 +495,8 @@ def validate_stdin(stdin: STDIN) -> STDIN:
         return validate_stdin(str(stdin).encode())
     if isinstance(stdin, bytes | bytearray):
         return bytes(stdin)
-    raise ValueError(f"Invalid stdin: (type={type(stdin)!s}) {stdin!s}")
+    _emsg = f"Invalid stdin: (type={type(stdin)!s}) {stdin!s}"
+    raise ValueError(_emsg)
 
 
 def utf8_string(val: str | bytes | bytearray) -> str:
@@ -622,9 +623,8 @@ def _do(
         if exe_path:
             _args[0] = exe_path
     if not shell and popen_has_pipe_character(_args):
-        raise ValueError(
-            f"WARNING: has a pipe character, but shell=False; args: {_args}"
-        )
+        _emsg = f"WARNING: has a pipe character, but shell=False; args: {_args}"
+        raise ValueError(_emsg)
     _env = None if env is None else mkenv(env, extenv=extenv)
     args_str = " ".join(_args)
     if dryrun:
@@ -1551,7 +1551,8 @@ def export(key: str, val: str | None = None) -> tuple[str, str]:
     if "=" in key:
         _key = key.split("=")[0]
         return export(_key, key[len(_key) + 1 :])
-    raise ValueError(f"Unable to parse env variable - key: {key!s}, value: {val!s}")
+    _emsg = f"Unable to parse env variable - key: {key!s}, value: {val!s}"
+    raise ValueError(_emsg)
 
 
 def setenv(key: str, val: str | None = None) -> tuple[str, str]:

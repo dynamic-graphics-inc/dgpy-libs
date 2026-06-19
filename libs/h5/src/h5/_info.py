@@ -219,7 +219,8 @@ class GroupLikeInfo(H5Mixin):
             return self.groups[item]
         if item in self.datasets:
             return self.datasets[item]
-        raise KeyError(f"{item} not found in {self.key}")
+        _emsg = f"{item} not found in {self.key}"
+        raise KeyError(_emsg)
 
     def get(
         self, item: str, default: GroupInfo | DatasetInfo | None = None
@@ -230,19 +231,20 @@ class GroupLikeInfo(H5Mixin):
             return self[item]
         except KeyError as ke:
             if not isinstance(default, GroupInfo | DatasetInfo):
-                raise TypeError(
-                    f"default must be a H5Group or H5Dataset, not {type(default)}"
-                ) from ke
+                _emsg = f"default must be a H5Group or H5Dataset, not {type(default)}"
+                raise TypeError(_emsg) from ke
             return default
 
     def _set_dataset(self, key: str, value: DatasetInfo) -> None:
         if key in self.groups:
-            raise KeyError(f"{key} already exists as a group")
+            _emsg = f"{key} already exists as a group"
+            raise KeyError(_emsg)
         self.datasets[key] = value
 
     def _set_group(self, key: str, value: GroupInfo) -> None:
         if key in self.datasets:
-            raise KeyError(f"{key} already exists as a dataset")
+            _emsg = f"{key} already exists as a dataset"
+            raise KeyError(_emsg)
         self.groups[key] = value
 
     def __setitem__(self, key: str, value: GroupInfo | DatasetInfo) -> None:
@@ -340,7 +342,8 @@ class GroupInfo(GroupLikeInfo):
             elif isinstance(value, h5py.Dataset):
                 datasets[key] = DatasetInfo.from_h5py_dataset(value)
             else:
-                raise TypeError(f"Unknown type: {type(value)}")
+                _emsg = f"Unknown type: {type(value)}"
+                raise TypeError(_emsg)
         attrs = dict(h5py_group.attrs)
         key = str(h5py_group.name)
         return cls(
@@ -426,7 +429,8 @@ class FileInfo(GroupLikeInfo):
             elif isinstance(value, h5py.Dataset):
                 datasets[key] = DatasetInfo.from_h5py_dataset(value)
             else:
-                raise TypeError(f"Unknown type: {type(value)}")
+                _emsg = f"Unknown type: {type(value)}"
+                raise TypeError(_emsg)
         attrs = dict(h5py_group.attrs)
         key = str(h5py_group.name)
         fssize = path.getsize(h5py_group.file.filename)
@@ -495,7 +499,8 @@ def h5py_obj_info(
         return DatasetInfo.from_h5py_dataset(obj)
     if isinstance(obj, h5py.File):
         return FileInfo.from_h5py_file(obj.get("/"))
-    raise TypeError(f"Unknown type: {type(obj)}")
+    _emsg = f"Unknown type: {type(obj)}"
+    raise TypeError(_emsg)
 
 
 def info(

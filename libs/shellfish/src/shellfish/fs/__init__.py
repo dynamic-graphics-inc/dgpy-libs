@@ -182,7 +182,8 @@ def filesize(fspath: FsPath) -> int:
 def scandir(dirpath: FsPath = ".") -> Iterable[DirEntry[AnyStr]]:
     """Typed version of os.scandir"""
     if not isdir(dirpath):
-        raise NotADirectoryError(f"{dirpath} is not a directory")
+        _emsg = f"{dirpath} is not a directory"
+        raise NotADirectoryError(_emsg)
     return cast("Iterable[DirEntry[AnyStr]]", _scandir(fspath(dirpath)))
 
 
@@ -224,9 +225,8 @@ def scandir_gen_filter(
         return (el for el in it if not el.is_dir(follow_symlinks=follow_symlinks))
     if not files and dirs and symlinks:  # dirs and symlinks
         return (el for el in it if not el.is_file(follow_symlinks=follow_symlinks))
-    raise ValueError(
-        f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
-    )
+    _emsg = f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
+    raise ValueError(_emsg)
 
 
 def scandir_gen(
@@ -1546,9 +1546,8 @@ def rm_gen(
                 elif recursive:
                     rmdir(_path_str, recursive=True, force=force)
                 else:
-                    raise ValueError(
-                        f"{_path_str!s} (under {fspath!s}) is a directory -- use r=True or recursive=True"
-                    )
+                    _emsg = f"{_path_str!s} (under {fspath!s}) is a directory -- use r=True or recursive=True"
+                    raise ValueError(_emsg)
     else:
         if isfile(fspath):
             if not dryrun:
@@ -1559,9 +1558,8 @@ def rm_gen(
                 rmdir(fspath, force=force, recursive=True)
             yield _fspath(fspath)
         else:
-            raise ValueError(
-                f"{fspath!s} is a directory -- use r=True or recursive=True"
-            )
+            _emsg = f"{fspath!s} is a directory -- use r=True or recursive=True"
+            raise ValueError(_emsg)
 
 
 def rm(
@@ -1628,7 +1626,8 @@ def copy_file(
     if not dryrun and mkdirp:
         _dest.parent.mkdir(parents=mkdirp, exist_ok=True)
     elif not _dest.parent.exists() or not _dest.parent.is_dir():
-        raise FileNotFoundError(f"Destination directory {_dest.parent} does not exist")
+        _emsg = f"Destination directory {_dest.parent} does not exist"
+        raise FileNotFoundError(_emsg)
     if not dryrun:
         write_bytes_gen(dest, read_bytes_gen(src, blocksize=2**18))
         _copystat(src, dest, follow_symlinks=True)

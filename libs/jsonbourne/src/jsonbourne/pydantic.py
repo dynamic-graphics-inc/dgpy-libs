@@ -78,7 +78,8 @@ def json_obj_before_validator(
     v: JsonObj[T] | dict[str, T] | Any,
 ) -> JsonObj[T]:
     if not is_json_obj_like(v):
-        raise ValueError(f"Expected JsonObj, got {type(v)}")
+        _emsg = f"Expected JsonObj, got {type(v)}"
+        raise ValueError(_emsg)
     if isinstance(v, JsonObj):
         return v
     return JsonObj(**v)

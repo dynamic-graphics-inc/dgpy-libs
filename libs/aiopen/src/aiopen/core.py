@@ -216,7 +216,8 @@ def _aiopen_dispatch(
     loop: AbstractEventLoop,
     executor: Any = None,
 ) -> TextIOWrapperAsync | BufferedIOAsyncBase | BufferedReaderAsync | FileIOAsync:
-    raise TypeError(f"Unsupported io type: {file}.")
+    _emsg = f"Unsupported io type: {file}."
+    raise TypeError(_emsg)
 
 
 @_aiopen_dispatch.register(TextIOBase)
