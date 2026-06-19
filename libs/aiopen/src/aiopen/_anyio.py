@@ -50,8 +50,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
         return self._obj
 
     async def __aenter__(self) -> AsyncFile[AnyStr]:
-        _obj = await self.init_async()
-        return _obj
+        return await self.init_async()
 
     async def __aexit__(
         self,

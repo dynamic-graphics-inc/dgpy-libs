@@ -2,6 +2,12 @@
 
 ## 2026-06-12
 
+- ruff `RET` rules turned on
+
+---
+
+## 2026-06-12
+
 - updated `__about__.py` files to slice
 - fixed codeql unclosed file warnings
 

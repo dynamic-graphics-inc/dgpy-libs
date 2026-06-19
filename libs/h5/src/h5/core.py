@@ -512,13 +512,11 @@ def datasets_dict(
             h5_path: h5_dataset[()]
             for h5_path, h5_dataset in h5py_obj_dataset_gen(h5_obj, h5_path)
         }
-    else:
-        with File(h5_obj, mode="r") as h5file:
-            datasets_dict = {
-                h5_path: h5_dataset[()]
-                for h5_path, h5_dataset in h5py_obj_dataset_gen(h5file, h5_path)
-            }
-            return datasets_dict
+    with File(h5_obj, mode="r") as h5file:
+        return {
+            h5_path: h5_dataset[()]
+            for h5_path, h5_dataset in h5py_obj_dataset_gen(h5file, h5_path)
+        }
 
 
 def attrs_dict(

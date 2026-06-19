@@ -124,9 +124,9 @@ class Requirement:
     def import_string(self) -> str:
         if self._from and self._as:
             return f"from {self._from} import {self._import} as {self._as}"
-        elif self._as:
+        if self._as:
             return f"import {self._import} as {self._as}"
-        elif self._from:
+        if self._from:
             return f"from {self._from} import {self._import}"
         return f"import {self._import}"
 
@@ -412,15 +412,14 @@ def parse_import_string(string: str) -> Requirement:
     if "as" in parts_set and "from" in parts_set:
         _f, _from, _i, _import, _a, _as = parts
         return Requirement(_from=_from, _import=_import, _as=_as)
-    elif "from" in parts_set:
+    if "from" in parts_set:
         _f, _from, _i, _import = parts
         return Requirement(_from=_from, _import=_import)
-    elif "as" in parts_set:
+    if "as" in parts_set:
         _i, _import, _a, _as = parts
         return Requirement(_import=_import, _as=_as)
-    else:
-        _, _import_str = parts
-        return Requirement(_import=_import_str)
+    _, _import_str = parts
+    return Requirement(_import=_import_str)
 
 
 def string2requirement(string: str) -> Requirement:
@@ -434,9 +433,9 @@ def make_requirement(
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
-    elif isinstance(requirement, str):
+    if isinstance(requirement, str):
         return string2requirement(string=requirement)
-    elif isinstance(requirement, dict):
+    if isinstance(requirement, dict):
         if "import" in requirement:
             requirement["_import"] = requirement.pop("import")  # type: ignore[typeddict-item]
         if "from" in requirement:

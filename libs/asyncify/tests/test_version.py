@@ -14,12 +14,11 @@ def _get_version() -> str:
         if path.exists(_filepath):
             with open(_filepath) as f:
                 _file = f.read()
-            version = (
+            return (
                 next(line for line in _file.split("\n") if "version" in line)
                 .replace("version = ", "")
                 .strip('"')
             )
-            return version
         _dirpath = path.split(_dirpath)[0]
     return version
 

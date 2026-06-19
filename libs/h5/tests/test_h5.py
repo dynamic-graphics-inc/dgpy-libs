@@ -217,8 +217,7 @@ def test_no_repeated_keys(tmp_path: Path) -> None:
         for k in h5.h5py_obj_keys_gen(f):
             if k in keys:
                 raise ValueError(f"Repeated key {k}")
-            else:
-                keys.add(k)
+            keys.add(k)
 
 
 def test_h5_test_files() -> None:

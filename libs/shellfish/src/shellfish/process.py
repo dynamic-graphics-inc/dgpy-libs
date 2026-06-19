@@ -232,10 +232,9 @@ def is_notebook() -> bool:  # pragma: nocov
         shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
         if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
-        elif shell == "TerminalInteractiveShell":
+        if shell == "TerminalInteractiveShell":
             return False  # Terminal running IPython
-        else:
-            return False  # Other type (?)
+        return False  # Other type (?)
     except NameError:
         return False  # Probably standard Python interpreter
 
@@ -282,14 +281,13 @@ def rhel_version() -> str:
             release_info = file.read()
             if "release 7" in release_info:
                 return "rhel7"
-            elif "release 8" in release_info:
+            if "release 8" in release_info:
                 return "rhel8"
-            elif "release 9" in release_info:
+            if "release 9" in release_info:
                 return "rhel9"
-            elif "release 10" in release_info:
+            if "release 10" in release_info:
                 return "rhel10"
-            else:
-                return "other"
+            return "other"
     except FileNotFoundError:
         return "linux"
 

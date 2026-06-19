@@ -217,7 +217,7 @@ class GroupLikeInfo(H5Mixin):
     def __getitem__(self, item: str) -> GroupInfo | DatasetInfo:
         if item in self.groups:
             return self.groups[item]
-        elif item in self.datasets:
+        if item in self.datasets:
             return self.datasets[item]
         raise KeyError(f"{item} not found in {self.key}")
 
@@ -248,7 +248,7 @@ class GroupLikeInfo(H5Mixin):
     def __setitem__(self, key: str, value: GroupInfo | DatasetInfo) -> None:
         if isinstance(value, GroupInfo):
             return self._set_group(key, value)
-        elif isinstance(value, DatasetInfo):
+        if isinstance(value, DatasetInfo):
             return self._set_dataset(key, value)
         valid_class_names = (
             GroupInfo.__class__.__name__,
@@ -264,9 +264,9 @@ class GroupLikeInfo(H5Mixin):
     def iter(self, *, groups: bool = True, datasets: bool = True) -> Iterable[str]:
         if groups and datasets:
             return chain(self.groups.keys(), self.datasets.keys())
-        elif groups and not datasets:
+        if groups and not datasets:
             return self.groups.keys()
-        elif not groups and datasets:
+        if not groups and datasets:
             return self.datasets.keys()
         raise ValueError("Must set either groups or datasets to True")
 
@@ -491,12 +491,11 @@ def h5py_obj_info(
 ) -> GroupInfo | DatasetInfo | FileInfo:
     if isinstance(obj, h5py.Group):
         return GroupInfo.from_h5py_group(obj)
-    elif isinstance(obj, h5py.Dataset):
+    if isinstance(obj, h5py.Dataset):
         return DatasetInfo.from_h5py_dataset(obj)
-    elif isinstance(obj, h5py.File):
+    if isinstance(obj, h5py.File):
         return FileInfo.from_h5py_file(obj.get("/"))
-    else:
-        raise TypeError(f"Unknown type: {type(obj)}")
+    raise TypeError(f"Unknown type: {type(obj)}")
 
 
 def info(

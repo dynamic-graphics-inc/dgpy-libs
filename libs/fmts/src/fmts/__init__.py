@@ -491,8 +491,7 @@ def nbytes_str(nbytes: int | float) -> str:
         return f"-{nbytes_str(abs(nbytes))}"
     for x in ["bytes", "KB", "MB", "GB", "TB"]:
         if nbytes < 1024.0 or x == "TB":
-            _str = f"{nbytes:3.1f} {x}"
-            return _str
+            return f"{nbytes:3.1f} {x}"
         nbytes /= 1024.0
     raise ValueError(f"Invalid number of bytes: {nbytes}")  # pragma: no cover
 
@@ -602,26 +601,25 @@ def nseconds(nsec: float) -> str:
     """
     if nsec < 0:
         return nseconds(abs(nsec))
-    elif isclose(nsec, 0):
+    if isclose(nsec, 0):
         return "0 sec"
-    elif 0.000001 > nsec >= 0.000000001:
+    if 0.000001 > nsec >= 0.000000001:
         return f"{(10**9) * nsec:.3f} ns"
-    elif 0.001 > nsec >= 0.000001:
+    if 0.001 > nsec >= 0.000001:
         return f"{(10**6) * nsec:.3f} ÃŽÂ¼s"
-    elif 1 > nsec >= 0.001:
+    if 1 > nsec >= 0.001:
         return f"{(10**3) * nsec:.3f} ms"
-    elif nsec < 60:
+    if nsec < 60:
         return f"{nsec:.3f} sec"
-    elif nsec < 3600:
+    if nsec < 3600:
         minutes = nsec // 60
         nsec %= 60
         return f"{minutes:02d}:{nsec:02d} (mm:ss)"
-    else:
-        hours = nsec // (60 * 60)
-        nsec %= 60 * 60
-        minutes = nsec // 60
-        nsec %= 60
-        return f"{hours:02d}:{minutes:02d}:{nsec:02d} (hh:mm:ss)"
+    hours = nsec // (60 * 60)
+    nsec %= 60 * 60
+    minutes = nsec // 60
+    nsec %= 60
+    return f"{hours:02d}:{minutes:02d}:{nsec:02d} (hh:mm:ss)"
 
 
 def dseconds(ti: float | int, tf: float | int) -> str:

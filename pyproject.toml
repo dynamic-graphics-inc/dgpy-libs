@@ -179,7 +179,7 @@ implicit_reexport = false
 strict = true
 strict_equality = true
 show_error_context = true
-enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool" ]
+enable_error_code = [ "ignore-without-code", "redundant-expr", "truthy-bool", ]
 
 [[tool.mypy.overrides]]
 module = "tests.*"
