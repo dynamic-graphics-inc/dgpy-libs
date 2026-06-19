@@ -34,7 +34,7 @@ else:
 FsPath: TypeAlias = str | Path | PathLikeAny
 FileOrGroup: TypeAlias = File | Group
 GroupLikeOrFsPath: TypeAlias = File | Group | FsPath
-H5pyCompression: TypeAlias = Literal["gzip", "lzf", "szip"]
+H5pyCompression: TypeAlias = Literal["gzip", "lzf", "szip", "unknown"]
 
 """
 h5py mode strings (taken from h5py docstrings)):

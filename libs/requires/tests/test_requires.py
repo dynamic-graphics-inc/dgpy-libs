@@ -115,8 +115,7 @@ def test_jsonthing() -> None:
     @requires("json")
     def fn() -> str:
         d = {"herm": 1}
-        s = json.dumps(d)
-        return s
+        return json.dumps(d)
 
     assert fn() == '{"herm": 1}'
 
@@ -125,8 +124,7 @@ def test_json_not_imported() -> None:
     @requires("json")
     def fn() -> str:
         d = {"herm": 1}
-        s = json.dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return json.dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -138,8 +136,7 @@ def test_requirement_as_decorator() -> None:
     @json_dumps_req
     def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -235,8 +232,7 @@ def test_from_json_import_dumps() -> None:
     @requires("from json import dumps")
     def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -245,8 +241,7 @@ def test_from_json_import_dumps_alias() -> None:
     @requires("from json import dumps as dumpz")
     def fn() -> str:
         d = {"herm": 1}
-        s = dumpz(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumpz(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -255,8 +250,7 @@ def test_from_json_import_dumps_module_alias() -> None:
     @requires("import json as jason")
     def fn() -> str:
         d = {"herm": 1}
-        s = jason.dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return jason.dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -266,8 +260,7 @@ async def test_from_json_import_dumps_async() -> None:
     @requires("from json import dumps")
     async def fn() -> str:  # noqa: RUF029
         d = {"herm": 1}
-        s = dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumps(d)  # type: ignore[name-defined, no-any-return]
 
     result = await fn()
     assert result == '{"herm": 1}'
@@ -277,8 +270,7 @@ def test_from_json_import_dumps_via_kwargs() -> None:
     @requires(_from="json", _import="dumps")
     def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -287,8 +279,7 @@ def test_from_json_import_dumps_via_dict() -> None:
     @requires({"from": "json", "import": "dumps"})
     def fn() -> str:
         d = {"herm": 1}
-        s = dumps(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return dumps(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -297,8 +288,7 @@ def test_from_json_import_dumps_via_dict_simple() -> None:
     @requires({"_from": "json", "_import": "dumps", "_as": "dumps_test_dict"})
     def fn() -> Any:
         d = {"herm": 1}
-        s = dumps_test_dict(d)  # type: ignore[name-defined]
-        return s
+        return dumps_test_dict(d)  # type: ignore[name-defined]
 
     assert fn() == '{"herm": 1}'
 
@@ -366,8 +356,7 @@ def test_from_json_import_dumps_as_dumpit() -> None:
     @requires("from json import dumps as DUMPIT")
     def fn() -> str:
         d = {"herm": 1}
-        s = DUMPIT(d)  # type: ignore[name-defined]
-        return s  # type: ignore[no-any-return]
+        return DUMPIT(d)  # type: ignore[name-defined, no-any-return]
 
     assert fn() == '{"herm": 1}'
 
@@ -376,8 +365,7 @@ def test_from_json_import_dumps_as_xxx_non_importable() -> None:
     @requires("from json import DUMPSNOTANATTR")
     def fn() -> Any:
         d = {"herm": 1}
-        s = DUMPSNOTANATTR(d)  # type: ignore[name-defined]
-        return s
+        return DUMPSNOTANATTR(d)  # type: ignore[name-defined]
 
     with pytest.raises(RequirementAttributeError):
         fn()
@@ -394,8 +382,7 @@ def test_requires() -> None:
 def test_requires_name_error() -> None:
     @requires("a_fake_module")
     def fn() -> Any:
-        _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
-        return _some_value
+        return a_fake_module.a_fake_function()  # type: ignore[name-defined]
 
     with pytest.raises(RequirementError):
         fn()
@@ -405,8 +392,7 @@ def test_requires_name_error() -> None:
 async def test_requires_name_error_async() -> None:
     @requires("a_fake_module")
     async def fn() -> Any:  # noqa: RUF029
-        _some_value = a_fake_module.a_fake_function()  # type: ignore[name-defined]
-        return _some_value
+        return a_fake_module.a_fake_function()  # type: ignore[name-defined]
 
     with pytest.raises(RequirementError):
         await fn()
@@ -445,8 +431,7 @@ def test_module_wrap() -> None:
 
     @requires(_import="numpy", _as="np")
     def mkvec(vector: Any) -> Any:
-        vector = np.ndarray(vector)
-        return vector
+        return np.ndarray(vector)
 
     try:
         _v = mkvec([12, 3])

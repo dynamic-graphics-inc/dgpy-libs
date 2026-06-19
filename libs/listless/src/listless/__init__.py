@@ -191,8 +191,7 @@ def partition(
     args = [iter(it)] * n
     if pad:
         return zip_longest(*args, fillvalue=padval)
-    else:
-        return zip(*args, strict=False)
+    return zip(*args, strict=False)
 
 
 def nyield(it: Sequence[_T], n: int) -> Iterable[_T]:
@@ -635,15 +634,14 @@ def unique_gen(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Itera
         have: set[_T] = set()
         have_add = have.add
         return (x for x in it if not (x in have or have_add(x)))
-    else:
-        havek: set[_K] = set()
-        havek_add = havek.add
+    havek: set[_K] = set()
+    havek_add = havek.add
 
-        return (
-            el
-            for el, k_el in ((_el, key(_el)) for _el in it)
-            if not (k_el in havek or havek_add(k_el))
-        )
+    return (
+        el
+        for el, k_el in ((_el, key(_el)) for _el in it)
+        if not (k_el in havek or havek_add(k_el))
+    )
 
 
 def unique(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Iterable[_T]:

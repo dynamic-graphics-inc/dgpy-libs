@@ -35,13 +35,12 @@ REUSE_TEST_ENVS = True
 
 def latest_wheel() -> str:
     wheels = sorted([el for el in os.listdir("dist") if el.endswith(".whl")])
-    latest = wheels[-1]
-    return latest
+    return wheels[-1]
 
 
 def _get_jsonbourne_version() -> str:
     _filepath = path.join(PWD, "pyproject.toml")
-    version = (
+    return (
         next(
             line
             for line in Path(_filepath).read_text(encoding="utf8").split("\n")
@@ -50,7 +49,6 @@ def _get_jsonbourne_version() -> str:
         .replace("version = ", "")
         .strip('"')
     )
-    return version
 
 
 def install_common_test_deps(session: nox.Session) -> None:

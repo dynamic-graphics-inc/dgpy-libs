@@ -1260,8 +1260,7 @@ class LIN(_LIN):
             src, dest, delete=delete, exclude=exclude, include=include, dry_run=dry_run
         )
 
-        done = do(args=list(filter(None, rsync_args)))
-        return done
+        return do(args=list(filter(None, rsync_args)))
 
     @staticmethod
     def sync(

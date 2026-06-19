@@ -301,7 +301,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def __setitem(self, key: _KT, value: _VT, *, identifier: bool = False) -> None:
         if is_int(key):
             self._data[str(key)] = value
-            return None
+            return
         if identifier and not is_identifier(key):
             raise ValueError(
                 f"Invalid key: ({key}).\nKey(s) is not a valid python identifier"
