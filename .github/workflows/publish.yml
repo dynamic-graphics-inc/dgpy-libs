@@ -25,7 +25,7 @@ jobs:
       matrix: ${{ steps.detect.outputs.matrix }}
       any: ${{ steps.detect.outputs.any }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -46,7 +46,7 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.detect.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
