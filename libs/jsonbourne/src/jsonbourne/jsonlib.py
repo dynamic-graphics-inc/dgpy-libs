@@ -698,7 +698,7 @@ def wjson(
     **kwargs: Any,
 ) -> int:
     with open(fspath, "wb") as f:
-        bytes_written = f.write(
+        return f.write(
             JSONLIB.dumpb(
                 data,
                 fmt=fmt,
@@ -709,7 +709,6 @@ def wjson(
                 **kwargs,
             )
         )
-    return bytes_written
 
 
 def rjson(

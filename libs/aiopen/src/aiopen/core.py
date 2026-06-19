@@ -80,8 +80,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
         line = await self.readline()
         if line:
             return cast("AnyStr", line)
-        else:
-            raise StopAsyncIteration
+        raise StopAsyncIteration
 
     @aio_hoist
     def close(self, *args: Any, **kwargs: Any) -> Any: ...
@@ -280,10 +279,9 @@ class AiopenContextManager(
     ) -> Any:
         if val is None:
             return self._coro.throw(typ)
-        elif tb is None:
+        if tb is None:
             return self._coro.throw(typ, val)
-        else:
-            return self._coro.throw(typ, val, tb)
+        return self._coro.throw(typ, val, tb)
 
     def close(self) -> Any:
         return self._coro.close()
@@ -308,15 +306,13 @@ class AiopenContextManager(
         return resp  # noqa: B901
 
     async def __aiter__(self) -> Any:
-        resp = await self._coro
-        return resp
+        return await self._coro
 
     def __await__(self) -> Any:
         return self._coro.__await__()
 
     async def __anext__(self) -> Any:
-        resp = await self._coro
-        return resp
+        return await self._coro
 
     async def __aenter__(
         self,

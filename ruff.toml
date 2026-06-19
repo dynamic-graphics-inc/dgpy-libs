@@ -30,7 +30,7 @@ select = [
 
   # -- TODO --
   # "N",
-  # "RET",
+  "RET",
   # "EM",
   # "PLW",
   # "PLE",

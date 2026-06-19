@@ -212,17 +212,17 @@ def scandir_gen_filter(
 ) -> Iterator[DirEntry[AnyStr]]:
     if files and dirs and symlinks:  # all
         return (x for x in it)
-    elif files_only or (files and not dirs and not symlinks):  # files (only)
+    if files_only or (files and not dirs and not symlinks):  # files (only)
         return (el for el in it if el.is_file(follow_symlinks=follow_symlinks))
-    elif dirs_only or (not files and dirs and not symlinks):  # dirs only
+    if dirs_only or (not files and dirs and not symlinks):  # dirs only
         return (el for el in it if el.is_dir(follow_symlinks=follow_symlinks))
-    elif symlinks_only or (not files and not dirs and symlinks):  # symlinks
+    if symlinks_only or (not files and not dirs and symlinks):  # symlinks
         return (el for el in it if el.is_symlink())
-    elif files and dirs and not symlinks:  # files and dirs
+    if files and dirs and not symlinks:  # files and dirs
         return (el for el in it if not el.is_symlink())
-    elif files and not dirs and symlinks:  # files and symlinks
+    if files and not dirs and symlinks:  # files and symlinks
         return (el for el in it if not el.is_dir(follow_symlinks=follow_symlinks))
-    elif not files and dirs and symlinks:  # dirs and symlinks
+    if not files and dirs and symlinks:  # dirs and symlinks
         return (el for el in it if not el.is_file(follow_symlinks=follow_symlinks))
     raise ValueError(
         f"Invalid combination of arguments: files={files}, dirs={dirs}, symlinks={symlinks}"
@@ -1511,7 +1511,7 @@ def rmdir(fspath: FsPath, *, force: bool = False, recursive: bool = False) -> No
         try:
             return rmdir(fspath, recursive=recursive)
         except FileNotFoundError:
-            return
+            return None
     if recursive:
         return rmtree(_fspath(fspath))
     return _rmdir(_fspath(fspath))
@@ -1589,9 +1589,8 @@ def rm(
         return list(
             rm_gen(fspath=fspath, force=force, recursive=recursive, dryrun=dryrun)
         )
-    else:
-        exhaust(rm_gen(fspath=fspath, force=force, recursive=recursive, dryrun=dryrun))
-        return None
+    exhaust(rm_gen(fspath=fspath, force=force, recursive=recursive, dryrun=dryrun))
+    return None
 
 
 def stat(fspath: FsPath) -> os_stat_result:
