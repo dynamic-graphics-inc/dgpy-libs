@@ -88,6 +88,7 @@ fmtc:
 
 # ruff lint
 ruff:
+    uv run ruff --version
     uv run ruff check .
 
 # ruff lint & fix
