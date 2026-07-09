@@ -24,6 +24,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
+    Literal,
 )
 
 from asyncify import asyncify
@@ -176,7 +177,7 @@ from shellfish.process import is_win
 from shellfish.stdio import Stdio as Stdio
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Sequence
 
     from shellfish._types import (
         STDIN as STDIN,
@@ -352,7 +353,6 @@ __all__ = (
     "unlink_files",
     "utf8_string",
     "validate_popen_args",
-    "validate_popen_args_windows",
     "validate_stdin",
     "walk_gen",
     "wbin",
@@ -518,6 +518,10 @@ def flatten_args(*args: Any | list[Any]) -> list[str]:
     return list(_flatten_strings(*args))
 
 
+def popen_has_pipe_character(args: Sequence[PopenArg]) -> bool:
+    return any(arg == "|" for arg in args)
+
+
 def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
     if len(args) == 0:
         raise ValueError("args must be a non-empty sequence")
@@ -529,21 +533,42 @@ def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
     return flatten_args(args)
 
 
-def popen_has_pipe_character(args: list[PopenArg] | tuple[PopenArg, ...]) -> bool:
-    return any(arg == "|" for arg in args)
+def _validate_popen_args_platform(
+    args: PopenArgs | tuple[PopenArgs, ...],
+    env: dict[str, str] | None = None,
+    *,
+    shell: bool = False,
+) -> list[str]:
+    del env, shell
+    return validate_popen_args(args)
 
 
-def validate_popen_args_windows(
-    args: PopenArgs, env: dict[str, str] | None = None
-) -> PopenArgs:
-    args = validate_popen_args(args)
-    _path = None
-    if env and "PATH" in env:
-        _path = env["PATH"]
-    fspath = which_lru(args[0], path=_path)
-    if fspath and fspath.lower() in {".cmd", ".bat"}:
-        args[0] = str(Path(fspath).absolute())
-    return args
+if IS_WIN:
+    _WINDOWS_BATCH_SUFFIXES: frozenset[str] = frozenset({".bat", ".cmd"})
+
+    def _is_windows_batch_file(fspath: str) -> bool:
+        return Path(fspath).suffix.lower() in _WINDOWS_BATCH_SUFFIXES
+
+    def _validate_popen_args_windows(
+        args: PopenArgs | tuple[PopenArgs, ...],
+        env: dict[str, str] | None = None,
+        *,
+        shell: bool = False,
+    ) -> list[str]:
+        args = validate_popen_args(args)
+        _path = None
+        if env and "PATH" in env:
+            _path = env["PATH"]
+        fspath = which_lru(args[0], path=_path)
+        if fspath is None:
+            fspath = args[0]
+        if not shell and _is_windows_batch_file(fspath):
+            return ["cmd.exe", "/d", "/c", "call", fspath, *args[1:]]
+        if fspath:
+            args[0] = fspath
+        return args
+
+    _validate_popen_args_platform = _validate_popen_args_windows
 
 
 def _do_tee(
@@ -560,8 +585,8 @@ def _do_tee(
     )
     return Done(
         args=completed.args,
-        stdout=completed.stdout,
-        stderr=completed.stderr,
+        stdout=completed.stdout.decode(),
+        stderr=completed.stderr.decode(),
         returncode=completed.returncode,
         ti=pdt.ti,
         tf=pdt.tf,
@@ -572,7 +597,7 @@ def _do_tee(
 
 
 def _do(
-    args: PopenArgs,
+    args: Sequence[str],
     *,
     env: dict[str, str] | None = None,
     extenv: bool = True,
@@ -613,7 +638,7 @@ def _do(
 
     """
     _input = validate_stdin(input)
-    _args = [*args]
+    _args = [args] if isinstance(args, (str, bytes)) else list(args)
     if IS_WIN:
         _syspath = None
         if env:
@@ -727,9 +752,7 @@ def do(
     """
     if args and popenargs:
         raise ValueError("Cannot give *popenargs and `args` kwargs")
-    args = validate_popen_args([*args]) if args else validate_popen_args(popenargs)
-    if is_win():
-        args = validate_popen_args_windows(args, env)
+    args = _validate_popen_args_platform(args if args else popenargs, env, shell=shell)
     _input = validate_stdin(input)
     return _do(
         args=args,
@@ -821,7 +844,7 @@ async def run_async(
     errors: str | None = None,
     text: bool = False,
     env: dict[str, str] | None = None,
-    universal_newlines: bool = False,
+    universal_newlines: Literal[True] | None = None,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[Any]:
     args = validate_popen_args(args)
@@ -838,7 +861,7 @@ async def run_async(
         errors=errors,
         env=env,
         capture_output=capture_output,
-        universal_newlines=universal_newlines | text,
+        universal_newlines=True if universal_newlines or text else None,
         encoding=encoding,
         **other_popen_kwargs,
     )
@@ -1033,9 +1056,7 @@ async def do_async(
     """
     if args and popenargs:
         raise ValueError("Cannot give *args and args-keyword-argument")
-    args = validate_popen_args(args) if args else validate_popen_args(popenargs)
-    if not shell and is_win():
-        args = validate_popen_args_windows(args, env)
+    args = _validate_popen_args_platform(args if args else popenargs, env, shell=shell)
     return await _do_async(
         args=args,
         env=env,
