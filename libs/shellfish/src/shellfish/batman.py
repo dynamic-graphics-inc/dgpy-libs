@@ -38,7 +38,9 @@ def bat(
     else:
         fspath_obj = Path(bat_filepath)
     return run(
-        args=[str(fspath)] if shell else ["cmd", "/c", _fspath(fspath_obj)],
+        args=[str(fspath)]
+        if shell
+        else ["cmd.exe", "/d", "/c", "call", _fspath(fspath_obj)],
         capture_output=True,
         shell=shell,
         text=text,
@@ -52,12 +54,11 @@ def run_cmd(cmd: str, *, text: bool = True) -> CompletedProcess[AnyStr]:
 
 
 def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
-    _commands = ["CALL " + cmd for cmd in cmds]
-    if len(_commands) == 0:
+    if len(cmds) == 0:
         raise ValueError("no commands given")
-    if len(_commands) == 1:
-        return run_cmd(_commands[0])
-    return run_cmds_as_bat_file(_commands)
+    if len(cmds) == 1:
+        return run_cmd("CALL " + cmds[0])
+    return run_cmds_as_bat_file(cmds)
 
 
 def run_cmds_as_bat_file(
