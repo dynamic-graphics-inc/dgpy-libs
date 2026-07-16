@@ -41,6 +41,7 @@ ignore = [
   "C417",   # super annoying
   "C901",   # too complex
   "RUF052", # used-dummy-variable
+  "RUF105", # noqa-comments - FIX ONCE OUT OF PREVIEW?
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
