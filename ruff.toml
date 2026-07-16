@@ -42,6 +42,7 @@ ignore = [
   "C901",   # too complex
   "RUF052", # used-dummy-variable
   "RUF105", # noqa-comments - FIX ONCE OUT OF PREVIEW?
+  "RUF201", # rule-codes-in-selectors - FIX ONCE OUT OF PREVIEW AS WELL
   # PYDOCSTYLE
   "D100", # undocumented-public-module
   "D101", # undocumented-public-class
