@@ -31,8 +31,8 @@ jobs:
           cache-dependency-glob: "uv.lock"
       - name: ruff-check
         run: |
-          uvx ruff --version
-          uvx ruff check .
+          uv run ruff --version
+          uv run ruff check .
 
   lint:
     runs-on: ubuntu-latest
