@@ -17,6 +17,7 @@ __all__ = (
     "requires_click",
     "requires_h5py",
     "requires_httpx",
+    "requires_httpx2",
     "requires_hypothesis",
     "requires_imageio",
     "requires_imageio_as_iio",
@@ -217,6 +218,12 @@ requires_anyio = Requirement(
 )
 requires_httpx = Requirement(
     _import="httpx",
+    pip=True,
+    conda=True,
+    conda_forge=True,
+)
+requires_httpx2 = Requirement(
+    _import="httpx2",
     pip=True,
     conda=True,
     conda_forge=True,

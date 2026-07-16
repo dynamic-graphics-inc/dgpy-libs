@@ -51,7 +51,6 @@ scripts.dgpydev = "dgpydev.cli:main"
 [dependency-groups]
 dev = [
   "anyio>=4.6.2.post1",
-  "httpx>=0.28.1",
   "ipython>=8.37.0",
   "mypy>=1.11.1",
   "nox>=2024.4.15",

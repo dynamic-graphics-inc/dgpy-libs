@@ -643,7 +643,6 @@ docs = [
 [package.dev-dependencies]
 dev = [
     { name = "anyio" },
-    { name = "httpx" },
     { name = "ipython" },
     { name = "mypy" },
     { name = "nox" },
@@ -688,7 +687,6 @@ provides-extras = ["docs"]
 [package.metadata.requires-dev]
 dev = [
     { name = "anyio", specifier = ">=4.6.2.post1" },
-    { name = "httpx", specifier = ">=0.28.1" },
     { name = "ipython", specifier = ">=8.37.0" },
     { name = "mypy", specifier = ">=1.11.1" },
     { name = "nox", specifier = ">=2024.4.15" },
