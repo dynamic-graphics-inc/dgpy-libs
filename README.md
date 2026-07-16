@@ -93,6 +93,7 @@ python libraries are all published on pip under the listed names.
 - [pydantic](https://pydantic-docs.helpmanual.io/): no need for explanation
 - [loguru](https://github.com/Delgan/loguru): very nice python logging library
 - [httpx](https://www.python-httpx.org/): http client library
+- [httpx2](https://httpx2.pydantic.dev/): http client library and successor to `httpx`
 - [attrs](https://github.com/python-attrs/attrs); class decorators library
 - [orjson](https://github.com/ijl/orjson); fastest python json library (optional
   dep of jsonbourne)
