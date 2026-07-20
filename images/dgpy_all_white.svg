@@ -1,0 +1,24 @@
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 600.5 575.4" style="enable-background:new 0 0 600.5 575.4;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+</style>
+<g>
+	<g id="d">
+		<circle class="st0" cx="98.4" cy="177.7" r="98.4"/>
+		<rect x="180.8" class="st0" width="120.5" height="279.2"/>
+	</g>
+	<path id="blue" class="st0" d="M324.5,0.4v278.8l65.3-1.2c0,0,62.9-2.3,62.9-89.4c0-74.9,0-119.3,0-119.3S458.9,5,324.5,0.4z"/>
+	<g id="yellow">
+		<path class="st0" d="M324.5,446.2H454v71.3c0,0,0.2,57.9-129.2,57.9"/>
+		<path class="st0" d="M396.1,297.3c75.3-2.3,76.2-74.9,76.2-74.9v-74.5c0,0,0,0,56.4,0c0,0,58.7,1.9,71.3,100.8
+			c0.2,1.5,0.3,3,0.3,4.5l0.3,67.3c0,2.7-0.2,5.5-0.5,8.2c-12.3,98.5-82.3,97.6-82.3,97.6H324.7V297.5L396.1,297.3z"/>
+		<circle class="st0" cx="392.9" cy="506.8" r="25.3"/>
+	</g>
+	<g id="g">
+		<circle class="st0" cx="98.4" cy="397.8" r="98.4"/>
+		<rect x="180.8" y="296.3" class="st0" width="120.5" height="279.2"/>
+	</g>
+	<title>dgpy</title>
+</g>
+</svg>
