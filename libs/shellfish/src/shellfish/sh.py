@@ -386,12 +386,20 @@ IS_WIN: bool = is_win()
 
 
 class FlagMeta(type):
-    """Meta class"""
+    """Metaclass turning attribute access on [Flag][shellfish.sh.Flag] into flags"""
 
     @staticmethod
     @cache
     def attr2flag(string: str) -> str:
-        """Convert and return attr to string"""
+        """Return an attribute name as a cli flag (underscores to dashes)
+
+        Args:
+            string: Attribute name to convert
+
+        Returns:
+            The attribute name with underscores replaced by dashes
+
+        """
         return string.replace("_", "-")
 
     def __getattr__(self, name: str) -> str:
@@ -399,18 +407,33 @@ class FlagMeta(type):
 
 
 class Flag(metaclass=FlagMeta):
-    """Flag obj
+    """Namespace that turns any attribute into the corresponding cli flag
+
+    Leading underscores become leading dashes and inner underscores become
+    dashes, so `Flag.__dry_run` is `'--dry-run'`. Not meant to be instantiated.
 
     Examples:
         >>> Flag.__help
         '--help'
         >>> Flag._v
         '-v'
+        >>> Flag.__dry_run
+        '--dry-run'
 
     """
 
 
 def mkenv(env: dict[str, str], *, extenv: bool = True) -> dict[str, str]:
+    """Return the environment dict to run a subprocess with
+
+    Args:
+        env: Environment variables for the subprocess
+        extenv: Extend `os.environ` with `env` instead of replacing it
+
+    Returns:
+        The environment variables dict
+
+    """
     if extenv:
         return {**dict(environ), **env}
     return env
@@ -622,16 +645,16 @@ def _do(
         shell: Run in shell or sub-shell
         check: Check the outputs (generally useless)
         input: Stdin to give to the subprocess
-        verbose (bool): Flag to write the subprocess stdout and stderr to
+        verbose: Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        tee (bool): Flag to tee the subprocess stdout and stderr to sys.stdout/stderr
+        tee: Flag to tee the subprocess stdout and stderr to sys.stdout/stderr
         text: Flag to decode the output as text
-        timeout (Optional[int]): Timeout in seconds for the process if not None
-        ok_code (Union[int, Sequence[int]]): Code(s) to consider as OK
-        dryrun (bool): Flag to not run the subprocess and return faux Done
+        timeout: Timeout in seconds for the process if not None
+        ok_code: Code(s) to consider as OK
+        dryrun: Flag to not run the subprocess and return a faux Done
 
     Returns:
-        Finished PRun object which is a dictionary, so a dictionary
+        [Done][shellfish.done.Done] object for the finished subprocess
 
     Raises:
         ValueError: If args has pipe character (`|`)
@@ -739,7 +762,7 @@ def do(
         tee (bool): Flag to tee the subprocess stdout and stderr to sys.stdout/stderr
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        timeout (Optional[int]): Timeout in seconds for the process if not None
+        timeout: Timeout in seconds for the process if not None
         ok_code: Return code(s) to check against
         dryrun: Don't run the subprocess
 
@@ -797,7 +820,7 @@ def shell(
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        timeout (Optional[int]): Timeout in seconds for the process if not None
+        timeout: Timeout in seconds for the process if not None
         ok_code: Return code(s) to check if ok
         dryrun: Don't run the subprocess
 
@@ -926,7 +949,7 @@ async def _do_async(
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        timeout (Optional[int]): Timeout in seconds for the process if not None
+        timeout: Timeout in seconds for the process if not None
         ok_code: Return code(s) to check if ok
         dryrun: Don't run the subprocess
 
@@ -1043,7 +1066,7 @@ async def do_async(
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        timeout (Optional[int]): Timeout in seconds for the process if not None
+        timeout: Timeout in seconds for the process if not None
         ok_code: Return code(s) that are considered OK (Default value = 0)
         dryrun (bool): Flag to not run the subprocess but return a Done object
 
@@ -1103,7 +1126,7 @@ async def doa(
         input: Stdin to give to the subprocess
         verbose (bool): Flag to write the subprocess stdout and stderr to
             sys.stdout and sys.stderr
-        timeout (Optional[int]): Timeout in seconds for the process if not None
+        timeout: Timeout in seconds for the process if not None
         ok_code: Return code(s) that are considered OK (Default value = 0)
         dryrun (bool): Flag to not run the subprocess but return a Done object
         extenv: Extend environment with the current environment (Default value = True)
@@ -1139,7 +1162,11 @@ async def doa(
 
 
 class LIN(_LIN):
-    """Linux (and Mac) shell commands/methods container"""
+    """Linux (and Mac) shell commands/methods container
+
+    Extends [shellfish.osfs.LIN][] with `rsync`/`sync` helpers. All members are
+    static methods; the class is used as a namespace, not instantiated.
+    """
 
     @staticmethod
     def rsync_args(
@@ -1316,9 +1343,14 @@ class LIN(_LIN):
 
 
 class WIN(_WIN):
-    """Windows shell commands/methods container"""
+    """Windows shell commands/methods container
+
+    Extends [shellfish.osfs.WIN][] with `robocopy`/`sync` helpers. All members
+    are static methods; the class is used as a namespace, not instantiated.
+    """
 
     _MAX_CMD_LENGTH: int = 8192
+    """Max length of a single windows command line, in characters"""
 
     @staticmethod
     def robocopy_args(
@@ -1641,7 +1673,7 @@ def which(cmd: str, path: str | None = None) -> str | None:
         path (str): System path to use
 
     Returns:
-        Optional[str]: path to command/exe
+        Path to the command/exe, or None if not found
 
     """
     return _which(cmd, path=path)
@@ -1655,7 +1687,7 @@ def where(cmd: str, path: str | None = None) -> str | None:
         path (str): System path to use
 
     Returns:
-        Optional[str]: path to command/exe
+        Path to the command/exe, or None if not found
 
     """
     return which(cmd, path=path)
@@ -1670,7 +1702,7 @@ def which_lru(cmd: str, path: str | None = None) -> str | None:
         path (str): System path to use
 
     Returns:
-        Optional[str]: path to command/exe
+        Path to the command/exe, or None if not found
 
     """
     return which(cmd, path=path)

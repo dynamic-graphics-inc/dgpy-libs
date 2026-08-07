@@ -1,3 +1,5 @@
+"""Done ~ completed subprocess results"""
+
 from __future__ import annotations
 
 import signal
@@ -32,33 +34,46 @@ __all__ = (
 
 
 class HrTimeDict(TypedDict):
-    """High resolution time"""
+    """High resolution time as a typed-dict; see [HrTime][shellfish.done.HrTime]"""
 
     secs: int
+    """Whole seconds"""
     nanos: int
+    """Nanoseconds remainder (0 <= nanos < 1_000_000_000)"""
 
 
 class HrTime(_ShellfishBaseModel):
-    """High resolution time"""
+    """High resolution time split into whole seconds and nanoseconds
+
+    Examples:
+        >>> HrTime.from_seconds(1.5)
+        HrTime(secs=1, nanos=500000000)
+        >>> HrTime.from_seconds(1.5).hrdt_dict()
+        {'secs': 1, 'nanos': 500000000}
+
+    """
 
     secs: int = Field(validation_alias=AliasChoices("sec", "secs", "s"))
+    """Whole seconds"""
     nanos: int = Field(validation_alias=AliasChoices("ns", "nsecs", "nanos"))
+    """Nanoseconds remainder (0 <= nanos < 1_000_000_000)"""
 
     @classmethod
     def from_seconds(cls, seconds: float) -> HrTime:
         """Return HrTime object from seconds
 
         Args:
-            seconds (float): number of seconds
+            seconds: number of seconds
 
         Returns:
-            HrTime object
+            HrTime object for the given number of seconds
 
         """
         _sec, _ns = divmod(int(seconds * 1_000_000_000), 1_000_000_000)
         return cls(secs=_sec, nanos=_ns)
 
     def hrdt_dict(self) -> HrTimeDict:
+        """Return this HrTime as a typed-dict"""
         return {
             "secs": self.secs,
             "nanos": self.nanos,
@@ -66,39 +81,64 @@ class HrTime(_ShellfishBaseModel):
 
     @property
     def sec(self) -> int:  # deprecated alias
+        """Deprecated alias for `secs`"""
         return self.secs
 
     @property
     def ns(self) -> int:  # deprecated alias
+        """Deprecated alias for `nanos`"""
         return self.nanos
 
 
 class DoneError(SubprocessError):
-    """Error raised when a process returns a non-zero/ok exit status
+    r"""Error raised when a process returns a non-zero/not-ok exit status
 
-    Attributes:
-        cmd (str): command that was run
-        returncode (int): exit status of the process
-        stdout (str): standard output (stdout) of the process
-        stderr (str): standard error (stderr) of the process
+    Raised by [Done.check][shellfish.done.Done.check].
+
+    Examples:
+        >>> done = Done(
+        ...     args=["sh", "-c", "exit 1"],
+        ...     returncode=1,
+        ...     stdout="",
+        ...     stderr="uh oh\n",
+        ...     ti=0.0,
+        ...     tf=0.1,
+        ...     dt=0.1,
+        ... )
+        >>> try:
+        ...     done.check()
+        ... except DoneError as e:
+        ...     (e.returncode, e.cmd, e.stderr)
+        (1, ['sh', '-c', 'exit 1'], 'uh oh\n')
 
     """
 
     done: Done
+    """The [Done][shellfish.done.Done] object that produced this error"""
     returncode: int
+    """Exit status of the process"""
     stdout: str
+    """Standard output (stdout) of the process"""
     stderr: str
+    """Standard error (stderr) of the process"""
     cmd: list[str]
+    """Command args the process was run with"""
 
     def __init__(self, done: Done) -> None:
+        """Create a DoneError from a `Done` object
+
+        Args:
+            done: Done object with a non-zero/not-ok returncode
+
+        """
         self.returncode = done.returncode
         self.cmd = done.args
         self.stderr = done.stderr
         self.stdout = done.stdout
-        self.cmd = done.args
         self.done = done
 
     def error_msg(self) -> str:
+        """Return the error message string for this error's returncode"""
         if self.returncode and self.returncode < 0:
             try:
                 return f"Command '{self.cmd}' died with {signal.Signals(-self.returncode)!r}."
@@ -113,6 +153,7 @@ class DoneError(SubprocessError):
 
     @property
     def output(self) -> str:
+        """Alias for `stdout`; mirrors `subprocess.CalledProcessError.output`"""
         return self.stdout
 
     @output.setter
@@ -121,17 +162,30 @@ class DoneError(SubprocessError):
 
 
 class DoneDict(TypedDict):
+    """Completed subprocess as a typed-dict; see [Done][shellfish.done.Done]"""
+
     args: list[str]
+    """Command args the process was run with"""
     returncode: int
+    """Exit status of the process"""
     stdout: str
+    """Standard output (stdout) of the process"""
     stderr: str
+    """Standard error (stderr) of the process"""
     ti: float
+    """Time the process started (seconds since epoch)"""
     tf: float
+    """Time the process finished (seconds since epoch)"""
     dt: float
+    """Time the process took to run (seconds; `tf - ti`)"""
     hrdt: HrTimeDict | None
+    """High resolution `dt`, if the runner provided one"""
     stdin: str | None
+    """Standard input (stdin) written to the process, if any"""
     async_proc: bool
+    """True if the process was run asynchronously"""
     verbose: bool
+    """True if stdout/stderr were echoed to the parent process' stdout/stderr"""
 
 
 @lru_cache(maxsize=32)
@@ -156,30 +210,66 @@ def _pfmt_stdio(s: AnyStr) -> AnyStr:
 
 
 class Done(_ShellfishBaseModel):
-    """Completed subprocess"""
+    r"""Completed subprocess
+
+    Returned by [shellfish.sh.do][] (and friends) once a process has finished.
+
+    Examples:
+        >>> done = Done(
+        ...     args=["echo", "hello"],
+        ...     returncode=0,
+        ...     stdout="hello\nworld\n",
+        ...     stderr="",
+        ...     ti=0.0,
+        ...     tf=0.5,
+        ...     dt=0.5,
+        ... )
+        >>> done.returncode
+        0
+        >>> done.lines
+        ['hello', 'world']
+        >>> done.grep("world")
+        ['world']
+        >>> done.check()  # does not raise; returncode is 0
+
+    """
 
     args: list[str]
+    """Command args the process was run with"""
     returncode: int
+    """Exit status of the process"""
     stdout: str
+    """Standard output (stdout) of the process"""
     stderr: str
+    """Standard error (stderr) of the process"""
     ti: float
+    """Time the process started (seconds since epoch)"""
     tf: float
+    """Time the process finished (seconds since epoch)"""
     dt: float
+    """Time the process took to run (seconds; `tf - ti`)"""
     hrdt: HrTime | None = None
+    """High resolution `dt`, if the runner provided one"""
     stdin: str | None = None
+    """Standard input (stdin) written to the process, if any"""
     async_proc: bool = False
+    """True if the process was run asynchronously"""
     dryrun: bool = Field(False)
+    """True if the process was not actually run (dryrun)"""
     verbose: bool = Field(False, exclude=True)
+    """Echo stdout/stderr to the parent process on init; excluded from dumps"""
 
     def __post_init__(self) -> None:
-        """Write the stdout/stdout to sys.stdout/sys.stderr post object init"""
+        """Write stdout/stderr to sys.stdout/sys.stderr post object init"""
         if self.verbose:
             self.sys_print()
 
     def model_post_init(self, _context: Any) -> None:
+        """Pydantic post-init hook; defers to `__post_init__`"""
         self.__post_init__()
 
     def __str__(self) -> str:
+        """Return a multi-line string representation of this Done object"""
         return "\n".join((
             "Done(",
             f"    args={self.args},",
@@ -198,6 +288,7 @@ class Done(_ShellfishBaseModel):
         ))
 
     def __repr__(self) -> str:
+        """Return a single-line string representation of this Done object"""
         return " ".join((
             f"Done(args={self.args},",
             f"returncode={self.returncode},",
@@ -214,18 +305,42 @@ class Done(_ShellfishBaseModel):
         ))
 
     def hrdt_dict(self) -> HrTimeDict:
+        """Return the high resolution run-time as a typed-dict
+
+        Falls back to converting `dt` to [HrTime][shellfish.done.HrTime] when the
+        runner did not provide an `hrdt`.
+        """
         if self.hrdt:
             return self.hrdt.hrdt_dict()
         return HrTime.from_seconds(seconds=self.dt).hrdt_dict()
 
     def stdout_lines(self, *, keepends: bool = False) -> list[str]:
+        """Return stdout split into lines
+
+        Args:
+            keepends: Keep the line-ending characters on each line
+
+        Returns:
+            List of stdout lines
+
+        """
         return self.stdout.splitlines(keepends=keepends)
 
     def stderr_lines(self, *, keepends: bool = False) -> list[str]:
+        """Return stderr split into lines
+
+        Args:
+            keepends: Keep the line-ending characters on each line
+
+        Returns:
+            List of stderr lines
+
+        """
         return self.stderr.splitlines(keepends=keepends)
 
     @property
     def lines(self) -> list[str]:
+        """Stdout split into lines without line-endings"""
         return self.stdout_lines(keepends=False)
 
     def done_dict(self) -> DoneDict:
@@ -245,7 +360,7 @@ class Done(_ShellfishBaseModel):
         )
 
     def _error(self) -> DoneError:
-        """Returns a CalledProcessError object"""
+        """Return a DoneError object for this Done object"""
         return DoneError(done=self)
 
     def check(
@@ -254,8 +369,11 @@ class Done(_ShellfishBaseModel):
     ) -> None:
         """Check returncode and stderr
 
+        Args:
+            ok_code: Return code (or collection of return codes) considered ok
+
         Raises:
-            DoneError: If return code is non-zero and stderr is not None
+            DoneError: If the return code is not ok
 
         """
         if isinstance(ok_code, int):
@@ -275,7 +393,7 @@ class Done(_ShellfishBaseModel):
 
         Args:
             filepath: Filepath to write stdout to
-            append (bool): Flag to append to file or plain write to file
+            append: Append to the file instead of overwriting it
 
         """
         fs.write_bytes(Path(filepath), self.stdout.encode("utf-8"), append=append)
@@ -294,7 +412,7 @@ class Done(_ShellfishBaseModel):
 
         Args:
             filepath: Filepath of location to write stderr
-            append (bool): Flag to append to file or plain write to file
+            append: Append to the file instead of overwriting it
 
         """
         fs.write_bytes(Path(filepath), self.stderr.encode("utf-8"), append=append)
@@ -346,13 +464,33 @@ class Done(_ShellfishBaseModel):
     def json_parse_stdout(
         self, *, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
     ) -> Any:
-        """Return json parsed stdout"""
+        """Return json parsed stdout
+
+        Args:
+            jsonc: Parse stdout as jsonc (json with comments)
+            jsonl: Parse stdout as jsonl (json-lines)
+            ndjson: Parse stdout as ndjson (newline delimited json)
+
+        Returns:
+            The parsed stdout
+
+        """
         return JSON.loads(self.stdout, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
     def json_parse_stderr(
         self, *, jsonc: bool = False, jsonl: bool = False, ndjson: bool = False
     ) -> Any:
-        """Return json parsed stderr"""
+        """Return json parsed stderr
+
+        Args:
+            jsonc: Parse stderr as jsonc (json with comments)
+            jsonl: Parse stderr as jsonl (json-lines)
+            ndjson: Parse stderr as ndjson (newline delimited json)
+
+        Returns:
+            The parsed stderr
+
+        """
         return JSON.loads(self.stderr, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
     def json_parse(
@@ -363,7 +501,18 @@ class Done(_ShellfishBaseModel):
         jsonl: bool = False,
         ndjson: bool = False,
     ) -> Any:
-        """Return json parsed stdout"""
+        """Return json parsed stdout (or stderr)
+
+        Args:
+            stderr: Parse stderr instead of stdout
+            jsonc: Parse as jsonc (json with comments)
+            jsonl: Parse as jsonl (json-lines)
+            ndjson: Parse as ndjson (newline delimited json)
+
+        Returns:
+            The parsed stdout, or the parsed stderr if `stderr` is True
+
+        """
         return (
             self.json_parse_stdout(jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
             if not stderr
@@ -378,14 +527,27 @@ class Done(_ShellfishBaseModel):
         jsonl: bool = False,
         ndjson: bool = False,
     ) -> Any:
-        """Return json parsed stdout (alias bc I keep flip-flopping the fn name)"""
+        """Alias for [json_parse][shellfish.done.Done.json_parse]
+
+        (bc I keep flip-flopping the fn name)
+
+        Args:
+            stderr: Parse stderr instead of stdout
+            jsonc: Parse as jsonc (json with comments)
+            jsonl: Parse as jsonl (json-lines)
+            ndjson: Parse as ndjson (newline delimited json)
+
+        Returns:
+            The parsed stdout, or the parsed stderr if `stderr` is True
+
+        """
         return self.json_parse(stderr=stderr, jsonc=jsonc, jsonl=jsonl, ndjson=ndjson)
 
     def grep(self, string: str) -> list[str]:
-        """Return lines in stdout that have
+        """Return lines in stdout that contain the given string
 
         Args:
-            string (str): String to search for
+            string: String to search for
 
         Returns:
             list[str]: List of strings of stdout lines containing the given

@@ -41,7 +41,20 @@ nav:
       - requires: './libs/requires/requires.api.md'
       - listless: './libs/listless/listless.api.md'
       - jsonbourne: './libs/jsonbourne/jsonbourne.api.md'
-      - shellfish: './libs/shellfish/shellfish.api.md'
+      - shellfish:
+          - shellfish: './libs/shellfish/shellfish.api.md'
+          - shellfish.sh: './libs/shellfish/sh.md'
+          - shellfish.fs: './libs/shellfish/fs.md'
+          - shellfish.fs.promises: './libs/shellfish/fs.promises.md'
+          - shellfish.done: './libs/shellfish/done.md'
+          - shellfish.exe: './libs/shellfish/exe.md'
+          - shellfish.process: './libs/shellfish/process.md'
+          - shellfish.sp: './libs/shellfish/sp.md'
+          - shellfish.osfs: './libs/shellfish/osfs.md'
+          - shellfish.aios: './libs/shellfish/aios.md'
+          - shellfish.dotenv: './libs/shellfish/dotenv.md'
+          - shellfish.echo: './libs/shellfish/echo.md'
+          - shellfish.stdio: './libs/shellfish/stdio.md'
       - xtyping: './libs/xtyping/xtyping.api.md'
   # - Notebooks:
   #     - Cache Money: './notebooks/cache_money.ipynb'
@@ -130,29 +143,35 @@ plugins:
         python:
           inventories:
             - https://docs.python.org/3/objects.inv
+          # NOTE: these must point at the `src` dirs -- pointing at `libs/<lib>`
+          # picks up the stale pre-src-layout `libs/<lib>/<lib>` husks (which
+          # hold only __pycache__), so griffe collects empty packages. That is
+          # invisible when the libs happen to be installed in the venv, but
+          # breaks `nox -s mkdocs_serve`, which installs only the mkdocs deps.
           paths:
-            - libs/aiopen
-            - libs/asyncify
-            - libs/fmts
-            - libs/funkify
-            - libs/h5
-            - libs/jsonbourne
-            - libs/requires
-            - libs/listless
-            - libs/shellfish
-            - libs/xtyping
-          inherited_members: true
-          docstring_style: google
+            - libs/aiopen/src
+            - libs/asyncify/src
+            - libs/fmts/src
+            - libs/funkify/src
+            - libs/h5/src
+            - libs/jsonbourne/src
+            - libs/requires/src
+            - libs/listless/src
+            - libs/shellfish/src
+            - libs/xtyping/src
           options:
+            docstring_style: google
             docstring_options:
               ignore_init_summary: true
             docstring_section_style: list
             filters: ["!^_"]
             heading_level: 1
             inherited_members: true
+            members_order: source
             merge_init_into_class: true
             parameter_headings: true
             separate_signature: true
+            show_docstring_attributes: true
             show_root_heading: true
             show_root_full_path: false
             show_signature_annotations: true

@@ -57,7 +57,24 @@ _OS_ENVIRON_ATTRS = set(dir(environ))
 
 @contextmanager
 def tmpenv(**kwargs: str) -> Generator[type[Env], Any, None]:
-    """Context manager for Env"""
+    """Context manager that restores `os.environ` on exit
+
+    Args:
+        **kwargs: Environment variables to set for the duration of the block
+
+    Yields:
+        The [Env][shellfish.process.Env] proxy
+
+    Examples:
+        >>> from shellfish.process import tmpenv
+        >>> with tmpenv(SOME_TMP_VAR="value") as e:
+        ...     e.SOME_TMP_VAR
+        'value'
+        >>> import os
+        >>> "SOME_TMP_VAR" in os.environ
+        False
+
+    """
     old_env = dict(environ)
     if kwargs:
         env.update(kwargs)
@@ -69,6 +86,13 @@ def tmpenv(**kwargs: str) -> Generator[type[Env], Any, None]:
 
 
 class _EnvObjMeta(type):
+    """Metaclass giving [Env][shellfish.process.Env] mapping + attr access
+
+    Implemented on the metaclass so that the operations work on the `Env` class
+    itself (`Env.SOME_VAR`, `'SOME_VAR' in Env`) rather than on instances. Every
+    operation proxies straight through to `os.environ`.
+    """
+
     def __contains__(cls, key: str) -> bool:
         return key in environ
 
@@ -110,37 +134,62 @@ class _EnvObjMeta(type):
         return cls.__setitem__(key, value)
 
     def update(self, d: dict[str, str]) -> None:
+        """Update the environment from a dict of env-var names to values"""
         return environ.update(d)
 
     def update_from_dict(self, d: dict[str, str]) -> None:
+        """Alias for [update][shellfish.process.Env.update]"""
         return self.update(d)
 
     def get(self, key: str, default: str | None = None) -> str:
+        """Return the value for `key`, or `default` if it is not set
+
+        Args:
+            key: Environment variable name
+            default: Value to return if `key` is not set
+
+        Returns:
+            The environment variable's value
+
+        Raises:
+            KeyError: If `key` is not set and no `default` is given
+
+        """
         if default is None:
             return environ[key]
         return environ.get(key, default)
 
     def setdefault(self, key: str, default: str) -> str:
+        """Set `key` to `default` if unset, and return the resulting value"""
         return environ.setdefault(key, default)
 
     def clear(self) -> None:
+        """Remove all environment variables"""
         return environ.clear()
 
     def keys(self) -> KeysView[str]:
+        """Return a view of the environment variable names"""
         return environ.keys()
 
     def values(self) -> ValuesView[str]:
+        """Return a view of the environment variable values"""
         return environ.values()
 
     def items(self) -> ItemsView[str, str]:
+        """Return a view of the environment `(name, value)` pairs"""
         return environ.items()
 
     def asdict(cls) -> dict[str, str]:
+        """Return the environment as a plain dict"""
         return dict(environ.items())
 
 
 class Env(metaclass=_EnvObjMeta):
-    """Env with attr access
+    """`os.environ` proxy with attribute access
+
+    Not meant to be instantiated — use the class itself (or its `env`/`ENV`
+    aliases). Attribute, item, and mapping access all read and write the live
+    `os.environ`; unset variables read as `None` instead of raising.
 
     Examples:
         >>> from os import environ
