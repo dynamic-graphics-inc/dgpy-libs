@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""sp = subprocess wrappers"""
+
 from __future__ import annotations
 
 import sys
@@ -51,8 +53,12 @@ __all__ = (
     "CompletedProcess",
     "CompletedProcessDict",
     "Popen",
+    "ProcessDt",
     "completed_process_dict",
+    "pcheck",
     "run",
+    "run_dtee",
+    "run_tee",
     "runb",
     "runs",
 )
@@ -73,20 +79,39 @@ class ProcessDt:
     """
 
     ti: float
+    """Time the process started (seconds since epoch)"""
     tf: float
+    """Time the process finished (seconds since epoch)"""
     dt: float
+    """Time the process took to run (seconds; `tf - ti`)"""
     __slots__ = ("dt", "tf", "ti")
 
     @classmethod
     def from_titf(cls, ti: float, tf: float) -> ProcessDt:
+        """Return a ProcessDt with `dt` computed from start/finish times
+
+        Args:
+            ti: Time the process started (seconds since epoch)
+            tf: Time the process finished (seconds since epoch)
+
+        Returns:
+            ProcessDt object
+
+        """
         return cls(ti=ti, tf=tf, dt=tf - ti)
 
 
 class CompletedProcessDict(TypedDict):
+    """`subprocess.CompletedProcess` as a typed-dict"""
+
     args: list[str]
+    """Command args the process was run with"""
     stdout: str
+    """Standard output (stdout) of the process"""
     stderr: str
+    """Standard error (stderr) of the process"""
     returncode: int
+    """Exit status of the process"""
 
 
 def completed_process_dict(
@@ -139,11 +164,8 @@ def pcheck(
         process: CompletedProcess object
         ok_code: OK code or sequence of codes, default is 0
 
-    Returns:
-        None
-
     Raises:
-        CompletedProcessError: if process.returncode not in ok_code
+        CalledProcessError: if process.returncode is not ok
 
     """
     if isinstance(ok_code, int):
@@ -181,6 +203,34 @@ def runb(
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
+    """Run a command capturing stdout/stderr as bytes
+
+    Thin wrapper around `subprocess.run` with `text=False` and an `ok_code`
+    aware `check`.
+
+    Args:
+        args: Command args to run
+        executable: Replacement program to execute
+        stdin: Stdin file/handle for the process
+        input: Stdin to write to the process
+        stdout: Stdout file/handle for the process
+        stderr: Stderr file/handle for the process
+        shell: Run the command through the shell
+        cwd: Working directory to run the command in
+        timeout: Timeout in seconds; None for no timeout
+        capture_output: Capture stdout and stderr
+        check: Check the return code against `ok_code`
+        env: Environment variables to run the command with
+        ok_code: Return code (or collection of return codes) considered ok
+        **other_popen_kwargs: Additional kwargs forwarded to `subprocess.run`
+
+    Returns:
+        `subprocess.CompletedProcess` with bytes stdout/stderr
+
+    Raises:
+        CalledProcessError: If `check` and the return code is not ok
+
+    """
     process = run(
         args=args,
         input=input,
@@ -218,7 +268,34 @@ def runs(
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[str]:
-    """Run command with txt output"""
+    """Run a command capturing stdout/stderr as strings
+
+    Thin wrapper around `subprocess.run` with `text=True` and an `ok_code`
+    aware `check`.
+
+    Args:
+        args: Command args to run
+        executable: Replacement program to execute
+        stdin: Stdin file/handle for the process
+        input: Stdin to write to the process
+        stdout: Stdout file/handle for the process
+        stderr: Stderr file/handle for the process
+        shell: Run the command through the shell
+        cwd: Working directory to run the command in
+        timeout: Timeout in seconds; None for no timeout
+        capture_output: Capture stdout and stderr
+        check: Check the return code against `ok_code`
+        env: Environment variables to run the command with
+        ok_code: Return code (or collection of return codes) considered ok
+        **other_popen_kwargs: Additional kwargs forwarded to `subprocess.run`
+
+    Returns:
+        `subprocess.CompletedProcess` with str stdout/stderr
+
+    Raises:
+        CalledProcessError: If `check` and the return code is not ok
+
+    """
     process = run(
         args=args,
         input=input,
@@ -248,6 +325,27 @@ def run_dtee(
     shell: bool = False,
     timeout: float | None = None,
 ) -> tuple[CompletedProcess[bytes], ProcessDt]:
+    """Run a command, tee-ing stdout/stderr, and time it
+
+    Streams the process' stdout/stderr to this process' stdout/stderr as they
+    arrive, while also capturing them.
+
+    Args:
+        args: Command args to run
+        cwd: Working directory to run the command in
+        env: Environment variables to run the command with
+        input: Stdin to write to the process
+        shell: Run the command through the shell
+        timeout: Timeout in seconds; None for no timeout
+
+    Returns:
+        Tuple of the `subprocess.CompletedProcess` and its
+            [ProcessDt][shellfish.sp.ProcessDt] timing
+
+    Raises:
+        TimeoutExpired: If the process does not finish within `timeout`
+
+    """
     stdout_bio = BytesIO()
     stderr_bio = BytesIO()
     args_str = args2cmd(args)
@@ -318,6 +416,20 @@ def run_tee(
     shell: bool = False,
     timeout: float | None = None,
 ) -> CompletedProcess[bytes]:
+    """Run a command, tee-ing stdout/stderr; see [run_dtee][shellfish.sp.run_dtee]
+
+    Args:
+        args: Command args to run
+        cwd: Working directory to run the command in
+        env: Environment variables to run the command with
+        input: Stdin to write to the process
+        shell: Run the command through the shell
+        timeout: Timeout in seconds; None for no timeout
+
+    Returns:
+        `subprocess.CompletedProcess` with bytes stdout/stderr
+
+    """
     completed_process, _pdt = run_dtee(
         args=args,
         input=input,

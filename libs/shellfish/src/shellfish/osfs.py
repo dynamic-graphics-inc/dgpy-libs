@@ -12,47 +12,118 @@ from shellfish import batman
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
+__all__ = (
+    "LIN",
+    "WIN",
+    "OsFsAbc",
+)
+
 
 class OsFsAbc(ABC):  # pragma: nocov
-    """Abstract base class for OS-specific fns"""
+    """Abstract base class for OS-specific symlink operations
+
+    Implemented by [LIN][shellfish.osfs.LIN] (linux/mac) and
+    [WIN][shellfish.osfs.WIN] (windows); all members are static methods, so the
+    subclasses are used as namespaces rather than instantiated.
+    """
 
     @staticmethod
     @abstractmethod
-    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None: ...
+    def link_dir(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        """Make a directory symlink
+
+        Args:
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: Allow the link to already exist
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
     def link_dirs(
         link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
-    ) -> None: ...
+    ) -> None:
+        """Make multiple directory symlinks
+
+        Args:
+            link_target_tuples: Iterable of `(link, target)` tuples
+            exist_ok: Allow the links to already exist
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
-    def link_file(
-        linkpath: str, targetpath: str, *, exist_ok: bool = False
-    ) -> None: ...
+    def link_file(linkpath: str, targetpath: str, *, exist_ok: bool = False) -> None:
+        """Make a file symlink
+
+        Args:
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: Allow the link to already exist
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
     def link_files(
         link_target_tuples: list[tuple[str, str]], *, exist_ok: bool = False
-    ) -> None: ...
+    ) -> None:
+        """Make multiple file symlinks
+
+        Args:
+            link_target_tuples: Iterable of `(link, target)` tuples
+            exist_ok: Allow the links to already exist
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
-    def unlink_dir(link: str) -> None: ...
+    def unlink_dir(link: str) -> None:
+        """Unlink a directory symlink
+
+        Args:
+            link: Path to the symlink
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
-    def unlink_dirs(links: Iterable[str]) -> None: ...
+    def unlink_dirs(links: Iterable[str]) -> None:
+        """Unlink multiple directory symlinks
+
+        Args:
+            links: Iterable of paths to symlinks
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
-    def unlink_file(link: str) -> None: ...
+    def unlink_file(link: str) -> None:
+        """Unlink a file symlink
+
+        Args:
+            link: Path to the symlink
+
+        """
+        ...
 
     @staticmethod
     @abstractmethod
-    def unlink_files(links: Iterable[str]) -> None: ...
+    def unlink_files(links: Iterable[str]) -> None:
+        """Unlink multiple file symlinks
+
+        Args:
+            links: Iterable of paths to symlinks
+
+        """
+        ...
 
 
 # =============================================================================
@@ -73,9 +144,9 @@ class LIN(OsFsAbc):  # pragma: nocov
         """Make a directory symlink
 
         Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (str): Allow link to exist
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: Allow link to exist
 
         """
         try:
@@ -94,7 +165,7 @@ class LIN(OsFsAbc):  # pragma: nocov
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
-            exist_ok (bool): Allow link to exist
+            exist_ok: Allow link to exist
 
         """
         for link, target in link_target_tuples:
@@ -105,9 +176,9 @@ class LIN(OsFsAbc):  # pragma: nocov
         """Make a file symlink
 
         Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): Allow links to already exist
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: Allow links to already exist
 
         """
         makedirs(path.split(linkpath)[0], exist_ok=True)
@@ -124,7 +195,7 @@ class LIN(OsFsAbc):  # pragma: nocov
         """Make multiple file symlinks
 
         Args:
-            exist_ok (bool): Allow links to already exist
+            exist_ok: Allow links to already exist
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
@@ -186,9 +257,9 @@ class WIN(OsFsAbc):  # pragma: nocov
         """Make a directory symlink
 
         Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): If True, do not raise an exception if the link exists
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: If True, do not raise an exception if the link exists
 
         """
         makedirs(path.split(linkpath)[0], exist_ok=True)
@@ -211,7 +282,7 @@ class WIN(OsFsAbc):  # pragma: nocov
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
-            exist_ok (bool): If True, do not raise an exception if the link(s) exist
+            exist_ok: If True, do not raise an exception if the link(s) exist
 
         """
         try:
@@ -230,9 +301,9 @@ class WIN(OsFsAbc):  # pragma: nocov
         """Make a file symlink
 
         Args:
-            linkpath (str): Path to the link to be made
-            targetpath (str): Path to the target of the link to be made
-            exist_ok (bool): If True, don't raise an exception if the link exists
+            linkpath: Path to the link to be made
+            targetpath: Path to the target of the link to be made
+            exist_ok: If True, don't raise an exception if the link exists
 
         """
         try:
@@ -254,7 +325,7 @@ class WIN(OsFsAbc):  # pragma: nocov
             link_target_tuples: Iterable of tuples of the form: (link, target)
                 or a dictionary mapping with key => value pairs of the form
                 link => target.
-            exist_ok (bool): If True, don't raise an exception if the link exists
+            exist_ok: If True, don't raise an exception if the link exists
 
         """
         try:
@@ -303,7 +374,7 @@ class WIN(OsFsAbc):  # pragma: nocov
         """Unlink a file symlink given a path to the symlink
 
         Args:
-            link (str): path to the symlink
+            link: path to the symlink
 
         """
         try:
