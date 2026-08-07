@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Dev/experimental ~ generators that yield subprocess output as it arrives"""
+
 from __future__ import annotations
 
 from concurrent.futures.thread import ThreadPoolExecutor

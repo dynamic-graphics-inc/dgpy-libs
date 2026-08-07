@@ -132,7 +132,7 @@ class ExeABC:
         self.__post_init__()
 
     def __post_init__(self) -> None:
-        """Hook called at the end of `__init__`; a no-op subclasses may override"""
+        """Run at the end of `__init__`; a no-op hook subclasses may override"""
 
     @classmethod
     def _from_exe_config(cls: type[TExe], config: ExeConfig) -> TExe:

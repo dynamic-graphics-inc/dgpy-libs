@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Test helpers ~ random strings/paths and filesystem assertions"""
+
 from __future__ import annotations
 
 import string
@@ -23,6 +25,16 @@ __all__ = (
 
 
 def assert_symlink_exists(fspath: FsPath, *, target: FsPath | None = None) -> bool:
+    """Check that a symlink exists (and optionally that it points at `target`)
+
+    Args:
+        fspath: Path of the symlink to check
+        target: Path the symlink is expected to resolve to, if given
+
+    Returns:
+        bool: True if the symlink exists (and matches `target`); False otherwise
+
+    """
     _path = Path(fspath)
     try:
         assert _path.exists()

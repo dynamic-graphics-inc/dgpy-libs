@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Subprocess-args utils ~ quoting and flattening of command args"""
+
 from __future__ import annotations
 
 from shlex import quote as _quote

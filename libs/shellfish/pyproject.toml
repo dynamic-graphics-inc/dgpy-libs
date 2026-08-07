@@ -57,6 +57,21 @@ include = [
 [tool.ruff]
 extend = "../../ruff.toml"
 
+[tool.ruff.lint]
+# shellfish enforces full google-style docstring coverage; the repo-wide
+# ruff.toml ignores these rules. D400/D415 stay ignored -- period-less
+# summary lines are the house style.
+extend-select = [
+  "D100", # undocumented-public-module
+  "D101", # undocumented-public-class
+  "D102", # undocumented-public-method
+  "D103", # undocumented-public-function
+  "D104", # undocumented-public-package
+  "D105", # undocumented-magic-method
+  "D107", # undocumented-public-init
+  "D401", # non-imperative-mood
+]
+
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 minversion = "8.0"

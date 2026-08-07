@@ -211,6 +211,25 @@ def scandir_gen_filter(
     dirs_only: bool = False,
     symlinks_only: bool = False,
 ) -> Iterator[DirEntry[AnyStr]]:
+    """Filter an iterable of `os.DirEntry` objects by entry type
+
+    Args:
+        it: Iterable of `os.DirEntry` objects to filter
+        follow_symlinks: Follow symlinks when checking entry types
+        files: Include files (Default value = True)
+        dirs: Include directories (Default value = True)
+        symlinks: Include symlinks (Default value = True)
+        files_only: Include files only (Default value = False)
+        dirs_only: Include directories only (Default value = False)
+        symlinks_only: Include symlinks only (Default value = False)
+
+    Returns:
+        Iterator[DirEntry]: Iterator of the `os.DirEntry` objects kept
+
+    Raises:
+        ValueError: If `files`, `dirs` and `symlinks` are all False
+
+    """
     if files and dirs and symlinks:  # all
         return (x for x in it)
     if files_only or (files and not dirs and not symlinks):  # files (only)
@@ -244,7 +263,7 @@ def scandir_gen(
     r"""Return an iterator of os.DirEntry objects
 
     Args:
-        fspath: (FsPath): dirpath to look through
+        fspath (FsPath): dirpath to look through
         recursive (bool): recursively scan the directory
         follow_symlinks (bool): follow symlinks when checking for dirs and files
         files (bool): include files
@@ -1461,6 +1480,17 @@ def glob(pattern: str, *, recursive: bool = False, r: bool = False) -> Iterator[
 
 
 def rename(src: FsPath, dest: FsPath, *, dryrun: bool = False) -> tuple[FsPath, FsPath]:
+    """Rename/move a file or directory
+
+    Args:
+        src (FsPath): Source path
+        dest (FsPath): Destination path
+        dryrun (bool): Do not rename if True; just return the src and dest
+
+    Returns:
+        Tuple[FsPath, FsPath]: The (src, dest) paths given
+
+    """
     if not dryrun:
         _move(fspath(src), dest)
     return (src, dest)
@@ -1605,6 +1635,17 @@ def stat(fspath: FsPath) -> os_stat_result:
 
 
 def symlink(link: FsPath, target: FsPath, *, _type: SymlinkType = "file") -> None:
+    """Create a symlink at `link` pointing at `target`
+
+    Args:
+        link (FsPath): Path of the symlink to create
+        target (FsPath): Path the symlink refers to
+        _type (SymlinkType): Kind of symlink to create ('file' or 'dir')
+
+    Raises:
+        NotImplementedError: On windows, where symlink creation is unsupported
+
+    """
     if _is_win():
         raise NotImplementedError("TODO")
     _symlink(str(link), str(target))

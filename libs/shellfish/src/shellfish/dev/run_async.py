@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+"""Dev/experimental ~ asyncio-based `run` with tee-ing of stdout/stderr"""
+
 from __future__ import annotations
 
 import asyncio
@@ -246,6 +248,33 @@ async def run_async(
     universal_newlines: bool = True,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[bytes]:
+    """Run a subprocess asynchronously, optionally tee-ing its output
+
+    Thin wrapper around `run_dtee_async` that drops the timing info.
+
+    Args:
+        *popenargs: Args as strings for the subprocess
+        executable: Executable to run in place of `popenargs[0]`
+        stdin: Stdin for the subprocess
+        text: Decode stdout/stderr as text (Default value = False)
+        input: Stdin as a string for the subprocess
+        stdout: Stdout for the subprocess
+        stderr: Stderr for the subprocess
+        shell: Run in shell or sub-shell (Default value = False)
+        cwd: Current working directory (Default value = None)
+        timeout: Timeout in seconds for the process if not None
+        capture_output: Capture stdout and stderr (Default value = True)
+        check: Raise if the return code is not in `ok_code`
+        env: Environment variables for the subprocess
+        ok_code: Return code(s) considered ok (Default value = 0)
+        tee: Write the subprocess output to sys.stdout/sys.stderr as it arrives
+        universal_newlines: Alias for `text`
+        **other_popen_kwargs: Additional kwargs forwarded to the subprocess
+
+    Returns:
+        CompletedProcess[bytes]: Completed process for the finished subprocess
+
+    """
     completed_process, _pdt = await run_dtee_async(
         *popenargs,
         executable=executable,

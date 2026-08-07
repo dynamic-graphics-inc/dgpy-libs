@@ -149,6 +149,12 @@ class DoneError(SubprocessError):
         )
 
     def __str__(self) -> str:
+        """Return the error message followed by the `Done` object
+
+        Returns:
+            str: Error message and the `Done` object for the subprocess
+
+        """
         return f"{self.error_msg()}\n{self.done}"
 
     @property

@@ -22,6 +22,14 @@ WIN_DEFAULT_PATHEXT: str = ".COM;.EXE;.BAT;.CMD;.VBS;.JS;.WS;.MSC"
 
 
 def pathext() -> tuple[str, ...]:
+    """Return the windows `PATHEXT` extensions as a tuple
+
+    Falls back to `WIN_DEFAULT_PATHEXT` if `PATHEXT` is unset or empty.
+
+    Returns:
+        Tuple[str, ...]: Executable file extensions (eg `('.COM', '.EXE', ...)`)
+
+    """
     pathext_source = _getenv("PATHEXT") or WIN_DEFAULT_PATHEXT
     return tuple(pathext_source.split(";"))
 
@@ -50,10 +58,38 @@ def bat(
 
 
 def run_cmd(cmd: str, *, text: bool = True) -> CompletedProcess[AnyStr]:
+    """Run a single command string through the shell
+
+    Args:
+        cmd: Command string to run
+        text: Decode stdout/stderr as text (Default value = True)
+
+    Returns:
+        CompletedProcess[AnyStr]: Completed process with captured output
+
+    Raises:
+        CalledProcessError: If the command exits non-zero
+
+    """
     return run(cmd, check=True, capture_output=True, text=text, shell=True)
 
 
 def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
+    """Run one or more commands, batching them into a bat file if needed
+
+    A single command is `CALL`-ed directly; multiple commands are written to a
+    temporary bat file and run via `run_cmds_as_bat_file`.
+
+    Args:
+        cmds: Command strings to run
+
+    Returns:
+        CompletedProcess[AnyStr]: Completed process with captured output
+
+    Raises:
+        ValueError: If `cmds` is empty
+
+    """
     if len(cmds) == 0:
         raise ValueError("no commands given")
     if len(cmds) == 1:
@@ -64,6 +100,19 @@ def run_cmds(cmds: Sequence[str]) -> CompletedProcess[AnyStr]:
 def run_cmds_as_bat_file(
     commands: Sequence[tuple[str, ...] | str], *, text: bool = True
 ) -> CompletedProcess[AnyStr]:
+    """Write commands to a temporary bat file and run it
+
+    Args:
+        commands: Commands to run; each is a string or a tuple of args to join
+        text: Decode stdout/stderr as text (Default value = True)
+
+    Returns:
+        CompletedProcess[AnyStr]: Completed process with captured output
+
+    Raises:
+        ValueError: If `commands` is empty
+
+    """
     if len(commands) == 0:
         raise ValueError("no commands given")
     _commands = [
@@ -119,6 +168,27 @@ def MKLINK_OPT(*, D: bool = False, H: bool = False, J: bool = False) -> str | No
 def MKLINK_ARGS(
     link: FsPath, target: FsPath, *, D: bool = False, H: bool = False, J: bool = False
 ) -> tuple[str, str, str, str] | tuple[str, str, str]:
+    """Return the args tuple for a windows `MKLINK` command
+
+    Args:
+        link: Path of the new link
+        target: Path the new link refers to
+        D: Create a directory symbolic link (Default value = False)
+        H: Create a hard link instead of a symbolic link (Default value = False)
+        J: Create a directory junction (Default value = False)
+
+    Returns:
+        Tuple[str, ...]: `MKLINK` args, with the absolute link/target paths
+
+    Raises:
+        ValueError: If more than one of `D`, `H` and `J` is True
+
+    Examples:
+        >>> args = MKLINK_ARGS("link", "target", D=True)
+        >>> args[0], args[1]
+        ('MKLINK', '/D')
+
+    """
     link_path = Path(link).absolute()
     target_path = Path(target).absolute()
     mklink_opt = MKLINK_OPT(D=D, H=H, J=J)
@@ -139,12 +209,25 @@ def MKLINK(
     J: bool = False,
     check: bool = False,
 ) -> CompletedProcess[str]:
-    """Creates a symbolic link.
+    """Create a symbolic link via the windows `MKLINK` command
+
+    Args:
+        link: Path of the new link
+        target: Path the new link refers to
+        D: Create a directory symbolic link (Default value = False)
+        H: Create a hard link instead of a symbolic link (Default value = False)
+        J: Create a directory junction (Default value = False)
+        check: Raise if `MKLINK` exits non-zero (Default value = False)
 
     Returns:
-        CompletedProcess[str]: The result of the MKLINK command.
+        CompletedProcess[str]: The result of the `MKLINK` command
 
-    Output of `MKLINK /?`:
+    Raises:
+        ValueError: If more than one of `D`, `H` and `J` is True
+
+    Notes:
+        Output of `MKLINK /?`:
+
         ```
         MKLINK [[/D] | [/H] | [/J]] Link Target
 
@@ -178,6 +261,28 @@ def RD_ARGS(
     Z: bool = False,
     A: bool = False,
 ) -> tuple[str, ...]:
+    """Return the args tuple for a windows `RD` command
+
+    Args:
+        fspath: Directory path to remove
+        S: Recursively remove subdirectories and files (Default value = False)
+        Q: Quiet; do not display progress messages (Default value = False)
+        R: Recursively remove subdirectories and files (Default value = False)
+        P: Prompt before each removal (Default value = False)
+        F: Do not display confirmation messages (Default value = False)
+        X: Do not display confirmation messages (Default value = False)
+        Y: Do not display confirmation messages (Default value = False)
+        Z: Do not display confirmation messages (Default value = False)
+        A: Do not display confirmation messages (Default value = False)
+
+    Returns:
+        Tuple[str, ...]: `RD` args, with the absolute directory path last
+
+    Examples:
+        >>> RD_ARGS("some-dir", S=True, Q=True)[:3]
+        ('RD', '/S', '/Q')
+
+    """
     opts = (
         "/S" if S else None,
         "/Q" if Q else None,
@@ -213,13 +318,27 @@ def RD(
     A: bool = False,
     check: bool = False,
 ) -> CompletedProcess[str]:
-    """Removes a directory.
+    """Remove a directory via the windows `RD` command
+
+    Args:
+        fspath: Directory path to remove
+        S: Recursively remove subdirectories and files (Default value = False)
+        Q: Quiet; do not display progress messages (Default value = False)
+        R: Recursively remove subdirectories and files (Default value = False)
+        P: Prompt before each removal (Default value = False)
+        F: Do not display confirmation messages (Default value = False)
+        X: Do not display confirmation messages (Default value = False)
+        Y: Do not display confirmation messages (Default value = False)
+        Z: Do not display confirmation messages (Default value = False)
+        A: Do not display confirmation messages (Default value = False)
+        check: Raise if `RD` exits non-zero (Default value = False)
 
     Returns:
-        CompletedProcess[str]: The result of the RD command.
+        CompletedProcess[str]: The result of the `RD` command
 
+    Notes:
+        Output of `RD /?`:
 
-    Output of `RD /?`:
         ```
         RD [/S] [/Q] [/R] [/P] [/F] [/X] [/Y] [/Z] [/A] [Drive:]Path
 
@@ -243,6 +362,19 @@ def RD(
 
 
 def DEL_ARGS(fspath: FsPath) -> tuple[str, str]:
+    """Return the args tuple for a windows `DEL` command
+
+    Args:
+        fspath: File path to delete
+
+    Returns:
+        Tuple[str, str]: `('DEL', <absolute-filepath>)`
+
+    Examples:
+        >>> DEL_ARGS("some-file.txt")[0]
+        'DEL'
+
+    """
     path_obj = Path(fspath).absolute()
     return (
         "DEL",
@@ -254,6 +386,16 @@ _DEL = DEL_ARGS
 
 
 def DEL(fspath: FsPath, *, check: bool = False) -> CompletedProcess[str]:
+    """Delete a file via the windows `DEL` command
+
+    Args:
+        fspath: File path to delete
+        check: Raise if `DEL` exits non-zero (Default value = False)
+
+    Returns:
+        CompletedProcess[str]: The result of the `DEL` command
+
+    """
     return run(
         args=("DEL", _fspath(Path(fspath))),
         check=check,

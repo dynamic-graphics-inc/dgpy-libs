@@ -403,6 +403,15 @@ class FlagMeta(type):
         return string.replace("_", "-")
 
     def __getattr__(self, name: str) -> str:
+        """Return the cli flag corresponding to an attribute name
+
+        Args:
+            name: Attribute name to convert
+
+        Returns:
+            The attribute name as a cli flag
+
+        """
         return self.attr2flag(string=name)
 
 
@@ -512,6 +521,26 @@ def pstdout_pstderr(proc: CompletedProcess[AnyStr]) -> tuple[str, str]:
 
 
 def validate_stdin(stdin: STDIN) -> STDIN:
+    """Convert stdin to bytes (or None) for use with `subprocess`
+
+    Args:
+        stdin: stdin as a string, bytes, bytearray or None
+
+    Returns:
+        STDIN: `stdin` as bytes, or None if `stdin` is None
+
+    Raises:
+        ValueError: If `stdin` is not a string, bytes, bytearray or None
+
+    Examples:
+        >>> validate_stdin("hello")
+        b'hello'
+        >>> validate_stdin(b"hello")
+        b'hello'
+        >>> validate_stdin(None) is None
+        True
+
+    """
     if stdin is None:
         return None
     if stdin and isinstance(stdin, str):
@@ -523,6 +552,21 @@ def validate_stdin(stdin: STDIN) -> STDIN:
 
 
 def utf8_string(val: str | bytes | bytearray) -> str:
+    """Decode bytes as utf-8, passing strings through unchanged
+
+    Args:
+        val: String or bytes-like object to decode
+
+    Returns:
+        str: `val` as a string
+
+    Examples:
+        >>> utf8_string(b"hello")
+        'hello'
+        >>> utf8_string("hello")
+        'hello'
+
+    """
     if not isinstance(val, str):
         return val.decode("utf-8")
     return val
@@ -542,10 +586,45 @@ def flatten_args(*args: Any | list[Any]) -> list[str]:
 
 
 def popen_has_pipe_character(args: Sequence[PopenArg]) -> bool:
+    """Check if any of the given args is a pipe character (`|`)
+
+    Args:
+        args: Subprocess args to check
+
+    Returns:
+        bool: True if any arg is a pipe character; False otherwise
+
+    Examples:
+        >>> popen_has_pipe_character(["echo", "hello"])
+        False
+        >>> popen_has_pipe_character(["echo", "hello", "|", "cat"])
+        True
+
+    """
     return any(arg == "|" for arg in args)
 
 
 def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
+    """Flatten and normalize subprocess args to a list of strings
+
+    A lone string arg is split shell-style; anything else is flattened.
+
+    Args:
+        args: Subprocess args, possibly nested
+
+    Returns:
+        List[str]: Flat list of string args
+
+    Raises:
+        ValueError: If `args` is empty
+
+    Examples:
+        >>> validate_popen_args(("echo hello",))
+        ['echo', 'hello']
+        >>> validate_popen_args((["echo", "hello"],))
+        ['echo', 'hello']
+
+    """
     if len(args) == 0:
         raise ValueError("args must be a non-empty sequence")
     if len(args) == 1:
@@ -870,6 +949,30 @@ async def run_async(
     universal_newlines: Literal[True] | None = None,
     **other_popen_kwargs: Any,
 ) -> CompletedProcess[Any]:
+    """Run a subprocess asynchronously; async version of `run`
+
+    Args:
+        args: Args as strings for the subprocess
+        stdin: Stdin for the subprocess
+        input: Stdin as a string for the subprocess
+        stdout: Stdout for the subprocess
+        stderr: Stderr for the subprocess
+        capture_output: Capture stdout and stderr (Default value = False)
+        shell: Run in shell or sub-shell (Default value = False)
+        cwd: Current working directory (Default value = None)
+        timeout: Timeout in seconds for the process if not None
+        check: Raise if the subprocess exits non-zero (Default value = False)
+        encoding: Encoding to use decoding stdout/stderr
+        errors: Error handling scheme used for decoding
+        text: Decode stdout/stderr as text (Default value = False)
+        env: Environment variables as a dictionary (Default value = None)
+        universal_newlines: Alias for `text`
+        **other_popen_kwargs: Additional kwargs forwarded to `subprocess.Popen`
+
+    Returns:
+        CompletedProcess[Any]: Completed process for the finished subprocess
+
+    """
     args = validate_popen_args(args)
     return await _run_async(
         args=args,
@@ -1321,6 +1424,21 @@ class LIN(_LIN):
         exclude: Iterable[str] | None = None,
         include: Iterable[str] | None = None,
     ) -> Done:
+        """Sync src to dest with `rsync`; alias for `LIN.rsync`
+
+        Args:
+            src: Source directory path
+            dest: Destination directory path
+            delete: Delete files in dest that are not in src (Default value = False)
+            mkdirs: Make destination directories if needed (Default value = False)
+            dry_run: Do a dry run without syncing (Default value = False)
+            exclude: Paths/globs to exclude from the sync
+            include: Paths/globs to include in the sync
+
+        Returns:
+            Done: Done object for the finished `rsync` subprocess
+
+        """
         return LIN.rsync(
             src,
             dest,
@@ -1491,6 +1609,21 @@ class WIN(_WIN):
         exclude: Iterable[str] | None = None,
         include: Iterable[str] | None = None,
     ) -> Done:  # pragma: nocov
+        """Sync src to dest with `robocopy`; alias for `WIN.robocopy`
+
+        Args:
+            src: Source directory path
+            dest: Destination directory path
+            delete: Delete files in dest that are not in src (Default value = False)
+            mkdirs: Make destination directories if needed (Default value = False)
+            dry_run: Do a dry run without syncing (Default value = False)
+            exclude: Files to exclude from the sync
+            include: Directories to exclude from the sync
+
+        Returns:
+            Done: Done object for the finished `robocopy` subprocess
+
+        """
         return WIN.robocopy(
             src=src,
             dest=dest,
