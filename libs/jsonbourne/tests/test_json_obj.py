@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import json
 
 from decimal import Decimal
@@ -506,13 +506,13 @@ def test_lookup_ops() -> None:
     data = {
         "key": "value",
         "list": [1, 2, 3, 4, 5],
-        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "dt": dt.datetime(1970, 1, 1, 0, 0, 0, 1),
         "sub": {
             "b": 3,
             "key": "val",
             "a": 1,
         },
-        "timedelta": datetime.timedelta(days=2),
+        "timedelta": dt.timedelta(days=2),
     }
 
     d = JSON(data)

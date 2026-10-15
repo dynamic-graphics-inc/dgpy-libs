@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import pathlib
 import uuid
 
@@ -55,7 +55,7 @@ class Point3dJsonInterfaceProperty(NamedTuple):
 D = {
     "key": "value",
     "list": [1, 2, 3, 4, 5],
-    "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+    "dt": dt.datetime(1970, 1, 1, 0, 0, 0, 1),
     "sub": {
         "b": 3,
         "key": "val",
@@ -63,7 +63,7 @@ D = {
     },
     "apath": pathlib.Path.home(),
     "Decimal": Decimal("1.4"),
-    "timedelta": datetime.timedelta(days=2),
+    "timedelta": dt.timedelta(days=2),
     "point": Point3d(1, 2, 3),
     "point_dumpable": Point3dDumpable(1, 2, 3),
     "point_json_interface": Point3dJsonInterface(1, 2, 3),
@@ -174,7 +174,7 @@ def test_dump_numpy_array_dumps(jsonlib: JsonLibABC) -> None:
 
 def test_datetime_dumps(jsonlib: JsonLibABC) -> None:
     data = {
-        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "dt": dt.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
     json_strings = [
         jsonlib.dumps(data),
@@ -243,7 +243,7 @@ def test_dump_numpy_array_dumpb(jsonlib: JsonLibABC) -> None:
 
 def test_datetime_dumpb(jsonlib: JsonLibABC) -> None:
     data = {
-        "dt": datetime.datetime(1970, 1, 1, 0, 0, 0, 1),
+        "dt": dt.datetime(1970, 1, 1, 0, 0, 0, 1),
     }
 
     json_bytes = [
