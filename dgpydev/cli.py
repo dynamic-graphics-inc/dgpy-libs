@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import datetime
+import datetime as dt
 import itertools as it
 
 from functools import lru_cache
@@ -282,7 +282,7 @@ class Change:
     lib: str
     version: str
     msg: str
-    timestamp: datetime.datetime = datetime.datetime.now()
+    timestamp: dt.datetime = dt.datetime.now()
 
     def __json__(self) -> Any:
         return {
@@ -317,7 +317,7 @@ class Change:
 
 
 class Changelog(JsonBaseModel):
-    updated: datetime.datetime = datetime.datetime.now()
+    updated: dt.datetime = dt.datetime.now()
     changes: list[Change]
 
     def most_recent_change(self) -> Change:
@@ -326,12 +326,12 @@ class Changelog(JsonBaseModel):
             raise ValueError(_errmsg)
         return max(self.changes, key=lambda change: change.timestamp)
 
-    def new_updated_timestamp(self) -> datetime.datetime:
+    def new_updated_timestamp(self) -> dt.datetime:
         try:
             most_recent_change = self.most_recent_change()
             return most_recent_change.timestamp
         except ValueError:
-            return datetime.datetime.now()
+            return dt.datetime.now()
 
     def check_similar_changes(self) -> None:
         unique_changes_ignoring_timestamp = set(
@@ -379,13 +379,13 @@ def change(
         console.log(f"Creating {changelog_json_filepath}")
         sh.write_json(
             changelog_json_filepath,
-            {"changes": [], "updated": datetime.datetime.now().isoformat()},
+            {"changes": [], "updated": dt.datetime.now().isoformat()},
         )
     # load changelog.json
     changelog_json = changelog_json_filepath.read_text()
     changelog = Changelog.from_json(changelog_json)
 
-    isots = datetime.datetime.now().isoformat()
+    isots = dt.datetime.now().isoformat()
     change = Change(lib=lib, version=lib_version(lib), msg=msg, timestamp=isots)
     changelog.changes.append(change)
 
