@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 
 from asyncio import AbstractEventLoop, get_event_loop, run as asyncio_run
 from collections.abc import (
@@ -244,7 +245,7 @@ def is_async(obj: Any) -> bool:
         True
 
     """
-    return asyncio.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
+    return inspect.iscoroutinefunction(obj) or asyncio.iscoroutine(obj)
 
 
 def is_coro(obj: Any) -> TypeGuard[Awaitable[Any]]:
