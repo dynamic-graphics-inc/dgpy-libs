@@ -28,18 +28,19 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     file = tmp_path.joinpath(filename)
     file.write_bytes(file_content)
 
-    async def serve_file(reader: Any, writer: Any) -> None:  # noqa: RUF029
+    async def serve_file(reader: Any, writer: Any) -> None:
         full_filename = str(file)
         with open(full_filename, "rb") as f:
             writer.write(f.read())
         writer.close()
+        await writer.wait_closed()
 
     server = await asyncio.start_server(
         serve_file,
         port=unused_tcp_port,
     )
 
-    reader, _ = await asyncio.open_connection(
+    reader, client_writer = await asyncio.open_connection(
         host="localhost",
         port=unused_tcp_port,
     )
@@ -47,12 +48,14 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     payload = await reader.read()
 
     assert payload == file_content
+    client_writer.close()
+    await client_writer.wait_closed()
 
     server.close()
     await server.wait_closed()
 
 
-@pytest.mark.asyncio(scope="session")
+@pytest.mark.asyncio(loop_scope="session")
 async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> None:
     """Fire up a small simple file server, and fetch a file."""
     # First we'll write a small file.
@@ -67,13 +70,14 @@ async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> Non
         writer.write(await f.read())
         await f.close()
         writer.close()
+        await writer.wait_closed()
 
     server = await asyncio.start_server(
         serve_file,
         port=unused_tcp_port,
     )
 
-    reader, _ = await asyncio.open_connection(
+    reader, client_writer = await asyncio.open_connection(
         host="localhost",
         port=unused_tcp_port,
     )
@@ -81,6 +85,8 @@ async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> Non
     payload = await reader.read()
 
     assert payload == file_content
+    client_writer.close()
+    await client_writer.wait_closed()
 
     server.close()
     await server.wait_closed()

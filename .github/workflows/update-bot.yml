@@ -28,8 +28,8 @@ jobs:
             echo '```text'
             uv lock -U 2>&1
             echo '```'
-          } > uv_output.md 
-      
+          } > uv_output.md
+
       - name: Check if uv.lock changed
         id: check-uv-lock
         run: |
@@ -38,7 +38,7 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             echo "Changes detected in uv.lock"
-            echo "== uv.lock changes ==" 
+            echo "== uv.lock changes =="
             cat uv_output.md
             echo "~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~"
             echo "changed=true" >> $GITHUB_OUTPUT

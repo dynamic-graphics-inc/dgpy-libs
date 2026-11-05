@@ -10,10 +10,10 @@ readme = "README.md"
 keywords = [ "h5", "h5py", "hdf5", "numpy" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -59,9 +59,11 @@ include = [
 extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 markers = [ "version" ]
 # add cov to pytest args
 addopts = [ "--cov=h5", "--cov-fail-under=75" ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 source = [ 'h5' ]

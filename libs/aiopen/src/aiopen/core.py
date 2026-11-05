@@ -137,12 +137,11 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
     def closed(self) -> bool:
         return self._file.closed
 
-    def detach(self) -> None:
+    def detach(self) -> Any:
         # check if self._file is FileIO
         if not isinstance(self._file, FileIO):
-            self._file.detach()
-        else:
-            raise AttributeError("detach() method is not available")
+            return self._file.detach()
+        raise AttributeError("detach() method is not available")
 
     @aio_hoist
     def peek(self, *args: Any, **kwargs: Any) -> Any:

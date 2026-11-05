@@ -11,10 +11,10 @@ keywords = [ "dgpy", "filesystem", "fs", "shell", "typed" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
 
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -66,7 +66,6 @@ addopts = [
   "--strict-markers",
   "--doctest-modules",
   "--ignore-glob=*/_meta.py",
-  # "--disable-warnings",
 ]
 xfail_strict = true
 markers = [
@@ -75,6 +74,7 @@ markers = [
   "aio",
   "asyncio",
 ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 source = [ 'shellfish' ]

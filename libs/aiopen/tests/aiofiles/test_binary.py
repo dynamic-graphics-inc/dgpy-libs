@@ -307,6 +307,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
 
     assert raw_file
     assert raw_file.read(10) == b"0123456789"
+    raw_file.close()
 
 
 @pytest.mark.asyncio

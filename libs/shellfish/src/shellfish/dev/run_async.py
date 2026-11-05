@@ -155,6 +155,7 @@ async def run_dtee_async(
             except TimeoutError as te:
                 for task in _bg:
                     task.cancel()
+                _proc.terminate()
                 raise TimeoutExpired(
                     cmd=_args,
                     timeout=timeout,
@@ -162,7 +163,9 @@ async def run_dtee_async(
                     stderr=_err_buf.getvalue(),
                 ) from te
             finally:
-                await _proc.wait()
+                # drain stdout/stderr to EOF so the pipe transports close
+                # if ya dont asyncio emits "unclosed transport" `ResourceWarnings`
+                await _proc.communicate()
         else:
             await asyncio.gather(
                 *_bg,
@@ -193,7 +196,7 @@ async def run_dtee_async(
                     stderr=_err_buf.getvalue(),
                 ) from te
             finally:
-                await _proc.wait()
+                await _proc.communicate()
         else:
             (_stdout, _stderr) = await _proc.communicate(input=_input_bytes)
             tf = time()

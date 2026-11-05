@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
 import sys
 import warnings
@@ -232,7 +233,7 @@ class Requirement:
                 tb = sys.exc_info()[2]
                 raise self.err().with_traceback(tb) from mnfe
 
-        if asyncio.iscoroutinefunction(f) or asyncio.iscoroutine(f):
+        if inspect.iscoroutinefunction(f) or asyncio.iscoroutine(f):
 
             async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> Any:
                 if self.lazy:

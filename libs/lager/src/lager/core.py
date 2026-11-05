@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import sys as _sys
 
 from functools import wraps
@@ -186,7 +187,7 @@ def flog(
                 )
             return result
 
-        if asyncio.iscoroutinefunction(funk) or asyncio.iscoroutine(funk):
+        if inspect.iscoroutinefunction(funk) or asyncio.iscoroutine(funk):
             return _flog_decorator_async  # type: ignore[return-value]
         return _flog_decorator
 
