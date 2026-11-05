@@ -289,7 +289,6 @@ def aiorun_anyio(
     """
     if is_coro(awaitable_or_func):
         if args:
-            # close the coroutine so it does not warn "was never awaited"
             cast("Coroutine[Any, Any, T_Retval]", awaitable_or_func).close()
             raise ValueError("args must be empty when calling a coroutine")
 
@@ -324,7 +323,6 @@ def aiorun_asyncio(
         )
 
     if args:
-        # close the coroutine so it does not warn "was never awaited"
         cast("Coroutine[Any, Any, T_Retval]", awaitable_or_func).close()
         raise ValueError("args must be empty when calling a coroutine")
     return asyncio_run(

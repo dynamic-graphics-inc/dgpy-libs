@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import time
 
 from os.path import dirname, join
@@ -41,11 +42,13 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
                 await writer.drain()
             await writer.drain()
         writer.close()
+        await writer.wait_closed()
 
     async def return_one(_: Any, writer: Any) -> None:
         writer.write(b"1")
         await writer.drain()
         writer.close()
+        await writer.wait_closed()
 
     counter = 0
 
@@ -53,9 +56,12 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
         nonlocal counter
         while True:
             r, w = await asyncio.open_connection("127.0.0.1", port=30001)
-            assert (await r.read()) == b"1"
-            counter += 1
-            w.close()
+            try:
+                assert (await r.read()) == b"1"
+                counter += 1
+            finally:
+                w.close()
+                await w.wait_closed()
             await asyncio.sleep(0.01)
 
     file_server = await asyncio.start_server(serve_file, port=unused_tcp_port)
@@ -67,16 +73,19 @@ async def test_slow_file(monkeypatch: MonkeyPatch, unused_tcp_port: int) -> None
 
     actual_contents = await reader.read()
     writer.close()
+    await writer.wait_closed()
 
     await asyncio.sleep(0)
+
+    spam_task.cancel()
+    with contextlib.suppress(asyncio.CancelledError):
+        await spam_task
 
     file_server.close()
     spam_server.close()
 
     await file_server.wait_closed()
     await spam_server.wait_closed()
-
-    spam_task.cancel()
 
     assert actual_contents == contents
     assert counter > 30

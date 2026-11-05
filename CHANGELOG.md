@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-11-05
+
+- ALL
+  - pytest warnings are errors everywhere
+  - set `asyncio_default_fixture_loop_scope`
+  - `license = "MIT"` instead of license classifiers
+  - `inspect.iscoroutinefunction` instead of `asyncio.iscoroutinefunction`
+    (deprecated in python3.14)
+- `aiopen`
+  - `detach()` returns the detached buffer (was returning `None`)
+- `asyncify`
+  - `aiorun*` closes the coroutine before raising on extra args
+- `shellfish`
+  - `run_async` terminates the process and closes its pipes on timeout
+
+---
+
 ## 2026-06-12
 
 - ruff `RET` rules turned on

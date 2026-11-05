@@ -28,11 +28,12 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     file = tmp_path.joinpath(filename)
     file.write_bytes(file_content)
 
-    async def serve_file(reader: Any, writer: Any) -> None:  # noqa: RUF029
+    async def serve_file(reader: Any, writer: Any) -> None:
         full_filename = str(file)
         with open(full_filename, "rb") as f:
             writer.write(f.read())
         writer.close()
+        await writer.wait_closed()
 
     server = await asyncio.start_server(
         serve_file,
@@ -69,6 +70,7 @@ async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> Non
         writer.write(await f.read())
         await f.close()
         writer.close()
+        await writer.wait_closed()
 
     server = await asyncio.start_server(
         serve_file,
