@@ -254,6 +254,7 @@ async def test_simple_detach(tmp_path: Path) -> None:
                 await file.read()
 
             assert raw_file.read(10) == b"0123456789"
+            raw_file.close()
 
     with pytest.raises(ValueError, match="underlying buffer has been detached"):
         await detach_file()

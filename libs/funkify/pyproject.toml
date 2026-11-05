@@ -11,10 +11,10 @@ keywords = [ "dgpy", "funk", "funky", "modules", "python" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
 
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -44,12 +44,12 @@ include = [
 extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 minversion = "8.0"
 addopts = [
   "-ra",
   "--strict-config",
   "--strict-markers",
-  "--disable-warnings",
   "--ignore-glob=*/_meta.py",
 ]
 markers = [
@@ -61,6 +61,7 @@ markers = [
   "basic: basic tests",
   "version",
 ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 source = [ 'funkify' ]

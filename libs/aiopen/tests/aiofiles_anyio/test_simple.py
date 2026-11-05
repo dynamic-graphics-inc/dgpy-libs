@@ -39,7 +39,7 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
         port=unused_tcp_port,
     )
 
-    reader, _ = await asyncio.open_connection(
+    reader, client_writer = await asyncio.open_connection(
         host="localhost",
         port=unused_tcp_port,
     )
@@ -47,6 +47,8 @@ async def test_serve_small_bin_file_sync(tmp_path: Path, unused_tcp_port: int) -
     payload = await reader.read()
 
     assert payload == file_content
+    client_writer.close()
+    await client_writer.wait_closed()
 
     server.close()
     await server.wait_closed()
@@ -73,7 +75,7 @@ async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> Non
         port=unused_tcp_port,
     )
 
-    reader, _ = await asyncio.open_connection(
+    reader, client_writer = await asyncio.open_connection(
         host="localhost",
         port=unused_tcp_port,
     )
@@ -81,6 +83,8 @@ async def test_serve_small_bin_file(tmp_path: Path, unused_tcp_port: int) -> Non
     payload = await reader.read()
 
     assert payload == file_content
+    client_writer.close()
+    await client_writer.wait_closed()
 
     server.close()
     await server.wait_closed()

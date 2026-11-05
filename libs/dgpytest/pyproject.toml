@@ -11,10 +11,10 @@ keywords = [ "dgpy", "plugin", "pytest", "typed" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
 
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Private :: Do Not Upload",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
@@ -53,20 +53,14 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--disable-warnings",
   "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
-filterwarnings = [
-  "error",
-  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-  "ignore::RuntimeWarning",
-  "ignore::pytest.PytestUnraisableExceptionWarning",
-]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",
   "timeout",
 ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 branch = true

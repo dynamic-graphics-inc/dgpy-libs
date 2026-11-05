@@ -113,7 +113,6 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--disable-warnings",
 ]
 # NOTE: the `libs/src/<pkg>` entries below are stale -- the real layout is
 # `libs/<pkg>/src/<pkg>`, so they collect nothing. Correcting them all at once
@@ -140,10 +139,8 @@ testpaths = [
 xfail_strict = true
 filterwarnings = [
   "error",
-  'ignore:"@coroutine" decorator is deprecated since Python 3\.8, use "async def" instead:DeprecationWarning',
-  "ignore::RuntimeWarning",
-  "ignore::pytest.PytestUnraisableExceptionWarning",
-  "ignore::DeprecationWarning",
+  # intentional deprecation shim, imported by --doctest-modules
+  "ignore:xtyping._all is deprecated:DeprecationWarning",
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",

@@ -6,8 +6,8 @@ from jsonbourne.httpx import Client
 
 def test_response_dot_JSON() -> None:
     something_url = "https://jsonplaceholder.typicode.com/todos/1"
-    c = Client()
-    r = c.get(something_url)
+    with Client() as c:
+        r = c.get(something_url)
     json_dict = r.json()
     assert isinstance(json_dict, dict)
     assert hasattr(r, "JSON")

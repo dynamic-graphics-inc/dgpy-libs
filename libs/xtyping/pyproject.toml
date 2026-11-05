@@ -11,10 +11,10 @@ keywords = [ "dgpy", "typed", "types", "typing" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
 
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",

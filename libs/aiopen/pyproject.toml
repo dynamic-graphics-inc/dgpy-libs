@@ -15,7 +15,6 @@ requires-python = ">=3.11,<4.0"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -63,14 +62,13 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--disable-warnings",
   "--cov-config=pyproject.toml",
   "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
-filterwarnings = [ "ignore::pytest.PytestUnraisableExceptionWarning" ]
 markers = [ "asyncio", "anyio", "version" ]
 testpaths = [ "aiopen", "tests" ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 source = [ 'aiopen' ]

@@ -10,10 +10,10 @@ readme = "README.md"
 keywords = [ "async", "asyncify", "asyncio", "dgpy" ]
 authors = [ { name = "jesse", email = "jesse@dgi.com" } ]
 requires-python = ">=3.11,<4.0"
+license = "MIT"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.11",
@@ -55,17 +55,13 @@ addopts = [
   "--strict-config",
   "--strict-markers",
   "--doctest-modules",
-  "--disable-warnings",
   "--cov-config=pyproject.toml",
   "--ignore-glob=*/_meta.py",
 ]
 xfail_strict = true
-filterwarnings = [
-  "error",
-  "ignore::pytest.PytestUnraisableExceptionWarning",
-]
 markers = [ "asyncio", "anyio" ]
 testpaths = [ "asyncify", "tests" ]
+filterwarnings = [ "error" ]
 
 [tool.coverage.run]
 source = [ 'asyncify' ]
