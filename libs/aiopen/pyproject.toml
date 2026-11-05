@@ -57,6 +57,7 @@ funkify = { workspace = true }
 extend = "../../ruff.toml"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 minversion = "8.0"
 addopts = [
   "--strict-config",
