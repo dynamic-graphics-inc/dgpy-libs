@@ -106,6 +106,7 @@ skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modul
 ignore-words-list = "opps,te"
 
 [tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
 minversion = "8.0"
 addopts = [
   "-ra",
