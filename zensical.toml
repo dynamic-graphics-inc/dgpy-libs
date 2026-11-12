@@ -1,0 +1,278 @@
+[project]
+site_name = "dgpy-libs"
+site_description = "Dynamic Graphics Python libraries"
+site_url = "https://dgpy.dev/"
+docs_dir = "docs"
+site_dir = "public"
+repo_url = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+repo_name = "dynamic-graphics-inc/dgpy-libs"
+edit_uri = "edit/main/docs/"
+site_author = "jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>"
+copyright = "Copyright &copy; 2019-2026 Dynamic Graphics Inc"
+extra_css = ["stylesheets/extra.css"]
+
+# lib pages embed the lib READMEs (and the reference pages are generated from
+# the source) so rebuild when either changes
+watch = [
+  "README.md",
+  "CHANGELOG.md",
+  "libs/aiopen/README.md",
+  "libs/aiopen/src",
+  "libs/asyncify/README.md",
+  "libs/asyncify/src",
+  "libs/dgpytest/README.md",
+  "libs/dgpytest/src",
+  "libs/fmts/README.md",
+  "libs/fmts/src",
+  "libs/funkify/README.md",
+  "libs/funkify/src",
+  "libs/h5/README.md",
+  "libs/h5/src",
+  "libs/jsonbourne/README.md",
+  "libs/jsonbourne/src",
+  "libs/lager/README.md",
+  "libs/lager/src",
+  "libs/listless/README.md",
+  "libs/listless/src",
+  "libs/requires/README.md",
+  "libs/requires/src",
+  "libs/shellfish/README.md",
+  "libs/shellfish/src",
+  "libs/xtyping/README.md",
+  "libs/xtyping/src",
+]
+
+# "API Reference" is filled in by the api-autonav plugin (see below)
+nav = [
+  { "Home" = "index.md" },
+  { "Libraries" = [
+    "libs/index.md",
+    { "aiopen" = "libs/aiopen/index.md" },
+    { "asyncify" = "libs/asyncify/index.md" },
+    { "fmts" = "libs/fmts/index.md" },
+    { "funkify" = "libs/funkify/index.md" },
+    { "h5" = "libs/h5/index.md" },
+    { "jsonbourne" = "libs/jsonbourne/index.md" },
+    { "lager" = "libs/lager/index.md" },
+    { "listless" = "libs/listless/index.md" },
+    { "requires" = "libs/requires/index.md" },
+    { "shellfish" = "libs/shellfish/index.md" },
+    { "xtyping" = "libs/xtyping/index.md" },
+    { "dgpytest" = "libs/dgpytest/index.md" },
+  ] },
+  { "API Reference" = [] },
+  { "Changelog" = "changelog.md" },
+  { "About" = "about.md" },
+]
+
+# ----------------------------------------------------------------------------
+# theme
+# ----------------------------------------------------------------------------
+[project.theme]
+logo = "images/dgpy_logo.svg"
+favicon = "images/favicon.png"
+features = [
+  "content.action.edit",
+  "content.action.view",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.tooltips",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.tabs",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+]
+
+[project.theme.icon]
+repo = "fontawesome/brands/github"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "custom"
+accent = "custom"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/github"
+link = "https://github.com/dynamic-graphics-inc/dgpy-libs"
+
+[[project.extra.social]]
+icon = "fontawesome/brands/python"
+link = "https://pypi.org/user/dgi/"
+
+# ----------------------------------------------------------------------------
+# markdown extensions
+# ----------------------------------------------------------------------------
+[project.markdown_extensions.abbr]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.toc]
+permalink = true
+[project.markdown_extensions.pymdownx.betterem]
+smart_enable = "all"
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_generator = "zensical.extensions.emoji.to_svg"
+emoji_index = "zensical.extensions.emoji.twemoji"
+[project.markdown_extensions.pymdownx.escapeall]
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+line_spans = "__span"
+pygments_lang_class = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.keys]
+[project.markdown_extensions.pymdownx.magiclink]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.pymdownx.snippets]
+# lib/about/changelog pages embed files from the repo root
+base_path = ["."]
+check_paths = true
+[project.markdown_extensions.pymdownx.superfences]
+custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+combine_header_slug = true
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+[project.markdown_extensions.pymdownx.tilde]
+
+# ----------------------------------------------------------------------------
+# plugins
+# ----------------------------------------------------------------------------
+[project.plugins.search]
+
+# GitHub-style `> [!NOTE]` alerts, so READMEs render the same on GH and here
+[project.plugins.gh-admonitions]
+
+# old (mkdocs) urls -> new
+[project.plugins.redirects.redirect_maps]
+"libs/aiopen/aiopen.api.md" = "reference/aiopen/index.md"
+"libs/asyncify/asyncify.api.md" = "reference/asyncify/index.md"
+"libs/fmts/fmts.api.md" = "reference/fmts/index.md"
+"libs/funkify/funkify.api.md" = "reference/funkify/index.md"
+"libs/h5/h5.api.md" = "reference/h5/index.md"
+"libs/jsonbourne/jsonbourne.api.md" = "reference/jsonbourne/index.md"
+"libs/listless/listless.api.md" = "reference/listless/index.md"
+"libs/requires/requires.api.md" = "reference/requires/index.md"
+"libs/xtyping/xtyping.api.md" = "reference/xtyping/index.md"
+"libs/shellfish/shellfish.api.md" = "reference/shellfish/index.md"
+"libs/shellfish/aios.md" = "reference/shellfish/aios/index.md"
+"libs/shellfish/done.md" = "reference/shellfish/done.md"
+"libs/shellfish/dotenv.md" = "reference/shellfish/dotenv.md"
+"libs/shellfish/echo.md" = "reference/shellfish/echo.md"
+"libs/shellfish/exe.md" = "reference/shellfish/exe.md"
+"libs/shellfish/fs.md" = "reference/shellfish/fs/index.md"
+"libs/shellfish/fs.promises.md" = "reference/shellfish/fs/promises.md"
+"libs/shellfish/osfs.md" = "reference/shellfish/osfs.md"
+"libs/shellfish/process.md" = "reference/shellfish/process.md"
+"libs/shellfish/sh.md" = "reference/shellfish/sh.md"
+"libs/shellfish/sp.md" = "reference/shellfish/sp.md"
+"libs/shellfish/stdio.md" = "reference/shellfish/stdio.md"
+
+[project.plugins.llmstxt]
+full_output = "llms-full.txt"
+markdown_description = "Python libraries from Dynamic Graphics Inc: async file IO, callable modules, JSON, logging, shell & filesystem tools."
+[project.plugins.llmstxt.sections]
+"Libraries" = ["libs/*/index.md"]
+"API Reference" = ["reference/**/*.md"]
+"Project" = ["changelog.md", "about.md"]
+
+# one reference page per module, generated from the source
+[project.plugins.api-autonav]
+nav_section_title = "API Reference"
+api_root_uri = "reference"
+nav_item_prefix = ""
+modules = [
+  "libs/aiopen/src/aiopen",
+  "libs/asyncify/src/asyncify",
+  "libs/fmts/src/fmts",
+  "libs/funkify/src/funkify",
+  "libs/h5/src/h5",
+  "libs/jsonbourne/src/jsonbourne",
+  "libs/lager/src/lager",
+  "libs/listless/src/listless",
+  "libs/requires/src/requires",
+  "libs/shellfish/src/shellfish",
+  "libs/xtyping/src/xtyping",
+  "libs/dgpytest/src/dgpytest",
+]
+exclude = [
+  're:.*\.__main__$',
+  're:.*\.__about__$',
+  're:.*\.dev(\..*)?$',
+  're:.*\.tests(\..*)?$',
+]
+
+[project.plugins.mkdocstrings.handlers.python]
+inventories = [
+  "https://docs.python.org/3/objects.inv",
+  "https://docs.pydantic.dev/latest/objects.inv",
+  "https://loguru.readthedocs.io/en/stable/objects.inv",
+  "https://docs.h5py.org/en/stable/objects.inv",
+  "https://anyio.readthedocs.io/en/stable/objects.inv",
+]
+# NOTE: these must point at the `src` dirs -- pointing at `libs/<lib>`
+# picks up the stale pre-src-layout `libs/<lib>/<lib>` husks (which
+# hold only __pycache__), so griffe collects empty packages.
+paths = [
+  "libs/aiopen/src",
+  "libs/asyncify/src",
+  "libs/dgpytest/src",
+  "libs/fmts/src",
+  "libs/funkify/src",
+  "libs/h5/src",
+  "libs/jsonbourne/src",
+  "libs/lager/src",
+  "libs/listless/src",
+  "libs/requires/src",
+  "libs/shellfish/src",
+  "libs/xtyping/src",
+]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+docstring_options = { ignore_init_summary = true }
+docstring_section_style = "list"
+filters = ["!^_"]
+heading_level = 1
+inherited_members = true
+members_order = "source"
+merge_init_into_class = true
+parameter_headings = true
+separate_signature = true
+show_docstring_attributes = true
+show_root_heading = true
+show_root_full_path = false
+show_signature_annotations = true
+show_source = false
+show_symbol_type_heading = true
+show_symbol_type_toc = true
+signature_crossrefs = true
+summary = true

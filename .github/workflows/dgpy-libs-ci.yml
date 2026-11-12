@@ -153,9 +153,8 @@ jobs:
         run: uv sync --all-extras --dev
       - name: install docs deps
         run: uv pip install '.[docs]'
-      - name: mkdocs build
-        if: github.ref != 'refs/heads/main'
-        run: uv run mkdocs build
-      - name: mkdocs build
+      - name: zensical build
+        run: uv run zensical build --strict
+      - name: deploy gh-pages
         if: github.ref == 'refs/heads/main'
-        run: uv run mkdocs gh-deploy --force
+        run: uvx ghp-import --no-jekyll --push --force public

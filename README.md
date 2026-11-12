@@ -66,6 +66,8 @@ uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellf
 
 ## About
 
+<!-- --8<-- [start:about] -->
+
 This repo (dgpy-libs) are the polished gems formed under intense geological
 pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These
 python libraries are all published on pip under the listed names.
@@ -104,6 +106,8 @@ python libraries are all published on pip under the listed names.
   library
 - [nox](https://github.com/theacodes/nox); truly a work of art
 
+<!-- --8<-- [end:about] -->
+
 ---
 
 ## Notebooks
@@ -122,6 +126,8 @@ notebooks/
 - [JSON parsing vs plain-jane dictionaries](./notebooks/json_parsing)
 
 ---
+
+<!-- --8<-- [start:people] -->
 
 ## Contributor(s)
 
@@ -166,3 +172,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
+
+<!-- --8<-- [end:people] -->

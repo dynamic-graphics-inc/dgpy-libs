@@ -171,27 +171,24 @@ def _pkg_entry_point(pkg_name: str) -> str:
     ])
 
 
-def _install_mkdocs_deps(session: nox.Session) -> None:
+def _install_docs_deps(session: nox.Session) -> None:
     session.install(
-        "mkdocs",  # docs!
-        "mkdocs-material",  # material theme
-        "mkdocs-jupyter",  # rendering jupyter notebooks
+        "zensical",  # docs!
         "mkdocstrings[python]",  # render docstrings 2 markdown
-        "markdown-callouts",  # callouts
         "black",  # code formatting for mkdocstrings-signatures
     )
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def mkdocs_serve(session: nox.Session) -> None:
-    _install_mkdocs_deps(session)
-    session.run("mkdocs", "serve")
+def docs_serve(session: nox.Session) -> None:
+    _install_docs_deps(session)
+    session.run("zensical", "serve")
 
 
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
-def mkdocs(session: nox.Session) -> None:
-    _install_mkdocs_deps(session)
-    session.run("mkdocs", "build")
+def docs(session: nox.Session) -> None:
+    _install_docs_deps(session)
+    session.run("zensical", "build", "--strict")
 
 
 @nox.session(reuse_venv=True)

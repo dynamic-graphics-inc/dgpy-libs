@@ -1,0 +1,62 @@
+/* dgpy brand colors, taken from images/dgpy_logo.svg */
+:root {
+  --dgpy-purple: #654691;
+  --dgpy-blue: #3671a2;
+  --dgpy-yellow: #ffd040;
+  --dgpy-teal: #026c68;
+}
+
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: var(--dgpy-purple);
+  --md-primary-fg-color--light: #8466b0;
+  --md-primary-fg-color--dark: #4a3369;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffffb3;
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: var(--dgpy-teal);
+  --md-accent-fg-color--transparent: #026c681a;
+  --md-accent-bg-color: #ffffff;
+  --md-accent-bg-color--light: #ffffffb3;
+}
+
+/* purple and teal are too dark to read on slate -- lighten them */
+[data-md-color-scheme="slate"][data-md-color-primary="custom"] {
+  --md-typeset-a-color: #b49ae0;
+}
+
+[data-md-color-scheme="slate"][data-md-color-accent="custom"] {
+  --md-accent-fg-color: var(--dgpy-yellow);
+  --md-accent-fg-color--transparent: #ffd0401a;
+}
+
+/* landing page */
+.dgpy-hero {
+  text-align: center;
+  margin: 1rem auto 2rem;
+  max-width: 44rem;
+}
+
+.dgpy-hero h1 {
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.dgpy-hero__logo {
+  width: 7rem;
+}
+
+.dgpy-hero .highlight {
+  text-align: left;
+}
+
+/* full-width tables (the landing/libraries tables look lopsided otherwise) */
+.md-typeset__table {
+  display: block;
+}
+
+.md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+}

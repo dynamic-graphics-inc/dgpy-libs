@@ -24,14 +24,14 @@ nav:
   # - Home: './index.md'
   - Libs:
       - Home: './index.md'
-      - aiopen: './libs/aiopen/README.ipynb'
-      - asyncify: './libs/asyncify/README.ipynb'
-      - funkify: './libs/funkify/README.ipynb'
-      - h5: './libs/h5/README.ipynb'
-      - jsonbourne: './libs/jsonbourne/README.ipynb'
-      - lager: './libs/lager/README.ipynb'
-      - requires: './libs/requires/README.ipynb'
-      - xtyping: './libs/xtyping/README.ipynb'
+      - aiopen: './libs/aiopen/README.md'
+      - asyncify: './libs/asyncify/README.md'
+      - funkify: './libs/funkify/README.md'
+      - h5: './libs/h5/README.md'
+      - jsonbourne: './libs/jsonbourne/README.md'
+      - lager: './libs/lager/README.md'
+      - requires: './libs/requires/README.md'
+      - xtyping: './libs/xtyping/README.md'
   - API:
       - aiopen: './libs/aiopen/aiopen.api.md'
       - asyncify: './libs/asyncify/asyncify.api.md'
@@ -56,11 +56,6 @@ nav:
           - shellfish.echo: './libs/shellfish/echo.md'
           - shellfish.stdio: './libs/shellfish/stdio.md'
       - xtyping: './libs/xtyping/xtyping.api.md'
-  # - Notebooks:
-  #     - Cache Money: './notebooks/cache_money.ipynb'
-  #     - Filter None: './notebooks/filter_none.ipynb'
-  #     - JSON "parsing": './notebooks/json_parsing.ipynb'
-  #     - String Formatting: './notebooks/string_fmt.ipynb'
 
 theme:
   name: 'material'
@@ -135,8 +130,6 @@ markdown_extensions:
 plugins:
   - search:
       lang: en
-  - mkdocs-jupyter:
-      execute: false
   ### MKDOCSTRINGS ###
   - mkdocstrings:
       handlers:
