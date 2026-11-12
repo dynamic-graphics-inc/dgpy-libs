@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from re import escape as re_escape
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
@@ -13,9 +13,14 @@ from requires.core import (
     Requirement,
     RequirementAttributeError,
     RequirementError,
+    _is_requirement_dict_like,
+    make_requirement,
     requires,
     string2requirement,
 )
+
+if TYPE_CHECKING:
+    from requires.core import _RequirementKwargsIdents
 
 
 def test_parse_import_xxx() -> None:
@@ -447,3 +452,53 @@ def test_module_wrap() -> None:
 
 if __name__ == "__main__":
     pytest.main()
+
+
+def test_make_requirement_from_dict_aliases_and_no_mutation() -> None:
+    d: _RequirementKwargsIdents = {
+        "import": "json",
+        "from": "json",
+        "as": "j",
+        "lazy": False,
+    }
+    req = make_requirement(d)
+    assert req == Requirement(_import="json", _from="json", _as="j", lazy=False)
+    # the caller's dict is left untouched
+    assert d == {"import": "json", "from": "json", "as": "j", "lazy": False}
+    assert make_requirement(d) == req
+
+
+def test_make_requirement_from_dict_underscore_keys() -> None:
+    req = make_requirement({"_import": "os", "_as": "o"})
+    assert req == Requirement(_import="os", _as="o")
+
+
+@pytest.mark.parametrize(
+    "d",
+    [
+        {"import": "json"},
+        {"_import": "json", "_as": "j", "lazy": False},
+        {"from": "json", "import": "dumps", "pip": True, "details": ["a"]},
+        Requirement(_import="os", _from="os").to_dict(),
+    ],
+)
+def test_is_requirement_dict_like_valid(d: dict[str, Any]) -> None:
+    assert _is_requirement_dict_like(d)
+
+
+@pytest.mark.parametrize(
+    "d",
+    [
+        {},
+        {"from": "json"},  # no import
+        {"import": 123},  # import not a str
+        {"imprt": "json"},  # typo key, no import
+        {"import": "json", "frm": "x"},  # unknown key
+        {"import": "json", "lazy": "yes"},  # bad value type
+        {"import": "json", "details": 1},  # bad value type
+    ],
+)
+def test_is_requirement_dict_like_invalid(d: dict[str, Any]) -> None:
+    assert not _is_requirement_dict_like(d)
+    with pytest.raises(RequirementError, match="Invalid requirement dict"):
+        make_requirement(d)  # type: ignore[arg-type]

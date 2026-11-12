@@ -235,10 +235,15 @@ __hoisted__ = (
     "trace",
     "warning",
 )
+# pyrefly: ignore[missing-attribute]
 _change_activation = LAGER._change_activation
+# pyrefly: ignore[missing-attribute]
 _core = LAGER._core
+# pyrefly: ignore[missing-attribute]
 _find_iter = LAGER._find_iter
+# pyrefly: ignore[missing-attribute]
 _log = LAGER._log
+# pyrefly: ignore[missing-attribute]
 _options = LAGER._options
 add = LAGER.add
 bind = LAGER.bind

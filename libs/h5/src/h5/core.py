@@ -219,8 +219,8 @@ def h5py_obj_keys_gen(
 
 def keys(h5_obj: FsPath | File | Group, h5_path: str = "") -> Iterable[str]:
     if isinstance(h5_obj, str | Path | PathLike):
-        with File(h5_obj, "r") as h5_obj:
-            yield from h5py_obj_keys_gen(h5_obj, h5_path=h5_path)
+        with File(h5_obj, "r") as h5_file:
+            yield from h5py_obj_keys_gen(h5_file, h5_path=h5_path)
     else:
         yield from h5py_obj_keys_gen(h5_obj, h5_path=h5_path)
 
@@ -229,8 +229,8 @@ def items(
     h5_obj: FsPath | File | Group, h5_path: str = ""
 ) -> Iterable[tuple[str, Dataset | Group]]:
     if isinstance(h5_obj, str | Path | PathLike):
-        with File(h5_obj, "r") as h5_obj:
-            yield from h5py_obj_gen(h5_obj, h5_path=h5_path)
+        with File(h5_obj, "r") as h5_file:
+            yield from h5py_obj_gen(h5_file, h5_path=h5_path)
     else:
         yield from h5py_obj_gen(h5_obj, h5_path=h5_path)
 

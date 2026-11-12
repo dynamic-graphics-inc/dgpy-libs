@@ -33,6 +33,10 @@ jobs:
         run: |
           uv run ruff --version
           uv run ruff check .
+      - name: pyrefly
+        run: |
+          uv run pyrefly --version
+          uv run pyrefly check
 
   lint:
     runs-on: ubuntu-latest

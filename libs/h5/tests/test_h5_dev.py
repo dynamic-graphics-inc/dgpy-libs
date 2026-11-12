@@ -405,5 +405,7 @@ class TestH5FileInfoObj:
         assert list_dump_gen == dump_gen_expected_no_attrs
 
     def test_setitem_type_error(self) -> None:
-        with pytest.raises(TypeError):
+        with pytest.raises(
+            TypeError, match=r"must be one of \('GroupInfo', 'DatasetInfo'\)"
+        ):
             h5_test_file_info["vanilla"] = 123  # type: ignore[assignment]

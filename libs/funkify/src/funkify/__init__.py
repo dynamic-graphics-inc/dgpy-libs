@@ -7,7 +7,7 @@ from __future__ import annotations
 import sys
 
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, TypeVar, cast
+from typing import TYPE_CHECKING, Any, ParamSpec, TypeVar
 
 from funkify import __about__
 from funkify.__about__ import __version__
@@ -15,7 +15,9 @@ from funkify.__about__ import __version__
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-T = TypeVar("T")
+_T = TypeVar("_T")
+_P = ParamSpec("_P")
+_R = TypeVar("_R")
 
 __all__ = (
     "__about__",
@@ -26,10 +28,10 @@ __all__ = (
 
 
 def default_export(
-    funk: T,
+    funk: _T,
     *,
     key: str | None = None,
-) -> T:
+) -> _T:
     """Assign a function to a module's __call__ attr
 
     Args:
@@ -37,7 +39,7 @@ def default_export(
         key (str): module name as it would appear in sys.modules
 
     Returns:
-        Callable[..., T]: the function passed in
+        Callable[..., _T]: the function passed in
 
     Raises:
         AttributeError: if key is None and exported obj no __module__ attr
@@ -50,15 +52,23 @@ def default_export(
         _emsg = f"funk ({funk}) has no __module__ attribute; plz provide module key"
         raise AttributeError(_emsg) from ae
 
-    class ModuleCls(ModuleType):
-        def __call__(self, *args: Any, **kwargs: Any) -> T:
-            return cast("T", funk(*args, **kwargs))  # type: ignore[operator]
+    mod_cls: type[ModuleType]
+    if callable(funk):
+        call = funk
 
-    class ModuleClsStaticValue(ModuleCls):
-        def __call__(self, *args: Any, **kwargs: Any) -> T:
-            return funk
+        class ModuleCls(ModuleType):
+            def __call__(self, *args: Any, **kwargs: Any) -> Any:
+                return call(*args, **kwargs)
 
-    mod_cls = ModuleCls if callable(funk) else ModuleClsStaticValue
+        mod_cls = ModuleCls
+    else:
+        value = funk
+
+        class ModuleClsStaticValue(ModuleType):
+            def __call__(self, *args: Any, **kwargs: Any) -> Any:
+                return value
+
+        mod_cls = ModuleClsStaticValue
 
     try:
         sys.modules[_module].__class__ = mod_cls
@@ -69,7 +79,7 @@ def default_export(
 
 
 @default_export
-def funkify(funk: Callable[..., T], *, key: str | None = None) -> Callable[..., T]:
+def funkify(funk: Callable[_P, _R], *, key: str | None = None) -> Callable[_P, _R]:
     """Assign a function to a module's __call__ attr
 
     Args:
@@ -77,7 +87,7 @@ def funkify(funk: Callable[..., T], *, key: str | None = None) -> Callable[..., 
         key (str): module name as it would appear in sys.modules
 
     Returns:
-        Callable[..., T]: the function passed in
+        Callable[_P, _R]: the function passed in
 
     """
     return default_export(funk=funk, key=key)

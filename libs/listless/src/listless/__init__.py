@@ -19,7 +19,8 @@ from collections.abc import (
 )
 from functools import reduce
 from itertools import chain, count, islice, tee, zip_longest
-from operator import iconcat, mul
+from math import prod
+from operator import iconcat
 from typing import (
     Any,
     TypeAlias,
@@ -582,9 +583,11 @@ def it_product(it: Iterable[int | float]) -> int | float:
         -24
         >>> it_product([-1, -2, 3, 4, 0.5])
         12.0
+        >>> it_product([])
+        1
 
     """
-    return reduce(mul, it)
+    return prod(it)
 
 
 def spliterable(
