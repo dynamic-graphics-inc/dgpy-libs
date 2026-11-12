@@ -65,7 +65,7 @@ class AsyncFileContextManager(Generic[AnyStr]):
 @overload
 def aiopen(
     file: str | PathLike[str] | int,
-    mode: OpenBinaryMode = ...,
+    mode: OpenBinaryMode,
     *,
     buffering: int = ...,
     encoding: str | None = ...,
@@ -104,7 +104,8 @@ def aiopen(
     return AsyncFileContextManager(
         coro=open_file(
             file=file,
-            mode=cast("OpenBinaryMode | OpenTextMode", mode),  # pyright: ignore[reportGeneralTypeIssues]
+            # the overloads above narrow
+            mode=cast("OpenTextMode", mode),
             buffering=buffering,
             encoding=encoding,
             errors=errors,

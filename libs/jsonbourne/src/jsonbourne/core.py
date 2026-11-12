@@ -291,14 +291,14 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             return isinstance(val, MutableMapping) and val.__contains__(rest)
         return key in self._data
 
-    def __setattr__(self, attr: _KT, value: _VT) -> None:
-        if attr in self._cls_protected_attrs():
+    def __setattr__(self, name: _KT, value: _VT) -> None:
+        if name in self._cls_protected_attrs():
             _emsg = (
-                f"Cannot set protected attribute ('{attr!s}'),"
-                f" must use brackets/setitem syntax: json_obj['{attr!s}']"
+                f"Cannot set protected attribute ('{name!s}'),"
+                f" must use brackets/setitem syntax: json_obj['{name!s}']"
             )
             raise ValueError(_emsg)
-        return self.__setitem__(attr, value)
+        return self.__setitem__(name, value)
 
     def __setitem(self, key: _KT, value: _VT, *, identifier: bool = False) -> None:
         if is_int(key):
