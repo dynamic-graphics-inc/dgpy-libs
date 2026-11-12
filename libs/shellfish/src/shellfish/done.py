@@ -5,10 +5,9 @@ from __future__ import annotations
 import signal
 import sys
 
-from functools import lru_cache
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, AnyStr, TypedDict
+from typing import TYPE_CHECKING, Any, TypedDict
 
 from pydantic import AliasChoices, Field
 
@@ -186,27 +185,6 @@ class DoneDict(TypedDict):
     """True if the process was run asynchronously"""
     verbose: bool
     """True if stdout/stderr were echoed to the parent process' stdout/stderr"""
-
-
-@lru_cache(maxsize=32)
-def _pfmt_stdio(s: AnyStr) -> AnyStr:
-    """Pretty format stdout/stderr strings"""
-    # BYTES
-    if isinstance(s, bytes):
-        if not s:
-            return b"b''"
-
-        lines = s.splitlines(keepends=True)
-        return (
-            b"(\n"
-            + b"\n".join(f"        {line!r},".encode() for line in lines)
-            + b"\n    )"
-        )
-    # STR
-    if not s:
-        return "''"
-    lines = s.splitlines(keepends=True)
-    return "(\n" + "\n".join(f"        {line!r}," for line in lines) + "\n    )"
 
 
 class Done(_ShellfishBaseModel):
