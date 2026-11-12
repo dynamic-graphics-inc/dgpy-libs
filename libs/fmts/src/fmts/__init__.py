@@ -40,6 +40,31 @@ SNAKE_CHARACTERS: str = ascii_lowercase + digits + "_"
 # regular expressions
 FIRST_CAP_RE = re.compile(r"(.)([A-Z][a-z]+)")
 ALL_CAP_RE = re.compile(r"([a-z0-9])([A-Z])")
+_SNAKE_STR_RE = re.compile(r"[a-z0-9_]*+")
+_SNAKE_BYTES_RE = re.compile(rb"[a-z0-9_]*+")
+
+
+def _as_str(string: str | bytes) -> str:
+    """Return `string` as `str`, decoding it if it is `bytes`"""
+    if isinstance(string, bytes):
+        return string.decode()
+    return string
+
+
+def _coerce_like(template: str | bytes, value: str | bytes) -> str | bytes:
+    if isinstance(template, bytes):
+        return value.encode() if isinstance(value, str) else value
+    return value.decode() if isinstance(value, bytes) else value
+
+
+if TYPE_CHECKING:
+
+    def _like(template: AnyStr, value: str | bytes) -> AnyStr:
+        """Return `value` as the same string type (`str`/`bytes`) as `template`"""
+        ...
+
+else:
+    _like = _coerce_like
 
 
 def anystr2anystr(fn: Callable[[str], str]) -> Callable[[AnyStr], AnyStr]:
@@ -54,18 +79,18 @@ def anystr2anystr(fn: Callable[[str], str]) -> Callable[[AnyStr], AnyStr]:
     """
 
     def _anystr2anystr(string: AnyStr) -> AnyStr:
-        if isinstance(string, bytes):
-            return fn(string.decode()).encode()
-        return fn(string)
+        return _like(string, fn(_as_str(string)))
 
-    _anystr2anystr.__name__ = fn.__name__
+    _anystr2anystr.__name__ = getattr(fn, "__name__", _anystr2anystr.__name__)
+    _anystr2anystr.__qualname__ = getattr(
+        fn, "__qualname__", _anystr2anystr.__qualname__
+    )
     _anystr2anystr.__doc__ = fn.__doc__
-    if hasattr(fn, "__module__"):
-        _anystr2anystr.__module__ = fn.__module__
+    _anystr2anystr.__module__ = getattr(fn, "__module__", _anystr2anystr.__module__)
     return _anystr2anystr
 
 
-def anystr(fn: Callable[[str], _R]) -> Callable[[AnyStr], _R]:
+def anystr(fn: Callable[[str], _R]) -> Callable[[str | bytes], _R]:
     """Convert a given function to accept any string type
 
     Args:
@@ -89,16 +114,13 @@ def anystr(fn: Callable[[str], _R]) -> Callable[[AnyStr], _R]:
 
     """
 
-    def _anystr(string: AnyStr) -> _R:
-        if isinstance(string, bytes):
-            return fn(string.decode())
-        return fn(string)
+    def _anystr(string: str | bytes) -> _R:
+        return fn(_as_str(string))
 
-    _anystr.__name__ = fn.__name__
+    _anystr.__name__ = getattr(fn, "__name__", _anystr.__name__)
+    _anystr.__qualname__ = getattr(fn, "__qualname__", _anystr.__qualname__)
     _anystr.__doc__ = fn.__doc__
-    if hasattr(fn, "__module__"):
-        _anystr.__module__ = fn.__module__
-
+    _anystr.__module__ = getattr(fn, "__module__", _anystr.__module__)
     return _anystr
 
 
@@ -182,8 +204,7 @@ def snake_characters_set() -> set[str]:
     return set(SNAKE_CHARACTERS)
 
 
-@anystr
-def is_snake(string: AnyStr) -> bool:
+def is_snake(string: str | bytes) -> bool:
     """Check if a given string is snake_case
 
     Args:
@@ -203,7 +224,11 @@ def is_snake(string: AnyStr) -> bool:
         False
 
     """
-    return all(c in snake_characters_set() for c in set(string))
+    return (
+        _SNAKE_STR_RE.fullmatch(string) is not None
+        if isinstance(string, str)
+        else _SNAKE_BYTES_RE.fullmatch(string) is not None
+    )
 
 
 def snake2kebab(string: AnyStr) -> AnyStr:
@@ -301,7 +326,9 @@ def snake2pascal(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
+        # pyrefly: ignore[bad-return]
         return b"".join(x.capitalize() for x in string.split(b"_"))
+    # pyrefly: ignore[bad-return]
     return "".join(x.title() for x in string.split("_"))
 
 
@@ -311,7 +338,7 @@ def _snake2camel(string: str) -> str:
 
 
 @anystr2anystr
-def snake2camel(string: AnyStr) -> AnyStr:
+def snake2camel(string: str) -> str:
     """Convert a given snake_case string to camelCase
 
     Args:
@@ -328,7 +355,7 @@ def snake2camel(string: AnyStr) -> AnyStr:
 
 
 @anystr2anystr
-def pascal2snake(string: AnyStr) -> AnyStr:
+def pascal2snake(string: str) -> str:
     """Convert a given PascalCase string to snake_case
 
     Examples:
@@ -369,7 +396,7 @@ def camel2pascal(string: AnyStr) -> AnyStr:
 
 
 @anystr2anystr
-def kebab2pascal(string: AnyStr) -> AnyStr:
+def kebab2pascal(string: str) -> str:
     """Convert a given kebab-case string to PascalCase
 
     Examples:
@@ -441,6 +468,7 @@ def ensure_trailing_newline(string: AnyStr) -> AnyStr:
     """
     if isinstance(string, bytes):
         return string.rstrip(b"\n") + b"\n"
+    # pyrefly: ignore[bad-return]
     return "{}\n".format(string.strip("\n"))
 
 
@@ -1337,9 +1365,7 @@ def indent(
         b'    this is a string'
 
     """
-    if isinstance(string, bytes):
-        return indent(string.decode("utf-8"), prefix, predicate).encode("utf-8")
-    return _indent(string, prefix, predicate)
+    return _like(string, _indent(_as_str(string), prefix, predicate))
 
 
 @anystr2anystr

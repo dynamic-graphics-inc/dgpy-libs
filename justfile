@@ -87,9 +87,9 @@ fmtc:
     uv run ruff check --select "I" --show-fixes .
 
 # ruff lint
-ruff:
+ruff +ARGS=".":
     uv run ruff --version
-    uv run ruff check .
+    uv run ruff check {{ ARGS }}
 
 # ruff lint & fix
 ruffix:
@@ -103,8 +103,21 @@ noxlint:
 mypy: fmt
     uv run nox -s mypy
 
+# pyrefly typecheck
+pyrefly *ARGS:
+    uv run pyrefly --version
+    uv run pyrefly check {{ ARGS }}
+
+# ty typecheck
+ty *ARGS:
+    uv run ty --version
+    uv run ty check {{ ARGS }}
+
+# typecheck
+typecheck: mypy pyrefly
+
 # lint
-lint: fmt noxlint
+lint: fmt noxlint pyrefly
 
 # format the justfile(s) (w/ just)
 fmt-justfile:

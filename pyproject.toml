@@ -56,6 +56,7 @@ dev = [
   "nox>=2024.4.15",
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
+  "pyrefly>=1.1.1",
   "pytest-cov>=6.1.1",
   "rich>=13.9.3",
   "ruff>=0.15.22",
