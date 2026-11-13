@@ -28,7 +28,7 @@ def dgpy_lib_pyproject_toml_string(
 ) -> Callable[[str], str]:
     def _get_pyproject_toml_string(libname: str) -> str:
         pyproject_toml_filepath = path.join(dgpy_lib_dirpath(libname), "pyproject.toml")
-        with open(pyproject_toml_filepath) as f:
+        with open(pyproject_toml_filepath, encoding="utf-8") as f:
             return f.read()
 
     return _get_pyproject_toml_string

@@ -12,7 +12,7 @@ def _get_version() -> str:
     for _i in range(3):
         _filepath = path.join(_dirpath, "pyproject.toml")
         if path.exists(_filepath):
-            with open(_filepath) as f:
+            with open(_filepath, encoding="utf-8") as f:
                 _file = f.read()
             return (
                 next(line for line in _file.split("\n") if "version" in line)

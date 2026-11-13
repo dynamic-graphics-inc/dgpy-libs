@@ -43,7 +43,7 @@ def lib_dirpath(libname: str) -> Path:
 
 def lib_pyproject_toml(libname: str) -> dict[str, Any]:
     pyproject_toml_filepath = lib_dirpath(libname) / "pyproject.toml"
-    with open(pyproject_toml_filepath) as f:
+    with open(pyproject_toml_filepath, encoding="utf-8") as f:
         return tomli.loads(f.read())
 
 

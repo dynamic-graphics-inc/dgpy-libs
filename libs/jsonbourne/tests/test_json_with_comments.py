@@ -26,10 +26,10 @@ def test_strip_comments_from_json() -> None:
     rush_with_comments_filepath = path.join(PWD, "data", "rush.comments.json")
     rush_no_comments_filepath = path.join(PWD, "data", "rush.no-comments.json")
 
-    with open(rush_with_comments_filepath) as f:
+    with open(rush_with_comments_filepath, encoding="utf-8") as f:
         rush_with_comments_string = f.read()
 
-    with open(rush_no_comments_filepath) as f:
+    with open(rush_no_comments_filepath, encoding="utf-8") as f:
         rush_no_comments_string = f.read()
 
     removed_comments_str = json.dumps(
@@ -46,10 +46,10 @@ def test_loads_jsonc() -> None:
     rush_with_comments_filepath = path.join(PWD, "data", "rush.comments.json")
     rush_no_comments_filepath = path.join(PWD, "data", "rush.no-comments.json")
 
-    with open(rush_with_comments_filepath) as f:
+    with open(rush_with_comments_filepath, encoding="utf-8") as f:
         rush_with_comments_string = f.read()
 
-    with open(rush_no_comments_filepath) as f:
+    with open(rush_no_comments_filepath, encoding="utf-8") as f:
         rush_no_comments_string = f.read()
 
     removed_comments_str = JSON.dumps(
