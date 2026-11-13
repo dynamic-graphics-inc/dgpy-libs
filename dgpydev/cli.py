@@ -298,7 +298,7 @@ class Change:
     def __hash__(self) -> int:
         return hash((self.lib, self.version, self.msg))
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Change):
             return False
         return self.equiv(other)
