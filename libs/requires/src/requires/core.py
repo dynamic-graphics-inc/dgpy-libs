@@ -26,7 +26,6 @@ from typing import (
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Mapping
 
-_T = TypeVar("_T")
 _R = TypeVar("_R")
 _P = ParamSpec("_P")
 

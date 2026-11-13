@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 from jsonbourne.json_arr import JsonArr, n_args
 
 
@@ -30,6 +32,34 @@ def test_get_fn_args_count() -> None:
         def __call__(self, a: Any, b: Any, c: Any) -> None: ...
 
     assert n_args(OBJ_initializer) == 3
+
+
+def test_n_args_bound_method_excludes_self() -> None:
+    class HasMethod:
+        def one(self, x: int) -> int:
+            return x
+
+    assert n_args(HasMethod().one) == 1
+
+
+def test_n_args_callable_instance_ignores_locals() -> None:
+    class CallableWithLocals:
+        def __call__(self, a: int, b: int) -> int:
+            local_1 = local_2 = a  # locals would inflate a `co_varnames` count
+            return local_1 + local_2 + b
+
+    assert n_args(CallableWithLocals()) == 2
+
+
+def test_n_args_builtin() -> None:
+    assert n_args(len) == 1
+    assert JsonArr(["ab", "c"]).map(len) == JsonArr([2, 1])
+
+
+@pytest.mark.parametrize("fn", [str, print])
+def test_n_args_undeterminable_raises_type_error(fn: Any) -> None:
+    with pytest.raises(TypeError, match="nargs"):
+        n_args(fn)
 
 
 def test_enumerate() -> None:

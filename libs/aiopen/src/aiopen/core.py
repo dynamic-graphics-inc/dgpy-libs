@@ -31,9 +31,9 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable, Coroutine
+    from collections.abc import Awaitable, Callable
     from os import PathLike
-    from types import TracebackType
+    from types import CodeType, CoroutineType, FrameType, TracebackType
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -265,7 +265,7 @@ class AiopenContextManager(
     __slots__ = ("_coro", "_obj")
 
     def __init__(self, coro: Any) -> None:
-        self._coro: Coroutine[Any, Any, Any] = coro
+        self._coro: CoroutineType[Any, Any, Any] = coro
         self._obj: (
             BufferedIOAsyncBase
             | BufferedReaderAsync
@@ -293,16 +293,16 @@ class AiopenContextManager(
         return self._coro.close()
 
     @property
-    def gi_frame(self) -> Any:
-        return self._coro.gi_frame  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
+    def gi_frame(self) -> FrameType | None:
+        return self._coro.cr_frame
 
     @property
     def gi_running(self) -> bool:
-        return self._coro.gi_running  # type: ignore[attr-defined, no-any-return]  # ty: ignore[missing-attribute]
+        return self._coro.cr_running
 
     @property
-    def gi_code(self) -> Any:
-        return self._coro.gi_code  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
+    def gi_code(self) -> CodeType:
+        return self._coro.cr_code
 
     def __next__(self) -> Any:
         return self.send(None)

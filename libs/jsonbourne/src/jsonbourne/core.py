@@ -38,10 +38,9 @@ if TYPE_CHECKING:
 
 JsonPrimitiveT = TypeVar("JsonPrimitiveT", str, int, float, None)
 JsonObjT = TypeVar("JsonObjT", bound="JsonObj[Any]")
-KT = TypeVar("KT")
-VT = TypeVar("VT")
 _KT = str
 _VT = TypeVar("_VT")
+_T = TypeVar("_T")
 JsonObjMutableMapping = MutableMapping[str, _VT]
 
 __all__ = (
@@ -436,26 +435,36 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Return the keys view of the JsonObj object"""
         return self._data.keys()
 
-    def setdefault(self, key: _KT, default: _VT | None = None) -> _VT:
-        if default:
-            return self._data.setdefault(key, default)
-        return self._data.setdefault(key)  # type: ignore[call-arg]  # ty: ignore[invalid-argument-type]
+    def setdefault(self, key: _KT, default: Any = None) -> Any:
+        return self._data.setdefault(key, default)
 
     def clear(self) -> None:
         self._data.clear()
 
-    def pop(self, key: _KT, default: Any | None = None) -> Any:
-        if default:
-            return self._data.pop(key, default)
-        return self._data.pop(key)
+    @overload
+    def pop(self, key: _KT, /) -> _VT: ...
 
-    def get(self, key: _KT, default: Any | None = None) -> Any:  # ty: ignore[incompatible-method-override]
-        try:
-            return self._data.get(key)
-        except KeyError as ke:
-            if default:
-                return default
-            raise ke
+    @overload
+    def pop(self, key: _KT, default: _VT, /) -> _VT: ...
+
+    @overload
+    def pop(self, key: _KT, default: _T, /) -> _VT | _T: ...
+
+    def pop(self, key: _KT, *default: Any) -> Any:
+        return self._data.pop(key, *default)
+
+    @overload
+    def get(self, key: _KT, /) -> _VT | None: ...
+
+    @overload
+    def get(self, key: _KT, default: _VT, /) -> _VT: ...
+
+    @overload
+    def get(self, key: _KT, default: _T, /) -> _VT | _T: ...
+
+    # ty (0.0.102) rejects any overloaded override of `Mapping.get` (mypy/pyrefly do not)
+    def get(self, key: _KT, default: Any = None, /) -> Any:  # ty: ignore[incompatible-method-override]
+        return self._data.get(key, default)
 
     def filter_none(self, *, recursive: bool = False) -> JsonObj[_VT]:
         """Filter key-values where the value is `None` but not false-y

@@ -216,6 +216,10 @@ include = [
 [tool.ty.analysis]
 allowed-unresolved-imports = [ "httpx", "jsonc2json", "rapidjson", "starlette.**" ]
 
+# error on stale `# ty: ignore[...]` comments (ty is still a wip)
+[tool.ty.rules]
+unused-ignore-comment = "error"
+
 # jsonlib declares orjson/rapidjson as `None` when not imporable
 [[tool.ty.overrides]]
 include = [ "libs/jsonbourne/src/jsonbourne/jsonlib.py" ]

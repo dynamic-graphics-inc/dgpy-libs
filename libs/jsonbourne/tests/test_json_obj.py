@@ -8,6 +8,7 @@ import json
 
 from decimal import Decimal
 from re import escape as re_escape
+from typing import Any
 
 import pytest
 
@@ -522,6 +523,39 @@ def test_lookup_ops() -> None:
     assert d["sub.key"] == "val"
     assert d["sub", "key"] == "val"
     assert d[("sub", "key")] == "val"  # noqa: RUF031
+
+
+def test_get_default() -> None:
+    d: JsonObj[Any] = JsonObj({"a": 1})
+    assert d.get("missing", 5) == 5
+    assert d.get("missing") is None
+    assert d.get("a", 9) == 1
+
+
+@pytest.mark.parametrize("default", [0, "", False, [], None])
+def test_pop_falsy_default(default: Any) -> None:
+    d: JsonObj[Any] = JsonObj({"a": 1})
+    assert d.pop("missing", default) == default
+
+
+def test_pop_without_default_raises() -> None:
+    d: JsonObj[Any] = JsonObj({"a": 1})
+    with pytest.raises(KeyError):
+        d.pop("missing")
+    assert d.pop("a") == 1
+
+
+@pytest.mark.parametrize("default", [0, "", False])
+def test_setdefault_falsy_default_is_stored(default: Any) -> None:
+    d: JsonObj[Any] = JsonObj({})
+    assert d.setdefault("k", default) == default
+    assert d["k"] == default
+
+
+def test_setdefault_no_default_stores_none() -> None:
+    d: JsonObj[Any] = JsonObj({})
+    assert d.setdefault("k") is None
+    assert "k" in d
 
 
 def test_cycle_eject() -> None:

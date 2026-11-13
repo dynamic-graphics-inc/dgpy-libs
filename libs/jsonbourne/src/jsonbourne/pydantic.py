@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Generator, MutableMapping
+from collections.abc import Callable, Iterator, MutableMapping
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
@@ -320,8 +320,8 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
-    def __iter__(self) -> Generator[tuple[str, Any], None, None]:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
-        return super().__iter__()
+    def __iter__(self) -> Iterator[str]:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
+        return (k for k, _v in super().__iter__())
 
     def __getitem__(self, item: str) -> Any:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
         try:

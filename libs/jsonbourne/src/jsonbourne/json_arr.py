@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import inspect
+
 from collections.abc import Callable, Iterable, Iterator, MutableSequence
 from typing import (
     TYPE_CHECKING,
@@ -17,6 +19,8 @@ from typing import (
 
 if TYPE_CHECKING:
     import builtins
+
+    from types import CodeType
 
     from pydantic import GetCoreSchemaHandler
 
@@ -46,17 +50,23 @@ def n_args(fn: Callable[..., _R]) -> int:
     if not callable(fn):
         _emsg = f"{fn!r} is not callable"
         raise TypeError(_emsg)
+    code: CodeType | None = getattr(fn, "__code__", None)
+    if code is not None:
+        return code.co_argcount - 1 if inspect.ismethod(fn) else code.co_argcount
+    call: object = getattr(fn, "__call__", None)  # noqa: B004 (want the bound method)
+    if inspect.ismethod(call):
+        return n_args(call)
     try:
-        return fn.__code__.co_argcount  # ty: ignore[missing-attribute]
-    except AttributeError:
-        ...
-    if hasattr(fn, "__call__"):  # noqa: B004
-        _nargs = n_args(fn.__call__)
-        co_varnames = fn.__call__.__code__.co_varnames  # ty: ignore[missing-attribute]
-        if co_varnames[0] == "self":
-            return len(co_varnames) - 1
-        return _nargs
-    _emsg = f"{fn!r} is not callable"
+        params = inspect.signature(fn).parameters.values()
+    except (TypeError, ValueError):
+        params = None
+    if params is not None:
+        positional = [
+            p for p in params if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
+        ]
+        if positional:
+            return len(positional)
+    _emsg = f"could not determine number of arguments for {fn!r}; pass `nargs=`"
     raise TypeError(_emsg)
 
 

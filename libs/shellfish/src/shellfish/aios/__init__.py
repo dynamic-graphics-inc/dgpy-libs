@@ -39,6 +39,7 @@ path = _path
 
 chmod = asyncify(os.chmod)
 if TYPE_CHECKING:
+
     @overload
     async def listdir(path: str | PathLike[str] | None = None) -> list[str]: ...
     @overload
