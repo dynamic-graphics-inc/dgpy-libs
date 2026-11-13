@@ -702,10 +702,8 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """
         if not isinstance(key, str | list | tuple):
             raise ValueError(
-                "".join((
-                    "dot_key arg must be string or sequence of strings; ",
-                    "strings will be split on '.'",
-                ))
+                "dot_key arg must be string or sequence of strings; "
+                "strings will be split on '.'"
             )
         parts = key.split(".") if isinstance(key, str) else list(key)
         root_val: Any = self._data[parts[0]]
