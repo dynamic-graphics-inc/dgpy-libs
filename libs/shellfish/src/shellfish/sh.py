@@ -1511,7 +1511,7 @@ class WIN(_WIN):
 # =============================================================================
 
 # OS DEPENDENT
-_OS: type[LIN] | type[WIN] = (
+_OS: type[LIN | WIN] = (
     WIN if "windows" in system().lower() else LIN
 )  # Use LIN/WIN as _OS
 sync = _OS.sync
