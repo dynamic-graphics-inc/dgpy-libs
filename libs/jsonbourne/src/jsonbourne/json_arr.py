@@ -33,11 +33,11 @@ _R = TypeVar("_R")
 
 
 class SupportsDunderLT(Protocol):
-    def __lt__(self, __other: Any) -> bool: ...
+    def __lt__(self, other: Any, /) -> bool: ...
 
 
 class SupportsDunderGT(Protocol):
-    def __gt__(self, __other: Any) -> bool: ...
+    def __gt__(self, other: Any, /) -> bool: ...
 
 
 SupportsRichComparison: TypeAlias = SupportsDunderLT | SupportsDunderGT
@@ -98,32 +98,32 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def copy(self) -> JsonArr[_T]:
         return JsonArr(self.__arr.copy())
 
-    def append(self, __object: _T) -> None:
-        self.__arr.append(__object)
+    def append(self, obj: _T, /) -> None:
+        self.__arr.append(obj)
 
-    def extend(self, __iterable: Iterable[_T]) -> None:
-        self.__arr.extend(__iterable)
+    def extend(self, iterable: Iterable[_T], /) -> None:
+        self.__arr.extend(iterable)
 
-    def push(self, *__object: _T) -> None:
-        self.extend(__object)
+    def push(self, *objects: _T) -> None:
+        self.extend(objects)
 
     def pop(self, index: int = -1) -> _T:
         return self.__arr.pop(index)
 
     # Signature of `list.index` should be kept in line with `collections.UserList.index()`
     def index(
-        self, __value: _T, __start: SupportsIndex = 0, __stop: SupportsIndex = -1
+        self, value: _T, start: SupportsIndex = 0, stop: SupportsIndex = -1, /
     ) -> int:
-        return self.__arr.index(__value, __start, __stop)
+        return self.__arr.index(value, start, stop)
 
-    def count(self, __value: _T) -> int:
-        return self.__arr.count(__value)
+    def count(self, value: _T, /) -> int:
+        return self.__arr.count(value)
 
-    def insert(self, __index: SupportsIndex, __object: _T) -> None:
-        return self.__arr.insert(__index, __object)
+    def insert(self, index: SupportsIndex, obj: _T, /) -> None:
+        return self.__arr.insert(index, obj)
 
-    def remove(self, __value: _T) -> None:
-        return self.__arr.remove(__value)
+    def remove(self, value: _T, /) -> None:
+        return self.__arr.remove(value)
 
     @overload
     def sort(
@@ -150,64 +150,64 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     __hash__: None  # type: ignore[assignment]
 
     @overload
-    def __getitem__(self, __i: SupportsIndex) -> _T: ...
+    def __getitem__(self, i: SupportsIndex, /) -> _T: ...
 
     @overload
-    def __getitem__(self, __s: builtins.slice) -> JsonArr[_T]: ...
+    def __getitem__(self, s: builtins.slice, /) -> JsonArr[_T]: ...
 
-    def __getitem__(self, __i: SupportsIndex | builtins.slice) -> _T | JsonArr[_T]:
-        if isinstance(__i, slice):
-            return JsonArr(self.__arr[__i])
-        return self.__arr[__i]
-
-    @overload
-    def __setitem__(self, __i: SupportsIndex, __o: _T) -> None: ...
+    def __getitem__(self, i: SupportsIndex | builtins.slice, /) -> _T | JsonArr[_T]:
+        if isinstance(i, slice):
+            return JsonArr(self.__arr[i])
+        return self.__arr[i]
 
     @overload
-    def __setitem__(self, __s: builtins.slice, __o: Iterable[_T]) -> None: ...
+    def __setitem__(self, i: SupportsIndex, o: _T, /) -> None: ...
 
-    def __setitem__(self, __i: Any, __o: Any) -> None:
-        return self.__arr.__setitem__(__i, __o)
+    @overload
+    def __setitem__(self, s: builtins.slice, o: Iterable[_T], /) -> None: ...
 
-    def __delitem__(self, __i: SupportsIndex | builtins.slice) -> None:
-        self.__arr.__delitem__(__i)
+    def __setitem__(self, i: Any, o: Any, /) -> None:
+        return self.__arr.__setitem__(i, o)
 
-    def __add__(self, __x: Iterable[_T] | JsonArr[_T]) -> JsonArr[_T]:
-        if isinstance(__x, JsonArr):
-            return JsonArr(self.__arr + __x.__arr)
-        return JsonArr(self.__arr + list(__x))
+    def __delitem__(self, i: SupportsIndex | builtins.slice, /) -> None:
+        self.__arr.__delitem__(i)
 
-    def __iadd__(self, __x: Iterable[_T]) -> JsonArr[_T]:
-        self.__arr += __x
+    def __add__(self, x: Iterable[_T] | JsonArr[_T], /) -> JsonArr[_T]:
+        if isinstance(x, JsonArr):
+            return JsonArr(self.__arr + x.__arr)
+        return JsonArr(self.__arr + list(x))
+
+    def __iadd__(self, x: Iterable[_T], /) -> JsonArr[_T]:
+        self.__arr += x
         return self
 
-    def __mul__(self, __n: int) -> JsonArr[_T]:
-        return JsonArr(self.__arr * __n)
+    def __mul__(self, n: int, /) -> JsonArr[_T]:
+        return JsonArr(self.__arr * n)
 
-    def __rmul__(self, __n: SupportsIndex) -> JsonArr[_T]:
-        return JsonArr(self.__arr.__mul__(__n))
+    def __rmul__(self, n: SupportsIndex, /) -> JsonArr[_T]:
+        return JsonArr(self.__arr.__mul__(n))
 
-    def __imul__(self, __n: SupportsIndex) -> JsonArr[_T]:
-        self.__arr.__mul__(__n)
+    def __imul__(self, n: SupportsIndex, /) -> JsonArr[_T]:
+        self.__arr.__mul__(n)
         return self
 
-    def __contains__(self, __o: object) -> bool:
-        return self.__arr.__contains__(__o)
+    def __contains__(self, o: object, /) -> bool:
+        return self.__arr.__contains__(o)
 
     def __reversed__(self) -> Iterator[_T]:
         return reversed(self.__arr)
 
-    def __gt__(self, __x: list[_T]) -> bool:
-        return self.__arr > __x
+    def __gt__(self, x: list[_T], /) -> bool:
+        return self.__arr > x
 
-    def __ge__(self, __x: list[_T]) -> bool:
-        return self.__arr >= __x
+    def __ge__(self, x: list[_T], /) -> bool:
+        return self.__arr >= x
 
-    def __lt__(self, __x: list[_T]) -> bool:
-        return self.__arr < __x
+    def __lt__(self, x: list[_T], /) -> bool:
+        return self.__arr < x
 
-    def __le__(self, __x: list[_T]) -> bool:
-        return self.__arr <= __x
+    def __le__(self, x: list[_T], /) -> bool:
+        return self.__arr <= x
 
     def as_list(self) -> list[_T]:
         return list(self.__arr)

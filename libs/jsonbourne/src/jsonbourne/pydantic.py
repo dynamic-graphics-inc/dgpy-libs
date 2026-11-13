@@ -97,7 +97,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
 
-    def model_post_init(self, __config: Any) -> None:
+    def model_post_init(self, context: Any, /) -> None:
         self.__post_init__()
 
     @property
