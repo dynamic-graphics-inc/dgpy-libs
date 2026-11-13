@@ -1317,6 +1317,8 @@ def body_contents(html_string: str) -> list[str]:
 class pstr(str):
     """Pretty-string subclass"""
 
+    __slots__ = ()
+
     def __new__(cls, content: str) -> Self:
         """Create and return new pstr from a str"""
         if "\n" in content and (content[0] == "\n" or content[-1] == "\n"):
