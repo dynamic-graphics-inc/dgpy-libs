@@ -279,7 +279,7 @@ def iswsl() -> bool:
 def is_notebook() -> bool:  # pragma: nocov
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
-        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
+        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]  # ty: ignore[unresolved-reference]
         if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
         if shell == "TerminalInteractiveShell":

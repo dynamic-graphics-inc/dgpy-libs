@@ -15,7 +15,7 @@ R = TypeVar("R")
 def deprecated_alias(
     target: Callable[P, R], *, msg: str | None = None
 ) -> Callable[P, R]:
-    _warn_msg = f"use of deprecated alias which will be removed in a future release; use {target.__name__}() instead."
+    _warn_msg = f"use of deprecated alias which will be removed in a future release; use {target.__name__}() instead."  # ty: ignore[missing-attribute]
 
     @wraps(target)
     def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
@@ -28,7 +28,7 @@ def deprecated_alias(
 
     # forward `help()` signature etc...
     try:
-        _wrapper.__signature__ = signature(target)  # type: ignore[attr-defined]
+        _wrapper.__signature__ = signature(target)  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
     except (ValueError, TypeError):
         ...
 

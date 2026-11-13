@@ -6,13 +6,14 @@ from __future__ import annotations
 
 import os
 
-from typing import TYPE_CHECKING, AnyStr, Generic
+from typing import TYPE_CHECKING, AnyStr, Generic, overload
 
 from asyncify import asyncify
 from shellfish.aios import _path
 
 if TYPE_CHECKING:
     from collections.abc import AsyncIterator
+    from os import PathLike
 
 __all__ = (
     "DirEntryAsync",
@@ -37,7 +38,19 @@ __all__ = (
 path = _path
 
 chmod = asyncify(os.chmod)
-listdir = asyncify(os.listdir)
+if TYPE_CHECKING:
+    @overload
+    async def listdir(path: str | PathLike[str] | None = None) -> list[str]: ...
+    @overload
+    async def listdir(path: bytes | PathLike[bytes]) -> list[bytes]: ...
+    @overload
+    async def listdir(path: int) -> list[str]: ...
+    async def listdir(
+        path: str | bytes | PathLike[str] | PathLike[bytes] | int | None = None,
+    ) -> list[str] | list[bytes]: ...
+
+else:
+    listdir = asyncify(os.listdir)
 lstat = asyncify(os.lstat)
 makedirs = asyncify(os.makedirs)
 mkdir = asyncify(os.mkdir)

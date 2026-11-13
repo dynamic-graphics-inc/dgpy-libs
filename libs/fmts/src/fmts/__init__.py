@@ -245,8 +245,8 @@ def snake2kebab(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.replace(b"_", b"-")
-    return string.replace("_", "-")
+        return string.replace(b"_", b"-")  # ty: ignore[invalid-explicit-return]
+    return string.replace("_", "-")  # ty: ignore[invalid-explicit-return]
 
 
 def kebab2snake(string: AnyStr) -> AnyStr:
@@ -263,8 +263,8 @@ def kebab2snake(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.replace(b"-", b"_")
-    return string.replace("-", "_")
+        return string.replace(b"-", b"_")  # ty: ignore[invalid-explicit-return]
+    return string.replace("-", "_")  # ty: ignore[invalid-explicit-return]
 
 
 @anystr2anystr
@@ -327,9 +327,9 @@ def snake2pascal(string: AnyStr) -> AnyStr:
     """
     if isinstance(string, bytes):
         # pyrefly: ignore[bad-return]
-        return b"".join(x.capitalize() for x in string.split(b"_"))
+        return b"".join(x.capitalize() for x in string.split(b"_"))  # ty: ignore[invalid-explicit-return]
     # pyrefly: ignore[bad-return]
-    return "".join(x.title() for x in string.split("_"))
+    return "".join(x.title() for x in string.split("_"))  # ty: ignore[invalid-explicit-return]
 
 
 @anystr2anystr
@@ -467,9 +467,9 @@ def ensure_trailing_newline(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.rstrip(b"\n") + b"\n"
+        return string.rstrip(b"\n") + b"\n"  # ty: ignore[invalid-explicit-return]
     # pyrefly: ignore[bad-return]
-    return "{}\n".format(string.strip("\n"))
+    return "{}\n".format(string.strip("\n"))  # ty: ignore[invalid-explicit-return]
 
 
 def nbytes_str(nbytes: int | float) -> str:

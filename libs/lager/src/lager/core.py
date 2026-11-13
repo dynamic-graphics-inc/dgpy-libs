@@ -87,7 +87,7 @@ try:
         }
         return _stringify(serializable)
 
-    Handler._serialize_record = staticmethod(_serialize_record)
+    Handler._serialize_record = staticmethod(_serialize_record)  # ty: ignore[invalid-assignment]
 except ModuleNotFoundError:
     ...
 
@@ -137,7 +137,7 @@ def flog(
     """
 
     def _flog(funk: Callable[..., T]) -> Callable[..., T]:
-        name = funk.__name__
+        name = funk.__name__  # ty: ignore[missing-attribute]
 
         @wraps(funk)
         def _flog_decorator(*args: Any, **kwargs: Any) -> T:
@@ -175,7 +175,7 @@ def flog(
                     kwargs,
                 )
             ti = time()
-            result: T = await funk(*args, **kwargs)  # type: ignore[misc]
+            result: T = await funk(*args, **kwargs)  # type: ignore[misc]  # ty: ignore[invalid-await]
             tf = time()
             if exit:
                 logger_.log(
@@ -188,15 +188,15 @@ def flog(
             return result
 
         if inspect.iscoroutinefunction(funk) or asyncio.iscoroutine(funk):
-            return _flog_decorator_async  # type: ignore[return-value]
+            return _flog_decorator_async  # type: ignore[return-value]  # ty: ignore[invalid-explicit-return]
         return _flog_decorator
 
-    return _flog(funk) if funk else _flog  # type: ignore[return-value]
+    return _flog(funk) if funk else _flog  # type: ignore[return-value]  # ty: ignore[invalid-explicit-return]
 
 
 def handlers() -> dict[int, Handler]:
     """Return all handlers"""
-    return logger._core.handlers  # type: ignore[no-any-return]
+    return logger._core.handlers  # type: ignore[no-any-return]  # ty: ignore[missing-attribute]
 
 
 def reset(level: str | int | None = None) -> None:
@@ -236,15 +236,15 @@ __hoisted__ = (
     "warning",
 )
 # pyrefly: ignore[missing-attribute]
-_change_activation = LAGER._change_activation
+_change_activation = LAGER._change_activation  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_core = LAGER._core
+_core = LAGER._core  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_find_iter = LAGER._find_iter
+_find_iter = LAGER._find_iter  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_log = LAGER._log
+_log = LAGER._log  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_options = LAGER._options
+_options = LAGER._options  # ty: ignore[missing-attribute]
 add = LAGER.add
 bind = LAGER.bind
 catch = LAGER.catch

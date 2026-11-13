@@ -312,7 +312,7 @@ class Requirement:
                         tb = sys.exc_info()[2]
                         raise self.err().with_traceback(tb) from mnfe
 
-            return _requires_dec_async  # type: ignore[return-value]
+            return _requires_dec_async  # type: ignore[return-value]  # ty: ignore[invalid-explicit-return]
 
         @wraps(f)
         def _requires_dec(*args: _P.args, **kwargs: _P.kwargs) -> _R:
@@ -342,9 +342,9 @@ class Requirement:
 
         # get and/or set the __requires__ attribute
         if hasattr(f, "__requires__"):
-            f.__requires__.add(self)
+            f.__requires__.add(self)  # ty: ignore[missing-attribute]
         else:
-            f.__requires__ = RequirementsMeta(requirements={self})  # type: ignore[attr-defined]
+            f.__requires__ = RequirementsMeta(requirements={self})  # type: ignore[attr-defined]  # ty: ignore[invalid-assignment]
         return _requires_dec
 
 
@@ -598,7 +598,7 @@ def requires(
         for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
             requirements_meta.add(el)
-        _wrapped_fn.__requires__ = requirements_meta  # type: ignore[attr-defined]
+        _wrapped_fn.__requires__ = requirements_meta  # type: ignore[attr-defined]  # ty: ignore[invalid-assignment]
         wraps(f)(_wrapped_fn)
         return _wrapped_fn
 

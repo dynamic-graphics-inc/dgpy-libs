@@ -261,7 +261,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
         """Function place holder that is called after object initialization"""
         # pylint: disable=unnecessary-pass
 
-    def __contains__(self, key: _KT) -> bool:  # type: ignore[override]
+    def __contains__(self, key: _KT) -> bool:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
         """Check if a key or dot-key is contained within the JsonObj object
 
         Args:
@@ -439,7 +439,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def setdefault(self, key: _KT, default: _VT | None = None) -> _VT:
         if default:
             return self._data.setdefault(key, default)
-        return self._data.setdefault(key)  # type: ignore[call-arg]
+        return self._data.setdefault(key)  # type: ignore[call-arg]  # ty: ignore[invalid-argument-type]
 
     def clear(self) -> None:
         self._data.clear()
@@ -449,7 +449,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
             return self._data.pop(key, default)
         return self._data.pop(key)
 
-    def get(self, key: _KT, default: Any | None = None) -> Any:
+    def get(self, key: _KT, default: Any | None = None) -> Any:  # ty: ignore[incompatible-method-override]
         try:
             return self._data.get(key)
         except KeyError as ke:
@@ -793,7 +793,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_attr_names(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return {el.name for el in cls.__attrs_attrs__}  # type: ignore[attr-defined]
+            return {el.name for el in cls.__attrs_attrs__}  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
         except AttributeError as ae:
             raise AttributeError("Class is not decorated with attr.attrs") from ae
 
@@ -801,7 +801,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_fields(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return cls.__fields__  # type: ignore[attr-defined, no-any-return]
+            return cls.__fields__  # type: ignore[attr-defined, no-any-return]  # ty: ignore[missing-attribute]
         except AttributeError as ae:
             raise AttributeError(
                 "Class does not inherit from pydantic.BaseModel"
@@ -811,7 +811,7 @@ class JsonObj(MutableMapping[str, _VT], Generic[_VT]):
     def _cls_field_names(cls) -> set[str]:
         """Return attrs-attribute names for an object decorated with attrs"""
         try:
-            return set(cls.__fields__)  # type: ignore[attr-defined]
+            return set(cls.__fields__)  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
         except AttributeError as ae:
             raise AttributeError(
                 "Class does not inherit from pydantic.BaseModel"

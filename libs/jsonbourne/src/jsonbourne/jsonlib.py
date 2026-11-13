@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """jsonbourne jsonlib api"""
 
-# pyright: reportOptionalMemberAccess=false
 from __future__ import annotations
 
 import dataclasses
