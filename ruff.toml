@@ -60,7 +60,7 @@ ignore = [
   "SIM105", # suppressible-exception
   "SIM115", # open-file-with-context-handler
   # PYUPGRADE
-  "UP009", # utf-8 encoding declaration (not needed but I am nostalgic)
+  "UP009", # utf-8 encoding declaration (not needed b/c I am nostalgic)
   "UP022", # must test shellfish first...
 ]
 
