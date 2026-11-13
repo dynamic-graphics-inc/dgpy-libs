@@ -106,7 +106,7 @@ def update() -> None:
 @cli.command()
 def patchall() -> None:
     """relock all dgpy-libs"""
-    for libname, _pyproject_toml_dict in pyproject_tomls().items():
+    for libname in pyproject_tomls():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")

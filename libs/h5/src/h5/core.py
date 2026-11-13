@@ -177,7 +177,7 @@ def h5py_obj_gen(
         ),
         *(  # Unpack a generator that generates generators recursively
             h5py_obj_gen(item, str(item.name), root=False)
-            for key, item in h5py_obj.items()
+            for item in h5py_obj.values()
             if isinstance(item, Group)
         ),
     )
