@@ -12,8 +12,11 @@
   - fixed `JsonObj.get`/`pop`/`setdefault` ignoring falsy or missing defaults
   - fixed `JsonArr.map`/`filter` arg counting for methods, callables, and
     builtins
+  - fixed `JsonArr *=` being a no-op
 - `aiopen`
   - fixed `AiopenContextManager.gi_*` raising `AttributeError`
+- `shellfish`
+  - `file_lines_gen` and `shebang` read files as UTF-8 (was locale default)
 
 ---
 
