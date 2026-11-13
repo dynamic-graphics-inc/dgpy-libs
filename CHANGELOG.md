@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## 2026-11-13
+- ALL
+  - Enable `ty` typechecking
+  - Remove `pyright` typechecking
+- `jsonbourne`
+  - **BREAKING:** iterating a `JsonBaseModel` yields keys, not `(key, value)`
+    tuples (use `.items()`)
+  - **BREAKING:** `JsonObj.get`/`pop` `default` is positional-only (like `dict`)
+  - fixed `JsonObj.get`/`pop`/`setdefault` ignoring falsy or missing defaults
+  - fixed `JsonArr.map`/`filter` arg counting for methods, callables, and
+    builtins
+- `aiopen`
+  - fixed `AiopenContextManager.gi_*` raising `AttributeError`
+
+---
+
 ## 2026-11-05
 
 - ALL
