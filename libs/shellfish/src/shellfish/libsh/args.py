@@ -23,7 +23,10 @@ def arganystr(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return arganystr(string.decode()).encode()
+        s = string.decode()
+        # pyrefly: ignore[bad-return]
+        return _quote(s).encode() if " " in s else string
+    # pyrefly: ignore[bad-return]
     return _quote(string) if " " in string else string
 
 

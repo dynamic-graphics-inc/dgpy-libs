@@ -152,6 +152,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
 
 # TODO: Fix generics...
 class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
+    # pyrefly: ignore[bad-override-mutable-attribute]
     _file: BufferedReader | BufferedRandom | BufferedWriter | TextIOWrapper
 
     def detach(self) -> Any:
@@ -161,6 +162,7 @@ class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
 class TextIOWrapperAsync(AsyncBase[str]):
     """Async version of io.TextIOWrapper"""
 
+    # pyrefly: ignore[bad-override-mutable-attribute]
     _file: TextIOWrapper
 
     @property
@@ -187,6 +189,7 @@ class TextIOWrapperAsync(AsyncBase[str]):
 class BufferedIOAsyncBase(AsyncBaseDetachable):
     """Async version of io.BufferedWriter"""
 
+    # pyrefly: ignore[bad-override-mutable-attribute]
     _file: BufferedReader | BufferedRandom | BufferedWriter
 
     @property
@@ -205,6 +208,7 @@ class BufferedReaderAsync(BufferedIOAsyncBase):
 class FileIOAsync(AsyncBase):  # type: ignore[type-arg]
     """The asyncio executor version of io.FileIO."""
 
+    # pyrefly: ignore[bad-override-mutable-attribute]
     _file: FileIO
 
 

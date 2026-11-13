@@ -56,6 +56,7 @@ dev = [
   "nox>=2024.4.15",
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
+  "pyrefly>=1.1.1",
   "pytest-cov>=6.1.1",
   "rich>=13.9.3",
   "ruff>=0.15.22",
@@ -206,7 +207,6 @@ include = [
   "libs/listless/src",
   "libs/requires/src",
   "libs/shellfish/src",
-  "libs/listless/src",
   "libs/xtyping/src",
 ]
 extraPaths = [
@@ -220,7 +220,6 @@ extraPaths = [
   "libs/listless/src",
   "libs/requires/src",
   "libs/shellfish/src",
-  "libs/listless/src",
   "libs/xtyping/src",
 ]
 exclude = [
@@ -237,3 +236,46 @@ reportGeneralTypeIssues = false
 reportInvalidTypeVarUse = false
 reportMissingImports = true
 reportMissingTypeStubs = false
+
+[tool.pyrefly]
+python-version = "3.11"
+# the workspace libs are editable-installed, so their src dirs are on the
+# site-package path; without this pyrefly auto-excludes them from the project
+disable-project-excludes-heuristics = true
+project-includes = [
+  "libs/aiopen/src",
+  "libs/asyncify/src",
+  "libs/dgpylibs/src",
+  "libs/dgpytest/src",
+  "libs/fmts/src",
+  "libs/funkify/src",
+  "libs/h5/src",
+  "libs/jsonbourne/src",
+  "libs/lager/src",
+  "libs/listless/src",
+  "libs/requires/src",
+  "libs/shellfish/src",
+  "libs/xtyping/src",
+]
+project-excludes = [
+  "**/.nox",
+  "**/.nox_win",
+  "**/.venv",
+  "**/__pycache__",
+  "**/node_modules",
+]
+# optional extras that are not installed in the dev env
+ignore-missing-imports = [
+  "httpx",
+  "httpx.*",
+  "jsonc2json",
+  "rapidjson",
+  "starlette",
+  "starlette.*",
+]
+
+# jsonlib binds orjson/rapidjson to None when they are not installed and only
+# touches them behind availability checks (same as its pyright file pragma)
+[[tool.pyrefly.sub-config]]
+matches = "libs/jsonbourne/src/jsonbourne/jsonlib.py"
+errors = { missing-attribute = false }

@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from re import escape as re_escape
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pytest
 
@@ -13,14 +13,19 @@ from requires.core import (
     Requirement,
     RequirementAttributeError,
     RequirementError,
+    _is_requirement_dict_like,
+    _make_requirement,
+    _string2requirement,
     requires,
-    string2requirement,
 )
+
+if TYPE_CHECKING:
+    from requires.core import _RequirementKwargsIdents
 
 
 def test_parse_import_xxx() -> None:
     s = "import json"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "json"
     assert a._as is None
     assert a._from is None
@@ -28,13 +33,13 @@ def test_parse_import_xxx() -> None:
 
 def test_parse_from_xxx_import_yyy() -> None:
     s = "from json import dumps"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "dumps"
     assert a._as is None
     assert a._from == "json"
 
     s = "from    json import dumps"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "dumps"
     assert a._as is None
     assert a._from == "json"
@@ -42,7 +47,7 @@ def test_parse_from_xxx_import_yyy() -> None:
 
 def test_parse_from_xxx_import_yyy_as_zzz() -> None:
     s = "from json import dumps as DUMPIT"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "dumps"
     assert a._as == "DUMPIT"
     assert a._from == "json"
@@ -52,7 +57,7 @@ def test_parse_from_xxx_import_yyy_as_zzz() -> None:
 
 def test_parse_from_xxx_import_yyy_as_zzz_nested() -> None:
     s = "from os.path import join as os_path_join"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "join"
     assert a._as == "os_path_join"
     assert a._from == "os.path"
@@ -62,7 +67,7 @@ def test_parse_from_xxx_import_yyy_as_zzz_nested() -> None:
 
 def test_parse_from_xxx_import_yyy_deeper_import() -> None:
     s = "import os.path.join as os_path_join"
-    a = string2requirement(s)
+    a = _string2requirement(s)
     assert a._import == "os.path.join"
     assert a._as == "os_path_join"
     assert a._from is None
@@ -131,7 +136,7 @@ def test_json_not_imported() -> None:
 
 def test_requirement_as_decorator() -> None:
     import_string = "from json import dumps"
-    json_dumps_req = string2requirement(import_string)
+    json_dumps_req = _string2requirement(import_string)
 
     @json_dumps_req
     def fn() -> str:
@@ -155,9 +160,9 @@ def test_requirement_as_decorator_multiple_xfail() -> None:
 
 def test_requirement_as_decorator_multiple() -> None:
     import_string = "from json import dumps"
-    json_dumps_req = string2requirement(import_string)
+    json_dumps_req = _string2requirement(import_string)
     import_loads_string = "from json import loads"
-    json_loads_req = string2requirement(import_loads_string)
+    json_loads_req = _string2requirement(import_loads_string)
 
     @json_dumps_req
     @json_loads_req
@@ -176,9 +181,9 @@ def test_requirement_as_decorator_multiple() -> None:
 def test_requirement_as_decorator_multiple_aliases() -> None:
     import_string = "from json import dumps as dumps2"
 
-    json_dumps_req = string2requirement(import_string)
+    json_dumps_req = _string2requirement(import_string)
     import_loads_string = "from json import loads as loads2"
-    json_loads_req = string2requirement(import_loads_string)
+    json_loads_req = _string2requirement(import_loads_string)
 
     @json_dumps_req
     @json_loads_req
@@ -208,9 +213,9 @@ def test_requirement_as_decorator_multiple_async_xfail() -> None:
 
 def test_requirement_as_decorator_multiple_async() -> None:
     import_string = "from json import dumps"
-    json_dumps_req = string2requirement(import_string)
+    json_dumps_req = _string2requirement(import_string)
     import_loads_string = "from json import loads"
-    json_loads_req = string2requirement(import_loads_string)
+    json_loads_req = _string2requirement(import_loads_string)
 
     @json_dumps_req
     @json_loads_req
@@ -447,3 +452,53 @@ def test_module_wrap() -> None:
 
 if __name__ == "__main__":
     pytest.main()
+
+
+def test_make_requirement_from_dict_aliases_and_no_mutation() -> None:
+    d: _RequirementKwargsIdents = {
+        "import": "json",
+        "from": "json",
+        "as": "j",
+        "lazy": False,
+    }
+    req = _make_requirement(d)
+    assert req == Requirement(_import="json", _from="json", _as="j", lazy=False)
+    # the caller's dict is left untouched
+    assert d == {"import": "json", "from": "json", "as": "j", "lazy": False}
+    assert _make_requirement(d) == req
+
+
+def test_make_requirement_from_dict_underscore_keys() -> None:
+    req = _make_requirement({"_import": "os", "_as": "o"})
+    assert req == Requirement(_import="os", _as="o")
+
+
+@pytest.mark.parametrize(
+    "d",
+    [
+        {"import": "json"},
+        {"_import": "json", "_as": "j", "lazy": False},
+        {"from": "json", "import": "dumps", "pip": True, "details": ["a"]},
+        Requirement(_import="os", _from="os").to_dict(),
+    ],
+)
+def test_is_requirement_dict_like_valid(d: dict[str, Any]) -> None:
+    assert _is_requirement_dict_like(d)
+
+
+@pytest.mark.parametrize(
+    "d",
+    [
+        {},
+        {"from": "json"},  # no import
+        {"import": 123},  # import not a str
+        {"imprt": "json"},  # typo key, no import
+        {"import": "json", "frm": "x"},  # unknown key
+        {"import": "json", "lazy": "yes"},  # bad value type
+        {"import": "json", "details": 1},  # bad value type
+    ],
+)
+def test_is_requirement_dict_like_invalid(d: dict[str, Any]) -> None:
+    assert not _is_requirement_dict_like(d)
+    with pytest.raises(RequirementError, match="Invalid requirement dict"):
+        _make_requirement(d)  # type: ignore[arg-type]

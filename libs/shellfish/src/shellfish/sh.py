@@ -661,7 +661,7 @@ def _do(
 
     """
     _input = validate_stdin(input)
-    _args = [args] if isinstance(args, (str, bytes)) else list(args)
+    _args = [args] if isinstance(args, str) else list(args)
     if IS_WIN:
         _syspath = None
         if env:

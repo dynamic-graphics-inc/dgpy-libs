@@ -20,6 +20,7 @@ except ModuleNotFoundError as mnfe:
 __all__ = ("JSONBOURNEResponse",)
 
 
+# pyrefly: ignore[invalid-inheritance]
 class JSONBOURNEResponse(Response):
     """FastAPI/starlette json response to auto use jsonbourne"""
 

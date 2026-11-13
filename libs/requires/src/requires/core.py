@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-import asyncio
 import inspect
 import logging
 import sys
@@ -12,21 +11,24 @@ import warnings
 from dataclasses import dataclass, field
 from functools import wraps
 from importlib import import_module
+from types import NoneType
 from typing import (
     TYPE_CHECKING,
     Any,
     ParamSpec,
+    Required,
     TypeAlias,
     TypedDict,
+    TypeGuard,
     TypeVar,
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Mapping
 
-T = TypeVar("T")
-R = TypeVar("R")
-P = ParamSpec("P")
+_T = TypeVar("_T")
+_R = TypeVar("_R")
+_P = ParamSpec("_P")
 
 __sys_version_info__ = sys.version_info
 log = logging.getLogger(__name__)
@@ -67,7 +69,57 @@ class RequirementDict(TypedDict):
     lazy: bool | None  # default true
 
 
-TRequirementDict: TypeAlias = RequirementDict | dict[str, Any]
+class _RequirementKwargsRequired(TypedDict):
+    _import: str
+
+
+class RequirementKwargs(_RequirementKwargsRequired, total=False):
+    """Kwargs version of `RequirementDict`"""
+
+    _from: str | None
+    _as: str | None
+    pip: str | bool | None
+    conda: str | bool | None
+    conda_forge: str | bool | None
+    details: str | list[str] | None
+    lazy: bool
+
+
+_RequirementKwargsIdents = TypedDict(
+    "_RequirementKwargsIdents",
+    {
+        "import": Required[str],
+        "from": str | None,
+        "as": str | None,
+        "pip": str | bool | None,
+        "conda": str | bool | None,
+        "conda_forge": str | bool | None,
+        "details": str | list[str] | None,
+        "lazy": bool,
+    },
+    total=False,
+)
+_RequirementKwargsIdents.__doc__ = (
+    """Requirement given as a dict with the keyword spellings import/from/as"""
+)
+
+_AnyRequirementDict: TypeAlias = (
+    RequirementDict | RequirementKwargs | _RequirementKwargsIdents
+)
+_REQUIREMENT_KEY_ALIASES = {"import": "_import", "from": "_from", "as": "_as"}
+_REQUIREMENT_DICT_VALUE_TYPES: dict[str, tuple[type, ...]] = {
+    "_import": (str,),
+    "import": (str,),
+    "_from": (str, NoneType),
+    "from": (str, NoneType),
+    "_as": (str, NoneType),
+    "as": (str, NoneType),
+    "pip": (str, bool, NoneType),
+    "conda": (str, bool, NoneType),
+    "conda_forge": (str, bool, NoneType),
+    "details": (str, list, NoneType),
+    "lazy": (bool, NoneType),
+}
 
 
 @dataclass(frozen=True, unsafe_hash=True)
@@ -222,7 +274,7 @@ class Requirement:
     def alias(self) -> str:
         return self._as or self._import
 
-    def __call__(self, f: Callable[P, R]) -> Callable[P, R]:
+    def __call__(self, f: Callable[_P, _R]) -> Callable[_P, _R]:
         _f_globals = _fn_globals(f)
         if not self.lazy:
             # Eagerly import the requirement
@@ -233,9 +285,9 @@ class Requirement:
                 tb = sys.exc_info()[2]
                 raise self.err().with_traceback(tb) from mnfe
 
-        if inspect.iscoroutinefunction(f) or asyncio.iscoroutine(f):
+        if inspect.iscoroutinefunction(f):
 
-            async def _requires_dec_async(*args: P.args, **kwargs: P.kwargs) -> Any:
+            async def _requires_dec_async(*args: _P.args, **kwargs: _P.kwargs) -> Any:
                 if self.lazy:
                     # Lazy loading logic
                     try:
@@ -263,7 +315,7 @@ class Requirement:
             return _requires_dec_async  # type: ignore[return-value]
 
         @wraps(f)
-        def _requires_dec(*args: P.args, **kwargs: P.kwargs) -> R:
+        def _requires_dec(*args: _P.args, **kwargs: _P.kwargs) -> _R:
             if self.lazy:
                 # lazy loading
                 try:
@@ -423,27 +475,41 @@ def parse_import_string(string: str) -> Requirement:
     return Requirement(_import=_import_str)
 
 
-def string2requirement(string: str) -> Requirement:
+def _string2requirement(string: str) -> Requirement:
     if "import" in string:
         return parse_import_string(string)
     return Requirement(_import=string)
 
 
-def make_requirement(
-    requirement: str | Requirement | TRequirementDict,
+def _is_requirement_dict_like(
+    obj: Mapping[str, object],
+) -> TypeGuard[_AnyRequirementDict]:
+    if not isinstance(obj.get("_import", obj.get("import")), str):
+        return False
+    return all(
+        isinstance(v, _REQUIREMENT_DICT_VALUE_TYPES.get(k, ())) for k, v in obj.items()
+    )
+
+
+def _make_requirement(
+    requirement: str | Requirement | _AnyRequirementDict,
 ) -> Requirement:
     if isinstance(requirement, Requirement):
         return requirement
     if isinstance(requirement, str):
-        return string2requirement(string=requirement)
+        return _string2requirement(string=requirement)
     if isinstance(requirement, dict):
-        if "import" in requirement:
-            requirement["_import"] = requirement.pop("import")  # type: ignore[typeddict-item]
-        if "from" in requirement:
-            requirement["_from"] = requirement.pop("from")  # type: ignore[typeddict-item]
-        if "as" in requirement:
-            requirement["_as"] = requirement.pop("as")  # type: ignore[typeddict-item]
-        return Requirement(**requirement)
+        if not _is_requirement_dict_like(requirement):
+            _emsg = (
+                f"Invalid requirement dict: {requirement!r}; needs a str"
+                " 'import'/'_import' and only keys/values from"
+                f" {sorted(_REQUIREMENT_DICT_VALUE_TYPES)}"
+            )
+            raise RequirementError(_emsg)
+        kwargs: dict[str, Any] = {
+            _REQUIREMENT_KEY_ALIASES.get(k, k): v for k, v in requirement.items()
+        }
+        return Requirement(**kwargs)
 
     str_type = str(type(requirement))
     str_req = str(requirement)
@@ -451,16 +517,16 @@ def make_requirement(
     raise RequirementError(_emsg)
 
 
-def make_requirements(
-    requirements: list[str | Requirement | TRequirementDict]
-    | tuple[str | Requirement | TRequirementDict]
+def _make_requirements(
+    requirements: list[str | Requirement | _AnyRequirementDict]
+    | tuple[str | Requirement | _AnyRequirementDict]
     | str
     | Requirement
-    | TRequirementDict,
+    | _AnyRequirementDict,
 ) -> list[Requirement]:
     if isinstance(requirements, list | tuple):
-        return [make_requirement(req) for req in requirements]
-    return make_requirements([requirements])
+        return [_make_requirement(req) for req in requirements]
+    return _make_requirements([requirements])
 
 
 def require(*args: Any, **kwargs: Any) -> Requirement:
@@ -468,7 +534,7 @@ def require(*args: Any, **kwargs: Any) -> Requirement:
 
 
 def requires(
-    *requirements: str | TRequirementDict | Requirement,
+    *requirements: str | _AnyRequirementDict | Requirement,
     _import: str | None = None,
     _as: str | None = None,
     _from: str | None = None,
@@ -477,7 +543,7 @@ def requires(
     conda_forge: str | bool | None = None,
     details: str | None = None,
     lazy: bool | None = None,
-) -> Callable[[Callable[P, R]], Callable[P, R]]:
+) -> Callable[[Callable[_P, _R]], Callable[_P, _R]]:
     """Decorator to specify the packages a function or class requires
 
     The decorator will not do anything unless a NameError is thrown. If a
@@ -524,9 +590,9 @@ def requires(
     else:
         if not requirements:
             raise ValueError("No requirements specified in 'requires' decorator.")
-        _requirements = make_requirements(list(requirements))
+        _requirements = _make_requirements(list(requirements))
 
-    def _requires_dec(f: Callable[P, R]) -> Callable[P, R]:
+    def _requires_dec(f: Callable[_P, _R]) -> Callable[_P, _R]:
         _wrapped_fn = f
         requirements_meta = RequirementsMeta(requirements=set())
         for el in _requirements:

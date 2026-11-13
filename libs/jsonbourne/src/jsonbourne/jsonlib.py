@@ -83,6 +83,7 @@ def _json_encode_default(obj: Any) -> Any:
             return obj.tolist()
     if dataclasses.is_dataclass(obj) and callable(obj):
         obj_instance = obj()
+        # pyrefly: ignore[bad-argument-type]
         return dataclasses.asdict(obj_instance)
     if isinstance(obj, set):
         return list(obj)
@@ -242,7 +243,9 @@ class JSON_STDLIB(JsonLibABC):
         **kwargs: Any,
     ) -> Any:
         if jsonc:
-            string = jsonc2json(string)
+            string = jsonc2json(
+                string.decode() if isinstance(string, bytes) else string
+            )
         if ndjson or jsonl:
             return [
                 pyjson.loads(line, **kwargs)
@@ -337,7 +340,9 @@ class ORJSON(JsonLibABC):
         **kwargs: Any,
     ) -> Any:
         if jsonc:
-            string = jsonc2json(string)
+            string = jsonc2json(
+                string.decode() if isinstance(string, bytes) else string
+            )
         if ndjson or jsonl:
             return [orjson.loads(line) for line in string.splitlines(keepends=False)]
         return orjson.loads(string)

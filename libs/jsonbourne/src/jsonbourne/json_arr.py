@@ -117,16 +117,14 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def sort(
         self: JsonArr[SupportsRichComparisonT], *, key: None = None, reverse: bool = ...
     ) -> None: ...
-
     @overload
     def sort(
         self, *, key: Callable[[_T], SupportsRichComparison], reverse: bool = ...
     ) -> None: ...
-
     def sort(
-        self,
+        self: JsonArr[Any],
         *,
-        key: Callable[[_T], SupportsRichComparison] | None = None,
+        key: Callable[[Any], SupportsRichComparison] | None = None,
         reverse: bool = False,
     ) -> None:
         return self.__arr.sort(key=key, reverse=reverse)

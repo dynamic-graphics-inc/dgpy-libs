@@ -252,10 +252,7 @@ class GroupLikeInfo(H5Mixin):
             return self._set_group(key, value)
         if isinstance(value, DatasetInfo):
             return self._set_dataset(key, value)
-        valid_class_names = (
-            GroupInfo.__class__.__name__,
-            DatasetInfo.__class__.__name__,
-        )
+        valid_class_names = (GroupInfo.__name__, DatasetInfo.__name__)
         raise TypeError(
             " ".join((
                 f"Can't set {key} to {value} of type {type(value)};",
