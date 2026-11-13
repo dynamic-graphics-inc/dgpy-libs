@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """jsonbourne's real name"""
-# flake8: noqa
+# ruff: noqa: F403
 
 from __future__ import annotations
 
