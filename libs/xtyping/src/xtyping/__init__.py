@@ -26,7 +26,7 @@ from collections.abc import (
     MutableSet,
     Reversible,
     Sequence,
-    Set,
+    Set,  # noqa: PYI025 (re-exported as `Set`)
     Sized,
     ValuesView,
 )
