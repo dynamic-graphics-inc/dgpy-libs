@@ -11,6 +11,7 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
+    Self,
     TypeGuard,
     TypeVar,
 )
@@ -272,9 +273,7 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         )
 
     @classmethod
-    def from_dict_filtered(
-        cls: type[JsonBaseModelT], dictionary: builtins.dict[str, Any]
-    ) -> JsonBaseModelT:
+    def from_dict_filtered(cls, dictionary: builtins.dict[str, Any]) -> Self:
         """Create class from dict filtering keys not in (sub)class' fields"""
         attr_names: set[str] = set(cls._cls_field_names())
         return cls(**{k: v for k, v in dictionary.items() if k in attr_names})

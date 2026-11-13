@@ -8,6 +8,7 @@ from shlex import split as _shplit
 from typing import (
     TYPE_CHECKING,
     Any,
+    Self,
     TypeVar,
 )
 
@@ -135,7 +136,7 @@ class ExeABC:
         """Hook called at the end of `__init__`; a no-op subclasses may override"""
 
     @classmethod
-    def _from_exe_config(cls: type[TExe], config: ExeConfig) -> TExe:
+    def _from_exe_config(cls, config: ExeConfig) -> Self:
         """Return a new instance from an [ExeConfig][shellfish.exe.ExeConfig]"""
         return cls(
             cmd=config.cmd,
