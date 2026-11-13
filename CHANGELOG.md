@@ -5,6 +5,8 @@
 - ALL
   - Enable `ty` typechecking
   - Remove `pyright` typechecking
+  - Replace `pre-commit` with [`prek`](https://prek.j178.dev)
+    (`.pre-commit-config.yaml` -> `prek.toml`; uses prek builtin hooks)
 - `jsonbourne`
   - **BREAKING:** iterating a `JsonBaseModel` yields keys, not `(key, value)`
     tuples (use `.items()`)
