@@ -94,7 +94,7 @@ class ExeABC:
         env: dict[str, str] | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> None:
         """Create an exe wrapper for `cmd`
@@ -231,7 +231,7 @@ class ExeABC:
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -283,7 +283,7 @@ class ExeABC:
         loop: Any | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> Done:
         """Run the exe asynchronously, overriding this exe's defaults
@@ -363,7 +363,7 @@ class Exe(ExeABC):
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -413,7 +413,7 @@ class ExeAsync(ExeABC):
         input: STDIN = None,
         loop: Any | None = None,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> Done:
         """Run the exe asynchronously; see [do_async][shellfish.exe.ExeABC.do_async]

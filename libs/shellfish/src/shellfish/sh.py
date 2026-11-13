@@ -743,7 +743,7 @@ def do(
     tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -802,7 +802,7 @@ def shell(
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -860,7 +860,7 @@ async def run_async(
     capture_output: bool = False,
     shell: bool = False,
     cwd: FsPath | None = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     check: bool = False,
     encoding: str | None = None,
     errors: str | None = None,
@@ -899,7 +899,7 @@ async def do_asyncify(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -932,7 +932,7 @@ async def _do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
