@@ -617,13 +617,13 @@ def scope_requirements(*, debug: bool = False) -> RequirementsMeta:
     calling_frame = sys._getframe(2)
     _f_globals = calling_frame.f_globals
     if debug:
-        log.debug(f"calling_frame: {calling_frame}")
-        log.debug(f"_f_globals: {_f_globals}")
+        log.debug("calling_frame: %s", calling_frame)
+        log.debug("_f_globals: %s", _f_globals)
     scope_reqs = RequirementsMeta(requirements=set())
 
     for name, obj in _f_globals.items():
         if hasattr(obj, "__requires__"):
-            log.debug(f"Found obj with requirements: {name} -> {obj}")
+            log.debug("Found obj with requirements: %s -> %s", name, obj)
             requirements_meta = obj.__requires__
             if not isinstance(requirements_meta, RequirementsMeta):
                 _emsg = f"Expected a RequirementsMeta instance, got {type(requirements_meta)}"

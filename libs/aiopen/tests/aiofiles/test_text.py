@@ -50,7 +50,7 @@ async def test_simple_readlines(mode: str) -> None:
     """Test the readlines functionality."""
     filename = join(dirname(__file__), "resources", "multiline_file.txt")
 
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         expected = f.readlines()
 
     async with aiopen(filename, mode=mode) as file:
@@ -142,7 +142,7 @@ async def test_staggered_read(mode: str) -> None:
         assert (await file.read()) == ""
 
     expected = []
-    with open(filename) as f:
+    with open(filename, encoding="utf-8") as f:
         while True:
             char = f.read(1)
             if char:

@@ -24,18 +24,16 @@ from h5py import (
     is_hdf5 as _is_hdf5,
 )
 
-from h5._types import FsPath, H5pyAttributesDict
-
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
     import numpy as np
     import numpy.typing as npt
 
+    from h5._types import FsPath, H5pyAttributesDict
+
 
 _GroupLike: TypeAlias = Group | File
-_DatasetOrGroup: TypeAlias = Dataset | Group
-_FsPathOrGroupLike: TypeAlias = FsPath | _GroupLike
 # TODO: this might be unused?
 h5py_obj_types = {
     "d": "dataset",
@@ -179,7 +177,7 @@ def h5py_obj_gen(
         ),
         *(  # Unpack a generator that generates generators recursively
             h5py_obj_gen(item, str(item.name), root=False)
-            for key, item in h5py_obj.items()
+            for item in h5py_obj.values()
             if isinstance(item, Group)
         ),
     )

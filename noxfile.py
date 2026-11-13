@@ -149,7 +149,7 @@ def dev(session: nox.Session) -> None:
     for libname, dirpath in LIB_DIRS.items():
         echo(libname, dirpath)
         pyproject_toml_fspath = path.join(dirpath, "pyproject.toml")
-        with open(pyproject_toml_fspath) as f:
+        with open(pyproject_toml_fspath, encoding="utf-8") as f:
             pyproject_toml_str = f.read().rstrip("\n")
 
         data = tomllib.loads(pyproject_toml_str)

@@ -8,6 +8,7 @@ from shlex import split as _shplit
 from typing import (
     TYPE_CHECKING,
     Any,
+    Self,
     TypeVar,
 )
 
@@ -94,7 +95,7 @@ class ExeABC:
         env: dict[str, str] | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> None:
         """Create an exe wrapper for `cmd`
@@ -135,7 +136,7 @@ class ExeABC:
         """Hook called at the end of `__init__`; a no-op subclasses may override"""
 
     @classmethod
-    def _from_exe_config(cls: type[TExe], config: ExeConfig) -> TExe:
+    def _from_exe_config(cls, config: ExeConfig) -> Self:
         """Return a new instance from an [ExeConfig][shellfish.exe.ExeConfig]"""
         return cls(
             cmd=config.cmd,
@@ -231,7 +232,7 @@ class ExeABC:
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -283,7 +284,7 @@ class ExeABC:
         loop: Any | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> Done:
         """Run the exe asynchronously, overriding this exe's defaults
@@ -363,7 +364,7 @@ class Exe(ExeABC):
         check: bool = False,
         verbose: bool = False,
         input: STDIN = None,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
         dryrun: bool = False,
     ) -> Done:
@@ -413,7 +414,7 @@ class ExeAsync(ExeABC):
         input: STDIN = None,
         loop: Any | None = None,
         shell: bool = False,
-        timeout: float | int | None = None,
+        timeout: float | None = None,
         verbose: bool = False,
     ) -> Done:
         """Run the exe asynchronously; see [do_async][shellfish.exe.ExeABC.do_async]

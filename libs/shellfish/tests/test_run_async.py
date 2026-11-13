@@ -46,7 +46,7 @@ async def test_subprocess_run_async_tee(
     capsys: pytest.CaptureFixture, tmp_path: Path
 ) -> None:
     chdir(tmp_path)
-    with open("file.py", "w") as f:
+    with open("file.py", "w", encoding="utf-8") as f:
         f.write(python_script_string)
 
     proc = await run_async(

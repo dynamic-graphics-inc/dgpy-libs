@@ -21,7 +21,7 @@ PopenArg: TypeAlias = str | bytes | PathLikeStrBytes
 PopenArgv: TypeAlias = Sequence[PopenArg]
 PopenArgs: TypeAlias = bytes | str | PopenArgv
 PopenEnv: TypeAlias = Mapping[str, str]
-SymlinkType: TypeAlias = Literal["dir"] | Literal["file"] | Literal["junction"] | str
+SymlinkType: TypeAlias = Literal["dir", "file", "junction"] | str  # noqa: PYI051 (literals for autocomplete)
 STDIN: TypeAlias = bytes | str | None
 STDIO: TypeAlias = int | bytes | IO[Any] | None
 
