@@ -15,15 +15,22 @@ select = [
   "F",      # pyflakes warnings
   "FA102",  # require `from __future__ import annotations`
   "FBT",    # flake8-boolean-trap
+  "FLY",    # flynt
+  "G004",   # logging-f-string
   "I",      # isort
   "ICN",
+  "PERF",   # perflint
+  "PGH",    # pygrep-hooks
   "PIE",    # flake8-pie
   "PLE",    # pylint errors
+  "PLW1514", # unspecified-encoding
   "PT",     # flake8-pytest-style
+  "PYI",    # flake8-pyi
   "Q",      # flake8-quotes
   "RET",    # flake8-return
   "RUF",    # ruff
   "SIM",    # flake8-simplify
+  "SLOT",   # flake8-slots
   "T201",   # print
   "TC",     # flake8-type-checking
   "TID",    # flake8-tidy-imports
@@ -75,7 +82,7 @@ ignore = [
   "D103",   # missing docstring
   "S101",   # use of assert
 ]
-"*.ipynb" = ["ANN", "E741", "F401", "F811", "F821", "RUF031", "T201"]
+"*.ipynb" = ["ANN", "E741", "PERF", "F401", "F811", "F821", "RUF031", "T201"]
 "libs/jsonbourne/src/jsonbourne/trydantic.py" = [
   "I001", # isort something wrong with in try block import
 ]
