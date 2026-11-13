@@ -25,7 +25,7 @@ def _JSON(self: Response, **kwargs: Any) -> Any:
 
 def patch_httpx() -> None:
     """Patch httpx to add a .JSON() method to Response objects."""
-    Response.JSON = _JSON  # type: ignore[unused-ignore]  # ty: ignore[missing-attribute]
+    Response.JSON = _JSON  # type: ignore[unused-ignore]
 
 
 patch_httpx()

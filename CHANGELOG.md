@@ -1,6 +1,7 @@
 # CHANGELOG
 
 ## 2026-11-13
+
 - ALL
   - Enable `ty` typechecking
   - Remove `pyright` typechecking
