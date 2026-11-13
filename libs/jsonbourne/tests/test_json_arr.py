@@ -144,6 +144,14 @@ def test_operators() -> None:
     assert isinstance(ja * 2, JsonArr)
 
 
+def test_imul_in_place() -> None:
+    ja = JsonArr([1, 2])
+    same = ja
+    ja *= 2
+    assert ja == JsonArr([1, 2, 1, 2])
+    assert ja is same
+
+
 def test_push() -> None:
     ja: JsonArr[int] = JsonArr()
     ja.push(0)

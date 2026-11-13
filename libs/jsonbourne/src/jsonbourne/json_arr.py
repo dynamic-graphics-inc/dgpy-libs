@@ -188,7 +188,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         return JsonArr(self.__arr.__mul__(n))
 
     def __imul__(self, n: SupportsIndex, /) -> JsonArr[_T]:
-        self.__arr.__mul__(n)
+        self.__arr *= n
         return self
 
     def __contains__(self, o: object, /) -> bool:
