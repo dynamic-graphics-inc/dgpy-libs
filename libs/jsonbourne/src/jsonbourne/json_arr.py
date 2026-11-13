@@ -279,7 +279,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         func: Callable[[_T], bool]
         | Callable[[_T, int], bool]
         | Callable[[_T, int, JsonArr[_T]], bool],
-        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
+        nargs: Literal[1, 2, 3] | None = None,
     ) -> JsonArr[_T]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
@@ -309,7 +309,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         func: Callable[[_T], _R]
         | Callable[[_T, int], _R]
         | Callable[[_T, int, JsonArr[_T]], _R],
-        nargs: Literal[1] | Literal[2] | Literal[3] | None = None,
+        nargs: Literal[1, 2, 3] | None = None,
     ) -> JsonArr[_R]:
         _fn_args = nargs or n_args(func)
         if _fn_args == 3:
