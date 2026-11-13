@@ -120,7 +120,7 @@ async def test_simple_read_fail(mode: str, tmp_path: Path) -> None:
         with pytest.raises(ValueError, match="not readable"):
             await file.read()
 
-    assert file.closed  # pyright: ignore[reportUnboundVariable]
+    assert file.closed
 
 
 @pytest.mark.anyio

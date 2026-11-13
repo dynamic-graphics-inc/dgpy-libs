@@ -73,7 +73,7 @@ from typing import (  # noqa: UP035
     get_origin,
     get_overloads,
     no_type_check,
-    no_type_check_decorator,
+    no_type_check_decorator,  # ty: ignore[deprecated]
     overload,
     reveal_type,
 )

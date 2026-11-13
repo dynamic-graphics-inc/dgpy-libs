@@ -318,7 +318,7 @@ def aiorun_asyncio(
     _debug = _backend_options.get("debug", False)
     if callable(awaitable_or_func) and not asyncio.iscoroutine(awaitable_or_func):
         return asyncio_run(
-            awaitable_or_func(*args),
+            awaitable_or_func(*args),  # ty: ignore[invalid-argument-type]
             debug=_debug,
         )
 

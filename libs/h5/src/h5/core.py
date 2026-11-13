@@ -10,10 +10,8 @@ from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
-    ParamSpec,
     TypeAlias,
     TypeGuard,
-    TypeVar,
     cast,
 )
 
@@ -34,12 +32,11 @@ if TYPE_CHECKING:
     import numpy as np
     import numpy.typing as npt
 
-_P = ParamSpec("_P")
-_R = TypeVar("_R")
 
-T_GroupLike: TypeAlias = Group | File
-T_DatasetOrGroup: TypeAlias = Dataset | Group
-T_FsPathOrGroupLike: TypeAlias = FsPath | T_GroupLike
+_GroupLike: TypeAlias = Group | File
+_DatasetOrGroup: TypeAlias = Dataset | Group
+_FsPathOrGroupLike: TypeAlias = FsPath | _GroupLike
+# TODO: this might be unused?
 h5py_obj_types = {
     "d": "dataset",
     "f": "file",
@@ -116,7 +113,7 @@ def is_group(obj: Any) -> TypeGuard[Group]:
     return is_h5py_group(obj)
 
 
-def is_group_like(obj: Any) -> TypeGuard[T_GroupLike]:
+def is_group_like(obj: Any) -> TypeGuard[_GroupLike]:
     return not isinstance(obj, str | bytes) and isinstance(obj, Group | File)
 
 

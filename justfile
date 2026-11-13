@@ -114,10 +114,10 @@ ty *ARGS:
     uv run ty check {{ ARGS }}
 
 # typecheck
-typecheck: mypy pyrefly
+typecheck: ty pyrefly mypy
 
 # lint
-lint: fmt noxlint pyrefly
+lint: fmt ty pyrefly noxlint
 
 # format the justfile(s) (w/ just)
 fmt-justfile:

@@ -17,7 +17,7 @@ jobs:
           pip install -U ruff
           ruff format --check .
           ruff check --select "I" .
-  ruff:
+  ruff: # TODO: rename this job to be not just "ruff"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -33,6 +33,10 @@ jobs:
         run: |
           uv run ruff --version
           uv run ruff check .
+      - name: ty
+        run: |
+          uv run ty --version
+          uv run ty check
       - name: pyrefly
         run: |
           uv run pyrefly --version

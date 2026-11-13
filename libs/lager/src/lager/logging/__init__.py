@@ -60,10 +60,10 @@ from logging import (
     setLogRecordFactory as setLogRecordFactory,
     setLogRecordFactory as set_log_record_factory,
     shutdown as shutdown,
-    warn as warn,
+    warn as warn,  # ty: ignore[deprecated]
     warning as warning,
 )
-from types import TracebackType
+from types import FrameType, TracebackType
 from typing import Any, Literal, Self, TypeAlias
 
 from lager.core import LOG, loglevel
@@ -259,13 +259,10 @@ class StdLoggingHandler(logging.Handler):
             level = loglevel(record.levelno)
 
         # Find caller from where originated the logging call
-        frame = logging.currentframe()
+        frame: FrameType | None = logging.currentframe()
         depth = 2
-        while (
-            frame.f_code.co_filename  # pyright: ignore[reportOptionalMemberAccess]
-            == logging.__file__
-        ):
-            frame = frame.f_back  # type: ignore[assignment]
+        while frame and frame.f_code.co_filename == logging.__file__:
+            frame = frame.f_back
             depth += 1
 
         LOG.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())

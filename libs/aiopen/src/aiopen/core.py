@@ -31,9 +31,9 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable, Callable, Coroutine
+    from collections.abc import Awaitable, Callable
     from os import PathLike
-    from types import TracebackType
+    from types import CodeType, CoroutineType, FrameType, TracebackType
 
 P = ParamSpec("P")
 T = TypeVar("T")
@@ -45,9 +45,11 @@ __all__ = ("aiopen",)
 
 
 def aio_hoist(funk: Callable[P, T]) -> Callable[P, Awaitable[T]]:
+    name: str = funk.__name__  # ty: ignore[missing-attribute]
+
     @wraps(funk)
     async def _async_funk(self: Any, *args: P.args, **kwargs: P.kwargs) -> T:
-        fn = getattr(self._file, funk.__name__)
+        fn = getattr(self._file, name)
         retval = await self._loop.run_in_executor(
             self._executor, partial(fn, *args, **kwargs)
         )
@@ -153,7 +155,7 @@ class AsyncBase(Generic[AnyStr]):  # pragma: no cover
 # TODO: Fix generics...
 class AsyncBaseDetachable(AsyncBase):  # type: ignore[type-arg]
     # pyrefly: ignore[bad-override-mutable-attribute]
-    _file: BufferedReader | BufferedRandom | BufferedWriter | TextIOWrapper
+    _file: BufferedReader | BufferedRandom | BufferedWriter | TextIOWrapper  # ty: ignore[incompatible-mutable-override]
 
     def detach(self) -> Any:
         return self._file.detach()
@@ -163,7 +165,7 @@ class TextIOWrapperAsync(AsyncBase[str]):
     """Async version of io.TextIOWrapper"""
 
     # pyrefly: ignore[bad-override-mutable-attribute]
-    _file: TextIOWrapper
+    _file: TextIOWrapper  # ty: ignore[incompatible-mutable-override]
 
     @property
     def encoding(self) -> str:
@@ -190,7 +192,7 @@ class BufferedIOAsyncBase(AsyncBaseDetachable):
     """Async version of io.BufferedWriter"""
 
     # pyrefly: ignore[bad-override-mutable-attribute]
-    _file: BufferedReader | BufferedRandom | BufferedWriter
+    _file: BufferedReader | BufferedRandom | BufferedWriter  # ty: ignore[incompatible-mutable-override]
 
     @property
     def raw(self) -> Any:
@@ -209,7 +211,7 @@ class FileIOAsync(AsyncBase):  # type: ignore[type-arg]
     """The asyncio executor version of io.FileIO."""
 
     # pyrefly: ignore[bad-override-mutable-attribute]
-    _file: FileIO
+    _file: FileIO  # ty: ignore[incompatible-mutable-override]
 
 
 @singledispatch
@@ -263,7 +265,7 @@ class AiopenContextManager(
     __slots__ = ("_coro", "_obj")
 
     def __init__(self, coro: Any) -> None:
-        self._coro: Coroutine[Any, Any, Any] = coro
+        self._coro: CoroutineType[Any, Any, Any] = coro
         self._obj: (
             BufferedIOAsyncBase
             | BufferedReaderAsync
@@ -291,16 +293,16 @@ class AiopenContextManager(
         return self._coro.close()
 
     @property
-    def gi_frame(self) -> Any:
-        return self._coro.gi_frame  # type: ignore[attr-defined]
+    def gi_frame(self) -> FrameType | None:
+        return self._coro.cr_frame
 
     @property
     def gi_running(self) -> bool:
-        return self._coro.gi_running  # type: ignore[attr-defined, no-any-return]
+        return self._coro.cr_running
 
     @property
-    def gi_code(self) -> Any:
-        return self._coro.gi_code  # type: ignore[attr-defined]
+    def gi_code(self) -> CodeType:
+        return self._coro.cr_code
 
     def __next__(self) -> Any:
         return self.send(None)

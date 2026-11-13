@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pyright: reportUndefinedVariable=false
 from __future__ import annotations
 
 import json

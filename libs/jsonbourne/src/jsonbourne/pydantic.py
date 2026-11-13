@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-from collections.abc import Callable, Generator, MutableMapping
+from collections.abc import Callable, Iterator, MutableMapping
 from functools import lru_cache
 from pprint import pformat
 from shutil import get_terminal_size
@@ -88,7 +88,7 @@ def json_obj_before_validator(
 TJsonObjPydantic = Annotated[JsonObj, BeforeValidator(json_obj_before_validator)]
 
 
-class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-arg]
+class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-arg]  # ty: ignore[lost-keyword-for-regular-parameter]
     """Hybrid `pydantic.BaseModel` and `jsonbourne.JsonObj`"""
 
     model_config = json_model_base_config
@@ -101,19 +101,19 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
         self.__post_init__()
 
     @property
-    def _data(self) -> dict[str, Any]:  # type: ignore[override]
+    def _data(self) -> builtins.dict[str, Any]:  # type: ignore[override]  # ty: ignore[incompatible-property-override]
         return self.__dict__
 
-    def __dumpable__(self) -> dict[str, Any]:
+    def __dumpable__(self) -> builtins.dict[str, Any]:
         return self.model_dump()
 
-    def __json_interface__(self) -> dict[str, Any]:
+    def __json_interface__(self) -> builtins.dict[str, Any]:
         return self.model_dump()
 
     # ===================================
     # ALIASES (SANS DEPRECATION WARNINGS)
     # ===================================
-    def dict(self, *args: Any, **kwargs: Any) -> dict[str, Any]:
+    def dict(self, *args: Any, **kwargs: Any) -> builtins.dict[str, Any]:
         """Alias for `model_dump`"""
         return self.model_dump(*args, **kwargs)
 
@@ -320,10 +320,10 @@ class JsonBaseModel(BaseModel, JsonObj, MutableMapping):  # type: ignore[type-ar
             return object.__delattr__(self, item)
         return super().__delattr__(item)
 
-    def __iter__(self) -> Generator[tuple[str, Any], None, None]:  # type: ignore[override]
-        return super().__iter__()
+    def __iter__(self) -> Iterator[str]:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
+        return (k for k, _v in super().__iter__())
 
-    def __getitem__(self, item: str) -> Any:  # type: ignore[override]
+    def __getitem__(self, item: str) -> Any:  # type: ignore[override]  # ty: ignore[incompatible-method-override]
         try:
             return super().__getattr__(item)
         except AttributeError as ae:

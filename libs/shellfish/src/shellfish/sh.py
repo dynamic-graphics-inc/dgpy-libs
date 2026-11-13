@@ -556,23 +556,13 @@ def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
     return flatten_args(args)
 
 
-def _validate_popen_args_platform(
-    args: PopenArgs | tuple[PopenArgs, ...],
-    env: dict[str, str] | None = None,
-    *,
-    shell: bool = False,
-) -> list[str]:
-    del env, shell
-    return validate_popen_args(args)
-
-
 if IS_WIN:
     _WINDOWS_BATCH_SUFFIXES: frozenset[str] = frozenset({".bat", ".cmd"})
 
     def _is_windows_batch_file(fspath: str) -> bool:
         return Path(fspath).suffix.lower() in _WINDOWS_BATCH_SUFFIXES
 
-    def _validate_popen_args_windows(
+    def _validate_popen_args_platform(
         args: PopenArgs | tuple[PopenArgs, ...],
         env: dict[str, str] | None = None,
         *,
@@ -591,7 +581,16 @@ if IS_WIN:
             args[0] = fspath
         return args
 
-    _validate_popen_args_platform = _validate_popen_args_windows
+else:
+
+    def _validate_popen_args_platform(
+        args: PopenArgs | tuple[PopenArgs, ...],
+        env: dict[str, str] | None = None,
+        *,
+        shell: bool = False,
+    ) -> list[str]:
+        del env, shell
+        return validate_popen_args(args)
 
 
 def _do_tee(

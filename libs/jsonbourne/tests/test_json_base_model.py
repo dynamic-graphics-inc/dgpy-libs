@@ -94,7 +94,8 @@ try:
         thingy_dict_spread = {
             **thingy,
         }
-        assert list(thingy) == [  # type: ignore[comparison-overlap]
+        assert list(thingy) == ["x", "y", "string"]
+        assert list(thingy.items()) == [
             ("x", 1),
             ("y", 2),
             ("string", "string"),

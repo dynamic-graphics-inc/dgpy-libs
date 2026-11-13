@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import annotations
 
+import inspect
+
 from collections.abc import Callable, Iterable, Iterator, MutableSequence
 from typing import (
     TYPE_CHECKING,
@@ -16,6 +18,10 @@ from typing import (
 )
 
 if TYPE_CHECKING:
+    import builtins
+
+    from types import CodeType
+
     from pydantic import GetCoreSchemaHandler
 
 __all__ = (
@@ -44,17 +50,23 @@ def n_args(fn: Callable[..., _R]) -> int:
     if not callable(fn):
         _emsg = f"{fn!r} is not callable"
         raise TypeError(_emsg)
+    code: CodeType | None = getattr(fn, "__code__", None)
+    if code is not None:
+        return code.co_argcount - 1 if inspect.ismethod(fn) else code.co_argcount
+    call: object = getattr(fn, "__call__", None)  # noqa: B004 (want the bound method)
+    if inspect.ismethod(call):
+        return n_args(call)
     try:
-        return fn.__code__.co_argcount
-    except AttributeError:
-        ...
-    if hasattr(fn, "__call__"):  # noqa: B004
-        _nargs = n_args(fn.__call__)
-        co_varnames = fn.__call__.__code__.co_varnames
-        if co_varnames[0] == "self":
-            return len(co_varnames) - 1
-        return _nargs
-    _emsg = f"{fn!r} is not callable"
+        params = inspect.signature(fn).parameters.values()
+    except (TypeError, ValueError):
+        params = None
+    if params is not None:
+        positional = [
+            p for p in params if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)
+        ]
+        if positional:
+            return len(positional)
+    _emsg = f"could not determine number of arguments for {fn!r}; pass `nargs=`"
     raise TypeError(_emsg)
 
 
@@ -141,9 +153,9 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def __getitem__(self, __i: SupportsIndex) -> _T: ...
 
     @overload
-    def __getitem__(self, __s: slice) -> JsonArr[_T]: ...
+    def __getitem__(self, __s: builtins.slice) -> JsonArr[_T]: ...
 
-    def __getitem__(self, __i: SupportsIndex | slice) -> _T | JsonArr[_T]:
+    def __getitem__(self, __i: SupportsIndex | builtins.slice) -> _T | JsonArr[_T]:
         if isinstance(__i, slice):
             return JsonArr(self.__arr[__i])
         return self.__arr[__i]
@@ -152,12 +164,12 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
     def __setitem__(self, __i: SupportsIndex, __o: _T) -> None: ...
 
     @overload
-    def __setitem__(self, __s: slice, __o: Iterable[_T]) -> None: ...
+    def __setitem__(self, __s: builtins.slice, __o: Iterable[_T]) -> None: ...
 
     def __setitem__(self, __i: Any, __o: Any) -> None:
         return self.__arr.__setitem__(__i, __o)
 
-    def __delitem__(self, __i: SupportsIndex | slice) -> None:
+    def __delitem__(self, __i: SupportsIndex | builtins.slice) -> None:
         self.__arr.__delitem__(__i)
 
     def __add__(self, __x: Iterable[_T] | JsonArr[_T]) -> JsonArr[_T]:
@@ -213,7 +225,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> Iterator[Callable[[Any], Any]]:
         """Return the JsonObj validator functions"""
-        yield cls.validate_type
+        yield cls.validate_type  # ty: ignore[invalid-yield]
 
     def eject(self) -> list[_T]:
         return self.__arr
