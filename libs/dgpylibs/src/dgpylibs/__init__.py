@@ -13,8 +13,6 @@ import asyncify
 import asyncify.__about__
 import fmts
 import fmts.__about__
-import funkify
-import funkify.__about__
 import h5
 import h5.__about__
 import jsonbourne
@@ -35,7 +33,6 @@ from asyncify import __version__ as __asyncify_version__
 from dgpylibs import __about__
 from dgpylibs.__about__ import __version__, __version__ as __dgpylibs_version__
 from fmts import __version__ as __fmts_version__
-from funkify import __version__ as __funkify_version__
 from h5 import __version__ as __h5_version__
 from jsonbourne import __version__ as __jsonbourne_version__
 from lager import __version__ as __lager_version__
@@ -49,7 +46,6 @@ __all__ = (
     "__asyncify_version__",
     "__dgpylibs_version__",
     "__fmts_version__",
-    "__funkify_version__",
     "__h5_version__",
     "__jsonbourne_version__",
     "__lager_version__",
@@ -61,7 +57,6 @@ __all__ = (
     "aiopen",
     "asyncify",
     "fmts",
-    "funkify",
     "h5",
     "jsonbourne",
     "lager",
@@ -75,7 +70,6 @@ LIBS = (
     "aiopen",
     "asyncify",
     "fmts",
-    "funkify",
     "h5",
     "jsonbourne",
     "lager",
@@ -100,7 +94,6 @@ class DgpyLibsMetadataDict(TypedDict):
     aiopen: DgpyLibMetadataDict
     asyncify: DgpyLibMetadataDict
     fmts: DgpyLibMetadataDict
-    funkify: DgpyLibMetadataDict
     h5: DgpyLibMetadataDict
     jsonbourne: DgpyLibMetadataDict
     lager: DgpyLibMetadataDict
@@ -152,7 +145,6 @@ class DgpyLibsMetadata:
         "asyncify",
         "dgpylibs",
         "fmts",
-        "funkify",
         "h5",
         "jsonbourne",
         "lager",
@@ -166,7 +158,6 @@ class DgpyLibsMetadata:
     aiopen: DgpyLibMetadata
     asyncify: DgpyLibMetadata
     fmts: DgpyLibMetadata
-    funkify: DgpyLibMetadata
     h5: DgpyLibMetadata
     jsonbourne: DgpyLibMetadata
     lager: DgpyLibMetadata
@@ -181,7 +172,6 @@ class DgpyLibsMetadata:
             "aiopen": self.aiopen.asdict(),
             "asyncify": self.asyncify.asdict(),
             "fmts": self.fmts.asdict(),
-            "funkify": self.funkify.asdict(),
             "h5": self.h5.asdict(),
             "jsonbourne": self.jsonbourne.asdict(),
             "lager": self.lager.asdict(),
@@ -197,7 +187,6 @@ class DgpyLibsVersionsDict(TypedDict):
     aiopen: str
     asyncify: str
     fmts: str
-    funkify: str
     h5: str
     jsonbourne: str
     lager: str
@@ -216,7 +205,6 @@ class DgpyLibsVersions:
         "asyncify",
         "dgpylibs",
         "fmts",
-        "funkify",
         "h5",
         "jsonbourne",
         "lager",
@@ -230,7 +218,6 @@ class DgpyLibsVersions:
     aiopen: str
     asyncify: str
     fmts: str
-    funkify: str
     h5: str
     jsonbourne: str
     lager: str
@@ -245,7 +232,6 @@ class DgpyLibsVersions:
             "aiopen": self.aiopen,
             "asyncify": self.asyncify,
             "fmts": self.fmts,
-            "funkify": self.funkify,
             "h5": self.h5,
             "jsonbourne": self.jsonbourne,
             "lager": self.lager,
@@ -280,12 +266,6 @@ dgpylibs_metadata = DgpyLibsMetadata(
         description=fmts.__about__.__description__,
         pkgroot=fmts.__about__.__pkgroot__,
         version=fmts.__about__.__version__,
-    ),
-    funkify=DgpyLibMetadata(
-        title=funkify.__about__.__title__,
-        description=funkify.__about__.__description__,
-        pkgroot=funkify.__about__.__pkgroot__,
-        version=funkify.__about__.__version__,
     ),
     h5=DgpyLibMetadata(
         title=h5.__about__.__title__,
@@ -336,7 +316,6 @@ dgpylibs_info = DgpyLibsVersions(
     aiopen=__aiopen_version__,
     asyncify=__asyncify_version__,
     fmts=__fmts_version__,
-    funkify=__funkify_version__,
     h5=__h5_version__,
     jsonbourne=__jsonbourne_version__,
     lager=__lager_version__,

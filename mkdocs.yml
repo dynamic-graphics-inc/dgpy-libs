@@ -11,7 +11,6 @@ watch:
   - libs/aiopen/src/aiopen
   - libs/asyncify/src/asyncify
   - libs/fmts/src/fmts
-  - libs/funkify/src/funkify
   - libs/h5/src/h5
   - libs/jsonbourne/src/jsonbourne
   - libs/listless/src/listless
@@ -26,7 +25,6 @@ nav:
       - Home: './index.md'
       - aiopen: './libs/aiopen/README.ipynb'
       - asyncify: './libs/asyncify/README.ipynb'
-      - funkify: './libs/funkify/README.ipynb'
       - h5: './libs/h5/README.ipynb'
       - jsonbourne: './libs/jsonbourne/README.ipynb'
       - lager: './libs/lager/README.ipynb'
@@ -36,7 +34,6 @@ nav:
       - aiopen: './libs/aiopen/aiopen.api.md'
       - asyncify: './libs/asyncify/asyncify.api.md'
       - fmts: './libs/fmts/fmts.api.md'
-      - funkify: './libs/funkify/funkify.api.md'
       - h5: './libs/h5/h5.api.md'
       - requires: './libs/requires/requires.api.md'
       - listless: './libs/listless/listless.api.md'
@@ -152,7 +149,6 @@ plugins:
             - libs/aiopen/src
             - libs/asyncify/src
             - libs/fmts/src
-            - libs/funkify/src
             - libs/h5/src
             - libs/jsonbourne/src
             - libs/requires/src

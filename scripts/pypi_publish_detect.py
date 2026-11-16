@@ -36,7 +36,6 @@ PACKAGES = [
     "aiopen",
     "asyncify",
     "fmts",
-    "funkify",
     "h5",
     "jsonbourne",
     "lager",

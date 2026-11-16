@@ -1,5 +1,29 @@
 # CHANGELOG
 
+## 2026-11-13
+
+- `funkify`
+  - Retired: removed from the repo and no longer published (existing PyPI
+    releases are left in place)
+- **BREAKING:** modules are no longer callable (no deprecation period)
+  - `aiopen` (v0.9.0): use `from aiopen import aiopen` instead of
+    `import aiopen; aiopen(...)`
+  - `asyncify` (v0.13.0): use `from asyncify import asyncify` instead of
+    `import asyncify; @asyncify`
+  - `requires` (v0.13.0): use `from requires import requires` instead of
+    `import requires; @requires(...)`
+  - `shellfish` (v0.8.0): use `shellfish.do(...)` / `shellfish.sh.do(...)`
+    instead of `shellfish(...)` / `shellfish.sh(...)`
+- `aiopen`, `asyncify`, `requires`, `shellfish`
+  - No longer depend on `funkify`
+- `dgpylibs` (v0.2.0)
+  - Dropped `funkify` from dependencies and from the version/metadata registry
+    (`__funkify_version__` and the `funkify` metadata fields are gone)
+- `jsonbourne`
+  - Unchanged: `JSON(...)` is still callable
+
+---
+
 ## 2026-11-05
 
 - ALL

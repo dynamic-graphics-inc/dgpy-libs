@@ -11,25 +11,23 @@
 
 **Install:** `pip install aiopen`
 
+> **Breaking change (v0.9.0):** the `aiopen` module is no longer callable. Replace `import aiopen; aiopen(...)` with `from aiopen import aiopen; aiopen(...)`.
+
 Async-open
 
 **Why not use aiofiles?**
 
 - Wanted more type annotations
 - aiofiles uses ye ole `@coroutine` decorator -- aiopen uses python3.6+ `async/await`
-- aiopen is a callable module, so you can do:
-  - `import aiopen`
-  - `async with aiopen('afile.txt', 'w') as f: await f.write('some text!')`
-  - `async with aiopen('afile.txt', 'r') as f: content = await f.read()`
 
 (Big shouts out to the aiofiles people, aiopen is entirely based off of aiofiles)
 
 ## Usage:
 
-Just import it! The module is also callable!
+Just import it!
 
 ```python
-import aiopen
+from aiopen import aiopen
 
 async with aiopen("afile.txt", "w") as f:
     await f.write("some text!")

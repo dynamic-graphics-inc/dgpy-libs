@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.14" ]
 
 [project]
 name = "asyncify"
-version = "0.12.1"
+version = "0.13.0"
 description = "sync 2 async"
 readme = "README.md"
 keywords = [ "async", "asyncify", "asyncio", "dgpy" ]
@@ -21,7 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed",
 ]
-dependencies = [ "funkify>=0.7" ]
+dependencies = [  ]
 
 [dependency-groups]
 dev = [

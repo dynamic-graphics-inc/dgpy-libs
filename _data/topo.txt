@@ -1,5 +1,4 @@
 fmts
-funkify
 h5
 lager
 listless

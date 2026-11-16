@@ -11,6 +11,8 @@
 
 **Install:** `pip install requires`
 
+> **Breaking change (v0.13.0):** the `requires` module is no longer callable. Replace `import requires; @requires(...)` with `from requires import requires; @requires(...)`.
+
 Decorate that lets you
 Require/Import dependencies at runtime.
 
@@ -38,7 +40,7 @@ except NameError as ne:
 
 ```python
 # This will not fail
-import requires  # Module is callable! (checkout funkify for more info -- `pip install funkify`)
+from requires import requires
 
 
 @requires("json")
@@ -52,7 +54,7 @@ uno()
     '{"a": 1, "b": 2}'
 
 ```python
-import requires
+from requires import requires
 
 
 @requires("from json import dumps")
@@ -76,7 +78,7 @@ dos()
     '{"a": 1, "b": 2}'
 
 ```python
-import requires
+from requires import requires
 
 
 @requires(_from="json", _import="dumps")
@@ -90,7 +92,7 @@ dos()
     '{"a": 1, "b": 2}'
 
 ```python
-import requires
+from requires import requires
 
 
 @requires(_import="rapidjson", pip="python-rapidjson", conda_forge="python-rapidjson")

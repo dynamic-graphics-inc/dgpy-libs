@@ -15,7 +15,6 @@ LIBS = (
     "dgpylibs",
     "dgpytest",
     "fmts",
-    "funkify",
     "h5",
     "jsonbourne",
     "lager",

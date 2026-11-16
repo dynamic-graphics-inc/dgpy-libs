@@ -11,6 +11,8 @@
 
 **Install:** `pip install shellfish` OR `uv add shellfish`
 
+> **Breaking change (v0.8.0):** the `shellfish` and `shellfish.sh` modules are no longer callable. Replace `shellfish(...)` / `sh(...)` with `shellfish.do(...)` / `sh.do(...)`.
+
 **What:** shellfish = shell & file-system utils; async & sync
 
 **Features:**

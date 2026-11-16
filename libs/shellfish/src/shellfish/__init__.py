@@ -6,7 +6,6 @@ from __future__ import annotations
 from os import path as path
 
 from asyncify import aiorun as aiorun
-from funkify import funkify as _funkify
 from shellfish import dotenv as dotenv, fs as fs, process as process, sh as sh
 from shellfish.__about__ import __version__ as __version__
 from shellfish._types import (
@@ -207,9 +206,6 @@ from shellfish.sh import (
     which_lru as which_lru,
 )
 from shellfish.stdio import Stdio as Stdio
-
-_funkify(sh.do, key="shellfish.sh")  # noqa: RUF067
-_funkify(sh.do, key="shellfish")  # noqa: RUF067
 
 ps = process  # noqa: RUF067
 
