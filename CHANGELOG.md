@@ -4,7 +4,8 @@
 
 - `funkify`
   - Retired: removed from the repo and no longer published (existing PyPI
-    releases are left in place)
+    releases are left in place); source + history moved to
+    [dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy)
 - **BREAKING:** modules are no longer callable (no deprecation period)
   - `aiopen` (v0.9.0): use `from aiopen import aiopen` instead of
     `import aiopen; aiopen(...)`
@@ -21,9 +22,7 @@
     (`__funkify_version__` and the `funkify` metadata fields are gone)
 - `jsonbourne`
   - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
-
-
-- type-checking
+- ALL
   - Enable `ty` typechecking
   - Remove `pyright` typechecking
   - Replace `pre-commit` with [`prek`](https://prek.j178.dev)
