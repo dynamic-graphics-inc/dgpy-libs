@@ -1,0 +1,1 @@
+--8<-- "libs/h5/README.md"

@@ -134,13 +134,11 @@ jobs:
           cd libs/dgpylibs
           uv run pytest --doctest-modules
 
-  mkdocs:
+  docs:
     permissions:
       contents: write
-      deployments: write
     needs: [lint, test]
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -152,9 +150,20 @@ jobs:
         run: uv sync --all-extras --dev
       - name: install docs deps
         run: uv pip install '.[docs]'
-      - name: mkdocs build
-        if: github.ref != 'refs/heads/main'
-        run: uv run mkdocs build
-      - name: mkdocs build
+      - name: check docs/notebooks markdown is up to date
+        run: |
+          bash scripts/mkreadnb.sh
+          if ! git diff --exit-code -- docs/notebooks/; then
+            echo "::error::docs/notebooks/*.md is out of date with its .ipynb -- run scripts/mkreadnb.sh and commit the result"
+            exit 1
+          fi
+      - name: zensical build
+        run: uv run zensical build --clean
+      - name: deploy to gh-pages
         if: github.ref == 'refs/heads/main'
-        run: uv run mkdocs gh-deploy --force
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages
+          force_orphan: true

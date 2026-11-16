@@ -72,7 +72,7 @@ python libraries are all published on pip under the listed names.
 
 - dgpy-libs must have excellent names and be published on pip
 - Embrace `async/await`
-- Python 3.9+ 'n up, baby!
+- Python 3.11+ 'n up, baby!
 - Use type annotations everywhere
 - No dead or commented out code
 - Use optional compiled-3rd-party-libs as optional dependencies to sneakily

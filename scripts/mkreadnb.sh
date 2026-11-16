@@ -1,7 +1,14 @@
 #!/bin/bash
+# Convert docs/notebooks/*.ipynb to markdown alongside (zensical does not render
+# notebooks). Not executed -- uses the outputs saved in each notebook.
+#
+# CI runs this and fails if docs/notebooks/ changes, so run it and commit the
+# result after editing a notebook. nbconvert is pinned so CI and local output
+# match; bump it here (and re-run + commit) to upgrade.
+#
+# Lib READMEs are not handled here: libs/<lib>/README.md is the source of truth
+# and docs/libs/<lib>/README.md includes it via a pymdownx.snippets `--8<--` line.
 
-while read -d '' filename; do
-    echo "${filename}"
-    jupyter nbconvert --to markdown --execute "${filename}"
-    cp -f --parents "${filename}" docs
-done < <(find "libs" -maxdepth 3 -type f -name "README.ipynb" -print0)
+set -euo pipefail
+
+uvx --from nbconvert==7.17.2 jupyter-nbconvert --to markdown docs/notebooks/*.ipynb
