@@ -20,7 +20,7 @@
   - Dropped `funkify` from dependencies and from the version/metadata registry
     (`__funkify_version__` and the `funkify` metadata fields are gone)
 - `jsonbourne`
-  - Unchanged: `JSON(...)` is still callable
+  - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
 
 ---
 
