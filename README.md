@@ -62,6 +62,9 @@ uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyp
 | [shellfish](./libs/shellfish)   | `pip install shellfish`  | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   |
 | [xtyping](./libs/xtyping)       | `pip install xtyping`    | [![PyPI](https://img.shields.io/pypi/v/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       |
 
+Retired libs (e.g. `funkify`) live in
+[dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy).
+
 ## About
 
 This repo (dgpy-libs) are the polished gems formed under intense geological
