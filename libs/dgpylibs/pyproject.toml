@@ -33,7 +33,6 @@ dependencies = [
   "listless",
   "requires",
   "shellfish",
-  "xtyping",
 ]
 urls.Homepage = "https://github.com/dynamic-graphics-inc/dgpy-libs"
 urls.Repository = "https://github.com/dynamic-graphics-inc/dgpy-libs"
@@ -62,7 +61,6 @@ lager = { workspace = true }
 listless = { workspace = true }
 requires = { workspace = true }
 shellfish = { workspace = true }
-xtyping = { workspace = true }
 
 [tool.ruff]
 extend = "../../ruff.toml"

@@ -7,6 +7,5 @@
   "lager": "0.20.1",
   "listless": "0.4.1",
   "requires": "0.12.1",
-  "shellfish": "0.7.2",
-  "xtyping": "0.11.1"
+  "shellfish": "0.7.2"
 }

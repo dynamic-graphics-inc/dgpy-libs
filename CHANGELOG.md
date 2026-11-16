@@ -2,6 +2,12 @@
 
 ## 2026-11-13
 
+- `xtyping`
+  - Retired: removed from the repo and no longer published (existing PyPI
+    releases are left in place); source + history moved to
+    [dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy)
+  - Replace `from xtyping import X` with `from typing import X` (or
+    `typing_extensions` for anything newer than your Python)
 - `funkify`
   - Retired: removed from the repo and no longer published (existing PyPI
     releases are left in place); source + history moved to
@@ -18,8 +24,9 @@
 - `aiopen`, `asyncify`, `requires`, `shellfish`
   - No longer depend on `funkify`
 - `dgpylibs` (v0.2.0)
-  - Dropped `funkify` from dependencies and from the version/metadata registry
-    (`__funkify_version__` and the `funkify` metadata fields are gone)
+  - Dropped `funkify` and `xtyping` from dependencies and from the
+    version/metadata registry (`__funkify_version__`, `__xtyping_version__` and
+    their metadata fields are gone)
 - `jsonbourne`
   - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
 - ALL

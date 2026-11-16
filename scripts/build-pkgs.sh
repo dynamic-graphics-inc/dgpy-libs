@@ -62,7 +62,6 @@ echo "Building and upload DGPY wheel"
 
 # build_pkg "dgpy"
 
-build_pkg "libs/xtyping"
 build_pkg "libs/listless"
 build_pkg "libs/fmts"
 build_pkg "libs/aiopen"

@@ -25,7 +25,6 @@ build:
     uv build -v --package listless
     uv build -v --package requires
     uv build -v --package shellfish
-    uv build -v --package xtyping
 
 # preview which libs would publish (versions not yet on PyPI)
 publish-check:
@@ -49,14 +48,13 @@ test: sync
     cd libs/listless && uv run pytest
     cd libs/requires && uv run pytest
     cd libs/shellfish && uv run pytest
-    cd libs/xtyping && uv run pytest
 
 # test a specific library `just test-lib h5`
 test-lib dgpylib: dev
     cd libs/{{dgpylib}} && uv run pytest
 
 # test all libraries
-test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish") (test-lib "xtyping")
+test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish")
 
 # fix imports
 rsort:

@@ -25,8 +25,6 @@ import requires
 import requires.__about__
 import shellfish
 import shellfish.__about__
-import xtyping
-import xtyping.__about__
 
 from aiopen import __version__ as __aiopen_version__
 from asyncify import __version__ as __asyncify_version__
@@ -39,7 +37,6 @@ from lager import __version__ as __lager_version__
 from listless import __version__ as __listless_version__
 from requires import __version__ as __requires_version__
 from shellfish import __version__ as __shellfish_version__
-from xtyping import __version__ as __xtyping_version__
 
 __all__ = (
     "__aiopen_version__",
@@ -53,7 +50,6 @@ __all__ = (
     "__requires_version__",
     "__shellfish_version__",
     "__version__",
-    "__xtyping_version__",
     "aiopen",
     "asyncify",
     "fmts",
@@ -63,7 +59,6 @@ __all__ = (
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 )
 
 LIBS = (
@@ -76,7 +71,6 @@ LIBS = (
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 )
 
 
@@ -98,7 +92,6 @@ class DgpyLibsMetadataDict(TypedDict):
     listless: DgpyLibMetadataDict
     requires: DgpyLibMetadataDict
     shellfish: DgpyLibMetadataDict
-    xtyping: DgpyLibMetadataDict
 
 
 @dataclass(frozen=True)
@@ -149,7 +142,6 @@ class DgpyLibsMetadata:
         "listless",
         "requires",
         "shellfish",
-        "xtyping",
     )
 
     dgpylibs: DgpyLibMetadata
@@ -162,7 +154,6 @@ class DgpyLibsMetadata:
     listless: DgpyLibMetadata
     requires: DgpyLibMetadata
     shellfish: DgpyLibMetadata
-    xtyping: DgpyLibMetadata
 
     def asdict(self) -> DgpyLibsMetadataDict:
         return {
@@ -176,7 +167,6 @@ class DgpyLibsMetadata:
             "listless": self.listless.asdict(),
             "requires": self.requires.asdict(),
             "shellfish": self.shellfish.asdict(),
-            "xtyping": self.xtyping.asdict(),
         }
 
 
@@ -191,7 +181,6 @@ class DgpyLibsVersionsDict(TypedDict):
     listless: str
     requires: str
     shellfish: str
-    xtyping: str
 
 
 @dataclass(frozen=True)
@@ -209,7 +198,6 @@ class DgpyLibsVersions:
         "listless",
         "requires",
         "shellfish",
-        "xtyping",
     )
 
     dgpylibs: str
@@ -222,7 +210,6 @@ class DgpyLibsVersions:
     listless: str
     requires: str
     shellfish: str
-    xtyping: str
 
     def asdict(self) -> DgpyLibsVersionsDict:
         return {
@@ -236,7 +223,6 @@ class DgpyLibsVersions:
             "listless": self.listless,
             "requires": self.requires,
             "shellfish": self.shellfish,
-            "xtyping": self.xtyping,
         }
 
 
@@ -301,12 +287,6 @@ dgpylibs_metadata = DgpyLibsMetadata(
         pkgroot=shellfish.__about__.__pkgroot__,
         version=shellfish.__about__.__version__,
     ),
-    xtyping=DgpyLibMetadata(
-        title=xtyping.__about__.__title__,
-        description=xtyping.__about__.__description__,
-        pkgroot=xtyping.__about__.__pkgroot__,
-        version=xtyping.__about__.__version__,
-    ),
 )
 
 dgpylibs_info = DgpyLibsVersions(
@@ -320,5 +300,4 @@ dgpylibs_info = DgpyLibsVersions(
     listless=__listless_version__,
     requires=__requires_version__,
     shellfish=__shellfish_version__,
-    xtyping=__xtyping_version__,
 )
