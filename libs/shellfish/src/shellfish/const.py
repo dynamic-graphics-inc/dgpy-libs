@@ -3,11 +3,11 @@
 
 from __future__ import annotations
 
-from typing import Final, Literal
+from typing import Final
 
-a: Final[Literal["a"]] = "a"
-r: Final[Literal["r"]] = "r"
-w: Final[Literal["w"]] = "w"
-ab: Final[Literal["ab"]] = "ab"
-rb: Final[Literal["rb"]] = "rb"
-wb: Final[Literal["wb"]] = "wb"
+a: Final = "a"
+r: Final = "r"
+w: Final = "w"
+ab: Final = "ab"
+rb: Final = "rb"
+wb: Final = "wb"

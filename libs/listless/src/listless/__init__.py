@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-# pyright: reportInvalidTypeVarUse=false
 """Listless = generators, iterators, and async iterators, Oh My!"""
 # ruff: noqa: RUF067
 
@@ -472,7 +471,7 @@ def filter_is_none(it: Iterable[_T | None]) -> Iterable[_T]:
 
 
     """
-    return filter(lambda x: x is not None, it)  # type: ignore[arg-type]
+    return (x for x in it if x is not None)
 
 
 def flatten(*args: _T | Iterable[_T]) -> Iterable[_T]:
@@ -636,14 +635,14 @@ def unique_gen(it: Iterable[_T], key: Callable[[_T], _K] | None = None) -> Itera
     if key is None:
         have: set[_T] = set()
         have_add = have.add
-        return (x for x in it if not (x in have or have_add(x)))
+        return (x for x in it if not (x in have or have_add(x)))  # ty: ignore[redundant-condition]
     havek: set[_K] = set()
     havek_add = havek.add
 
     return (
         el
         for el, k_el in ((_el, key(_el)) for _el in it)
-        if not (k_el in havek or havek_add(k_el))
+        if not (k_el in havek or havek_add(k_el))  # ty: ignore[redundant-condition]
     )
 
 

@@ -26,7 +26,7 @@ def test_is_hdf5_file(tmp_path: Path) -> None:
     filepath = tmp_path / "test.h5"
     make_test_hdf5_file(filepath)
 
-    with open("not-a-file.h5", "w") as f:
+    with open("not-a-file.h5", "w", encoding="utf-8") as f:
         f.write("not a hdf5 file")
     assert not h5.is_hdf5("not-a-file.h5")
 

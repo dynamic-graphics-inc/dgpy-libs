@@ -25,9 +25,9 @@ def arganystr(string: AnyStr) -> AnyStr:
     if isinstance(string, bytes):
         s = string.decode()
         # pyrefly: ignore[bad-return]
-        return _quote(s).encode() if " " in s else string
+        return _quote(s).encode() if " " in s else string  # ty: ignore[invalid-explicit-return]
     # pyrefly: ignore[bad-return]
-    return _quote(string) if " " in string else string
+    return _quote(string) if " " in string else string  # ty: ignore[invalid-explicit-return]
 
 
 def argstr(string: str | bytes) -> str:

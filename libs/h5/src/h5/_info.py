@@ -22,6 +22,8 @@ import h5py
 import numpy as np
 
 if TYPE_CHECKING:
+    import builtins
+
     from collections.abc import Iterable, Iterator
 
     from h5._types import H5pyCompression
@@ -148,7 +150,7 @@ class H5Mixin(H5ABC):
 @dataclass
 class DatasetInfo(H5Mixin):
     key: str
-    attrs: dict[str, Any]
+    attrs: builtins.dict[str, Any]
     shape: tuple[int, ...]
     ndim: int
     dtype: str
@@ -366,9 +368,9 @@ class FileInfo(GroupLikeInfo):
     fspath: str
     fssize: int
     key: str
-    groups: dict[str, GroupInfo]
-    attrs: dict[str, Any]
-    datasets: dict[str, DatasetInfo]
+    groups: builtins.dict[str, GroupInfo]
+    attrs: builtins.dict[str, Any]
+    datasets: builtins.dict[str, DatasetInfo]
     h5type: Literal["file"]
 
     @property

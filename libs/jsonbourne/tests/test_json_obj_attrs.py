@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# type: ignore
+# mypy: disable-error-code="arg-type,type-arg"
 from __future__ import annotations
 
 import pytest

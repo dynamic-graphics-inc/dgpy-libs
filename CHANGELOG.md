@@ -39,6 +39,25 @@
 - `jsonbourne`
   - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
 
+
+- type-checking
+  - Enable `ty` typechecking
+  - Remove `pyright` typechecking
+  - Replace `pre-commit` with [`prek`](https://prek.j178.dev)
+    (`.pre-commit-config.yaml` -> `prek.toml`; uses prek builtin hooks)
+- `jsonbourne`
+  - **BREAKING:** iterating a `JsonBaseModel` yields keys, not `(key, value)`
+    tuples (use `.items()`)
+  - **BREAKING:** `JsonObj.get`/`pop` `default` is positional-only (like `dict`)
+  - fixed `JsonObj.get`/`pop`/`setdefault` ignoring falsy or missing defaults
+  - fixed `JsonArr.map`/`filter` arg counting for methods, callables, and
+    builtins
+  - fixed `JsonArr *=` being a no-op
+- `aiopen`
+  - fixed `AiopenContextManager.gi_*` raising `AttributeError`
+- `shellfish`
+  - `file_lines_gen` and `shebang` read files as UTF-8 (was locale default)
+
 ---
 
 ## 2026-11-05

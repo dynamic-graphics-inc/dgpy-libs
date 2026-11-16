@@ -262,7 +262,7 @@ def is_wsl() -> bool:  # pragma: nocov
         return True
 
     try:
-        with open("/proc/version") as f:
+        with open("/proc/version", encoding="utf-8") as f:
             if "microsoft" in f.read().lower():
                 return True
     except FileNotFoundError:
@@ -279,7 +279,7 @@ def iswsl() -> bool:
 def is_notebook() -> bool:  # pragma: nocov
     """Determine if running in ipython/jupyter notebook; returns True/False"""
     try:
-        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]
+        shell = get_ipython().__class__.__name__  # type: ignore[name-defined]  # ty: ignore[unresolved-reference]
         if shell == "ZMQInteractiveShell":
             return True  # Jupyter notebook or qtconsole
         if shell == "TerminalInteractiveShell":
@@ -327,7 +327,7 @@ def rhel_version() -> str:
         ...
 
     try:
-        with open("/etc/redhat-release") as file:
+        with open("/etc/redhat-release", encoding="utf-8") as file:
             release_info = file.read()
             if "release 7" in release_info:
                 return "rhel7"

@@ -556,23 +556,13 @@ def validate_popen_args(args: PopenArgs | tuple[PopenArgs, ...]) -> list[str]:
     return flatten_args(args)
 
 
-def _validate_popen_args_platform(
-    args: PopenArgs | tuple[PopenArgs, ...],
-    env: dict[str, str] | None = None,
-    *,
-    shell: bool = False,
-) -> list[str]:
-    del env, shell
-    return validate_popen_args(args)
-
-
 if IS_WIN:
     _WINDOWS_BATCH_SUFFIXES: frozenset[str] = frozenset({".bat", ".cmd"})
 
     def _is_windows_batch_file(fspath: str) -> bool:
         return Path(fspath).suffix.lower() in _WINDOWS_BATCH_SUFFIXES
 
-    def _validate_popen_args_windows(
+    def _validate_popen_args_platform(
         args: PopenArgs | tuple[PopenArgs, ...],
         env: dict[str, str] | None = None,
         *,
@@ -591,7 +581,16 @@ if IS_WIN:
             args[0] = fspath
         return args
 
-    _validate_popen_args_platform = _validate_popen_args_windows
+else:
+
+    def _validate_popen_args_platform(
+        args: PopenArgs | tuple[PopenArgs, ...],
+        env: dict[str, str] | None = None,
+        *,
+        shell: bool = False,
+    ) -> list[str]:
+        del env, shell
+        return validate_popen_args(args)
 
 
 def _do_tee(
@@ -744,7 +743,7 @@ def do(
     tee: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -803,7 +802,7 @@ def shell(
     check: bool = False,
     verbose: bool = False,
     input: STDIN = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -861,7 +860,7 @@ async def run_async(
     capture_output: bool = False,
     shell: bool = False,
     cwd: FsPath | None = None,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     check: bool = False,
     encoding: str | None = None,
     errors: str | None = None,
@@ -900,7 +899,7 @@ async def do_asyncify(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -933,7 +932,7 @@ async def _do_async(
     verbose: bool = False,
     input: STDIN = None,
     check: bool = False,
-    timeout: float | int | None = None,
+    timeout: float | None = None,
     ok_code: int | list[int] | tuple[int, ...] | set[int] = 0,
     dryrun: bool = False,
 ) -> Done:
@@ -1512,7 +1511,7 @@ class WIN(_WIN):
 # =============================================================================
 
 # OS DEPENDENT
-_OS: type[LIN] | type[WIN] = (
+_OS: type[LIN | WIN] = (
     WIN if "windows" in system().lower() else LIN
 )  # Use LIN/WIN as _OS
 sync = _OS.sync

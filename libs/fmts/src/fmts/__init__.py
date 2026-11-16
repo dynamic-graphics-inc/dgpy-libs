@@ -20,6 +20,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     AnyStr,
+    Self,
     TypeVar,
 )
 
@@ -245,8 +246,8 @@ def snake2kebab(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.replace(b"_", b"-")
-    return string.replace("_", "-")
+        return string.replace(b"_", b"-")  # ty: ignore[invalid-explicit-return]
+    return string.replace("_", "-")  # ty: ignore[invalid-explicit-return]
 
 
 def kebab2snake(string: AnyStr) -> AnyStr:
@@ -263,8 +264,8 @@ def kebab2snake(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.replace(b"-", b"_")
-    return string.replace("-", "_")
+        return string.replace(b"-", b"_")  # ty: ignore[invalid-explicit-return]
+    return string.replace("-", "_")  # ty: ignore[invalid-explicit-return]
 
 
 @anystr2anystr
@@ -327,9 +328,9 @@ def snake2pascal(string: AnyStr) -> AnyStr:
     """
     if isinstance(string, bytes):
         # pyrefly: ignore[bad-return]
-        return b"".join(x.capitalize() for x in string.split(b"_"))
+        return b"".join(x.capitalize() for x in string.split(b"_"))  # ty: ignore[invalid-explicit-return]
     # pyrefly: ignore[bad-return]
-    return "".join(x.title() for x in string.split("_"))
+    return "".join(x.title() for x in string.split("_"))  # ty: ignore[invalid-explicit-return]
 
 
 @anystr2anystr
@@ -467,12 +468,12 @@ def ensure_trailing_newline(string: AnyStr) -> AnyStr:
 
     """
     if isinstance(string, bytes):
-        return string.rstrip(b"\n") + b"\n"
+        return string.rstrip(b"\n") + b"\n"  # ty: ignore[invalid-explicit-return]
     # pyrefly: ignore[bad-return]
-    return "{}\n".format(string.strip("\n"))
+    return "{}\n".format(string.strip("\n"))  # ty: ignore[invalid-explicit-return]
 
 
-def nbytes_str(nbytes: int | float) -> str:
+def nbytes_str(nbytes: float) -> str:
     """Format nbytesber of bytes to human readable form
 
     Args:
@@ -525,7 +526,7 @@ def nbytes_str(nbytes: int | float) -> str:
     raise ValueError(_emsg)  # pragma: no cover
 
 
-def nbytes(nbytes: int | float) -> str:
+def nbytes(nbytes: float) -> str:
     """Alias for nbytes_str (for backward compatibility)
 
     Examples:
@@ -651,7 +652,7 @@ def nseconds(nsec: float) -> str:
     return f"{hours:02d}:{minutes:02d}:{nsec:02d} (hh:mm:ss)"
 
 
-def dseconds(ti: float | int, tf: float | int) -> str:
+def dseconds(ti: float, tf: float) -> str:
     """Format time duration given initial and final timestamps in seconds
 
     Args:
@@ -1316,7 +1317,9 @@ def body_contents(html_string: str) -> list[str]:
 class pstr(str):
     """Pretty-string subclass"""
 
-    def __new__(cls, content: str) -> pstr:
+    __slots__ = ()
+
+    def __new__(cls, content: str) -> Self:
         """Create and return new pstr from a str"""
         if "\n" in content and (content[0] == "\n" or content[-1] == "\n"):
             return str.__new__(cls, content.strip("\n"))
