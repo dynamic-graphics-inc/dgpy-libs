@@ -231,7 +231,6 @@ project-includes = [
   "libs/dgpylibs/src",
   "libs/dgpytest/src",
   "libs/fmts/src",
-  "libs/funkify/src",
   "libs/h5/src",
   "libs/jsonbourne/src",
   "libs/lager/src",
