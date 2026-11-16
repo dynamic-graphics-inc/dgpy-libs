@@ -103,11 +103,6 @@ jobs:
           cd libs/xtyping
           uv run pytest
 
-      - name: test funkify
-        run: |
-          cd libs/funkify
-          uv run pytest --cov=funkify
-
       - name: test asyncify
         run: |
           cd libs/asyncify

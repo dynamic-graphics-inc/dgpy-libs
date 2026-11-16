@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 
-from funkify import funkify
 from requires.__about__ import __version__
 from requires.core import (
     Requirement,
@@ -20,8 +19,6 @@ from requires.core import (
     requires_python,
     scope_requirements,
 )
-
-funkify(requires, key="requires")  # noqa: RUF067
 
 __all__ = (
     "Requirement",

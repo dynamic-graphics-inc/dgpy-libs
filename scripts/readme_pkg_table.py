@@ -32,7 +32,6 @@ def main() -> None:
         "aiopen",
         "asyncify",
         "fmts",
-        "funkify",
         "h5",
         "jsonbourne",
         "lager",

@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.14" ]
 
 [project]
 name = "dgpylibs"
-version = "0.1.0"
+version = "0.2.0"
 description = "Dynamic Graphics Python libraries"
 keywords = [ "dgi", "dgpy", "python3", "typed" ]
 authors = [ { name = "jessekrubin", email = "jesse@dgi.com" } ]
@@ -27,7 +27,6 @@ dependencies = [
   "aiopen",
   "asyncify",
   "fmts",
-  "funkify",
   "h5",
   "jsonbourne",
   "lager",
@@ -57,7 +56,6 @@ include = [
 asyncify = { workspace = true }
 aiopen = { workspace = true }
 fmts = { workspace = true }
-funkify = { workspace = true }
 h5 = { workspace = true }
 jsonbourne = { workspace = true }
 lager = { workspace = true }

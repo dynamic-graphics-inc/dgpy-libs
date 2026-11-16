@@ -13,12 +13,11 @@
 
 **Install:** `pip install asyncify`
 
+> **Breaking change (v0.13.0):** the `asyncify` module is no longer callable. Replace `import asyncify; @asyncify` with `from asyncify import asyncify; @asyncify`.
+
 **Usage:**
 
 ```python
-import asyncify
-
-# OR
 from asyncify import asyncify
 from asyncify import run  # asyncio.run polyfill for python36
 

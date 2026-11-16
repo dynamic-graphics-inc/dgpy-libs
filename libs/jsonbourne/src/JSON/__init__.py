@@ -71,5 +71,5 @@ if __name__ == "__main__":
     from jsonbourne.__main__ import main
 
     main()
-else:  # if __name__ is NOT __main__, funkify module
+else:  # if __name__ is NOT __main__, make the module callable
     sys.modules["JSON"].__class__ = JSONModuleCls

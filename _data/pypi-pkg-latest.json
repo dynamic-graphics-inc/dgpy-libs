@@ -1,13 +1,12 @@
 {
-  "aiopen": "0.5.3",
-  "asyncify": "0.9.0",
-  "fmts": "0.1.1",
-  "funkify": "0.4.4",
-  "h5": "0.5.2",
-  "jsonbourne": "0.21.3",
-  "lager": "0.16.2",
-  "listless": "0.1.1",
-  "requires": "0.10.2",
-  "shellfish": "0.1.2",
-  "xtyping": "0.6.1"
+  "aiopen": "0.8.1",
+  "asyncify": "0.12.1",
+  "fmts": "0.4.1",
+  "h5": "0.12.2",
+  "jsonbourne": "0.32.1",
+  "lager": "0.20.1",
+  "listless": "0.4.1",
+  "requires": "0.12.1",
+  "shellfish": "0.7.2",
+  "xtyping": "0.11.1"
 }

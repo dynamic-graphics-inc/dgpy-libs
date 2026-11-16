@@ -31,7 +31,6 @@ libs
 ├── dgpylibs    - dgpy-libs mega package
 ├── dgpytest    - pytest plugin (WIP)
 ├── fmts        - string formatting tools
-├── funkify     - callable modules
 ├── h5          - hdf5 tools
 ├── jsonbourne  - JSON tools/wrappers
 ├── lager       - logging library built on loguru
@@ -45,9 +44,9 @@ libs
 
 ```bash
 # pip
-pip install aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping
+pip install aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyping
 # uv
-uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping
+uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyping
 ```
 
 | Package                         | Install                  | Version                                                                                                                      | Python Versions                                                                                                                                        |
@@ -55,7 +54,6 @@ uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellf
 | [aiopen](./libs/aiopen)         | `pip install aiopen`     | [![PyPI](https://img.shields.io/pypi/v/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/)         | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/aiopen?style=flat-square&cacheSeconds=600)](https://pypi.org/project/aiopen/)         |
 | [asyncify](./libs/asyncify)     | `pip install asyncify`   | [![PyPI](https://img.shields.io/pypi/v/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/)     | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/asyncify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/asyncify/)     |
 | [fmts](./libs/fmts)             | `pip install fmts`       | [![PyPI](https://img.shields.io/pypi/v/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/)             | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fmts?style=flat-square&cacheSeconds=600)](https://pypi.org/project/fmts/)             |
-| [funkify](./libs/funkify)       | `pip install funkify`    | [![PyPI](https://img.shields.io/pypi/v/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/)       | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/funkify?style=flat-square&cacheSeconds=600)](https://pypi.org/project/funkify/)       |
 | [h5](./libs/h5)                 | `pip install h5`         | [![PyPI](https://img.shields.io/pypi/v/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/)                 | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/h5?style=flat-square&cacheSeconds=600)](https://pypi.org/project/h5/)                 |
 | [jsonbourne](./libs/jsonbourne) | `pip install jsonbourne` | [![PyPI](https://img.shields.io/pypi/v/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonbourne?style=flat-square&cacheSeconds=600)](https://pypi.org/project/jsonbourne/) |
 | [lager](./libs/lager)           | `pip install lager`      | [![PyPI](https://img.shields.io/pypi/v/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/)           | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/lager?style=flat-square&cacheSeconds=600)](https://pypi.org/project/lager/)           |
@@ -63,6 +61,9 @@ uv add aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellf
 | [requires](./libs/requires)     | `pip install requires`   | [![PyPI](https://img.shields.io/pypi/v/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     |
 | [shellfish](./libs/shellfish)   | `pip install shellfish`  | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   |
 | [xtyping](./libs/xtyping)       | `pip install xtyping`    | [![PyPI](https://img.shields.io/pypi/v/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       |
+
+Retired libs (e.g. `funkify`) live in
+[dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy).
 
 ## About
 

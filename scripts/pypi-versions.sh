@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DGPY_LIBS=(aiopen asyncify fmts funkify h5 jsonbourne lager listless requires shellfish xtyping)
+DGPY_LIBS=(aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyping)
 
 function pypi_versions() {
     echo $(pip index versions ${1} | grep -i available | cut -d' ' -f 3- | jq -R 'split(", ")')

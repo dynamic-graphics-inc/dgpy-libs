@@ -4,7 +4,7 @@ requires = [ "uv-build>=0.8,<0.14" ]
 
 [project]
 name = "aiopen"
-version = "0.8.1"
+version = "0.9.0"
 description = "Async file io"
 readme = "README.md"
 keywords = [ "aiopen", "anyio", "async", "dgpy", "fs" ]
@@ -23,7 +23,7 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
-dependencies = [ "funkify>=0.7" ]
+dependencies = [  ]
 
 optional-dependencies.test = [
   "anyio>=4.4",
@@ -46,9 +46,6 @@ packages = [ "src/aiopen" ]
 
 [tool.hatch.build.targets.sdist]
 include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
-
-[tool.uv.sources]
-funkify = { workspace = true }
 
 [tool.ruff]
 # COVERAGE

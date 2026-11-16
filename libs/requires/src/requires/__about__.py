@@ -7,4 +7,4 @@ __all__ = ("__description__", "__pkgroot__", "__title__", "__version__")
 __title__ = "requires"
 __description__ = "Runtime imports and dependency utils"
 __pkgroot__ = __file__[:-13]
-__version__ = "0.12.1"
+__version__ = "0.13.0"

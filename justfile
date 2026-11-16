@@ -19,7 +19,6 @@ build:
     uv build -v --package aiopen
     uv build -v --package asyncify
     uv build -v --package fmts
-    uv build -v --package funkify
     uv build -v --package h5
     uv build -v --package jsonbourne
     uv build -v --package lager
@@ -44,7 +43,6 @@ test: sync
     cd libs/dgpylibs && uv run pytest
     cd libs/dgpytest && uv run pytest
     cd libs/fmts && uv run pytest
-    cd libs/funkify && uv run pytest
     cd libs/h5 && uv run pytest
     cd libs/jsonbourne && uv run pytest
     cd libs/lager && uv run pytest
@@ -58,7 +56,7 @@ test-lib dgpylib: dev
     cd libs/{{dgpylib}} && uv run pytest
 
 # test all libraries
-test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "funkify") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish") (test-lib "xtyping")
+test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish") (test-lib "xtyping")
 
 # fix imports
 rsort:

@@ -22,7 +22,6 @@ dependencies = [
   "dgpylibs",
   "dgpytest",
   "fmts",
-  "funkify",
   "h5[cli]",
   "jsonbourne",
   "lager",
@@ -59,7 +58,7 @@ dev = [
   "pyrefly>=1.1.1",
   "pytest-cov>=6.1.1",
   "rich>=13.9.3",
-  "ruff>=0.15.22",
+  "ruff>=0.16.1",
   "tomli>=2.0.1",
   "ty>=0.0.102",
 ]
@@ -75,7 +74,6 @@ members = [
   "libs/dgpylibs",
   "libs/dgpytest",
   "libs/fmts",
-  "libs/funkify",
   "libs/h5",
   "libs/jsonbourne",
   "libs/lager",
@@ -91,7 +89,6 @@ asyncify = { workspace = true }
 dgpylibs = { workspace = true }
 dgpytest = { workspace = true }
 fmts = { workspace = true }
-funkify = { workspace = true }
 h5 = { workspace = true }
 jsonbourne = { workspace = true }
 lager = { workspace = true }
@@ -127,7 +124,6 @@ testpaths = [
   "libs/src/dgpylibs",
   "libs/src/dgpytest",
   "libs/src/fmts",
-  "libs/src/funkify",
   "libs/src/h5",
   "libs/src/jsonbourne",
   "libs/src/lager",
@@ -203,7 +199,6 @@ include = [
   "libs/dgpylibs/src",
   "libs/dgpytest/src",
   "libs/fmts/src",
-  "libs/funkify/src",
   "libs/h5/src",
   "libs/jsonbourne/src",
   "libs/lager/src",
@@ -236,7 +231,6 @@ project-includes = [
   "libs/dgpylibs/src",
   "libs/dgpytest/src",
   "libs/fmts/src",
-  "libs/funkify/src",
   "libs/h5/src",
   "libs/jsonbourne/src",
   "libs/lager/src",
