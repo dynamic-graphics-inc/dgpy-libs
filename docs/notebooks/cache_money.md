@@ -63,7 +63,7 @@ for i in range(40 + 1):
     n:38   fib(n): 39088169   funk-run-time: 12.1551 sec
     n:39   fib(n): 63245986   funk-run-time: 18.8260 sec
     n:40   fib(n): 102334155   funk-run-time: 28.9990 sec
-    
+
 
 ## THAT WAS SLOW!!
 
@@ -132,6 +132,6 @@ for i in range(40 + 1):
     n:38   fib(n): 39088169   funk-run-time: 0.0000 sec
     n:39   fib(n): 63245986   funk-run-time: 0.0000 sec
     n:40   fib(n): 102334155   funk-run-time: 0.0000 sec
-    
+
 
 # Much Better

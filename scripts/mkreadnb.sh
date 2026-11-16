@@ -12,3 +12,8 @@
 set -euo pipefail
 
 uvx --from nbconvert==7.17.2 jupyter-nbconvert --to markdown docs/notebooks/*.ipynb
+
+# nbconvert's indent filter is platform-dependent (it checks os.linesep, so on
+# Windows output blocks keep a trailing "    " line). Normalize so Windows and
+# Linux produce identical files: LF endings, whitespace-only lines emptied.
+sed -i -e 's/\r$//' -e 's/^[[:space:]]*$//' docs/notebooks/*.md
