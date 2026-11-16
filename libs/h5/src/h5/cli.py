@@ -23,12 +23,10 @@ try:
     from rich.console import Console
 except ImportError as ie:  # pragma: no cover
     raise ImportError(
-        "\n".join((
-            "h5 cli requires click, rich, and ry; install with:",
-            " - pip:    `pip install h5[cli]`",
-            " - uv-pip: `uv pip install h5[cli]`",
-            " - uv:     `uv add h5[cli]`",
-        ))
+        "h5 cli requires click, rich, and ry; install with:\n"
+        " - pip:    `pip install h5[cli]`\n"
+        " - uv-pip: `uv pip install h5[cli]`\n"
+        " - uv:     `uv add h5[cli]`"
     ) from ie
 
 console = Console()

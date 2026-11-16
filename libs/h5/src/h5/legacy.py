@@ -45,7 +45,7 @@ def _h5_deprecated(fn: Callable[_P, _R]) -> Callable[_P, _R]:
     @wraps(fn)
     def _fn(*args: _P.args, **kwargs: _P.kwargs) -> _R:
         warn(
-            f"Function {fn.__name__} is deprecated; move",
+            f"Function {fn.__name__} is deprecated; move",  # ty: ignore[missing-attribute]
             DeprecationWarning,
             stacklevel=2,
         )

@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import TypedDict, TypeVar
+from typing import TypedDict
 
 import aiopen
 import aiopen.__about__
@@ -78,8 +78,6 @@ LIBS = (
     "shellfish",
     "xtyping",
 )
-
-T = TypeVar("T")
 
 
 class DgpyLibMetadataDict(TypedDict):

@@ -26,7 +26,6 @@ from typing import (
 if TYPE_CHECKING:
     from collections.abc import Callable, Iterable, Mapping
 
-_T = TypeVar("_T")
 _R = TypeVar("_R")
 _P = ParamSpec("_P")
 
@@ -312,7 +311,7 @@ class Requirement:
                         tb = sys.exc_info()[2]
                         raise self.err().with_traceback(tb) from mnfe
 
-            return _requires_dec_async  # type: ignore[return-value]
+            return _requires_dec_async  # type: ignore[return-value]  # ty: ignore[invalid-explicit-return]
 
         @wraps(f)
         def _requires_dec(*args: _P.args, **kwargs: _P.kwargs) -> _R:
@@ -342,9 +341,9 @@ class Requirement:
 
         # get and/or set the __requires__ attribute
         if hasattr(f, "__requires__"):
-            f.__requires__.add(self)
+            f.__requires__.add(self)  # ty: ignore[missing-attribute]
         else:
-            f.__requires__ = RequirementsMeta(requirements={self})  # type: ignore[attr-defined]
+            f.__requires__ = RequirementsMeta(requirements={self})  # type: ignore[attr-defined]  # ty: ignore[invalid-assignment]
         return _requires_dec
 
 
@@ -598,7 +597,7 @@ def requires(
         for el in _requirements:
             _wrapped_fn = el(_wrapped_fn)
             requirements_meta.add(el)
-        _wrapped_fn.__requires__ = requirements_meta  # type: ignore[attr-defined]
+        _wrapped_fn.__requires__ = requirements_meta  # type: ignore[attr-defined]  # ty: ignore[invalid-assignment]
         wraps(f)(_wrapped_fn)
         return _wrapped_fn
 
@@ -618,13 +617,13 @@ def scope_requirements(*, debug: bool = False) -> RequirementsMeta:
     calling_frame = sys._getframe(2)
     _f_globals = calling_frame.f_globals
     if debug:
-        log.debug(f"calling_frame: {calling_frame}")
-        log.debug(f"_f_globals: {_f_globals}")
+        log.debug("calling_frame: %s", calling_frame)
+        log.debug("_f_globals: %s", _f_globals)
     scope_reqs = RequirementsMeta(requirements=set())
 
     for name, obj in _f_globals.items():
         if hasattr(obj, "__requires__"):
-            log.debug(f"Found obj with requirements: {name} -> {obj}")
+            log.debug("Found obj with requirements: %s -> %s", name, obj)
             requirements_meta = obj.__requires__
             if not isinstance(requirements_meta, RequirementsMeta):
                 _emsg = f"Expected a RequirementsMeta instance, got {type(requirements_meta)}"

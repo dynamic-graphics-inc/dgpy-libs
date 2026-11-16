@@ -7,7 +7,7 @@ import sys
 
 from pathlib import Path
 from subprocess import CompletedProcess, SubprocessError
-from typing import TYPE_CHECKING, Any, TypedDict
+from typing import TYPE_CHECKING, Any, Self, TypedDict
 
 from pydantic import AliasChoices, Field
 
@@ -426,7 +426,7 @@ class Done(_ShellfishBaseModel):
         """
         self.write_stdout(filepath, append=True)
 
-    def __irshift__(self, filepath: FsPath) -> Done:
+    def __irshift__(self, filepath: FsPath) -> Self:
         """Operator overload for appending stderr to fspath
 
         Args:

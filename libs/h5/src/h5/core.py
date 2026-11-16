@@ -10,10 +10,8 @@ from pathlib import Path
 from typing import (
     TYPE_CHECKING,
     Any,
-    ParamSpec,
     TypeAlias,
     TypeGuard,
-    TypeVar,
     cast,
 )
 
@@ -26,20 +24,17 @@ from h5py import (
     is_hdf5 as _is_hdf5,
 )
 
-from h5._types import FsPath, H5pyAttributesDict
-
 if TYPE_CHECKING:
     from collections.abc import Iterable
 
     import numpy as np
     import numpy.typing as npt
 
-_P = ParamSpec("_P")
-_R = TypeVar("_R")
+    from h5._types import FsPath, H5pyAttributesDict
 
-T_GroupLike: TypeAlias = Group | File
-T_DatasetOrGroup: TypeAlias = Dataset | Group
-T_FsPathOrGroupLike: TypeAlias = FsPath | T_GroupLike
+
+_GroupLike: TypeAlias = Group | File
+# TODO: this might be unused?
 h5py_obj_types = {
     "d": "dataset",
     "f": "file",
@@ -116,7 +111,7 @@ def is_group(obj: Any) -> TypeGuard[Group]:
     return is_h5py_group(obj)
 
 
-def is_group_like(obj: Any) -> TypeGuard[T_GroupLike]:
+def is_group_like(obj: Any) -> TypeGuard[_GroupLike]:
     return not isinstance(obj, str | bytes) and isinstance(obj, Group | File)
 
 
@@ -182,7 +177,7 @@ def h5py_obj_gen(
         ),
         *(  # Unpack a generator that generates generators recursively
             h5py_obj_gen(item, str(item.name), root=False)
-            for key, item in h5py_obj.items()
+            for item in h5py_obj.values()
             if isinstance(item, Group)
         ),
     )

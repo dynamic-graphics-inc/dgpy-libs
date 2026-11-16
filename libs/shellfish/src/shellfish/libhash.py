@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 
 __all__ = ("hash_bytes_gen", "string2hasher")
 
-_HASHERS: dict[str, Callable[[], _Hash]] = {
+_HASHERS: dict[str, Callable[[], _Hash]] = {  # ty: ignore[invalid-assignment]
     "blake2b": blake2b,  # type: ignore[dict-item]
     "blake2s": blake2s,  # type: ignore[dict-item]
     "md5": md5,

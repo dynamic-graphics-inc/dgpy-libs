@@ -43,7 +43,7 @@ def lib_dirpath(libname: str) -> Path:
 
 def lib_pyproject_toml(libname: str) -> dict[str, Any]:
     pyproject_toml_filepath = lib_dirpath(libname) / "pyproject.toml"
-    with open(pyproject_toml_filepath) as f:
+    with open(pyproject_toml_filepath, encoding="utf-8") as f:
         return tomli.loads(f.read())
 
 
@@ -106,7 +106,7 @@ def update() -> None:
 @cli.command()
 def patchall() -> None:
     """relock all dgpy-libs"""
-    for libname, _pyproject_toml_dict in pyproject_tomls().items():
+    for libname in pyproject_tomls():
         dirpath = lib_dirpath(libname)
         console.log(f"Relocking {libname}")
         console.log(f"cd {dirpath}")
@@ -298,7 +298,7 @@ class Change:
     def __hash__(self) -> int:
         return hash((self.lib, self.version, self.msg))
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Change):
             return False
         return self.equiv(other)

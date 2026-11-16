@@ -50,7 +50,7 @@ def test_is(tmp_path: Path, runner: CliRunner) -> None:
 
 def test_is_not(tmp_path: Path, runner: CliRunner) -> None:
     filepath = str(tmp_path / "test.h5")
-    with open(str(filepath), "w") as f:
+    with open(str(filepath), "w", encoding="utf-8") as f:
         f.write("test")
     failing_result = runner.invoke(cli, ["is", filepath])
     assert failing_result.exit_code == 1

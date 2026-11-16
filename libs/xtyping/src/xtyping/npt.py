@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
     ArrayLike: TypeAlias = npt.ArrayLike
     DTypeLike: TypeAlias = npt.DTypeLike
-    NBitBase: TypeAlias = npt.NBitBase
+    NBitBase: TypeAlias = npt.NBitBase  # ty: ignore[deprecated]
     NDArray: TypeAlias = npt.NDArray
 else:
     ArrayLike = Any

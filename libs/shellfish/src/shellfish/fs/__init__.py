@@ -399,7 +399,7 @@ def touch(fspath: FsPath, *, mkdirp: bool = True) -> None:
             parent_dir = path.dirname(str(fspath))
             if parent_dir:
                 _makedirs(parent_dir, exist_ok=True)
-        with open(fspath, "a"):
+        with open(fspath, "a", encoding="utf-8"):
             utime(fspath, None)
 
 
@@ -1057,7 +1057,7 @@ def file_lines_gen(filepath: FsPath, *, keepends: bool = True) -> Iterable[str]:
 
 
     """
-    with open(filepath) as f:
+    with open(filepath, encoding="utf-8") as f:
         if keepends:
             yield from (line for line in f)
         else:
@@ -1403,7 +1403,7 @@ def shebang(fspath: FsPath) -> str | None:
         >>> remove(script)
 
     """
-    with open(fspath) as f:
+    with open(fspath, encoding="utf-8") as f:
         first = f.readline().replace("\r\n", "\n").strip("\n")
         return first if "#!" in first[:2] else None
 

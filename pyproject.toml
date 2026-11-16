@@ -60,6 +60,7 @@ dev = [
   "rich>=13.9.3",
   "ruff>=0.16.1",
   "tomli>=2.0.1",
+  "ty>=0.0.102",
 ]
 
 [tool.uv.build-backend]
@@ -188,8 +189,10 @@ disallow_untyped_decorators = false
 disallow_any_generics = false
 disallow_untyped_defs = true
 
-[tool.pyright]
-pythonVersion = "3.11"
+[tool.ty.environment]
+python-version = "3.11"
+
+[tool.ty.src]
 include = [
   "libs/aiopen/src",
   "libs/asyncify/src",
@@ -204,32 +207,18 @@ include = [
   "libs/shellfish/src",
   "libs/xtyping/src",
 ]
-extraPaths = [
-  "libs/aiopen/src",
-  "libs/asyncify/src",
-  "libs/fmts/src",
-  "libs/h5/src",
-  "libs/jsonbourne/src",
-  "libs/lager/src",
-  "libs/listless/src",
-  "libs/requires/src",
-  "libs/shellfish/src",
-  "libs/xtyping/src",
-]
-exclude = [
-  "**/.pytype",
-  "**/node_modules",
-  "**/__pycache__",
-  "docs",
-  "**/.venv",
-  "**/.nox",
-  "**/.nox_win",
-  "**/.*",
-]
-reportGeneralTypeIssues = false
-reportInvalidTypeVarUse = false
-reportMissingImports = true
-reportMissingTypeStubs = false
+
+[tool.ty.analysis]
+allowed-unresolved-imports = [ "httpx", "jsonc2json", "rapidjson", "starlette.**" ]
+
+# error on stale `# ty: ignore[...]` comments (ty is still a wip)
+[tool.ty.rules]
+unused-ignore-comment = "error"
+
+# jsonlib declares orjson/rapidjson as `None` when not imporable
+[[tool.ty.overrides]]
+include = [ "libs/jsonbourne/src/jsonbourne/jsonlib.py" ]
+rules = { missing-union-attribute = "ignore" }
 
 [tool.pyrefly]
 python-version = "3.11"
@@ -269,7 +258,7 @@ ignore-missing-imports = [
 ]
 
 # jsonlib binds orjson/rapidjson to None when they are not installed and only
-# touches them behind availability checks (same as its pyright file pragma)
+# touches them behind availability checks
 [[tool.pyrefly.sub-config]]
 matches = "libs/jsonbourne/src/jsonbourne/jsonlib.py"
 errors = { missing-attribute = false }
