@@ -98,11 +98,6 @@ jobs:
           cd libs/fmts
           uv run pytest --doctest-modules
 
-      - name: test xtyping
-        run: |
-          cd libs/xtyping
-          uv run pytest
-
       - name: test asyncify
         run: |
           cd libs/asyncify

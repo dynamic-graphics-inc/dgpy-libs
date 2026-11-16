@@ -113,7 +113,6 @@ known-first-party = [
   "listless",
   "requires",
   "shellfish",
-  "xtyping",
 ]
 lines-after-imports = -1
 lines-between-types = 1

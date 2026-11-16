@@ -28,7 +28,6 @@ dependencies = [
   "listless",
   "requires",
   "shellfish",
-  "xtyping",
 ]
 
 optional-dependencies.docs = [
@@ -80,7 +79,6 @@ members = [
   "libs/listless",
   "libs/requires",
   "libs/shellfish",
-  "libs/xtyping",
 ]
 
 [tool.uv.sources]
@@ -95,7 +93,6 @@ lager = { workspace = true }
 listless = { workspace = true }
 requires = { workspace = true }
 shellfish = { workspace = true }
-xtyping = { workspace = true }
 
 [tool.ruff]
 extend = "./ruff.toml"
@@ -130,15 +127,12 @@ testpaths = [
   "libs/src/listless",
   "libs/src/requires",
   "libs/shellfish/src/shellfish",
-  "libs/src/xtyping",
   "tests",
 ]
 
 xfail_strict = true
 filterwarnings = [
   "error",
-  # intentional deprecation shim, imported by --doctest-modules
-  "ignore:xtyping._all is deprecated:DeprecationWarning",
 ]
 markers = [
   "slow: marks tests as slow (deselect with '-m \"not slow\"')",
@@ -205,7 +199,6 @@ include = [
   "libs/listless/src",
   "libs/requires/src",
   "libs/shellfish/src",
-  "libs/xtyping/src",
 ]
 
 [tool.ty.analysis]
@@ -237,7 +230,6 @@ project-includes = [
   "libs/listless/src",
   "libs/requires/src",
   "libs/shellfish/src",
-  "libs/xtyping/src",
 ]
 project-excludes = [
   "**/.nox",

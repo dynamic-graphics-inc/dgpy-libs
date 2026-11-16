@@ -36,17 +36,16 @@ libs
 ├── lager       - logging library built on loguru
 ├── listless    - generator tools
 ├── requires    - dynamic import(s)
-├── shellfish   - shell and filesystem tools
-└── xtyping     - types
+└── shellfish   - shell and filesystem tools
 ```
 
 **Install:**
 
 ```bash
 # pip
-pip install aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyping
+pip install aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish
 # uv
-uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyping
+uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish
 ```
 
 | Package                         | Install                  | Version                                                                                                                      | Python Versions                                                                                                                                        |
@@ -60,9 +59,8 @@ uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish xtyp
 | [listless](./libs/listless)     | `pip install listless`   | [![PyPI](https://img.shields.io/pypi/v/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/)     | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/listless?style=flat-square&cacheSeconds=600)](https://pypi.org/project/listless/)     |
 | [requires](./libs/requires)     | `pip install requires`   | [![PyPI](https://img.shields.io/pypi/v/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     |
 | [shellfish](./libs/shellfish)   | `pip install shellfish`  | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   |
-| [xtyping](./libs/xtyping)       | `pip install xtyping`    | [![PyPI](https://img.shields.io/pypi/v/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/xtyping?style=flat-square&cacheSeconds=600)](https://pypi.org/project/xtyping/)       |
 
-Retired libs (e.g. `funkify`) live in
+Retired libs (e.g. `funkify`, `xtyping`) live in
 [dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy).
 
 ## About

@@ -10,7 +10,6 @@ DGPY_LIBS = (
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 )
 
 __all__ = ("DGPY_LIBS",)

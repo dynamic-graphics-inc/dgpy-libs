@@ -22,7 +22,6 @@ members = [
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 ]
 
 [[package]]
@@ -757,7 +756,6 @@ dependencies = [
     { name = "listless" },
     { name = "requires" },
     { name = "shellfish" },
-    { name = "xtyping" },
 ]
 
 [package.optional-dependencies]
@@ -817,7 +815,6 @@ requires-dist = [
     { name = "requires", editable = "libs/requires" },
     { name = "shellfish", editable = "libs/shellfish" },
     { name = "typing-extensions", marker = "python_full_version < '3.10' and extra == 'docs'", specifier = ">=4.1" },
-    { name = "xtyping", editable = "libs/xtyping" },
 ]
 provides-extras = ["docs"]
 
@@ -851,7 +848,6 @@ dependencies = [
     { name = "listless" },
     { name = "requires" },
     { name = "shellfish" },
-    { name = "xtyping" },
 ]
 
 [package.metadata]
@@ -865,7 +861,6 @@ requires-dist = [
     { name = "listless", editable = "libs/listless" },
     { name = "requires", editable = "libs/requires" },
     { name = "shellfish", editable = "libs/shellfish" },
-    { name = "xtyping", editable = "libs/xtyping" },
 ]
 
 [[package]]
@@ -3477,19 +3472,4 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/1a/e4/f0f252c65f9bf7c4042b1f707ef338d49f799da582234e1d3e6e2cfca291/win32_setctime-1.2.1.tar.gz", hash = "sha256:077b35471bf1ff1d71e165c919ddc0cecf51b8e1802f5d820d33a96e2f6717dd", size = 4983, upload-time = "2026-10-25T18:21:32.318Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/bd/df/5593480bc1e932eeae28e4fa182ab68174edd0d77409ced3b6491d02d1d5/win32_setctime-1.2.1-py3-none-any.whl", hash = "sha256:a9edc685b35414bec69392c866ed82456ad125ac4a6a4b703ec1d8b462d4f477", size = 4215, upload-time = "2026-10-25T18:21:30.939Z" },
-]
-
-[[package]]
-name = "xtyping"
-version = "0.11.1"
-source = { editable = "libs/xtyping" }
-dependencies = [
-    { name = "annotated-types" },
-    { name = "typing-extensions" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "annotated-types", specifier = ">=0.7" },
-    { name = "typing-extensions", specifier = ">=4.12.2" },
 ]
