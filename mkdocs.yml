@@ -9,7 +9,7 @@ site_author: 'jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>'
 copyright: 'Dynamic Graphics Inc'
 remote_branch: 'gh-pages'
 # NOTE: zensical ignores `watch`; edits under libs/*/src need a manual
-# rebuild/restart while running `zensical serve`.
+# rebuild/restart via `uv run zensical build` while running `uv run zensical serve`.
 
 
 nav:
@@ -47,15 +47,10 @@ nav:
           - shellfish.dotenv: 'libs/shellfish/dotenv.md'
           - shellfish.echo: 'libs/shellfish/echo.md'
           - shellfish.stdio: 'libs/shellfish/stdio.md'
-  # - Notebooks:
-  #     - Cache Money: 'notebooks/cache_money.ipynb'
-  #     - Filter None: 'notebooks/filter_none.ipynb'
-  #     - JSON "parsing": 'notebooks/json_parsing.ipynb'
-  #     - String Formatting: 'notebooks/string_fmt.ipynb'
+
 
 theme:
   name: 'material'
-  # classic = Material for MkDocs look (zensical defaults to 'modern')
   variant: classic
   language: en
   logo: 'images/dgpy_white_edge_small.png'
@@ -127,17 +122,11 @@ markdown_extensions:
 
 plugins:
   - search
-  ### MKDOCSTRINGS ###
   - mkdocstrings:
       handlers:
         python:
           inventories:
             - https://docs.python.org/3/objects.inv
-          # NOTE: these must point at the `src` dirs -- pointing at `libs/<lib>`
-          # picks up the stale pre-src-layout `libs/<lib>/<lib>` husks (which
-          # hold only __pycache__), so griffe collects empty packages. That is
-          # invisible when the libs happen to be installed in the venv, but
-          # breaks `nox -s mkdocs_serve`, which installs only the mkdocs deps.
           paths:
             - libs/aiopen/src
             - libs/asyncify/src
