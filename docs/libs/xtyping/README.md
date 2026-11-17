@@ -1,1 +1,0 @@
---8<-- "libs/xtyping/README.md"
