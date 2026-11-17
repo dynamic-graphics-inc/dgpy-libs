@@ -2,7 +2,6 @@ fmts
 h5
 lager
 listless
-xtyping
 jsonbourne
 aiopen
 asyncify

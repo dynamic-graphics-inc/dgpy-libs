@@ -149,7 +149,6 @@ plugins:
             - libs/requires/src
             - libs/listless/src
             - libs/shellfish/src
-            - libs/xtyping/src
           options:
             docstring_style: google
             docstring_options:

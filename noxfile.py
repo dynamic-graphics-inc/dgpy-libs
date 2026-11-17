@@ -21,7 +21,6 @@ LIBS = (
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 )
 
 

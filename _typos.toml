@@ -5,7 +5,6 @@
 extend-exclude = [
   "libs/shellfish/src/shellfish/fs/_async.py",
   "_data/pypi-classifiers.json",
-  "libs/xtyping/README.md",
 ]
 
 [default]

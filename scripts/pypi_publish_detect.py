@@ -42,7 +42,6 @@ PACKAGES = [
     "listless",
     "requires",
     "shellfish",
-    "xtyping",
 ]
 
 

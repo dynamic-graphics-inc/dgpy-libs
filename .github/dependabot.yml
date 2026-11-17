@@ -97,15 +97,6 @@ updates:
           - "*"
 
   - package-ecosystem: "pip"
-    directory: "/libs/xtyping"
-    schedule:
-      interval: "daily"
-    groups:
-      xtyping-dependencies:
-        patterns:
-          - "*"
-
-  - package-ecosystem: "pip"
     directory: "/libs/dgpytest"
     schedule:
       interval: "daily"

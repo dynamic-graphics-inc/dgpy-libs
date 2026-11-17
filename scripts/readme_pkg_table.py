@@ -38,7 +38,6 @@ def main() -> None:
         "listless",
         "requires",
         "shellfish",
-        "xtyping",
     ]
     packages = [PackagesTableRow.from_pkg_name(pkg) for pkg in packages]
     table_lines = [
