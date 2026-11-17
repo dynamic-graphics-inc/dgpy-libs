@@ -25,7 +25,6 @@ nav:
       - listless: 'libs/listless/README.md'
       - requires: 'libs/requires/README.md'
       - shellfish: 'libs/shellfish/README.md'
-      - xtyping: 'libs/xtyping/README.md'
   - API:
       - aiopen: 'libs/aiopen/aiopen.api.md'
       - asyncify: 'libs/asyncify/asyncify.api.md'
@@ -48,7 +47,6 @@ nav:
           - shellfish.dotenv: 'libs/shellfish/dotenv.md'
           - shellfish.echo: 'libs/shellfish/echo.md'
           - shellfish.stdio: 'libs/shellfish/stdio.md'
-      - xtyping: 'libs/xtyping/xtyping.api.md'
   # - Notebooks:
   #     - Cache Money: 'notebooks/cache_money.ipynb'
   #     - Filter None: 'notebooks/filter_none.ipynb'
