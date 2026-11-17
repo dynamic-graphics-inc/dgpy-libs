@@ -6,6 +6,7 @@
 [[repos]]
 repo = "builtin"
 hooks = [
+  { id = "check-json", exclude = '^libs/jsonbourne/tests/data/rush\.comments\.json$' },
   { id = "check-yaml" },
   { id = "end-of-file-fixer" },
   { id = "trailing-whitespace" },

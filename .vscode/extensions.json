@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "editorconfig.editorconfig",
-    "esbenp.prettier-vscode",
     "johnpapa.vscode-peacock",
     "charliermarsh.ruff"
   ]
