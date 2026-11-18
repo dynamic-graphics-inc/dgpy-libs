@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 2026-11-16
+
+- Docs
+  - Built with [Zensical](https://zensical.org) instead of MkDocs 1.x + Material
+    (MkDocs 1.x is unmaintained; MkDocs 2.0 drops plugins/Material)
+  - Lib README pages include `libs/<lib>/README.md` directly (snippets) instead
+    of rendering a copied `README.ipynb` (mkdocs-jupyter is not supported);
+    `fmts`, `listless` and `shellfish` README pages added
+  - Removed the stale `libs/*/README.ipynb` files; `README.md` is the source of
+    truth (it is also the PyPI description)
+  - `docs/notebooks/*.ipynb` are served as committed `.md` conversions
+  - Docs home page includes the root `README.md` instead of a hand-kept copy
+  - Python 3.11+ stated in README/docs (was 3.9+)
+  - Dropped dead `python_version<'3.10'` docs dependencies
+  - nox sessions renamed: `mkdocs` -> `docs`, `mkdocs_serve` -> `docs_serve`
+  - CI deploys to `gh-pages` via `peaceiris/actions-gh-pages`
+
 ## 2026-11-13
 
 - `xtyping`
@@ -10,8 +27,7 @@
     `typing_extensions` for anything newer than your Python)
 - `funkify`
   - Retired: removed from the repo and no longer published (existing PyPI
-    releases are left in place); source + history moved to
-    [dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy)
+    releases are left in place)
 - **BREAKING:** modules are no longer callable (no deprecation period)
   - `aiopen` (v0.9.0): use `from aiopen import aiopen` instead of
     `import aiopen; aiopen(...)`
@@ -28,8 +44,10 @@
     version/metadata registry (`__funkify_version__`, `__xtyping_version__` and
     their metadata fields are gone)
 - `jsonbourne`
-  - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
-- ALL
+  - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use
+    funkify as a dependency)
+
+- type-checking
   - Enable `ty` typechecking
   - Remove `pyright` typechecking
   - Replace `pre-commit` with [`prek`](https://prek.j178.dev)

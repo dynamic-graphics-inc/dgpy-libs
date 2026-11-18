@@ -106,8 +106,9 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# mkdocs documentation
+# docs build output (zensical; site_dir in zensical.toml)
 /site
+/public
 
 # mypy
 .mypy_cache/

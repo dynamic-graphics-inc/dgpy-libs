@@ -1,0 +1,1 @@
+--8<-- "libs/shellfish/README.md"

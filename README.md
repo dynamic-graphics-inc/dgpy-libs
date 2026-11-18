@@ -1,5 +1,8 @@
 <a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
+<picture>
+<source media="(prefers-color-scheme: dark)" srcset="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner_dark.svg?raw=true">
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true" alt="drawing" height="120" width="300"/>
+</picture>
 </a>
 
 # dgpy-libs
@@ -73,7 +76,7 @@ python libraries are all published on pip under the listed names.
 
 - dgpy-libs must have excellent names and be published on pip
 - Embrace `async/await`
-- Python 3.9+ 'n up, baby!
+- Python 3.11+ 'n up, baby!
 - Use type annotations everywhere
 - No dead or commented out code
 - Use optional compiled-3rd-party-libs as optional dependencies to sneakily
