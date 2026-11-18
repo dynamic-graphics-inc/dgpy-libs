@@ -1,8 +1,5 @@
 <a href="https://github.com/dynamic-graphics-inc/dgpy-libs">
-<picture>
-<source media="(prefers-color-scheme: dark)" srcset="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy-banner-dark.svg?raw=true">
 <img align="right" src="https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy-banner.svg?raw=true" alt="drawing" height="120" width="300"/>
-</picture>
 </a>
 
 # listless
