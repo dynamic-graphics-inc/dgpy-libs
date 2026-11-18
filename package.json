@@ -2,19 +2,18 @@
   "name": "dgpy-libs",
   "version": "0.0.1",
   "description": "dgpy libs",
-  "main": "index.js",
-  "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
-  "author": "jesse <jessekrubin@gmail.com>",
   "license": "MIT",
+  "author": "jesse <jesse@dgi.com>",
+  "contributors": [
+    "dan costello <dan@dgi.com>"
+  ],
+  "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
+  "main": "index.js",
   "scripts": {
-    "dcheck": "dprint check",
-    "dfmt": "dprint fmt",
-    "dprint-up": "dprint config update --yes --verbose",
     "nuke": "npx rimraf ./**/node_modules",
     "nukenox": "npx rimraf ./**/.nox*"
   },
   "devDependencies": {
-    "dprint": "^0.65.0",
     "prettier": "^3.10.1"
   }
 }
