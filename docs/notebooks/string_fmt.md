@@ -60,5 +60,3 @@ hyphens("sheldon")  # returns: "--sheldon--"
 
 
     '--sheldon--'
-
-

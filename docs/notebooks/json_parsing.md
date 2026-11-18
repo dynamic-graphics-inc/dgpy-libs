@@ -234,4 +234,3 @@ json_parsed_data = orjson.loads(data_json_string)
 ```
 
     4.01 µs ± 197 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-
