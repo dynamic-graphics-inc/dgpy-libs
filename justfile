@@ -115,6 +115,20 @@ typecheck: ty pyrefly mypy
 # lint
 lint: fmt ty pyrefly noxlint
 
+# --- docs (zensical; config in zensical.toml) ---
+
+# serve docs w/ live reload on :8000, e.g. `just docs` or `just docs -o -a localhost:8001`
+docs *ARGS:
+    uv run --extra docs zensical serve {{ ARGS }}
+
+# build docs -> public/ (same as ci)
+docs-build:
+    uv run --extra docs zensical build --clean
+
+# regenerate docs/notebooks/*.md from the .ipynb files
+docs-nb:
+    bash scripts/mkreadnb.sh
+
 # format the justfile(s) (w/ just)
 fmt-justfile:
     just --fmt --unstable

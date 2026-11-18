@@ -1,0 +1,31 @@
+name: "on-issue-opened"
+
+on:
+  issues:
+    types: [ opened ]
+
+permissions:
+  issues: write
+
+jobs:
+  ensure-issue-title-number:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ensure-issue-title-starts-with-issue-number
+        if: ${{ !contains(fromJson('["github-actions", "github-actions[bot]", "dependabot[bot]", "sheldon-turtle"]'), github.actor) }}
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.SHELDON_GITHUB_ACTIONS_TOKEN }}
+          script: |
+            const issueNumber = context.issue.number;
+            const issueTitle = context.payload.issue.title.trim();
+            const prefix = `#${issueNumber}: `;
+            if (!issueTitle.startsWith(prefix)) {
+              const newTitle = `${prefix}${issueTitle}`;
+              await github.rest.issues.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+                title: newTitle
+              });
+            }
