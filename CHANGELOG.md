@@ -3,8 +3,8 @@
 ## 2026-11-16
 
 - Docs
-  - Built with [Zensical](https://zensical.org) instead of MkDocs 1.x +
-    Material (MkDocs 1.x is unmaintained; MkDocs 2.0 drops plugins/Material)
+  - Built with [Zensical](https://zensical.org) instead of MkDocs 1.x + Material
+    (MkDocs 1.x is unmaintained; MkDocs 2.0 drops plugins/Material)
   - Lib README pages include `libs/<lib>/README.md` directly (snippets) instead
     of rendering a copied `README.ipynb` (mkdocs-jupyter is not supported);
     `fmts`, `listless` and `shellfish` README pages added
@@ -44,8 +44,8 @@
     version/metadata registry (`__funkify_version__`, `__xtyping_version__` and
     their metadata fields are gone)
 - `jsonbourne`
-  - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use funkify as a dependency)
-
+  - jsonbourne is unchanged: `JSON(...)` is still callable (this did not use
+    funkify as a dependency)
 
 - type-checking
   - Enable `ty` typechecking

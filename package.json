@@ -14,7 +14,7 @@
     "nukenox": "npx rimraf ./**/.nox*"
   },
   "devDependencies": {
-    "dprint": "^0.50.1",
-    "prettier": "^3.6.2"
+    "dprint": "^0.65.0",
+    "prettier": "^3.10.1"
   }
 }

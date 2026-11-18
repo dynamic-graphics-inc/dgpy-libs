@@ -1,0 +1,172 @@
+# Zensical docs config -- https://zensical.org/docs/setup/basics/
+#
+#   uv run zensical serve   # live preview (watches docs/, this file, libs/*/src)
+#   uv run zensical build   # -> public/
+
+[project]
+site_name = "dgpy-libs"
+site_url = "https://dynamic-graphics-inc.github.io/dgpy-libs/"
+site_author = "jesse rubin <jesse@dgi.com> & dan costello <dan@dgi.com>"
+copyright = "Dynamic Graphics Inc"
+docs_dir = "docs"
+site_dir = "public"
+repo_url = "https://github.com/dynamic-graphics-inc/dgpy-libs/"
+repo_name = "GitHub"
+edit_uri = "edit/main/docs/"
+
+nav = [
+  { "Libs" = [
+    { "Home" = "index.md" },
+    { "aiopen" = "libs/aiopen/README.md" },
+    { "asyncify" = "libs/asyncify/README.md" },
+    { "fmts" = "libs/fmts/README.md" },
+    { "h5" = "libs/h5/README.md" },
+    { "jsonbourne" = "libs/jsonbourne/README.md" },
+    { "lager" = "libs/lager/README.md" },
+    { "listless" = "libs/listless/README.md" },
+    { "requires" = "libs/requires/README.md" },
+    { "shellfish" = "libs/shellfish/README.md" },
+  ] },
+  { "API" = [
+    { "aiopen" = "libs/aiopen/aiopen.api.md" },
+    { "asyncify" = "libs/asyncify/asyncify.api.md" },
+    { "fmts" = "libs/fmts/fmts.api.md" },
+    { "h5" = "libs/h5/h5.api.md" },
+    { "requires" = "libs/requires/requires.api.md" },
+    { "listless" = "libs/listless/listless.api.md" },
+    { "jsonbourne" = "libs/jsonbourne/jsonbourne.api.md" },
+    { "shellfish" = [
+      { "shellfish" = "libs/shellfish/shellfish.api.md" },
+      { "shellfish.sh" = "libs/shellfish/sh.md" },
+      { "shellfish.fs" = "libs/shellfish/fs.md" },
+      { "shellfish.fs.promises" = "libs/shellfish/fs.promises.md" },
+      { "shellfish.done" = "libs/shellfish/done.md" },
+      { "shellfish.exe" = "libs/shellfish/exe.md" },
+      { "shellfish.process" = "libs/shellfish/process.md" },
+      { "shellfish.sp" = "libs/shellfish/sp.md" },
+      { "shellfish.osfs" = "libs/shellfish/osfs.md" },
+      { "shellfish.aios" = "libs/shellfish/aios.md" },
+      { "shellfish.dotenv" = "libs/shellfish/dotenv.md" },
+      { "shellfish.echo" = "libs/shellfish/echo.md" },
+      { "shellfish.stdio" = "libs/shellfish/stdio.md" },
+    ] },
+  ] },
+]
+
+# ---------------------------------------------------------------------------
+# Theme -- zensical "modern" variant (the default; set variant = "classic"
+# for the old mkdocs-material look). Fonts default to Inter / JetBrains Mono.
+# ---------------------------------------------------------------------------
+[project.theme]
+language = "en"
+logo = "images/dgpy_white_edge_small.png"
+favicon = "images/favicon.png"
+features = [
+  "announce.dismiss",
+  "content.action.edit",
+  "content.action.view",
+  "content.code.annotate",
+  "content.code.copy",
+  "content.tooltips",
+  "navigation.expand",
+  "navigation.footer",
+  "navigation.indexes",
+  "navigation.instant",
+  "navigation.sections",
+  "navigation.tabs",
+  "navigation.tabs.sticky",
+  "navigation.top",
+  "search.highlight",
+  "toc.follow",
+  "toc.integrate",
+]
+
+[project.theme.icon]
+repo = "fontawesome/brands/github-alt"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "deep purple"
+accent = "teal"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "teal"
+accent = "deep purple"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+# ---------------------------------------------------------------------------
+# Markdown extensions
+# ---------------------------------------------------------------------------
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.callouts]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.emoji]
+[project.markdown_extensions.pymdownx.tilde]
+[project.markdown_extensions.pymdownx.magiclink]
+[project.markdown_extensions.pymdownx.escapeall]
+[project.markdown_extensions.pymdownx.highlight]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.tasklist]
+
+# docs/**/README.md pages pull in libs/<lib>/README.md via `--8<--`
+[project.markdown_extensions.pymdownx.snippets]
+check_paths = true
+
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true
+
+[project.markdown_extensions.pymdownx.betterem]
+smart_enable = "all"
+
+[project.markdown_extensions.toc]
+permalink = "⚓︎"
+
+# ---------------------------------------------------------------------------
+# mkdocstrings -- API pages (`::: pkg`). Source `paths` are also watched by
+# `zensical serve`, so edits under libs/*/src trigger a rebuild.
+# NOTE: paths must point at the `src` dirs -- pointing at `libs/<lib>` picks
+# up stale pre-src-layout `libs/<lib>/<lib>` husks and griffe collects empty
+# packages (invisible when the libs are installed in the venv).
+# ---------------------------------------------------------------------------
+[project.plugins.mkdocstrings.handlers.python]
+inventories = ["https://docs.python.org/3/objects.inv"]
+paths = [
+  "libs/aiopen/src",
+  "libs/asyncify/src",
+  "libs/fmts/src",
+  "libs/h5/src",
+  "libs/jsonbourne/src",
+  "libs/requires/src",
+  "libs/listless/src",
+  "libs/shellfish/src",
+]
+
+[project.plugins.mkdocstrings.handlers.python.options]
+docstring_style = "google"
+docstring_options = { ignore_init_summary = true }
+docstring_section_style = "list"
+filters = ["!^_"]
+heading_level = 1
+inherited_members = true
+members_order = "source"
+merge_init_into_class = true
+parameter_headings = true
+separate_signature = true
+show_docstring_attributes = true
+show_root_heading = true
+show_root_full_path = false
+show_signature_annotations = true
+show_source = false
+show_symbol_type_heading = true
+show_symbol_type_toc = true
+signature_crossrefs = true
+summary = true

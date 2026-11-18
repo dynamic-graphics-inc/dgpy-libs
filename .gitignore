@@ -106,7 +106,7 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
-# docs build output (zensical; site_dir in mkdocs.yml)
+# docs build output (zensical; site_dir in zensical.toml)
 /site
 /public
 
