@@ -36,7 +36,9 @@
     "**/node_modules",
     "**/tests",
     "**/pyproject.toml",
-    "zensical.toml"
+    "zensical.toml",
+    "prek.toml",
+    "docs/notebooks/*.md"
   ],
   "plugins": [
     "https://plugins.dprint.dev/dockerfile-0.3.3.wasm",

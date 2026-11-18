@@ -17,3 +17,8 @@ uvx --from nbconvert==7.17.2 jupyter-nbconvert --to markdown docs/notebooks/*.ip
 # Windows output blocks keep a trailing "    " line). Normalize so Windows and
 # Linux produce identical files: LF endings, whitespace-only lines emptied.
 sed -i -e 's/\r$//' -e 's/^[[:space:]]*$//' docs/notebooks/*.md
+
+# nbconvert ends files with extra blank lines, which prek's end-of-file-fixer
+# (and dprint) strip on commit -- then this script's CI check sees a diff. End
+# every file with exactly one newline so the output is already hook-clean.
+sed -i -e ':a' -e '/^\n*$/{$d;N;ba' -e '}' docs/notebooks/*.md
