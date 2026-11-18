@@ -59,7 +59,7 @@ nav = [
 # ---------------------------------------------------------------------------
 [project.theme]
 language = "en"
-logo = "images/dgpy_white_edge_small.png"
+logo = "images/dgpy_white_edge_small.svg"
 favicon = "images/favicon.png"
 features = [
   "announce.dismiss",
