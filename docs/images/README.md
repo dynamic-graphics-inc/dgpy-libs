@@ -5,8 +5,7 @@ File names are `kebab-case`.
 
 | file                        | used by                                                         |
 | --------------------------- | --------------------------------------------------------------- |
-| `dgpy-banner.svg`           | README banner, light backgrounds (black lettering)              |
-| `dgpy-banner-dark.svg`      | README banner, dark backgrounds (white lettering)               |
+| `dgpy-banner.svg`           | README banner (adapts to light/dark, see below)                 |
 | `dgpy-white-edge-small.svg` | docs site header logo (`theme.logo` in `zensical.toml`)         |
 | `favicon.png`               | docs site favicon (`theme.favicon` in `zensical.toml`)          |
 | `favicon.ico`               | multi-size favicon (16/32/48/256)                               |
@@ -28,11 +27,23 @@ When you change `dgpy-banner.svg`, copy it over `dgpy_banner.svg` too:
 cp docs/images/dgpy-banner.svg docs/images/dgpy_banner.svg
 ```
 
-## Why `<picture>` and two banner files
+## How the banner handles light/dark
 
-The READMEs wrap the banner in `<picture>` with a
-`prefers-color-scheme: dark` `<source>` pointing at `dgpy-banner-dark.svg`.
-Don't swap this for one SVG with a media query inside it. An SVG loaded
-through `<img>` follows the OS colour scheme, not the page's, so on PyPI
-(always a light page) a dark-mode OS would get white lettering on white.
-PyPI strips `<source>` and always shows the light `<img>`.
+`dgpy-banner.svg` is one file used as a plain `<img>` everywhere (GitHub,
+PyPI, the docs site). Its lettering styles itself:
+
+```css
+.t{fill:#000;stroke:#fff;stroke-width:5px;stroke-linejoin:round;paint-order:stroke}
+@media (prefers-color-scheme: dark){.t{fill:#fff;stroke:#000}}
+```
+
+- The `prefers-color-scheme` query inside an SVG `<img>` follows the
+  embedding page's `color-scheme` when the page declares one, otherwise the
+  OS. GitHub and Zensical both declare it from their theme toggle, so the
+  lettering is black on light pages and white on dark ones.
+- PyPI declares nothing, so there it follows the OS. A dark-mode OS gets
+  white lettering on PyPI's white page; the opposite-colour outline
+  (`stroke` + `paint-order: stroke`) keeps it readable. Everywhere else the
+  outline matches the background and is invisible.
+
+No `<picture>`, no second file, no JS.
