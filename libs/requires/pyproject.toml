@@ -42,7 +42,7 @@ packages = [ "src/requires" ]
 include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
 
 [tool.ruff]
-extend = "../../ruff.toml"
+extend = "../../pyproject.toml"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"

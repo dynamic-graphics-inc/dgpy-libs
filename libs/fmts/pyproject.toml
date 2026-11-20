@@ -45,7 +45,7 @@ include = [
 ]
 
 [tool.ruff]
-extend = "../../ruff.toml"
+extend = "../../pyproject.toml"
 
 [tool.coverage.run]
 source = [ 'fmts' ]

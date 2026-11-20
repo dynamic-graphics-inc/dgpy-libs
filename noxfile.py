@@ -131,13 +131,6 @@ def lint(session: nox.Session) -> None:
     _mypy(session)
 
 
-ruffext = """
-
-[tool.ruff]
-extend = "../../pyproject.toml"
-"""
-
-
 @nox.session(venv_backend=VENV_BACKEND, reuse_venv=True)
 def dev(session: nox.Session) -> None:
     import tomllib
