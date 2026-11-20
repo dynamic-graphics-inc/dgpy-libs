@@ -63,6 +63,6 @@ requires = { workspace = true }
 shellfish = { workspace = true }
 
 [tool.ruff]
-extend = "../../ruff.toml"
+extend = "../../pyproject.toml"
 
 [tool]

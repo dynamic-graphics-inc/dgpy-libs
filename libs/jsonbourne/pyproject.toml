@@ -67,7 +67,7 @@ include = [
 module-name = "jsonbourne"
 
 [tool.ruff]
-extend = "../../ruff.toml"
+extend = "../../pyproject.toml"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
