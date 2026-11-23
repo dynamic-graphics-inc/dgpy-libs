@@ -5,6 +5,7 @@
 - Config
   - centralizing top level configuration files to move ruff and typos config
     into pyproject.toml
+- remove duplicate changelog (previously at `changelog\changelog.json`)
 
 
 ## 2026-11-16
