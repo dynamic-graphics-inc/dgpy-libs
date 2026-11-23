@@ -42,7 +42,7 @@ packages = [ "src/lager" ]
 include = [ "src", "pyproject.toml", "README.md", "LICENSE" ]
 
 [tool.ruff]
-extend = "../../ruff.toml"
+extend = "../../pyproject.toml"
 
 [tool.coverage.run]
 source = [ 'lager' ]
