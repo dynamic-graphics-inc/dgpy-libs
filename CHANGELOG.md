@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 2026-11-23
+
+- Config
+  - centralizing top level configuration files to move ruff and typos config
+    into pyproject.toml
+
+
 ## 2026-11-16
 
 - Docs
