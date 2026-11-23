@@ -46,18 +46,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Set up Python 3
-        uses: actions/setup-python@v7
+      - name: install-uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: 3.11
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-
+          python-version: "3.11"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - name: install-just
+        uses: extractions/setup-just@v3
       - name: mypy
-        run: |
-          pip install nox
-          nox -s lint
+        run: just mypy
 
   test:
     runs-on: ubuntu-latest

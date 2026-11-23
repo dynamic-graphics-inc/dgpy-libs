@@ -49,7 +49,7 @@ except ImportError:
 try:
     import numpy as np
 except ImportError:
-    np = None
+    np = None  # type: ignore[assignment]
 
 JSONLIB_DEFAULT_PREFERENCE = (
     "orjson",
@@ -73,7 +73,7 @@ def _json_encode_default(obj: Any) -> Any:
         return _dumpable(obj)
     if hasattr(obj, "__json_interface__"):
         return _json_interface(obj)
-    if np:
+    if np is not None:
         if isinstance(obj, np.floating):
             return float(obj)
         if isinstance(obj, np.integer):

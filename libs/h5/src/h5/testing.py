@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from functools import lru_cache
 from pathlib import Path
+from typing import Any
 
 import h5py
 import numpy as np
@@ -39,7 +40,7 @@ EXPECTED_DATASETS = {
     "/filter-gzip": np.arange(100) * 3,
     "/filter-lzf": np.arange(100) * 4,
 }
-EXPECTED_ATTRS = {
+EXPECTED_ATTRS: dict[str, dict[str, Any]] = {
     "/": {
         "root_attr_str": "root_attr_value",
     },

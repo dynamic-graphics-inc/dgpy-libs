@@ -21,4 +21,4 @@ sed -i -e 's/\r$//' -e 's/^[[:space:]]*$//' docs/notebooks/*.md
 # nbconvert ends files with extra blank lines, which prek's end-of-file-fixer
 # strips on commit -- then this script's CI check sees a diff. End
 # every file with exactly one newline so the output is already hook-clean.
-sed -i -e ':a' -e '/^\n*$/{$d;N;ba' -e '}' docs/notebooks/*.md
+sed -i -e ':a' -e '/^\n*$/{$d;N;ba' -e '}' docs/notebooks/*.md # spellchecker:disable-line

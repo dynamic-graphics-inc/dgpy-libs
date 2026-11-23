@@ -87,7 +87,7 @@ try:
         }
         return _stringify(serializable)
 
-    Handler._serialize_record = staticmethod(_serialize_record)  # ty: ignore[invalid-assignment]
+    Handler._serialize_record = staticmethod(_serialize_record)  # type: ignore[method-assign]  # ty: ignore[invalid-assignment]
 except ModuleNotFoundError:
     ...
 
@@ -196,7 +196,7 @@ def flog(
 
 def handlers() -> dict[int, Handler]:
     """Return all handlers"""
-    return logger._core.handlers  # type: ignore[no-any-return]  # ty: ignore[missing-attribute]
+    return logger._core.handlers  # type: ignore[attr-defined,no-any-return]  # ty: ignore[missing-attribute]
 
 
 def reset(level: str | int | None = None) -> None:
@@ -236,15 +236,15 @@ __hoisted__ = (
     "warning",
 )
 # pyrefly: ignore[missing-attribute]
-_change_activation = LAGER._change_activation  # ty: ignore[missing-attribute]
+_change_activation = LAGER._change_activation  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_core = LAGER._core  # ty: ignore[missing-attribute]
+_core = LAGER._core  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_find_iter = LAGER._find_iter  # ty: ignore[missing-attribute]
+_find_iter = LAGER._find_iter  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_log = LAGER._log  # ty: ignore[missing-attribute]
+_log = LAGER._log  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
 # pyrefly: ignore[missing-attribute]
-_options = LAGER._options  # ty: ignore[missing-attribute]
+_options = LAGER._options  # type: ignore[attr-defined]  # ty: ignore[missing-attribute]
 add = LAGER.add
 bind = LAGER.bind
 catch = LAGER.catch
