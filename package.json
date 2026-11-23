@@ -10,8 +10,7 @@
   "repository": "https://github.com/dynamic-graphics-inc/dgpy-libs.git",
   "main": "index.js",
   "scripts": {
-    "nuke": "npx rimraf ./**/node_modules",
-    "nukenox": "npx rimraf ./**/.nox*"
+    "nuke": "npx rimraf ./**/node_modules"
   },
   "devDependencies": {
     "prettier": "^3.10.1"

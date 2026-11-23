@@ -45,7 +45,6 @@ dev = [
   "anyio>=4.6.2.post1",
   "ipython>=8.37.0",
   "mypy>=1.11.1",
-  "nox>=2024.4.15",
   "orjson>=3.10.18",
   "pydantic>=2.11.5",
   "pyrefly>=1.1.1",
@@ -164,7 +163,6 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "**/conftest.py" = ["D"]
-"**/noxfile.py" = ["D"]
 "**/tests/*.py" = [
   "ANN401", # use of Any
   "D1",
@@ -216,10 +214,6 @@ max-complexity = 20
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.codespell]
-skip = "*/.nox/*,*/.nox_win/*,*/.pytype/*,*/.mypy_cache/*,*/.venv/*,*/node_modules/*,./poetry.lock"
-ignore-words-list = "opps,te"
-
 # REF: https://github.com/crate-ci/typos/blob/master/docs/reference.md
 # install typos: cargo install typos-cli
 
@@ -250,6 +244,7 @@ extend-ignore-re = [
 
 [tool.typos.default.extend-words]
 2nd = "2nd"
+Opps = "Opps" # PyPI classifier "Framework :: Opps"
 
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
@@ -333,6 +328,12 @@ disallow_untyped_decorators = false
 disallow_any_generics = false
 disallow_untyped_defs = true
 
+# starlette is an optional dep (not in the dev env); `Response` resolves to Any
+[[tool.mypy.overrides]]
+module = "jsonbourne.fastapi"
+disallow_subclassing_any = false
+warn_unused_ignores = false
+
 [tool.ty.environment]
 python-version = "3.11"
 
@@ -382,8 +383,6 @@ project-includes = [
   "libs/shellfish/src",
 ]
 project-excludes = [
-  "**/.nox",
-  "**/.nox_win",
   "**/.venv",
   "**/__pycache__",
   "**/node_modules",

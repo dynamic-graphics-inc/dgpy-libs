@@ -50,22 +50,16 @@ test: sync
     cd libs/shellfish && uv run pytest
 
 # test a specific library `just test-lib h5`
-test-lib dgpylib: dev
+test-lib dgpylib: sync
     cd libs/{{dgpylib}} && uv run pytest
-
-# test all libraries
-test-all: (test-lib "aiopen") (test-lib "asyncify") (test-lib "dgpylibs") (test-lib "dgpytest") (test-lib "fmts") (test-lib "h5") (test-lib "jsonbourne") (test-lib "lager") (test-lib "listless") (test-lib "requires") (test-lib "shellfish")
 
 # fix imports
 rsort:
     uv run ruff check --select "I" --show-fixes --fix .
 
-# sort imports
-isort: rsort
-
-# check spelling
-codespell:
-    codespell .
+# check spelling (typos; config in pyproject.toml)
+typos *ARGS:
+    typos {{ ARGS }}
 
 # format python
 fmt:
@@ -75,7 +69,7 @@ fmt:
 
 # fmt pyproject.toml files
 pyproject-fmt:
-    find . -type f -name pyproject.toml | xargs -n1 pyproject-fmt --keep-full-version
+    uvx pyproject-fmt --keep-full-version pyproject.toml libs/*/pyproject.toml
 
 # format-check
 fmtc:
@@ -87,17 +81,18 @@ ruff +ARGS=".":
     uv run ruff --version
     uv run ruff check {{ ARGS }}
 
-# ruff lint & fix
-ruffix:
-    uv run ruff check . --fix
-
-# nox lint
-noxlint:
-    nox -s lint
-
-# mypy
-mypy: fmt
-    uv run nox -s mypy
+# mypy (per-lib b/c each lib has a `tests` package)
+mypy:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run mypy --version
+    libs=(aiopen asyncify dgpylibs dgpytest fmts h5 jsonbourne lager listless requires shellfish)
+    srcs=()
+    for lib in "${libs[@]}"; do srcs+=("libs/$lib/src/$lib"); done
+    for lib in "${libs[@]}"; do
+        echo "--- mypy: $lib"
+        uv run mypy --show-error-codes --config-file pyproject.toml "${srcs[@]}" "libs/$lib/tests"
+    done
 
 # pyrefly typecheck
 pyrefly *ARGS:
@@ -113,7 +108,7 @@ ty *ARGS:
 typecheck: ty pyrefly mypy
 
 # lint
-lint: fmt ty pyrefly noxlint
+lint: fmt ty pyrefly mypy
 
 # --- docs (zensical; config in zensical.toml) ---
 
