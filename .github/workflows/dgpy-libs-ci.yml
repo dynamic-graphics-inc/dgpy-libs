@@ -2,14 +2,6 @@ name: dgpy-libs-ci
 
 on: [push, pull_request]
 
-# Jobs:
-#   lint       prek: ruff (check, format), yaml, whitespace (the hooks that run on commit)
-#   typecheck  mypy, ty, pyrefly
-#   test       pytest for each lib, on each Python version
-#   docs       generated notebook pages are up to date; zensical build; deploy on main
-#   ci-ok      passes only when all the jobs above pass. The ONLY required check:
-#              rename or add jobs freely, branch protection does not change.
-
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -54,7 +46,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false # one failing Python version does not cancel the others
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12", "3.13", "3.14"]
     steps:
