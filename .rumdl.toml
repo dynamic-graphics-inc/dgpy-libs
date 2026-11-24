@@ -3,6 +3,8 @@
 
 [global]
 include = ["docs/**/*.md", "README.md", "CHANGELOG.md", "libs/*/README.md"]
+# Generated from the notebooks by scripts/mkreadnb.sh; CI checks that they match.
+exclude = ["docs/notebooks/**"]
 
 [per-file-ignores]
 # mkdocstrings stubs (`::: module`) and the copied lib READMEs, which start
@@ -10,8 +12,6 @@ include = ["docs/**/*.md", "README.md", "CHANGELOG.md", "libs/*/README.md"]
 "docs/libs/**/*.md" = ["MD033", "MD041"]
 # A snippet include of README.md.
 "docs/index.md" = ["MD041"]
-# Notebook exports start at level 2.
-"docs/notebooks/*.md" = ["MD041"]
 # The READMEs start with the HTML logo; jsonbourne uses <pre> blocks.
 "libs/*/README.md" = ["MD033", "MD041"]
 # The notebook links work on the docs site (docs/index.md includes this file),
