@@ -11,10 +11,10 @@ hooks = [
   { id = "trailing-whitespace" },
 ]
 
+# Local hooks run the tools from uv.lock, so each tool has one version.
 [[repos]]
-repo = "https://github.com/astral-sh/ruff-pre-commit"
-rev = "v0.17.5"
+repo = "local"
 hooks = [
-  { id = "ruff-check" },
-  { id = "ruff-format" },
+  { id = "ruff-check", name = "ruff check", entry = "uv run --frozen ruff check --force-exclude", language = "system", types_or = ["python", "pyi"] },
+  { id = "ruff-format", name = "ruff format", entry = "uv run --frozen ruff format --force-exclude", language = "system", types_or = ["python", "pyi"] },
 ]
