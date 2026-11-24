@@ -1,0 +1,35 @@
+# rumdl: markdown lint and format (https://github.com/rvben/rumdl).
+# The same rules as dgpy-dev.
+
+[global]
+include = ["docs/**/*.md", "README.md", "CHANGELOG.md", "libs/*/README.md"]
+
+[per-file-ignores]
+# mkdocstrings stubs (`::: module`) and the copied lib READMEs, which start
+# with the HTML logo, not a heading.
+"docs/libs/**/*.md" = ["MD033", "MD041"]
+# A snippet include of README.md.
+"docs/index.md" = ["MD041"]
+# Notebook exports start at level 2.
+"docs/notebooks/*.md" = ["MD041"]
+# The READMEs start with the HTML logo; jsonbourne uses <pre> blocks.
+"libs/*/README.md" = ["MD033", "MD041"]
+# The notebook links work on the docs site (docs/index.md includes this file),
+# not on GitHub. One link cannot work in both places.
+"README.md" = ["MD033", "MD041", "MD057"]
+# Two releases on the same day have the same date heading.
+"CHANGELOG.md" = ["MD024"]
+
+# One sentence per line (semantic line breaks). GitHub renders the lines of a
+# paragraph as one paragraph, and a diff shows each changed sentence.
+[MD013]
+reflow = true
+reflow-mode = "sentence-per-line"
+line-length = 0
+tables = false
+code-blocks = false
+
+# Zensical (like mkdocs) uses Python-Markdown: a nested list needs 4 spaces,
+# else it renders flat on the docs site.
+[MD007]
+indent = 4

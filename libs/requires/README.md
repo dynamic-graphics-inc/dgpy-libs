@@ -4,25 +4,24 @@
 
 # requires
 
-[![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg)
-[![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/requires.svg)](https://img.shields.io/pypi/pyversions/requires.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/requires.svg)](https://img.shields.io/pypi/wheel/requires.svg) [![Version](https://img.shields.io/pypi/v/requires.svg)](https://img.shields.io/pypi/v/requires.svg) [![py_versions](https://img.shields.io/pypi/pyversions/requires.svg)](https://img.shields.io/pypi/pyversions/requires.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install requires`
 
-> **Breaking change (v0.13.0):** the `requires` module is no longer callable. Replace `import requires; @requires(...)` with `from requires import requires; @requires(...)`.
+> **Breaking change (v0.13.0):** the `requires` module is no longer callable.
+> Replace `import requires; @requires(...)` with `from requires import requires; @requires(...)`.
 
-Decorate that lets you
-Require/Import dependencies at runtime.
+Decorate that lets you Require/Import dependencies at runtime.
 
-Python dependency management can be mind bottlingly complex. Optional dependencies are pretty common. Why not require the dependency at run time if a function requires said dependency?
+Python dependency management can be mind bottlingly complex.
+Optional dependencies are pretty common.
+Why not require the dependency at run time if a function requires said dependency?
 
 This package has come in handy in lambda-land where you only get 250mb (on aws)!
 
 ---
 
-## Usage:
+## Usage
 
 ```python
 # This will fail
@@ -36,7 +35,9 @@ except NameError as ne:
     print("Error:", ne)
 ```
 
-    Error: name 'json' is not defined
+```text
+Error: name 'json' is not defined
+```
 
 ```python
 # This will not fail
@@ -51,7 +52,9 @@ def uno():
 uno()
 ```
 
-    '{"a": 1, "b": 2}'
+```text
+'{"a": 1, "b": 2}'
+```
 
 ```python
 from requires import requires
@@ -65,7 +68,9 @@ def uno():
 uno()
 ```
 
-    '{"a": 1, "b": 2}'
+```text
+'{"a": 1, "b": 2}'
+```
 
 ```python
 def dos():
@@ -75,7 +80,9 @@ def dos():
 dos()
 ```
 
-    '{"a": 1, "b": 2}'
+```text
+'{"a": 1, "b": 2}'
+```
 
 ```python
 from requires import requires
@@ -89,7 +96,9 @@ def dos():
 dos()
 ```
 
-    '{"a": 1, "b": 2}'
+```text
+'{"a": 1, "b": 2}'
+```
 
 ```python
 from requires import requires
@@ -103,7 +112,9 @@ def tres():
 tres()  # Will err if not install with where to install instructions
 ```
 
-    '{"a":1,"b":2}'
+```text
+'{"a":1,"b":2}'
+```
 
 ```python
 # should error
@@ -117,7 +128,9 @@ except NameError as ne:
     print("ERROR:", ne)
 ```
 
-    ERROR: name 'path' is not defined
+```text
+ERROR: name 'path' is not defined
+```
 
 ```python
 from requires import Requirement
@@ -154,13 +167,15 @@ except requires.RequirementError as err:
     print(err)
 ```
 
-    ERROR:
-    Module/Package(s) not found/installed; could not import: `import alibrary`
-        pip install alibrary
-        conda install -c conda-forge alibrary-conda-listing
-        Install details
+```text
+ERROR:
+Module/Package(s) not found/installed; could not import: `import alibrary`
+    pip install alibrary
+    conda install -c conda-forge alibrary-conda-listing
+    Install details
+```
 
-## Less verbose version:
+## Less verbose version
 
 ```python
 import requires

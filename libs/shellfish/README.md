@@ -4,14 +4,12 @@
 
 # shellfish
 
-[![Wheel](https://img.shields.io/pypi/wheel/shellfish.svg)](https://img.shields.io/pypi/wheel/shellfish.svg)
-[![Version](https://img.shields.io/pypi/v/shellfish.svg)](https://img.shields.io/pypi/v/shellfish.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/shellfish.svg)](https://img.shields.io/pypi/pyversions/shellfish.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/shellfish.svg)](https://img.shields.io/pypi/wheel/shellfish.svg) [![Version](https://img.shields.io/pypi/v/shellfish.svg)](https://img.shields.io/pypi/v/shellfish.svg) [![py_versions](https://img.shields.io/pypi/pyversions/shellfish.svg)](https://img.shields.io/pypi/pyversions/shellfish.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install shellfish` OR `uv add shellfish`
 
-> **Breaking change (v0.8.0):** the `shellfish` and `shellfish.sh` modules are no longer callable. Replace `shellfish(...)` / `sh(...)` with `shellfish.do(...)` / `sh.do(...)`.
+> **Breaking change (v0.8.0):** the `shellfish` and `shellfish.sh` modules are no longer callable.
+> Replace `shellfish(...)` / `sh(...)` with `shellfish.do(...)` / `sh.do(...)`.
 
 **What:** shellfish = shell & file-system utils; async & sync
 

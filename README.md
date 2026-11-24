@@ -4,14 +4,11 @@
 
 # dgpy-libs
 
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-[![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff) [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
 
-Docs:
-[dynamic-graphics-inc.github.io/dgpy-libs](https://dynamic-graphics-inc.github.io/dgpy-libs/)
+Docs: [dynamic-graphics-inc.github.io/dgpy-libs](https://dynamic-graphics-inc.github.io/dgpy-libs/)
 
-Repo:
-[github.com/dynamic-graphics-inc/dgpy-libs](https://github.com/dynamic-graphics-inc/dgpy-libs)
+Repo: [github.com/dynamic-graphics-inc/dgpy-libs](https://github.com/dynamic-graphics-inc/dgpy-libs)
 
 ---
 
@@ -60,14 +57,12 @@ uv add aiopen asyncify fmts h5 jsonbourne lager listless requires shellfish
 | [requires](./libs/requires)     | `pip install requires`   | [![PyPI](https://img.shields.io/pypi/v/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/requires?style=flat-square&cacheSeconds=600)](https://pypi.org/project/requires/)     |
 | [shellfish](./libs/shellfish)   | `pip install shellfish`  | [![PyPI](https://img.shields.io/pypi/v/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   | [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/shellfish?style=flat-square&cacheSeconds=600)](https://pypi.org/project/shellfish/)   |
 
-Retired libs (e.g. `funkify`, `xtyping`) live in
-[dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy).
+Retired libs (e.g. `funkify`, `xtyping`) live in [dgpy-libs-legacy](https://github.com/dynamic-graphics-inc/dgpy-libs-legacy).
 
 ## About
 
-This repo (dgpy-libs) are the polished gems formed under intense geological
-pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/). These
-python libraries are all published on pip under the listed names.
+This repo (dgpy-libs) are the polished gems formed under intense geological pressure below the offices of [Dynamic Graphics Inc](http://dgi.com/).
+These python libraries are all published on pip under the listed names.
 
 ### Design PhilosoPY
 
@@ -76,14 +71,10 @@ python libraries are all published on pip under the listed names.
 - Python 3.11+ 'n up, baby!
 - Use type annotations everywhere
 - No dead or commented out code
-- Use optional compiled-3rd-party-libs as optional dependencies to sneakily
-  speed things up if present
-- Optional dependencies are good! Missing optional deps should trigger an error
-  msg that is helpful to installing the relevant dependency ONLY IF THE
-  DEPENDENCY IS NEEDED.
-- Test coverage is usually a dumb metric and 100% test coverage `!=` bug-free
-  code (tests of dgpy-libs are slowly being migrated from internal/private repos
-  to this repo)
+- Use optional compiled-3rd-party-libs as optional dependencies to sneakily speed things up if present
+- Optional dependencies are good!
+  Missing optional deps should trigger an error msg that is helpful to installing the relevant dependency ONLY IF THE DEPENDENCY IS NEEDED.
+- Test coverage is usually a dumb metric and 100% test coverage `!=` bug-free code (tests of dgpy-libs are slowly being migrated from internal/private repos to this repo)
 
 ### Third party friends
 
@@ -94,19 +85,16 @@ python libraries are all published on pip under the listed names.
 - [httpx](https://www.python-httpx.org/): http client library
 - [httpx2](https://httpx2.pydantic.dev/): http client library and successor to `httpx`
 - [attrs](https://github.com/python-attrs/attrs); class decorators library
-- [orjson](https://github.com/ijl/orjson); fastest python json library (optional
-  dep of jsonbourne)
-- [rapidjson/python-rapidjson](https://github.com/python-rapidjson/python-rapidjson);
-  best mostly drop-in replacement for python's json module
+- [orjson](https://github.com/ijl/orjson); fastest python json library (optional dep of jsonbourne)
+- [rapidjson/python-rapidjson](https://github.com/python-rapidjson/python-rapidjson); best mostly drop-in replacement for python's json module
 - [h5py](https://github.com/h5py/h5py); base of h5
-- [rich](https://github.com/willmcgugan/rich); best python console formatting
-  library
+- [rich](https://github.com/willmcgugan/rich); best python console formatting library
 
 ---
 
 ## Notebooks
 
-```
+```text
 notebooks/
 ├── cache_money.ipynb
 ├── filter_none.ipynb
@@ -123,15 +111,14 @@ notebooks/
 
 ## Contributor(s)
 
-- [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` /
-  `jessekrubin@gmail.com`
-- [Dan Costello](https://github.com/dan-costello) ~ `dan@dgi.com` /
-  `dan.costello2@gmail.com`
+- [Jesse Rubin](https://github.com/jessekrubin) ~ `jesse@dgi.com` / `jessekrubin@gmail.com`
+- [Dan Costello](https://github.com/dan-costello) ~ `dan@dgi.com` / `dan.costello2@gmail.com`
 - Possibly you!?
 
 ## Contributing
 
-Plz do! Send me that PR!
+Plz do!
+Send me that PR!
 
 ---
 

@@ -15,11 +15,8 @@ File names are `kebab-case`.
 
 `dgpy_banner.svg` (snake_case) is a **copy** of `dgpy-banner.svg`.
 
-READMEs already published to PyPI (every lib released before the
-kebab-case rename) load the banner from
-`https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true`.
-PyPI never re-renders an old release's README, so deleting or renaming this
-file breaks the banner on those pages.
+READMEs already published to PyPI (every lib released before the kebab-case rename) load the banner from `https://github.com/dynamic-graphics-inc/dgpy-libs/blob/main/docs/images/dgpy_banner.svg?raw=true`.
+PyPI never re-renders an old release's README, so deleting or renaming this file breaks the banner on those pages.
 
 When you change `dgpy-banner.svg`, copy it over `dgpy_banner.svg` too:
 
@@ -29,21 +26,18 @@ cp docs/images/dgpy-banner.svg docs/images/dgpy_banner.svg
 
 ## How the banner handles light/dark
 
-`dgpy-banner.svg` is one file used as a plain `<img>` everywhere (GitHub,
-PyPI, the docs site). Its lettering styles itself:
+`dgpy-banner.svg` is one file used as a plain `<img>` everywhere (GitHub, PyPI, the docs site).
+Its lettering styles itself:
 
 ```css
 .t{fill:#000;stroke:#fff;stroke-width:5px;stroke-linejoin:round;paint-order:stroke}
 @media (prefers-color-scheme: dark){.t{fill:#fff;stroke:#000}}
 ```
 
-- The `prefers-color-scheme` query inside an SVG `<img>` follows the
-  embedding page's `color-scheme` when the page declares one, otherwise the
-  OS. GitHub and Zensical both declare it from their theme toggle, so the
-  lettering is black on light pages and white on dark ones.
-- PyPI declares nothing, so there it follows the OS. A dark-mode OS gets
-  white lettering on PyPI's white page; the opposite-colour outline
-  (`stroke` + `paint-order: stroke`) keeps it readable. Everywhere else the
-  outline matches the background and is invisible.
+- The `prefers-color-scheme` query inside an SVG `<img>` follows the embedding page's `color-scheme` when the page declares one, otherwise the OS.
+  GitHub and Zensical both declare it from their theme toggle, so the lettering is black on light pages and white on dark ones.
+- PyPI declares nothing, so there it follows the OS.
+  A dark-mode OS gets white lettering on PyPI's white page; the opposite-colour outline (`stroke` + `paint-order: stroke`) keeps it readable.
+  Everywhere else the outline matches the background and is invisible.
 
 No `<picture>`, no second file, no JS.

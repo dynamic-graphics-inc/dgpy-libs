@@ -4,10 +4,7 @@
 
 # lager :beer:
 
-[![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg)
-[![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/lager.svg)](https://img.shields.io/pypi/pyversions/lager.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/lager.svg)](https://img.shields.io/pypi/wheel/lager.svg) [![Version](https://img.shields.io/pypi/v/lager.svg)](https://img.shields.io/pypi/v/lager.svg) [![py_versions](https://img.shields.io/pypi/pyversions/lager.svg)](https://img.shields.io/pypi/pyversions/lager.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install lager`
 
@@ -18,9 +15,10 @@ Logging library based off of loguru (`pip install loguru`).
 - Lager is a better pun
 - Lager is really a utility pack for loguru
 
-BTW: Loguru is an amazing lib. Check it out: https://github.com/Delgan/loguru
+BTW: Loguru is an amazing lib.
+Check it out: <https://github.com/Delgan/loguru>
 
-## Usage:
+## Usage
 
 ```python
 from lager import LOG, lager, LAGER, log, logger  # All the same object
@@ -28,4 +26,6 @@ from lager import LOG, lager, LAGER, log, logger  # All the same object
 LOG.info("info")
 ```
 
-    2022-07-21 08:38:20.263 | INFO     | __main__:<cell line: 3>:3 - info
+```text
+2022-07-21 08:38:20.263 | INFO     | __main__:<cell line: 3>:3 - info
+```

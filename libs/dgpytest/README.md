@@ -4,10 +4,7 @@
 
 # dgpytest
 
-[![Wheel](https://img.shields.io/pypi/wheel/dgpytest.svg)](https://img.shields.io/pypi/wheel/dgpytest.svg)
-[![Version](https://img.shields.io/pypi/v/dgpytest.svg)](https://img.shields.io/pypi/v/dgpytest.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/dgpytest.svg)](https://img.shields.io/pypi/pyversions/dgpytest.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/dgpytest.svg)](https://img.shields.io/pypi/wheel/dgpytest.svg) [![Version](https://img.shields.io/pypi/v/dgpytest.svg)](https://img.shields.io/pypi/v/dgpytest.svg) [![py_versions](https://img.shields.io/pypi/pyversions/dgpytest.svg)](https://img.shields.io/pypi/pyversions/dgpytest.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install dgpytest` OR `uv add dgpytest`
 

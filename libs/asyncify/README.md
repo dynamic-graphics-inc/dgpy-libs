@@ -4,16 +4,14 @@
 
 # asyncify
 
-[![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg)
-[![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/asyncify.svg)](https://img.shields.io/pypi/wheel/asyncify.svg) [![Version](https://img.shields.io/pypi/v/asyncify.svg)](https://img.shields.io/pypi/v/asyncify.svg) [![py_versions](https://img.shields.io/pypi/pyversions/asyncify.svg)](https://img.shields.io/pypi/pyversions/asyncify.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **TLDR:** Sync 2 Async decorator
 
 **Install:** `pip install asyncify`
 
-> **Breaking change (v0.13.0):** the `asyncify` module is no longer callable. Replace `import asyncify; @asyncify` with `from asyncify import asyncify; @asyncify`.
+> **Breaking change (v0.13.0):** the `asyncify` module is no longer callable.
+> Replace `import asyncify; @asyncify` with `from asyncify import asyncify; @asyncify`.
 
 **Usage:**
 
