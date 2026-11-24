@@ -16,7 +16,5 @@ repo = "local"
 hooks = [
   { id = "ruff-check", name = "ruff check", entry = "uv run --frozen ruff check --force-exclude", language = "system", types_or = ["python", "pyi"] },
   { id = "ruff-format", name = "ruff format", entry = "uv run --frozen ruff format --force-exclude", language = "system", types_or = ["python", "pyi"] },
-  # rumdl ignores `include` for file names it gets, so it checks the repo with
-  # .rumdl.toml. Add a directory there, not here.
   { id = "rumdl", name = "rumdl check", entry = "uv run --frozen rumdl check .", language = "system", types = ["markdown"], pass_filenames = false },
 ]
