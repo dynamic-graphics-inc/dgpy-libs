@@ -11,7 +11,6 @@ hooks = [
   { id = "trailing-whitespace" },
 ]
 
-# Local hooks run the tools from uv.lock, so each tool has one version.
 [[repos]]
 repo = "local"
 hooks = [
