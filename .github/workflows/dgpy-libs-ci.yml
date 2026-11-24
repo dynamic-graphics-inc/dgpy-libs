@@ -3,21 +3,7 @@ name: dgpy-libs-ci
 on: [push, pull_request]
 
 jobs:
-  fmtc:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - name: Setup python
-        uses: actions/setup-python@v7
-        with:
-          python-version: "3.11"
-      - name: ruff-check
-        run: |
-          python -m pip install --upgrade pip
-          pip install -U ruff
-          ruff format --check .
-          ruff check --select "I" .
-  ruff: # TODO: rename this job to be not just "ruff"
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -29,23 +15,15 @@ jobs:
           python-version: "3.11"
           enable-cache: true
           cache-dependency-glob: "uv.lock"
-      - name: ruff-check
-        run: |
-          uv run ruff --version
-          uv run ruff check .
-      - name: ty
-        run: |
-          uv run ty --version
-          uv run ty check
-      - name: pyrefly
-        run: |
-          uv run pyrefly --version
-          uv run pyrefly check
+      - name: prek
+        run: uv run prek run --all-files --show-diff-on-failure
 
-  lint:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
       - name: install-uv
         uses: astral-sh/setup-uv@v7
         with:
@@ -56,80 +34,62 @@ jobs:
         uses: extractions/setup-just@v4
       - name: mypy
         run: just mypy
+      - name: ty
+        run: |
+          uv run ty --version
+          uv run ty check
+      - name: pyrefly
+        run: |
+          uv run pyrefly --version
+          uv run pyrefly check
 
   test:
     runs-on: ubuntu-latest
-
-    # matrix of python versions to test against
     strategy:
+      fail-fast: false
       matrix:
         python-version: ["3.11", "3.12", "3.13", "3.14"]
-
-    # set uv environment variables
     steps:
       - uses: actions/checkout@v7
-
-      - name: Set up Python 3
+      - name: setup-python
         uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Install uv and set the python version
+      - name: install-uv
         uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
-
       - name: uv-sync
         run: uv sync --all-extras --dev
-
       - name: test-dgpydev
-        run: |
-          uv run pytest --doctest-modules tests
-
-      - name: test listless
-        run: |
-          cd libs/listless
-          uv run pytest --doctest-modules
-
-      - name: test fmts
-        run: |
-          cd libs/fmts
-          uv run pytest --doctest-modules
-
-      - name: test asyncify
-        run: |
-          cd libs/asyncify
-          uv run pytest --cov=asyncify --doctest-modules
-
-      - name: test requires
-        run: |
-          cd libs/requires
-          uv run pytest tests
-
-      - name: test aiopen
-        run: |
-          cd libs/aiopen
-          uv run pytest --doctest-modules
-
-      - name: test lager
-        run: |
-          cd libs/lager
-          uv run pytest tests
-
-      - name: test jsonbourne
-        run: |
-          cd libs/jsonbourne
-          uv run pytest --doctest-modules
-
-      - name: test shellfish
-        run: |
-          cd libs/shellfish
-          uv run pytest --doctest-modules
-
-      - name: test dgpylibs
-        run: |
-          cd libs/dgpylibs
-          uv run pytest --doctest-modules
+        run: uv run pytest --doctest-modules tests
+      - name: test-listless
+        working-directory: libs/listless
+        run: uv run pytest --doctest-modules
+      - name: test-fmts
+        working-directory: libs/fmts
+        run: uv run pytest --doctest-modules
+      - name: test-asyncify
+        working-directory: libs/asyncify
+        run: uv run pytest --cov=asyncify --doctest-modules
+      - name: test-requires
+        working-directory: libs/requires
+        run: uv run pytest tests
+      - name: test-aiopen
+        working-directory: libs/aiopen
+        run: uv run pytest --doctest-modules
+      - name: test-lager
+        working-directory: libs/lager
+        run: uv run pytest tests
+      - name: test-jsonbourne
+        working-directory: libs/jsonbourne
+        run: uv run pytest --doctest-modules
+      - name: test-shellfish
+        working-directory: libs/shellfish
+        run: uv run pytest --doctest-modules
+      - name: test-dgpylibs
+        working-directory: libs/dgpylibs
+        run: uv run pytest --doctest-modules
 
   docs:
     permissions:
@@ -138,25 +98,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - name: setup-python
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
       - name: install-uv
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
       - name: uv-sync
         run: uv sync --all-extras --dev
-      - name: install docs deps
+      - name: install-docs-deps
         run: uv pip install '.[docs]'
-      - name: check docs/notebooks markdown is up to date
+      - name: notebook-pages-up-to-date
         run: |
           bash scripts/mkreadnb.sh
           if ! git diff --exit-code -- docs/notebooks/; then
             echo "::error::docs/notebooks/*.md is out of date with its .ipynb -- run scripts/mkreadnb.sh and commit the result"
             exit 1
           fi
-      - name: zensical build
+      - name: zensical-build
         run: uv run zensical build --clean
-      - name: deploy to gh-pages
+      - name: deploy-gh-pages
         if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
@@ -164,3 +125,20 @@ jobs:
           publish_dir: ./public
           publish_branch: gh-pages
           force_orphan: true
+
+  ci-ok:
+    if: always()
+    needs: [lint, typecheck, test, docs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: all-jobs-passed
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "job results: $RESULTS"
+          for r in $RESULTS; do
+            if [ "$r" != "success" ]; then
+              echo "::error::a required job did not succeed ($r)"
+              exit 1
+            fi
+          done
