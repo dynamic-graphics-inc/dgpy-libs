@@ -53,7 +53,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: install-just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: mypy
         run: just mypy
 
