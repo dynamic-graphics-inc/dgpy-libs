@@ -4,10 +4,7 @@
 
 # fmts
 
-[![Wheel](https://img.shields.io/pypi/wheel/fmts.svg)](https://img.shields.io/pypi/wheel/fmts.svg)
-[![Version](https://img.shields.io/pypi/v/fmts.svg)](https://img.shields.io/pypi/v/fmts.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/fmts.svg)](https://img.shields.io/pypi/pyversions/fmts.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/fmts.svg)](https://img.shields.io/pypi/wheel/fmts.svg) [![Version](https://img.shields.io/pypi/v/fmts.svg)](https://img.shields.io/pypi/v/fmts.svg) [![py_versions](https://img.shields.io/pypi/pyversions/fmts.svg)](https://img.shields.io/pypi/pyversions/fmts.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install fmts` OR `uv add fmts`
 

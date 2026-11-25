@@ -4,14 +4,12 @@
 
 # aiopen
 
-[![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg)
-[![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/aiopen.svg)](https://img.shields.io/pypi/wheel/aiopen.svg) [![Version](https://img.shields.io/pypi/v/aiopen.svg)](https://img.shields.io/pypi/v/aiopen.svg) [![py_versions](https://img.shields.io/pypi/pyversions/aiopen.svg)](https://img.shields.io/pypi/pyversions/aiopen.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install aiopen`
 
-> **Breaking change (v0.9.0):** the `aiopen` module is no longer callable. Replace `import aiopen; aiopen(...)` with `from aiopen import aiopen; aiopen(...)`.
+> **Breaking change (v0.9.0):** the `aiopen` module is no longer callable.
+> Replace `import aiopen; aiopen(...)` with `from aiopen import aiopen; aiopen(...)`.
 
 Async-open
 
@@ -22,7 +20,7 @@ Async-open
 
 (Big shouts out to the aiofiles people, aiopen is entirely based off of aiofiles)
 
-## Usage:
+## Usage
 
 Just import it!
 

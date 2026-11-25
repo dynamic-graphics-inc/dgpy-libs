@@ -4,26 +4,23 @@
 
 # jsonbourne
 
-[![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg)](https://img.shields.io/pypi/wheel/jsonbourne.svg)
-[![Version](https://img.shields.io/pypi/v/jsonbourne.svg)](https://img.shields.io/pypi/v/jsonbourne.svg)
-[![py_versions](https://img.shields.io/pypi/pyversions/jsonbourne.svg)](https://img.shields.io/pypi/pyversions/jsonbourne.svg)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![Wheel](https://img.shields.io/pypi/wheel/jsonbourne.svg)](https://img.shields.io/pypi/wheel/jsonbourne.svg) [![Version](https://img.shields.io/pypi/v/jsonbourne.svg)](https://img.shields.io/pypi/v/jsonbourne.svg) [![py_versions](https://img.shields.io/pypi/pyversions/jsonbourne.svg)](https://img.shields.io/pypi/pyversions/jsonbourne.svg) [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 **Install:** `pip install jsonbourne`
 
 - Python json lib/pkg that makes json feel like the JSON module in javascript/typescript:
-  - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
-  - Automatically uses best json-lib-backend available (`orjson`/`python-rapidjson`) ~ can be configured
+    - `from jsonbourne import JSON; JSON.parse(JSON.stringify({"key": "value"}))`
+    - Automatically uses best json-lib-backend available (`orjson`/`python-rapidjson`) ~ can be configured
 - Hybrid dict/class object (`jsonbourne.JsonObj`):
-  - Dot-notation getting/setting (featuring protected attributes!)
-  - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!
-  - Works with `pydantic` and `attrs`
+    - Dot-notation getting/setting (featuring protected attributes!)
+    - All your favorite python dictionary methods (`items`, `keys`, `update`, `values`) and more!
+    - Works with `pydantic` and `attrs`
 - FastAPI:
-  - JSONBOURNEResponse ~ auto use the best
+    - JSONBOURNEResponse ~ auto use the best
 - No hard dependencies ~ works with python-stdlib-json as well as `orjson` and `python-rapidjson`
 - `jsonbourne.JsonObj` uses list/dict comprehensions (some are recursive) everywhere because 'why not?' and it is a bit faster
 
-## Usage:
+## Usage
 
 ### JSON ~ `from jsonbourne import JSON`
 
@@ -55,7 +52,9 @@ string_dumps = JSON.dumps({"a": 1, "b": 2, "c": 3})  # '{"a": 1, "b": 2, "c": 3}
 string_dumps
 ```
 
-    '{"a":1,"b":2,"c":3}'
+```text
+'{"a":1,"b":2,"c":3}'
+```
 
 #### JSON option kwargs ~ `pretty` & `sort_keys`
 
@@ -68,11 +67,13 @@ string_dumps = JSON.stringify(
 print(string_dumps)
 ```
 
-    {
-      "b": 2,
-      "a": 1,
-      "c": 3
-    }
+```text
+{
+  "b": 2,
+  "a": 1,
+  "c": 3
+}
+```
 
 **sort_keys:**
 
@@ -83,11 +84,13 @@ string_dumps = JSON.stringify(
 print(string_dumps)
 ```
 
-    {
-      "a": 1,
-      "b": 2,
-      "c": 3
-    }
+```text
+{
+  "a": 1,
+  "b": 2,
+  "c": 3
+}
+```
 
 ### JsonObj & JSON
 
@@ -151,30 +154,34 @@ JSON(data)
 JSON(data).sub.b
 ```
 
-    3
+```text
+3
+```
 
 ```python
 stringified_data = JSON(data).stringify(pretty=True)
 print(stringified_data)
 ```
 
-    {
-      "key": "value",
-      "list": [
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "dt": "1970-01-01T00:00:00.000001",
-      "sub": {
-        "b": 3,
-        "key": "val",
-        "a": 1
-      },
-      "timedelta": 172800.0
-    }
+```text
+{
+  "key": "value",
+  "list": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "dt": "1970-01-01T00:00:00.000001",
+  "sub": {
+    "b": 3,
+    "key": "val",
+    "a": 1
+  },
+  "timedelta": 172800.0
+}
+```
 
 ```python
 parsed_data = JSON(stringified_data)
@@ -193,74 +200,90 @@ parsed_data
 list(parsed_data.keys())
 ```
 
-    ['key', 'list', 'dt', 'sub', 'timedelta']
+```text
+['key', 'list', 'dt', 'sub', 'timedelta']
+```
 
 ```python
 list(parsed_data.items())
 ```
 
-    [('key', 'value'),
-     ('list', [1, 2, 3, 4, 5]),
-     ('dt', '1970-01-01T00:00:00.000001'),
-     ('sub', JsonObj(**{'b': 3, 'key': 'val', 'a': 1})),
-     ('timedelta', 172800.0)]
+```text
+[('key', 'value'),
+ ('list', [1, 2, 3, 4, 5]),
+ ('dt', '1970-01-01T00:00:00.000001'),
+ ('sub', JsonObj(**{'b': 3, 'key': 'val', 'a': 1})),
+ ('timedelta', 172800.0)]
+```
 
 ```python
 list(parsed_data.dot_keys())
 ```
 
-    [('key',),
-     ('list',),
-     ('dt',),
-     ('sub', 'b'),
-     ('sub', 'key'),
-     ('sub', 'a'),
-     ('timedelta',)]
+```text
+[('key',),
+ ('list',),
+ ('dt',),
+ ('sub', 'b'),
+ ('sub', 'key'),
+ ('sub', 'a'),
+ ('timedelta',)]
+```
 
 ```python
 list(parsed_data.dot_items())
 ```
 
-    [(('key',), 'value'),
-     (('list',), [1, 2, 3, 4, 5]),
-     (('dt',), '1970-01-01T00:00:00.000001'),
-     (('sub', 'b'), 3),
-     (('sub', 'key'), 'val'),
-     (('sub', 'a'), 1),
-     (('timedelta',), 172800.0)]
+```text
+[(('key',), 'value'),
+ (('list',), [1, 2, 3, 4, 5]),
+ (('dt',), '1970-01-01T00:00:00.000001'),
+ (('sub', 'b'), 3),
+ (('sub', 'key'), 'val'),
+ (('sub', 'a'), 1),
+ (('timedelta',), 172800.0)]
+```
 
 ```python
 parsed_data[("sub", "key")]
 ```
 
-    'val'
+```text
+'val'
+```
 
 ```python
 parsed_data.dot_lookup("sub.key")
 ```
 
-    'val'
+```text
+'val'
+```
 
 ```python
 {**parsed_data}
 ```
 
-    {'key': 'value',
-     'list': [1, 2, 3, 4, 5],
-     'dt': '1970-01-01T00:00:00.000001',
-     'sub': JsonObj(**{'b': 3, 'key': 'val', 'a': 1}),
-     'timedelta': 172800.0}
+```text
+{'key': 'value',
+ 'list': [1, 2, 3, 4, 5],
+ 'dt': '1970-01-01T00:00:00.000001',
+ 'sub': JsonObj(**{'b': 3, 'key': 'val', 'a': 1}),
+ 'timedelta': 172800.0}
+```
 
 ```python
 # fully eject
 parsed_data.eject()
 ```
 
-    {'key': 'value',
-     'list': [1, 2, 3, 4, 5],
-     'dt': '1970-01-01T00:00:00.000001',
-     'sub': {'b': 3, 'key': 'val', 'a': 1},
-     'timedelta': 172800.0}
+```text
+{'key': 'value',
+ 'list': [1, 2, 3, 4, 5],
+ 'dt': '1970-01-01T00:00:00.000001',
+ 'sub': {'b': 3, 'key': 'val', 'a': 1},
+ 'timedelta': 172800.0}
+```
 
 #### Protected keys
 
@@ -287,11 +310,13 @@ assert j.items != [1, 2, 3, 4]
 assert j["items"] == [1, 2, 3, 4]
 ```
 
-    {'_data': {'key': 'value', 'items': [1, 2, 3, 4]}}
-    JsonObj(**{
-        'items': [1, 2, 3, 4], 'key': 'value'
-    })
-    items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
+```text
+{'_data': {'key': 'value', 'items': [1, 2, 3, 4]}}
+JsonObj(**{
+    'items': [1, 2, 3, 4], 'key': 'value'
+})
+items <bound method JsonObj.items of JsonObj(**{'key': 'value', 'items': [1, 2, 3, 4]})>
+```
 
 ### pydantic & jsonbourne
 
@@ -299,7 +324,7 @@ assert j["items"] == [1, 2, 3, 4]
 - Allows for aliases when getting/setting attribute(s)
 - Supports `__post_init__` (like dataclasses)
 
-#### Basic usage:
+#### Basic usage
 
 ```python
 from jsonbourne import JsonObj
@@ -363,18 +388,17 @@ obj
 obj.a_property
 ```
 
-    'prop_value'
+```text
+'prop_value'
+```
 
 ---
 
 ## JSON backend/lib
 
-**`jsonbourne` finds the best json-lib (python-rapidjson/orjson) it can!** On import `jsonbourne` gets to
-work spying on your python env. `jsonbourne`, the most highly qualified json-CIA-agent, will import the best
-python-json library it can find; if `jsonbourne`'s cover is blown (meaning: the
-only json library found is the python stdlib json), `jsonbourne` will fallback
-to
-the python stdlib json.
+**`jsonbourne` finds the best json-lib (python-rapidjson/orjson) it can!**
+On import `jsonbourne` gets to work spying on your python env.
+`jsonbourne`, the most highly qualified json-CIA-agent, will import the best python-json library it can find; if `jsonbourne`'s cover is blown (meaning: the only json library found is the python stdlib json), `jsonbourne` will fallback to the python stdlib json.
 
 `jsonbourne` will look for the following json-packages in the following order:
 
@@ -392,10 +416,12 @@ print(json)
 print(string)
 ```
 
-    <class 'jsonbourne.jsonlib.RAPIDJSON'>
-    {"a":1,"b":2,"c":3}
+```text
+<class 'jsonbourne.jsonlib.RAPIDJSON'>
+{"a":1,"b":2,"c":3}
+```
 
-### Installing better JSON lib:
+### Installing better JSON lib
 
 #### `orjson`
 

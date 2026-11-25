@@ -52,6 +52,7 @@ dev = [
   "rich>=13.9.3",
   "prek>=0.5.11",
   "ruff==0.17.5",
+  "rumdl==0.3.6",
   "tomli>=2.0.1",
   "ty>=0.0.102",
 ]
@@ -403,3 +404,24 @@ ignore-missing-imports = [
 [[tool.pyrefly.sub-config]]
 matches = "libs/jsonbourne/src/jsonbourne/jsonlib.py"
 errors = { missing-attribute = false }
+
+[tool.rumdl]
+include = ["docs/**/*.md", "README.md", "CHANGELOG.md", "libs/*/README.md"]
+exclude = ["docs/notebooks/**"]
+
+[tool.rumdl.per-file-ignores]
+"docs/libs/**/*.md" = ["MD033", "MD041"]
+"docs/index.md" = ["MD041"]
+"libs/*/README.md" = ["MD033", "MD041"]
+"README.md" = ["MD033", "MD041", "MD057"]
+"CHANGELOG.md" = ["MD024"]
+
+[tool.rumdl.MD013]
+reflow = true
+reflow-mode = "sentence-per-line"
+line-length = 0
+tables = false
+code-blocks = false
+
+[tool.rumdl.MD007]
+indent = 4
