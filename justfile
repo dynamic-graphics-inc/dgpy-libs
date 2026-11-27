@@ -65,7 +65,7 @@ typos *ARGS:
 fmt:
     uv run ruff format
     uv run ruff check --select "I,RUF022" --show-fixes --fix --unsafe-fixes .
-    pnpx prettier@latest -w --prose-wrap=always CHANGELOG.md
+    uv run rumdl fmt .
 
 # fmt pyproject.toml files
 pyproject-fmt:
