@@ -225,7 +225,7 @@ class JsonArr(MutableSequence[_T], Generic[_T]):
         cls, source_type: Any, handler: GetCoreSchemaHandler
     ) -> Iterator[Callable[[Any], Any]]:
         """Return the JsonObj validator functions"""
-        yield cls.validate_type  # ty: ignore[invalid-yield]
+        yield cls.validate_type
 
     def eject(self) -> list[_T]:
         return self.__arr
